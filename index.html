@@ -7,8 +7,18 @@
 <link rel="stylesheet" type="text/css" href="inc/styles.css" />
 <title>Hypertable: An Open Source, High Performance, Scalable Database</title>
 <script type="text/javascript">
-	function animateCube(img) { img.src = "images/gra-tesseract.gif"; }
-	function stillCube(img) { img.src = "images/tesseract.jpg"; }
+	var cubeTimer;
+	var preload = new Image();
+	preload.src = "images/gra-tesseract.gif";
+
+	function animateCube(img) {
+		clearTimeout(cubeTimer);
+		img.src = "images/gra-tesseract.gif";
+	}
+	function stillCube(img) {
+		cubeTimer = setTimeout(function() {
+			img.src = "images/tesseract.jpg" }, 5000);
+	}
 </script>
 </head>
 <body>

@@ -6,14 +6,18 @@ function req_get($name, $default) {
 }
 
 $message=trim(req_get('message', null));
+$blurb = '';
 
 if (!empty($message)) {
   $subject = req_get('subject', '[Feedback] <no subject>');
   $from = req_get('email', 'Feedback <no email>');
-  mail('support@hypertable.org', $_REQUEST['subject'], print_r($_REQUEST, 1),
-       "From: $email");
-  $blurb = "Thanks for your feedback!";
-  //$blurb .="<pre>". htmlspecialchars(print_r($_REQUEST,1)) ."</pre>";
+  // simple spam filter 
+  if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_USER_AGENT'])) {
+    $body = print_r($_REQUEST, 1).print_r($_SERVER, 1);
+    //$blurb = '<pre>'. htmlspecialchars($body) .'</pre>';
+    mail('support@hypertable.org', $_REQUEST['subject'], $body, "From: $from");
+  }
+  $blurb .= "Thanks for your feedback!";
 }
 else {
   $blurb = "Thanks for kicking around the tires, feel free to say something!";
@@ -23,7 +27,7 @@ else {
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<meta http-equiv="description" content="We'd love to hear from you, if you're not comfortable to discuss in the forum feel free to use the following feedback form" />
+<meta http-equiv="description" content="We'd love to hear from you, if you're not comfortable to discuss in the forums, feel free to use the following feedback form" />
 <link rel="stylesheet" type="text/css" href="inc/styles.css" />
 <title>Feedback</title>
 </head>
@@ -40,7 +44,7 @@ else {
 <li><a href="download.html">Download</a></li>
 <li><a href="license.html">License</a></li>
 <li><a href="documentation.html">Documentation</a></li>
-<li><a href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
+<li><a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
 <li><a href="mailing-list.html">Mailing Lists</a></li>
 <li><a href="sponsors.html">Sponsors</a></li>
 <li class="last"><a href="feedback.html" class="on">Feedback</a></li>
@@ -52,7 +56,7 @@ else {
 <div id="news" style="margin: 2em">
 <h3><?= $blurb ?></h3>
 <dl>
-<dt><a href="/feedback.html">Go back to feedback page</a></dt>
+<dt><a href="feedback.html">Go back to feedback page</a></dt>
 </dl>
 </div>
 </div>

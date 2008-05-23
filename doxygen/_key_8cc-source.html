@@ -29,7 +29,7 @@
 <a name="l00031"></a><a class="code" href="_key_8cc.html#82243a8ed88cef75a579946fe0535117">00031</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="_key_8cc.html#82243a8ed88cef75a579946fe0535117">end_row_chars</a>[3] = { (char)0xff, (<span class="keywordtype">char</span>)0xff, 0 };
 <a name="l00032"></a><a class="code" href="_key_8cc.html#85ae1d23fe2d20ba7439f621d32f0229">00032</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="_key_8cc.html#85ae1d23fe2d20ba7439f621d32f0229">end_root_row_chars</a>[5] = { <span class="charliteral">'0'</span>, <span class="charliteral">':'</span>, (char)0xff, (<span class="keywordtype">char</span>)0xff, 0 };
 <a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="_key_8cc.html#bdc354a978f3f403c48a312b9ad81dce">00034</a>   <span class="keywordtype">size_t</span> <a class="code" href="_key_8cc.html#bdc354a978f3f403c48a312b9ad81dce">write_key</a>(uint8_t *buf, uint8_t flag, <span class="keyword">const</span> <span class="keywordtype">char</span> *row, uint8_t column_family_code, <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier, uint64_t <a class="code" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>) {
+<a name="l00034"></a><a class="code" href="_key_8cc.html#4324f9c728a57ad621cbd55dc616f5cf">00034</a>   <span class="keywordtype">size_t</span> <a class="code" href="_key_8cc.html#4324f9c728a57ad621cbd55dc616f5cf">write_key</a>(uint8_t *buf, uint8_t flag, <span class="keyword">const</span> <span class="keywordtype">char</span> *row, uint8_t column_family_code, <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier, uint64_t <a class="code" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>) {
 <a name="l00035"></a>00035     uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = buf;
 <a name="l00036"></a>00036     strcpy((<span class="keywordtype">char</span> *)ptr, row);
 <a name="l00037"></a>00037     ptr += strlen(row) + 1;
@@ -73,7 +73,7 @@
 <a name="l00075"></a>00075     uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = <span class="keyword">new</span> uint8_t [ len + <a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3" title="Length of a variable length encoded 32-bit integer (up to 5 bytes).">Serialization::encoded_length_vi32</a>(len) ];  <span class="comment">// !!! could probably just make this 6</span>
 <a name="l00076"></a>00076     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs(ptr);
 <a name="l00077"></a>00077     <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;ptr, len);
-<a name="l00078"></a>00078     <a class="code" href="_key_8cc.html#bdc354a978f3f403c48a312b9ad81dce">write_key</a>(ptr, flag, row, column_family_code, column_qualifier, timestamp);
+<a name="l00078"></a>00078     <a class="code" href="_key_8cc.html#4324f9c728a57ad621cbd55dc616f5cf">write_key</a>(ptr, flag, row, column_family_code, column_qualifier, timestamp);
 <a name="l00079"></a>00079     <span class="keywordflow">return</span> bs;
 <a name="l00080"></a>00080   }
 <a name="l00081"></a>00081 
@@ -83,7 +83,7 @@
 <a name="l00085"></a>00085       len += strlen(column_qualifier);
 <a name="l00086"></a>00086     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c">ensure</a>(len + <a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3" title="Length of a variable length encoded 32-bit integer (up to 5 bytes).">Serialization::encoded_length_vi32</a>(len));  <span class="comment">// !!! could probably just make this 6</span>
 <a name="l00087"></a>00087     <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, len);
-<a name="l00088"></a>00088     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="_key_8cc.html#bdc354a978f3f403c48a312b9ad81dce">write_key</a>(dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, flag, row, column_family_code, column_qualifier, timestamp);
+<a name="l00088"></a>00088     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="_key_8cc.html#4324f9c728a57ad621cbd55dc616f5cf">write_key</a>(dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, flag, row, column_family_code, column_qualifier, timestamp);
 <a name="l00089"></a>00089   }
 <a name="l00090"></a>00090 
 <a name="l00091"></a><a class="code" href="class_hypertable_1_1_key.html#75bdf3c5d1fc0921eb196fc78afeca3a">00091</a>   <a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd" title="Constructor (for implicit construction).">Key::Key</a>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key) {
@@ -155,7 +155,7 @@
 <a name="l00160"></a>00160 
 <a name="l00161"></a>00161 }
 <a name="l00162"></a>00162 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 14:50:27 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -1,18 +1,29 @@
 <?php
-function req_get($name, $default) {
-  if (isset($_REQUEST[$name]))
+function req_get($name, $default = null) {
+  if (!empty($_REQUEST[$name]))
     return $_REQUEST[$name];
   return $default;
+}
+
+// simple spam filter 
+function req_is_spam() {
+  if (empty($_SERVER['HTTP_REFERER']) ||
+      empty($_SERVER['HTTP_USER_AGENT']))
+    return true;
+
+  $version = trim(req_get('version'));
+
+  if (!empty($version) && !preg_match('/^\d+(?:\.\d+){1,3}$/', $version))
+    return true;
 }
 
 $message=trim(req_get('message', null));
 $blurb = '';
 
 if (!empty($message)) {
-  $subject = req_get('subject', '[Feedback] <no subject>');
-  $from = req_get('email', 'Feedback <no email>');
-  // simple spam filter 
-  if (!empty($_SERVER['HTTP_REFERER']) && !empty($_SERVER['HTTP_USER_AGENT'])) {
+  if (!req_is_spam()) {
+    $subject = req_get('subject', '[Feedback] <no subject>');
+    $from = req_get('email', 'Feedback <no email>');
     $body = print_r($_REQUEST, 1).print_r($_SERVER, 1);
     //$blurb = '<pre>'. htmlspecialchars($body) .'</pre>';
     mail('support@hypertable.org', $_REQUEST['subject'], $body, "From: $from");

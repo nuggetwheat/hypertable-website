@@ -17,23 +17,23 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>BlockCompressionCodecBmz.cc</h1><a href="_block_compression_codec_bmz_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_checksum_8h.html">Common/Checksum.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_thread_8h.html">Common/Thread.h</a>"</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_bmz_8h.html">BlockCompressionCodecBmz.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="bmz_8h.html">bmz/bmz.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00029"></a>00029 <span class="keyword">using namespace </span>std;
-<a name="l00030"></a>00030 <span class="keyword">using namespace </span>boost;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_checksum_8h.html">Common/Checksum.h</a>"</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_thread_8h.html">Common/Thread.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_bmz_8h.html">BlockCompressionCodecBmz.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="bmz_8h.html">bmz/bmz.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00030"></a>00030 <span class="keyword">using namespace </span>std;
 <a name="l00031"></a>00031 
-<a name="l00032"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#9a867d3f75029134fb57e9abaea46d42">00032</a> BlockCompressionCodecBmz::BlockCompressionCodecBmz(<span class="keyword">const</span> Args &amp;args) :
-<a name="l00033"></a>00033                                                    m_workmem(0) {
+<a name="l00032"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#9a867d3f75029134fb57e9abaea46d42">00032</a> BlockCompressionCodecBmz::BlockCompressionCodecBmz(<span class="keyword">const</span> Args &amp;args)
+<a name="l00033"></a>00033     : m_workmem(0) {
 <a name="l00034"></a>00034   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="bmz_8c.html#62f518d7d1e2a5f5e638807edfb64a85" title="Perform bmz initialization only needs to be called once, mostly for sanity checks...">bmz_init</a>() == <a class="code" href="bmz_8h.html#bcd9587ac68784e74887226dbdd439a3">BMZ_E_OK</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b25eae4ff9ed5e2405f164e5cf694b8e91">Error::BLOCK_COMPRESSOR_INIT_ERROR</a>);
 <a name="l00035"></a>00035   <span class="comment">// defaults</span>
 <a name="l00036"></a>00036   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bd70e027d2a82bdacc87d0f3d47e79bd">m_offset</a> = 0;
 <a name="l00037"></a>00037   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bbb457c278585428e0fbbdc3fc019ad8">m_fp_len</a> = 19;
-<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e044c58782bd7fcf29ee7a6d006ce57f">set_args</a>(args);
+<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e6500a35842e9c8ce24f216d2c0accf7">set_args</a>(args);
 <a name="l00039"></a>00039 }
 <a name="l00040"></a>00040 
 <a name="l00041"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#cf9b2585a6bd1e05127745b1e6f7c314">00041</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#cf9b2585a6bd1e05127745b1e6f7c314">BlockCompressionCodecBmz::~BlockCompressionCodecBmz</a>() {
@@ -45,8 +45,8 @@
 <a name="l00047"></a>00047 <span class="preprocessor">  _code_; \</span>
 <a name="l00048"></a>00048 <span class="preprocessor">} while (0)</span>
 <a name="l00049"></a>00049 <span class="preprocessor"></span>
-<a name="l00050"></a>00050 <span class="keywordtype">int</span>
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e044c58782bd7fcf29ee7a6d006ce57f">00051</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e044c58782bd7fcf29ee7a6d006ce57f">BlockCompressionCodecBmz::set_args</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html#ec2c53d500d53c4b6f5bf7c73bae17b9">Args</a> &amp;args) {
+<a name="l00050"></a>00050 <span class="keywordtype">void</span>
+<a name="l00051"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e6500a35842e9c8ce24f216d2c0accf7">00051</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#e6500a35842e9c8ce24f216d2c0accf7">BlockCompressionCodecBmz::set_args</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html#861d4f594703e53ceb7a5a0f834afbcb">Args</a> &amp;args) {
 <a name="l00052"></a>00052   Args::const_iterator it = args.begin(), arg_end = args.end();
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054   <span class="keywordflow">for</span> (; it != arg_end; ++it) {
@@ -56,79 +56,73 @@
 <a name="l00058"></a>00058       <a class="code" href="_block_compression_codec_bmz_8cc.html#69ebfe17959b9026e05f987728851892">_NEXT_ARG</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bd70e027d2a82bdacc87d0f3d47e79bd">m_offset</a> = atoi((*it).c_str()));
 <a name="l00059"></a>00059     <span class="keywordflow">else</span> <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"unknown bmz compressor argument: %s"</span>, (*it).c_str());
 <a name="l00060"></a>00060   }
-<a name="l00061"></a>00061   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 <span class="keywordtype">int</span>
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#b88e73e700fa9abfa649a9ff58b21882">00065</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#b88e73e700fa9abfa649a9ff58b21882">BlockCompressionCodecBmz::deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input,
-<a name="l00066"></a>00066                                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
-<a name="l00067"></a>00067                                   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header,
-<a name="l00068"></a>00068                                   <span class="keywordtype">size_t</span> reserve) {
-<a name="l00069"></a>00069   <span class="keywordtype">size_t</span> inlen = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00070"></a>00070   <span class="keywordtype">size_t</span> headerlen = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>();
-<a name="l00071"></a>00071   <span class="keywordtype">size_t</span> outlen = <a class="code" href="bmz_8c.html#565eb981fe7e7a2fc1fefc47ef491b8e" title="Compute bmz compression output buffer length.">bmz_pack_buflen</a>(inlen);
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>(outlen + headerlen + reserve);
-<a name="l00074"></a>00074   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>(<a class="code" href="bmz_8c.html#c0b1526bfbf81c4511a27afee751d010" title="Return size of work memory for bmz compression.">bmz_pack_worklen</a>(inlen, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bbb457c278585428e0fbbdc3fc019ad8">m_fp_len</a>), <span class="keyword">true</span>);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="bmz_8c.html#56feb9141bd6c6ece9151c4f40b8c638" title="Perform bmz compression.">bmz_pack</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, inlen, output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen, &amp;outlen,
-<a name="l00077"></a>00077                      <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bd70e027d2a82bdacc87d0f3d47e79bd">m_offset</a>, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bbb457c278585428e0fbbdc3fc019ad8">m_fp_len</a>, 0, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>) == <a class="code" href="bmz_8h.html#bcd9587ac68784e74887226dbdd439a3">BMZ_E_OK</a>, 
-<a name="l00078"></a>00078             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d788dd416885fc5863417debf040a344">Error::BLOCK_COMPRESSOR_DEFLATE_ERROR</a>);
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <span class="comment">// in case of an incompressible block</span>
-<a name="l00081"></a>00081   <span class="keywordflow">if</span> (outlen &gt;= inlen) {
-<a name="l00082"></a>00082     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>);
-<a name="l00083"></a>00083     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, inlen);
-<a name="l00084"></a>00084     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(inlen);
-<a name="l00085"></a>00085     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(inlen);
-<a name="l00086"></a>00086   }
-<a name="l00087"></a>00087   <span class="keywordflow">else</span> {
-<a name="l00088"></a>00088     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc997574babd822d75aa0827f676d278ae99a1">BMZ</a>);
-<a name="l00089"></a>00089     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(inlen);
-<a name="l00090"></a>00090     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(outlen);
-<a name="l00091"></a>00091   }
-<a name="l00092"></a>00092   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#ee0b3d20cd8caeb050a7d036fe7a4c53">set_data_checksum</a>(<a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>()));
-<a name="l00093"></a>00093   
-<a name="l00094"></a>00094   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00095"></a>00095   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c27464ff16cdbc7d2b3604e886d8cf7a">encode</a>(&amp;output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
-<a name="l00096"></a>00096   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>();
+<a name="l00061"></a>00061 }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063 <span class="keywordtype">void</span>
+<a name="l00064"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#c005e7d8ad78a08828a9ae938508e65f">00064</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#c005e7d8ad78a08828a9ae938508e65f">BlockCompressionCodecBmz::deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input,
+<a name="l00065"></a>00065                                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
+<a name="l00066"></a>00066                                   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header,
+<a name="l00067"></a>00067                                   <span class="keywordtype">size_t</span> reserve) {
+<a name="l00068"></a>00068   <span class="keywordtype">size_t</span> inlen = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00069"></a>00069   <span class="keywordtype">size_t</span> headerlen = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>();
+<a name="l00070"></a>00070   <span class="keywordtype">size_t</span> outlen = <a class="code" href="bmz_8c.html#565eb981fe7e7a2fc1fefc47ef491b8e" title="Compute bmz compression output buffer length.">bmz_pack_buflen</a>(inlen);
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(outlen + headerlen + reserve);
+<a name="l00073"></a>00073   <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(<a class="code" href="bmz_8c.html#c0b1526bfbf81c4511a27afee751d010" title="Return size of work memory for bmz compression.">bmz_pack_worklen</a>(inlen, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bbb457c278585428e0fbbdc3fc019ad8">m_fp_len</a>), <span class="keyword">true</span>);
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="bmz_8c.html#56feb9141bd6c6ece9151c4f40b8c638" title="Perform bmz compression.">bmz_pack</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, inlen, output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen, &amp;outlen,
+<a name="l00076"></a>00076                      <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bd70e027d2a82bdacc87d0f3d47e79bd">m_offset</a>, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#bbb457c278585428e0fbbdc3fc019ad8">m_fp_len</a>, 0, <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>) == <a class="code" href="bmz_8h.html#bcd9587ac68784e74887226dbdd439a3">BMZ_E_OK</a>,
+<a name="l00077"></a>00077             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d788dd416885fc5863417debf040a344">Error::BLOCK_COMPRESSOR_DEFLATE_ERROR</a>);
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="comment">// in case of an incompressible block</span>
+<a name="l00080"></a>00080   <span class="keywordflow">if</span> (outlen &gt;= inlen) {
+<a name="l00081"></a>00081     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>);
+<a name="l00082"></a>00082     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, inlen);
+<a name="l00083"></a>00083     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(inlen);
+<a name="l00084"></a>00084     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(inlen);
+<a name="l00085"></a>00085   }
+<a name="l00086"></a>00086   <span class="keywordflow">else</span> {
+<a name="l00087"></a>00087     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc997574babd822d75aa0827f676d278ae99a1">BMZ</a>);
+<a name="l00088"></a>00088     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(inlen);
+<a name="l00089"></a>00089     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(outlen);
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#ee0b3d20cd8caeb050a7d036fe7a4c53">set_data_checksum</a>(<a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + headerlen,
+<a name="l00092"></a>00092                                       header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>()));
+<a name="l00093"></a>00093   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00094"></a>00094   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">encode</a>(&amp;output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
+<a name="l00095"></a>00095   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>();
+<a name="l00096"></a>00096 }
 <a name="l00097"></a>00097 
-<a name="l00098"></a>00098   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 <span class="keywordtype">int</span>
-<a name="l00102"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#1be7adf1bb225e242dce2075db66da35">00102</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#1be7adf1bb225e242dce2075db66da35">BlockCompressionCodecBmz::inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input,
-<a name="l00103"></a>00103                                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
-<a name="l00104"></a>00104                                   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header) {
-<a name="l00105"></a>00105   uint8_t *ip = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00106"></a>00106   <span class="keywordtype">size_t</span> remain = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#e0ef276907be66d3b97a0bb5a2e76b04">decode</a>(&amp;ip, &amp;remain) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>,
-<a name="l00109"></a>00109             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>);
-<a name="l00110"></a>00110   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>() == remain,
-<a name="l00111"></a>00111             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>);
-<a name="l00112"></a>00112   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>() == <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(ip, remain),
-<a name="l00113"></a>00113             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28b4327c75266ae09ae145b36ec3307a4">Error::BLOCK_COMPRESSOR_CHECKSUM_MISMATCH</a>);
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115   <span class="keywordtype">size_t</span> outlen = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>() == <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>)
-<a name="l00118"></a>00118     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, ip, outlen);
-<a name="l00119"></a>00119   <span class="keywordflow">else</span> {
-<a name="l00120"></a>00120     output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>(outlen);
-<a name="l00121"></a>00121     <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>(<a class="code" href="bmz_8c.html#8a29912372c85a850b530ba8143034dc" title="Return size of work memory for bmz decompression.">bmz_unpack_worklen</a>(outlen), <span class="keyword">true</span>);
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123     <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="bmz_8c.html#a251ec18664698ab168a138221b37c6a" title="Perform bmz decompression.">bmz_unpack</a>(ip, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, &amp;outlen,
-<a name="l00124"></a>00124                          <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>) == <a class="code" href="bmz_8h.html#bcd9587ac68784e74887226dbdd439a3">BMZ_E_OK</a>,
-<a name="l00125"></a>00125               <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>);
-<a name="l00126"></a>00126     <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(outlen == header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>(),
-<a name="l00127"></a>00127               <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>);
-<a name="l00128"></a>00128   }
-<a name="l00129"></a>00129   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + outlen;
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00132"></a>00132 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+<a name="l00098"></a>00098 <span class="keywordtype">void</span>
+<a name="l00099"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#20d13cc0ef1431cdffcb8c75c6e178e1">00099</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#20d13cc0ef1431cdffcb8c75c6e178e1">BlockCompressionCodecBmz::inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input,
+<a name="l00100"></a>00100                                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
+<a name="l00101"></a>00101                                   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header) {
+<a name="l00102"></a>00102   <span class="keyword">const</span> uint8_t *ip = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00103"></a>00103   <span class="keywordtype">size_t</span> remain = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">decode</a>(&amp;ip, &amp;remain);
+<a name="l00106"></a>00106   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>() == remain,
+<a name="l00107"></a>00107             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>);
+<a name="l00108"></a>00108   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>() == <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(ip, remain),
+<a name="l00109"></a>00109             <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28b4327c75266ae09ae145b36ec3307a4">Error::BLOCK_COMPRESSOR_CHECKSUM_MISMATCH</a>);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111   <span class="keywordtype">size_t</span> outlen = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>() == <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>)
+<a name="l00114"></a>00114     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, ip, outlen);
+<a name="l00115"></a>00115   <span class="keywordflow">else</span> {
+<a name="l00116"></a>00116     output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(outlen);
+<a name="l00117"></a>00117     <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(<a class="code" href="bmz_8c.html#8a29912372c85a850b530ba8143034dc" title="Return size of work memory for bmz decompression.">bmz_unpack_worklen</a>(outlen), <span class="keyword">true</span>);
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119     <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="bmz_8c.html#a251ec18664698ab168a138221b37c6a" title="Perform bmz decompression.">bmz_unpack</a>(ip, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, &amp;outlen,
+<a name="l00120"></a>00120                          <a class="code" href="class_hypertable_1_1_block_compression_codec_bmz.html#3a25b83f3d27c052759b1183875bfd3d">m_workmem</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>) == <a class="code" href="bmz_8h.html#bcd9587ac68784e74887226dbdd439a3">BMZ_E_OK</a>,
+<a name="l00121"></a>00121               <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>);
+<a name="l00122"></a>00122     <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(outlen == header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>(),
+<a name="l00123"></a>00123               <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>);
+<a name="l00124"></a>00124   }
+<a name="l00125"></a>00125   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + outlen;
+<a name="l00126"></a>00126 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -30,66 +30,65 @@
 <a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_cell_list_scanner_8h.html">CellListScanner.h</a>"</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_cell_store_release_callback_8h.html">CellStoreReleaseCallback.h</a>"</span>
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="keyword">namespace </span>Hypertable {
-<a name="l00038"></a>00038 
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html">00039</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> {
-<a name="l00040"></a>00040   <span class="keyword">public</span>:
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html">00042</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00043"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html#31c812721d638ceed38bdd948c8f6ac6">00043</a>       <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner;
-<a name="l00044"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html#0f4b20179e4494d7cdeb5892d61128ed">00044</a>       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key;
-<a name="l00045"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html#13ef59b13a4815d0c69bf78905772924">00045</a>       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00046"></a>00046     } <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html">ScannerStateT</a>;
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1lt_scanner_state.html">00048</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1lt_scanner_state.html">ltScannerState</a> {
-<a name="l00049"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1lt_scanner_state.html#200603494755cd6575bb15dd2c792d5f">00049</a>       <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1lt_scanner_state.html#200603494755cd6575bb15dd2c792d5f">operator()</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html">ScannerStateT</a> &amp;ss1, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html">ScannerStateT</a> &amp;ss2)<span class="keyword"> const </span>{
-<a name="l00050"></a>00050         <span class="keywordflow">return</span> !(ss1.<a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html#0f4b20179e4494d7cdeb5892d61128ed">key</a> &lt; ss2.<a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state_t.html#0f4b20179e4494d7cdeb5892d61128ed">key</a>);
-<a name="l00051"></a>00051       }
-<a name="l00052"></a>00052     };
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <a class="code" href="class_hypertable_1_1_merge_scanner.html#3fc6514946255faece4598e53fab751f">MergeScanner</a>(<a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scanContextPtr, <span class="keywordtype">bool</span> returnDeletes=<span class="keyword">true</span>);
-<a name="l00055"></a>00055     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#2382deb48145767591a4616b5e213a2d">~MergeScanner</a>();
-<a name="l00056"></a>00056     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#751872e54e049273b90ed26e95252b69">forward</a>();
-<a name="l00057"></a>00057     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <span class="keyword">get</span>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value);
-<a name="l00058"></a>00058     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner);
-<a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">00060</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">install_release_callback</a>(<a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> &amp;cb) {
-<a name="l00061"></a>00061       <a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">m_release_callback</a> = cb;
-<a name="l00062"></a>00062     }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <span class="keyword">private</span>:
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#8a57d829b92bda84d6255065c810c475">initialize</a>();
-<a name="l00067"></a>00067 
-<a name="l00068"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#c701c41934fce745ee983e7c50510348">00068</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#c701c41934fce745ee983e7c50510348">m_done</a>;
-<a name="l00069"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#4969176c4e01a08852994a8bde0a2c37">00069</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#4969176c4e01a08852994a8bde0a2c37">m_initialized</a>;
-<a name="l00070"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#da3e72661cf57183ec1d87de885cb51f">00070</a>     std::vector&lt;CellListScanner *&gt;  <a class="code" href="class_hypertable_1_1_merge_scanner.html#da3e72661cf57183ec1d87de885cb51f">m_scanners</a>;
-<a name="l00071"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#70c010142d1c09650c34caafb523079b">00071</a>     std::priority_queue&lt;ScannerStateT, std::vector&lt;ScannerStateT&gt;, <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1lt_scanner_state.html">ltScannerState</a>&gt; <a class="code" href="class_hypertable_1_1_merge_scanner.html#70c010142d1c09650c34caafb523079b">m_queue</a>;
-<a name="l00072"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#f12e51823365925eefac81b89a51f5bf">00072</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#f12e51823365925eefac81b89a51f5bf">m_delete_present</a>;
-<a name="l00073"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#b28251c7590796e15b90918c1fcad06d">00073</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#b28251c7590796e15b90918c1fcad06d">m_deleted_row</a>;
-<a name="l00074"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#bc13d619f935bdd29df11c1e8dcf5093">00074</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#bc13d619f935bdd29df11c1e8dcf5093">m_deleted_row_timestamp</a>;
-<a name="l00075"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#457b5302ff80d7cb92d4d24bedf4b04c">00075</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#457b5302ff80d7cb92d4d24bedf4b04c">m_deleted_column_family</a>;
-<a name="l00076"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#725c6d5fd13fddee6c49a8a7fec18b32">00076</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#725c6d5fd13fddee6c49a8a7fec18b32">m_deleted_column_family_timestamp</a>;
-<a name="l00077"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#23264fdcc0cb7317b6e7b1e52440a4fc">00077</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#23264fdcc0cb7317b6e7b1e52440a4fc">m_deleted_cell</a>;
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#d61edea1c6e34de5a11faafa139627c3">00078</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#d61edea1c6e34de5a11faafa139627c3">m_deleted_cell_timestamp</a>;
-<a name="l00079"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#133ad3067ce9f63ca3732ea0c0d01f69">00079</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#133ad3067ce9f63ca3732ea0c0d01f69">m_return_deletes</a>;
-<a name="l00080"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#ab0ea14b8a20eee689606b0e40fd1a1b">00080</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#ab0ea14b8a20eee689606b0e40fd1a1b">m_row_count</a>;
-<a name="l00081"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#acf9bf3bb143a06e79c432ab6b1407a7">00081</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#acf9bf3bb143a06e79c432ab6b1407a7">m_row_limit</a>;
-<a name="l00082"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#034652cfce2f71f1aab6c63cde3506ef">00082</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#034652cfce2f71f1aab6c63cde3506ef">m_cell_count</a>;
-<a name="l00083"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#264abb38c0bb4a4d0abd2560890676a4">00083</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#264abb38c0bb4a4d0abd2560890676a4">m_cell_limit</a>;
-<a name="l00084"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#70f788600c1d6870143399a789fffeaa">00084</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#70f788600c1d6870143399a789fffeaa">m_cell_cutoff</a>;
-<a name="l00085"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#07a16293aaddcdb44b50ed30e4a35b19">00085</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#07a16293aaddcdb44b50ed30e4a35b19">m_start_timestamp</a>;
-<a name="l00086"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#ff99a4395670c30d908fed5ae98ed2d6">00086</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#ff99a4395670c30d908fed5ae98ed2d6">m_end_timestamp</a>;
-<a name="l00087"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#4204c047997e0cc7603715a4ee3670bb">00087</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#4204c047997e0cc7603715a4ee3670bb">m_prev_key</a>;
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">00088</a>     <a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">m_release_callback</a>;
-<a name="l00089"></a>00089   };
-<a name="l00090"></a>00090 }
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092 <span class="preprocessor">#endif // HYPERTABLE_MERGESCANNER_H</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable {
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> {
+<a name="l00039"></a>00039   <span class="keyword">public</span>:
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html">00041</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html">ScannerState</a> {
+<a name="l00042"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#78f4a131580186514cea39275ff3e8c4">00042</a>       <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *<a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#78f4a131580186514cea39275ff3e8c4">scanner</a>;
+<a name="l00043"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#0aadb751e4a5727afd6af3bf5ffda9b7">00043</a>       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#0aadb751e4a5727afd6af3bf5ffda9b7">key</a>;
+<a name="l00044"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#ea5fef9e409847e38a77d619896a7db4">00044</a>       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#ea5fef9e409847e38a77d619896a7db4">value</a>;
+<a name="l00045"></a>00045     };
+<a name="l00046"></a>00046 
+<a name="l00047"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_lt_scanner_state.html">00047</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_lt_scanner_state.html">LtScannerState</a> {
+<a name="l00048"></a><a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_lt_scanner_state.html#c937c91f321814967073209b5b4b5478">00048</a>       <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_lt_scanner_state.html#c937c91f321814967073209b5b4b5478">operator()</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html">ScannerState</a> &amp;ss1, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html">ScannerState</a> &amp;ss2)<span class="keyword"> const </span>{
+<a name="l00049"></a>00049         <span class="keywordflow">return</span> !(ss1.<a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#0aadb751e4a5727afd6af3bf5ffda9b7">key</a> &lt; ss2.<a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_scanner_state.html#0aadb751e4a5727afd6af3bf5ffda9b7">key</a>);
+<a name="l00050"></a>00050       }
+<a name="l00051"></a>00051     };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053     <a class="code" href="class_hypertable_1_1_merge_scanner.html#06882151f39c85e11faf108e11523719">MergeScanner</a>(<a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx, <span class="keywordtype">bool</span> return_dels=<span class="keyword">true</span>);
+<a name="l00054"></a>00054     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#2382deb48145767591a4616b5e213a2d">~MergeScanner</a>();
+<a name="l00055"></a>00055     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#751872e54e049273b90ed26e95252b69">forward</a>();
+<a name="l00056"></a>00056     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <span class="keyword">get</span>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value);
+<a name="l00057"></a>00057     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner);
+<a name="l00058"></a>00058 
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">00059</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">install_release_callback</a>(<a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> &amp;cb) {
+<a name="l00060"></a>00060       <a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">m_release_callback</a> = cb;
+<a name="l00061"></a>00061     }
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <span class="keyword">private</span>:
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html#8a57d829b92bda84d6255065c810c475">initialize</a>();
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#c701c41934fce745ee983e7c50510348">00067</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#c701c41934fce745ee983e7c50510348">m_done</a>;
+<a name="l00068"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#4969176c4e01a08852994a8bde0a2c37">00068</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#4969176c4e01a08852994a8bde0a2c37">m_initialized</a>;
+<a name="l00069"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#da3e72661cf57183ec1d87de885cb51f">00069</a>     std::vector&lt;CellListScanner *&gt;  <a class="code" href="class_hypertable_1_1_merge_scanner.html#da3e72661cf57183ec1d87de885cb51f">m_scanners</a>;
+<a name="l00070"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#ff338737ec56e61518d7d5ae13c8bb15">00070</a>     std::priority_queue&lt;ScannerState, std::vector&lt;ScannerState&gt;, <a class="code" href="struct_hypertable_1_1_merge_scanner_1_1_lt_scanner_state.html">LtScannerState</a>&gt; <a class="code" href="class_hypertable_1_1_merge_scanner.html#ff338737ec56e61518d7d5ae13c8bb15">m_queue</a>;
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#f12e51823365925eefac81b89a51f5bf">00071</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#f12e51823365925eefac81b89a51f5bf">m_delete_present</a>;
+<a name="l00072"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#b28251c7590796e15b90918c1fcad06d">00072</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#b28251c7590796e15b90918c1fcad06d">m_deleted_row</a>;
+<a name="l00073"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#c263d2811e3f6404733579c4c1f12606">00073</a>     int64_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#c263d2811e3f6404733579c4c1f12606">m_deleted_row_timestamp</a>;
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#457b5302ff80d7cb92d4d24bedf4b04c">00074</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#457b5302ff80d7cb92d4d24bedf4b04c">m_deleted_column_family</a>;
+<a name="l00075"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#2d3206368e4839b843dced3f590355e7">00075</a>     int64_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#2d3206368e4839b843dced3f590355e7">m_deleted_column_family_timestamp</a>;
+<a name="l00076"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#23264fdcc0cb7317b6e7b1e52440a4fc">00076</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#23264fdcc0cb7317b6e7b1e52440a4fc">m_deleted_cell</a>;
+<a name="l00077"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#8541b07b51f461d12d7d24c5308dc3c1">00077</a>     int64_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#8541b07b51f461d12d7d24c5308dc3c1">m_deleted_cell_timestamp</a>;
+<a name="l00078"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#133ad3067ce9f63ca3732ea0c0d01f69">00078</a>     <span class="keywordtype">bool</span>          <a class="code" href="class_hypertable_1_1_merge_scanner.html#133ad3067ce9f63ca3732ea0c0d01f69">m_return_deletes</a>;
+<a name="l00079"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#30e608d16b44ee06fb31321143e34f3a">00079</a>     int32_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#30e608d16b44ee06fb31321143e34f3a">m_row_count</a>;
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#81b1c8be7d04839f7bc097ca53e062b0">00080</a>     int32_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#81b1c8be7d04839f7bc097ca53e062b0">m_row_limit</a>;
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#034652cfce2f71f1aab6c63cde3506ef">00081</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#034652cfce2f71f1aab6c63cde3506ef">m_cell_count</a>;
+<a name="l00082"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#264abb38c0bb4a4d0abd2560890676a4">00082</a>     uint32_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#264abb38c0bb4a4d0abd2560890676a4">m_cell_limit</a>;
+<a name="l00083"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#70f788600c1d6870143399a789fffeaa">00083</a>     uint64_t      <a class="code" href="class_hypertable_1_1_merge_scanner.html#70f788600c1d6870143399a789fffeaa">m_cell_cutoff</a>;
+<a name="l00084"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#c88854576d0c9f60286e2c42fc3b5dff">00084</a>     int64_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#c88854576d0c9f60286e2c42fc3b5dff">m_start_timestamp</a>;
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#5a701e5b94e7ee16ed6968a8a3f330bb">00085</a>     int64_t       <a class="code" href="class_hypertable_1_1_merge_scanner.html#5a701e5b94e7ee16ed6968a8a3f330bb">m_end_timestamp</a>;
+<a name="l00086"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#4204c047997e0cc7603715a4ee3670bb">00086</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#4204c047997e0cc7603715a4ee3670bb">m_prev_key</a>;
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">00087</a>     <a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> <a class="code" href="class_hypertable_1_1_merge_scanner.html#01c5433a8918bc5405118c9c6db492aa">m_release_callback</a>;
+<a name="l00088"></a>00088   };
+<a name="l00089"></a>00089 }
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091 <span class="preprocessor">#endif // HYPERTABLE_MERGESCANNER_H</span>
+<a name="l00092"></a>00092 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

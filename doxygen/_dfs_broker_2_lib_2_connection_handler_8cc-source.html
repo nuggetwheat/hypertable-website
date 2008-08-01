@@ -17,142 +17,139 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_c3c604fdad199344478df8227f4c80be.html">DfsBroker</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_df8487a01cb755e77d7c6a87e00c90c2.html">Lib</a></div>
 <h1>ConnectionHandler.cc</h1><a href="_dfs_broker_2_lib_2_connection_handler_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_exception_8h.html">Common/Exception.h</a>"</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_string_ext_8h.html">Common/StringExt.h</a>"</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_application_queue_8h.html">AsyncComm/ApplicationQueue.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_protocol_8h.html">Protocol.h</a>"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_connection_handler_8h.html">ConnectionHandler.h</a>"</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_close_8h.html">RequestHandlerClose.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_request_handler_create_8h.html">RequestHandlerCreate.h</a>"</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_open_8h.html">RequestHandlerOpen.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_request_handler_read_8h.html">RequestHandlerRead.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_request_handler_append_8h.html">RequestHandlerAppend.h</a>"</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_request_handler_seek_8h.html">RequestHandlerSeek.h</a>"</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_request_handler_remove_8h.html">RequestHandlerRemove.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_request_handler_length_8h.html">RequestHandlerLength.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_request_handler_pread_8h.html">RequestHandlerPread.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_request_handler_mkdirs_8h.html">RequestHandlerMkdirs.h</a>"</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_request_handler_flush_8h.html">RequestHandlerFlush.h</a>"</span>
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_status_8h.html">RequestHandlerStatus.h</a>"</span>
-<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_request_handler_rmdir_8h.html">RequestHandlerRmdir.h</a>"</span>
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_readdir_8h.html">RequestHandlerReaddir.h</a>"</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_exists_8h.html">RequestHandlerExists.h</a>"</span>
-<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_request_handler_rename_8h.html">RequestHandlerRename.h</a>"</span>
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00048"></a>00048 <span class="keyword">using namespace </span>Hypertable::DfsBroker;
-<a name="l00049"></a>00049 
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b87d5e59566ddb1c45ed60b6d8e20418">00053</a> <span class="keywordtype">void</span> ConnectionHandler::handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) {
-<a name="l00054"></a>00054   <span class="keywordtype">short</span> command = -1;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordflow">if</span> (eventPtr-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>) {
-<a name="l00057"></a>00057     <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> *requestHandler = 0;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059     <span class="comment">//eventPtr-&gt;display()</span>
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     <span class="keywordflow">try</span> {
-<a name="l00062"></a>00062       <span class="keywordflow">if</span> (eventPtr-&gt;messageLen &lt; <span class="keyword">sizeof</span>(int16_t)) {
-<a name="l00063"></a>00063         std::string message = <span class="stringliteral">"Truncated Request"</span>;
-<a name="l00064"></a>00064         <span class="keywordflow">throw</span> <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_protocol_exception.html">ProtocolException</a>(message);
-<a name="l00065"></a>00065       }
-<a name="l00066"></a>00066       memcpy(&amp;command, eventPtr-&gt;message, <span class="keyword">sizeof</span>(int16_t));
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_application_queue_8h.html">AsyncComm/ApplicationQueue.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_protocol_8h.html">Protocol.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_connection_handler_8h.html">ConnectionHandler.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_close_8h.html">RequestHandlerClose.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_request_handler_create_8h.html">RequestHandlerCreate.h</a>"</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_open_8h.html">RequestHandlerOpen.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_request_handler_read_8h.html">RequestHandlerRead.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_request_handler_append_8h.html">RequestHandlerAppend.h</a>"</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_request_handler_seek_8h.html">RequestHandlerSeek.h</a>"</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_request_handler_remove_8h.html">RequestHandlerRemove.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_request_handler_length_8h.html">RequestHandlerLength.h</a>"</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_request_handler_pread_8h.html">RequestHandlerPread.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_request_handler_mkdirs_8h.html">RequestHandlerMkdirs.h</a>"</span>
+<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_request_handler_flush_8h.html">RequestHandlerFlush.h</a>"</span>
+<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_status_8h.html">RequestHandlerStatus.h</a>"</span>
+<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_request_handler_rmdir_8h.html">RequestHandlerRmdir.h</a>"</span>
+<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_readdir_8h.html">RequestHandlerReaddir.h</a>"</span>
+<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_request_handler_exists_8h.html">RequestHandlerExists.h</a>"</span>
+<a name="l00046"></a>00046 <span class="preprocessor">#include "<a class="code" href="_request_handler_rename_8h.html">RequestHandlerRename.h</a>"</span>
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00049"></a>00049 <span class="keyword">using namespace </span>DfsBroker;
+<a name="l00050"></a>00050 <span class="keyword">using namespace </span>Serialization;
+<a name="l00051"></a>00051 
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#398ab75661a2da867854eab7a9f069c2">00055</a> <span class="keywordtype">void</span> ConnectionHandler::handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event) {
+<a name="l00056"></a>00056   <span class="keywordtype">short</span> command = -1;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="keywordflow">if</span> (event-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>) {
+<a name="l00059"></a>00059     <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> *handler = 0;
+<a name="l00060"></a>00060     <span class="keyword">const</span> uint8_t *msg = <span class="keyword">event</span>-&gt;message;
+<a name="l00061"></a>00061     <span class="keywordtype">size_t</span> remain = <span class="keyword">event</span>-&gt;message_len;
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063     <span class="comment">//event-&gt;display()</span>
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065     <span class="keywordflow">try</span> {
+<a name="l00066"></a>00066       command = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;msg, &amp;remain);
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068       <span class="comment">// sanity check command code</span>
-<a name="l00069"></a>00069       <span class="keywordflow">if</span> (command &lt; 0 || command &gt;= <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#1e74c29a6ae296482aacc88b66552e9f">Protocol::COMMAND_MAX</a>) {
-<a name="l00070"></a>00070         std::string message = (std::string)<span class="stringliteral">"Invalid command ("</span> + command + <span class="stringliteral">")"</span>;
-<a name="l00071"></a>00071         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_protocol_exception.html">ProtocolException</a>(message);
-<a name="l00072"></a>00072       }
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074       <span class="keywordflow">switch</span> (command) {
-<a name="l00075"></a>00075       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#53066035f525623ca5c22fdaf82c3e1d">Protocol::COMMAND_OPEN</a>:
-<a name="l00076"></a>00076         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_open.html">RequestHandlerOpen</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00077"></a>00077         <span class="keywordflow">break</span>;
-<a name="l00078"></a>00078       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#34a5ff4abafe60030a595b3afabffca8">Protocol::COMMAND_CREATE</a>:
-<a name="l00079"></a>00079         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_create.html">RequestHandlerCreate</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00080"></a>00080         <span class="keywordflow">break</span>;
-<a name="l00081"></a>00081       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#959141a4961118d3ebe2554f47141d47">Protocol::COMMAND_CLOSE</a>:
-<a name="l00082"></a>00082         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_close.html">RequestHandlerClose</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00083"></a>00083         <span class="keywordflow">break</span>;
-<a name="l00084"></a>00084       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#0dde951c50031afc9a5b4da51f116561">Protocol::COMMAND_READ</a>:
-<a name="l00085"></a>00085         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_read.html">RequestHandlerRead</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00086"></a>00086         <span class="keywordflow">break</span>;
-<a name="l00087"></a>00087       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#7e1367289f3a2433f0f64ae24d2e7705">Protocol::COMMAND_APPEND</a>:
-<a name="l00088"></a>00088         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html">RequestHandlerAppend</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00089"></a>00089         <span class="keywordflow">break</span>;
-<a name="l00090"></a>00090       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#ade9fcedb4722fd4e06653f841ae2c3e">Protocol::COMMAND_SEEK</a>:
-<a name="l00091"></a>00091         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_seek.html">RequestHandlerSeek</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00092"></a>00092         <span class="keywordflow">break</span>;
-<a name="l00093"></a>00093       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#b67f5c492395ad149767cadf36be065e">Protocol::COMMAND_REMOVE</a>:
-<a name="l00094"></a>00094         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_remove.html">RequestHandlerRemove</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00095"></a>00095         <span class="keywordflow">break</span>;
-<a name="l00096"></a>00096       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#7c6e564e21eed0d67dc0bf4b67812d16">Protocol::COMMAND_LENGTH</a>:
-<a name="l00097"></a>00097         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_length.html">RequestHandlerLength</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00098"></a>00098         <span class="keywordflow">break</span>;
-<a name="l00099"></a>00099       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#680402ee163df06c3cf33ad905a0a87d">Protocol::COMMAND_PREAD</a>:
-<a name="l00100"></a>00100         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_pread.html">RequestHandlerPread</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00101"></a>00101         <span class="keywordflow">break</span>;
-<a name="l00102"></a>00102       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#5c07786551583750443bd85c72cf4023">Protocol::COMMAND_MKDIRS</a>:
-<a name="l00103"></a>00103         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_mkdirs.html">RequestHandlerMkdirs</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00104"></a>00104         <span class="keywordflow">break</span>;
-<a name="l00105"></a>00105       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#dccf9a99e98f29d5bf80107b028575d1">Protocol::COMMAND_FLUSH</a>:
-<a name="l00106"></a>00106         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_flush.html">RequestHandlerFlush</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00107"></a>00107         <span class="keywordflow">break</span>;
-<a name="l00108"></a>00108       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#5bb7bd179b0def394e1246168050e84e">Protocol::COMMAND_RMDIR</a>:
-<a name="l00109"></a>00109         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_rmdir.html">RequestHandlerRmdir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00110"></a>00110         <span class="keywordflow">break</span>;
-<a name="l00111"></a>00111       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#9ca99868d2bca432556de114de0d5aea">Protocol::COMMAND_READDIR</a>:
-<a name="l00112"></a>00112         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html">RequestHandlerReaddir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00113"></a>00113         <span class="keywordflow">break</span>;
-<a name="l00114"></a>00114       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#39c4c6e587f064d66b423d990563c688">Protocol::COMMAND_EXISTS</a>:
-<a name="l00115"></a>00115         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_exists.html">RequestHandlerExists</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00116"></a>00116         <span class="keywordflow">break</span>;
-<a name="l00117"></a>00117       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#40232977f19f89ac7c56c5e8e5f180ed">Protocol::COMMAND_RENAME</a>:
-<a name="l00118"></a>00118         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_rename.html">RequestHandlerRename</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00119"></a>00119         <span class="keywordflow">break</span>;
-<a name="l00120"></a>00120       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#e28ab1e4a58ec59ab3d3fc040a16bbf3">Protocol::COMMAND_STATUS</a>:
-<a name="l00121"></a>00121         requestHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_status.html">RequestHandlerStatus</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), eventPtr);
-<a name="l00122"></a>00122         <span class="keywordflow">break</span>;
-<a name="l00123"></a>00123       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#c4fd6171761e06caed9c491b665815c5">Protocol::COMMAND_SHUTDOWN</a>:
-<a name="l00124"></a>00124         {
-<a name="l00125"></a>00125           uint16_t flags = 0;
-<a name="l00126"></a>00126           <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, eventPtr);
-<a name="l00127"></a>00127           <span class="keywordflow">if</span> (eventPtr-&gt;messageLen &gt;= 4)
-<a name="l00128"></a>00128             memcpy(&amp;flags, &amp;eventPtr-&gt;message[2], 2);
-<a name="l00129"></a>00129           <span class="keywordflow">if</span> ((flags &amp; <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#cc5734755a07ed92f53cba3a0d323f1e">Protocol::SHUTDOWN_FLAG_IMMEDIATE</a>) != 0)
-<a name="l00130"></a>00130             <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>-&gt;shutdown();
-<a name="l00131"></a>00131           <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>-&gt;shutdown(&amp;cb);
-<a name="l00132"></a>00132           exit(0);
-<a name="l00133"></a>00133         }
-<a name="l00134"></a>00134         <span class="keywordflow">break</span>;
-<a name="l00135"></a>00135       <span class="keywordflow">default</span>:
-<a name="l00136"></a>00136         std::string message = (string)<span class="stringliteral">"Command code "</span> + command + <span class="stringliteral">" not implemented"</span>;
-<a name="l00137"></a>00137         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_protocol_exception.html">ProtocolException</a>(message);
-<a name="l00138"></a>00138       }
-<a name="l00139"></a>00139       <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>-&gt;add( requestHandler );
-<a name="l00140"></a>00140     }
-<a name="l00141"></a>00141     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_protocol_exception.html">ProtocolException</a> &amp;e) {
-<a name="l00142"></a>00142       <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, eventPtr);
-<a name="l00143"></a>00143       std::string errMsg = e.what();
-<a name="l00144"></a>00144       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Protocol error '%s'"</span>, e.what());
-<a name="l00145"></a>00145       cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, errMsg);
-<a name="l00146"></a>00146     }
-<a name="l00147"></a>00147   }
-<a name="l00148"></a>00148   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (eventPtr-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>) {
-<a name="l00149"></a>00149     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s : Closing all open handles from %s:%d"</span>, eventPtr-&gt;toString().c_str(),
-<a name="l00150"></a>00150                 inet_ntoa(eventPtr-&gt;addr.sin_addr), ntohs(eventPtr-&gt;addr.sin_port));
-<a name="l00151"></a>00151     <a class="code" href="class_hypertable_1_1_open_file_map.html">OpenFileMap</a> &amp;ofMap = <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>-&gt;get_open_file_map();
-<a name="l00152"></a>00152     ofMap.remove_all(eventPtr-&gt;addr);
+<a name="l00069"></a>00069       <span class="keywordflow">if</span> (command &lt; 0 || command &gt;= <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#1e74c29a6ae296482aacc88b66552e9f">Protocol::COMMAND_MAX</a>)
+<a name="l00070"></a>00070         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Invalid command (%d)"</span>, command);
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072       <span class="keywordflow">switch</span> (command) {
+<a name="l00073"></a>00073       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#53066035f525623ca5c22fdaf82c3e1d">Protocol::COMMAND_OPEN</a>:
+<a name="l00074"></a>00074         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_open.html">RequestHandlerOpen</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00075"></a>00075         <span class="keywordflow">break</span>;
+<a name="l00076"></a>00076       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#34a5ff4abafe60030a595b3afabffca8">Protocol::COMMAND_CREATE</a>:
+<a name="l00077"></a>00077         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_create.html">RequestHandlerCreate</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00078"></a>00078         <span class="keywordflow">break</span>;
+<a name="l00079"></a>00079       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#959141a4961118d3ebe2554f47141d47">Protocol::COMMAND_CLOSE</a>:
+<a name="l00080"></a>00080         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_close.html">RequestHandlerClose</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00081"></a>00081         <span class="keywordflow">break</span>;
+<a name="l00082"></a>00082       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#0dde951c50031afc9a5b4da51f116561">Protocol::COMMAND_READ</a>:
+<a name="l00083"></a>00083         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_read.html">RequestHandlerRead</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00084"></a>00084         <span class="keywordflow">break</span>;
+<a name="l00085"></a>00085       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#7e1367289f3a2433f0f64ae24d2e7705">Protocol::COMMAND_APPEND</a>:
+<a name="l00086"></a>00086         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html">RequestHandlerAppend</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00087"></a>00087         <span class="keywordflow">break</span>;
+<a name="l00088"></a>00088       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#ade9fcedb4722fd4e06653f841ae2c3e">Protocol::COMMAND_SEEK</a>:
+<a name="l00089"></a>00089         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_seek.html">RequestHandlerSeek</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00090"></a>00090         <span class="keywordflow">break</span>;
+<a name="l00091"></a>00091       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#b67f5c492395ad149767cadf36be065e">Protocol::COMMAND_REMOVE</a>:
+<a name="l00092"></a>00092         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_remove.html">RequestHandlerRemove</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00093"></a>00093         <span class="keywordflow">break</span>;
+<a name="l00094"></a>00094       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#7c6e564e21eed0d67dc0bf4b67812d16">Protocol::COMMAND_LENGTH</a>:
+<a name="l00095"></a>00095         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_length.html">RequestHandlerLength</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00096"></a>00096         <span class="keywordflow">break</span>;
+<a name="l00097"></a>00097       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#680402ee163df06c3cf33ad905a0a87d">Protocol::COMMAND_PREAD</a>:
+<a name="l00098"></a>00098         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_pread.html">RequestHandlerPread</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00099"></a>00099         <span class="keywordflow">break</span>;
+<a name="l00100"></a>00100       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#5c07786551583750443bd85c72cf4023">Protocol::COMMAND_MKDIRS</a>:
+<a name="l00101"></a>00101         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_mkdirs.html">RequestHandlerMkdirs</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00102"></a>00102         <span class="keywordflow">break</span>;
+<a name="l00103"></a>00103       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#dccf9a99e98f29d5bf80107b028575d1">Protocol::COMMAND_FLUSH</a>:
+<a name="l00104"></a>00104         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_flush.html">RequestHandlerFlush</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00105"></a>00105         <span class="keywordflow">break</span>;
+<a name="l00106"></a>00106       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#5bb7bd179b0def394e1246168050e84e">Protocol::COMMAND_RMDIR</a>:
+<a name="l00107"></a>00107         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_rmdir.html">RequestHandlerRmdir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00108"></a>00108         <span class="keywordflow">break</span>;
+<a name="l00109"></a>00109       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#9ca99868d2bca432556de114de0d5aea">Protocol::COMMAND_READDIR</a>:
+<a name="l00110"></a>00110         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html">RequestHandlerReaddir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00111"></a>00111         <span class="keywordflow">break</span>;
+<a name="l00112"></a>00112       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#39c4c6e587f064d66b423d990563c688">Protocol::COMMAND_EXISTS</a>:
+<a name="l00113"></a>00113         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_exists.html">RequestHandlerExists</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00114"></a>00114         <span class="keywordflow">break</span>;
+<a name="l00115"></a>00115       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#40232977f19f89ac7c56c5e8e5f180ed">Protocol::COMMAND_RENAME</a>:
+<a name="l00116"></a>00116         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_rename.html">RequestHandlerRename</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00117"></a>00117         <span class="keywordflow">break</span>;
+<a name="l00118"></a>00118       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#e28ab1e4a58ec59ab3d3fc040a16bbf3">Protocol::COMMAND_STATUS</a>:
+<a name="l00119"></a>00119         handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_status.html">RequestHandlerStatus</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>.get(), event);
+<a name="l00120"></a>00120         <span class="keywordflow">break</span>;
+<a name="l00121"></a>00121       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#c4fd6171761e06caed9c491b665815c5">Protocol::COMMAND_SHUTDOWN</a>: {
+<a name="l00122"></a>00122           uint16_t flags = 0;
+<a name="l00123"></a>00123           <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, event);
+<a name="l00124"></a>00124           <span class="keywordflow">if</span> (event-&gt;message_len &gt;= 4)
+<a name="l00125"></a>00125             memcpy(&amp;flags, &amp;event-&gt;message[2], 2);
+<a name="l00126"></a>00126           <span class="keywordflow">if</span> ((flags &amp; <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#cc5734755a07ed92f53cba3a0d323f1e">Protocol::SHUTDOWN_FLAG_IMMEDIATE</a>) != 0)
+<a name="l00127"></a>00127             <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>-&gt;shutdown();
+<a name="l00128"></a>00128           <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>-&gt;shutdown(&amp;cb);
+<a name="l00129"></a>00129           exit(0);
+<a name="l00130"></a>00130         }
+<a name="l00131"></a>00131         <span class="keywordflow">break</span>;
+<a name="l00132"></a>00132       <span class="keywordflow">default</span>:
+<a name="l00133"></a>00133         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Unimplemented command (%d)"</span>, command);
+<a name="l00134"></a>00134       }
+<a name="l00135"></a>00135       <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>-&gt;add(handler);
+<a name="l00136"></a>00136     }
+<a name="l00137"></a>00137     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00138"></a>00138       <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, event);
+<a name="l00139"></a>00139       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00140"></a>00140       <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> errmsg = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%s - %s"</span>, e.what(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00141"></a>00141       cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, errmsg);
+<a name="l00142"></a>00142     }
+<a name="l00143"></a>00143   }
+<a name="l00144"></a>00144   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>) {
+<a name="l00145"></a>00145     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s : Closing all open handles from %s:%d"</span>,
+<a name="l00146"></a>00146              event-&gt;to_str().c_str(), inet_ntoa(event-&gt;addr.sin_addr),
+<a name="l00147"></a>00147              ntohs(event-&gt;addr.sin_port));
+<a name="l00148"></a>00148     <a class="code" href="class_hypertable_1_1_open_file_map.html">OpenFileMap</a> &amp;ofmap = <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37413321602bf7bd1195edf177b3072d">m_broker_ptr</a>-&gt;get_open_file_map();
+<a name="l00149"></a>00149     ofmap.remove_all(event-&gt;addr);
+<a name="l00150"></a>00150   }
+<a name="l00151"></a>00151   <span class="keywordflow">else</span> {
+<a name="l00152"></a>00152     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, event-&gt;to_str().c_str());
 <a name="l00153"></a>00153   }
-<a name="l00154"></a>00154   <span class="keywordflow">else</span> {
-<a name="l00155"></a>00155     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, eventPtr-&gt;toString().c_str());
-<a name="l00156"></a>00156   }
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155 }
+<a name="l00156"></a>00156 
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

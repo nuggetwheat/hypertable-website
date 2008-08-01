@@ -47,17 +47,19 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#5a39b8c86418fe402a985133c2fcb0e8">command_text</a> (short command)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#84e2a8e9e0926f3a121b375318b7fb6d">create_create_table_request</a> (const char *tableName, const char *schemaString)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">create_create_table_request</a> (const char *tablename, const char *schemastr)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#f8b52bddbb4742228c17b9081987ba66">create_get_schema_request</a> (const char *tableName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#0d18f5430ffd576cde4ceedf0c78b739">create_get_schema_request</a> (const char *tablename)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#488c1cb9cad8db9dc62da8471f6cce24">create_status_request</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#8141e1cfc2d57c90a4386a5d09c11c88">create_register_server_request</a> (std::string &amp;location)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">create_register_server_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;location)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">create_report_split_request</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log_dir, uint64_t soft_limit)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">create_drop_table_request</a> (const char *table_name, bool if_exists)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#a729ff7109424239375e3ba8d6799730">create_shutdown_request</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#be4cdf2209539cdf1f6b6a3e407e9fac">COMMAND_CREATE_TABLE</a> = 0</td></tr>
@@ -72,16 +74,18 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#a7dbbf1dbf71a06173cd5a716ef6c498">COMMAND_DROP_TABLE</a> = 5</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">COMMAND_MAX</a> = 6</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#27785e89d423d4014d465cd764bfc287">COMMAND_SHUTDOWN</a> = 6</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">COMMAND_MAX</a> = 7</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#8f1d89f9b61be51bf89d5a00d717aa16">m_command_strings</a> []</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00035">35</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00034">34</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="84e2a8e9e0926f3a121b375318b7fb6d"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_create_table_request" ref="84e2a8e9e0926f3a121b375318b7fb6d" args="(const char *tableName, const char *schemaString)" -->
+<a class="anchor" name="4b97d530ca187b4316d28af37c0d9403"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_create_table_request" ref="4b97d530ca187b4316d28af37c0d9403" args="(const char *tablename, const char *schemastr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -89,13 +93,13 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::MasterProtocol::create_create_table_request           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>tableName</em>, </td>
+          <td class="paramname"> <em>tablename</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>schemaString</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>schemastr</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -108,11 +112,11 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00032">32</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00031">31</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f8b52bddbb4742228c17b9081987ba66"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_get_schema_request" ref="f8b52bddbb4742228c17b9081987ba66" args="(const char *tableName)" -->
+<a class="anchor" name="0d18f5430ffd576cde4ceedf0c78b739"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_get_schema_request" ref="0d18f5430ffd576cde4ceedf0c78b739" args="(const char *tablename)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -120,7 +124,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::MasterProtocol::create_get_schema_request           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>tableName</em>          </td>
+          <td class="paramname"> <em>tablename</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
         </tr>
@@ -130,7 +134,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00041">41</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00040">40</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -151,18 +155,18 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00049">49</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00048">48</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="8141e1cfc2d57c90a4386a5d09c11c88"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_register_server_request" ref="8141e1cfc2d57c90a4386a5d09c11c88" args="(std::string &amp;location)" -->
+<a class="anchor" name="c1d2c67d1298f19259a239ddabda4bab"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_register_server_request" ref="c1d2c67d1298f19259a239ddabda4bab" args="(const String &amp;location)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::MasterProtocol::create_register_server_request           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>location</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
@@ -173,7 +177,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00056">56</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00055">55</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -216,7 +220,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00064">64</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00063">63</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -247,7 +251,28 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00075">75</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00074">74</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a729ff7109424239375e3ba8d6799730"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_shutdown_request" ref="a729ff7109424239375e3ba8d6799730" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::MasterProtocol::create_shutdown_request           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00083">83</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -271,7 +296,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_protocol.html#7a1396871f0d0db47ad436530017bd0a">Hypertable::Protocol</a>.</p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00093">93</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00100">100</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -289,7 +314,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00039">39</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00038">38</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -306,7 +331,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00040">40</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00039">39</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -323,7 +348,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00041">41</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00040">40</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -340,7 +365,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00042">42</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00041">41</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -357,7 +382,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00043">43</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00042">42</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -374,6 +399,23 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
+<p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00043">43</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="27785e89d423d4014d465cd764bfc287"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_SHUTDOWN" ref="27785e89d423d4014d465cd764bfc287" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#27785e89d423d4014d465cd764bfc287">Hypertable::MasterProtocol::COMMAND_SHUTDOWN</a> = 6<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
 <p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00044">44</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
 
 </div>
@@ -383,7 +425,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">Hypertable::MasterProtocol::COMMAND_MAX</a> = 6<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">Hypertable::MasterProtocol::COMMAND_MAX</a> = 7<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -413,7 +455,8 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
     <span class="stringliteral">"status"</span>,
     <span class="stringliteral">"register server"</span>,
     <span class="stringliteral">"report split"</span>,
-    <span class="stringliteral">"drop table"</span>
+    <span class="stringliteral">"drop table"</span>,
+    <span class="stringliteral">"shutdown"</span>
   }
 </pre></div>
 <p>Definition at line <a class="el" href="_master_protocol_8h-source.html#l00047">47</a> of file <a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a>.</p>
@@ -422,7 +465,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:48 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:06 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -45,7 +45,7 @@
 <a name="l00045"></a>00045 <span class="preprocessor">  double t1; \</span>
 <a name="l00046"></a>00046 <span class="preprocessor">  HT_MEASURE(t1, TIMES(_times_, _code_)); \</span>
 <a name="l00047"></a>00047 <span class="preprocessor">  printf("%16s: %.3fs (%.3fMB/s)\n", \</span>
-<a name="l00048"></a>00048 <span class="preprocessor">         _label_, t1, (_n_) / 1e6 / t1 *( _times_)); \</span>
+<a name="l00048"></a>00048 <span class="preprocessor">         _label_, t1, (_n_) / 1e6 / t1 *(_times_)); \</span>
 <a name="l00049"></a>00049 <span class="preprocessor">  fflush(stdout); fflush(stderr); \</span>
 <a name="l00050"></a>00050 <span class="preprocessor">} while (0)</span>
 <a name="l00051"></a>00051 <span class="preprocessor"></span>
@@ -253,7 +253,7 @@
 <a name="l00253"></a>00253 
 <a name="l00254"></a>00254     <span class="keywordflow">if</span> (opt &amp; <a class="code" href="bmz-test_8c.html#a09f2e5859a304dea8b03800f064742f">O_HASH_MASK16X2</a>)
 <a name="l00255"></a>00255       <a class="code" href="bmz-test_8c.html#07a9d26b16e395d3e4ea245ff6e86a79">BENCH</a>(<span class="stringliteral">"hash mask16x2"</span>, <a class="code" href="bmz-internal_8h.html#090a25b4499c1b5bfdc051208aa74ca0">bmz_bench_hash</a>(data, len, <a class="code" href="bmz-internal_8h.html#fa4019afd464eb9044696285482042fa">BMZ_HASH_MASK16X2</a>),
-<a name="l00256"></a>00256             len, n); 
+<a name="l00256"></a>00256             len, n);
 <a name="l00257"></a>00257 
 <a name="l00258"></a>00258     <span class="keywordflow">if</span> (opt &amp; <a class="code" href="bmz-test_8c.html#e1b9d81e61e495bcb274e6799064989c">O_HASH_MASK</a>)
 <a name="l00259"></a>00259       <a class="code" href="bmz-test_8c.html#07a9d26b16e395d3e4ea245ff6e86a79">BENCH</a>(<span class="stringliteral">"hash mask"</span>, <a class="code" href="bmz-internal_8h.html#090a25b4499c1b5bfdc051208aa74ca0">bmz_bench_hash</a>(data, len, <a class="code" href="bmz-internal_8h.html#1bf2311a8eccf8da1d429bec69fda5fe">BMZ_HASH_MASK</a>), len, n);
@@ -376,7 +376,7 @@
 <a name="l00376"></a>00376 
 <a name="l00377"></a>00377     <span class="keywordflow">if</span> (!data) <a class="code" href="bmz-test_8c.html#57d9be48a2d2312a1e3303af874430ac">DIE</a>(<span class="stringliteral">"error alloc'ing %ld bytes"</span>, len);
 <a name="l00378"></a>00378 
-<a name="l00379"></a>00379     <span class="keywordflow">if</span> ((len = read(fd, data, len)) != st.st_size) 
+<a name="l00379"></a>00379     <span class="keywordflow">if</span> ((len = read(fd, data, len)) != st.st_size)
 <a name="l00380"></a>00380       <a class="code" href="bmz-test_8c.html#57d9be48a2d2312a1e3303af874430ac">DIE</a>(<span class="stringliteral">"error reading %s (expecting %ld bytes, got %ld"</span>,
 <a name="l00381"></a>00381           fname, (<span class="keywordtype">long</span>)st.st_size, len);
 <a name="l00382"></a>00382   }
@@ -409,7 +409,7 @@
 <a name="l00409"></a>00409          <span class="stringliteral">"--check-hash                  verify rolling hashes\n"</span>
 <a name="l00410"></a>00410          <span class="stringliteral">"--bench-lut                   benchmarks for lookup table\n"</span>
 <a name="l00411"></a>00411          <span class="stringliteral">"--times       &lt;number&gt;        number of repeats for the test\n"</span>
-<a name="l00412"></a>00412          );
+<a name="l00412"></a>00412 );
 <a name="l00413"></a>00413   exit(0);
 <a name="l00414"></a>00414 }
 <a name="l00415"></a>00415 
@@ -441,7 +441,7 @@
 <a name="l00441"></a>00441     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--hash-mask16x2"</span>, *ia))   <a class="code" href="bmz-test_8c.html#0423c1b0437b757b7acccddf01dfb35c">s_options</a> |= <a class="code" href="bmz-test_8c.html#a09f2e5859a304dea8b03800f064742f">O_HASH_MASK16X2</a>;
 <a name="l00442"></a>00442     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--hash-mask"</span>, *ia))       <a class="code" href="bmz-test_8c.html#0423c1b0437b757b7acccddf01dfb35c">s_options</a> |= <a class="code" href="bmz-test_8c.html#e1b9d81e61e495bcb274e6799064989c">O_HASH_MASK</a>;
 <a name="l00443"></a>00443     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--hash-mask32x2"</span>, *ia))   <a class="code" href="bmz-test_8c.html#0423c1b0437b757b7acccddf01dfb35c">s_options</a> |= <a class="code" href="bmz-test_8c.html#4398443b102a02b9acccf624f59f423e">O_HASH_MASK32X2</a>;
-<a name="l00444"></a>00444     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--help"</span>, *ia))            <a class="code" href="bmz-test_8c.html#35ee06182a68a7e4ddf45e3b888e60c1">show_usage</a>(); 
+<a name="l00444"></a>00444     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--help"</span>, *ia))            <a class="code" href="bmz-test_8c.html#35ee06182a68a7e4ddf45e3b888e60c1">show_usage</a>();
 <a name="l00445"></a>00445     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"--"</span>, *ia)) {
 <a name="l00446"></a>00446       ++ia;
 <a name="l00447"></a>00447       <span class="keywordflow">break</span>;
@@ -468,7 +468,7 @@
 <a name="l00468"></a>00468 
 <a name="l00469"></a>00469 <span class="comment">/* vim: et sw=2</span>
 <a name="l00470"></a>00470 <span class="comment"> */</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

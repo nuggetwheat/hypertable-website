@@ -17,45 +17,41 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_c3c604fdad199344478df8227f4c80be.html">DfsBroker</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_df8487a01cb755e77d7c6a87e00c90c2.html">Lib</a></div>
 <h1>RequestHandlerAppend.cc</h1><a href="_request_handler_append_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_request_handler_append_8h.html">RequestHandlerAppend.h</a>"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_response_callback_append_8h.html">ResponseCallbackAppend.h</a>"</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable::DfsBroker;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#5f74e38bad38dd5400b6e16d9bcbf3ab">00037</a> <span class="keywordtype">void</span> RequestHandlerAppend::run() {
-<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#b22ec893a6db48046c0461f48ba147c8">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
-<a name="l00039"></a>00039   uint32_t fd, amount;
-<a name="l00040"></a>00040   <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a> = <span class="keyword">false</span>;
-<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;messageLen - 2;
-<a name="l00042"></a>00042   uint8_t *msgPtr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_request_handler_append_8h.html">RequestHandlerAppend.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_response_callback_append_8h.html">ResponseCallbackAppend.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00032"></a>00032 <span class="keyword">using namespace </span>DfsBroker;
+<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Serialization;
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 
+<a name="l00039"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#5f74e38bad38dd5400b6e16d9bcbf3ab">00039</a> <span class="keywordtype">void</span> RequestHandlerAppend::run() {
+<a name="l00040"></a>00040   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#b22ec893a6db48046c0461f48ba147c8">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
+<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
+<a name="l00042"></a>00042   <span class="keyword">const</span> uint8_t *msg = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <span class="keywordflow">if</span> (remaining &lt; 8)
-<a name="l00045"></a>00045     <span class="keywordflow">goto</span> abort;
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047   <a class="code" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8" title="Decodes an int (4 byte integer) from the given buffer.">Serialization::decode_int</a>(&amp;msgPtr, &amp;remaining, &amp;fd);
-<a name="l00048"></a>00048   <a class="code" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8" title="Decodes an int (4 byte integer) from the given buffer.">Serialization::decode_int</a>(&amp;msgPtr, &amp;remaining, &amp;amount);
-<a name="l00049"></a>00049   <a class="code" href="namespace_hypertable_1_1_serialization.html#de757fde9815b5fa22fbb58576ebf78c" title="Decodes a boolean value from the given buffer.">Serialization::decode_bool</a>(&amp;msgPtr, &amp;remaining, &amp;flush);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keywordflow">if</span> (remaining &lt; amount)
-<a name="l00052"></a>00052     <span class="keywordflow">goto</span> abort;
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#41ac80b8a4c9a08a5c9670bfa40cbe87">m_broker</a>-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#cf78e64948a66624a687d4b0b43facb3">append</a>(&amp;cb, fd, amount, msgPtr, flush);
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordflow">return</span>;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058  abort:
-<a name="l00059"></a>00059   <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Encoding problem with APPEND message"</span>);
-<a name="l00060"></a>00060   cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Encoding problem with APPEND message"</span>);
-<a name="l00061"></a>00061   <span class="keywordflow">return</span>;
-<a name="l00062"></a>00062 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00044"></a>00044   <span class="keywordflow">try</span> {
+<a name="l00045"></a>00045     uint32_t fd = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00046"></a>00046     uint32_t amount = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00047"></a>00047     <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(&amp;msg, &amp;remaining);
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <span class="keywordflow">if</span> (remaining &lt; amount)
+<a name="l00050"></a>00050       <a class="code" href="serialization-c_8h.html#065ff2517b3895a4b099ae2947e40434" title="Copyright (C) 2008 Luke Lu (Zvents, Inc.">HT_THROW_INPUT_OVERRUN</a>(remaining, amount);
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#41ac80b8a4c9a08a5c9670bfa40cbe87">m_broker</a>-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0831f9f4b22d5ad4709d1d3c24732c0">append</a>(&amp;cb, fd, amount, msg, flush);
+<a name="l00053"></a>00053   }
+<a name="l00054"></a>00054   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00055"></a>00055     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00056"></a>00056     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), <span class="stringliteral">"Error handling APPEND message"</span>);
+<a name="l00057"></a>00057   }
+<a name="l00058"></a>00058 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

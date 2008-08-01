@@ -18,34 +18,218 @@
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>RangeServerMetaLogReader.cc</h1><a href="_range_server_meta_log_reader_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_range_server_meta_log_reader_8h.html">RangeServerMetaLogReader.h</a>"</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="keyword">using namespace </span>std;
-<a name="l00026"></a>00026 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#d4dbbc45e34fce55de6f7668f4e0ad18">00028</a> RangeServerMetaLogReader::RangeServerMetaLogReader(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *,
-<a name="l00029"></a>00029                                                    <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;path)
-<a name="l00030"></a>00030 {
-<a name="l00031"></a>00031   <span class="comment">// TODO</span>
-<a name="l00032"></a>00032 }
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <a class="code" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">MetaLogReader::ScanEntry</a> *
-<a name="l00035"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#a2d09167a4dbac5c09ee84e3dae0166b">00035</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#a2d09167a4dbac5c09ee84e3dae0166b">RangeServerMetaLogReader::next</a>(ScanEntry *) {
-<a name="l00036"></a>00036   <span class="comment">// TODO</span>
-<a name="l00037"></a>00037   <span class="keywordflow">return</span> NULL;
-<a name="l00038"></a>00038 }
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <a class="code" href="class_hypertable_1_1_range_server_meta_log_entry.html">RangeServerMetaLogEntry</a> *
-<a name="l00041"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#90486a0bcff24e8391668e938a1a28e6">00041</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#90486a0bcff24e8391668e938a1a28e6" title="read and get ready for the next record, throws if invalid">RangeServerMetaLogReader::read</a>() {
-<a name="l00042"></a>00042   <span class="comment">// TODO</span>
-<a name="l00043"></a>00043   <span class="keywordflow">return</span> NULL;
-<a name="l00044"></a>00044 }
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;set&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_cstr_hash_map_8h.html">Common/CstrHashMap.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_cstr_hash_map_8h.html">Common/CstrHashMap.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_filesystem_8h.html">Filesystem.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_meta_log_version_8h.html">MetaLogVersion.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_range_server_meta_log_reader_8h.html">RangeServerMetaLogReader.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_range_server_meta_log_entries_8h.html">RangeServerMetaLogEntries.h</a>"</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00034"></a>00034 <span class="keyword">using namespace </span>Serialization;
+<a name="l00035"></a>00035 <span class="keyword">using namespace </span>MetaLogEntryFactory;
+<a name="l00036"></a>00036 <span class="keyword">using namespace </span>RangeServerTxn;
+<a name="l00037"></a>00037 <span class="keyword">using namespace </span>Error;
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">namespace </span>{
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 <span class="keyword">struct </span>RsiSetTraits {
+<a name="l00042"></a>00042   <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *x, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *y)<span class="keyword"> const </span>{
+<a name="l00043"></a>00043     <span class="keywordflow">if</span> (x-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#b8bc7b9c2eed2c887d43d21a98306996">table</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> &lt; y-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#b8bc7b9c2eed2c887d43d21a98306996">table</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>)
+<a name="l00044"></a>00044       <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="keywordtype">void</span>
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#5b10608974a006bca372af76ec2e2172">00047</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#5b10608974a006bca372af76ec2e2172">RangeServerMetaLogReader::load_range_states</a>(<a class="code" href="namespace_hypertable.html#1389e4fec4f43f4edb0529721c1f0d11">RangeStates</a> &amp;) {
-<a name="l00048"></a>00048   <span class="comment">// TODO</span>
-<a name="l00049"></a>00049 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00046"></a>00046     <span class="keywordflow">if</span> (x-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#b8bc7b9c2eed2c887d43d21a98306996">table</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> &gt; y-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#b8bc7b9c2eed2c887d43d21a98306996">table</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>)
+<a name="l00047"></a>00047       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <span class="keywordflow">return</span> std::strcmp(x-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#c6269a0eef317617c3f261ee7759ca35">range</a>.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>, y-&gt;<a class="code" href="struct_hypertable_1_1_range_state_info.html#c6269a0eef317617c3f261ee7759ca35">range</a>.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>) &lt; 0;
+<a name="l00050"></a>00050   }
+<a name="l00051"></a>00051 };
+<a name="l00052"></a>00052 
+<a name="l00053"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">00053</a> <span class="keyword">typedef</span> std::set&lt;RangeStateInfo *, RsiSetTraits&gt; <a class="code" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a>;
+<a name="l00054"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#921e581fadb98a9271dfe4a454f8d1c0">00054</a> <span class="keyword">typedef</span> std::pair&lt;RsiSet::iterator, bool&gt; <a class="code" href="_range_server_meta_log_reader_8cc.html#921e581fadb98a9271dfe4a454f8d1c0">RsiInsRes</a>;
+<a name="l00055"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#1d2eab001408adf4d1b98f73d74e8488">00055</a> <span class="keyword">typedef</span> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html">RangeServerMetaLogReader</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a>;
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">00057</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_range_loaded.html">RangeLoaded</a> *ep) {
+<a name="l00058"></a>00058   <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *rsi = <span class="keyword">new</span> <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a>(ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a>, ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a>,
+<a name="l00059"></a>00059       ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>, ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry.html#406cdb3f5a82956831dcfd7ccb41e76e">timestamp</a>);
+<a name="l00060"></a>00060   RsiInsRes res = rsi_set.insert(rsi);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062   <span class="keywordflow">if</span> (!res.second) {
+<a name="l00063"></a>00063     <a class="code" href="_logger_8h.html#3a235992e72ce7509127fe740f32b8d1">HT_WARN_OUT</a> &lt;&lt;<span class="stringliteral">"Duplicate RangeLoaded entry in: "</span>&lt;&lt; rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#6965847e89593013eedc5c54eab79ae6">path</a>()
+<a name="l00064"></a>00064                 &lt;&lt; <span class="stringliteral">" at "</span>&lt;&lt; rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>() &lt;&lt;<span class="stringliteral">"/"</span>&lt;&lt; rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#edf6ac6aa2fba6b5ea7e9be5e6aab47c">size</a>() &lt;&lt;<span class="charliteral">'\n'</span>
+<a name="l00065"></a>00065                 &lt;&lt; ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a> &lt;&lt; ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a> &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00066"></a>00066     <span class="keyword">delete</span> rsi;
+<a name="l00067"></a>00067   }
+<a name="l00068"></a>00068 }
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#303cd49162cc076329bc7db005d52ff9">00070</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_start.html">SplitStart</a> *ep) {
+<a name="l00071"></a>00071   <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> ri(ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a>, ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a>);
+<a name="l00072"></a>00072   RsiSet::iterator it = rsi_set.find(&amp;ri);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   <span class="keywordflow">if</span> (it == rsi_set.end())
+<a name="l00075"></a>00075     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b247cb21cf59ed9e1037fb4ccada9855e5">METALOG_ENTRY_BAD_ORDER</a>, <span class="stringliteral">"Unexpected split start entry at "</span>
+<a name="l00076"></a>00076         <span class="stringliteral">"%lu/%lu in %s"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>(), (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#edf6ac6aa2fba6b5ea7e9be5e6aab47c">size</a>(), rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#6965847e89593013eedc5c54eab79ae6">path</a>().c_str());
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078   (*it)-&gt;transactions.push_back(ep);
+<a name="l00079"></a>00079   (*it)-&gt;range_state = ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>;
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#46bfd3840cc76f6c9d2fc8b6ce393544">00082</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_done.html">SplitDone</a> *ep) {
+<a name="l00083"></a>00083   <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> ri(ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a>, ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a>);
+<a name="l00084"></a>00084   RsiSet::iterator it = rsi_set.find(&amp;ri);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">if</span> (it == rsi_set.end() ||
+<a name="l00087"></a>00087       (*it)-&gt;transactions.empty() ||
+<a name="l00088"></a>00088       (*it)-&gt;transactions.front()-&gt;get_type() != <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006023b4ca3d4929a75ebd5a4b188eb31b8">RS_SPLIT_START</a>)
+<a name="l00089"></a>00089     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b247cb21cf59ed9e1037fb4ccada9855e5">METALOG_ENTRY_BAD_ORDER</a>, <span class="stringliteral">"Unexpected split done entry at "</span>
+<a name="l00090"></a>00090         <span class="stringliteral">"%lu/%lu in %s"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>(), (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#edf6ac6aa2fba6b5ea7e9be5e6aab47c">size</a>(), rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#6965847e89593013eedc5c54eab79ae6">path</a>().c_str());
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   (*it)-&gt;transactions.clear();
+<a name="l00093"></a>00093   (*it)-&gt;range_state.clear();
+<a name="l00094"></a>00094 }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#33f809c3af064d7d4f96a2196389aa52">00096</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_shrunk.html">SplitShrunk</a> *ep) {
+<a name="l00097"></a>00097   <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> ri(ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a>, ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a>);
+<a name="l00098"></a>00098   RsiSet::iterator it = rsi_set.find(&amp;ri);
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <span class="keywordflow">if</span> (it == rsi_set.end() ||
+<a name="l00101"></a>00101       (*it)-&gt;transactions.empty() ||
+<a name="l00102"></a>00102       (*it)-&gt;transactions.front()-&gt;get_type() != <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006023b4ca3d4929a75ebd5a4b188eb31b8">RS_SPLIT_START</a>)
+<a name="l00103"></a>00103     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b247cb21cf59ed9e1037fb4ccada9855e5">METALOG_ENTRY_BAD_ORDER</a>, <span class="stringliteral">"Unexpected split shrunk entry at "</span>
+<a name="l00104"></a>00104         <span class="stringliteral">"%lu/%lu in %s"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>(), (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#edf6ac6aa2fba6b5ea7e9be5e6aab47c">size</a>(), rd.<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#6965847e89593013eedc5c54eab79ae6">path</a>().c_str());
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   (*it)-&gt;transactions.push_back(ep);
+<a name="l00107"></a>00107   <span class="comment">// update shrunk range</span>
+<a name="l00108"></a>00108   (*it)-&gt;range = ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#a087b6dd362d4d198dea7d90ab092ea7">range</a>;
+<a name="l00109"></a>00109   (*it)-&gt;range_state = ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>;
+<a name="l00110"></a>00110 }
+<a name="l00111"></a>00111 
+<a name="l00112"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#b94ef49e913aeb541a6b4025459786a7">00112</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_start.html">MoveStart</a> *ep) {
+<a name="l00113"></a>00113   <span class="comment">// TODO</span>
+<a name="l00114"></a>00114 }
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#93d0787b28a54200f2c6bc521f2cba9d">00116</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_prepared.html">MovePrepared</a> *ep) {
+<a name="l00117"></a>00117   <span class="comment">// TODO</span>
+<a name="l00118"></a>00118 }
+<a name="l00119"></a>00119 
+<a name="l00120"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#5fe6bdec765cddfd418669794946b406">00120</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_done.html">MoveDone</a> *ep) {
+<a name="l00121"></a>00121   <span class="comment">// TODO</span>
+<a name="l00122"></a>00122 }
+<a name="l00123"></a>00123 
+<a name="l00124"></a><a class="code" href="_range_server_meta_log_reader_8cc.html#8ead70f5082308b62cbafd3b6e6fa230">00124</a> <span class="keywordtype">void</span> <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(Reader &amp;rd, RsiSet &amp;rsi_set, <a class="code" href="class_hypertable_1_1_range_server_txn_1_1_drop_table.html">DropTable</a> *ep) {
+<a name="l00125"></a>00125   RsiSet::iterator it = rsi_set.begin();
+<a name="l00126"></a>00126   RsiSet::iterator tmpit;
+<a name="l00127"></a>00127   
+<a name="l00128"></a>00128   <span class="keywordflow">while</span> (it != rsi_set.end()) {
+<a name="l00129"></a>00129     <span class="keywordflow">if</span> ((*it)-&gt;table.id == ep-&gt;<a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#fb54228df6f3e574f6e2ab5fec41c5ea">table</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>) {
+<a name="l00130"></a>00130       tmpit = it;
+<a name="l00131"></a>00131       ++it;
+<a name="l00132"></a>00132       rsi_set.erase(tmpit);
+<a name="l00133"></a>00133     }
+<a name="l00134"></a>00134     <span class="keywordflow">else</span>
+<a name="l00135"></a>00135       ++it;
+<a name="l00136"></a>00136   }
+<a name="l00137"></a>00137 }
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140 } <span class="comment">// local namespace</span>
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142 <span class="keyword">namespace </span>Hypertable {
+<a name="l00143"></a>00143 
+<a name="l00144"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#c53bb70cc6b516934a9e8cdb787f9b5c">00144</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#c53bb70cc6b516934a9e8cdb787f9b5c">RangeServerMetaLogReader::RangeServerMetaLogReader</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs,
+<a name="l00145"></a>00145                                                    <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;path)
+<a name="l00146"></a>00146     : <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html">Parent</a>(fs, path) {
+<a name="l00147"></a>00147   uint8_t buf[<a class="code" href="namespace_hypertable.html#1fed8051ac727468516dad4d3db5ae0a3a5bedf8e4890ad6ec845eb2bcf5ad34">RSML_HEADER_SIZE</a>];
+<a name="l00148"></a>00148   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="namespace_hypertable.html#1fed8051ac727468516dad4d3db5ae0a3a5bedf8e4890ad6ec845eb2bcf5ad34">RSML_HEADER_SIZE</a>;
+<a name="l00149"></a>00149   <span class="keywordtype">size_t</span> nread = fs-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acd4652b3396d670963584b7d12f2910" title="Reads data from a file at the current position asynchronously.">read</a>(<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#f31d85561c96b5468eee87c5f65999d6">fd</a>(), buf, <a class="code" href="namespace_hypertable.html#1fed8051ac727468516dad4d3db5ae0a3a5bedf8e4890ad6ec845eb2bcf5ad34">RSML_HEADER_SIZE</a>);
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151   <span class="keywordflow">if</span> (nread != <a class="code" href="namespace_hypertable.html#1fed8051ac727468516dad4d3db5ae0a3a5bedf8e4890ad6ec845eb2bcf5ad34">RSML_HEADER_SIZE</a>)
+<a name="l00152"></a>00152     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dd9352427e64d2185061a2ea7e4c29f1">METALOG_BAD_RS_HEADER</a>, <span class="stringliteral">""</span>);
+<a name="l00153"></a>00153 
+<a name="l00154"></a>00154   <span class="keyword">const</span> uint8_t *p = buf + strlen(<a class="code" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">RSML_PREFIX</a>);
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;p, &amp;len) != <a class="code" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">RSML_VERSION</a>)
+<a name="l00157"></a>00157     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2523145ce47426f1505b4c62a0ac8dd7a">METALOG_VERSION_MISMATCH</a>, <span class="stringliteral">""</span>);
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159   <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>() += nread;
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
+<a name="l00162"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#4d37ef88d5c569333816f7d55c77cdc6">00162</a> RangeServerMetaLogReader::~RangeServerMetaLogReader() {
+<a name="l00163"></a>00163   <span class="keywordflow">foreach</span>(<a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *i, <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>) <span class="keyword">delete</span> i;
+<a name="l00164"></a>00164 }
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166 <a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *
+<a name="l00167"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#ef0beeda0f5bf977b33120e225d1b756">00167</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#ef0beeda0f5bf977b33120e225d1b756" title="read and get ready for the next record, throws if invalid">RangeServerMetaLogReader::read</a>() {
+<a name="l00168"></a>00168   ScanEntry entry;
+<a name="l00169"></a>00169 
+<a name="l00170"></a>00170   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#09e1316ab4b3151e77b1863a19dc604e">next</a>(entry))
+<a name="l00171"></a>00171     <span class="keywordflow">return</span> 0;
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173   <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> buf(entry.buf);
+<a name="l00174"></a>00174   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#945e0a4d330de6677b8d562c2018fde1">new_from_payload</a>(<a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006">RangeServerMetaLogEntryType</a>(entry.type),
+<a name="l00175"></a>00175                           entry.timestamp, buf);
+<a name="l00176"></a>00176 }
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178 <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#c457d328aed1420df0e4042a629149d4">RangeStates</a> &amp;
+<a name="l00179"></a><a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#d8072f37d469f8889e9f0b0b25c11ddd">00179</a> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#d8072f37d469f8889e9f0b0b25c11ddd">RangeServerMetaLogReader::load_range_states</a>(<span class="keywordtype">bool</span> force) {
+<a name="l00180"></a>00180   <span class="keywordflow">if</span> (!force &amp;&amp; <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>.size())
+<a name="l00181"></a>00181     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>;      <span class="comment">// already loaded</span>
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c3a3df3ab5326ad5943599fabfee8746">pos</a>() &gt; <a class="code" href="namespace_hypertable.html#1fed8051ac727468516dad4d3db5ae0a3a5bedf8e4890ad6ec845eb2bcf5ad34">RSML_HEADER_SIZE</a>) {
+<a name="l00184"></a>00184     <span class="comment">// need to start from scratch, as seek doesn't work on buffered reads yet</span>
+<a name="l00185"></a>00185     <a class="code" href="namespace_hypertable.html#931a127d778ff4ad42346aa47ec8bdfe">RangeServerMetaLogReaderPtr</a> p(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#c53bb70cc6b516934a9e8cdb787f9b5c">RangeServerMetaLogReader</a>(&amp;<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#461b6bfb9e29192eed78393f4d245b52">fs</a>(), <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#6965847e89593013eedc5c54eab79ae6">path</a>()));
+<a name="l00186"></a>00186     p-&gt;load_range_states();
+<a name="l00187"></a>00187     p-&gt;m_range_states.swap(<a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>);
+<a name="l00188"></a>00188     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>;
+<a name="l00189"></a>00189   }
+<a name="l00190"></a>00190   <a class="code" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> rsi_set;
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192   <span class="keywordflow">for</span> (<a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *p = <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#ef0beeda0f5bf977b33120e225d1b756" title="read and get ready for the next record, throws if invalid">read</a>(); p; p = <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#ef0beeda0f5bf977b33120e225d1b756" title="read and get ready for the next record, throws if invalid">read</a>()) {
+<a name="l00193"></a>00193     <span class="keywordflow">switch</span> (p-&gt;get_type()) {
+<a name="l00194"></a>00194     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006176f641a8f9e0870b1362df833d77d76">RS_RANGE_LOADED</a>:
+<a name="l00195"></a>00195       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_range_loaded.html">RangeLoaded</a> *)p);     <span class="keywordflow">break</span>;
+<a name="l00196"></a>00196     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006023b4ca3d4929a75ebd5a4b188eb31b8">RS_SPLIT_START</a>:
+<a name="l00197"></a>00197       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_start.html">SplitStart</a> *)p);      <span class="keywordflow">break</span>;
+<a name="l00198"></a>00198     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006e04f53c4a56d83ebafd4495d05652883">RS_SPLIT_DONE</a>:
+<a name="l00199"></a>00199       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_done.html">SplitDone</a> *)p);       <span class="keywordflow">break</span>;
+<a name="l00200"></a>00200     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f90069227e5f03dd9852c0d5bcf23661e20f6">RS_SPLIT_SHRUNK</a>:
+<a name="l00201"></a>00201       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_split_shrunk.html">SplitShrunk</a> *)p);     <span class="keywordflow">break</span>;
+<a name="l00202"></a>00202     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006d29c0aec4f3ed4604eca9b41ae04ac7e">RS_MOVE_START</a>:
+<a name="l00203"></a>00203       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_start.html">MoveStart</a> *)p);       <span class="keywordflow">break</span>;
+<a name="l00204"></a>00204     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006d68256a94980071fe29fd2ee2de7a0bd">RS_MOVE_PREPARED</a>:
+<a name="l00205"></a>00205       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_prepared.html">MovePrepared</a> *)p);    <span class="keywordflow">break</span>;
+<a name="l00206"></a>00206     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006c006054988c6682bee75021970fe113d">RS_MOVE_DONE</a>:
+<a name="l00207"></a>00207       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_move_done.html">MoveDone</a> *)p);        <span class="keywordflow">break</span>;
+<a name="l00208"></a>00208     <span class="keywordflow">case</span> <a class="code" href="namespace_hypertable_1_1_meta_log_entry_factory.html#e01d7d6f8e73c38df0837eca6b0f9006a319605b76cd7d736493f3e3eb5e9384">RS_DROP_TABLE</a>:
+<a name="l00209"></a>00209       <a class="code" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a>(*<span class="keyword">this</span>, rsi_set, (<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_drop_table.html">DropTable</a> *)p);        <span class="keywordflow">break</span>;
+<a name="l00210"></a>00210     <span class="keywordflow">default</span>:
+<a name="l00211"></a>00211       <a class="code" href="_logger_8h.html#ff7734773831c8fe26871d764ef53372">HT_FATALF</a>(<span class="stringliteral">"Bad code: unhandled entry type: %d"</span>, p-&gt;<a class="code" href="class_hypertable_1_1_range_server_txn_1_1_drop_table.html#717aadaede9e6eb77feb299ceb0462ea" title="Get the most derived type of the entry.">get_type</a>());
+<a name="l00212"></a>00212     }
+<a name="l00213"></a>00213   }
+<a name="l00214"></a>00214   std::copy(rsi_set.begin(), rsi_set.end(), back_inserter(<a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>));
+<a name="l00215"></a>00215   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_range_server_meta_log_reader.html#0f1d027ee15dde5bb23607d6d2ee85a3">m_range_states</a>;
+<a name="l00216"></a>00216 }
+<a name="l00217"></a>00217 
+<a name="l00218"></a><a class="code" href="namespace_hypertable.html#905a4ae6b1390c4b4a3b1ace5685a73d">00218</a> std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> &amp;info) {
+<a name="l00219"></a>00219   out &lt;&lt;<span class="stringliteral">"{RangeStateInfo: table="</span>&lt;&lt; info.<a class="code" href="struct_hypertable_1_1_range_state_info.html#b8bc7b9c2eed2c887d43d21a98306996">table</a> &lt;&lt;<span class="stringliteral">"\n  range="</span>&lt;&lt; info.<a class="code" href="struct_hypertable_1_1_range_state_info.html#c6269a0eef317617c3f261ee7759ca35">range</a>;
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221   <span class="keywordflow">if</span> (info.<a class="code" href="struct_hypertable_1_1_range_state_info.html#3734e918263b25d2845f6b4f12cb6c56">transactions</a>.size()) {
+<a name="l00222"></a>00222     out &lt;&lt;<span class="stringliteral">"\n  transactions=(\n"</span>;
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224     <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#6ca35df6ef1e71c527f9e75300648050">MetaLogEntryPtr</a> &amp;<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, info.<a class="code" href="struct_hypertable_1_1_range_state_info.html#3734e918263b25d2845f6b4f12cb6c56">transactions</a>) 
+<a name="l00225"></a>00225       out &lt;&lt;<span class="stringliteral">"    "</span>&lt;&lt; ptr.get() &lt;&lt;<span class="charliteral">'\n'</span>;
+<a name="l00226"></a>00226 
+<a name="l00227"></a>00227     out &lt;&lt;<span class="stringliteral">"  )"</span>;
+<a name="l00228"></a>00228   }
+<a name="l00229"></a>00229   out &lt;&lt;<span class="stringliteral">"\n}\n"</span>;
+<a name="l00230"></a>00230   <span class="keywordflow">return</span> out;
+<a name="l00231"></a>00231 }
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233 } <span class="comment">// namespace Hypertable</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

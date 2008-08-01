@@ -17,111 +17,112 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_44760ae6378a7d9abe41b4e4a4ada92b.html">Tools</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_12533a265f32f4452d24df4cc74e4d3f.html">hyperspace</a></div>
 <h1>CommandCreate.cc</h1><a href="_command_create_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;cstring&gt;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_usage_8h.html">Common/Usage.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_command_create_8h.html">CommandCreate.h</a>"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_file_handle_callback_8h.html">FileHandleCallback.h</a>"</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_tools_2hyperspace_2_global_8h.html">Global.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_util_8h.html">Util.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00034"></a>00034 <span class="keyword">using namespace </span>Hyperspace;
-<a name="l00035"></a>00035 <span class="keyword">using namespace </span>std;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="keyword">const</span> <span class="keywordtype">char</span> *CommandCreate::ms_usage[] = {
-<a name="l00038"></a>00038   <span class="stringliteral">"create &lt;fname&gt; flags=[READ|WRITE|LOCK|TEMP|LOCK_SHARED|LOCK_EXCLUSIVE] [OPTIONS]"</span>,
-<a name="l00039"></a>00039   <span class="stringliteral">"OPTIONS:"</span>,
-<a name="l00040"></a>00040   <span class="stringliteral">"  attr:&lt;name&gt;=&lt;value&gt;  This can be used to specify extended attributes that should"</span>,
-<a name="l00041"></a>00041   <span class="stringliteral">"                       get created atomically when the file is created"</span>,
-<a name="l00042"></a>00042   <span class="stringliteral">"  event-mask=&lt;mask&gt;  This indicates which events should be delivered on this handle."</span>,
-<a name="l00043"></a>00043   <span class="stringliteral">"                     The &lt;mask&gt; value can take any combination of the following:"</span>,
-<a name="l00044"></a>00044   <span class="stringliteral">"                     ATTR_SET|ATTR_DEL|LOCK_ACQUIRED|LOCK_RELEASED"</span>,
-<a name="l00045"></a>00045   <span class="stringliteral">"  This command issues an CREATE request to Hyperspace."</span>,
-<a name="l00046"></a>00046   (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00047"></a>00047 };
-<a name="l00048"></a>00048 
-<a name="l00049"></a><a class="code" href="class_hyperspace_1_1_command_create.html#ca631b44637965e4fc9243839935e618">00049</a> <span class="keywordtype">int</span> CommandCreate::run() {
-<a name="l00050"></a>00050   std::string fname = <span class="stringliteral">""</span>;
-<a name="l00051"></a>00051   <span class="keywordtype">int</span> flags = 0;
-<a name="l00052"></a>00052   <span class="keywordtype">int</span> eventMask = 0;
-<a name="l00053"></a>00053   <span class="keywordtype">char</span> *str, *last;
-<a name="l00054"></a>00054   uint64_t handle;
-<a name="l00055"></a>00055   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00056"></a>00056   std::vector&lt;AttributeT&gt; initAttrs;
-<a name="l00057"></a>00057   <a class="code" href="struct_hyperspace_1_1_attribute_t.html" title="Structure to hold extended attribute and value.">AttributeT</a> attr;
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size(); i++) {
-<a name="l00060"></a>00060     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first == <span class="stringliteral">"flags"</span>) {
-<a name="l00061"></a>00061       str = strtok_r((<span class="keywordtype">char</span> *)<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str(), <span class="stringliteral">" \t|"</span>, &amp;last);
-<a name="l00062"></a>00062       <span class="keywordflow">while</span> (str) {
-<a name="l00063"></a>00063         <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"READ"</span>))
-<a name="l00064"></a>00064           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>;
-<a name="l00065"></a>00065         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"WRITE"</span>))
-<a name="l00066"></a>00066           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac247037491d5a78002d883f613cfcb38d6386da1c" title="Open file for writing.">OPEN_FLAG_WRITE</a>;
-<a name="l00067"></a>00067         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK"</span>))
-<a name="l00068"></a>00068           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749d9984b4e533df577fc4e39478065ea24" title="Open file for locking.">OPEN_FLAG_LOCK</a>;
-<a name="l00069"></a>00069         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"TEMP"</span>))
-<a name="l00070"></a>00070           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749d15bd5e99b1bf3cdc5566e1b99e1dfac" title="Used in conjunction with CREATE to create an ephemeral file.">OPEN_FLAG_TEMP</a>;
-<a name="l00071"></a>00071         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_SHARED"</span>))
-<a name="l00072"></a>00072           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749af526604b052b73f18444af250b419a8" title="Atomically open and lock file shared, fail if can&amp;#39;t.">OPEN_FLAG_LOCK_SHARED</a>;
-<a name="l00073"></a>00073         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_EXCLUSIVE"</span>))
-<a name="l00074"></a>00074           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374991ab02931b9ea3d82697bfdbc45897fd" title="atomically open and lock file exclusive, fail if can&amp;#39;t">OPEN_FLAG_LOCK_EXCLUSIVE</a>;
-<a name="l00075"></a>00075         str = strtok_r(0, <span class="stringliteral">" \t|"</span>, &amp;last);
-<a name="l00076"></a>00076       }
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first == <span class="stringliteral">"event-mask"</span>) {
-<a name="l00079"></a>00079       str = strtok_r((<span class="keywordtype">char</span> *)<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str(), <span class="stringliteral">" \t|"</span>, &amp;last);
-<a name="l00080"></a>00080       <span class="keywordflow">while</span> (str) {
-<a name="l00081"></a>00081         <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"ATTR_SET"</span>))
-<a name="l00082"></a>00082           eventMask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976bfffbd4da4ca2cb7ee950e458efdbf2">EVENT_MASK_ATTR_SET</a>;
-<a name="l00083"></a>00083         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"ATTR_DEL"</span>))
-<a name="l00084"></a>00084           eventMask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976b7953f3c88177ca9cb2fa1f679e59cc">EVENT_MASK_ATTR_DEL</a>;
-<a name="l00085"></a>00085         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_ACQUIRED"</span>))
-<a name="l00086"></a>00086           eventMask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5972e6a280f62824a5437d453d36712ed62">EVENT_MASK_LOCK_ACQUIRED</a>;
-<a name="l00087"></a>00087         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_RELEASED"</span>))
-<a name="l00088"></a>00088           eventMask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f597b6bb219591606a78180dd3b85afdbe73">EVENT_MASK_LOCK_RELEASED</a>;
-<a name="l00089"></a>00089         str = strtok_r(0, <span class="stringliteral">" \t|"</span>, &amp;last);
-<a name="l00090"></a>00090       }
-<a name="l00091"></a>00091     }
-<a name="l00092"></a>00092     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first.find(<span class="stringliteral">"attr:"</span>, 0) == 0) {
-<a name="l00093"></a>00093       attr.<a class="code" href="struct_hyperspace_1_1_attribute_t.html#0c9d34b564519d3a8bc19fd619a5c6f1" title="name of extended attribute">name</a> = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first.c_str() + 5;
-<a name="l00094"></a>00094       attr.<a class="code" href="struct_hyperspace_1_1_attribute_t.html#679825b2d56c316e9d2f0c6392c08163" title="pointer to attribute value">value</a> = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str();
-<a name="l00095"></a>00095       attr.<a class="code" href="struct_hyperspace_1_1_attribute_t.html#837a6d0c3db880ca46137d13cb85ec33" title="length of attribute value">valueLen</a> = strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *)attr.<a class="code" href="struct_hyperspace_1_1_attribute_t.html#679825b2d56c316e9d2f0c6392c08163" title="pointer to attribute value">value</a>);
-<a name="l00096"></a>00096       initAttrs.push_back(attr);
-<a name="l00097"></a>00097     }
-<a name="l00098"></a>00098     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fname != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second != <span class="stringliteral">""</span>) {
-<a name="l00099"></a>00099       cerr &lt;&lt; <span class="stringliteral">"Invalid arguments.  Type 'help' for usage."</span> &lt;&lt; endl;
-<a name="l00100"></a>00100       <span class="keywordflow">return</span> -1;
-<a name="l00101"></a>00101     }
-<a name="l00102"></a>00102     <span class="keywordflow">else</span>
-<a name="l00103"></a>00103       fname = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first;
-<a name="l00104"></a>00104   }
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106   <span class="keywordflow">if</span> (flags == 0) {
-<a name="l00107"></a>00107     cerr &lt;&lt; <span class="stringliteral">"Error: no flags supplied."</span> &lt;&lt; endl;
-<a name="l00108"></a>00108     <span class="keywordflow">return</span> -1;
-<a name="l00109"></a>00109   }
-<a name="l00110"></a>00110   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fname == <span class="stringliteral">""</span>) {
-<a name="l00111"></a>00111     cerr &lt;&lt; <span class="stringliteral">"Error: no filename supplied."</span> &lt;&lt; endl;
-<a name="l00112"></a>00112     <span class="keywordflow">return</span> -1;
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115   <span class="comment">//HT_INFOF("create(%s, 0x%x, 0x%x)", fname.c_str(), flags, eventMask);</span>
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> callbackPtr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_file_handle_callback.html">FileHandleCallback</a>(eventMask);
-<a name="l00118"></a>00118 
-<a name="l00119"></a>00119   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_command_create.html#788d094d733e0f1b11d225978e0e96ec">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#5630ef92d446e5f9b8c297c7f37a99e8" title="Creates a file.">create</a>(fname, flags, callbackPtr, initAttrs, &amp;handle)) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00120"></a>00120     std::string normalName;
-<a name="l00121"></a>00121     <a class="code" href="namespace_hyperspace_1_1_util.html#6996a3cc776f6585767a776e82d54830" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Util::normalize_pathname</a>(fname, normalName);
-<a name="l00122"></a>00122     <a class="code" href="namespace_hyperspace_1_1_global.html#d66d0360b8d0f9c0e7d1f8a1c973192a">Global::fileMap</a>[normalName] = handle;
-<a name="l00123"></a>00123   }
-<a name="l00124"></a>00124   <span class="keywordflow">return</span> error;
-<a name="l00125"></a>00125 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:19 2008 for hypertable by&nbsp;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstring&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_usage_8h.html">Common/Usage.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_command_create_8h.html">CommandCreate.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_file_handle_callback_8h.html">FileHandleCallback.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_tools_2hyperspace_2_global_8h.html">Global.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_util_8h.html">Util.h</a>"</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00035"></a>00035 <span class="keyword">using namespace </span>Hyperspace;
+<a name="l00036"></a>00036 <span class="keyword">using namespace </span>std;
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="keyword">const</span> <span class="keywordtype">char</span> *CommandCreate::ms_usage[] = {
+<a name="l00039"></a>00039   <span class="stringliteral">"create &lt;fname&gt; flags=[READ|WRITE|LOCK|TEMP|LOCK_SHARED|LOCK_EXCLUSIVE] [OPTIONS]"</span>,
+<a name="l00040"></a>00040   <span class="stringliteral">"OPTIONS:"</span>,
+<a name="l00041"></a>00041   <span class="stringliteral">"  attr:&lt;name&gt;=&lt;value&gt;  This can be used to specify extended attributes that should"</span>,
+<a name="l00042"></a>00042   <span class="stringliteral">"                       get created atomically when the file is created"</span>,
+<a name="l00043"></a>00043   <span class="stringliteral">"  event-mask=&lt;mask&gt;  This indicates which events should be delivered on this handle."</span>,
+<a name="l00044"></a>00044   <span class="stringliteral">"                     The &lt;mask&gt; value can take any combination of the following:"</span>,
+<a name="l00045"></a>00045   <span class="stringliteral">"                     ATTR_SET|ATTR_DEL|LOCK_ACQUIRED|LOCK_RELEASED"</span>,
+<a name="l00046"></a>00046   <span class="stringliteral">"  This command issues an CREATE request to Hyperspace."</span>,
+<a name="l00047"></a>00047   (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
+<a name="l00048"></a>00048 };
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="class_hyperspace_1_1_command_create.html#ca631b44637965e4fc9243839935e618">00050</a> <span class="keywordtype">int</span> CommandCreate::run() {
+<a name="l00051"></a>00051   std::string fname = <span class="stringliteral">""</span>;
+<a name="l00052"></a>00052   <span class="keywordtype">int</span> flags = 0;
+<a name="l00053"></a>00053   <span class="keywordtype">int</span> event_mask = 0;
+<a name="l00054"></a>00054   <span class="keywordtype">char</span> *str, *last;
+<a name="l00055"></a>00055   uint64_t handle;
+<a name="l00056"></a>00056   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00057"></a>00057   std::vector&lt;Attribute&gt; init_attrs;
+<a name="l00058"></a>00058   <a class="code" href="struct_hyperspace_1_1_attribute.html" title="Structure to hold extended attribute and value.">Attribute</a> attr;
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size(); i++) {
+<a name="l00061"></a>00061     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first == <span class="stringliteral">"flags"</span>) {
+<a name="l00062"></a>00062       str = strtok_r((<span class="keywordtype">char</span> *)<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str(), <span class="stringliteral">" \t|"</span>, &amp;last);
+<a name="l00063"></a>00063       <span class="keywordflow">while</span> (str) {
+<a name="l00064"></a>00064         <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"READ"</span>))
+<a name="l00065"></a>00065           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>;
+<a name="l00066"></a>00066         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"WRITE"</span>))
+<a name="l00067"></a>00067           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac247037491d5a78002d883f613cfcb38d6386da1c" title="Open file for writing.">OPEN_FLAG_WRITE</a>;
+<a name="l00068"></a>00068         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK"</span>))
+<a name="l00069"></a>00069           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749d9984b4e533df577fc4e39478065ea24" title="Open file for locking.">OPEN_FLAG_LOCK</a>;
+<a name="l00070"></a>00070         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"TEMP"</span>))
+<a name="l00071"></a>00071           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749d15bd5e99b1bf3cdc5566e1b99e1dfac" title="Used in conjunction with CREATE to create an ephemeral file.">OPEN_FLAG_TEMP</a>;
+<a name="l00072"></a>00072         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_SHARED"</span>))
+<a name="l00073"></a>00073           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac24703749af526604b052b73f18444af250b419a8" title="Atomically open and lock file shared, fail if can&amp;#39;t.">OPEN_FLAG_LOCK_SHARED</a>;
+<a name="l00074"></a>00074         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_EXCLUSIVE"</span>))
+<a name="l00075"></a>00075           flags |= <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374991ab02931b9ea3d82697bfdbc45897fd" title="atomically open and lock file exclusive, fail if can&amp;#39;t">OPEN_FLAG_LOCK_EXCLUSIVE</a>;
+<a name="l00076"></a>00076         str = strtok_r(0, <span class="stringliteral">" \t|"</span>, &amp;last);
+<a name="l00077"></a>00077       }
+<a name="l00078"></a>00078     }
+<a name="l00079"></a>00079     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first == <span class="stringliteral">"event-mask"</span>) {
+<a name="l00080"></a>00080       str = strtok_r((<span class="keywordtype">char</span> *)<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str(), <span class="stringliteral">" \t|"</span>, &amp;last);
+<a name="l00081"></a>00081       <span class="keywordflow">while</span> (str) {
+<a name="l00082"></a>00082         <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"ATTR_SET"</span>))
+<a name="l00083"></a>00083           event_mask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976bfffbd4da4ca2cb7ee950e458efdbf2">EVENT_MASK_ATTR_SET</a>;
+<a name="l00084"></a>00084         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"ATTR_DEL"</span>))
+<a name="l00085"></a>00085           event_mask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976b7953f3c88177ca9cb2fa1f679e59cc">EVENT_MASK_ATTR_DEL</a>;
+<a name="l00086"></a>00086         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_ACQUIRED"</span>))
+<a name="l00087"></a>00087           event_mask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5972e6a280f62824a5437d453d36712ed62">EVENT_MASK_LOCK_ACQUIRED</a>;
+<a name="l00088"></a>00088         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(str, <span class="stringliteral">"LOCK_RELEASED"</span>))
+<a name="l00089"></a>00089           event_mask |= <a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f597b6bb219591606a78180dd3b85afdbe73">EVENT_MASK_LOCK_RELEASED</a>;
+<a name="l00090"></a>00090         str = strtok_r(0, <span class="stringliteral">" \t|"</span>, &amp;last);
+<a name="l00091"></a>00091       }
+<a name="l00092"></a>00092     }
+<a name="l00093"></a>00093     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first.find(<span class="stringliteral">"attr:"</span>, 0) == 0) {
+<a name="l00094"></a>00094       attr.<a class="code" href="struct_hyperspace_1_1_attribute.html#87823aefd7c3774cb42ea0d0dcba18fb" title="name of extended attribute">name</a> = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first.c_str() + 5;
+<a name="l00095"></a>00095       attr.<a class="code" href="struct_hyperspace_1_1_attribute.html#2e98577d1a2011aa2215ad7bd56f9d76" title="pointer to attribute value">value</a> = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second.c_str();
+<a name="l00096"></a>00096       attr.<a class="code" href="struct_hyperspace_1_1_attribute.html#af5446b754dd9af56daf064e7864be72" title="length of attribute value">value_len</a> = strlen((<span class="keyword">const</span> <span class="keywordtype">char</span> *)attr.<a class="code" href="struct_hyperspace_1_1_attribute.html#2e98577d1a2011aa2215ad7bd56f9d76" title="pointer to attribute value">value</a>);
+<a name="l00097"></a>00097       init_attrs.push_back(attr);
+<a name="l00098"></a>00098     }
+<a name="l00099"></a>00099     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fname != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].second != <span class="stringliteral">""</span>) {
+<a name="l00100"></a>00100       cerr &lt;&lt; <span class="stringliteral">"Invalid arguments.  Type 'help' for usage."</span> &lt;&lt; endl;
+<a name="l00101"></a>00101       <span class="keywordflow">return</span> -1;
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103     <span class="keywordflow">else</span>
+<a name="l00104"></a>00104       fname = <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[i].first;
+<a name="l00105"></a>00105   }
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107   <span class="keywordflow">if</span> (flags == 0) {
+<a name="l00108"></a>00108     cerr &lt;&lt; <span class="stringliteral">"Error: no flags supplied."</span> &lt;&lt; endl;
+<a name="l00109"></a>00109     <span class="keywordflow">return</span> -1;
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (fname == <span class="stringliteral">""</span>) {
+<a name="l00112"></a>00112     cerr &lt;&lt; <span class="stringliteral">"Error: no filename supplied."</span> &lt;&lt; endl;
+<a name="l00113"></a>00113     <span class="keywordflow">return</span> -1;
+<a name="l00114"></a>00114   }
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   <span class="comment">//HT_INFOF("create(%s, 0x%x, 0x%x)", fname.c_str(), flags, event_mask);</span>
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> callback = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_file_handle_callback.html">FileHandleCallback</a>(event_mask);
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_command_create.html#788d094d733e0f1b11d225978e0e96ec">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#53a7be51f0157b9f5b536eca4bc62949" title="Creates a file.">create</a>(fname, flags, callback, init_attrs, &amp;handle)) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00121"></a>00121     std::string normal_name;
+<a name="l00122"></a>00122     <a class="code" href="namespace_hyperspace_1_1_util.html#3196bb16521bac194818ea66e5dc50f2" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Util::normalize_pathname</a>(fname, normal_name);
+<a name="l00123"></a>00123     <a class="code" href="namespace_hyperspace_1_1_global.html#3090a3963826ebe08acd258e06796c55">Global::file_map</a>[normal_name] = handle;
+<a name="l00124"></a>00124   }
+<a name="l00125"></a>00125   <span class="keywordflow">return</span> error;
+<a name="l00126"></a>00126 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

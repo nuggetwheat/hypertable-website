@@ -27,13 +27,13 @@
 <a name="l00029"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html">00029</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html">BlockCompressionCodecLzo</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html" title="Abstract base class for block compression codecs.">BlockCompressionCodec</a> {
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031   <span class="keyword">public</span>:
-<a name="l00032"></a>00032     <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#8519b400cd7646f1868da6cdf0126ea8">BlockCompressionCodecLzo</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html#ec2c53d500d53c4b6f5bf7c73bae17b9">Args</a> &amp;args);
+<a name="l00032"></a>00032     <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#8519b400cd7646f1868da6cdf0126ea8">BlockCompressionCodecLzo</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html#861d4f594703e53ceb7a5a0f834afbcb">Args</a> &amp;args);
 <a name="l00033"></a>00033     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c72372ae5812077654f2579856d24166">~BlockCompressionCodecLzo</a>();
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#085e787e4d1ef6e056274613227d22f8">deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
-<a name="l00036"></a>00036                         <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header, <span class="keywordtype">size_t</span> reserve=0);
-<a name="l00037"></a>00037     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#016866d6223b846d601650c0e93d526c">inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
-<a name="l00038"></a>00038                         <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header);
+<a name="l00035"></a>00035     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#b75f4d8984f2ec2fb04c7872b4f2b2bc">deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
+<a name="l00036"></a>00036                          <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header, <span class="keywordtype">size_t</span> reserve=0);
+<a name="l00037"></a>00037     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#f9681bd2721da0ae4e5484cf34b9f714">inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output,
+<a name="l00038"></a>00038                          <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header);
 <a name="l00039"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c7c829f5a0ee9df97ca6a25864298e91">00039</a>     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c7c829f5a0ee9df97ca6a25864298e91">get_type</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99757954b2685cbc8b612b7b279bcab5198e">LZO</a>; }
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041   <span class="keyword">private</span>:
@@ -44,7 +44,7 @@
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047 <span class="preprocessor">#endif // HYPERTABLE_BLOCKCOMPRESSIONCODECLZO_H</span>
 <a name="l00048"></a>00048 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

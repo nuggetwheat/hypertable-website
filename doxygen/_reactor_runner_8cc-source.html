@@ -17,117 +17,115 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e65477d41cbea77146d554d167dc9746.html">AsyncComm</a></div>
 <h1>ReactorRunner.cc</h1><a href="_reactor_runner_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00029"></a>00029 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#endif</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span>}
-<a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="_reactor_runner_8cc.html#ea5efdbc52497c0aa0d992da07e726c5">00033</a> <span class="preprocessor">#define DISABLE_LOG_DEBUG 1</span>
-<a name="l00034"></a>00034 <span class="preprocessor"></span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_handler_map_8h.html">HandlerMap.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_8h.html">IOHandler.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">ReactorFactory.h</a>"</span>
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_reactor_runner_8h.html">ReactorRunner.h</a>"</span>
-<a name="l00042"></a>00042 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">Hypertable::ReactorRunner::ms_shutdown</a> = <span class="keyword">false</span>;
-<a name="l00045"></a>00045 <a class="code" href="namespace_hypertable.html#f69bac2b8487c8ff6afc7d817cf981e2">HandlerMapPtr</a> <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">Hypertable::ReactorRunner::ms_handler_map_ptr</a>;
-<a name="l00046"></a>00046 
-<a name="l00050"></a><a class="code" href="class_hypertable_1_1_reactor_runner.html#544b4496b73a54eaf4469ead8daf982d">00050</a> <span class="keywordtype">void</span> ReactorRunner::operator()() {
-<a name="l00051"></a>00051   <span class="keywordtype">int</span> n;
-<a name="l00052"></a>00052   <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler;
-<a name="l00053"></a>00053   set&lt;IOHandler *&gt; removedHandlers;
-<a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> timeout;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00057"></a>00057 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event events[256];
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordflow">while</span> ((n = epoll_wait(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;pollFd, events, 256, timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#cdaa0cc9fa3b3ce9c8f45c1e59492894">get_millis</a>())) &gt;= 0 || errno == EINTR) {
-<a name="l00060"></a>00060     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;get_removed_handlers(removedHandlers);
-<a name="l00061"></a>00061     <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"epoll_wait returned %d events"</span>, n);
-<a name="l00062"></a>00062     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; i++) {
-<a name="l00063"></a>00063       <span class="keywordflow">if</span> (removedHandlers.count((<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].data.ptr) == 0) {
-<a name="l00064"></a>00064         handler = (<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].data.ptr;
-<a name="l00065"></a>00065         if (handler &amp;&amp; handler-&gt;handle_event(&amp;events[i])) {
-<a name="l00066"></a>00066           <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;decomission_handler(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#a42d3ee9e690b7feb7781a28c4abfd95">get_address</a>());
-<a name="l00067"></a>00067           removedHandlers.insert(handler);
-<a name="l00068"></a>00068         }
-<a name="l00069"></a>00069       }
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071     <span class="keywordflow">if</span> (!removedHandlers.empty())
-<a name="l00072"></a>00072       <a class="code" href="class_hypertable_1_1_reactor_runner.html#cf6641a9a4b29d85d001d815f0a00681">cleanup_and_remove_handlers</a>(removedHandlers);
-<a name="l00073"></a>00073     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;handle_timeouts(timeout);
-<a name="l00074"></a>00074     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">ms_shutdown</a>)
-<a name="l00075"></a>00075       <span class="keywordflow">return</span>;
-<a name="l00076"></a>00076   }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_wait(%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;pollFd, strerror(errno));
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#if defined(__APPLE__)</span>
+<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#endif</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>}
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="_reactor_runner_8cc.html#e5e9ac0409119b4d04ed831a2236c477">00035</a> <span class="preprocessor">#define HT_DISABLE_LOG_DEBUG 1</span>
+<a name="l00036"></a>00036 <span class="preprocessor"></span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_handler_map_8h.html">HandlerMap.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_8h.html">IOHandler.h</a>"</span>
+<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
+<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">ReactorFactory.h</a>"</span>
+<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_reactor_runner_8h.html">ReactorRunner.h</a>"</span>
+<a name="l00044"></a>00044 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">Hypertable::ReactorRunner::ms_shutdown</a> = <span class="keyword">false</span>;
+<a name="l00047"></a>00047 <a class="code" href="namespace_hypertable.html#f69bac2b8487c8ff6afc7d817cf981e2">HandlerMapPtr</a> <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">Hypertable::ReactorRunner::ms_handler_map_ptr</a>;
+<a name="l00048"></a>00048 
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_reactor_runner.html#544b4496b73a54eaf4469ead8daf982d">00052</a> <span class="keywordtype">void</span> ReactorRunner::operator()() {
+<a name="l00053"></a>00053   <span class="keywordtype">int</span> n;
+<a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler;
+<a name="l00055"></a>00055   std::set&lt;IOHandler *&gt; removed_handlers;
+<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> timeout;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00059"></a>00059 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event events[256];
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="keywordflow">while</span> ((n = epoll_wait(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;poll_fd, events, 256, timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#cdaa0cc9fa3b3ce9c8f45c1e59492894">get_millis</a>())) &gt;= 0 || errno == EINTR) {
+<a name="l00062"></a>00062     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;get_removed_handlers(removed_handlers);
+<a name="l00063"></a>00063     <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"epoll_wait returned %d events"</span>, n);
+<a name="l00064"></a>00064     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; i++) {
+<a name="l00065"></a>00065       <span class="keywordflow">if</span> (removed_handlers.count((<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].data.ptr) == 0) {
+<a name="l00066"></a>00066         handler = (<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].data.ptr;
+<a name="l00067"></a>00067         if (handler &amp;&amp; handler-&gt;handle_event(&amp;events[i])) {
+<a name="l00068"></a>00068           <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;decomission_handler(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#a42d3ee9e690b7feb7781a28c4abfd95">get_address</a>());
+<a name="l00069"></a>00069           removed_handlers.insert(handler);
+<a name="l00070"></a>00070         }
+<a name="l00071"></a>00071       }
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073     <span class="keywordflow">if</span> (!removed_handlers.empty())
+<a name="l00074"></a>00074       <a class="code" href="class_hypertable_1_1_reactor_runner.html#38347637d2d17c30e4e987f21f0a7f5e">cleanup_and_remove_handlers</a>(removed_handlers);
+<a name="l00075"></a>00075     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;handle_timeouts(timeout);
+<a name="l00076"></a>00076     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">ms_shutdown</a>)
+<a name="l00077"></a>00077       <span class="keywordflow">return</span>;
+<a name="l00078"></a>00078   }
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent events[32];
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083   <span class="keywordflow">while</span> ((n = kevent(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kQueue, NULL, 0, events, 32, timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#4b845ddfffecdbc444744a4c651e3d2f">get_timespec</a>())) &gt;= 0 || errno == EINTR) {
-<a name="l00084"></a>00084     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;get_removed_handlers(removedHandlers);
-<a name="l00085"></a>00085     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; i++) {
-<a name="l00086"></a>00086       handler = (<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].udata;
-<a name="l00087"></a>00087       <span class="keywordflow">if</span> (removedHandlers.count(handler) == 0) {
-<a name="l00088"></a>00088         <span class="keywordflow">if</span> (handler &amp;&amp; handler-&gt;handle_event(&amp;events[i])) {
-<a name="l00089"></a>00089           <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;decomission_handler(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#a42d3ee9e690b7feb7781a28c4abfd95">get_address</a>());
-<a name="l00090"></a>00090           removedHandlers.insert(handler);
-<a name="l00091"></a>00091         }
-<a name="l00092"></a>00092       }
-<a name="l00093"></a>00093     }
-<a name="l00094"></a>00094     <span class="keywordflow">if</span> (!removedHandlers.empty())
-<a name="l00095"></a>00095       <a class="code" href="class_hypertable_1_1_reactor_runner.html#cf6641a9a4b29d85d001d815f0a00681">cleanup_and_remove_handlers</a>(removedHandlers);
-<a name="l00096"></a>00096     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;handle_timeouts(timeout);
-<a name="l00097"></a>00097     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">ms_shutdown</a>)
-<a name="l00098"></a>00098       <span class="keywordflow">return</span>;
-<a name="l00099"></a>00099   }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kQueue, strerror(errno));
+<a name="l00080"></a>00080   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_wait(%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;poll_fd, strerror(errno));
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00083"></a>00083 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent events[32];
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   <span class="keywordflow">while</span> ((n = kevent(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kqd, NULL, 0, events, 32, timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#4b845ddfffecdbc444744a4c651e3d2f">get_timespec</a>())) &gt;= 0 || errno == EINTR) {
+<a name="l00086"></a>00086     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;get_removed_handlers(removed_handlers);
+<a name="l00087"></a>00087     <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;n; i++) {
+<a name="l00088"></a>00088       handler = (<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *)events[i].udata;
+<a name="l00089"></a>00089       <span class="keywordflow">if</span> (removed_handlers.count(handler) == 0) {
+<a name="l00090"></a>00090         <span class="keywordflow">if</span> (handler &amp;&amp; handler-&gt;handle_event(&amp;events[i])) {
+<a name="l00091"></a>00091           <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;decomission_handler(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#a42d3ee9e690b7feb7781a28c4abfd95">get_address</a>());
+<a name="l00092"></a>00092           removed_handlers.insert(handler);
+<a name="l00093"></a>00093         }
+<a name="l00094"></a>00094       }
+<a name="l00095"></a>00095     }
+<a name="l00096"></a>00096     <span class="keywordflow">if</span> (!removed_handlers.empty())
+<a name="l00097"></a>00097       <a class="code" href="class_hypertable_1_1_reactor_runner.html#38347637d2d17c30e4e987f21f0a7f5e">cleanup_and_remove_handlers</a>(removed_handlers);
+<a name="l00098"></a>00098     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;handle_timeouts(timeout);
+<a name="l00099"></a>00099     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor_runner.html#310decd0b5d5567ba55c7ffd0a0c65ae">ms_shutdown</a>)
+<a name="l00100"></a>00100       <span class="keywordflow">return</span>;
+<a name="l00101"></a>00101   }
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103 <span class="preprocessor">#endif</span>
-<a name="l00104"></a>00104 <span class="preprocessor"></span>}
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106 
+<a name="l00103"></a>00103   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kqd, strerror(errno));
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 <span class="preprocessor">#endif</span>
+<a name="l00106"></a>00106 <span class="preprocessor"></span>}
 <a name="l00107"></a>00107 
-<a name="l00108"></a><a class="code" href="class_hypertable_1_1_reactor_runner.html#cf6641a9a4b29d85d001d815f0a00681">00108</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor_runner.html#cf6641a9a4b29d85d001d815f0a00681">ReactorRunner::cleanup_and_remove_handlers</a>(set&lt;IOHandler *&gt; &amp;handlers) {
-<a name="l00109"></a>00109   <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler;
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   <span class="keywordflow">for</span> (set&lt;IOHandler *&gt;::iterator iter=handlers.begin(); iter!=handlers.end(); iter++) {
-<a name="l00112"></a>00112     handler = *iter;
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00115"></a>00115 <span class="preprocessor"></span>    <span class="keyword">struct </span>epoll_event event;
-<a name="l00116"></a>00116     memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00117"></a>00117     <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;pollFd, EPOLL_CTL_DEL, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), &amp;event) &lt; 0) {
-<a name="l00118"></a>00118       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(EPOLL_CTL_DEL, %d) failure, %s"</span>, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), strerror(errno));
-<a name="l00119"></a>00119     }
-<a name="l00120"></a>00120 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00121"></a>00121 <span class="preprocessor"></span>    <span class="keyword">struct </span>kevent devents[2];
-<a name="l00122"></a>00122     EV_SET(&amp;devents[0], handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), EVFILT_READ, EV_DELETE, 0, 0, 0);
-<a name="l00123"></a>00123     EV_SET(&amp;devents[1], handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), EVFILT_WRITE, EV_DELETE, 0, 0, 0);
-<a name="l00124"></a>00124     <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kQueue, devents, 2, NULL, 0, NULL) == -1 &amp;&amp; errno != ENOENT) {
-<a name="l00125"></a>00125       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(%d) : %s"</span>, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), strerror(errno));
-<a name="l00126"></a>00126     }
-<a name="l00127"></a>00127 <span class="preprocessor">#else</span>
-<a name="l00128"></a>00128 <span class="preprocessor"></span>    <a class="code" href="_i_o_handler_accept_8cc.html#b625750f606f98bcd0bc081f958de1da">ImplementMe</a>;
-<a name="l00129"></a>00129 <span class="preprocessor">#endif</span>
-<a name="l00130"></a>00130 <span class="preprocessor"></span>    close(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>());
-<a name="l00131"></a>00131     <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;purge_handler(handler);
-<a name="l00132"></a>00132     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;cancel_requests(handler);
-<a name="l00133"></a>00133   }
-<a name="l00134"></a>00134 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 
+<a name="l00110"></a><a class="code" href="class_hypertable_1_1_reactor_runner.html#38347637d2d17c30e4e987f21f0a7f5e">00110</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor_runner.html#38347637d2d17c30e4e987f21f0a7f5e">ReactorRunner::cleanup_and_remove_handlers</a>(std::set&lt;IOHandler *&gt; &amp;handlers) {
+<a name="l00111"></a>00111   <span class="keywordflow">foreach</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler, handlers) {
+<a name="l00112"></a>00112 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00113"></a>00113 <span class="preprocessor"></span>    <span class="keyword">struct </span>epoll_event event;
+<a name="l00114"></a>00114     memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
+<a name="l00115"></a>00115     <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;poll_fd, EPOLL_CTL_DEL, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), &amp;event) &lt; 0) {
+<a name="l00116"></a>00116       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(EPOLL_CTL_DEL, %d) failure, %s"</span>, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), strerror(errno));
+<a name="l00117"></a>00117     }
+<a name="l00118"></a>00118 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00119"></a>00119 <span class="preprocessor"></span>    <span class="keyword">struct </span>kevent devents[2];
+<a name="l00120"></a>00120     EV_SET(&amp;devents[0], handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), EVFILT_READ, EV_DELETE, 0, 0, 0);
+<a name="l00121"></a>00121     EV_SET(&amp;devents[1], handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), EVFILT_WRITE, EV_DELETE, 0, 0, 0);
+<a name="l00122"></a>00122     <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;kqd, devents, 2, NULL, 0, NULL) == -1 &amp;&amp; errno != ENOENT) {
+<a name="l00123"></a>00123       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(%d) : %s"</span>, handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>(), strerror(errno));
+<a name="l00124"></a>00124     }
+<a name="l00125"></a>00125 <span class="preprocessor">#else</span>
+<a name="l00126"></a>00126 <span class="preprocessor"></span>    <a class="code" href="_i_o_handler_accept_8cc.html#b625750f606f98bcd0bc081f958de1da">ImplementMe</a>;
+<a name="l00127"></a>00127 <span class="preprocessor">#endif</span>
+<a name="l00128"></a>00128 <span class="preprocessor"></span>    close(handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f63fb5da68730518a4c00e3de865e1c5">get_sd</a>());
+<a name="l00129"></a>00129     <a class="code" href="class_hypertable_1_1_reactor_runner.html#e4a98b609645df933fb95448f2d62d5d">ms_handler_map_ptr</a>-&gt;purge_handler(handler);
+<a name="l00130"></a>00130     <a class="code" href="class_hypertable_1_1_reactor_runner.html#cb7b12c4ac13f28794cb40d4d3586b05">m_reactor_ptr</a>-&gt;cancel_requests(handler);
+<a name="l00131"></a>00131   }
+<a name="l00132"></a>00132 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

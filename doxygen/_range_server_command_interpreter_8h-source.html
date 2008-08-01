@@ -33,7 +33,7 @@
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable {
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_client.html">Client</a>;
+<a name="l00038"></a>00038   <span class="keyword">class </span>Client;
 <a name="l00039"></a>00039 
 <a name="l00040"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html">00040</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html">RangeServerCommandInterpreter</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_command_interpreter.html">CommandInterpreter</a> {
 <a name="l00041"></a>00041   <span class="keyword">public</span>:
@@ -43,14 +43,14 @@
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046   <span class="keyword">private</span>:
 <a name="l00047"></a>00047 
-<a name="l00048"></a>00048     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#3778186f127b1d3f3af18922e89f9cdc">display_scan_data</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schemaPtr);
+<a name="l00048"></a>00048     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">display_scan_data</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr);
 <a name="l00049"></a>00049 
 <a name="l00050"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#3f46ba6b2bb4376a9321edf5fc213f4d">00050</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#3f46ba6b2bb4376a9321edf5fc213f4d">m_comm</a>;
 <a name="l00051"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#519a3c79f2a97d6cb127d10ac66767cd">00051</a>     <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#519a3c79f2a97d6cb127d10ac66767cd">m_hyperspace_ptr</a>;
 <a name="l00052"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">00052</a>     <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>;
 <a name="l00053"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">00053</a>     <a class="code" href="namespace_hypertable.html#ac32295cd3d6c1d7bc3e0198aad94a53">RangeServerClientPtr</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>;
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#1502a2c57f61e146a74c22a26c7e79c7">00054</a>     <span class="keyword">typedef</span> hash_map&lt;String, TableInfo *&gt; <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#1502a2c57f61e146a74c22a26c7e79c7">MapT</a>;
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#51a5b3a8e787fd9f5fa4c02700457e86">00055</a>     <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#1502a2c57f61e146a74c22a26c7e79c7">MapT</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#51a5b3a8e787fd9f5fa4c02700457e86">m_table_map</a>;
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#efb78b13a42294c20bbcc604cd1fb5fe">00054</a>     <span class="keyword">typedef</span> hash_map&lt;String, TableInfo *&gt; <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#efb78b13a42294c20bbcc604cd1fb5fe">TableMap</a>;
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">00055</a>     <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#efb78b13a42294c20bbcc604cd1fb5fe">TableMap</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">m_table_map</a>;
 <a name="l00056"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">00056</a>     int32_t <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a>;
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058   };
@@ -59,7 +59,7 @@
 <a name="l00061"></a>00061 }
 <a name="l00062"></a>00062 
 <a name="l00063"></a>00063 <span class="preprocessor">#endif // HYPERTABLE_RANGESERVERCOMMANDINTERPRETER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:19 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

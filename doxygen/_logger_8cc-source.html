@@ -71,7 +71,7 @@
 <a name="l00082"></a>00082       <a class="code" href="namespace_hypertable_1_1_logger.html#df321cfeae13383e3566e5cf8e2c261a">set_flush_per_log</a>(flush_per_log);
 <a name="l00083"></a>00083     }
 <a name="l00084"></a>00084     <span class="keyword">virtual</span> ~FlushableOstreamAppender() { close(); }
-<a name="l00085"></a>00085     
+<a name="l00085"></a>00085 
 <a name="l00086"></a>00086     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> reopen() { <span class="keywordflow">return</span> <span class="keyword">true</span>; }
 <a name="l00087"></a>00087     <span class="keyword">virtual</span> <span class="keywordtype">void</span> close() { <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>(); }
 <a name="l00088"></a>00088     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>() { <a class="code" href="_logger_8cc.html#5f30cb2e857044f62985c54d45134910">m_stream</a>.flush(); }
@@ -97,7 +97,7 @@
 <a name="l00108"></a><a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">00108</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a> = <span class="keyword">true</span>;
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110 <span class="keywordtype">void</span>
-<a name="l00111"></a><a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">00111</a> <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">Logger::initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keywordtype">int</span> priority, <span class="keywordtype">bool</span> flush_per_log,
+<a name="l00111"></a><a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">00111</a> <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Logger::initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keywordtype">int</span> priority, <span class="keywordtype">bool</span> flush_per_log,
 <a name="l00112"></a>00112                    std::ostream &amp;out) {
 <a name="l00113"></a>00113   <a class="code" href="_logger_8cc.html#b1d47fc4201d8cc507039337ac7027ab">appender</a> = <span class="keyword">new</span> FlushableOstreamAppender(<span class="stringliteral">"default"</span>, out, flush_per_log);
 <a name="l00114"></a>00114   Logging::Layout* layout = <span class="keyword">new</span> Logging::BasicLayout();
@@ -137,7 +137,7 @@
 <a name="l00148"></a><a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">00148</a> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">Logger::flush</a>() {
 <a name="l00149"></a>00149   <a class="code" href="_logger_8cc.html#b1d47fc4201d8cc507039337ac7027ab">appender</a>-&gt;flush();
 <a name="l00150"></a>00150 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

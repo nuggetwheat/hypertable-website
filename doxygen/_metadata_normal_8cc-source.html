@@ -17,81 +17,82 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_b6724abc6b41a2670a831834f82498af.html">RangeServer</a></div>
 <h1>MetadataNormal.cc</h1><a href="_metadata_normal_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;cassert&gt;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstring&gt;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_table_mutator_8h.html">Hypertable/Lib/TableMutator.h</a>"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_table_scanner_8h.html">Hypertable/Lib/TableScanner.h</a>"</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_range_server_2_global_8h.html">Global.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_metadata_normal_8h.html">MetadataNormal.h</a>"</span>
-<a name="l00032"></a>00032 
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cassert&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;cstring&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_table_mutator_8h.html">Hypertable/Lib/TableMutator.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_table_scanner_8h.html">Hypertable/Lib/TableScanner.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_range_server_2_global_8h.html">Global.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_metadata_normal_8h.html">MetadataNormal.h</a>"</span>
 <a name="l00033"></a>00033 
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#c21c197f1cc07b71eb25cf74110740ba">00037</a> MetadataNormal::MetadataNormal(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *identifier, std::string &amp;<a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>) : m_files_scanner_ptr(0) {
-<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a> = std::string(<span class="stringliteral">""</span>) + (uint32_t)identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> + <span class="stringliteral">":"</span> + end_row;
-<a name="l00039"></a>00039 }
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 
+<a name="l00034"></a>00034 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00035"></a>00035 
+<a name="l00039"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#c21c197f1cc07b71eb25cf74110740ba">00039</a> MetadataNormal::MetadataNormal(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *identifier, std::string &amp;<a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>) : m_files_scanner_ptr(0) {
+<a name="l00040"></a>00040   <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a> = std::string(<span class="stringliteral">""</span>) + (uint32_t)identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> + <span class="stringliteral">":"</span> + end_row;
+<a name="l00041"></a>00041 }
 <a name="l00042"></a>00042 
-<a name="l00046"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#46f1a66ab4a4e0fdf5ca6d8928a69cbb">00046</a> <a class="code" href="class_hypertable_1_1_metadata_normal.html#46f1a66ab4a4e0fdf5ca6d8928a69cbb">MetadataNormal::~MetadataNormal</a>() {
-<a name="l00047"></a>00047   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = 0;
-<a name="l00048"></a>00048 }
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#46f1a66ab4a4e0fdf5ca6d8928a69cbb">00048</a> <a class="code" href="class_hypertable_1_1_metadata_normal.html#46f1a66ab4a4e0fdf5ca6d8928a69cbb">MetadataNormal::~MetadataNormal</a>() {
+<a name="l00049"></a>00049   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = 0;
+<a name="l00050"></a>00050 }
 <a name="l00051"></a>00051 
-<a name="l00052"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#a0dca12a2242ed77e015177f373cc0b2">00052</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#a0dca12a2242ed77e015177f373cc0b2">MetadataNormal::reset_files_scan</a>() {
-<a name="l00053"></a>00053   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Scan specification.">ScanSpec</a> scan_spec;
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#b420af7a4803fcc2e85ad724bccde34b">row_limit</a> = 1;
-<a name="l00056"></a>00056   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = 1;
-<a name="l00057"></a>00057   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#de0d505f0d080baf7e678942f1077a7c">start_row</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
-<a name="l00058"></a>00058   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#6ccc92aa214c85d2194236fe39e53f89">start_row_inclusive</a> = <span class="keyword">true</span>;
-<a name="l00059"></a>00059   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#595e26a58a860be723c864c4f6656715">end_row</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
-<a name="l00060"></a>00060   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#c3938b9d476eb71cd9feb8b5ce11f871">end_row_inclusive</a> = <span class="keyword">true</span>;
-<a name="l00061"></a>00061   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.clear();
-<a name="l00062"></a>00062   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"Files"</span>);
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_scanner(scan_spec);
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#a0dca12a2242ed77e015177f373cc0b2">00054</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#a0dca12a2242ed77e015177f373cc0b2">MetadataNormal::reset_files_scan</a>() {
+<a name="l00055"></a>00055   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> scan_spec;
+<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_row_interval.html" title="Represents a row interval.">RowInterval</a> ri;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#97e2254194926d6d5dc60eea2c0e7315">row_limit</a> = 1;
+<a name="l00059"></a>00059   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = 1;
+<a name="l00060"></a>00060   ri.<a class="code" href="class_hypertable_1_1_row_interval.html#05d415110f00f1273f449f7e4bf653d4">start</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
+<a name="l00061"></a>00061   ri.<a class="code" href="class_hypertable_1_1_row_interval.html#780ab1bf0f06ccf506544717be0f4ae1">end</a>   = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
+<a name="l00062"></a>00062   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(ri);
+<a name="l00063"></a>00063   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.clear();
+<a name="l00064"></a>00064   scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"Files"</span>);
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066 }
-<a name="l00067"></a>00067 
+<a name="l00066"></a>00066   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_scanner(scan_spec);
+<a name="l00067"></a>00067 }
 <a name="l00068"></a>00068 
 <a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#d27e0d4635b0cc93e17c6d6fb7141a82">00070</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#d27e0d4635b0cc93e17c6d6fb7141a82">MetadataNormal::get_next_files</a>(std::string &amp;ag_name, std::string &amp;files) {
-<a name="l00071"></a>00071   <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> cell;
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   assert(<a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a>);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a>-&gt;next(cell)) {
-<a name="l00076"></a>00076     assert(!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"Files"</span>));
-<a name="l00077"></a>00077     ag_name = std::string(cell.<a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>);
-<a name="l00078"></a>00078     files = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
-<a name="l00079"></a>00079     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00080"></a>00080   }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = 0;
-<a name="l00083"></a>00083   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00084"></a>00084 }
-<a name="l00085"></a>00085 
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#d27e0d4635b0cc93e17c6d6fb7141a82">00071</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#d27e0d4635b0cc93e17c6d6fb7141a82">MetadataNormal::get_next_files</a>(std::string &amp;ag_name, std::string &amp;files) {
+<a name="l00072"></a>00072   <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> cell;
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   assert(<a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a>);
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a>-&gt;next(cell)) {
+<a name="l00077"></a>00077     assert(!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"Files"</span>));
+<a name="l00078"></a>00078     ag_name = std::string(cell.<a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>);
+<a name="l00079"></a>00079     files = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
+<a name="l00080"></a>00080     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00081"></a>00081   }
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <a class="code" href="class_hypertable_1_1_metadata_normal.html#aca7ce5b07f880a7fe060c092fd5980f">m_files_scanner_ptr</a> = 0;
+<a name="l00084"></a>00084   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00085"></a>00085 }
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087 
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#4285c4078981fe811e09e55f90bd3996">00088</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#4285c4078981fe811e09e55f90bd3996">MetadataNormal::write_files</a>(std::string &amp;ag_name, std::string &amp;files) {
-<a name="l00089"></a>00089   <a class="code" href="namespace_hypertable.html#54eba9b142d3941a0b4acda0990c4c7a">TableMutatorPtr</a> mutator_ptr;
-<a name="l00090"></a>00090   <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> key;
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092   mutator_ptr = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_mutator();
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094   key.<a class="code" href="class_hypertable_1_1_key_spec.html#40369f5a201a674f92d5b20d1d154396">row</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
-<a name="l00095"></a>00095   key.<a class="code" href="class_hypertable_1_1_key_spec.html#ff2126e370d03427e6209eca7211feff">row_len</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.length();
-<a name="l00096"></a>00096   key.<a class="code" href="class_hypertable_1_1_key_spec.html#62878b08e5b98e9e78ec6317fd0f9b40">column_family</a> = <span class="stringliteral">"Files"</span>;
-<a name="l00097"></a>00097   key.<a class="code" href="class_hypertable_1_1_key_spec.html#742ecb8bbe5b1bc6974cc1b6b1df2aa0">column_qualifier</a> = ag_name.c_str();
-<a name="l00098"></a>00098   key.<a class="code" href="class_hypertable_1_1_key_spec.html#4fab3b4e8b573592e4fe3a6d1bf08776">column_qualifier_len</a> = ag_name.length();
-<a name="l00099"></a>00099   mutator_ptr-&gt;set(0, key, (uint8_t *)files.c_str(), files.length());
-<a name="l00100"></a>00100   mutator_ptr-&gt;flush();
-<a name="l00101"></a>00101 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00088"></a>00088 
+<a name="l00089"></a><a class="code" href="class_hypertable_1_1_metadata_normal.html#4285c4078981fe811e09e55f90bd3996">00089</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_normal.html#4285c4078981fe811e09e55f90bd3996">MetadataNormal::write_files</a>(std::string &amp;ag_name, std::string &amp;files) {
+<a name="l00090"></a>00090   <a class="code" href="namespace_hypertable.html#54eba9b142d3941a0b4acda0990c4c7a">TableMutatorPtr</a> mutator_ptr;
+<a name="l00091"></a>00091   <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> key;
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   mutator_ptr = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_mutator();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095   key.<a class="code" href="class_hypertable_1_1_key_spec.html#40369f5a201a674f92d5b20d1d154396">row</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.c_str();
+<a name="l00096"></a>00096   key.<a class="code" href="class_hypertable_1_1_key_spec.html#ff2126e370d03427e6209eca7211feff">row_len</a> = <a class="code" href="class_hypertable_1_1_metadata_normal.html#5dc21f88b7f34e2fccf3aa6fe7a92f79">m_metadata_key</a>.length();
+<a name="l00097"></a>00097   key.<a class="code" href="class_hypertable_1_1_key_spec.html#62878b08e5b98e9e78ec6317fd0f9b40">column_family</a> = <span class="stringliteral">"Files"</span>;
+<a name="l00098"></a>00098   key.<a class="code" href="class_hypertable_1_1_key_spec.html#742ecb8bbe5b1bc6974cc1b6b1df2aa0">column_qualifier</a> = ag_name.c_str();
+<a name="l00099"></a>00099   key.<a class="code" href="class_hypertable_1_1_key_spec.html#4fab3b4e8b573592e4fe3a6d1bf08776">column_qualifier_len</a> = ag_name.length();
+<a name="l00100"></a>00100   mutator_ptr-&gt;set(0, key, (uint8_t *)files.c_str(), files.length());
+<a name="l00101"></a>00101   mutator_ptr-&gt;flush();
+<a name="l00102"></a>00102 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

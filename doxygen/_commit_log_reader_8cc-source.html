@@ -17,179 +17,197 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>CommitLogReader.cc</h1><a href="_commit_log_reader_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;dirent.h&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;limits.h&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;sys/uio.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00034"></a>00034 }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_string_ext_8h.html">Common/StringExt.h</a>"</span>
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_compressor_factory_8h.html">Hypertable/Lib/CompressorFactory.h</a>"</span>
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_8h.html">BlockCompressionCodec.h</a>"</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_commit_log_8h.html">CommitLog.h</a>"</span>
-<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_commit_log_block_stream_8h.html">CommitLogBlockStream.h</a>"</span>
-<a name="l00046"></a>00046 <span class="preprocessor">#include "<a class="code" href="_commit_log_reader_8h.html">CommitLogReader.h</a>"</span>
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00049"></a>00049 <span class="keyword">using namespace </span>std;
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 <span class="keyword">namespace </span>{
-<a name="l00052"></a>00052   <span class="keyword">struct </span>reverse_sort_clfi {
-<a name="l00053"></a>00053     <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> &amp;clfi1, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> &amp;clfi2)<span class="keyword"> const </span>{
-<a name="l00054"></a>00054       <span class="keywordflow">return</span> clfi1.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a> &gt;= clfi2.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a>;
-<a name="l00055"></a>00055     }
-<a name="l00056"></a>00056   };
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cassert&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;dirent.h&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;limits.h&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;sys/uio.h&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
+<a name="l00035"></a>00035 }
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_string_ext_8h.html">Common/StringExt.h</a>"</span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_compressor_factory_8h.html">Hypertable/Lib/CompressorFactory.h</a>"</span>
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_8h.html">BlockCompressionCodec.h</a>"</span>
+<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_commit_log_8h.html">CommitLog.h</a>"</span>
+<a name="l00046"></a>00046 <span class="preprocessor">#include "<a class="code" href="_commit_log_block_stream_8h.html">CommitLogBlockStream.h</a>"</span>
+<a name="l00047"></a>00047 <span class="preprocessor">#include "<a class="code" href="_commit_log_reader_8h.html">CommitLogReader.h</a>"</span>
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00050"></a>00050 <span class="keyword">using namespace </span>std;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="keyword">namespace </span>{
+<a name="l00053"></a>00053   <span class="keyword">struct </span>reverse_sort_clfi {
+<a name="l00054"></a>00054     <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> &amp;clfi1, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> &amp;clfi2)<span class="keyword"> const </span>{
+<a name="l00055"></a>00055       <span class="keywordflow">return</span> clfi1.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a> &gt;= clfi2.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a>;
+<a name="l00056"></a>00056     }
+<a name="l00057"></a>00057   };
+<a name="l00058"></a>00058 }
 <a name="l00059"></a>00059 
-<a name="l00062"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#35eec5c37ef480f0dabf1fda76f49abc">00062</a> CommitLogReader::CommitLogReader(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> log_dir) : <a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a>(log_dir), <a class="code" href="_master_gc_8cc.html#51a6a59072bffa39a9536f577d592c4a">m_fs</a>(fs), m_block_buffer(256), m_compressor(0) {
-<a name="l00063"></a>00063   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9e149af2bc617cce5cdeaba9457ddea7">load_fragments</a>(log_dir);
-<a name="l00064"></a>00064 }
-<a name="l00065"></a>00065 
+<a name="l00060"></a>00060 
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#35eec5c37ef480f0dabf1fda76f49abc">00063</a> CommitLogReader::CommitLogReader(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> log_dir) : <a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a>(log_dir), <a class="code" href="_master_gc_8cc.html#51a6a59072bffa39a9536f577d592c4a">m_fs</a>(fs), m_block_buffer(256), m_compressor(0) {
+<a name="l00064"></a>00064   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#10ccbde3f5c0ab40cdcd7f7acd931fcc">load_fragments</a>(log_dir);
+<a name="l00065"></a>00065 }
 <a name="l00066"></a>00066 
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#6db3272bf006ed25c4cbe42f25b58270">00067</a> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6db3272bf006ed25c4cbe42f25b58270">CommitLogReader::~CommitLogReader</a>() {
-<a name="l00068"></a>00068 }
-<a name="l00069"></a>00069 
+<a name="l00067"></a>00067 
+<a name="l00068"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#6db3272bf006ed25c4cbe42f25b58270">00068</a> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6db3272bf006ed25c4cbe42f25b58270">CommitLogReader::~CommitLogReader</a>() {
+<a name="l00069"></a>00069 }
 <a name="l00070"></a>00070 
 <a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">00072</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">CommitLogReader::next_raw_block</a>(<a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> *infop, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header) {
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074  try_again:
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.empty())
-<a name="l00077"></a>00077     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream == 0)
-<a name="l00080"></a>00080     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html">CommitLogBlockStream</a>(<a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().log_dir, <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%u"</span>, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().num) );
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;next(infop, header)) {
-<a name="l00083"></a>00083     <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream;
-<a name="l00084"></a>00084     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream = 0;
-<a name="l00085"></a>00085     <a class="code" href="class_hypertable_1_1_commit_log_base.html#51429788ecd2964aedcf6cbb6a2f0258">m_fragment_queue</a>.push_back( <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top() );
-<a name="l00086"></a>00086     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.pop();
-<a name="l00087"></a>00087     <span class="keywordflow">goto</span> try_again;
-<a name="l00088"></a>00088   }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00091"></a>00091 }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 
-<a name="l00095"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#67391edbbec856273ce422803c84b141">00095</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#67391edbbec856273ce422803c84b141">CommitLogReader::next</a>(<span class="keyword">const</span> uint8_t **blockp, <span class="keywordtype">size_t</span> *lenp, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header) {
-<a name="l00096"></a>00096   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00097"></a>00097   <a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> binfo;
+<a name="l00072"></a>00072 
+<a name="l00073"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">00073</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">CommitLogReader::next_raw_block</a>(<a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> *infop, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header) {
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075  try_again:
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.empty())
+<a name="l00078"></a>00078     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream == 0)
+<a name="l00081"></a>00081     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html">CommitLogBlockStream</a>(<a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().log_dir, <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%u"</span>, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().num));
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;next(infop, header)) {
+<a name="l00084"></a>00084     <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream;
+<a name="l00085"></a>00085     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream = 0;
+<a name="l00086"></a>00086     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().timestamp = <a class="code" href="class_hypertable_1_1_commit_log_base.html#5306399f1ef94699271a68201ac12ece">m_last_timestamp</a>;
+<a name="l00087"></a>00087     <a class="code" href="class_hypertable_1_1_commit_log_base.html#51429788ecd2964aedcf6cbb6a2f0258">m_fragment_queue</a>.push_back(<a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top());
+<a name="l00088"></a>00088     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.pop();
+<a name="l00089"></a>00089     <span class="keywordflow">goto</span> try_again;
+<a name="l00090"></a>00090   }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="keywordflow">if</span> (header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(<a class="code" href="class_hypertable_1_1_commit_log.html#e5037b08e56aa6f4f923e0c5f373f305">CommitLog::MAGIC_LINK</a>)) {
+<a name="l00093"></a>00093     assert(header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>() == <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">BlockCompressionCodec::NONE</a>);
+<a name="l00094"></a>00094     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> log_dir = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)(infop-&gt;<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#d9f6234c08cd27de2a8db3049e8367c7">block_ptr</a> + header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a>());
+<a name="l00095"></a>00095     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#10ccbde3f5c0ab40cdcd7f7acd931fcc">load_fragments</a>(log_dir);
+<a name="l00096"></a>00096     <span class="keywordflow">goto</span> try_again;
+<a name="l00097"></a>00097   }
 <a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">next_raw_block</a>(&amp;binfo, header)) {
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101     <span class="keywordflow">if</span> (binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a> == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00102"></a>00102       <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zblock(0);
+<a name="l00099"></a>00099   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00100"></a>00100 }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 
 <a name="l00103"></a>00103 
-<a name="l00104"></a>00104       <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
-<a name="l00105"></a>00105       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> = binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#d9f6234c08cd27de2a8db3049e8367c7">block_ptr</a>;
-<a name="l00106"></a>00106       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#d9f6234c08cd27de2a8db3049e8367c7">block_ptr</a> + binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#ddfcfe8ff8847a7e5d3f8ceaf3e506f3">block_len</a>;
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108       <a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">load_compressor</a>(header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>());
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110       <span class="comment">// Decompress</span>
-<a name="l00111"></a>00111       <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#386dbc4ff9df26caf6d3930ea222eb51">inflate</a>(zblock, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>, *header)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00112"></a>00112         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Inflate error in CommitLog fragment %s starting at postion %lld (block len = %lld) - %s"</span>,
-<a name="l00113"></a>00113                   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;get_fname().c_str(),
-<a name="l00114"></a>00114                   binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>, binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a> - binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>,
-<a name="l00115"></a>00115                   <a class="code" href="namespace_hypertable_1_1_error.html#aa9a88a896e9afc2abf07a4dafcc4444">Error::get_text</a>(error));
-<a name="l00116"></a>00116         <span class="keywordflow">continue</span>;
-<a name="l00117"></a>00117       }
-<a name="l00118"></a>00118  
-<a name="l00119"></a>00119       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
-<a name="l00120"></a>00120       *blockp = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00121"></a>00121       *lenp = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00122"></a>00122       <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"shaggy\t%s\t%u\t%u"</span>, <a class="code" href="class_hypertable_1_1_commit_log_base.html#688260b61be8081e80890b5eef13f891">m_log_name</a>.c_str(), header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>(), header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>());
-<a name="l00123"></a>00123       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00124"></a>00124     }
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Corruption detected in CommitLog fragment %s starting at postion %lld for %lld bytes - %s"</span>,
-<a name="l00127"></a>00127               <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;get_fname().c_str(),
-<a name="l00128"></a>00128               binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>, binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a> - binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>,
-<a name="l00129"></a>00129               <a class="code" href="namespace_hypertable_1_1_error.html#aa9a88a896e9afc2abf07a4dafcc4444">Error::get_text</a>(binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a>));
-<a name="l00130"></a>00130   }
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00133"></a>00133 }
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135 
+<a name="l00104"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#67391edbbec856273ce422803c84b141">00104</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#67391edbbec856273ce422803c84b141">CommitLogReader::next</a>(<span class="keyword">const</span> uint8_t **blockp, <span class="keywordtype">size_t</span> *lenp, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header) {
+<a name="l00105"></a>00105   <a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> binfo;
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">next_raw_block</a>(&amp;binfo, header)) {
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109     <span class="keywordflow">if</span> (binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a> == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00110"></a>00110       <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zblock;
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112       <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
+<a name="l00113"></a>00113       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> = binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#d9f6234c08cd27de2a8db3049e8367c7">block_ptr</a>;
+<a name="l00114"></a>00114       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#d9f6234c08cd27de2a8db3049e8367c7">block_ptr</a> + binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#ddfcfe8ff8847a7e5d3f8ceaf3e506f3">block_len</a>;
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116       <span class="keywordflow">try</span> {
+<a name="l00117"></a>00117         <a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">load_compressor</a>(header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>());
+<a name="l00118"></a>00118         <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#fc5d02d2e8eba18108a024ac3443a2e9">inflate</a>(zblock, <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>, *header);
+<a name="l00119"></a>00119       }
+<a name="l00120"></a>00120       <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00121"></a>00121         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Inflate error in CommitLog fragment %s starting at "</span>
+<a name="l00122"></a>00122                   <span class="stringliteral">"postion %lld (block len = %lld) - %s"</span>,
+<a name="l00123"></a>00123                   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;get_fname().c_str(),
+<a name="l00124"></a>00124                   binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>, binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a> - binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>,
+<a name="l00125"></a>00125                   <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00126"></a>00126         <span class="keywordflow">continue</span>;
+<a name="l00127"></a>00127       }
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129       <a class="code" href="class_hypertable_1_1_commit_log_base.html#5306399f1ef94699271a68201ac12ece">m_last_timestamp</a> = header-&gt;<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#589e8d8ebd6697befb203f6a56176f05">get_timestamp</a>();
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131       zblock.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
+<a name="l00132"></a>00132       *blockp = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00133"></a>00133       *lenp = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#158c63f89002460259cdd93266590065">m_block_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00134"></a>00134       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00135"></a>00135     }
 <a name="l00136"></a>00136 
-<a name="l00137"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#9e149af2bc617cce5cdeaba9457ddea7">00137</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9e149af2bc617cce5cdeaba9457ddea7">CommitLogReader::load_fragments</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir) {
-<a name="l00138"></a>00138   vector&lt;string&gt; listing;
-<a name="l00139"></a>00139   <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> file_info;
-<a name="l00140"></a>00140   vector&lt;CommitLogFileInfo&gt; fragment_vector;
-<a name="l00141"></a>00141   <span class="keyword">struct </span>reverse_sort_clfi fragment_ordering_obj;
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143   <a class="code" href="class_hypertable_1_1_file_utils.html#0745554ffb9c117351f7b5887a5ebc63">FileUtils::add_trailing_slash</a>( log_dir );
-<a name="l00144"></a>00144   
-<a name="l00145"></a>00145   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f834e57791fc23b76e6c5297bcf4094a" title="Obtains a listing of all files in a directory asynchronously.">readdir</a>(log_dir, listing);
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147   <span class="keywordflow">if</span> (listing.size() == 0)
-<a name="l00148"></a>00148     <span class="keywordflow">return</span>;
+<a name="l00137"></a>00137     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Corruption detected in CommitLog fragment %s starting at "</span>
+<a name="l00138"></a>00138              <span class="stringliteral">"postion %lld for %lld bytes - %s"</span>,
+<a name="l00139"></a>00139              <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.top().block_stream-&gt;get_fname().c_str(),
+<a name="l00140"></a>00140              binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>, binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a> - binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>,
+<a name="l00141"></a>00141              <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a>));
+<a name="l00142"></a>00142     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.pop();
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144   }
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00147"></a>00147 }
+<a name="l00148"></a>00148 
 <a name="l00149"></a>00149 
-<a name="l00150"></a>00150   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;listing.size(); i++) {
-<a name="l00151"></a>00151     <span class="keywordtype">char</span> *endptr;
-<a name="l00152"></a>00152     <span class="keywordtype">long</span> num = strtol(listing[i].c_str(), &amp;endptr, 10);
-<a name="l00153"></a>00153     <span class="keywordflow">if</span> (*endptr != 0) {
-<a name="l00154"></a>00154       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Invalid file '%s' found in commit log directory '%s'"</span>, listing[i].c_str(), log_dir.c_str());
-<a name="l00155"></a>00155     }
-<a name="l00156"></a>00156     <span class="keywordflow">else</span> {
-<a name="l00157"></a>00157       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a> = (uint32_t)num;
-<a name="l00158"></a>00158       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#05c180f00c04ee9b133695debe4e6f30">log_dir</a> = log_dir;
-<a name="l00159"></a>00159       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#624ab908f9bcd96736aaf24937d6e54b">purge_log_dir</a> = <span class="keyword">false</span>;
-<a name="l00160"></a>00160       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#f8832add19970b301a4b2766ec65ef62">timestamp</a> = 0;
-<a name="l00161"></a>00161       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#1a1ce40f4dfb710b3cf768143724c111">block_stream</a> = 0;
-<a name="l00162"></a>00162       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#361d994e959aa0fc7b49283d00713317">size</a> = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(log_dir + listing[i]);
-<a name="l00163"></a>00163       fragment_vector.push_back(file_info);
-<a name="l00164"></a>00164     }
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167   sort(fragment_vector.begin(), fragment_vector.end(), fragment_ordering_obj);
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169   <span class="comment">// set the "purge log dir" bit on the most recent fragment</span>
-<a name="l00170"></a>00170   fragment_vector[0].purge_log_dir = <span class="keyword">true</span>;
-<a name="l00171"></a>00171 
-<a name="l00172"></a>00172   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;fragment_vector.size(); i++)
-<a name="l00173"></a>00173     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.push(fragment_vector[i]);
-<a name="l00174"></a>00174 
-<a name="l00175"></a>00175 }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177 
-<a name="l00178"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">00178</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">CommitLogReader::load_compressor</a>(uint16_t ztype) {
-<a name="l00179"></a>00179   <a class="code" href="namespace_hypertable.html#44d0f57e416984b50be9acf23ae8229b">BlockCompressionCodecPtr</a> compressor_ptr;
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a> != 0 &amp;&amp; ztype == <a class="code" href="class_hypertable_1_1_commit_log_reader.html#a9b236fbeddada73446dc2def553a8e2">m_compressor_type</a>)
-<a name="l00182"></a>00182     <span class="keywordflow">return</span>;
-<a name="l00183"></a>00183   <span class="keywordflow">if</span> (ztype &gt;= <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99754536861155759a1bd1e26beeb600ddf6">BlockCompressionCodec::COMPRESSION_TYPE_LIMIT</a>)
-<a name="l00184"></a>00184     <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28587b9720dd346db8c1a83dd895ffdad">Error::BLOCK_COMPRESSOR_UNSUPPORTED_TYPE</a>, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Invalid compression type - "</span> + ztype);
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   compressor_ptr = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#1b5f51faa710ae6129e8f04c2454addc">m_compressor_map</a>[ztype];
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188   <span class="keywordflow">if</span> (!compressor_ptr) {
-<a name="l00189"></a>00189     compressor_ptr = <a class="code" href="class_hypertable_1_1_compressor_factory.html#2982d6db42a48056ff32aea918fb3942">CompressorFactory::create_block_codec</a>((<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975">BlockCompressionCodec::Type</a>)ztype);
-<a name="l00190"></a>00190     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#1b5f51faa710ae6129e8f04c2454addc">m_compressor_map</a>[ztype] = compressor_ptr;
-<a name="l00191"></a>00191   }
+<a name="l00150"></a>00150 
+<a name="l00151"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#10ccbde3f5c0ab40cdcd7f7acd931fcc">00151</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#10ccbde3f5c0ab40cdcd7f7acd931fcc">CommitLogReader::load_fragments</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir) {
+<a name="l00152"></a>00152   vector&lt;string&gt; listing;
+<a name="l00153"></a>00153   <a class="code" href="struct_hypertable_1_1_commit_log_file_info.html">CommitLogFileInfo</a> file_info;
+<a name="l00154"></a>00154   vector&lt;CommitLogFileInfo&gt; fragment_vector;
+<a name="l00155"></a>00155   <span class="keyword">struct </span>reverse_sort_clfi fragment_ordering_obj;
+<a name="l00156"></a>00156 
+<a name="l00157"></a>00157   <a class="code" href="class_hypertable_1_1_file_utils.html#ac6b85222ba3a245107ed4763b0f083c">FileUtils::add_trailing_slash</a>(log_dir);
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f834e57791fc23b76e6c5297bcf4094a" title="Obtains a listing of all files in a directory asynchronously.">readdir</a>(log_dir, listing);
+<a name="l00160"></a>00160 
+<a name="l00161"></a>00161   <span class="keywordflow">if</span> (listing.size() == 0)
+<a name="l00162"></a>00162     <span class="keywordflow">return</span>;
+<a name="l00163"></a>00163 
+<a name="l00164"></a>00164   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;listing.size(); i++) {
+<a name="l00165"></a>00165     <span class="keywordtype">char</span> *endptr;
+<a name="l00166"></a>00166     <span class="keywordtype">long</span> num = strtol(listing[i].c_str(), &amp;endptr, 10);
+<a name="l00167"></a>00167     <span class="keywordflow">if</span> (*endptr != 0) {
+<a name="l00168"></a>00168       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Invalid file '%s' found in commit log directory '%s'"</span>, listing[i].c_str(), log_dir.c_str());
+<a name="l00169"></a>00169     }
+<a name="l00170"></a>00170     <span class="keywordflow">else</span> {
+<a name="l00171"></a>00171       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#62da6df32b2a98aa27f484d3ca3e0eea">num</a> = (uint32_t)num;
+<a name="l00172"></a>00172       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#05c180f00c04ee9b133695debe4e6f30">log_dir</a> = log_dir;
+<a name="l00173"></a>00173       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#624ab908f9bcd96736aaf24937d6e54b">purge_log_dir</a> = <span class="keyword">false</span>;
+<a name="l00174"></a>00174       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#f8832add19970b301a4b2766ec65ef62">timestamp</a> = 0;
+<a name="l00175"></a>00175       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#1a1ce40f4dfb710b3cf768143724c111">block_stream</a> = 0;
+<a name="l00176"></a>00176       file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#361d994e959aa0fc7b49283d00713317">size</a> = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#3f6ad37601003fd95a18ac4abbac6890">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(log_dir + listing[i]);
+<a name="l00177"></a>00177       <span class="keywordflow">if</span> (file_info.<a class="code" href="struct_hypertable_1_1_commit_log_file_info.html#361d994e959aa0fc7b49283d00713317">size</a> &gt; 0)
+<a name="l00178"></a>00178         fragment_vector.push_back(file_info);
+<a name="l00179"></a>00179     }
+<a name="l00180"></a>00180   }
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182   <span class="keywordflow">if</span> (fragment_vector.empty())
+<a name="l00183"></a>00183     <span class="keywordflow">return</span>;
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   sort(fragment_vector.begin(), fragment_vector.end(), fragment_ordering_obj);
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187   <span class="comment">// set the "purge log dir" bit on the most recent fragment</span>
+<a name="l00188"></a>00188   fragment_vector[0].purge_log_dir = <span class="keyword">true</span>;
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;fragment_vector.size(); i++)
+<a name="l00191"></a>00191     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#6f904f2a1a1738d00ca931e82761ab4b">m_fragment_stack</a>.push(fragment_vector[i]);
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#a9b236fbeddada73446dc2def553a8e2">m_compressor_type</a> = ztype;
-<a name="l00194"></a>00194   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a> = compressor_ptr.get();
-<a name="l00195"></a>00195 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+<a name="l00193"></a>00193 }
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195 
+<a name="l00196"></a><a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">00196</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html#fd14f43969fb21dfb8b0f2e1c61d3dd1">CommitLogReader::load_compressor</a>(uint16_t ztype) {
+<a name="l00197"></a>00197   <a class="code" href="namespace_hypertable.html#44d0f57e416984b50be9acf23ae8229b">BlockCompressionCodecPtr</a> compressor_ptr;
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a> != 0 &amp;&amp; ztype == <a class="code" href="class_hypertable_1_1_commit_log_reader.html#a9b236fbeddada73446dc2def553a8e2">m_compressor_type</a>)
+<a name="l00200"></a>00200     <span class="keywordflow">return</span>;
+<a name="l00201"></a>00201   <span class="keywordflow">if</span> (ztype &gt;= <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99754536861155759a1bd1e26beeb600ddf6">BlockCompressionCodec::COMPRESSION_TYPE_LIMIT</a>)
+<a name="l00202"></a>00202     <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28587b9720dd346db8c1a83dd895ffdad">Error::BLOCK_COMPRESSOR_UNSUPPORTED_TYPE</a>, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Invalid compression type - "</span> + ztype);
+<a name="l00203"></a>00203 
+<a name="l00204"></a>00204   compressor_ptr = <a class="code" href="class_hypertable_1_1_commit_log_reader.html#1b5f51faa710ae6129e8f04c2454addc">m_compressor_map</a>[ztype];
+<a name="l00205"></a>00205 
+<a name="l00206"></a>00206   <span class="keywordflow">if</span> (!compressor_ptr) {
+<a name="l00207"></a>00207     compressor_ptr = <a class="code" href="class_hypertable_1_1_compressor_factory.html#2982d6db42a48056ff32aea918fb3942">CompressorFactory::create_block_codec</a>((<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975">BlockCompressionCodec::Type</a>)ztype);
+<a name="l00208"></a>00208     <a class="code" href="class_hypertable_1_1_commit_log_reader.html#1b5f51faa710ae6129e8f04c2454addc">m_compressor_map</a>[ztype] = compressor_ptr;
+<a name="l00209"></a>00209   }
+<a name="l00210"></a>00210 
+<a name="l00211"></a>00211   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#a9b236fbeddada73446dc2def553a8e2">m_compressor_type</a> = ztype;
+<a name="l00212"></a>00212   <a class="code" href="class_hypertable_1_1_commit_log_reader.html#9b79992ec76e5f09ec17c923ec9af2ad">m_compressor</a> = compressor_ptr.get();
+<a name="l00213"></a>00213 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

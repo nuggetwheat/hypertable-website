@@ -37,27 +37,27 @@
 <a name="l00038"></a>00038 
 <a name="l00046"></a><a class="code" href="class_hypertable_1_1_reference_count.html">00046</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> : noncopyable {
 <a name="l00047"></a>00047   <span class="keyword">public</span>:
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_reference_count.html#f95004c1ae9959f2a78216a92daa185a">00048</a>     <a class="code" href="class_hypertable_1_1_reference_count.html#f95004c1ae9959f2a78216a92daa185a">ReferenceCount</a>() { <a class="code" href="atomic_8h.html#f7cad706a5bba06487b2011794061922" title="atomic_set - set atomic variable">atomic_set</a>(&amp;<a class="code" href="class_hypertable_1_1_reference_count.html#a1737a12bc070a1db3c0b86e6d5d5fb4">refCount</a>, 0); }
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_reference_count.html#f95004c1ae9959f2a78216a92daa185a">00048</a>     <a class="code" href="class_hypertable_1_1_reference_count.html#f95004c1ae9959f2a78216a92daa185a">ReferenceCount</a>() { <a class="code" href="atomic_8h.html#f7cad706a5bba06487b2011794061922" title="atomic_set - set atomic variable">atomic_set</a>(&amp;<a class="code" href="class_hypertable_1_1_reference_count.html#637b4db7b114a8d07860bfa529ad4f57">refcount</a>, 0); }
 <a name="l00049"></a><a class="code" href="class_hypertable_1_1_reference_count.html#b1166399e8418359c0de0c9160cbb8b4">00049</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_reference_count.html#b1166399e8418359c0de0c9160cbb8b4">~ReferenceCount</a>() { <span class="keywordflow">return</span>; }
 <a name="l00050"></a>00050     <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reference_count.html#69c9b55270517d731376a3d6f06c53e4" title="Atomically increments reference count.">intrusive_ptr_add_ref</a>(<a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> *rc);
 <a name="l00051"></a>00051     <span class="keyword">friend</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reference_count.html#66f349480c9ac228f6c3db4b6827817c" title="Atomically decrements reference count, deleting the ReferenceCount object when the...">intrusive_ptr_release</a>(<a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> *rc);
 <a name="l00052"></a>00052   <span class="keyword">private</span>:
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_reference_count.html#a1737a12bc070a1db3c0b86e6d5d5fb4">00053</a>     <a class="code" href="structatomic__t.html">atomic_t</a> <a class="code" href="class_hypertable_1_1_reference_count.html#a1737a12bc070a1db3c0b86e6d5d5fb4">refCount</a>;
+<a name="l00053"></a><a class="code" href="class_hypertable_1_1_reference_count.html#637b4db7b114a8d07860bfa529ad4f57">00053</a>     <a class="code" href="structatomic__t.html">atomic_t</a> <a class="code" href="class_hypertable_1_1_reference_count.html#637b4db7b114a8d07860bfa529ad4f57">refcount</a>;
 <a name="l00054"></a>00054   };
 <a name="l00055"></a>00055 
 <a name="l00061"></a><a class="code" href="namespace_hypertable.html#9feda6116f081c6842289c6c856a47a7">00061</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#9feda6116f081c6842289c6c856a47a7" title="Atomically increments reference count.">intrusive_ptr_add_ref</a>(<a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> *rc) {
-<a name="l00062"></a>00062     <a class="code" href="atomic_8h.html#9a5d8951b9c8bae6c060b2bf41a76d03">atomic_inc_return</a>(&amp;rc-&gt;<a class="code" href="class_hypertable_1_1_reference_count.html#a1737a12bc070a1db3c0b86e6d5d5fb4">refCount</a>);
+<a name="l00062"></a>00062     <a class="code" href="atomic_8h.html#9a5d8951b9c8bae6c060b2bf41a76d03">atomic_inc_return</a>(&amp;rc-&gt;<a class="code" href="class_hypertable_1_1_reference_count.html#637b4db7b114a8d07860bfa529ad4f57">refcount</a>);
 <a name="l00063"></a>00063   }
 <a name="l00064"></a>00064 
 <a name="l00071"></a><a class="code" href="namespace_hypertable.html#ae662fdc8594165f1ac7109c04e9a527">00071</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#ae662fdc8594165f1ac7109c04e9a527" title="Atomically decrements reference count, deleting the ReferenceCount object when the...">intrusive_ptr_release</a>(<a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> *rc) {
-<a name="l00072"></a>00072     <span class="keywordflow">if</span> (<a class="code" href="atomic_8h.html#80a3daad64ad057b95fdc1e0f3ad3232" title="atomic_sub_and_test - subtract value from variable and test result">atomic_sub_and_test</a>(1, &amp;rc-&gt;<a class="code" href="class_hypertable_1_1_reference_count.html#a1737a12bc070a1db3c0b86e6d5d5fb4">refCount</a>))
+<a name="l00072"></a>00072     <span class="keywordflow">if</span> (<a class="code" href="atomic_8h.html#80a3daad64ad057b95fdc1e0f3ad3232" title="atomic_sub_and_test - subtract value from variable and test result">atomic_sub_and_test</a>(1, &amp;rc-&gt;<a class="code" href="class_hypertable_1_1_reference_count.html#637b4db7b114a8d07860bfa529ad4f57">refcount</a>))
 <a name="l00073"></a>00073       <span class="keyword">delete</span> rc;
 <a name="l00074"></a>00074   }
 <a name="l00075"></a>00075 
 <a name="l00076"></a>00076 }
 <a name="l00077"></a>00077 
 <a name="l00078"></a>00078 <span class="preprocessor">#endif // HYPERTABLE_REFERENCECOUNT_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

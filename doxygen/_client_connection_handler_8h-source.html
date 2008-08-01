@@ -27,69 +27,70 @@
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_8h.html">AsyncComm/DispatchHandler.h</a>"</span>
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="namespace_hyperspace.html">00034</a> <span class="keyword">namespace </span>Hyperspace {
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a>;
-<a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_client_connection_handler.html">ClientConnectionHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
-<a name="l00039"></a>00039   <span class="keyword">public</span>:
-<a name="l00040"></a>00040 
-<a name="l00041"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d40871820e2fa770ab92248e11c2b14aa6">00041</a>     <span class="keyword">enum</span> { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4796b653d2b3a9067b90e721286c63d56">CONNECTING</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d40871820e2fa770ab92248e11c2b14aa6">HANDSHAKING</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4c60f4327c849227f93a8a523b54dd3f6">CONNECTED</a> };
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043     <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#af6de944829f945324ce2b00ffe96080">ClientConnectionHandler</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> *session, time_t timeout);
-<a name="l00044"></a>00044     <span class="keyword">virtual</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#4343b7c2a9fab2ba3b6a0f30b0a69217">~ClientConnectionHandler</a>();
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#6308e64af08212482ad0c1a314769882" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">Hypertable::EventPtr</a> &amp;eventPtr);
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#c11690a3f0014acc727c3943d299b206">00048</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#c11690a3f0014acc727c3943d299b206">set_session_id</a>(uint64_t <span class="keywordtype">id</span>) { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">m_session_id</a> = id; }
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#be2c7d1f0898d836e51a6a2d15345c74">00050</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#be2c7d1f0898d836e51a6a2d15345c74">disconnected</a>() { 
-<a name="l00051"></a>00051       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
-<a name="l00052"></a>00052       <span class="keywordflow">return</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> == <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
-<a name="l00053"></a>00053     }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#72bd60787cc5919526b6a90bb79d16c8">00055</a>     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#72bd60787cc5919526b6a90bb79d16c8">initiate_connection</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr) {
-<a name="l00056"></a>00056       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
-<a name="l00057"></a>00057       <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> dhp(<span class="keyword">this</span>);
-<a name="l00058"></a>00058       <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00059"></a>00059       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4796b653d2b3a9067b90e721286c63d56">CONNECTING</a>;
-<a name="l00060"></a>00060       <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">connect</a>(addr, dhp)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00061"></a>00061         std::string str;
-<a name="l00062"></a>00062         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem establishing TCP connection with Hyperspace.Master at %s - %s"</span>,
-<a name="l00063"></a>00063                      InetAddr::string_format(str, addr), <a class="code" href="namespace_hypertable_1_1_error.html#aa9a88a896e9afc2abf07a4dafcc4444">Error::get_text</a>(error));
-<a name="l00064"></a>00064         <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46" title="Closes the socket connection specified by the addr argument.">close_socket</a>(addr);
-<a name="l00065"></a>00065         <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
-<a name="l00066"></a>00066       }
-<a name="l00067"></a>00067       <span class="keywordflow">return</span> error;
-<a name="l00068"></a>00068     }
-<a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f69671f422d0df7a0e2222e2ea9ba60a">00070</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f69671f422d0df7a0e2222e2ea9ba60a">set_verbose_mode</a>(<span class="keywordtype">bool</span> verbose) { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">m_verbose</a> = verbose; }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d45046840769619e477d5fc82a6194f6">00072</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d45046840769619e477d5fc82a6194f6">close</a>() {
-<a name="l00073"></a>00073       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
-<a name="l00074"></a>00074       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46" title="Closes the socket connection specified by the addr argument.">close_socket</a>(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">m_master_addr</a>);
-<a name="l00075"></a>00075       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
-<a name="l00076"></a>00076     }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="keyword">private</span>:
-<a name="l00079"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">00079</a>     boost::mutex <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>;
-<a name="l00080"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">00080</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>;
-<a name="l00081"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#aa418b31760f97122d347853750e4151">00081</a>     <a class="code" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> *<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#aa418b31760f97122d347853750e4151">m_session</a>;
-<a name="l00082"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">00082</a>     uint64_t <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">m_session_id</a>;
-<a name="l00083"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">00083</a>     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a>;
-<a name="l00084"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">00084</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">m_verbose</a>;
-<a name="l00085"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">00085</a>     <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">m_master_addr</a>;
-<a name="l00086"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f9e06b5504fd0b9fc815e2163d61a901">00086</a>     time_t <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f9e06b5504fd0b9fc815e2163d61a901">m_timeout</a>;
-<a name="l00087"></a>00087   };
-<a name="l00088"></a><a class="code" href="namespace_hyperspace.html#e28a6dd66f4cf2341d6936d3d9e26110">00088</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;ClientConnectionHandler&gt; <a class="code" href="namespace_hyperspace.html#e28a6dd66f4cf2341d6936d3d9e26110">ClientConnectionHandlerPtr</a>;
-<a name="l00089"></a>00089   
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hyperspace {
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035   <span class="keyword">using namespace </span>Hypertable;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037   <span class="keyword">class </span>Session;
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html">00039</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_client_connection_handler.html">ClientConnectionHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
+<a name="l00040"></a>00040   <span class="keyword">public</span>:
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d40871820e2fa770ab92248e11c2b14aa6">00042</a>     <span class="keyword">enum</span> { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4796b653d2b3a9067b90e721286c63d56">CONNECTING</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d40871820e2fa770ab92248e11c2b14aa6">HANDSHAKING</a>, <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4c60f4327c849227f93a8a523b54dd3f6">CONNECTED</a> };
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044     <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#af6de944829f945324ce2b00ffe96080">ClientConnectionHandler</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hyperspace_1_1_session.html">Session</a> *session, time_t timeout);
+<a name="l00045"></a>00045     <span class="keyword">virtual</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#4343b7c2a9fab2ba3b6a0f30b0a69217">~ClientConnectionHandler</a>();
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#ebcea535e09e25b18c6c9bbd3129ad7a" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">Hypertable::EventPtr</a> &amp;event_ptr);
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#c11690a3f0014acc727c3943d299b206">00049</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#c11690a3f0014acc727c3943d299b206">set_session_id</a>(uint64_t <span class="keywordtype">id</span>) { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">m_session_id</a> = id; }
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#be2c7d1f0898d836e51a6a2d15345c74">00051</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#be2c7d1f0898d836e51a6a2d15345c74">disconnected</a>() {
+<a name="l00052"></a>00052       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
+<a name="l00053"></a>00053       <span class="keywordflow">return</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> == <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
+<a name="l00054"></a>00054     }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#72bd60787cc5919526b6a90bb79d16c8">00056</a>     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#72bd60787cc5919526b6a90bb79d16c8">initiate_connection</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr) {
+<a name="l00057"></a>00057       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
+<a name="l00058"></a>00058       <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> dhp(<span class="keyword">this</span>);
+<a name="l00059"></a>00059       <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00060"></a>00060       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4796b653d2b3a9067b90e721286c63d56">CONNECTING</a>;
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">connect</a>(addr, dhp)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00062"></a>00062         std::string str;
+<a name="l00063"></a>00063         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem establishing TCP connection with Hyperspace.Master at %s - %s"</span>,
+<a name="l00064"></a>00064                      <a class="code" href="struct_hypertable_1_1_inet_addr.html#d8f44211e7b89743d7ed4282c6d7f307" title="Format a socket address.">InetAddr::string_format</a>(str, addr), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(error));
+<a name="l00065"></a>00065         <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46" title="Closes the socket connection specified by the addr argument.">close_socket</a>(addr);
+<a name="l00066"></a>00066         <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
+<a name="l00067"></a>00067       }
+<a name="l00068"></a>00068       <span class="keywordflow">return</span> error;
+<a name="l00069"></a>00069     }
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f69671f422d0df7a0e2222e2ea9ba60a">00071</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f69671f422d0df7a0e2222e2ea9ba60a">set_verbose_mode</a>(<span class="keywordtype">bool</span> verbose) { <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">m_verbose</a> = verbose; }
+<a name="l00072"></a>00072 
+<a name="l00073"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d45046840769619e477d5fc82a6194f6">00073</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d45046840769619e477d5fc82a6194f6">close</a>() {
+<a name="l00074"></a>00074       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>);
+<a name="l00075"></a>00075       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46" title="Closes the socket connection specified by the addr argument.">close_socket</a>(<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">m_master_addr</a>);
+<a name="l00076"></a>00076       <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a> = <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8ffdc932928f78d9b30539ef68c884d4e6c44dd4d0e7980310c843b02934086e">DISCONNECTED</a>;
+<a name="l00077"></a>00077     }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keyword">private</span>:
+<a name="l00080"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">00080</a>     boost::mutex <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42aec0669c57f42cfb6008e7cc37a657">m_mutex</a>;
+<a name="l00081"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">00081</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#8f3dee8b53f6d31be8fa52b5a7f001c1">m_comm</a>;
+<a name="l00082"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#aa418b31760f97122d347853750e4151">00082</a>     <a class="code" href="class_hyperspace_1_1_session.html">Session</a> *<a class="code" href="class_hyperspace_1_1_client_connection_handler.html#aa418b31760f97122d347853750e4151">m_session</a>;
+<a name="l00083"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">00083</a>     uint64_t <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#0244221c2fd1881951652da2725ea1c1">m_session_id</a>;
+<a name="l00084"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">00084</a>     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#d94cf38b594ea3940b6bb5ec5ae95f3e">m_state</a>;
+<a name="l00085"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">00085</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#42e0aa940c0b04c4125c5ecbd0aa88e3">m_verbose</a>;
+<a name="l00086"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">00086</a>     <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#a7af335bbba7ccb0a1df9c46bc34d404">m_master_addr</a>;
+<a name="l00087"></a><a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f9e06b5504fd0b9fc815e2163d61a901">00087</a>     time_t <a class="code" href="class_hyperspace_1_1_client_connection_handler.html#f9e06b5504fd0b9fc815e2163d61a901">m_timeout</a>;
+<a name="l00088"></a>00088   };
+<a name="l00089"></a><a class="code" href="namespace_hyperspace.html#e28a6dd66f4cf2341d6936d3d9e26110">00089</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;ClientConnectionHandler&gt; <a class="code" href="namespace_hyperspace.html#e28a6dd66f4cf2341d6936d3d9e26110">ClientConnectionHandlerPtr</a>;
 <a name="l00090"></a>00090 
-<a name="l00091"></a>00091 }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093 <span class="preprocessor">#endif // HYPERSPACE_CLIENTCONNECTIONHANDLER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 }
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094 <span class="preprocessor">#endif // HYPERSPACE_CLIENTCONNECTIONHANDLER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

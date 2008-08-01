@@ -40,17 +40,13 @@ Collaboration diagram for Hypertable::Comm:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_comm__coll__graph.png" border="0" usemap="#_hypertable_1_1_comm__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_comm__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="176,96,368,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="64,5,136,32"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="176,96,368,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="64,6,136,32"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="392,96,523,123"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_comm-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#47668b629f7201a6ada3ff3afa4ff712">Comm</a> ()</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#00134417af6aae9bf911d3ec7b8c049b">~Comm</a> ()</td></tr>
-
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab">connect</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;default_handler_ptr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Establishes a TCP connection to the address given by the addr argument and associates with it a default dispatch handler.  <a href="#ab29af416a46e5ef940203207fa9ffab"></a><br></td></tr>
@@ -60,12 +56,12 @@ Collaboration diagram for Hypertable::Comm:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#1005545155167ea8556c7d1724dfdc25">set_alias</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;alias)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets an alias for a TCP connection.  <a href="#1005545155167ea8556c7d1724dfdc25"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#d657f3666ca68e2b635e2f1804fa5270">listen</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#c81da0a29244afb9c533963197dcf51b">ConnectionHandlerFactoryPtr</a> &amp;chf_ptr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#d8e49fbe70932e0df390f018cfede4c3">listen</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#c81da0a29244afb9c533963197dcf51b">ConnectionHandlerFactoryPtr</a> &amp;chf_ptr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tells the communication subsystem to listen for connection requests on the address given by the addr argument.  <a href="#d657f3666ca68e2b635e2f1804fa5270"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#b485241d1c79d22ef4528f8a2b1c4e5b">listen</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#c81da0a29244afb9c533963197dcf51b">ConnectionHandlerFactoryPtr</a> &amp;chf_ptr, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;default_handler_ptr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tells the communication subsystem to listen for connection requests on the address given by the addr argument.  <a href="#d8e49fbe70932e0df390f018cfede4c3"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#d4efe8c186860a6b76244c80caac32d5">listen</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#c81da0a29244afb9c533963197dcf51b">ConnectionHandlerFactoryPtr</a> &amp;chf_ptr, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;default_handler_ptr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tells the communication subsystem to listen for connection requests on the address given by the addr argument.  <a href="#b485241d1c79d22ef4528f8a2b1c4e5b"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Tells the communication subsystem to listen for connection requests on the address given by the addr argument.  <a href="#d4efe8c186860a6b76244c80caac32d5"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#bd216d0b11df28363c9dc509da01a1f3">send_request</a> (struct sockaddr_in &amp;addr, time_t timeout, <a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbuf_ptr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *response_handler)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends a request message over a connection, expecting a response.  <a href="#bd216d0b11df28363c9dc509da01a1f3"></a><br></td></tr>
@@ -75,9 +71,9 @@ Collaboration diagram for Hypertable::Comm:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#566a43959b335ffc8b42a49e173c9476">get_local_address</a> (struct sockaddr_in addr, struct sockaddr_in *local_addr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Obtains the local address of a socket connection.  <a href="#566a43959b335ffc8b42a49e173c9476"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#8a7d3022a12cd11959fd54b74b2a3ad9">create_datagram_receive_socket</a> (struct sockaddr_in *addr, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handler_ptr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#52bc6f0042ebfacf83f099ca26909602">create_datagram_receive_socket</a> (struct sockaddr_in *addr, int tos, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handler_ptr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a local socket for receiving datagrams and assigns a default dispatch handler to handle events on this socket.  <a href="#8a7d3022a12cd11959fd54b74b2a3ad9"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a local socket for receiving datagrams and assigns a default dispatch handler to handle events on this socket.  <a href="#52bc6f0042ebfacf83f099ca26909602"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#93140a1cd19fa5d1385f210005bbf9b8">send_datagram</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;send_addr, <a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbuf_ptr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends a datagram to a remote address.  <a href="#93140a1cd19fa5d1385f210005bbf9b8"></a><br></td></tr>
@@ -90,26 +86,37 @@ Collaboration diagram for Hypertable::Comm:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46">close_socket</a> (struct sockaddr_in &amp;addr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Closes the socket connection specified by the addr argument.  <a href="#f28dd696003d36d7677b3719e2cfeb46"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#193565c5dddb894233ad534e5f11b8f7">instance</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#53ed7d960a060a0b833d7c69d9abd2ce">destroy</a> ()</td></tr>
+
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#47668b629f7201a6ada3ff3afa4ff712">Comm</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#00134417af6aae9bf911d3ec7b8c049b">~Comm</a> ()</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#8778f1e5619a01e62f4d28ff4fb5b20d">connect_socket</a> (int sd, struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;default_handler_ptr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">----- Private methods -----  <a href="#8778f1e5619a01e62f4d28ff4fb5b20d"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#df6073ad8da057f7f72122d52c1716c9">m_mutex</a></td></tr>
-
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#f69bac2b8487c8ff6afc7d817cf981e2">HandlerMapPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#0a79bcca2a1ab2cf6c45cdfbff0802ac">m_handler_map_ptr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#23201b4522610945204322e58cf2aa76">m_timer_reactor_ptr</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Static Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#6827ca59f7c4e440a0413668453a714d">ms_instance</a> = NULL</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="structatomic__t.html">atomic_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#8fabafbc7958acae7284de86a9e02407">ms_next_request_id</a> = ATOMIC_INIT(1)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm.html#5c5704e896270f0854b2c879b096f998">ms_mutex</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Provides communication (message passing) services to an application. 
 <p>
 There should be only one instance of this class per process and the static method <a class="el" href="class_hypertable_1_1_reactor_factory.html#dda95af73ca29ccaf3f401293495ec76" title="This method creates and initializes the I/O reactor threads and must be called once...">ReactorFactory::initialize</a> must be called prior to constructing this class in order to create the system-wide I/O reactor threads. 
-<p>Definition at line <a class="el" href="_comm_8h-source.html#l00052">52</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00042">42</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="47668b629f7201a6ada3ff3afa4ff712"></a><!-- doxytag: member="Hypertable::Comm::Comm" ref="47668b629f7201a6ada3ff3afa4ff712" args="()" -->
 <div class="memitem">
@@ -120,7 +127,7 @@ There should be only one instance of this class per process and the static metho
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td width="100%"><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -128,7 +135,7 @@ There should be only one instance of this class per process and the static metho
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00062">62</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00064">64</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -141,7 +148,7 @@ There should be only one instance of this class per process and the static metho
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td width="100%"><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -149,11 +156,53 @@ There should be only one instance of this class per process and the static metho
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00076">76</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00075">75</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="193565c5dddb894233ad534e5f11b8f7"></a><!-- doxytag: member="Hypertable::Comm::instance" ref="193565c5dddb894233ad534e5f11b8f7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="class_hypertable_1_1_comm.html">Comm</a>* Hypertable::Comm::instance           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00044">44</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="53ed7d960a060a0b833d7c69d9abd2ce"></a><!-- doxytag: member="Hypertable::Comm::destroy" ref="53ed7d960a060a0b833d7c69d9abd2ce" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Comm::destroy           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00089">89</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="ab29af416a46e5ef940203207fa9ffab"></a><!-- doxytag: member="Hypertable::Comm::connect" ref="ab29af416a46e5ef940203207fa9ffab" args="(struct sockaddr_in &amp;addr, DispatchHandlerPtr &amp;default_handler_ptr)" -->
 <div class="memitem">
 <div class="memproto">
@@ -191,7 +240,7 @@ CONNECTION_ESTABLISHED and DISCONNECT events are delivered to the default dispat
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00093">93</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00100">100</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -239,7 +288,7 @@ A default dispatch handler is associated with the connection to receive CONNECTI
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00112">112</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00117">117</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -277,18 +326,17 @@ Sets an alias for a TCP connection.
     <tr><td valign="top"></td><td valign="top"><em>alias</em>&nbsp;</td><td>alias connection identifier </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00145">145</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00147">147</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d657f3666ca68e2b635e2f1804fa5270"></a><!-- doxytag: member="Hypertable::Comm::listen" ref="d657f3666ca68e2b635e2f1804fa5270" args="(struct sockaddr_in &amp;addr, ConnectionHandlerFactoryPtr &amp;chf_ptr)" -->
+<a class="anchor" name="d8e49fbe70932e0df390f018cfede4c3"></a><!-- doxytag: member="Hypertable::Comm::listen" ref="d8e49fbe70932e0df390f018cfede4c3" args="(struct sockaddr_in &amp;addr, ConnectionHandlerFactoryPtr &amp;chf_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Comm::listen           </td>
+          <td class="memname">void Comm::listen           </td>
           <td>(</td>
           <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
@@ -318,18 +366,17 @@ New connections will be assigned dispatch handlers by invoking the get_instance 
     <tr><td valign="top"></td><td valign="top"><em>chf_ptr</em>&nbsp;</td><td>connection handler factory smart pointer </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00136">136</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00141">141</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b485241d1c79d22ef4528f8a2b1c4e5b"></a><!-- doxytag: member="Hypertable::Comm::listen" ref="b485241d1c79d22ef4528f8a2b1c4e5b" args="(struct sockaddr_in &amp;addr, ConnectionHandlerFactoryPtr &amp;chf_ptr, DispatchHandlerPtr &amp;default_handler_ptr)" -->
+<a class="anchor" name="d4efe8c186860a6b76244c80caac32d5"></a><!-- doxytag: member="Hypertable::Comm::listen" ref="d4efe8c186860a6b76244c80caac32d5" args="(struct sockaddr_in &amp;addr, ConnectionHandlerFactoryPtr &amp;chf_ptr, DispatchHandlerPtr &amp;default_handler_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Comm::listen           </td>
+          <td class="memname">void Comm::listen           </td>
           <td>(</td>
           <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
@@ -366,7 +413,6 @@ New connections will be assigned dispatch handlers by invoking the get_instance 
     <tr><td valign="top"></td><td valign="top"><em>default_handler_ptr</em>&nbsp;</td><td>smart pointer to default dispatch handler </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
 <p>Definition at line <a class="el" href="_comm_8cc-source.html#l00154">154</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
@@ -413,8 +459,7 @@ New connections will be assigned dispatch handlers by invoking the get_instance 
 Sends a request message over a connection, expecting a response. 
 <p>
 The connection is specified by the addr argument which is the remote end of the connection. The request message to send is encapsulated in the cbuf_ptr object (see <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>) and should start with a valid header. The dispatch handler given by the response_handler argument will get called back with either a response MESSAGE event or a TIMEOUT event if no response is received within the number of seconds specified by the timeout argument.<p>
-If the server at the other end of the connection uses an <a class="el" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a> to carry out requests, then the gid field in the header can be used to serialize requests that are destined for the same object. For example, the following code serializes requests to the same file descriptor:<p>
-<pre>
+If the server at the other end of the connection uses an <a class="el" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a> to carry out requests, then the gid field in the header can be used to serialize requests that are destined for the same object. For example, the following code serializes requests to the same file descriptor: <pre>
  <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> hbuilder(Header::PROTOCOL_DFSBROKER);
  hbuilder.set_group_id(fd);
  <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *cbuf = new CommBuf(hbuilder, 14);
@@ -432,7 +477,7 @@ If the server at the other end of the connection uses an <a class="el" href="cla
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00196">196</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00191">191</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -468,8 +513,8 @@ It is assumed that the id field of the header matches the id field of the reques
 <pre>
  <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> hbuilder;
  hbuilder.initialize_from_request(request_event_ptr-&gt;header);
- CommBufPtr cbufPtr( new CommBuf(hbuilder, 4) );
- cbufPtr-&gt;append_int(Error::OK);
+ CommBufPtr cbp(new CommBuf(hbuilder, 4));
+ cbp-&gt;append_i32(Error::OK);
  </pre><p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
@@ -479,7 +524,7 @@ It is assumed that the id field of the header matches the id field of the reques
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00227">227</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00224">224</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -520,19 +565,25 @@ The connection is identified by the remote address in the addr argument.<p>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00352">352</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00350">350</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="8a7d3022a12cd11959fd54b74b2a3ad9"></a><!-- doxytag: member="Hypertable::Comm::create_datagram_receive_socket" ref="8a7d3022a12cd11959fd54b74b2a3ad9" args="(struct sockaddr_in *addr, DispatchHandlerPtr &amp;handler_ptr)" -->
+<a class="anchor" name="52bc6f0042ebfacf83f099ca26909602"></a><!-- doxytag: member="Hypertable::Comm::create_datagram_receive_socket" ref="52bc6f0042ebfacf83f099ca26909602" args="(struct sockaddr_in *addr, int tos, DispatchHandlerPtr &amp;handler_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Comm::create_datagram_receive_socket           </td>
+          <td class="memname">void Comm::create_datagram_receive_socket           </td>
           <td>(</td>
           <td class="paramtype">struct sockaddr_in *&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>tos</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -556,12 +607,12 @@ This socket can also be used for sending datagrams. The events delivered for thi
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>address of the socket </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>tos</em>&nbsp;</td><td>TOS value to set on IP packet </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>handler_ptr</em>&nbsp;</td><td>default dispatch handler to handle the deliver of events </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00253">253</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00247">247</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -599,7 +650,7 @@ This socket can also be used for sending datagrams. The events delivered for thi
 <p>
 Sends a datagram to a remote address. 
 <p>
-The remote address is specified by the addr argument and the local socket address to send it from is specified by the send_addr argument. The send_addr argument must refer to a socket that was created with a call to <a href="#create_datagram_receive_socket">create_datagram_receive_socket</a>.<p>
+The remote address is specified by the addr argument and the local socket address to send it from is specified by the send_addr argument. The send_addr argument must refer to a socket that was created with a call to .<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>remote address to send datagram to </td></tr>
@@ -609,7 +660,7 @@ The remote address is specified by the addr argument and the local socket addres
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00299">299</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00303">303</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -650,7 +701,7 @@ The handler argument represents the dispatch handler to receive the TIMER event.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00326">326</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00328">328</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -691,7 +742,7 @@ The handler argument represents the dispatch handler to receive the TIMER event.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00341">341</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00340">340</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -722,7 +773,7 @@ This has the effect of closing the connection and removing it from the event dem
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00370">370</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00366">366</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
@@ -761,11 +812,28 @@ This has the effect of closing the connection and removing it from the event dem
 ----- Private methods ----- 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00390">390</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8cc-source.html#l00383">383</a> of file <a class="el" href="_comm_8cc-source.html">Comm.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="6827ca59f7c4e440a0413668453a714d"></a><!-- doxytag: member="Hypertable::Comm::ms_instance" ref="6827ca59f7c4e440a0413668453a714d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> * <a class="el" href="class_hypertable_1_1_comm.html#6827ca59f7c4e440a0413668453a714d">Comm::ms_instance</a> = NULL<code> [static, private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00259">259</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="8fabafbc7958acae7284de86a9e02407"></a><!-- doxytag: member="Hypertable::Comm::ms_next_request_id" ref="8fabafbc7958acae7284de86a9e02407" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -779,16 +847,16 @@ This has the effect of closing the connection and removing it from the event dem
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8h-source.html#l00250">250</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00264">264</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="df6073ad8da057f7f72122d52c1716c9"></a><!-- doxytag: member="Hypertable::Comm::m_mutex" ref="df6073ad8da057f7f72122d52c1716c9" args="" -->
+<a class="anchor" name="5c5704e896270f0854b2c879b096f998"></a><!-- doxytag: member="Hypertable::Comm::ms_mutex" ref="5c5704e896270f0854b2c879b096f998" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boost::mutex <a class="el" href="class_hypertable_1_1_comm.html#df6073ad8da057f7f72122d52c1716c9">Hypertable::Comm::m_mutex</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> <a class="el" href="class_hypertable_1_1_comm.html#5c5704e896270f0854b2c879b096f998">Comm::ms_mutex</a><code> [static, private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -796,7 +864,7 @@ This has the effect of closing the connection and removing it from the event dem
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8h-source.html#l00252">252</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00266">266</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
 
 </div>
 </div><p>
@@ -813,7 +881,7 @@ This has the effect of closing the connection and removing it from the event dem
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8h-source.html#l00253">253</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00267">267</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
 
 </div>
 </div><p>
@@ -830,13 +898,13 @@ This has the effect of closing the connection and removing it from the event dem
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_8h-source.html#l00254">254</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_8h-source.html#l00268">268</a> of file <a class="el" href="_comm_8h-source.html">Comm.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_comm_8h-source.html">Comm.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_comm_8cc-source.html">Comm.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:33 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

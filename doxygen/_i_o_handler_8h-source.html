@@ -37,7 +37,7 @@
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_8h.html">DispatchHandler.h</a>"</span>
 <a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">ReactorFactory.h</a>"</span>
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_timer_8h.html">Timer.h</a>"</span>
+<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_expire_timer_8h.html">ExpireTimer.h</a>"</span>
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045 <span class="keyword">namespace </span>Hypertable {
 <a name="l00046"></a>00046 
@@ -64,32 +64,32 @@
 <a name="l00070"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#926d3ad5643a9f0edce42e95257f2235">00070</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#926d3ad5643a9f0edce42e95257f2235">~IOHandler</a>() { <span class="keywordflow">return</span>; }
 <a name="l00071"></a>00071 
 <a name="l00072"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">00072</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a> *event) {
-<a name="l00073"></a>00073       memcpy(&amp;event-&gt;<a class="code" href="class_hypertable_1_1_event.html#407bf9f5ed87269d4e45335cee2aab19" title="Local address to which event was delivered.">localAddr</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>));
+<a name="l00073"></a>00073       memcpy(&amp;event-&gt;<a class="code" href="class_hypertable_1_1_event.html#e33b4e258a034cac22d1d65d9e1967b5" title="Local address to which event was delivered.">local_addr</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>));
 <a name="l00074"></a>00074       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>) {
-<a name="l00075"></a>00075         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, event-&gt;<a class="code" href="class_hypertable_1_1_event.html#210fac8f1524042b64bf54c209fde6c5" title="Generates a one-line string representation of the event.">toString</a>().c_str());
+<a name="l00075"></a>00075         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, event-&gt;<a class="code" href="class_hypertable_1_1_event.html#ef83da0bc210cf5bf9ab945e77b2a151" title="Generates a one-line string representation of the event.">to_str</a>().c_str());
 <a name="l00076"></a>00076         <span class="keyword">delete</span> event;
 <a name="l00077"></a>00077       }
 <a name="l00078"></a>00078       <span class="keywordflow">else</span> {
-<a name="l00079"></a>00079         <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> eventPtr(event);
-<a name="l00080"></a>00080         <a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>-&gt;handle(eventPtr);
+<a name="l00079"></a>00079         <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr(event);
+<a name="l00080"></a>00080         <a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>-&gt;handle(event_ptr);
 <a name="l00081"></a>00081       }
 <a name="l00082"></a>00082     }
 <a name="l00083"></a>00083 
 <a name="l00084"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#fd23476195c313f418266e5fb70d6998">00084</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a> *event, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh) {
-<a name="l00085"></a>00085       memcpy(&amp;event-&gt;<a class="code" href="class_hypertable_1_1_event.html#407bf9f5ed87269d4e45335cee2aab19" title="Local address to which event was delivered.">localAddr</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>));
+<a name="l00085"></a>00085       memcpy(&amp;event-&gt;<a class="code" href="class_hypertable_1_1_event.html#e33b4e258a034cac22d1d65d9e1967b5" title="Local address to which event was delivered.">local_addr</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>));
 <a name="l00086"></a>00086       <span class="keywordflow">if</span> (!dh) {
 <a name="l00087"></a>00087         <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>) {
-<a name="l00088"></a>00088           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, event-&gt;<a class="code" href="class_hypertable_1_1_event.html#210fac8f1524042b64bf54c209fde6c5" title="Generates a one-line string representation of the event.">toString</a>().c_str());
+<a name="l00088"></a>00088           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"%s"</span>, event-&gt;<a class="code" href="class_hypertable_1_1_event.html#ef83da0bc210cf5bf9ab945e77b2a151" title="Generates a one-line string representation of the event.">to_str</a>().c_str());
 <a name="l00089"></a>00089           <span class="keyword">delete</span> event;
 <a name="l00090"></a>00090         }
 <a name="l00091"></a>00091         <span class="keywordflow">else</span> {
-<a name="l00092"></a>00092           <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> eventPtr(event);
-<a name="l00093"></a>00093           <a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>-&gt;handle(eventPtr);
+<a name="l00092"></a>00092           <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr(event);
+<a name="l00093"></a>00093           <a class="code" href="class_hypertable_1_1_i_o_handler.html#fe5c86fe33c3380c405f595ac99d1353">m_dispatch_handler_ptr</a>-&gt;handle(event_ptr);
 <a name="l00094"></a>00094         }
 <a name="l00095"></a>00095       }
 <a name="l00096"></a>00096       <span class="keywordflow">else</span> {
-<a name="l00097"></a>00097         <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> eventPtr(event);
-<a name="l00098"></a>00098         dh-&gt;<a class="code" href="class_hypertable_1_1_dispatch_handler.html#d8c7975d126c64104e48c26b03034b18" title="Callback method.">handle</a>(eventPtr);
+<a name="l00097"></a>00097         <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr(event);
+<a name="l00098"></a>00098         dh-&gt;<a class="code" href="class_hypertable_1_1_dispatch_handler.html#e1f871312036aeb52e8e391ad0d70b55" title="Callback method.">handle</a>(event_ptr);
 <a name="l00099"></a>00099       }
 <a name="l00100"></a>00100     }
 <a name="l00101"></a>00101 
@@ -100,10 +100,10 @@
 <a name="l00106"></a>00106 <span class="preprocessor"></span>      <span class="keyword">struct </span>epoll_event event;
 <a name="l00107"></a>00107       memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
 <a name="l00108"></a>00108       <span class="keyword">event</span>.data.ptr = <span class="keyword">this</span>;
-<a name="l00109"></a>00109       <span class="keyword">event</span>.events = EPOLLIN | EPOLLERR | EPOLLHUP;
-<a name="l00110"></a>00110       <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, EPOLL_CTL_ADD, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
+<a name="l00109"></a>00109       <span class="keyword">event</span>.events = EPOLLIN | EPOLLOUT | EPOLLERR | EPOLLHUP | EPOLLET;
+<a name="l00110"></a>00110       <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;poll_fd, EPOLL_CTL_ADD, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
 <a name="l00111"></a>00111         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(%d, EPOLL_CTL_ADD, %d, EPOLLIN|EPOLLERR|EPOLLHUP) failed : %s"</span>,
-<a name="l00112"></a>00112                      <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
+<a name="l00112"></a>00112                      <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;poll_fd, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
 <a name="l00113"></a>00113         exit(1);
 <a name="l00114"></a>00114       }
 <a name="l00115"></a>00115       <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> |= <a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">Reactor::READ_READY</a>;
@@ -118,8 +118,8 @@
 <a name="l00124"></a>00124 
 <a name="l00125"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#75edb5812c1d7e722f3949c7fc499aec">00125</a>     <span class="keyword">struct </span>sockaddr_in &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#75edb5812c1d7e722f3949c7fc499aec">get_local_address</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>; }
 <a name="l00126"></a>00126 
-<a name="l00127"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#35fd5f3230fa65da384e6f803353f39a">00127</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#75edb5812c1d7e722f3949c7fc499aec">get_local_address</a>(<span class="keyword">struct</span> sockaddr_in *addrPtr) {
-<a name="l00128"></a>00128       memcpy(addrPtr, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> sockaddr_in));
+<a name="l00127"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#94bd965d2a09bd9ddd8484213e4826ef">00127</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#75edb5812c1d7e722f3949c7fc499aec">get_local_address</a>(<span class="keyword">struct</span> sockaddr_in *addrp) {
+<a name="l00128"></a>00128       memcpy(addrp, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> sockaddr_in));
 <a name="l00129"></a>00129     }
 <a name="l00130"></a>00130 
 <a name="l00131"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#a65ee168c7726ec7a496cdcf82b39b72">00131</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a65ee168c7726ec7a496cdcf82b39b72">set_alias</a>(<span class="keyword">struct</span> sockaddr_in &amp;alias) {
@@ -134,12 +134,12 @@
 <a name="l00140"></a>00140 
 <a name="l00141"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#8b1605a5267c97a7467ea0e8440e6b55">00141</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#8b1605a5267c97a7467ea0e8440e6b55">get_reactor</a>(<a class="code" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a> &amp;reactor_ptr) { reactor_ptr = <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>; }
 <a name="l00142"></a>00142 
-<a name="l00143"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">00143</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">shutdown</a>() { 
-<a name="l00144"></a>00144       <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_timer_t.html">TimerT</a> timer;
+<a name="l00143"></a><a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">00143</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">shutdown</a>() {
+<a name="l00144"></a>00144       <a class="code" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> timer;
 <a name="l00145"></a>00145       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;schedule_removal(<span class="keyword">this</span>);
-<a name="l00146"></a>00146       boost::xtime_get(&amp;timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, boost::TIME_UTC);
-<a name="l00147"></a>00147       timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>.nsec += 200000000LL;
-<a name="l00148"></a>00148       timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#1796626947dc855edec9793442e53ed3">handler</a> = 0;
+<a name="l00146"></a>00146       boost::xtime_get(&amp;timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, boost::TIME_UTC);
+<a name="l00147"></a>00147       timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>.nsec += 200000000LL;
+<a name="l00148"></a>00148       timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#eca4ea3b231d1245d68c90d6e52683be">handler</a> = 0;
 <a name="l00149"></a>00149       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;add_timer(timer);
 <a name="l00150"></a>00150     }
 <a name="l00151"></a>00151 
@@ -150,9 +150,9 @@
 <a name="l00156"></a>00156 <span class="preprocessor"></span>      <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">remove_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">Reactor::READ_READY</a>|<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
 <a name="l00157"></a>00157 <span class="preprocessor">#elif defined(__linux__)</span>
 <a name="l00158"></a>00158 <span class="preprocessor"></span>      <span class="keyword">struct </span>epoll_event event;  <span class="comment">// this is necessary for &lt; Linux 2.6.9</span>
-<a name="l00159"></a>00159       <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, EPOLL_CTL_DEL, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
+<a name="l00159"></a>00159       <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;poll_fd, EPOLL_CTL_DEL, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
 <a name="l00160"></a>00160         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(%d, EPOLL_CTL_DEL, %d) failed : %s"</span>,
-<a name="l00161"></a>00161                      <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
+<a name="l00161"></a>00161                      <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;poll_fd, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
 <a name="l00162"></a>00162         exit(1);
 <a name="l00163"></a>00163       }
 <a name="l00164"></a>00164       <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> = 0;
@@ -185,7 +185,7 @@
 <a name="l00191"></a>00191 
 <a name="l00192"></a>00192 
 <a name="l00193"></a>00193 <span class="preprocessor">#endif // HYPERTABLE_IOHANDLER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

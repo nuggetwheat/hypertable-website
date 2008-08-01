@@ -47,9 +47,9 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#6a931349b47cba24558f19fba1e605c5">command_text</a> (short command)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#1f4bec0ef369ac5840b88b420f64e79c">create_open_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname, uint32_t bufferSize=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#fea7e718a9053fe0eba4b9043e739156">create_open_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname, uint32_t bufsz=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#da98709385494038c6ea29a593435a8d">create_create_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#161c27764e4c936ffc45b44b7014d76e">create_create_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#9630b3f2199129364b00f0ed6e705cd6">create_close_request</a> (int32_t fd)</td></tr>
 
@@ -127,7 +127,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
 
 <p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_protocol_8h-source.html#l00036">36</a> of file <a class="el" href="_dfs_broker_2_lib_2_protocol_8h-source.html">Protocol.h</a>.</p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="1f4bec0ef369ac5840b88b420f64e79c"></a><!-- doxytag: member="Hypertable::DfsBroker::Protocol::create_open_request" ref="1f4bec0ef369ac5840b88b420f64e79c" args="(const String &amp;fname, uint32_t bufferSize=0)" -->
+<a class="anchor" name="fea7e718a9053fe0eba4b9043e739156"></a><!-- doxytag: member="Hypertable::DfsBroker::Protocol::create_open_request" ref="fea7e718a9053fe0eba4b9043e739156" args="(const String &amp;fname, uint32_t bufsz=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -141,7 +141,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em> = <code>0</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>bufsz</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -158,7 +158,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="da98709385494038c6ea29a593435a8d"></a><!-- doxytag: member="Hypertable::DfsBroker::Protocol::create_create_request" ref="da98709385494038c6ea29a593435a8d" args="(const String &amp;fname, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize)" -->
+<a class="anchor" name="161c27764e4c936ffc45b44b7014d76e"></a><!-- doxytag: member="Hypertable::DfsBroker::Protocol::create_create_request" ref="161c27764e4c936ffc45b44b7014d76e" args="(const String &amp;fname, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -178,7 +178,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em>, </td>
+          <td class="paramname"> <em>bufsz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -190,7 +190,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>blockSize</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>blksz</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -979,7 +979,7 @@ Collaboration diagram for Hypertable::DfsBroker::Protocol:</div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_dfs_broker_2_lib_2_protocol_8h-source.html">Protocol.h</a><li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_dfs_broker_2_lib_2_protocol_8cc-source.html">Protocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:27:16 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:36 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

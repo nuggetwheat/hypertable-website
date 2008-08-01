@@ -50,18 +50,20 @@ Collaboration diagram for Hypertable::ApplicationQueue:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#67df431a1722624b9e9366d43592f4c8">ApplicationQueue</a> (int worker_count)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor to set up the application queue.  <a href="#67df431a1722624b9e9366d43592f4c8"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#f3f88e8c75772f9d90f9a49f3514ead1">~ApplicationQueue</a> ()</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#3c9268f4bd3830e7cbdcb91730f7dbac">shutdown</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Shuts down the application queue.  <a href="#3c9268f4bd3830e7cbdcb91730f7dbac"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#0e2a88088e7ea348bd1b0debe31f7046">join</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Waits for a shutdown to complete.  <a href="#0e2a88088e7ea348bd1b0debe31f7046"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#902b0710d0795d2dcd37718575ffc412">add</a> (<a class="el" href="class_hypertable_1_1_application_handler.html">ApplicationHandler</a> *appHandler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#90a565d28cffe4408f663165cf918134">add</a> (<a class="el" href="class_hypertable_1_1_application_handler.html">ApplicationHandler</a> *app_handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a request (application handler) to the request queue.  <a href="#902b0710d0795d2dcd37718575ffc412"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a request (application handler) to the request queue.  <a href="#90a565d28cffe4408f663165cf918134"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
-&lt; uint64_t, <a class="el" href="class_hypertable_1_1_application_queue_1_1_usage_rec.html">UsageRec</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#268f69967a4d941b6dfcc83b668ee1f2">UsageRecMapT</a></td></tr>
+&lt; uint64_t, <a class="el" href="class_hypertable_1_1_application_queue_1_1_usage_rec.html">UsageRec</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#ae54b4c98a1ac80f2e622ce749994740">UsageRecMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_application_queue.html#87c9bc54f7ad5e3fc5e97ee3485305cc">m_mutex</a></td></tr>
@@ -86,14 +88,14 @@ Collaboration diagram for Hypertable::ApplicationQueue:</div>
 Provides application work queue and worker threads. 
 <p>
 It maintains a queue of requests and a pool of threads that pull requests off the queue and carry them out. 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00044">44</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00045">45</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="268f69967a4d941b6dfcc83b668ee1f2"></a><!-- doxytag: member="Hypertable::ApplicationQueue::UsageRecMapT" ref="268f69967a4d941b6dfcc83b668ee1f2" args="" -->
+<a class="anchor" name="ae54b4c98a1ac80f2e622ce749994740"></a><!-- doxytag: member="Hypertable::ApplicationQueue::UsageRecMap" ref="ae54b4c98a1ac80f2e622ce749994740" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="class_hypertable_1_1_application_queue_1_1_usage_rec.html">UsageRec</a> *&gt; <a class="el" href="class_hypertable_1_1_application_queue.html#268f69967a4d941b6dfcc83b668ee1f2">Hypertable::ApplicationQueue::UsageRecMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="class_hypertable_1_1_application_queue_1_1_usage_rec.html">UsageRec</a> *&gt; <a class="el" href="class_hypertable_1_1_application_queue.html#ae54b4c98a1ac80f2e622ce749994740">Hypertable::ApplicationQueue::UsageRecMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -101,7 +103,7 @@ It maintains a queue of requests and a pool of threads that pull requests off th
 
 <p>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00054">54</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00055">55</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -132,7 +134,28 @@ It creates a number of worker threads specified by the worker_count argument.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00151">151</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00157">157</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f3f88e8c75772f9d90f9a49f3514ead1"></a><!-- doxytag: member="Hypertable::ApplicationQueue::~ApplicationQueue" ref="f3f88e8c75772f9d90f9a49f3514ead1" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::ApplicationQueue::~ApplicationQueue           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00165">165</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -156,7 +179,7 @@ It creates a number of worker threads specified by the worker_count argument.<p>
 Shuts down the application queue. 
 <p>
 All outstanding requests are carried out and then all threads exit. <a class="el" href="class_hypertable_1_1_application_queue.html#0e2a88088e7ea348bd1b0debe31f7046" title="Waits for a shutdown to complete.">join</a> can be called to wait for completion of the shutdown. 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00164">164</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00177">177</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -179,11 +202,11 @@ All outstanding requests are carried out and then all threads exit. <a class="el
 Waits for a shutdown to complete. 
 <p>
 This method returns when all application queue threads exit. 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00173">173</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00186">186</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="902b0710d0795d2dcd37718575ffc412"></a><!-- doxytag: member="Hypertable::ApplicationQueue::add" ref="902b0710d0795d2dcd37718575ffc412" args="(ApplicationHandler *appHandler)" -->
+<a class="anchor" name="90a565d28cffe4408f663165cf918134"></a><!-- doxytag: member="Hypertable::ApplicationQueue::add" ref="90a565d28cffe4408f663165cf918134" args="(ApplicationHandler *app_handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -191,7 +214,7 @@ This method returns when all application queue threads exit.
           <td class="memname">void Hypertable::ApplicationQueue::add           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_application_handler.html">ApplicationHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>appHandler</em>          </td>
+          <td class="paramname"> <em>app_handler</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -203,7 +226,7 @@ This method returns when all application queue threads exit.
 Adds a request (application handler) to the request queue. 
 <p>
 The request queue is designed to support the serialization of related requests. Requests are related by the thread group ID value in the <a class="el" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a>. This thread group ID is constructed in the <a class="el" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a> object 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00187">187</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00200">200</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -221,7 +244,7 @@ The request queue is designed to support the serialization of related requests. 
 
 <p>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00138">138</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00144">144</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -238,7 +261,7 @@ The request queue is designed to support the serialization of related requests. 
 
 <p>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00139">139</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00145">145</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -255,7 +278,7 @@ The request queue is designed to support the serialization of related requests. 
 
 <p>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00140">140</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00146">146</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
@@ -272,13 +295,13 @@ The request queue is designed to support the serialization of related requests. 
 
 <p>
 
-<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00141">141</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
+<p>Definition at line <a class="el" href="_application_queue_8h-source.html#l00147">147</a> of file <a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_application_queue_8h-source.html">ApplicationQueue.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:32 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

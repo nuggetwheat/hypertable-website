@@ -47,9 +47,9 @@ Collaboration diagram for Hypertable::DispatchHandler:</div>
 <a href="class_hypertable_1_1_dispatch_handler-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dispatch_handler.html#d8c7975d126c64104e48c26b03034b18">handle</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dispatch_handler.html#e1f871312036aeb52e8e391ad0d70b55">handle</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Callback method.  <a href="#d8c7975d126c64104e48c26b03034b18"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Callback method.  <a href="#e1f871312036aeb52e8e391ad0d70b55"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dispatch_handler.html#39ac65c6cec6ea17f8ac8c08ee0da076">~DispatchHandler</a> ()</td></tr>
 
 </table>
@@ -81,7 +81,7 @@ An objects of this class gets installed for each connection that is established 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="d8c7975d126c64104e48c26b03034b18"></a><!-- doxytag: member="Hypertable::DispatchHandler::handle" ref="d8c7975d126c64104e48c26b03034b18" args="(EventPtr &amp;eventPtr)=0" -->
+<a class="anchor" name="e1f871312036aeb52e8e391ad0d70b55"></a><!-- doxytag: member="Hypertable::DispatchHandler::handle" ref="e1f871312036aeb52e8e391ad0d70b55" args="(EventPtr &amp;event_ptr)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -89,7 +89,7 @@ An objects of this class gets installed for each connection that is established 
           <td class="memname">virtual void Hypertable::DispatchHandler::handle           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>          </td>
+          <td class="paramname"> <em>event_ptr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -103,17 +103,17 @@ Callback method.
 When the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> layer needs to deliver an event to the application, this method is called to do so. The set of event types include, CONNECTION_ESTABLISHED, DISCONNECT, MESSAGE, ERROR, and TIMER.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>eventPtr</em>&nbsp;</td><td>smart pointer to <a class="el" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a> object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>event_ptr</em>&nbsp;</td><td>smart pointer to <a class="el" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a> object </td></tr>
   </table>
 </dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_connection_manager.html#64d32639f3dec20bd4301d5c7b738064">Hypertable::ConnectionManager</a>, <a class="el" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#d45ffb95c51184e64835d8b6c9106898">Hypertable::DispatchHandlerSynchronizer</a>, <a class="el" href="class_response_handler.html#e18dbd74ee713517639d28792b2b9c39">ResponseHandler</a>, <a class="el" href="class_response_handler_t_c_p.html#029dcb9b49abfb86868232b9647d768c">ResponseHandlerTCP</a>, <a class="el" href="class_response_handler_u_d_p.html#c37f0faf4c3e122e35f61835ffc1e2e1">ResponseHandlerUDP</a>, <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html#6f9875940877c7ce8ca40673072f7795">Hypertable::ClientBufferedReaderHandler</a>, <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b87d5e59566ddb1c45ed60b6d8e20418">Hypertable::DfsBroker::ConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_client_connection_handler.html#6308e64af08212482ad0c1a314769882">Hyperspace::ClientConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_client_keepalive_handler.html#4c139b91ddea457b1619c4bac9423b8c">Hyperspace::ClientKeepaliveHandler</a>, <a class="el" href="class_hyperspace_1_1_server_connection_handler.html#1a3c32f4399c19e6ef911fd5ba096a9e">Hyperspace::ServerConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_server_keepalive_handler.html#03e9bb1f55ce58ad952a0c55513aa43b">Hyperspace::ServerKeepaliveHandler</a>, <a class="el" href="class_hypertable_1_1_table_mutator_dispatch_handler.html#cfc0bab92016e1c83a855705c6ebb45e">Hypertable::TableMutatorDispatchHandler</a>, <a class="el" href="class_hypertable_1_1_connection_handler.html#b87d5e59566ddb1c45ed60b6d8e20418">Hypertable::ConnectionHandler</a>, <a class="el" href="class_hypertable_1_1_drop_table_dispatch_handler.html#89cf6efea661d2f2cec2bc0368f830dc">Hypertable::DropTableDispatchHandler</a>, <a class="el" href="class_hypertable_1_1_connection_handler.html#ca93acd7442b8ebafe637ffa3daac4cb">Hypertable::ConnectionHandler</a>, and <a class="el" href="class_hyperspace_1_1_timer_handler.html#faf60b13f621cfc48b3eb83f47174924">Hyperspace::TimerHandler</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_connection_manager.html#64d32639f3dec20bd4301d5c7b738064">Hypertable::ConnectionManager</a>, <a class="el" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#e717ced182bb8ddd474449ab00e54103">Hypertable::DispatchHandlerSynchronizer</a>, <a class="el" href="class_response_handler.html#e6413b05c2b763e08e3badc762251a79">ResponseHandler</a>, <a class="el" href="class_response_handler_t_c_p.html#309b93d1a76cfad23eb269f2aa1bd227">ResponseHandlerTCP</a>, <a class="el" href="class_response_handler_u_d_p.html#8ec6bdb0551ae2aa0440e8e072218028">ResponseHandlerUDP</a>, <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html#53ab6c3508da48b20e6bb3ecd8a8aa1a">Hypertable::ClientBufferedReaderHandler</a>, <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#398ab75661a2da867854eab7a9f069c2">Hypertable::DfsBroker::ConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_client_connection_handler.html#ebcea535e09e25b18c6c9bbd3129ad7a">Hyperspace::ClientConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_client_keepalive_handler.html#b2416e0fdd6bc940020d538cfda980c0">Hyperspace::ClientKeepaliveHandler</a>, <a class="el" href="class_hyperspace_1_1_server_connection_handler.html#7497ad97b304842a8136e6ce1e107ca9">Hyperspace::ServerConnectionHandler</a>, <a class="el" href="class_hyperspace_1_1_server_keepalive_handler.html#9b45529f39a28f176d9c9aa29b44534d">Hyperspace::ServerKeepaliveHandler</a>, <a class="el" href="class_hypertable_1_1_table_mutator_dispatch_handler.html#cfc0bab92016e1c83a855705c6ebb45e">Hypertable::TableMutatorDispatchHandler</a>, <a class="el" href="class_hypertable_1_1_connection_handler.html#398ab75661a2da867854eab7a9f069c2">Hypertable::ConnectionHandler</a>, <a class="el" href="class_hypertable_1_1_drop_table_dispatch_handler.html#89cf6efea661d2f2cec2bc0368f830dc">Hypertable::DropTableDispatchHandler</a>, <a class="el" href="class_hypertable_1_1_connection_handler.html#1daaaf3ff9ce938ccfe45aba117a77da">Hypertable::ConnectionHandler</a>, and <a class="el" href="class_hyperspace_1_1_timer_handler.html#e9b95402ac0e0c41229a9528f0f12f1c">Hyperspace::TimerHandler</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_dispatch_handler_8h-source.html">DispatchHandler.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:34 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

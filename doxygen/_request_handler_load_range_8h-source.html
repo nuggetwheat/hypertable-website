@@ -26,29 +26,28 @@
 <a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_event_8h.html">AsyncComm/Event.h</a>"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hypertable {
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a>;
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html">00037</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_request_handler_load_range.html">RequestHandlerLoadRange</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> {
-<a name="l00038"></a>00038   <span class="keyword">public</span>:
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#57ed70b59fbf7844c5d2d3332364d1ce">00039</a>     <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#57ed70b59fbf7844c5d2d3332364d1ce">RequestHandlerLoadRange</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a> *rangeServer, <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) : <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a>(eventPtr), <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">m_comm</a>(comm), <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>(rangeServer) {
-<a name="l00040"></a>00040       <span class="keywordflow">return</span>;
-<a name="l00041"></a>00041     }
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#347275db2063d0d445081aaca0b6e8a1" title="Abstract method to carry out the request.">run</a>();
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <span class="keyword">private</span>:
-<a name="l00046"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">00046</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>        *<a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">m_comm</a>;
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">00047</a>     <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a> *<a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>;
-<a name="l00048"></a>00048   };
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 }
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="preprocessor">#endif // HYPERTABLE_REQUESTHANDLERLOADRANGE_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>Hypertable {
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   <span class="keyword">class </span>RangeServer;
+<a name="l00035"></a>00035 
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html">00036</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_request_handler_load_range.html">RequestHandlerLoadRange</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> {
+<a name="l00037"></a>00037   <span class="keyword">public</span>:
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#c9405b7c45d37b98bf1204b9e301e856">00038</a>     <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#c9405b7c45d37b98bf1204b9e301e856">RequestHandlerLoadRange</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a> *rs, <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) : <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a>(event_ptr), <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">m_comm</a>(comm), <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>(rs) {
+<a name="l00039"></a>00039       <span class="keywordflow">return</span>;
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#347275db2063d0d445081aaca0b6e8a1" title="Abstract method to carry out the request.">run</a>();
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   <span class="keyword">private</span>:
+<a name="l00045"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">00045</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>        *<a class="code" href="class_hypertable_1_1_request_handler_load_range.html#0ddf13c96fcd9678b34e812d4fdd0e5f">m_comm</a>;
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">00046</a>     <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a> *<a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>;
+<a name="l00047"></a>00047   };
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="preprocessor">#endif // HYPERTABLE_REQUESTHANDLERLOADRANGE_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -36,14 +36,14 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::vector<br>
 &lt; std::pair<br>
 &lt; <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>,<br>
- <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> &gt; &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">VectorT</a></td></tr>
+ <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> &gt; &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Vector</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#577c1e6424b90cce0b2d3999923b21a3">ScanBlock</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#0c623adecfc8e0feb38eacd43ebe4a06">load</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#ccf73fdeee55e4cdf4ae9dd021307ed3">load</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Loads scanblock data returned from <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a>.  <a href="#0c623adecfc8e0feb38eacd43ebe4a06"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Loads scanblock data returned from <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a>.  <a href="#ccf73fdeee55e4cdf4ae9dd021307ed3"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#4327fccbaa6789a95889ef55e6650ae5">size</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the number of key/value pairs in the scanblock.  <a href="#4327fccbaa6789a95889ef55e6650ae5"></a><br></td></tr>
@@ -69,9 +69,9 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#ef6222e09abc6be70c7e678fea35e669">m_scanner_id</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">VectorT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">m_vec</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Vector</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">m_vec</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">VectorT::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">m_iter</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Vector::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">m_iter</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html#b12ea39f038c80a6279f0e66d9ed2115">m_event_ptr</a></td></tr>
 
@@ -82,12 +82,12 @@ Encapsulates a block of scan results.
 The CREATE_SCANNER and FETCH_SCANBLOCK <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> methods return a block of scan results and this class parses and provides easy access to the key/value pairs in that result. 
 <p>Definition at line <a class="el" href="_scan_block_8h-source.html#l00037">37</a> of file <a class="el" href="_scan_block_8h-source.html">ScanBlock.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="07dd471754fde97da7da1599d95ddfca"></a><!-- doxytag: member="Hypertable::ScanBlock::VectorT" ref="07dd471754fde97da7da1599d95ddfca" args="" -->
+<a class="anchor" name="12490cbe38f11f51a456f416df434065"></a><!-- doxytag: member="Hypertable::ScanBlock::Vector" ref="12490cbe38f11f51a456f416df434065" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef std::vector&lt; std::pair&lt;<a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>, <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>&gt; &gt; <a class="el" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">Hypertable::ScanBlock::VectorT</a>          </td>
+          <td class="memname">typedef std::vector&lt; std::pair&lt;<a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>, <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>&gt; &gt; <a class="el" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Hypertable::ScanBlock::Vector</a>          </td>
         </tr>
       </table>
 </div>
@@ -117,12 +117,12 @@ The CREATE_SCANNER and FETCH_SCANBLOCK <a class="el" href="class_hypertable_1_1_
 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00035">35</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
+<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00038">38</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="0c623adecfc8e0feb38eacd43ebe4a06"></a><!-- doxytag: member="Hypertable::ScanBlock::load" ref="0c623adecfc8e0feb38eacd43ebe4a06" args="(EventPtr &amp;eventPtr)" -->
+<a class="anchor" name="ccf73fdeee55e4cdf4ae9dd021307ed3"></a><!-- doxytag: member="Hypertable::ScanBlock::load" ref="ccf73fdeee55e4cdf4ae9dd021307ed3" args="(EventPtr &amp;event_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -130,7 +130,7 @@ The CREATE_SCANNER and FETCH_SCANBLOCK <a class="el" href="class_hypertable_1_1_
           <td class="memname">int ScanBlock::load           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>          </td>
+          <td class="paramname"> <em>event_ptr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -144,12 +144,12 @@ Loads scanblock data returned from <a class="el" href="class_hypertable_1_1_rang
 Both the CREATE_SCANNER and FETCH_SCANBLOCK methods return a block of key/value pairs.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>eventPtr</em>&nbsp;</td><td>smart pointer to response MESSAGE event </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>event_ptr</em>&nbsp;</td><td>smart pointer to response MESSAGE event </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00043">43</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
+<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00046">46</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
 
 </div>
 </div><p>
@@ -228,7 +228,7 @@ Resets iterator to first key/value pair in the scanblock.
 <p>
 Returns the next key/value pair in the scanblock. 
 <p>
-<b>NOTE:</b> invoking the <a class="el" href="class_hypertable_1_1_scan_block.html#0c623adecfc8e0feb38eacd43ebe4a06" title="Loads scanblock data returned from RangeServer.">load</a> method invalidates all pointers previously returned from this method.<p>
+<b>NOTE:</b> invoking the <a class="el" href="class_hypertable_1_1_scan_block.html#ccf73fdeee55e4cdf4ae9dd021307ed3" title="Loads scanblock data returned from RangeServer.">load</a> method invalidates all pointers previously returned from this method.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>reference to return key pointer </td></tr>
@@ -237,7 +237,7 @@ Returns the next key/value pair in the scanblock.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if key/value returned, false if no more key/value pairs </dd></dl>
 
-<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00089">89</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
+<p>Definition at line <a class="el" href="_scan_block_8cc-source.html#l00084">84</a> of file <a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a>.</p>
 
 </div>
 </div><p>
@@ -365,12 +365,12 @@ Returns scanner ID associated with this scanblock.
 
 </div>
 </div><p>
-<a class="anchor" name="69451f07a220cd92abb7105bc3067f64"></a><!-- doxytag: member="Hypertable::ScanBlock::m_vec" ref="69451f07a220cd92abb7105bc3067f64" args="" -->
+<a class="anchor" name="933e55f9cdaea5abb5a1cbbfe05d299d"></a><!-- doxytag: member="Hypertable::ScanBlock::m_vec" ref="933e55f9cdaea5abb5a1cbbfe05d299d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">VectorT</a> <a class="el" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">Hypertable::ScanBlock::m_vec</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Vector</a> <a class="el" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">Hypertable::ScanBlock::m_vec</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -382,12 +382,12 @@ Returns scanner ID associated with this scanblock.
 
 </div>
 </div><p>
-<a class="anchor" name="aaf04084ece03bed69f2b117fbf6743f"></a><!-- doxytag: member="Hypertable::ScanBlock::m_iter" ref="aaf04084ece03bed69f2b117fbf6743f" args="" -->
+<a class="anchor" name="6d267ec517ee38203a85baa3d642c102"></a><!-- doxytag: member="Hypertable::ScanBlock::m_iter" ref="6d267ec517ee38203a85baa3d642c102" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">VectorT::iterator <a class="el" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">Hypertable::ScanBlock::m_iter</a><code> [private]</code>          </td>
+          <td class="memname">Vector::iterator <a class="el" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">Hypertable::ScanBlock::m_iter</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -418,7 +418,7 @@ Returns scanner ID associated with this scanblock.
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_scan_block_8h-source.html">ScanBlock.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_scan_block_8cc-source.html">ScanBlock.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:51 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:11 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

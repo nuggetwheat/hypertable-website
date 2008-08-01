@@ -21,30 +21,27 @@
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_MASTER_METALOG_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_meta_log_8h.html">MetaLog.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">namespace </span>Hypertable {
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="class_hypertable_1_1_master_meta_log_entry.html">00030</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master_meta_log_entry.html">MasterMetaLogEntry</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> {
-<a name="l00031"></a>00031 <span class="keyword">public</span>:
-<a name="l00032"></a>00032 };
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>;
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="class_hypertable_1_1_master_meta_log.html">00036</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master_meta_log.html">MasterMetaLog</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_meta_log.html">MetaLog</a> {
-<a name="l00037"></a>00037 <span class="keyword">public</span>:
-<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_master_meta_log.html#dbc3c46d8bc97078f4e0d8e8c7e9c9e9">MasterMetaLog</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;path);
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#5bcdd90d2af1c957a2bc446cfa67b768">write</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *);
-<a name="l00041"></a>00041   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#5bcdd90d2af1c957a2bc446cfa67b768">write</a>(<a class="code" href="class_hypertable_1_1_master_meta_log_entry.html">MasterMetaLogEntry</a> *);
-<a name="l00042"></a>00042   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#58e786a5cf872359bd7874479ee91e94">close</a>();
-<a name="l00043"></a>00043   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#b6d6eb6ebb88a8bb19dc7e5dad76667e">purge</a>();
-<a name="l00044"></a>00044 };
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 } <span class="comment">// namespace Hypertable</span>
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 <span class="preprocessor">#endif // HYPERTABLE_MASTER_METALOG_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_meta_log_dfs_base_8h.html">MetaLogDfsBase.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_master_meta_log_reader_8h.html">MasterMetaLogReader.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keyword">namespace </span>Hypertable {
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="class_hypertable_1_1_master_meta_log.html">00031</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master_meta_log.html">MasterMetaLog</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_meta_log_dfs_base.html">MetaLogDfsBase</a> {
+<a name="l00032"></a>00032 <span class="keyword">public</span>:
+<a name="l00033"></a>00033   <a class="code" href="class_hypertable_1_1_master_meta_log.html#dbc3c46d8bc97078f4e0d8e8c7e9c9e9">MasterMetaLog</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="class_hypertable_1_1_meta_log_dfs_base.html#afc02456ce5727025e430c41903fba2c">path</a>);
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#5bcdd90d2af1c957a2bc446cfa67b768" title="Write a metalog entry.">write</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *);
+<a name="l00036"></a>00036   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#58e786a5cf872359bd7874479ee91e94" title="Close the metalog Implementation should handle multiple close calls.">close</a>();
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_meta_log.html#8b964d064186c5db52929c5fa0abf3b9">purge</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#648afeea9cbae98267710480b1f87413">MasterStates</a> &amp;);
+<a name="l00039"></a>00039 };
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="namespace_hypertable.html#d955e200a01ca8732835763ecce4e3a4">00041</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MasterMetaLog&gt; <a class="code" href="namespace_hypertable.html#d955e200a01ca8732835763ecce4e3a4">MasterMetaLogPtr</a>;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 } <span class="comment">// namespace Hypertable</span>
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 <span class="preprocessor">#endif // HYPERTABLE_MASTER_METALOG_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

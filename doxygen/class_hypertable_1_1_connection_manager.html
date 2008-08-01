@@ -40,7 +40,7 @@ Collaboration diagram for Hypertable::ConnectionManager:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_connection_manager__coll__graph.png" border="0" usemap="#_hypertable_1_1_connection_manager__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_connection_manager__coll__map">
-<area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="6,224,200,251"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="35,96,227,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="208,173,342,200"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="184,5,256,32"><area shape="rect" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl_t.html" title="Hypertable::ConnectionManager::SharedImplT" alt="" coords="138,275,442,301"></map>
+<area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="5,238,200,264"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="13,96,205,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="207,187,340,214"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="164,6,236,32"><area shape="rect" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html" title="Hypertable::ConnectionManager::SharedImpl" alt="" coords="137,288,431,315"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="400,96,531,123"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -52,39 +52,39 @@ boost::intrusive_ptr<br>
 &lt; <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#92e53bf2d7fbdc7566ebe0d5dd347beb">ConnectionStatePtr</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#d111398d16b37aee18f31561a42379d4">ConnectionManager</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da">ConnectionManager</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#d111398d16b37aee18f31561a42379d4"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#35cea429c36a77c77c4b1c4dcaf424da"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#d31170e904a6220e401c1143bb3abcee">ConnectionManager</a> (const <a class="el" href="class_hypertable_1_1_connection_manager.html">ConnectionManager</a> &amp;cm)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Copy Constructor.  <a href="#d31170e904a6220e401c1143bb3abcee"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#c084866426806920b97828e432e10285">~ConnectionManager</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructor.  <a href="#c084866426806920b97828e432e10285"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#9b853ec3d5f1a71b8d276d5fa47a5fb4">add</a> (struct sockaddr_in &amp;addr, time_t timeout, const char *serviceName)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#44ce5f69d29558917d85457edf57a094">add</a> (struct sockaddr_in &amp;addr, time_t timeout, const char *service_name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a connection to the connection manager.  <a href="#9b853ec3d5f1a71b8d276d5fa47a5fb4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#7112f4daa047f8970c08d510462a6c4d">add</a> (struct sockaddr_in &amp;addr, time_t timeout, const char *serviceName, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handlerPtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a connection to the connection manager.  <a href="#44ce5f69d29558917d85457edf57a094"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#574c1d21ed70614a8d780270ea130132">add</a> (struct sockaddr_in &amp;addr, time_t timeout, const char *service_name, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Same as above method except installs a dispatch handler on the connection.  <a href="#7112f4daa047f8970c08d510462a6c4d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#167b9361796b3f9d2d7ec5141d9482a0">add</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;localAddr, time_t timeout, const char *serviceName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Same as above method except installs a dispatch handler on the connection.  <a href="#574c1d21ed70614a8d780270ea130132"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#30d3948acf80a51ac020cbcd04a86e44">add</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;local_addr, time_t timeout, const char *service_name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a connection to the connection manager with a specific local address.  <a href="#167b9361796b3f9d2d7ec5141d9482a0"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#e8b750521f0f35bbb283f60b9bd1f3b4">add</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;localAddr, time_t timeout, const char *serviceName, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handlerPtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a connection to the connection manager with a specific local address.  <a href="#30d3948acf80a51ac020cbcd04a86e44"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#728869acde027b7c7350e068c1c3daa6">add</a> (struct sockaddr_in &amp;addr, struct sockaddr_in &amp;local_addr, time_t timeout, const char *service_name, <a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Same as above method except installs a dispatch handler on the connection.  <a href="#e8b750521f0f35bbb283f60b9bd1f3b4"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Same as above method except installs a dispatch handler on the connection.  <a href="#728869acde027b7c7350e068c1c3daa6"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#17c4820a28c9f9571e827ec5d5b2f74b">remove</a> (struct sockaddr_in &amp;addr)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a connection from the connection manager.  <a href="#17c4820a28c9f9571e827ec5d5b2f74b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#343cc5e7a3c32fcb25ca42dfbb18b8a1">wait_for_connection</a> (struct sockaddr_in &amp;addr, long maxWaitSecs)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#1f3d57830a3095d46b133b22ad4dd577">wait_for_connection</a> (struct sockaddr_in &amp;addr, long max_wait_secs)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method blocks until the connection to the given address is established.  <a href="#343cc5e7a3c32fcb25ca42dfbb18b8a1"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method blocks until the connection to the given address is established.  <a href="#1f3d57830a3095d46b133b22ad4dd577"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#8bdcf7ea409fbdee6180f53b72eddb4a">get_comm</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> object associated with this connection manager.  <a href="#8bdcf7ea409fbdee6180f53b72eddb4a"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#3e4f5c32cf6c45083e042fc2dc75f9bc">set_quiet_mode</a> (bool mode)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method sets a 'quietMode' flag which can disable the generation of log messages upon failed connection attempts.  <a href="#3e4f5c32cf6c45083e042fc2dc75f9bc"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method sets a 'quiet_mode' flag which can disable the generation of log messages upon failed connection attempts.  <a href="#3e4f5c32cf6c45083e042fc2dc75f9bc"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#64d32639f3dec20bd4301d5c7b738064">handle</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This is the comm layer dispatch callback method.  <a href="#64d32639f3dec20bd4301d5c7b738064"></a><br></td></tr>
@@ -92,18 +92,18 @@ boost::intrusive_ptr<br>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This is the Boost thread "run" method.  <a href="#4b6fe917e7be3812c4fdafa84b103a89"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#4411eb7fdeed2ed14f0b6a0370724fe6">send_connect_request</a> (<a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> *connState)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#cee8344dd731e118249fc494085ad5f8">send_connect_request</a> (<a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> *conn_state)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to establish a connection for the given <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> object.  <a href="#4411eb7fdeed2ed14f0b6a0370724fe6"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to establish a connection for the given <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> object.  <a href="#cee8344dd731e118249fc494085ad5f8"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl_t.html">SharedImplT</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#aa0b3851b4c103117a8333ef6d1e7bbb">m_impl</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1lt_connection_state.html">ltConnectionState</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_lt_connection_state.html">LtConnectionState</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl_t.html">SharedImplT</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -130,7 +130,7 @@ If any of the connections gets broken, then this class will continuously attempt
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="d111398d16b37aee18f31561a42379d4"></a><!-- doxytag: member="Hypertable::ConnectionManager::ConnectionManager" ref="d111398d16b37aee18f31561a42379d4" args="(Comm *comm)" -->
+<a class="anchor" name="35cea429c36a77c77c4b1c4dcaf424da"></a><!-- doxytag: member="Hypertable::ConnectionManager::ConnectionManager" ref="35cea429c36a77c77c4b1c4dcaf424da" args="(Comm *comm=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -138,7 +138,7 @@ If any of the connections gets broken, then this class will continuously attempt
           <td class="memname">Hypertable::ConnectionManager::ConnectionManager           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td>
-          <td class="paramname"> <em>comm</em>          </td>
+          <td class="paramname"> <em>comm</em> = <code>0</code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -156,7 +156,7 @@ Creates a thread to do connection retry attempts.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00094">94</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00096">96</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -180,7 +180,7 @@ Creates a thread to do connection retry attempts.<p>
 Copy Constructor. 
 <p>
 Shares the implementation with object being copied. 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00104">104</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00106">106</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -203,12 +203,12 @@ Shares the implementation with object being copied.
 Destructor. 
 <p>
 TBD. 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00112">112</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00114">114</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="9b853ec3d5f1a71b8d276d5fa47a5fb4"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="9b853ec3d5f1a71b8d276d5fa47a5fb4" args="(struct sockaddr_in &amp;addr, time_t timeout, const char *serviceName)" -->
+<a class="anchor" name="44ce5f69d29558917d85457edf57a094"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="44ce5f69d29558917d85457edf57a094" args="(struct sockaddr_in &amp;addr, time_t timeout, const char *service_name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -228,7 +228,7 @@ TBD.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>serviceName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>service_name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -247,7 +247,7 @@ The address structure addr holds an address that the connection manager should m
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>The IP address to maintain a connection to </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>When connection dies, wait this many seconds before attempting to reestablish </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>service_name</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
   </table>
 </dl>
 
@@ -255,7 +255,7 @@ The address structure addr holds an address that the connection manager should m
 
 </div>
 </div><p>
-<a class="anchor" name="7112f4daa047f8970c08d510462a6c4d"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="7112f4daa047f8970c08d510462a6c4d" args="(struct sockaddr_in &amp;addr, time_t timeout, const char *serviceName, DispatchHandlerPtr &amp;handlerPtr)" -->
+<a class="anchor" name="574c1d21ed70614a8d780270ea130132"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="574c1d21ed70614a8d780270ea130132" args="(struct sockaddr_in &amp;addr, time_t timeout, const char *service_name, DispatchHandlerPtr &amp;handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -275,13 +275,13 @@ The address structure addr holds an address that the connection manager should m
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>serviceName</em>, </td>
+          <td class="paramname"> <em>service_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlerPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -299,8 +299,8 @@ Same as above method except installs a dispatch handler on the connection.
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>The IP address to maintain a connection to </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>The timeout value (in seconds) that gets passed into <a class="el" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">Comm::connect</a> and also used as the waiting period betweeen connection attempts </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handlerPtr</em>&nbsp;</td><td>This is the default handler to install on the connection. All events get changed through to this handler. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>service_name</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>This is the default handler to install on the connection. All events get changed through to this handler. </td></tr>
   </table>
 </dl>
 
@@ -308,7 +308,7 @@ Same as above method except installs a dispatch handler on the connection.
 
 </div>
 </div><p>
-<a class="anchor" name="167b9361796b3f9d2d7ec5141d9482a0"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="167b9361796b3f9d2d7ec5141d9482a0" args="(struct sockaddr_in &amp;addr, struct sockaddr_in &amp;localAddr, time_t timeout, const char *serviceName)" -->
+<a class="anchor" name="30d3948acf80a51ac020cbcd04a86e44"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="30d3948acf80a51ac020cbcd04a86e44" args="(struct sockaddr_in &amp;addr, struct sockaddr_in &amp;local_addr, time_t timeout, const char *service_name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -322,7 +322,7 @@ Same as above method except installs a dispatch handler on the connection.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
-          <td class="paramname"> <em>localAddr</em>, </td>
+          <td class="paramname"> <em>local_addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -334,7 +334,7 @@ Same as above method except installs a dispatch handler on the connection.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>serviceName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>service_name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -352,17 +352,17 @@ The address structure addr holds an address that the connection manager should m
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>The IP address to maintain a connection to </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>localAddr</em>&nbsp;</td><td>The local address to bind to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>local_addr</em>&nbsp;</td><td>The local address to bind to </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>When connection dies, wait this many seconds before attempting to reestablish </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>service_name</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00113">113</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00110">110</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e8b750521f0f35bbb283f60b9bd1f3b4"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="e8b750521f0f35bbb283f60b9bd1f3b4" args="(struct sockaddr_in &amp;addr, struct sockaddr_in &amp;localAddr, time_t timeout, const char *serviceName, DispatchHandlerPtr &amp;handlerPtr)" -->
+<a class="anchor" name="728869acde027b7c7350e068c1c3daa6"></a><!-- doxytag: member="Hypertable::ConnectionManager::add" ref="728869acde027b7c7350e068c1c3daa6" args="(struct sockaddr_in &amp;addr, struct sockaddr_in &amp;local_addr, time_t timeout, const char *service_name, DispatchHandlerPtr &amp;handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -376,7 +376,7 @@ The address structure addr holds an address that the connection manager should m
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
-          <td class="paramname"> <em>localAddr</em>, </td>
+          <td class="paramname"> <em>local_addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -388,13 +388,13 @@ The address structure addr holds an address that the connection manager should m
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>serviceName</em>, </td>
+          <td class="paramname"> <em>service_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlerPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -411,14 +411,14 @@ Same as above method except installs a dispatch handler on the connection.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>The IP address to maintain a connection to </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>localAddr</em>&nbsp;</td><td>The local address to bind to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>local_addr</em>&nbsp;</td><td>The local address to bind to </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>The timeout value (in seconds) that gets passed into <a class="el" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">Comm::connect</a> and also used as the waiting period betweeen connection attempts </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>serviceName</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handlerPtr</em>&nbsp;</td><td>This is the default handler to install on the connection. All events get changed through to this handler. </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>service_name</em>&nbsp;</td><td>The name of the serivce at the other end of the connection used for descriptive log messages </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>This is the default handler to install on the connection. All events get changed through to this handler. </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00084">84</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00082">82</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -448,11 +448,11 @@ Removes a connection from the connection manager.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html">Error</a> code (<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success) </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00208">208</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00207">207</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="343cc5e7a3c32fcb25ca42dfbb18b8a1"></a><!-- doxytag: member="Hypertable::ConnectionManager::wait_for_connection" ref="343cc5e7a3c32fcb25ca42dfbb18b8a1" args="(struct sockaddr_in &amp;addr, long maxWaitSecs)" -->
+<a class="anchor" name="1f3d57830a3095d46b133b22ad4dd577"></a><!-- doxytag: member="Hypertable::ConnectionManager::wait_for_connection" ref="1f3d57830a3095d46b133b22ad4dd577" args="(struct sockaddr_in &amp;addr, long max_wait_secs)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -466,7 +466,7 @@ Removes a connection from the connection manager.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">long&nbsp;</td>
-          <td class="paramname"> <em>maxWaitSecs</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>max_wait_secs</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -480,16 +480,16 @@ Removes a connection from the connection manager.
 <p>
 This method blocks until the connection to the given address is established. 
 <p>
-The given address must have been previously added with a call to Add. If the connection is not established within maxWaitSecs, then the method returns false.<p>
+The given address must have been previously added with a call to Add. If the connection is not established within max_wait_secs, then the method returns false.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>the address of the connection to wait for </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>maxWaitSecs</em>&nbsp;</td><td>The maximum time to wait for the connection before returning </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>max_wait_secs</em>&nbsp;</td><td>The maximum time to wait for the connection before returning </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if connected, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00121">121</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00118">118</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -513,7 +513,7 @@ Returns the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides 
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the assocated comm object </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00195">195</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00212">212</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -534,16 +534,16 @@ Returns the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides 
 <div class="memdoc">
 
 <p>
-This method sets a 'quietMode' flag which can disable the generation of log messages upon failed connection attempts. 
+This method sets a 'quiet_mode' flag which can disable the generation of log messages upon failed connection attempts. 
 <p>
 It is set to false by default.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>mode</em>&nbsp;</td><td>The new value for the quietMode flag </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>mode</em>&nbsp;</td><td>The new value for the quiet_mode flag </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00204">204</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00221">221</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -555,7 +555,7 @@ It is set to false by default.<p>
           <td class="memname">void ConnectionManager::handle           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>          </td>
+          <td class="paramname"> <em>event_ptr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [virtual]</code></td>
         </tr>
@@ -571,13 +571,13 @@ It should only get called by the AsyncComm subsystem.<p>
 It gets called for each connection related event (establishment, disconnect, etc.) for each connection. For connect events, the connection's connected flag is set to true and it's condition variable is signaled. For all other events (e.g. disconnect or error), the connection's connected flag is set to false and a retry is scheduled.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>eventPtr</em>&nbsp;</td><td>shared pointer to event object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>event_ptr</em>&nbsp;</td><td>shared pointer to event object </td></tr>
   </table>
 </dl>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_dispatch_handler.html#d8c7975d126c64104e48c26b03034b18">Hypertable::DispatchHandler</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_dispatch_handler.html#e1f871312036aeb52e8e391ad0d70b55">Hypertable::DispatchHandler</a>.</p>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00243">243</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00245">245</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -601,13 +601,11 @@ This is the Boost thread "run" method.
 <p>
 This is the boost::thread run method.<p>
 It is called by the manager thread when it starts up. 
-<p>
-if (!m_impl-&gt;quietMode) { HT_INFOF("Attempting to re-establish connection to %s at %s:%d...", connStatePtr-&gt;serviceName.c_str(), inet_ntoa(connStatePtr-&gt;addr.sin_addr), ntohs(connStatePtr-&gt;addr.sin_port)); } 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00286">286</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00291">291</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="4411eb7fdeed2ed14f0b6a0370724fe6"></a><!-- doxytag: member="Hypertable::ConnectionManager::send_connect_request" ref="4411eb7fdeed2ed14f0b6a0370724fe6" args="(ConnectionState *connState)" -->
+<a class="anchor" name="cee8344dd731e118249fc494085ad5f8"></a><!-- doxytag: member="Hypertable::ConnectionManager::send_connect_request" ref="cee8344dd731e118249fc494085ad5f8" args="(ConnectionState *conn_state)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -615,7 +613,7 @@ if (!m_impl-&gt;quietMode) { HT_INFOF("Attempting to re-establish connection to 
           <td class="memname">void ConnectionManager::send_connect_request           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> *&nbsp;</td>
-          <td class="paramname"> <em>connState</em>          </td>
+          <td class="paramname"> <em>conn_state</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [private]</code></td>
         </tr>
@@ -626,24 +624,24 @@ if (!m_impl-&gt;quietMode) { HT_INFOF("Attempting to re-establish connection to 
 <p>
 Attempts to establish a connection for the given <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> object. 
 <p>
-If a failure occurs, it prints an error message and then schedules a retry by updating the nextRetry member of the connState object and pushing it onto the retry heap<p>
+If a failure occurs, it prints an error message and then schedules a retry by updating the next_retry member of the conn_state object and pushing it onto the retry heap<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>connState</em>&nbsp;</td><td>The connection state record </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>conn_state</em>&nbsp;</td><td>The connection state record </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00159">159</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00160">160</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="aa0b3851b4c103117a8333ef6d1e7bbb"></a><!-- doxytag: member="Hypertable::ConnectionManager::m_impl" ref="aa0b3851b4c103117a8333ef6d1e7bbb" args="" -->
+<a class="anchor" name="5815b5557e73ac9c2fb970b4dfcdc518"></a><!-- doxytag: member="Hypertable::ConnectionManager::m_impl" ref="5815b5557e73ac9c2fb970b4dfcdc518" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl_t.html">SharedImplT</a>* <a class="el" href="class_hypertable_1_1_connection_manager.html#aa0b3851b4c103117a8333ef6d1e7bbb">Hypertable::ConnectionManager::m_impl</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a>* <a class="el" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">Hypertable::ConnectionManager::m_impl</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -651,13 +649,13 @@ If a failure occurs, it prints an error message and then schedules a retry by up
 
 <p>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00222">222</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00239">239</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:33 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

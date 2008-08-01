@@ -17,230 +17,202 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e65477d41cbea77146d554d167dc9746.html">AsyncComm</a></div>
 <h1>IOHandler.cc</h1><a href="_i_o_handler_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstdio&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00025"></a>00025 <span class="keyword">using namespace </span>std;
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00030"></a>00030 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#endif</span>
-<a name="l00032"></a>00032 <span class="preprocessor"></span>}
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_8h.html">IOHandler.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_reactor_8h.html">Reactor.h</a>"</span>
-<a name="l00038"></a>00038 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00041"></a>00041 <span class="preprocessor"></span>
-<a name="l00042"></a>00042 <span class="keywordtype">void</span> IOHandler::add_poll_interest(<span class="keywordtype">int</span> mode) {
-<a name="l00043"></a>00043   <span class="keyword">struct </span>epoll_event event;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> |= mode;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;cstdio&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00026"></a>00026 <span class="keyword">using namespace </span>std;
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#if defined(__APPLE__)</span>
+<a name="l00031"></a>00031 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#endif</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>}
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_8h.html">IOHandler.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_reactor_8h.html">Reactor.h</a>"</span>
+<a name="l00039"></a>00039 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>
+<a name="l00043"></a>00043 <span class="keywordtype">void</span> IOHandler::add_poll_interest(<span class="keywordtype">int</span> mode) {
+<a name="l00044"></a>00044   <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> |= mode;
+<a name="l00045"></a>00045 }
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00048"></a>00048   <span class="keyword">event</span>.data.ptr = <span class="keyword">this</span>;
-<a name="l00049"></a>00049   <span class="keyword">event</span>.events = EPOLLERR | EPOLLHUP;
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> &amp; <a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">Reactor::READ_READY</a>)
-<a name="l00052"></a>00052     <span class="keyword">event</span>.events |= EPOLLIN;
-<a name="l00053"></a>00053   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> &amp; <a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>)
-<a name="l00054"></a>00054     <span class="keyword">event</span>.events |= EPOLLOUT;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, EPOLL_CTL_MOD, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063 }
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">IOHandler::remove_poll_interest</a>(<span class="keywordtype">int</span> mode) {
-<a name="l00068"></a>00068   <span class="keyword">struct </span>epoll_event event;
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070   <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> &amp;= ~mode;
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00073"></a>00073   <span class="keyword">event</span>.data.ptr = <span class="keyword">this</span>;
-<a name="l00074"></a>00074   <span class="keyword">event</span>.events = EPOLLERR | EPOLLHUP;
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="keywordflow">if</span> (m_poll_interest &amp; Reactor::READ_READY)
-<a name="l00077"></a>00077     <span class="keyword">event</span>.events |= EPOLLIN;
-<a name="l00078"></a>00078   <span class="keywordflow">if</span> (m_poll_interest &amp; Reactor::WRITE_READY)
-<a name="l00079"></a>00079     <span class="keyword">event</span>.events |= EPOLLOUT;
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081   <span class="keywordflow">if</span> (epoll_ctl(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;pollFd, EPOLL_CTL_MOD, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, &amp;event) &lt; 0) {
-<a name="l00082"></a>00082     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(EPOLL_CTL_MOD, sd=%d) (mode=%x) : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, mode, strerror(errno));
-<a name="l00083"></a>00083     exit(1);
-<a name="l00084"></a>00084   }
-<a name="l00085"></a>00085 }
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089 <span class="keywordtype">void</span> IOHandler::display_event(<span class="keyword">struct</span> epoll_event *event) {
-<a name="l00090"></a>00090   <span class="keywordtype">char</span> buf[128];
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092   buf[0] = 0;
-<a name="l00093"></a>00093   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLIN)
-<a name="l00094"></a>00094     strcat(buf, <span class="stringliteral">"EPOLLIN "</span>);
-<a name="l00095"></a>00095   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLOUT)
-<a name="l00096"></a>00096     strcat(buf, <span class="stringliteral">"EPOLLOUT "</span>);
-<a name="l00097"></a>00097   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLPRI)
-<a name="l00098"></a>00098     strcat(buf, <span class="stringliteral">"EPOLLPRI "</span>);
-<a name="l00099"></a>00099   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLERR)
-<a name="l00100"></a>00100     strcat(buf, <span class="stringliteral">"EPOLLERR "</span>);
-<a name="l00101"></a>00101   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLHUP)
-<a name="l00102"></a>00102     strcat(buf, <span class="stringliteral">"EPOLLHUP "</span>);
-<a name="l00103"></a>00103   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLET)
-<a name="l00104"></a>00104     strcat(buf, <span class="stringliteral">"EPOLLET "</span>);
-<a name="l00105"></a>00105   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLONESHOT)
-<a name="l00106"></a>00106     strcat(buf, <span class="stringliteral">"EPOLLONESHOT "</span>);
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   <span class="keywordflow">if</span> (buf[0] == 0)
-<a name="l00109"></a>00109     sprintf(buf, <span class="stringliteral">"0x%x "</span>, event-&gt;events);
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   clog &lt;&lt; <span class="stringliteral">"epoll events = "</span> &lt;&lt; buf &lt;&lt; endl;
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113   <span class="keywordflow">return</span>;
-<a name="l00114"></a>00114 }
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00119"></a>00119 <span class="preprocessor"></span>
-<a name="l00120"></a>00120 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a16d1f29a7987edfc38ea3cac355168c">IOHandler::add_poll_interest</a>(<span class="keywordtype">int</span> mode) {
-<a name="l00121"></a>00121   <span class="keyword">struct </span>kevent events[2];
-<a name="l00122"></a>00122   <span class="keywordtype">int</span> count=0;
-<a name="l00123"></a>00123   <span class="keywordflow">if</span> (mode &amp; Reactor::READ_READY) {
-<a name="l00124"></a>00124     EV_SET(&amp;events[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, <span class="keyword">this</span>);
-<a name="l00125"></a>00125     count++;
-<a name="l00126"></a>00126   }
-<a name="l00127"></a>00127   <span class="keywordflow">if</span> (mode &amp; Reactor::WRITE_READY) {
-<a name="l00128"></a>00128     EV_SET(&amp;events[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, <span class="keyword">this</span>);
-<a name="l00129"></a>00129     count++;
-<a name="l00130"></a>00130   }
-<a name="l00131"></a>00131   assert(count &gt; 0);
-<a name="l00132"></a>00132     
-<a name="l00133"></a>00133   <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;kQueue, events, count, 0, 0, 0) == -1) {
-<a name="l00134"></a>00134     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) (mode=%x) : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, mode, strerror(errno));
-<a name="l00135"></a>00135     exit(1);
-<a name="l00136"></a>00136   }
-<a name="l00137"></a>00137   m_poll_interest |= mode;
-<a name="l00138"></a>00138 }
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">IOHandler::remove_poll_interest</a>(<span class="keywordtype">int</span> mode) {
-<a name="l00141"></a>00141   <span class="keyword">struct </span>kevent devents[2];
-<a name="l00142"></a>00142   <span class="keywordtype">int</span> count = 0;
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144   <span class="keywordflow">if</span> (mode &amp; Reactor::READ_READY) {
-<a name="l00145"></a>00145     EV_SET(&amp;devents[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_READ, EV_DELETE, 0, 0, 0);
-<a name="l00146"></a>00146     count++;
-<a name="l00147"></a>00147   }
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149   <span class="keywordflow">if</span> (mode &amp; Reactor::WRITE_READY) {
-<a name="l00150"></a>00150     EV_SET(&amp;devents[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_WRITE, EV_DELETE, 0, 0, 0);
-<a name="l00151"></a>00151     count++;
-<a name="l00152"></a>00152   }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154   <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;kQueue, devents, count, 0, 0, 0) == -1 &amp;&amp; errno != ENOENT) {
-<a name="l00155"></a>00155     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) (mode=%x) : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, mode, strerror(errno));
-<a name="l00156"></a>00156     exit(1);
-<a name="l00157"></a>00157   }
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160 
-<a name="l00164"></a>00164 <span class="keywordtype">void</span> IOHandler::display_event(<span class="keyword">struct</span> kevent *event) {
-<a name="l00165"></a>00165 
-<a name="l00166"></a>00166   clog &lt;&lt; <span class="stringliteral">"kevent: ident="</span> &lt;&lt; hex &lt;&lt; (long)event-&gt;ident;
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168   switch (event-&gt;filter) {
-<a name="l00169"></a>00169   <span class="keywordflow">case</span> EVFILT_READ:
-<a name="l00170"></a>00170     clog &lt;&lt; <span class="stringliteral">", EVFILT_READ, fflags="</span>;
-<a name="l00171"></a>00171     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LOWAT)
-<a name="l00172"></a>00172       clog &lt;&lt; <span class="stringliteral">"NOTE_LOWAT"</span>;
-<a name="l00173"></a>00173     <span class="keywordflow">else</span>
-<a name="l00174"></a>00174       clog &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
-<a name="l00175"></a>00175     <span class="keywordflow">break</span>;
-<a name="l00176"></a>00176   <span class="keywordflow">case</span> EVFILT_WRITE:
-<a name="l00177"></a>00177     clog &lt;&lt; <span class="stringliteral">", EVFILT_WRITE, fflags="</span>;
-<a name="l00178"></a>00178     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LOWAT)
-<a name="l00179"></a>00179       clog &lt;&lt; <span class="stringliteral">"NOTE_LOWAT"</span>;
-<a name="l00180"></a>00180     <span class="keywordflow">else</span>
-<a name="l00181"></a>00181       clog &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
-<a name="l00182"></a>00182     <span class="keywordflow">break</span>;
-<a name="l00183"></a>00183   <span class="keywordflow">case</span> EVFILT_AIO:
-<a name="l00184"></a>00184     clog &lt;&lt; <span class="stringliteral">", EVFILT_AIO, fflags="</span> &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">IOHandler::remove_poll_interest</a>(<span class="keywordtype">int</span> mode) {
+<a name="l00050"></a>00050   <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> &amp;= ~mode;
+<a name="l00051"></a>00051 }
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="keywordtype">void</span> IOHandler::display_event(<span class="keyword">struct</span> epoll_event *event) {
+<a name="l00056"></a>00056   <span class="keywordtype">char</span> buf[128];
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   buf[0] = 0;
+<a name="l00059"></a>00059   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLIN)
+<a name="l00060"></a>00060     strcat(buf, <span class="stringliteral">"EPOLLIN "</span>);
+<a name="l00061"></a>00061   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLOUT)
+<a name="l00062"></a>00062     strcat(buf, <span class="stringliteral">"EPOLLOUT "</span>);
+<a name="l00063"></a>00063   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLPRI)
+<a name="l00064"></a>00064     strcat(buf, <span class="stringliteral">"EPOLLPRI "</span>);
+<a name="l00065"></a>00065   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLERR)
+<a name="l00066"></a>00066     strcat(buf, <span class="stringliteral">"EPOLLERR "</span>);
+<a name="l00067"></a>00067   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLHUP)
+<a name="l00068"></a>00068     strcat(buf, <span class="stringliteral">"EPOLLHUP "</span>);
+<a name="l00069"></a>00069   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLET)
+<a name="l00070"></a>00070     strcat(buf, <span class="stringliteral">"EPOLLET "</span>);
+<a name="l00071"></a>00071   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLONESHOT)
+<a name="l00072"></a>00072     strcat(buf, <span class="stringliteral">"EPOLLONESHOT "</span>);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   <span class="keywordflow">if</span> (buf[0] == 0)
+<a name="l00075"></a>00075     sprintf(buf, <span class="stringliteral">"0x%x "</span>, event-&gt;events);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   clog &lt;&lt; <span class="stringliteral">"epoll events = "</span> &lt;&lt; buf &lt;&lt; endl;
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keywordflow">return</span>;
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00085"></a>00085 <span class="preprocessor"></span>
+<a name="l00086"></a>00086 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a16d1f29a7987edfc38ea3cac355168c">IOHandler::add_poll_interest</a>(<span class="keywordtype">int</span> mode) {
+<a name="l00087"></a>00087   <span class="keyword">struct </span>kevent events[2];
+<a name="l00088"></a>00088   <span class="keywordtype">int</span> count=0;
+<a name="l00089"></a>00089   <span class="keywordflow">if</span> (mode &amp; <a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">Reactor::READ_READY</a>) {
+<a name="l00090"></a>00090     EV_SET(&amp;events[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_READ, EV_ADD | EV_ENABLE, 0, 0, <span class="keyword">this</span>);
+<a name="l00091"></a>00091     count++;
+<a name="l00092"></a>00092   }
+<a name="l00093"></a>00093   <span class="keywordflow">if</span> (mode &amp; <a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>) {
+<a name="l00094"></a>00094     EV_SET(&amp;events[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, <span class="keyword">this</span>);
+<a name="l00095"></a>00095     count++;
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097   assert(count &gt; 0);
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;kqd, events, count, 0, 0, 0) == -1) {
+<a name="l00100"></a>00100     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) (mode=%x) : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, mode, strerror(errno));
+<a name="l00101"></a>00101     exit(1);
+<a name="l00102"></a>00102   }
+<a name="l00103"></a>00103   <a class="code" href="class_hypertable_1_1_i_o_handler.html#cbd567b98791b3847e008d58e44e7d0c">m_poll_interest</a> |= mode;
+<a name="l00104"></a>00104 }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">IOHandler::remove_poll_interest</a>(<span class="keywordtype">int</span> mode) {
+<a name="l00107"></a>00107   <span class="keyword">struct </span>kevent devents[2];
+<a name="l00108"></a>00108   <span class="keywordtype">int</span> count = 0;
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   <span class="keywordflow">if</span> (mode &amp; Reactor::READ_READY) {
+<a name="l00111"></a>00111     EV_SET(&amp;devents[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_READ, EV_DELETE, 0, 0, 0);
+<a name="l00112"></a>00112     count++;
+<a name="l00113"></a>00113   }
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115   <span class="keywordflow">if</span> (mode &amp; Reactor::WRITE_READY) {
+<a name="l00116"></a>00116     EV_SET(&amp;devents[count], <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, EVFILT_WRITE, EV_DELETE, 0, 0, 0);
+<a name="l00117"></a>00117     count++;
+<a name="l00118"></a>00118   }
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120   <span class="keywordflow">if</span> (kevent(<a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;kqd, devents, count, 0, 0, 0) == -1 &amp;&amp; errno != ENOENT) {
+<a name="l00121"></a>00121     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) (mode=%x) : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, mode, strerror(errno));
+<a name="l00122"></a>00122     exit(1);
+<a name="l00123"></a>00123   }
+<a name="l00124"></a>00124 }
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126 
+<a name="l00130"></a>00130 <span class="keywordtype">void</span> IOHandler::display_event(<span class="keyword">struct</span> kevent *event) {
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132   clog &lt;&lt; <span class="stringliteral">"kevent: ident="</span> &lt;&lt; hex &lt;&lt; (long)event-&gt;ident;
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   switch (event-&gt;filter) {
+<a name="l00135"></a>00135   <span class="keywordflow">case</span> EVFILT_READ:
+<a name="l00136"></a>00136     clog &lt;&lt; <span class="stringliteral">", EVFILT_READ, fflags="</span>;
+<a name="l00137"></a>00137     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LOWAT)
+<a name="l00138"></a>00138       clog &lt;&lt; <span class="stringliteral">"NOTE_LOWAT"</span>;
+<a name="l00139"></a>00139     <span class="keywordflow">else</span>
+<a name="l00140"></a>00140       clog &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
+<a name="l00141"></a>00141     <span class="keywordflow">break</span>;
+<a name="l00142"></a>00142   <span class="keywordflow">case</span> EVFILT_WRITE:
+<a name="l00143"></a>00143     clog &lt;&lt; <span class="stringliteral">", EVFILT_WRITE, fflags="</span>;
+<a name="l00144"></a>00144     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LOWAT)
+<a name="l00145"></a>00145       clog &lt;&lt; <span class="stringliteral">"NOTE_LOWAT"</span>;
+<a name="l00146"></a>00146     <span class="keywordflow">else</span>
+<a name="l00147"></a>00147       clog &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
+<a name="l00148"></a>00148     <span class="keywordflow">break</span>;
+<a name="l00149"></a>00149   <span class="keywordflow">case</span> EVFILT_AIO:
+<a name="l00150"></a>00150     clog &lt;&lt; <span class="stringliteral">", EVFILT_AIO, fflags="</span> &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
+<a name="l00151"></a>00151     <span class="keywordflow">break</span>;
+<a name="l00152"></a>00152   <span class="keywordflow">case</span> EVFILT_VNODE:
+<a name="l00153"></a>00153     clog &lt;&lt; <span class="stringliteral">", EVFILT_VNODE, fflags={"</span>;
+<a name="l00154"></a>00154     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_DELETE)
+<a name="l00155"></a>00155       clog &lt;&lt; <span class="stringliteral">" NOTE_DELETE"</span>;
+<a name="l00156"></a>00156     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_WRITE)
+<a name="l00157"></a>00157       clog &lt;&lt; <span class="stringliteral">" NOTE_WRITE"</span>;
+<a name="l00158"></a>00158     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXTEND)
+<a name="l00159"></a>00159       clog &lt;&lt; <span class="stringliteral">" NOTE_EXTEND"</span>;
+<a name="l00160"></a>00160     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_ATTRIB)
+<a name="l00161"></a>00161       clog &lt;&lt; <span class="stringliteral">" NOTE_ATTRIB"</span>;
+<a name="l00162"></a>00162     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LINK)
+<a name="l00163"></a>00163       clog &lt;&lt; <span class="stringliteral">" NOTE_LINK"</span>;
+<a name="l00164"></a>00164     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_RENAME)
+<a name="l00165"></a>00165       clog &lt;&lt; <span class="stringliteral">" NOTE_RENAME"</span>;
+<a name="l00166"></a>00166     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_REVOKE)
+<a name="l00167"></a>00167       clog &lt;&lt; <span class="stringliteral">" NOTE_REVOKE"</span>;
+<a name="l00168"></a>00168     clog &lt;&lt; <span class="stringliteral">" }"</span>;
+<a name="l00169"></a>00169     <span class="keywordflow">break</span>;
+<a name="l00170"></a>00170   <span class="keywordflow">case</span> EVFILT_PROC:
+<a name="l00171"></a>00171     clog &lt;&lt; <span class="stringliteral">", EVFILT_VNODE, fflags={"</span>;
+<a name="l00172"></a>00172     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXIT)
+<a name="l00173"></a>00173       clog &lt;&lt; <span class="stringliteral">" NOTE_EXIT"</span>;
+<a name="l00174"></a>00174     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_FORK)
+<a name="l00175"></a>00175       clog &lt;&lt; <span class="stringliteral">" NOTE_FORK"</span>;
+<a name="l00176"></a>00176     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXEC)
+<a name="l00177"></a>00177       clog &lt;&lt; <span class="stringliteral">" NOTE_EXEC"</span>;
+<a name="l00178"></a>00178     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_TRACK)
+<a name="l00179"></a>00179       clog &lt;&lt; <span class="stringliteral">" NOTE_TRACK"</span>;
+<a name="l00180"></a>00180     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_TRACKERR)
+<a name="l00181"></a>00181       clog &lt;&lt; <span class="stringliteral">" NOTE_TRACKERR"</span>;
+<a name="l00182"></a>00182     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_CHILD)
+<a name="l00183"></a>00183       clog &lt;&lt; <span class="stringliteral">" NOTE_CHILD"</span>;
+<a name="l00184"></a>00184     clog &lt;&lt; <span class="stringliteral">" pid="</span> &lt;&lt; (<span class="keyword">event</span>-&gt;flags &amp; NOTE_PDATAMASK);
 <a name="l00185"></a>00185     <span class="keywordflow">break</span>;
-<a name="l00186"></a>00186   <span class="keywordflow">case</span> EVFILT_VNODE:
-<a name="l00187"></a>00187     clog &lt;&lt; <span class="stringliteral">", EVFILT_VNODE, fflags={"</span>;
-<a name="l00188"></a>00188     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_DELETE)
-<a name="l00189"></a>00189       clog &lt;&lt; <span class="stringliteral">" NOTE_DELETE"</span>;
-<a name="l00190"></a>00190     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_WRITE)
-<a name="l00191"></a>00191       clog &lt;&lt; <span class="stringliteral">" NOTE_WRITE"</span>;
-<a name="l00192"></a>00192     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXTEND)
-<a name="l00193"></a>00193       clog &lt;&lt; <span class="stringliteral">" NOTE_EXTEND"</span>;
-<a name="l00194"></a>00194     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_ATTRIB)
-<a name="l00195"></a>00195       clog &lt;&lt; <span class="stringliteral">" NOTE_ATTRIB"</span>;
-<a name="l00196"></a>00196     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_LINK)
-<a name="l00197"></a>00197       clog &lt;&lt; <span class="stringliteral">" NOTE_LINK"</span>;
-<a name="l00198"></a>00198     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_RENAME)
-<a name="l00199"></a>00199       clog &lt;&lt; <span class="stringliteral">" NOTE_RENAME"</span>;
-<a name="l00200"></a>00200     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_REVOKE)
-<a name="l00201"></a>00201       clog &lt;&lt; <span class="stringliteral">" NOTE_REVOKE"</span>;
-<a name="l00202"></a>00202     clog &lt;&lt; <span class="stringliteral">" }"</span>;
-<a name="l00203"></a>00203     <span class="keywordflow">break</span>;
-<a name="l00204"></a>00204   <span class="keywordflow">case</span> EVFILT_PROC:
-<a name="l00205"></a>00205     clog &lt;&lt; <span class="stringliteral">", EVFILT_VNODE, fflags={"</span>;
-<a name="l00206"></a>00206     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXIT)
-<a name="l00207"></a>00207       clog &lt;&lt; <span class="stringliteral">" NOTE_EXIT"</span>;
-<a name="l00208"></a>00208     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_FORK)
-<a name="l00209"></a>00209       clog &lt;&lt; <span class="stringliteral">" NOTE_FORK"</span>;
-<a name="l00210"></a>00210     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_EXEC)
-<a name="l00211"></a>00211       clog &lt;&lt; <span class="stringliteral">" NOTE_EXEC"</span>;
-<a name="l00212"></a>00212     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_TRACK)
-<a name="l00213"></a>00213       clog &lt;&lt; <span class="stringliteral">" NOTE_TRACK"</span>;
-<a name="l00214"></a>00214     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_TRACKERR)
-<a name="l00215"></a>00215       clog &lt;&lt; <span class="stringliteral">" NOTE_TRACKERR"</span>;
-<a name="l00216"></a>00216     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_CHILD)
-<a name="l00217"></a>00217       clog &lt;&lt; <span class="stringliteral">" NOTE_CHILD"</span>;
-<a name="l00218"></a>00218     clog &lt;&lt; <span class="stringliteral">" pid="</span> &lt;&lt; (<span class="keyword">event</span>-&gt;flags &amp; NOTE_PDATAMASK);
-<a name="l00219"></a>00219     <span class="keywordflow">break</span>;
-<a name="l00220"></a>00220   <span class="keywordflow">case</span> EVFILT_SIGNAL:
-<a name="l00221"></a>00221     clog &lt;&lt; <span class="stringliteral">", EVFILT_SIGNAL, fflags="</span> &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
-<a name="l00222"></a>00222     <span class="keywordflow">break</span>;
-<a name="l00223"></a>00223   <span class="keywordflow">case</span> EVFILT_TIMER:
-<a name="l00224"></a>00224     clog &lt;&lt; <span class="stringliteral">", EVFILT_TIMER, fflags={"</span>;
-<a name="l00225"></a>00225     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_SECONDS)
-<a name="l00226"></a>00226       clog &lt;&lt; <span class="stringliteral">" NOTE_SECONDS"</span>;
-<a name="l00227"></a>00227     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_USECONDS)
-<a name="l00228"></a>00228       clog &lt;&lt; <span class="stringliteral">" NOTE_USECONDS"</span>;
-<a name="l00229"></a>00229     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_NSECONDS)
-<a name="l00230"></a>00230       clog &lt;&lt; <span class="stringliteral">" NOTE_NSECONDS"</span>;
-<a name="l00231"></a>00231     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_ABSOLUTE)
-<a name="l00232"></a>00232       clog &lt;&lt; <span class="stringliteral">" NOTE_ABSOLUTE"</span>;
-<a name="l00233"></a>00233     clog &lt;&lt; <span class="stringliteral">" }"</span>;
-<a name="l00234"></a>00234     <span class="keywordflow">break</span>;
-<a name="l00235"></a>00235   }
-<a name="l00236"></a>00236 
-<a name="l00237"></a>00237   <span class="keywordflow">if</span>(event-&gt;flags != 0) {
-<a name="l00238"></a>00238     clog &lt;&lt; <span class="stringliteral">", flags="</span>;
-<a name="l00239"></a>00239     <span class="keywordflow">if</span> ((event-&gt;flags &amp; EV_EOF) || (<span class="keyword">event</span>-&gt;flags &amp; EV_ERROR)) {
-<a name="l00240"></a>00240       clog &lt;&lt; <span class="stringliteral">"{"</span>;
-<a name="l00241"></a>00241       <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_EOF)
-<a name="l00242"></a>00242         clog &lt;&lt; <span class="stringliteral">" EV_EOF"</span>;
-<a name="l00243"></a>00243       <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_ERROR)
-<a name="l00244"></a>00244         clog &lt;&lt; <span class="stringliteral">" EV_ERROR"</span>;
-<a name="l00245"></a>00245       clog &lt;&lt; <span class="stringliteral">"}"</span>;
-<a name="l00246"></a>00246     }
-<a name="l00247"></a>00247     <span class="keywordflow">else</span>
-<a name="l00248"></a>00248       clog &lt;&lt; hex &lt;&lt; <span class="keyword">event</span>-&gt;flags;
-<a name="l00249"></a>00249   }
-<a name="l00250"></a>00250   clog &lt;&lt; <span class="stringliteral">", data="</span> &lt;&lt; dec &lt;&lt; (long)event-&gt;data &lt;&lt; endl;
-<a name="l00251"></a>00251 }
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253 <span class="preprocessor">#endif</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00186"></a>00186   <span class="keywordflow">case</span> EVFILT_SIGNAL:
+<a name="l00187"></a>00187     clog &lt;&lt; <span class="stringliteral">", EVFILT_SIGNAL, fflags="</span> &lt;&lt; <span class="keyword">event</span>-&gt;fflags;
+<a name="l00188"></a>00188     <span class="keywordflow">break</span>;
+<a name="l00189"></a>00189   <span class="keywordflow">case</span> EVFILT_TIMER:
+<a name="l00190"></a>00190     clog &lt;&lt; <span class="stringliteral">", EVFILT_TIMER, fflags={"</span>;
+<a name="l00191"></a>00191     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_SECONDS)
+<a name="l00192"></a>00192       clog &lt;&lt; <span class="stringliteral">" NOTE_SECONDS"</span>;
+<a name="l00193"></a>00193     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_USECONDS)
+<a name="l00194"></a>00194       clog &lt;&lt; <span class="stringliteral">" NOTE_USECONDS"</span>;
+<a name="l00195"></a>00195     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_NSECONDS)
+<a name="l00196"></a>00196       clog &lt;&lt; <span class="stringliteral">" NOTE_NSECONDS"</span>;
+<a name="l00197"></a>00197     <span class="keywordflow">if</span> (event-&gt;fflags &amp; NOTE_ABSOLUTE)
+<a name="l00198"></a>00198       clog &lt;&lt; <span class="stringliteral">" NOTE_ABSOLUTE"</span>;
+<a name="l00199"></a>00199     clog &lt;&lt; <span class="stringliteral">" }"</span>;
+<a name="l00200"></a>00200     <span class="keywordflow">break</span>;
+<a name="l00201"></a>00201   }
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203   <span class="keywordflow">if</span>(event-&gt;flags != 0) {
+<a name="l00204"></a>00204     clog &lt;&lt; <span class="stringliteral">", flags="</span>;
+<a name="l00205"></a>00205     <span class="keywordflow">if</span> ((event-&gt;flags &amp; EV_EOF) || (<span class="keyword">event</span>-&gt;flags &amp; EV_ERROR)) {
+<a name="l00206"></a>00206       clog &lt;&lt; <span class="stringliteral">"{"</span>;
+<a name="l00207"></a>00207       <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_EOF)
+<a name="l00208"></a>00208         clog &lt;&lt; <span class="stringliteral">" EV_EOF"</span>;
+<a name="l00209"></a>00209       <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_ERROR)
+<a name="l00210"></a>00210         clog &lt;&lt; <span class="stringliteral">" EV_ERROR"</span>;
+<a name="l00211"></a>00211       clog &lt;&lt; <span class="stringliteral">"}"</span>;
+<a name="l00212"></a>00212     }
+<a name="l00213"></a>00213     <span class="keywordflow">else</span>
+<a name="l00214"></a>00214       clog &lt;&lt; hex &lt;&lt; <span class="keyword">event</span>-&gt;flags;
+<a name="l00215"></a>00215   }
+<a name="l00216"></a>00216   clog &lt;&lt; <span class="stringliteral">", data="</span> &lt;&lt; dec &lt;&lt; (long)event-&gt;data &lt;&lt; endl;
+<a name="l00217"></a>00217 }
+<a name="l00218"></a>00218 
+<a name="l00219"></a>00219 <span class="preprocessor">#endif</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

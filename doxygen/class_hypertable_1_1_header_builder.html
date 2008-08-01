@@ -39,15 +39,15 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#e6b90144842c0211f15d308af24a8792">HeaderBuilder</a> (uint8_t protocol, uint32_t gid=0)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#e6b90144842c0211f15d308af24a8792"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#d9d23ccef55da065b6a5104ece850d1c">initialize_from_request</a> (Header::HeaderT *header)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7">initialize_from_request</a> (<a class="el" href="struct_hypertable_1_1_header_1_1_common.html">Header::Common</a> *header)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method is used to initialize a response header from a give request header.  <a href="#d9d23ccef55da065b6a5104ece850d1c"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method is used to initialize a response header from a give request header.  <a href="#64a0e791e54c74bb4c1cd6d8f9a977a7"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#a174cad7aa956693a6f9d461579ea9db">header_length</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the length of the header that would be generated.  <a href="#a174cad7aa956693a6f9d461579ea9db"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#4e3ec38f01eb80b0309b40e364acf0af">encode</a> (uint8_t **bufPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#18390b40bc72b458f7f4df99ae829f21">encode</a> (uint8_t **bufp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes the header to the given buffer.  <a href="#4e3ec38f01eb80b0309b40e364acf0af"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes the header to the given buffer.  <a href="#18390b40bc72b458f7f4df99ae829f21"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_header_builder.html#2a627e6f9117254d989c86264f3e7466">set_flags</a> (uint8_t flags)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the flags member of the header builder.  <a href="#2a627e6f9117254d989c86264f3e7466"></a><br></td></tr>
@@ -80,7 +80,7 @@ Builds a response or request header for messages sent over the <a class="el" hre
 <p>
 An object of this type gets passed into the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> constructor and is used to generate the message header.<p>
 <b>NOTE:</b> The reason for this class is that someday it will support a recipient list which will be a variable sized set of addresses that the message should be delivered to. By encapsulating the construction of message headers into a class like this one, variable sized headers can be easily supported. 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00048">48</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00043">43</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="9b9aeb6f4905bf11a7c6ec1a68873841"></a><!-- doxytag: member="Hypertable::HeaderBuilder::HeaderBuilder" ref="9b9aeb6f4905bf11a7c6ec1a68873841" args="()" -->
 <div class="memitem">
@@ -101,7 +101,7 @@ An object of this type gets passed into the <a class="el" href="class_hypertable
 Constructor. 
 <p>
 Initializes all members to 0. 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00054">54</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00049">49</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -141,19 +141,19 @@ Initializes the m_protocol and m_group_id members with the supplied arguments, a
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00067">67</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00062">62</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="d9d23ccef55da065b6a5104ece850d1c"></a><!-- doxytag: member="Hypertable::HeaderBuilder::initialize_from_request" ref="d9d23ccef55da065b6a5104ece850d1c" args="(Header::HeaderT *header)" -->
+<a class="anchor" name="64a0e791e54c74bb4c1cd6d8f9a977a7"></a><!-- doxytag: member="Hypertable::HeaderBuilder::initialize_from_request" ref="64a0e791e54c74bb4c1cd6d8f9a977a7" args="(Header::Common *header)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::HeaderBuilder::initialize_from_request           </td>
           <td>(</td>
-          <td class="paramtype">Header::HeaderT *&nbsp;</td>
+          <td class="paramtype"><a class="el" href="struct_hypertable_1_1_header_1_1_common.html">Header::Common</a> *&nbsp;</td>
           <td class="paramname"> <em>header</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
@@ -172,7 +172,7 @@ It pulls the ID, the group ID, and the flags from the given request header.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00076">76</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00071">71</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -195,11 +195,11 @@ It pulls the ID, the group ID, and the flags from the given request header.<p>
 Returns the length of the header that would be generated. 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00085">85</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00080">80</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="4e3ec38f01eb80b0309b40e364acf0af"></a><!-- doxytag: member="Hypertable::HeaderBuilder::encode" ref="4e3ec38f01eb80b0309b40e364acf0af" args="(uint8_t **bufPtr)" -->
+<a class="anchor" name="18390b40bc72b458f7f4df99ae829f21"></a><!-- doxytag: member="Hypertable::HeaderBuilder::encode" ref="18390b40bc72b458f7f4df99ae829f21" args="(uint8_t **bufp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -207,7 +207,7 @@ Returns the length of the header that would be generated.
           <td class="memname">void Hypertable::HeaderBuilder::encode           </td>
           <td>(</td>
           <td class="paramtype">uint8_t **&nbsp;</td>
-          <td class="paramname"> <em>bufPtr</em>          </td>
+          <td class="paramname"> <em>bufp</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -221,11 +221,11 @@ Encodes the header to the given buffer.
 Advances the buffer pointer by the length of the header written.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>bufPtr</em>&nbsp;</td><td>address of buffer pointer to write header to </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bufp</em>&nbsp;</td><td>address of buffer pointer to write header to </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8cc-source.html#l00026">26</a> of file <a class="el" href="_header_builder_8cc-source.html">HeaderBuilder.cc</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8cc-source.html#l00027">27</a> of file <a class="el" href="_header_builder_8cc-source.html">HeaderBuilder.cc</a>.</p>
 
 </div>
 </div><p>
@@ -255,7 +255,7 @@ Currently this is only used internally by the <a class="el" href="class_hypertab
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00100">100</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00095">95</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -284,7 +284,7 @@ ORs in some flag bits to the existing flags.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00106">106</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00101">101</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -313,7 +313,7 @@ Sets the protocol family of the message.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00112">112</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00107">107</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -342,7 +342,7 @@ Sets the group ID of the message.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00118">118</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00113">113</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -371,7 +371,7 @@ Sets the total length of the message.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00124">124</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00119">119</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -389,7 +389,7 @@ Sets the total length of the message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00127">127</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00122">122</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -406,7 +406,7 @@ Sets the total length of the message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00128">128</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00123">123</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -423,7 +423,7 @@ Sets the total length of the message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00129">129</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00124">124</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -440,7 +440,7 @@ Sets the total length of the message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00130">130</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00125">125</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
@@ -457,13 +457,13 @@ Sets the total length of the message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00131">131</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
+<p>Definition at line <a class="el" href="_header_builder_8h-source.html#l00126">126</a> of file <a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_header_builder_8h-source.html">HeaderBuilder.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_header_builder_8cc-source.html">HeaderBuilder.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:35 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:54 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

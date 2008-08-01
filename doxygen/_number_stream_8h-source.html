@@ -33,11 +33,11 @@
 <a name="l00035"></a>00035 <span class="keyword">namespace </span>Hypertable {
 <a name="l00036"></a>00036 
 <a name="l00037"></a><a class="code" href="class_hypertable_1_1_number_stream.html">00037</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_number_stream.html">NumberStream</a> {
-<a name="l00038"></a>00038     
+<a name="l00038"></a>00038 
 <a name="l00039"></a>00039   <span class="keyword">public</span>:
 <a name="l00040"></a><a class="code" href="class_hypertable_1_1_number_stream.html#39b290cbeae94da04c1ee0d25f452f9a">00040</a>     <a class="code" href="class_hypertable_1_1_number_stream.html#39b290cbeae94da04c1ee0d25f452f9a">NumberStream</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname) {
 <a name="l00041"></a>00041       <span class="keyword">struct </span>stat statbuf;
-<a name="l00042"></a>00042       
+<a name="l00042"></a>00042 
 <a name="l00043"></a>00043       <span class="keywordflow">if</span> (stat(fname, &amp;statbuf) != 0) {
 <a name="l00044"></a>00044         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem stating file '%s' - %s"</span>, fname, strerror(errno));
 <a name="l00045"></a>00045         exit(1);
@@ -46,7 +46,7 @@
 <a name="l00048"></a>00048         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Number stream file '%s' is not big enough, must be at least 4 bytes long"</span>, fname);
 <a name="l00049"></a>00049         exit(1);
 <a name="l00050"></a>00050       }
-<a name="l00051"></a>00051       
+<a name="l00051"></a>00051 
 <a name="l00052"></a>00052       <span class="keywordflow">if</span> ((<a class="code" href="class_hypertable_1_1_number_stream.html#d0952ebbba087c63479c40136381cb6d">m_fp</a> = fopen(fname, <span class="stringliteral">"r"</span>)) == 0) {
 <a name="l00053"></a>00053         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unable to open number stream file '%s'"</span>, fname);
 <a name="l00054"></a>00054         exit(1);
@@ -55,7 +55,7 @@
 <a name="l00057"></a><a class="code" href="class_hypertable_1_1_number_stream.html#40d50b44754e854be1aee1a428ad0b0d">00057</a>     <a class="code" href="class_hypertable_1_1_number_stream.html#40d50b44754e854be1aee1a428ad0b0d">~NumberStream</a>() {
 <a name="l00058"></a>00058       fclose(<a class="code" href="class_hypertable_1_1_number_stream.html#d0952ebbba087c63479c40136381cb6d">m_fp</a>);
 <a name="l00059"></a>00059     }
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_number_stream.html#7812282f670ecb5501fe407cd0e21cb7">00060</a>     uint32_t <a class="code" href="class_hypertable_1_1_number_stream.html#7812282f670ecb5501fe407cd0e21cb7">getInt</a>() {
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_number_stream.html#fb6402e41b0b3faee0e4c180839e2e72">00060</a>     uint32_t <a class="code" href="class_hypertable_1_1_number_stream.html#fb6402e41b0b3faee0e4c180839e2e72">get_int</a>() {
 <a name="l00061"></a>00061       uint32_t number;
 <a name="l00062"></a>00062 
 <a name="l00063"></a>00063       <span class="keywordflow">if</span> (fread(&amp;number, <span class="keyword">sizeof</span>(int32_t), 1, <a class="code" href="class_hypertable_1_1_number_stream.html#d0952ebbba087c63479c40136381cb6d">m_fp</a>) == 0) {
@@ -76,7 +76,7 @@
 <a name="l00078"></a>00078 }
 <a name="l00079"></a>00079 
 <a name="l00080"></a>00080 <span class="preprocessor">#endif // HYPERTABLE_NUMBERSTREAM_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

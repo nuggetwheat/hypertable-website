@@ -35,14 +35,14 @@
 <a name="l00037"></a>00037 
 <a name="l00038"></a>00038     <span class="keyword">public</span>:
 <a name="l00039"></a>00039 
-<a name="l00040"></a>00040       <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#1f4bec0ef369ac5840b88b420f64e79c">create_open_request</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname,
-<a name="l00041"></a>00041                                           uint32_t bufferSize=0);
+<a name="l00040"></a>00040       <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#fea7e718a9053fe0eba4b9043e739156">create_open_request</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname,
+<a name="l00041"></a>00041                                           uint32_t bufsz=0);
 <a name="l00042"></a>00042 
-<a name="l00043"></a>00043       <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#da98709385494038c6ea29a593435a8d">create_create_request</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname,
+<a name="l00043"></a>00043       <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#161c27764e4c936ffc45b44b7014d76e">create_create_request</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname,
 <a name="l00044"></a>00044                                             <span class="keywordtype">bool</span> overwrite,
-<a name="l00045"></a>00045                                             int32_t bufferSize,
+<a name="l00045"></a>00045                                             int32_t bufsz,
 <a name="l00046"></a>00046                                             int32_t replication,
-<a name="l00047"></a>00047                                             int64_t blockSize);
+<a name="l00047"></a>00047                                             int64_t blksz);
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049       <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#9630b3f2199129364b00f0ed6e705cd6">create_close_request</a>(int32_t fd);
 <a name="l00050"></a>00050 
@@ -109,7 +109,7 @@
 <a name="l00111"></a>00111 }
 <a name="l00112"></a>00112 
 <a name="l00113"></a>00113 <span class="preprocessor">#endif // HYPERTABLE_DFSBROKER_PROTOCOL_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

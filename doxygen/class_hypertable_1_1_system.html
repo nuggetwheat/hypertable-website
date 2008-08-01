@@ -30,29 +30,58 @@
 <a href="class_hypertable_1_1_system-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#c6b989a845ca8007a19ac398397c876f">initialize</a> (const char *argv0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#fe286a0beef6ca012aef6ba903332ecc">initialize</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_directory)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#fceb903d25fa18b1ba02700a2ff2900e">locate_install_dir</a> (const char *argv0)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">get_processor_count</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#7c2c91c42a8dbd334bb7cf2a91aeaebd">installDir</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#6fe96f484f32221deed04ae268fd4712">executableName</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Static Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#8e48919f3c35dcabe9b3702f615e73e1">_init</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_directory)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#b836ff93ca5e662e0520847adc64775f">ms_initialized</a> = false</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_system.html#9e14658920188fbf6c5bd213af3ff77c">ms_mutex</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_system_8h-source.html#l00030">30</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00031">31</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="c6b989a845ca8007a19ac398397c876f"></a><!-- doxytag: member="Hypertable::System::initialize" ref="c6b989a845ca8007a19ac398397c876f" args="(const char *argv0)" -->
+<a class="anchor" name="fe286a0beef6ca012aef6ba903332ecc"></a><!-- doxytag: member="Hypertable::System::initialize" ref="fe286a0beef6ca012aef6ba903332ecc" args="(const String &amp;install_directory)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void System::initialize           </td>
+          <td class="memname">static void Hypertable::System::initialize           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>install_directory</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline, static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00035">35</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="fceb903d25fa18b1ba02700a2ff2900e"></a><!-- doxytag: member="Hypertable::System::locate_install_dir" ref="fceb903d25fa18b1ba02700a2ff2900e" args="(const char *argv0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> System::locate_install_dir           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>argv0</em>          </td>
@@ -65,7 +94,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_system_8cc-source.html#l00046">46</a> of file <a class="el" href="_system_8cc-source.html">System.cc</a>.</p>
+<p>Definition at line <a class="el" href="_system_8cc-source.html#l00051">51</a> of file <a class="el" href="_system_8cc-source.html">System.cc</a>.</p>
 
 </div>
 </div><p>
@@ -86,17 +115,39 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_system_8cc-source.html#l00117">117</a> of file <a class="el" href="_system_8cc-source.html">System.cc</a>.</p>
+<p>Definition at line <a class="el" href="_system_8cc-source.html#l00140">140</a> of file <a class="el" href="_system_8cc-source.html">System.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8e48919f3c35dcabe9b3702f615e73e1"></a><!-- doxytag: member="Hypertable::System::_init" ref="8e48919f3c35dcabe9b3702f615e73e1" args="(const String &amp;install_directory)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void System::_init           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>install_directory</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static, private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_system_8cc-source.html#l00120">120</a> of file <a class="el" href="_system_8cc-source.html">System.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="7c2c91c42a8dbd334bb7cf2a91aeaebd"></a><!-- doxytag: member="Hypertable::System::installDir" ref="7c2c91c42a8dbd334bb7cf2a91aeaebd" args="" -->
+<a class="anchor" name="901bdacd28ac1348d5a460a3480baa14"></a><!-- doxytag: member="Hypertable::System::install_dir" ref="901bdacd28ac1348d5a460a3480baa14" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">string <a class="el" href="class_hypertable_1_1_system.html#7c2c91c42a8dbd334bb7cf2a91aeaebd">System::installDir</a><code> [static]</code>          </td>
+          <td class="memname">string <a class="el" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a><code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -104,16 +155,16 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_system_8h-source.html#l00034">34</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00045">45</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="6fe96f484f32221deed04ae268fd4712"></a><!-- doxytag: member="Hypertable::System::executableName" ref="6fe96f484f32221deed04ae268fd4712" args="" -->
+<a class="anchor" name="f7c2d3c7baaac23d26d1e326d326c674"></a><!-- doxytag: member="Hypertable::System::exe_name" ref="f7c2d3c7baaac23d26d1e326d326c674" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">string <a class="el" href="class_hypertable_1_1_system.html#6fe96f484f32221deed04ae268fd4712">System::executableName</a><code> [static]</code>          </td>
+          <td class="memname">string <a class="el" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">System::exe_name</a><code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -121,7 +172,24 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_system_8h-source.html#l00035">35</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00046">46</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b836ff93ca5e662e0520847adc64775f"></a><!-- doxytag: member="Hypertable::System::ms_initialized" ref="b836ff93ca5e662e0520847adc64775f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_system.html#b836ff93ca5e662e0520847adc64775f">System::ms_initialized</a> = false<code> [static, private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00053">53</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
 
 </div>
 </div><p>
@@ -138,13 +206,13 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_system_8h-source.html#l00040">40</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
+<p>Definition at line <a class="el" href="_system_8h-source.html#l00054">54</a> of file <a class="el" href="_system_8h-source.html">System.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_system_8h-source.html">System.h</a><li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_system_8cc-source.html">System.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:39 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:58 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

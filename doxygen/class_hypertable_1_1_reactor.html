@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::Reactor:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_reactor__coll__graph.png" border="0" usemap="#_hypertable_1_1_reactor__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_reactor__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="69,96,261,123"><area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="68,174,263,200"><area shape="rect" href="class_hypertable_1_1_i_o_handler.html" title="Hypertable::IOHandler" alt="" coords="287,174,444,200"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="129,6,201,32"><area shape="rect" href="class_hypertable_1_1_request_cache.html" title="Hypertable::RequestCache" alt="" coords="79,376,263,403"><area shape="rect" href="struct_hypertable_1_1_request_cache_1_1cache__node.html" title="Hypertable::RequestCache::cache_node" alt="" coords="68,267,335,294"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="69,96,261,123"><area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="68,174,263,200"><area shape="rect" href="class_hypertable_1_1_i_o_handler.html" title="Hypertable::IOHandler" alt="" coords="287,174,444,200"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="129,6,201,32"><area shape="rect" href="class_hypertable_1_1_request_cache.html" title="Hypertable::RequestCache" alt="" coords="77,376,261,403"><area shape="rect" href="struct_hypertable_1_1_request_cache_1_1_cache_node.html" title="Hypertable::RequestCache::CacheNode" alt="" coords="68,267,332,294"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -56,13 +56,13 @@ Collaboration diagram for Hypertable::Reactor:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#45426b231e3e1f1aed2618cf35fbb50e">cancel_requests</a> (<a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#cc788460444ca8358623cab4311d3943">add_timer</a> (struct <a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a> &amp;timer)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#0136dd00c4325e8b986c1a5d91cd9775">add_timer</a> (<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &amp;timer)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#f4f4bd49dafce3a0cb5f494368f68a88">schedule_removal</a> (<a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#f1695aa5da8c4b8cd1812d2fc6b6d1d3">get_removed_handlers</a> (set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt; &amp;<a class="el" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#c0ff73f3326ba8dbd6c6e48bbacd2f13">get_removed_handlers</a> (std::set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt; &amp;<a class="el" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#68d614710247588c8618d7dc4edafaa0">handle_timeouts</a> (<a class="el" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;nextTimeout)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#d05df16fbcad0de291af683834efed1f">handle_timeouts</a> (<a class="el" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;next_timeout)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a> ()</td></tr>
 
@@ -79,9 +79,10 @@ Collaboration diagram for Hypertable::Reactor:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_request_cache.html">RequestCache</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::priority_queue<br>
-&lt; <a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a>,<br>
- std::vector&lt; <a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a> &gt;,<br>
- <a class="el" href="struct_hypertable_1_1lt_timer.html">ltTimer</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a></td></tr>
+&lt; <a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>,<br>
+ std::vector<br>
+&lt; <a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &gt;,<br>
+ <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a></td></tr>
 
@@ -89,7 +90,7 @@ Collaboration diagram for Hypertable::Reactor:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::xtime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#c1d5a3f3e40db5ba8df85c300d401d77">m_removed_handlers</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Friends</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#8d3498cce4737f60e7a9353ceddacd3c">ReactorFactory</a></td></tr>
@@ -118,7 +119,7 @@ Collaboration diagram for Hypertable::Reactor:</div>
 
 <p>
 The following logic creates a UDP socket that is used to interrupt epoll_wait so that it can reset its timeout value 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00057">57</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00059">59</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -250,14 +251,14 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 </div>
 </div><p>
-<a class="anchor" name="cc788460444ca8358623cab4311d3943"></a><!-- doxytag: member="Hypertable::Reactor::add_timer" ref="cc788460444ca8358623cab4311d3943" args="(struct TimerT &amp;timer)" -->
+<a class="anchor" name="0136dd00c4325e8b986c1a5d91cd9775"></a><!-- doxytag: member="Hypertable::Reactor::add_timer" ref="0136dd00c4325e8b986c1a5d91cd9775" args="(ExpireTimer &amp;timer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::Reactor::add_timer           </td>
           <td>(</td>
-          <td class="paramtype">struct <a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>timer</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
@@ -294,14 +295,14 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 </div>
 </div><p>
-<a class="anchor" name="f1695aa5da8c4b8cd1812d2fc6b6d1d3"></a><!-- doxytag: member="Hypertable::Reactor::get_removed_handlers" ref="f1695aa5da8c4b8cd1812d2fc6b6d1d3" args="(set&lt; IOHandler * &gt; &amp;dst)" -->
+<a class="anchor" name="c0ff73f3326ba8dbd6c6e48bbacd2f13"></a><!-- doxytag: member="Hypertable::Reactor::get_removed_handlers" ref="c0ff73f3326ba8dbd6c6e48bbacd2f13" args="(std::set&lt; IOHandler * &gt; &amp;dst)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::Reactor::get_removed_handlers           </td>
           <td>(</td>
-          <td class="paramtype">set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt; &amp;&nbsp;</td>
+          <td class="paramtype">std::set&lt; <a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> * &gt; &amp;&nbsp;</td>
           <td class="paramname"> <em>dst</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
@@ -316,7 +317,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 </div>
 </div><p>
-<a class="anchor" name="68d614710247588c8618d7dc4edafaa0"></a><!-- doxytag: member="Hypertable::Reactor::handle_timeouts" ref="68d614710247588c8618d7dc4edafaa0" args="(PollTimeout &amp;nextTimeout)" -->
+<a class="anchor" name="d05df16fbcad0de291af683834efed1f"></a><!-- doxytag: member="Hypertable::Reactor::handle_timeouts" ref="d05df16fbcad0de291af683834efed1f" args="(PollTimeout &amp;next_timeout)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -324,7 +325,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
           <td class="memname">void Reactor::handle_timeouts           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>nextTimeout</em>          </td>
+          <td class="paramname"> <em>next_timeout</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -336,7 +337,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 Deliver timer events 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00109">109</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00121">121</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -357,7 +358,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00184">184</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00196">196</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -378,7 +379,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00220">220</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00237">237</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -469,12 +470,12 @@ Deliver timer events
 
 </div>
 </div><p>
-<a class="anchor" name="126dc1bb190c8ac1a10247ece76959d7"></a><!-- doxytag: member="Hypertable::Reactor::m_timer_heap" ref="126dc1bb190c8ac1a10247ece76959d7" args="" -->
+<a class="anchor" name="190bc07c7b97a49f8bdfc7f000eafd27"></a><!-- doxytag: member="Hypertable::Reactor::m_timer_heap" ref="190bc07c7b97a49f8bdfc7f000eafd27" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::priority_queue&lt;<a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a>, std::vector&lt;<a class="el" href="struct_hypertable_1_1_timer_t.html">TimerT</a>&gt;, <a class="el" href="struct_hypertable_1_1lt_timer.html">ltTimer</a>&gt; <a class="el" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">Hypertable::Reactor::m_timer_heap</a><code> [protected]</code>          </td>
+          <td class="memname">std::priority_queue&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>, std::vector&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>&gt;, <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a>&gt; <a class="el" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">Hypertable::Reactor::m_timer_heap</a><code> [protected]</code>          </td>
         </tr>
       </table>
 </div>
@@ -537,12 +538,12 @@ Deliver timer events
 
 </div>
 </div><p>
-<a class="anchor" name="c1d5a3f3e40db5ba8df85c300d401d77"></a><!-- doxytag: member="Hypertable::Reactor::m_removed_handlers" ref="c1d5a3f3e40db5ba8df85c300d401d77" args="" -->
+<a class="anchor" name="fb25579f1ed518c2f672f82eb53cb349"></a><!-- doxytag: member="Hypertable::Reactor::m_removed_handlers" ref="fb25579f1ed518c2f672f82eb53cb349" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">set&lt;<a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *&gt; <a class="el" href="class_hypertable_1_1_reactor.html#c1d5a3f3e40db5ba8df85c300d401d77">Hypertable::Reactor::m_removed_handlers</a><code> [protected]</code>          </td>
+          <td class="memname">std::set&lt;<a class="el" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *&gt; <a class="el" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">Hypertable::Reactor::m_removed_handlers</a><code> [protected]</code>          </td>
         </tr>
       </table>
 </div>
@@ -556,7 +557,7 @@ Deliver timer events
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_8h-source.html">Reactor.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_8cc-source.html">Reactor.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:36 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:55 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

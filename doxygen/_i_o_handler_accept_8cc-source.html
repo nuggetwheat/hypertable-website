@@ -17,93 +17,95 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e65477d41cbea77146d554d167dc9746.html">AsyncComm</a></div>
 <h1>IOHandlerAccept.cc</h1><a href="_i_o_handler_accept_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00023"></a>00023 <span class="keyword">using namespace </span>std;
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;netinet/tcp.h&gt;</span>
-<a name="l00028"></a>00028 }
-<a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="_i_o_handler_accept_8cc.html#ea5efdbc52497c0aa0d992da07e726c5">00030</a> <span class="preprocessor">#define DISABLE_LOG_DEBUG 1</span>
-<a name="l00031"></a>00031 <span class="preprocessor"></span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_handler_map_8h.html">HandlerMap.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_accept_8h.html">IOHandlerAccept.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">ReactorFactory.h</a>"</span>
-<a name="l00040"></a>00040 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042 
-<a name="l00046"></a>00046 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span><span class="keywordtype">bool</span> IOHandlerAccept::handle_event(<span class="keyword">struct</span> kevent *event) {
-<a name="l00048"></a>00048   <span class="comment">//DisplayEvent(event);</span>
-<a name="l00049"></a>00049   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_READ)  
-<a name="l00050"></a>00050     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">handle_incoming_connection</a>();
-<a name="l00051"></a>00051   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00052"></a>00052 }
-<a name="l00053"></a>00053 <span class="preprocessor">#elif defined(__linux__)</span>
-<a name="l00054"></a>00054 <span class="preprocessor"></span><span class="keywordtype">bool</span> IOHandlerAccept::handle_event(<span class="keyword">struct</span> epoll_event *event) {
-<a name="l00055"></a>00055   <span class="comment">//DisplayEvent(event);</span>
-<a name="l00056"></a>00056   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">handle_incoming_connection</a>();
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 <span class="preprocessor">#else</span>
-<a name="l00059"></a><a class="code" href="_i_o_handler_accept_8cc.html#b625750f606f98bcd0bc081f958de1da">00059</a> <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#06d1fe4338ea57379c8d5bf3822a6e0c">ImplementMe</a>;
-<a name="l00060"></a>00060 <span class="preprocessor">#endif</span>
-<a name="l00061"></a>00061 <span class="preprocessor"></span>
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">00064</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">IOHandlerAccept::handle_incoming_connection</a>() {
-<a name="l00065"></a>00065   <span class="keywordtype">int</span> sd;
-<a name="l00066"></a>00066   <span class="keyword">struct </span>sockaddr_in addr;
-<a name="l00067"></a>00067   socklen_t addrLen = <span class="keyword">sizeof</span>(sockaddr_in);
-<a name="l00068"></a>00068   <span class="keywordtype">int</span> one = 1;
-<a name="l00069"></a>00069   <a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a> *dataHandler;
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071   <span class="keywordflow">if</span> ((sd = accept(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, (<span class="keyword">struct</span> sockaddr *)&amp;addr, &amp;addrLen)) &lt; 0) {
-<a name="l00072"></a>00072     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"accept() failure: %s"</span>, strerror(errno));
-<a name="l00073"></a>00073     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00074"></a>00074   }
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"Just accepted incoming connection, fd=%d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00025"></a>00025 <span class="keyword">using namespace </span>std;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;netinet/tcp.h&gt;</span>
+<a name="l00030"></a>00030 }
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="_i_o_handler_accept_8cc.html#e5e9ac0409119b4d04ed831a2236c477">00032</a> <span class="preprocessor">#define HT_DISABLE_LOG_DEBUG 1</span>
+<a name="l00033"></a>00033 <span class="preprocessor"></span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_handler_map_8h.html">HandlerMap.h</a>"</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_accept_8h.html">IOHandlerAccept.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
+<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">ReactorFactory.h</a>"</span>
+<a name="l00042"></a>00042 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 
+<a name="l00048"></a>00048 <span class="preprocessor">#if defined(__APPLE__)</span>
+<a name="l00049"></a>00049 <span class="preprocessor"></span><span class="keywordtype">bool</span> IOHandlerAccept::handle_event(<span class="keyword">struct</span> kevent *event) {
+<a name="l00050"></a>00050   <span class="comment">//DisplayEvent(event);</span>
+<a name="l00051"></a>00051   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_READ)
+<a name="l00052"></a>00052     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">handle_incoming_connection</a>();
+<a name="l00053"></a>00053   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 <span class="preprocessor">#elif defined(__linux__)</span>
+<a name="l00056"></a>00056 <span class="preprocessor"></span><span class="keywordtype">bool</span> IOHandlerAccept::handle_event(<span class="keyword">struct</span> epoll_event *event) {
+<a name="l00057"></a>00057   <span class="comment">//DisplayEvent(event);</span>
+<a name="l00058"></a>00058   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">handle_incoming_connection</a>();
+<a name="l00059"></a>00059 }
+<a name="l00060"></a>00060 <span class="preprocessor">#else</span>
+<a name="l00061"></a><a class="code" href="_i_o_handler_accept_8cc.html#b625750f606f98bcd0bc081f958de1da">00061</a> <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#06d1fe4338ea57379c8d5bf3822a6e0c">ImplementMe</a>;
+<a name="l00062"></a>00062 <span class="preprocessor">#endif</span>
+<a name="l00063"></a>00063 <span class="preprocessor"></span>
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065 
+<a name="l00066"></a><a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">00066</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#1ae46517b10dd86abfd95beee5bf2056">IOHandlerAccept::handle_incoming_connection</a>() {
+<a name="l00067"></a>00067   <span class="keywordtype">int</span> sd;
+<a name="l00068"></a>00068   <span class="keyword">struct </span>sockaddr_in addr;
+<a name="l00069"></a>00069   socklen_t addr_len = <span class="keyword">sizeof</span>(sockaddr_in);
+<a name="l00070"></a>00070   <span class="keywordtype">int</span> one = 1;
+<a name="l00071"></a>00071   <a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a> *data_handler;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073   <span class="keywordflow">if</span> ((sd = accept(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, (<span class="keyword">struct</span> sockaddr *)&amp;addr, &amp;addr_len)) &lt; 0) {
+<a name="l00074"></a>00074     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"accept() failure: %s"</span>, strerror(errno));
+<a name="l00075"></a>00075     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00076"></a>00076   }
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="comment">// Set to non-blocking</span>
-<a name="l00079"></a>00079   <a class="code" href="class_hypertable_1_1_file_utils.html#2a30b40bbb82792f23fbea2d394b3954">FileUtils::set_flags</a>(sd, O_NONBLOCK);
-<a name="l00080"></a>00080 
-<a name="l00081"></a>00081 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00082"></a>00082 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (setsockopt(sd, SOL_TCP, TCP_NODELAY, &amp;one, <span class="keyword">sizeof</span>(one)) &lt; 0)
-<a name="l00083"></a>00083     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(TCP_NODELAY) failure: %s"</span>, strerror(errno));
-<a name="l00084"></a>00084 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00085"></a>00085 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, &amp;one, <span class="keyword">sizeof</span>(one)) &lt; 0)
-<a name="l00086"></a>00086     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_NOSIGPIPE) failure: %s"</span>, strerror(errno));
-<a name="l00087"></a>00087 <span class="preprocessor">#endif</span>
-<a name="l00088"></a>00088 <span class="preprocessor"></span>
-<a name="l00089"></a>00089   <span class="keywordtype">int</span> bufsize = 4*32768;
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_SNDBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
-<a name="l00092"></a>00092     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_SNDBUF) failed - %s"</span>, strerror(errno));
-<a name="l00093"></a>00093   }
-<a name="l00094"></a>00094   <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_RCVBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
-<a name="l00095"></a>00095     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_RCVBUF) failed - %s"</span>, strerror(errno));
-<a name="l00096"></a>00096   }
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098   <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> dhp;
-<a name="l00099"></a>00099   <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#3c26c5cdd7073a102771c8d4e6e77f5c">m_handler_factory_ptr</a>-&gt;get_instance(dhp);
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   dataHandler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a>(sd, addr, dhp);
+<a name="l00078"></a>00078   <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"Just accepted incoming connection, fd=%d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(addr.sin_addr), ntohs(addr.sin_port));
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080   <span class="comment">// Set to non-blocking</span>
+<a name="l00081"></a>00081   <a class="code" href="class_hypertable_1_1_file_utils.html#2a30b40bbb82792f23fbea2d394b3954">FileUtils::set_flags</a>(sd, O_NONBLOCK);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00084"></a>00084 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (setsockopt(sd, SOL_TCP, TCP_NODELAY, &amp;one, <span class="keyword">sizeof</span>(one)) &lt; 0)
+<a name="l00085"></a>00085     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(TCP_NODELAY) failure: %s"</span>, strerror(errno));
+<a name="l00086"></a>00086 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00087"></a>00087 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_NOSIGPIPE, &amp;one, <span class="keyword">sizeof</span>(one)) &lt; 0)
+<a name="l00088"></a>00088     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_NOSIGPIPE) failure: %s"</span>, strerror(errno));
+<a name="l00089"></a>00089 <span class="preprocessor">#endif</span>
+<a name="l00090"></a>00090 <span class="preprocessor"></span>
+<a name="l00091"></a>00091   <span class="keywordtype">int</span> bufsize = 4*32768;
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093   <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_SNDBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
+<a name="l00094"></a>00094     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_SNDBUF) failed - %s"</span>, strerror(errno));
+<a name="l00095"></a>00095   }
+<a name="l00096"></a>00096   <span class="keywordflow">if</span> (setsockopt(sd, SOL_SOCKET, SO_RCVBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
+<a name="l00097"></a>00097     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"setsockopt(SO_RCVBUF) failed - %s"</span>, strerror(errno));
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> dhp;
+<a name="l00101"></a>00101   <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#3c26c5cdd7073a102771c8d4e6e77f5c">m_handler_factory_ptr</a>-&gt;get_instance(dhp);
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103   <a class="code" href="namespace_hypertable.html#65acf7a2bb3a2e6888164aee882be988">IOHandlerPtr</a> handlerPtr( dataHandler );
-<a name="l00104"></a>00104   <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#7548e7b89eaecda9abb3bfa85112b349">m_handler_map_ptr</a>-&gt;insert_handler(dataHandler);
-<a name="l00105"></a>00105   dataHandler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#7c6d07e6b45f42218714eacc05e580ac">start_polling</a>();
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107   <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>( <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860cccdc11418b986f151802fbd94a4a199563">Event::CONNECTION_ESTABLISHED</a>, dataHandler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#f6ec9fbec449335c4cf2bbb7052b5928">connection_id</a>(), addr, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) );
+<a name="l00103"></a>00103   data_handler = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a>(sd, addr, dhp);
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   <a class="code" href="namespace_hypertable.html#65acf7a2bb3a2e6888164aee882be988">IOHandlerPtr</a> handler(data_handler);
+<a name="l00106"></a>00106   <a class="code" href="class_hypertable_1_1_i_o_handler_accept.html#7548e7b89eaecda9abb3bfa85112b349">m_handler_map_ptr</a>-&gt;insert_handler(data_handler);
+<a name="l00107"></a>00107   data_handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#7c6d07e6b45f42218714eacc05e580ac">start_polling</a>();
 <a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00110"></a>00110  }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00109"></a>00109   <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860cccdc11418b986f151802fbd94a4a199563">Event::CONNECTION_ESTABLISHED</a>, data_handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#f6ec9fbec449335c4cf2bbb7052b5928">connection_id</a>(), addr, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00112"></a>00112  }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

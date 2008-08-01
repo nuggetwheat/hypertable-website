@@ -17,45 +17,45 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e65477d41cbea77146d554d167dc9746.html">AsyncComm</a></div>
 <h1>DispatchHandlerSynchronizer.cc</h1><a href="_dispatch_handler_synchronizer_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_synchronizer_8h.html">DispatchHandlerSynchronizer.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_protocol_8h.html">Protocol.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00029"></a>00029 
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_synchronizer_8h.html">DispatchHandlerSynchronizer.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_protocol_8h.html">Protocol.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keyword">using namespace </span>Hypertable;
 <a name="l00030"></a>00030 
-<a name="l00034"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#be9be3679d4e32c74ee663ca4b913b9e">00034</a> DispatchHandlerSynchronizer::DispatchHandlerSynchronizer() : m_valid(0x11111111), m_receive_queue(), <a class="code" href="dfsclient_8cc.html#b6cd53732098745970bdd5c71c6ea343">m_mutex</a>(), <a class="code" href="dfsclient_8cc.html#bdc249734e800ea84000357d60b10e88">m_cond</a>() {
-<a name="l00035"></a>00035   <span class="keywordflow">return</span>;
-<a name="l00036"></a>00036 }
-<a name="l00037"></a>00037 
+<a name="l00031"></a>00031 
+<a name="l00035"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#be9be3679d4e32c74ee663ca4b913b9e">00035</a> DispatchHandlerSynchronizer::DispatchHandlerSynchronizer() : m_receive_queue(), <a class="code" href="dfsclient_8cc.html#b6cd53732098745970bdd5c71c6ea343">m_mutex</a>(), <a class="code" href="dfsclient_8cc.html#bdc249734e800ea84000357d60b10e88">m_cond</a>() {
+<a name="l00036"></a>00036   <span class="keywordflow">return</span>;
+<a name="l00037"></a>00037 }
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039 
-<a name="l00043"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#d45ffb95c51184e64835d8b6c9106898">00043</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#d45ffb95c51184e64835d8b6c9106898" title="Dispatch method.">DispatchHandlerSynchronizer::handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) {
-<a name="l00044"></a>00044   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#08b2d28c405a97c62599cf361ff85ec6">m_mutex</a>);
-<a name="l00045"></a>00045   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#a1fb8537556b7ba5a8bdc4d0ab1bd96b">m_valid</a> == 0x11111111, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00046"></a>00046   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.push(eventPtr);
-<a name="l00047"></a>00047   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#62e950394a38b7f418581be86ddcd6e6">m_cond</a>.notify_one();    
+<a name="l00040"></a>00040 
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#e717ced182bb8ddd474449ab00e54103">00044</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#e717ced182bb8ddd474449ab00e54103" title="Dispatch method.">DispatchHandlerSynchronizer::handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00045"></a>00045   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#08b2d28c405a97c62599cf361ff85ec6">m_mutex</a>);
+<a name="l00046"></a>00046   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.push(event_ptr);
+<a name="l00047"></a>00047   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#62e950394a38b7f418581be86ddcd6e6">m_cond</a>.notify_one();
 <a name="l00048"></a>00048 }
 <a name="l00049"></a>00049 
 <a name="l00050"></a>00050 
 <a name="l00051"></a>00051 
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#7cdb249ea7881220186dd32020ca2a25">00055</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#7cdb249ea7881220186dd32020ca2a25" title="This method is used by a client to synchronize.">DispatchHandlerSynchronizer::wait_for_reply</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) {
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667">00055</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">DispatchHandlerSynchronizer::wait_for_reply</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
 <a name="l00056"></a>00056   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#08b2d28c405a97c62599cf361ff85ec6">m_mutex</a>);
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.empty())
 <a name="l00059"></a>00059     <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#62e950394a38b7f418581be86ddcd6e6">m_cond</a>.wait(lock);
 <a name="l00060"></a>00060 
-<a name="l00061"></a>00061   eventPtr = <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.front();
+<a name="l00061"></a>00061   event_ptr = <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.front();
 <a name="l00062"></a>00062   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#b9da248ffb803edb94f41b4a186ab1b6">m_receive_queue</a>.pop();
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <span class="keywordflow">if</span> (eventPtr-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a> &amp;&amp; <a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(eventPtr.get()) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00064"></a>00064   <span class="keywordflow">if</span> (event_ptr-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a> &amp;&amp; <a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr.get()) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
 <a name="l00065"></a>00065     <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00066"></a>00066 
 <a name="l00067"></a>00067   <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00068"></a>00068 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

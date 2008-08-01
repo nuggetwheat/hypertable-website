@@ -20,489 +20,209 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_SERIALIZATION_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_SERIALIZATION_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;cstring&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="serialization-c_8h.html">serialization-c.h</a>"</span>
+<a name="l00026"></a>00026 
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/detail/endian.hpp&gt;</span>
+<a name="l00028"></a><a class="code" href="namespace_hypertable_1_1_serialization.html">00028</a> <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Serialization {
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#ifdef HT_SERIALIZATION_GENERIC</span>
-<a name="l00034"></a>00034 <span class="preprocessor"></span><span class="preprocessor">#undef BOOST_LITTLE_ENDIAN</span>
-<a name="l00035"></a>00035 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l00036"></a>00036 <span class="preprocessor"></span>
-<a name="l00037"></a>00037 <span class="comment">// vint limits</span>
-<a name="l00038"></a><a class="code" href="_serialization_8h.html#f4aabb87a7ed28c013cb4b06d96f3804">00038</a> <span class="preprocessor">#define HT_MAX_V1B 0x7f</span>
-<a name="l00039"></a><a class="code" href="_serialization_8h.html#01dd25a70e35af5b8d7e04689c38534b">00039</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V2B 0x3fff</span>
-<a name="l00040"></a><a class="code" href="_serialization_8h.html#c7c4e448d15ae255f810a4bc71cd8465">00040</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V3B 0x1fffff</span>
-<a name="l00041"></a><a class="code" href="_serialization_8h.html#735ec71de798b899dee834d0d494bdcd">00041</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V4B 0xfffffff</span>
-<a name="l00042"></a><a class="code" href="_serialization_8h.html#29d3cea444e5d4fc277bdf1b1367be33">00042</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V5B 0x7ffffffffull</span>
-<a name="l00043"></a><a class="code" href="_serialization_8h.html#10975d615d720940ebe0c98421828000">00043</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V6B 0x3ffffffffffull</span>
-<a name="l00044"></a><a class="code" href="_serialization_8h.html#9c9c8090f20ba8ccbf72728037796c60">00044</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V7B 0x1ffffffffffffull</span>
-<a name="l00045"></a><a class="code" href="_serialization_8h.html#ffaa1fabf974683f1237f1103586f535">00045</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V8B 0xffffffffffffffull</span>
-<a name="l00046"></a><a class="code" href="_serialization_8h.html#ca2f7d683cdca669ff8464a6c18d7cb7">00046</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_V9B 0x7fffffffffffffffull</span>
-<a name="l00047"></a>00047 <span class="preprocessor"></span>
-<a name="l00048"></a><a class="code" href="_serialization_8h.html#acb120ebcf132d5d96162ae3814d662a">00048</a> <span class="preprocessor">#define HT_MAX_LEN_VINT32 5</span>
-<a name="l00049"></a><a class="code" href="_serialization_8h.html#9b3979a042cc7650f88a900b627d7079">00049</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_MAX_LEN_VINT64 10</span>
-<a name="l00050"></a>00050 <span class="preprocessor"></span>
-<a name="l00051"></a>00051 <span class="comment">// vint encode</span>
-<a name="l00052"></a><a class="code" href="_serialization_8h.html#1dde44eb7df047336c38cf4668470c7c">00052</a> <span class="preprocessor">#define HT_ENCODE_VINT0(_op_, _val_) \</span>
-<a name="l00053"></a>00053 <span class="preprocessor">  if (_val_ &lt;= HT_MAX_V1B) { \</span>
-<a name="l00054"></a>00054 <span class="preprocessor">    *(_op_)++ = (uint8_t)((_val_) &amp; 0x7f); \</span>
-<a name="l00055"></a>00055 <span class="preprocessor">    return; \</span>
-<a name="l00056"></a>00056 <span class="preprocessor">  }</span>
-<a name="l00057"></a>00057 <span class="preprocessor"></span>
-<a name="l00058"></a><a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">00058</a> <span class="preprocessor">#define HT_ENCODE_VINT_(_op_, _val_) \</span>
-<a name="l00059"></a>00059 <span class="preprocessor">  *(_op_)++ = (uint8_t)((_val_) | 0x80); \</span>
-<a name="l00060"></a>00060 <span class="preprocessor">  _val_ &gt;&gt;= 7; \</span>
-<a name="l00061"></a>00061 <span class="preprocessor">  HT_ENCODE_VINT0(_op_, _val_)</span>
-<a name="l00062"></a>00062 <span class="preprocessor"></span>
-<a name="l00063"></a><a class="code" href="_serialization_8h.html#714e24c9b35ae312dc1cd131a57556bb">00063</a> <span class="preprocessor">#define HT_ENCODE_VINT4(_op_, _val_) \</span>
-<a name="l00064"></a>00064 <span class="preprocessor">  HT_ENCODE_VINT_(_op_, _val_) HT_ENCODE_VINT_(_op_, _val_) \</span>
-<a name="l00065"></a>00065 <span class="preprocessor">  HT_ENCODE_VINT_(_op_, _val_) HT_ENCODE_VINT_(_op_, _val_)</span>
-<a name="l00066"></a>00066 <span class="preprocessor"></span>
-<a name="l00067"></a>00067 <span class="comment">// vint decode</span>
-<a name="l00068"></a><a class="code" href="_serialization_8h.html#e0b8fb8450b3cc2fca8a24ffc232906e">00068</a> <span class="preprocessor">#define HT_DECODE_NEED(_rp_, _n_) \</span>
-<a name="l00069"></a>00069 <span class="preprocessor">  if (*(_rp_) &lt; _n_) \</span>
-<a name="l00070"></a>00070 <span class="preprocessor">    throw Exception(Error::SERIALIZATION_INPUT_OVERRUN); \</span>
-<a name="l00071"></a>00071 <span class="preprocessor">  *(_rp_) -= _n_</span>
-<a name="l00072"></a>00072 <span class="preprocessor"></span>
-<a name="l00073"></a><a class="code" href="_serialization_8h.html#81e4bb06806755364c06be370ce01512">00073</a> <span class="preprocessor">#define HT_DECODE_VINT0(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00074"></a>00074 <span class="preprocessor">  HT_DECODE_NEED(_rp_, 1); \</span>
-<a name="l00075"></a>00075 <span class="preprocessor">  _type_ _n_ = (*(_ip_)++ &amp; 0x7f), shift = 0;</span>
-<a name="l00076"></a>00076 <span class="preprocessor"></span>
-<a name="l00077"></a><a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">00077</a> <span class="preprocessor">#define HT_DECODE_VINT_(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00078"></a>00078 <span class="preprocessor">  shift += 7; \</span>
-<a name="l00079"></a>00079 <span class="preprocessor">  if ((_ip_)[-1] &amp; 0x80) { \</span>
-<a name="l00080"></a>00080 <span class="preprocessor">    HT_DECODE_NEED(_rp_, 1); \</span>
-<a name="l00081"></a>00081 <span class="preprocessor">    _n_ |= ((_type_)(*(_ip_)++ &amp; 0x7f) &lt;&lt; shift); \</span>
-<a name="l00082"></a>00082 <span class="preprocessor">  } else return _n_;</span>
-<a name="l00083"></a>00083 <span class="preprocessor"></span>
-<a name="l00084"></a><a class="code" href="_serialization_8h.html#1fb91ff4c039747a6e48b6145e58178b">00084</a> <span class="preprocessor">#define HT_DECODE_VINT4(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00085"></a>00085 <span class="preprocessor">  HT_DECODE_VINT_(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00086"></a>00086 <span class="preprocessor">  HT_DECODE_VINT_(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00087"></a>00087 <span class="preprocessor">  HT_DECODE_VINT_(_type_, _n_, _ip_, _rp_) \</span>
-<a name="l00088"></a>00088 <span class="preprocessor">  HT_DECODE_VINT_(_type_, _n_, _ip_, _rp_)</span>
-<a name="l00089"></a>00089 <span class="preprocessor"></span>
-<a name="l00090"></a><a class="code" href="namespace_hypertable_1_1_serialization.html">00090</a> <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Serialization {
-<a name="l00091"></a>00091 
-<a name="l00099"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b">00099</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b" title="Encodes a boolean into the given buffer.">encode_bool</a>(uint8_t **bufp, <span class="keywordtype">bool</span> bval) {
-<a name="l00100"></a>00100       *(*bufp) = (bval) ? 1 : 0;
-<a name="l00101"></a>00101       (*bufp)++;
-<a name="l00102"></a>00102     }
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104 
-<a name="l00114"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#de757fde9815b5fa22fbb58576ebf78c">00114</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#de757fde9815b5fa22fbb58576ebf78c" title="Decodes a boolean value from the given buffer.">decode_bool</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, <span class="keywordtype">bool</span> *boolp) {
-<a name="l00115"></a>00115       <span class="keywordflow">if</span> (*remainingp == 0)
-<a name="l00116"></a>00116         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00117"></a>00117       *boolp = (*(*bufp) == 0) ? <span class="keyword">false</span> : <span class="keyword">true</span>;
-<a name="l00118"></a>00118       (*bufp)++;
-<a name="l00119"></a>00119       (*remainingp)--;
-<a name="l00120"></a>00120       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00121"></a>00121     }
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123 
-<a name="l00133"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#c030542188047b53c386f25ec3042c2f">00133</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#c030542188047b53c386f25ec3042c2f" title="Decodes a single byte from the given buffer.">decode_byte</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, uint8_t *bytePtr) {
-<a name="l00134"></a>00134       <span class="keywordflow">if</span> (*remainingp == 0)
-<a name="l00135"></a>00135         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00136"></a>00136       *bytePtr = *(*bufp)++;
-<a name="l00137"></a>00137       (*remainingp)--;
-<a name="l00138"></a>00138       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00139"></a>00139     }
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141 
-<a name="l00149"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#dd9bc4ec1b2319c867432466bf77b0d5">00149</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#dd9bc4ec1b2319c867432466bf77b0d5" title="Encodes a short (2 byte integer) into the given buffer.">encode_short</a>(uint8_t **bufp, uint16_t sval) {
-<a name="l00150"></a>00150 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00151"></a>00151 <span class="preprocessor"></span>      memcpy(*bufp, &amp;sval, 2);
-<a name="l00152"></a>00152       *bufp += 2;
-<a name="l00153"></a>00153 <span class="preprocessor">#else</span>
-<a name="l00154"></a>00154 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)sval;
-<a name="l00155"></a>00155       *(*bufp)++ = (uint8_t)(sval &gt;&gt; 8);
-<a name="l00156"></a>00156 <span class="preprocessor">#endif</span>
-<a name="l00157"></a>00157 <span class="preprocessor"></span>    }
-<a name="l00158"></a>00158 
-<a name="l00159"></a>00159 
-<a name="l00169"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#87d607f10efd535ca34217a06836b5f4">00169</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#87d607f10efd535ca34217a06836b5f4" title="Decodes a short (2 byte integer) from the given buffer.">decode_short</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, uint16_t *svalp) {
-<a name="l00170"></a>00170       <span class="keywordflow">if</span> (*remainingp &lt; 2)
-<a name="l00171"></a>00171         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00172"></a>00172 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00173"></a>00173 <span class="preprocessor"></span>      memcpy(svalp, *bufp, 2);
-<a name="l00174"></a>00174       *bufp += 2;
-<a name="l00175"></a>00175 <span class="preprocessor">#else</span>
-<a name="l00176"></a>00176 <span class="preprocessor"></span>      *svalp = *(*bufp)++;
-<a name="l00177"></a>00177       *svalp |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00178"></a>00178 <span class="preprocessor">#endif</span>
-<a name="l00179"></a>00179 <span class="preprocessor"></span>      *remainingp -= 2;
-<a name="l00180"></a>00180       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00181"></a>00181     }
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183 
-<a name="l00191"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#d656abc88dca985c946998e7bfb25dba">00191</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#d656abc88dca985c946998e7bfb25dba" title="Encodes an int (4 byte integer) into the given buffer.">encode_int</a>(uint8_t **bufp, uint32_t ival) {
-<a name="l00192"></a>00192 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00193"></a>00193 <span class="preprocessor"></span>      memcpy(*bufp, &amp;ival, 4);
-<a name="l00194"></a>00194       *bufp += 4;
-<a name="l00195"></a>00195 <span class="preprocessor">#else</span>
-<a name="l00196"></a>00196 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)ival;
-<a name="l00197"></a>00197       *(*bufp)++ = (uint8_t)(ival &gt;&gt; 8);
-<a name="l00198"></a>00198       *(*bufp)++ = (uint8_t)(ival &gt;&gt; 16);
-<a name="l00199"></a>00199       *(*bufp)++ = (uint8_t)(ival &gt;&gt; 24);
-<a name="l00200"></a>00200 <span class="preprocessor">#endif</span>
-<a name="l00201"></a>00201 <span class="preprocessor"></span>    }
-<a name="l00202"></a>00202 
-<a name="l00203"></a>00203 
-<a name="l00213"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8">00213</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8" title="Decodes an int (4 byte integer) from the given buffer.">decode_int</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, uint32_t *ivalp) {
-<a name="l00214"></a>00214       <span class="keywordflow">if</span> (*remainingp &lt; 4)
-<a name="l00215"></a>00215         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00216"></a>00216 
-<a name="l00217"></a>00217 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00218"></a>00218 <span class="preprocessor"></span>      memcpy(ivalp, *bufp, 4);
-<a name="l00219"></a>00219       *bufp += 4;
-<a name="l00220"></a>00220 <span class="preprocessor">#else</span>
-<a name="l00221"></a>00221 <span class="preprocessor"></span>      *ivalp = *(*bufp)++;
-<a name="l00222"></a>00222       *ivalp |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00223"></a>00223       *ivalp |= (*(*bufp)++ &lt;&lt; 16);
-<a name="l00224"></a>00224       *ivalp |= (*(*bufp)++ &lt;&lt; 24);
-<a name="l00225"></a>00225 <span class="preprocessor">#endif</span>
-<a name="l00226"></a>00226 <span class="preprocessor"></span>      *remainingp -= 4;
-<a name="l00227"></a>00227       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00228"></a>00228     }
-<a name="l00229"></a>00229 
-<a name="l00230"></a>00230 
-<a name="l00238"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#2faea11813bd892d8d0e77758f0a988b">00238</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#2faea11813bd892d8d0e77758f0a988b" title="Encodes a long (8 byte integer) into the given buffer.">encode_long</a>(uint8_t **bufp, uint64_t lval) {
-<a name="l00239"></a>00239 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00240"></a>00240 <span class="preprocessor"></span>      memcpy(*bufp, &amp;lval, 8);
-<a name="l00241"></a>00241       *bufp += 8;
-<a name="l00242"></a>00242 <span class="preprocessor">#else</span>
-<a name="l00243"></a>00243 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)lval;
-<a name="l00244"></a>00244       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 8);
-<a name="l00245"></a>00245       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 16);
-<a name="l00246"></a>00246       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 24);
-<a name="l00247"></a>00247       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 32);
-<a name="l00248"></a>00248       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 40);
-<a name="l00249"></a>00249       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 48);
-<a name="l00250"></a>00250       *(*bufp)++ = (uint8_t)(lval &gt;&gt; 56);
-<a name="l00251"></a>00251 <span class="preprocessor">#endif</span>
-<a name="l00252"></a>00252 <span class="preprocessor"></span>    }
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254 
-<a name="l00264"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#5970b55283b4717ede1240b762d0d3e1">00264</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#5970b55283b4717ede1240b762d0d3e1" title="Decodes an int (4 byte integer) from the given buffer.">decode_long</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, uint64_t *lvalp) {
-<a name="l00265"></a>00265       <span class="keywordflow">if</span> (*remainingp &lt; 8)
-<a name="l00266"></a>00266         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00267"></a>00267 
-<a name="l00268"></a>00268 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00269"></a>00269 <span class="preprocessor"></span>      memcpy(lvalp, *bufp, 8);
-<a name="l00270"></a>00270       *bufp += 8;
-<a name="l00271"></a>00271 <span class="preprocessor">#else</span>
-<a name="l00272"></a>00272 <span class="preprocessor"></span>      *lvalp = *(*bufp)++;
-<a name="l00273"></a>00273       *lvalp |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00274"></a>00274       *lvalp |= (*(*bufp)++ &lt;&lt; 16);
-<a name="l00275"></a>00275       *lvalp |= ((uint64_t)(*(*bufp)++) &lt;&lt; 24);
-<a name="l00276"></a>00276       *lvalp |= ((uint64_t)(*(*bufp)++) &lt;&lt; 32);
-<a name="l00277"></a>00277       *lvalp |= ((uint64_t)(*(*bufp)++) &lt;&lt; 40);
-<a name="l00278"></a>00278       *lvalp |= ((uint64_t)(*(*bufp)++) &lt;&lt; 48);
-<a name="l00279"></a>00279       *lvalp |= ((uint64_t)(*(*bufp)++) &lt;&lt; 56);
-<a name="l00280"></a>00280 <span class="preprocessor">#endif</span>
-<a name="l00281"></a>00281 <span class="preprocessor"></span>
-<a name="l00282"></a>00282       *remainingp -= 8;
-<a name="l00283"></a>00283       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00284"></a>00284     }
-<a name="l00285"></a>00285 
-<a name="l00292"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#e550bff9e7d0a469aa686b90c3fdf62a">00292</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#e550bff9e7d0a469aa686b90c3fdf62a" title="Computes the encoded length of a byte array.">encoded_length_byte_array</a>(int32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
-<a name="l00293"></a>00293       <span class="keywordflow">return</span> len + 4;
-<a name="l00294"></a>00294     }
-<a name="l00295"></a>00295 
-<a name="l00296"></a>00296 
-<a name="l00306"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#c8b69bf7b7b2c153c8e1d9ea502a782c">00306</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#c8b69bf7b7b2c153c8e1d9ea502a782c" title="Encodes a variable sized byte array into the given buffer.">encode_byte_array</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">void</span> *data, int32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
-<a name="l00307"></a>00307       <a class="code" href="namespace_hypertable_1_1_serialization.html#d656abc88dca985c946998e7bfb25dba" title="Encodes an int (4 byte integer) into the given buffer.">encode_int</a>(bufp, len);
-<a name="l00308"></a>00308       memcpy(*bufp, (uint8_t *)data, len);
-<a name="l00309"></a>00309       *bufp += len;
-<a name="l00310"></a>00310     }
-<a name="l00311"></a>00311 
-<a name="l00312"></a>00312 
-<a name="l00324"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#660a9e996c22c6661d31680c8926bbd9">00324</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#660a9e996c22c6661d31680c8926bbd9" title="Decodes a variable sized byte array from the given buffer.">decode_byte_array</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, uint8_t **dstPtr, int32_t *lenp) {
-<a name="l00325"></a>00325       <span class="comment">// length</span>
-<a name="l00326"></a>00326       <span class="keywordflow">if</span> (*remainingp &lt; 4)
-<a name="l00327"></a>00327         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00328"></a>00328       <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8" title="Decodes an int (4 byte integer) from the given buffer.">decode_int</a>(bufp, remainingp, (uint32_t *)lenp))
-<a name="l00329"></a>00329         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00330"></a>00330       <span class="comment">// data</span>
-<a name="l00331"></a>00331       <span class="keywordflow">if</span> (*remainingp &lt; (<span class="keywordtype">size_t</span>)*lenp)
-<a name="l00332"></a>00332         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00333"></a>00333       *dstPtr = (*bufp);
-<a name="l00334"></a>00334       *remainingp -= *lenp;
-<a name="l00335"></a>00335       *bufp += *lenp;
-<a name="l00336"></a>00336       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00337"></a>00337     }
-<a name="l00338"></a>00338 
-<a name="l00345"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#f00eb744da2c588025166abe34f3996a">00345</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#f00eb744da2c588025166abe34f3996a" title="Computes the encoded length of a c-style null-terminated string.">encoded_length_string</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
-<a name="l00346"></a>00346       <span class="keywordflow">return</span> 2 + ((str == 0) ? 0 : strlen(str)) + 1;
-<a name="l00347"></a>00347     }
-<a name="l00348"></a>00348 
-<a name="l00349"></a>00349 
-<a name="l00356"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#68c4fb1c55bfc323f336c8205093efd8">00356</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#f00eb744da2c588025166abe34f3996a" title="Computes the encoded length of a c-style null-terminated string.">encoded_length_string</a>(<span class="keyword">const</span> std::string &amp;str) {
-<a name="l00357"></a>00357       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#f00eb744da2c588025166abe34f3996a" title="Computes the encoded length of a c-style null-terminated string.">encoded_length_string</a>(str.c_str());
-<a name="l00358"></a>00358     }
-<a name="l00359"></a>00359 
-<a name="l00360"></a>00360 
-<a name="l00371"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#ab31a00ab375e83220337c5eb069b7d8">00371</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#ab31a00ab375e83220337c5eb069b7d8" title="Encodes a c-style null-terminated string into the given buffer.">encode_string</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
-<a name="l00372"></a>00372       uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = (str == 0) ? 0 : strlen(str);
-<a name="l00373"></a>00373 
-<a name="l00374"></a>00374       <a class="code" href="namespace_hypertable_1_1_serialization.html#dd9bc4ec1b2319c867432466bf77b0d5" title="Encodes a short (2 byte integer) into the given buffer.">encode_short</a>(bufp, len);
-<a name="l00375"></a>00375 
-<a name="l00376"></a>00376       <span class="comment">// string characters</span>
-<a name="l00377"></a>00377       <span class="keywordflow">if</span> (len &gt; 0) {
-<a name="l00378"></a>00378         memcpy(*bufp, str, len);
-<a name="l00379"></a>00379         (*bufp) += len;
-<a name="l00380"></a>00380       }
-<a name="l00381"></a>00381 
-<a name="l00382"></a>00382       <span class="comment">// '\\0' terminator</span>
-<a name="l00383"></a>00383       *(*bufp)++ = 0;
-<a name="l00384"></a>00384     }
-<a name="l00385"></a>00385 
-<a name="l00386"></a>00386 
-<a name="l00397"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#e7ec45055aa109089bf33e1988c54741">00397</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#ab31a00ab375e83220337c5eb069b7d8" title="Encodes a c-style null-terminated string into the given buffer.">encode_string</a>(uint8_t **bufp, <span class="keyword">const</span> std::string &amp;str) {
-<a name="l00398"></a>00398       <a class="code" href="namespace_hypertable_1_1_serialization.html#ab31a00ab375e83220337c5eb069b7d8" title="Encodes a c-style null-terminated string into the given buffer.">encode_string</a>(bufp, str.c_str());
-<a name="l00399"></a>00399     }
+<a name="l00037"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#84279c65251016ad7adcda9b64cbe52d">00037</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#84279c65251016ad7adcda9b64cbe52d" title="Encodes a byte into the given buffer.">encode_i8</a>(uint8_t **bufp, uint8_t val) {
+<a name="l00038"></a>00038     <a class="code" href="serialization-c_8h.html#50e3ba74f29521fecf6cbd75493f846b" title="Encode a 8-bit integer (byte).">HT_ENCODE_I8</a>(*bufp, val);
+<a name="l00039"></a>00039   }
+<a name="l00040"></a>00040 
+<a name="l00048"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1">00048</a>   <span class="keyword">inline</span> uint8_t <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00049"></a>00049     <a class="code" href="serialization-c_8h.html#c59336e3cb91517e34994373384da325">HT_DECODE_NEED</a>(*remainp, 1);
+<a name="l00050"></a>00050     <span class="keywordflow">return</span> *(*bufp)++;
+<a name="l00051"></a>00051   }
+<a name="l00052"></a>00052 
+<a name="l00061"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a">00061</a>   <span class="keyword">inline</span> uint8_t <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00062"></a>00062     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(bufp, remainp);
+<a name="l00063"></a>00063   }
+<a name="l00064"></a>00064 
+<a name="l00072"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b">00072</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b" title="Encodes a boolean into the given buffer.">encode_bool</a>(uint8_t **bufp, <span class="keywordtype">bool</span> bval) {
+<a name="l00073"></a>00073     <a class="code" href="serialization-c_8h.html#c9818d0daef14000fb4aa8dd971cc85f" title="Encode a boolean value.">HT_ENCODE_BOOL</a>(*bufp, bval);
+<a name="l00074"></a>00074   }
+<a name="l00075"></a>00075 
+<a name="l00084"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557">00084</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00085"></a>00085     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(bufp, remainp) != 0;
+<a name="l00086"></a>00086   }
+<a name="l00087"></a>00087 
+<a name="l00094"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18">00094</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18" title="Encode a 16-bit integer in little-endian order.">encode_i16</a>(uint8_t **bufp , uint16_t val) {
+<a name="l00095"></a>00095     <a class="code" href="serialization-c_8h.html#d51c015ff0fd4f68190cf3b2294404e8" title="Encode a 16 bit integer in little endian format.">HT_ENCODE_I16</a>(*bufp, val);
+<a name="l00096"></a>00096   }
+<a name="l00097"></a>00097 
+<a name="l00105"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1">00105</a>   <span class="keyword">inline</span> uint16_t <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00106"></a>00106     uint16_t val;
+<a name="l00107"></a>00107     <a class="code" href="serialization-c_8h.html#2c2894136e86a13fd2ae655a168d08ab" title="Decoded a 16 bit integer encoded in little endian format.">HT_DECODE_I16</a>(*bufp, *remainp, val);
+<a name="l00108"></a>00108     <span class="keywordflow">return</span> val;
+<a name="l00109"></a>00109   }
+<a name="l00110"></a>00110 
+<a name="l00117"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b">00117</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(uint8_t **bufp, uint32_t val) {
+<a name="l00118"></a>00118     <a class="code" href="serialization-c_8h.html#5c0d5a93c97e26e98a5ffbd2eb354aa0" title="Enocde a 32-bit integer in little endian format.">HT_ENCODE_I32</a>(*bufp, val);
+<a name="l00119"></a>00119   }
+<a name="l00120"></a>00120 
+<a name="l00128"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707">00128</a>   <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00129"></a>00129     uint32_t val;
+<a name="l00130"></a>00130     <a class="code" href="serialization-c_8h.html#86bf63199c7cbbe799993b3612b450e3" title="Decode a 32-bit integer encoded in little endian format.">HT_DECODE_I32</a>(*bufp, *remainp, val);
+<a name="l00131"></a>00131     <span class="keywordflow">return</span> val;
+<a name="l00132"></a>00132   }
+<a name="l00133"></a>00133 
+<a name="l00140"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae">00140</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae" title="Encode a 64-bit integer in little-endian order.">encode_i64</a>(uint8_t **bufp, uint64_t val) {
+<a name="l00141"></a>00141     <a class="code" href="serialization-c_8h.html#cc4cb83095b727a881b68b84202e43d1" title="Encode a 64-bit integer in little endian format.">HT_ENCODE_I64</a>(*bufp, val);
+<a name="l00142"></a>00142   }
+<a name="l00143"></a>00143 
+<a name="l00151"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe">00151</a>   <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00152"></a>00152     uint64_t val;
+<a name="l00153"></a>00153     <a class="code" href="serialization-c_8h.html#361fe594e7f9be85769aa2d5fc108af3" title="Decode a 64-bit integer encoded in little endian format.">HT_DECODE_I64</a>(*bufp, *remainp, val);
+<a name="l00154"></a>00154     <span class="keywordflow">return</span> val;
+<a name="l00155"></a>00155   }
+<a name="l00156"></a>00156 
+<a name="l00163"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3">00163</a>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3" title="Length of a variable length encoded 32-bit integer (up to 5 bytes).">encoded_length_vi32</a>(uint32_t val) {
+<a name="l00164"></a>00164     <span class="keywordflow">return</span> <a class="code" href="serialization-c_8h.html#a57451ff13f88c5a2c3050a8e249c840" title="vint encoded length of a 32-bit integer">HT_ENCODED_LEN_VI32</a>(val);
+<a name="l00165"></a>00165   }
+<a name="l00166"></a>00166 
+<a name="l00173"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#3e4a63c6d43494ae96cc5f76fa02f197">00173</a>   <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#3e4a63c6d43494ae96cc5f76fa02f197" title="Length of a variable length encoded 64-bit integer (up to 9 bytes).">encoded_length_vi64</a>(uint64_t val) {
+<a name="l00174"></a>00174     <span class="keywordflow">return</span> <a class="code" href="serialization-c_8h.html#15f743b1d92025d2de1b4d2aa6187092" title="vint encoded length of a 64-bit integer">HT_ENCODED_LEN_VI64</a>(val);
+<a name="l00175"></a>00175   }
+<a name="l00176"></a>00176 
+<a name="l00183"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2">00183</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">encode_vi32</a>(uint8_t **bufp, uint32_t val) {
+<a name="l00184"></a>00184     <a class="code" href="serialization-c_8h.html#61d495a804bb4764ab84c7b9f0f1c368" title="Encode a 32-bit integer in vint format.">HT_ENCODE_VI32</a>(*bufp, val, <span class="keywordflow">return</span>);
+<a name="l00185"></a>00185   }
+<a name="l00186"></a>00186 
+<a name="l00193"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#49d31f7df721d23118f9f955047aff66">00193</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#49d31f7df721d23118f9f955047aff66" title="Encode a integer (up to 64-bit) in variable length encoding.">encode_vi64</a>(uint8_t **bufp, uint64_t val) {
+<a name="l00194"></a>00194     <a class="code" href="serialization-c_8h.html#ea4f73391142833ff0c147053dd66cae" title="Encode a 64-bit integer in vint format.">HT_ENCODE_VI64</a>(*bufp, val, <span class="keywordflow">return</span>);
+<a name="l00195"></a>00195   }
+<a name="l00196"></a>00196 
+<a name="l00204"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95">00204</a>   <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00205"></a>00205     uint32_t n;
+<a name="l00206"></a>00206     <a class="code" href="serialization-c_8h.html#08db49dc43d8299123d79ab3e2167b0b" title="Decode a 32-bit integer encoded in vint format.">HT_DECODE_VI32</a>(*bufp, *remainp, n, <span class="keywordflow">return</span> n);
+<a name="l00207"></a>00207   }
+<a name="l00208"></a>00208 
+<a name="l00216"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330">00216</a>   <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00217"></a>00217     uint64_t n;
+<a name="l00218"></a>00218     <a class="code" href="serialization-c_8h.html#403a21982b51969576770aa6ce776e69" title="Decode a 64-bit integer encoded in vint format.">HT_DECODE_VI64</a>(*bufp, *remainp, n, <span class="keywordflow">return</span> n);
+<a name="l00219"></a>00219   }
+<a name="l00220"></a>00220 
+<a name="l00227"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78">00227</a>   <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(<span class="keyword">const</span> uint8_t **bufp) {
+<a name="l00228"></a>00228     <span class="keywordtype">size_t</span> remain = 6;
+<a name="l00229"></a>00229     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(bufp, &amp;remain);
+<a name="l00230"></a>00230   }
+<a name="l00231"></a>00231 
+<a name="l00238"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#80faa25d46370b97984c4eab45831d59">00238</a>   <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(<span class="keyword">const</span> uint8_t **bufp) {
+<a name="l00239"></a>00239     <span class="keywordtype">size_t</span> remain = 12;
+<a name="l00240"></a>00240     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(bufp, &amp;remain);
+<a name="l00241"></a>00241   }
+<a name="l00242"></a>00242 
+<a name="l00249"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#4934596786a79b90d5847d08edcf08e9">00249</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#4934596786a79b90d5847d08edcf08e9" title="Computes the encoded length of a 32-bit length byte array (i32, bytes).">encoded_length_bytes32</a>(int32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00250"></a>00250     <span class="keywordflow">return</span> len + 4;
+<a name="l00251"></a>00251   }
+<a name="l00252"></a>00252 
+<a name="l00262"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#697da2b8b8e712f080b3b39355afbc75">00262</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#697da2b8b8e712f080b3b39355afbc75" title="Encodes a variable sized byte array into the given buffer.">encode_bytes32</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">void</span> *data, int32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00263"></a>00263     <a class="code" href="serialization-c_8h.html#45362c30d297ad019c812b4884572a1d" title="Encode a buffer in bytes32 format (i32, data).">HT_ENCODE_BYTES32</a>(*bufp, data, len);
+<a name="l00264"></a>00264   }
+<a name="l00265"></a>00265 
+<a name="l00275"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#ac64285d2eb0e7713b4cdbae3f2af7ae">00275</a>   <span class="keyword">inline</span> uint8_t *<a class="code" href="namespace_hypertable_1_1_serialization.html#ac64285d2eb0e7713b4cdbae3f2af7ae" title="Decodes a variable sized byte array from the given buffer.">decode_bytes32</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp,
+<a name="l00276"></a>00276                                  uint32_t *lenp) {
+<a name="l00277"></a>00277     uint8_t *out;
+<a name="l00278"></a>00278     <a class="code" href="serialization-c_8h.html#8ac96691c032353bce013204c1a0b654" title="Decode bytes32 (i32, data).">HT_DECODE_BYTES32</a>(*bufp, *remainp, out, *lenp);
+<a name="l00279"></a>00279     <span class="keywordflow">return</span> out;
+<a name="l00280"></a>00280   }
+<a name="l00281"></a>00281 
+<a name="l00288"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#8967c9991f7ee857c84c3c8e50db3df9">00288</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#8967c9991f7ee857c84c3c8e50db3df9" title="Computes the encoded length of a string16 encoding.">encoded_length_str16</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
+<a name="l00289"></a>00289     <span class="keywordflow">return</span> 2 + ((str == 0) ? 0 : strlen(str)) + 1;
+<a name="l00290"></a>00290   }
+<a name="l00291"></a>00291 
+<a name="l00298"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#597b1e44ee4e973d1c87719dc4cb04ed">00298</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#8967c9991f7ee857c84c3c8e50db3df9" title="Computes the encoded length of a string16 encoding.">encoded_length_str16</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;str) {
+<a name="l00299"></a>00299     <span class="keywordflow">return</span> 2 + str.length() + 1;
+<a name="l00300"></a>00300   }
+<a name="l00301"></a>00301 
+<a name="l00312"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4">00312</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4" title="Encodes a string buffer into the given buffer.">encode_str16</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">void</span> *str, uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00313"></a>00313     <a class="code" href="serialization-c_8h.html#59fb6759059ce3b6c652bce3b407b0bb" title="Encode a string buffer in str16 format (i16, data, null).">HT_ENCODE_STR16</a>(*bufp, str, len);
+<a name="l00314"></a>00314   }
+<a name="l00315"></a>00315 
+<a name="l00326"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#10fba8f4cba9b1523e67deac72270b55">00326</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4" title="Encodes a string buffer into the given buffer.">encode_str16</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
+<a name="l00327"></a>00327     uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = (str == 0) ? 0 : strlen(str);
+<a name="l00328"></a>00328     <a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4" title="Encodes a string buffer into the given buffer.">encode_str16</a>(bufp, str, len);
+<a name="l00329"></a>00329   }
+<a name="l00330"></a>00330 
+<a name="l00341"></a>00341   <span class="keyword">template</span> &lt;<span class="keyword">class</span> StringT&gt;
+<a name="l00342"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#714b4f163bc2f67d1649a1074e00210b">00342</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4" title="Encodes a string buffer into the given buffer.">encode_str16</a>(uint8_t **bufp, <span class="keyword">const</span> StringT &amp;str) {
+<a name="l00343"></a>00343     <a class="code" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4" title="Encodes a string buffer into the given buffer.">encode_str16</a>(bufp, str.c_str(), str.length());
+<a name="l00344"></a>00344   }
+<a name="l00345"></a>00345 
+<a name="l00357"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#f1023f260dede42e5744864c35b6c38f">00357</a>   <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_serialization.html#f1023f260dede42e5744864c35b6c38f" title="Decodes a c-style string from the given buffer.">decode_str16</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00358"></a>00358     <span class="keyword">const</span> <span class="keywordtype">char</span> *str;
+<a name="l00359"></a>00359     uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00360"></a>00360     <a class="code" href="serialization-c_8h.html#1303e53cf5ef898ea85c9c0fb5246a57" title="Decode str16 (i16, data, null).">HT_DECODE_STR16</a>(*bufp, *remainp, str, len);
+<a name="l00361"></a>00361     <span class="keywordflow">return</span> str;
+<a name="l00362"></a>00362   }
+<a name="l00363"></a>00363 
+<a name="l00376"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0">00376</a>   <span class="keyword">inline</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_serialization.html#f1023f260dede42e5744864c35b6c38f" title="Decodes a c-style string from the given buffer.">decode_str16</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp,
+<a name="l00377"></a>00377                                   uint16_t *lenp) {
+<a name="l00378"></a>00378     <span class="keywordtype">char</span> *str;
+<a name="l00379"></a>00379     <a class="code" href="serialization-c_8h.html#1303e53cf5ef898ea85c9c0fb5246a57" title="Decode str16 (i16, data, null).">HT_DECODE_STR16</a>(*bufp, *remainp, str, *lenp);
+<a name="l00380"></a>00380     <span class="keywordflow">return</span> str;
+<a name="l00381"></a>00381   }
+<a name="l00382"></a>00382 
+<a name="l00393"></a>00393   <span class="keyword">template</span> &lt;<span class="keyword">class</span> StringT&gt;
+<a name="l00394"></a>00394   <span class="keyword">inline</span> StringT <a class="code" href="namespace_hypertable_1_1_serialization.html#f1023f260dede42e5744864c35b6c38f" title="Decodes a c-style string from the given buffer.">decode_str16</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00395"></a>00395     <span class="keywordtype">char</span> *str;
+<a name="l00396"></a>00396     uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00397"></a>00397     <a class="code" href="serialization-c_8h.html#1303e53cf5ef898ea85c9c0fb5246a57" title="Decode str16 (i16, data, null).">HT_DECODE_STR16</a>(*bufp, *remainp, str, len);
+<a name="l00398"></a>00398     <span class="keywordflow">return</span> StringT(str, len); <span class="comment">// RVO hopeful</span>
+<a name="l00399"></a>00399   }
 <a name="l00400"></a>00400 
-<a name="l00401"></a>00401 
-<a name="l00414"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9">00414</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9" title="Decodes a c-style string from the given buffer.">decode_string</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, <span class="keyword">const</span> <span class="keywordtype">char</span> **strp) {
-<a name="l00415"></a>00415       uint16_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
-<a name="l00416"></a>00416       *strp = 0;
-<a name="l00417"></a>00417       <span class="keywordflow">if</span> (*remainingp &lt; 3)
-<a name="l00418"></a>00418         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00419"></a>00419       <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#87d607f10efd535ca34217a06836b5f4" title="Decodes a short (2 byte integer) from the given buffer.">decode_short</a>(bufp, remainingp, &amp;len))
-<a name="l00420"></a>00420         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00421"></a>00421       <span class="keywordflow">if</span> (*remainingp &lt; (<span class="keywordtype">size_t</span>)len+1)
-<a name="l00422"></a>00422         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00423"></a>00423       *strp = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)*bufp;
-<a name="l00424"></a>00424       *remainingp -= (size_t)len+1;
-<a name="l00425"></a>00425       *bufp += (size_t)len+1;
-<a name="l00426"></a>00426       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00427"></a>00427     }
-<a name="l00428"></a>00428 
-<a name="l00429"></a>00429 
-<a name="l00441"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#e99d3532afeadd2ec0c0fd8aced93297">00441</a>     <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9" title="Decodes a c-style string from the given buffer.">decode_string</a>(uint8_t **bufp, <span class="keywordtype">size_t</span> *remainingp, std::string &amp;str) {
-<a name="l00442"></a>00442       <span class="keyword">const</span> <span class="keywordtype">char</span> *cstr;
-<a name="l00443"></a>00443       <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9" title="Decodes a c-style string from the given buffer.">decode_string</a>(bufp, remainingp, &amp;cstr))
-<a name="l00444"></a>00444         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00445"></a>00445       str = cstr;
-<a name="l00446"></a>00446       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00447"></a>00447     }
-<a name="l00448"></a>00448 
-<a name="l00456"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1">00456</a>     <span class="keyword">inline</span> uint8_t <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00457"></a>00457       <span class="keywordflow">if</span> (*remainp &lt; 1)
-<a name="l00458"></a>00458         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>);
-<a name="l00459"></a>00459 
-<a name="l00460"></a>00460       *remainp -= 1;
-<a name="l00461"></a>00461       <span class="keywordflow">return</span> *(*bufp)++;
-<a name="l00462"></a>00462     }
-<a name="l00463"></a>00463 
+<a name="l00407"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec">00407</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec" title="Computes the encoded length of vstr (vint64, data, null).">encoded_length_vstr</a>(<span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00408"></a>00408     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#3e4a63c6d43494ae96cc5f76fa02f197" title="Length of a variable length encoded 64-bit integer (up to 9 bytes).">encoded_length_vi64</a>(len) + len + 1;
+<a name="l00409"></a>00409   }
+<a name="l00410"></a>00410 
+<a name="l00418"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#0a1da082decd9869d834d383f2179974">00418</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec" title="Computes the encoded length of vstr (vint64, data, null).">encoded_length_vstr</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s) {
+<a name="l00419"></a>00419     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec" title="Computes the encoded length of vstr (vint64, data, null).">encoded_length_vstr</a>(s ? strlen(s) : 0);
+<a name="l00420"></a>00420   }
+<a name="l00421"></a>00421 
+<a name="l00429"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27">00429</a>   <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec" title="Computes the encoded length of vstr (vint64, data, null).">encoded_length_vstr</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;s) {
+<a name="l00430"></a>00430     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec" title="Computes the encoded length of vstr (vint64, data, null).">encoded_length_vstr</a>(s.length());
+<a name="l00431"></a>00431   }
+<a name="l00432"></a>00432 
+<a name="l00440"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18">00440</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">encode_vstr</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">void</span> *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00441"></a>00441     <a class="code" href="serialization-c_8h.html#f9c87f3eb772783ffdae4be9b9b8e521" title="Encode in vstr format (vint, data, null).">HT_ENCODE_VSTR</a>(*bufp, buf, len);
+<a name="l00442"></a>00442   }
+<a name="l00443"></a>00443 
+<a name="l00450"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#d0045be4ae68c074f7c25e79d0060727">00450</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">encode_vstr</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">char</span> *s) {
+<a name="l00451"></a>00451     <a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">encode_vstr</a>(bufp, s, s ? strlen(s) : 0);
+<a name="l00452"></a>00452   }
+<a name="l00453"></a>00453 
+<a name="l00460"></a>00460   <span class="keyword">template</span> &lt;<span class="keyword">class</span> StringT&gt;
+<a name="l00461"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e">00461</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">encode_vstr</a>(uint8_t **bufp, <span class="keyword">const</span> StringT &amp;s) {
+<a name="l00462"></a>00462     <a class="code" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">encode_vstr</a>(bufp, s.data(), s.length());
+<a name="l00463"></a>00463   }
 <a name="l00464"></a>00464 
-<a name="l00471"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18">00471</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18" title="Encode a 16-bit integer in little-endian order.">encode_i16</a>(uint8_t **bufp , uint16_t val) {
-<a name="l00472"></a>00472 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00473"></a>00473 <span class="preprocessor"></span>      memcpy(*bufp, &amp;val, 2);
-<a name="l00474"></a>00474       *bufp += 2;
-<a name="l00475"></a>00475 <span class="preprocessor">#else</span>
-<a name="l00476"></a>00476 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)val;
-<a name="l00477"></a>00477       *(*bufp)++ = (uint8_t)(val &gt;&gt; 8);
-<a name="l00478"></a>00478 <span class="preprocessor">#endif</span>
-<a name="l00479"></a>00479 <span class="preprocessor"></span>    }
+<a name="l00474"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#ea801c536672942c9a747f9525d6c597">00474</a>   <span class="keyword">inline</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_serialization.html#ea801c536672942c9a747f9525d6c597" title="Decode a vstr (vint64, data, null) Note, decoding a vstr longer than 4GiB on a 32-bit...">decode_vstr</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00475"></a>00475     <span class="keywordtype">char</span> *buf;
+<a name="l00476"></a>00476     <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00477"></a>00477     <a class="code" href="serialization-c_8h.html#450134409d0895300ab1c0800b2a7f4b" title="Decode a vstr (vint, data, null).">HT_DECODE_VSTR</a>(*bufp, *remainp, buf, len);
+<a name="l00478"></a>00478     <span class="keywordflow">return</span> buf;
+<a name="l00479"></a>00479   }
 <a name="l00480"></a>00480 
-<a name="l00481"></a>00481 
-<a name="l00489"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1">00489</a>     <span class="keyword">inline</span> uint16_t <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00490"></a>00490       <span class="keywordflow">if</span> (*remainp &lt; 2)
-<a name="l00491"></a>00491         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>);
-<a name="l00492"></a>00492 
-<a name="l00493"></a>00493 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00494"></a>00494 <span class="preprocessor"></span>      uint16_t val;
-<a name="l00495"></a>00495       memcpy(&amp;val, *bufp, 2);
-<a name="l00496"></a>00496       *bufp += 2;
-<a name="l00497"></a>00497 <span class="preprocessor">#else</span>
-<a name="l00498"></a>00498 <span class="preprocessor"></span>      uint16_t val = *(*bufp)++;
-<a name="l00499"></a>00499       val |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00500"></a>00500 <span class="preprocessor">#endif</span>
-<a name="l00501"></a>00501 <span class="preprocessor"></span>      *remainp -= 2;
-<a name="l00502"></a>00502 
-<a name="l00503"></a>00503       <span class="keywordflow">return</span> val;
-<a name="l00504"></a>00504     }
-<a name="l00505"></a>00505 
-<a name="l00506"></a>00506 
-<a name="l00513"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b">00513</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(uint8_t **bufp, uint32_t val) {
-<a name="l00514"></a>00514 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00515"></a>00515 <span class="preprocessor"></span>      memcpy(*bufp, &amp;val, 4);
-<a name="l00516"></a>00516       *bufp += 4;
-<a name="l00517"></a>00517 <span class="preprocessor">#else</span>
-<a name="l00518"></a>00518 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)val;
-<a name="l00519"></a>00519       *(*bufp)++ = (uint8_t)(val &gt;&gt; 8);
-<a name="l00520"></a>00520       *(*bufp)++ = (uint8_t)(val &gt;&gt; 16);
-<a name="l00521"></a>00521       *(*bufp)++ = (uint8_t)(val &gt;&gt; 24);
-<a name="l00522"></a>00522 <span class="preprocessor">#endif</span>
-<a name="l00523"></a>00523 <span class="preprocessor"></span>    }
-<a name="l00524"></a>00524 
-<a name="l00525"></a>00525 
-<a name="l00533"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707">00533</a>     <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00534"></a>00534       <span class="keywordflow">if</span> (*remainp &lt; 4)
-<a name="l00535"></a>00535         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>);
-<a name="l00536"></a>00536 
-<a name="l00537"></a>00537 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00538"></a>00538 <span class="preprocessor"></span>      uint32_t val;
-<a name="l00539"></a>00539       memcpy(&amp;val, *bufp, 4);
-<a name="l00540"></a>00540       *bufp += 4;
-<a name="l00541"></a>00541 <span class="preprocessor">#else</span>
-<a name="l00542"></a>00542 <span class="preprocessor"></span>      uint32_t val = *(*bufp)++;
-<a name="l00543"></a>00543       val |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00544"></a>00544       val |= (*(*bufp)++ &lt;&lt; 16);
-<a name="l00545"></a>00545       val |= (*(*bufp)++ &lt;&lt; 24);
-<a name="l00546"></a>00546 <span class="preprocessor">#endif</span>
-<a name="l00547"></a>00547 <span class="preprocessor"></span>      *remainp -= 4;
-<a name="l00548"></a>00548 
-<a name="l00549"></a>00549       <span class="keywordflow">return</span> val;
-<a name="l00550"></a>00550     }
-<a name="l00551"></a>00551 
-<a name="l00552"></a>00552 
-<a name="l00559"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae">00559</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae" title="Encode a 64-bit integer in little-endian order.">encode_i64</a>(uint8_t **bufp, uint64_t val) {
-<a name="l00560"></a>00560 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00561"></a>00561 <span class="preprocessor"></span>      memcpy(*bufp, &amp;val, 8);
-<a name="l00562"></a>00562       *bufp += 8;
-<a name="l00563"></a>00563 <span class="preprocessor">#else</span>
-<a name="l00564"></a>00564 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)val;
-<a name="l00565"></a>00565       *(*bufp)++ = (uint8_t)(val &gt;&gt; 8);
-<a name="l00566"></a>00566       *(*bufp)++ = (uint8_t)(val &gt;&gt; 16);
-<a name="l00567"></a>00567       *(*bufp)++ = (uint8_t)(val &gt;&gt; 24);
-<a name="l00568"></a>00568       *(*bufp)++ = (uint8_t)(val &gt;&gt; 32);
-<a name="l00569"></a>00569       *(*bufp)++ = (uint8_t)(val &gt;&gt; 40);
-<a name="l00570"></a>00570       *(*bufp)++ = (uint8_t)(val &gt;&gt; 48);
-<a name="l00571"></a>00571       *(*bufp)++ = (uint8_t)(val &gt;&gt; 56);
-<a name="l00572"></a>00572 <span class="preprocessor">#endif</span>
-<a name="l00573"></a>00573 <span class="preprocessor"></span>    }
-<a name="l00574"></a>00574 
-<a name="l00575"></a>00575 
-<a name="l00583"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe">00583</a>     <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00584"></a>00584       <span class="keywordflow">if</span> (*remainp &lt; 8)
-<a name="l00585"></a>00585         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>);
-<a name="l00586"></a>00586 
-<a name="l00587"></a>00587 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00588"></a>00588 <span class="preprocessor"></span>      uint64_t val;
-<a name="l00589"></a>00589       memcpy(&amp;val, *bufp, 8);
-<a name="l00590"></a>00590       *bufp += 8;
-<a name="l00591"></a>00591 <span class="preprocessor">#else</span>
-<a name="l00592"></a>00592 <span class="preprocessor"></span>      uint64_t val = *(*bufp)++;
-<a name="l00593"></a>00593       val |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00594"></a>00594       val |= (*(*bufp)++ &lt;&lt; 16);
-<a name="l00595"></a>00595       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 24);
-<a name="l00596"></a>00596       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 32);
-<a name="l00597"></a>00597       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 40);
-<a name="l00598"></a>00598       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 48);
-<a name="l00599"></a>00599       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 56);
-<a name="l00600"></a>00600 <span class="preprocessor">#endif</span>
-<a name="l00601"></a>00601 <span class="preprocessor"></span>      *remainp -= 8;
-<a name="l00602"></a>00602 
-<a name="l00603"></a>00603       <span class="keywordflow">return</span> val;
-<a name="l00604"></a>00604     }
-<a name="l00605"></a>00605 
-<a name="l00606"></a>00606 
-<a name="l00613"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3">00613</a>     <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3" title="Length of a variable length encoded 32-bit integer (up to 5 bytes).">encoded_length_vi32</a>(uint32_t val) {
-<a name="l00614"></a>00614       <span class="keywordflow">return</span> (val &lt;= <a class="code" href="_serialization_8h.html#f4aabb87a7ed28c013cb4b06d96f3804" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">HT_MAX_V1B</a> ? 1 : \
-<a name="l00615"></a>00615               (val &lt;= <a class="code" href="_serialization_8h.html#01dd25a70e35af5b8d7e04689c38534b">HT_MAX_V2B</a> ? 2 : \
-<a name="l00616"></a>00616                (val &lt;= <a class="code" href="_serialization_8h.html#c7c4e448d15ae255f810a4bc71cd8465">HT_MAX_V3B</a> ? 3 : \
-<a name="l00617"></a>00617                 (val &lt;= <a class="code" href="_serialization_8h.html#735ec71de798b899dee834d0d494bdcd">HT_MAX_V4B</a> ? 4 : 5))));
-<a name="l00618"></a>00618     }
-<a name="l00619"></a>00619 
-<a name="l00626"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#3e4a63c6d43494ae96cc5f76fa02f197">00626</a>     <span class="keyword">inline</span> <span class="keywordtype">int</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#3e4a63c6d43494ae96cc5f76fa02f197" title="Length of a variable length encoded 64-bit integer (up to 9 bytes).">encoded_length_vi64</a>(uint64_t val) {
-<a name="l00627"></a>00627       <span class="keywordflow">return</span> (val &lt;= <a class="code" href="_serialization_8h.html#f4aabb87a7ed28c013cb4b06d96f3804" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">HT_MAX_V1B</a> ? 1 : \
-<a name="l00628"></a>00628               (val &lt;= <a class="code" href="_serialization_8h.html#01dd25a70e35af5b8d7e04689c38534b">HT_MAX_V2B</a> ? 2 : \
-<a name="l00629"></a>00629                (val &lt;= <a class="code" href="_serialization_8h.html#c7c4e448d15ae255f810a4bc71cd8465">HT_MAX_V3B</a> ? 3 : \
-<a name="l00630"></a>00630                 (val &lt;= <a class="code" href="_serialization_8h.html#735ec71de798b899dee834d0d494bdcd">HT_MAX_V4B</a> ? 4 : \
-<a name="l00631"></a>00631                  (val &lt;= <a class="code" href="_serialization_8h.html#29d3cea444e5d4fc277bdf1b1367be33">HT_MAX_V5B</a> ? 5 : \
-<a name="l00632"></a>00632                   (val &lt;= <a class="code" href="_serialization_8h.html#10975d615d720940ebe0c98421828000">HT_MAX_V6B</a> ? 6 : \
-<a name="l00633"></a>00633                    (val &lt;= <a class="code" href="_serialization_8h.html#9c9c8090f20ba8ccbf72728037796c60">HT_MAX_V7B</a> ? 7 : \
-<a name="l00634"></a>00634                     (val &lt;= <a class="code" href="_serialization_8h.html#ffaa1fabf974683f1237f1103586f535">HT_MAX_V8B</a> ? 8 : \
-<a name="l00635"></a>00635                      (val &lt;= <a class="code" href="_serialization_8h.html#ca2f7d683cdca669ff8464a6c18d7cb7">HT_MAX_V9B</a> ? 9 : 10)))))))));
-<a name="l00636"></a>00636     }
-<a name="l00637"></a>00637 
-<a name="l00644"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2">00644</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">encode_vi32</a>(uint8_t **bufp, uint32_t val) {
-<a name="l00645"></a>00645       <a class="code" href="_serialization_8h.html#1dde44eb7df047336c38cf4668470c7c">HT_ENCODE_VINT0</a>(*bufp, val)
-<a name="l00646"></a>00646       <a class="code" href="_serialization_8h.html#714e24c9b35ae312dc1cd131a57556bb">HT_ENCODE_VINT4</a>(*bufp, val)
-<a name="l00647"></a>00647       <a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(*bufp, val)
-<a name="l00648"></a>00648       <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!<span class="stringliteral">"corrupted vint32"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00649"></a>00649     }
-<a name="l00650"></a>00650 
-<a name="l00657"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#49d31f7df721d23118f9f955047aff66">00657</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#49d31f7df721d23118f9f955047aff66" title="Encode a integer (up to 64-bit) in variable length encoding.">encode_vi64</a>(uint8_t **bufp, uint64_t val) {
-<a name="l00658"></a>00658       <a class="code" href="_serialization_8h.html#1dde44eb7df047336c38cf4668470c7c">HT_ENCODE_VINT0</a>(*bufp, val)
-<a name="l00659"></a>00659       <a class="code" href="_serialization_8h.html#714e24c9b35ae312dc1cd131a57556bb">HT_ENCODE_VINT4</a>(*bufp, val)
-<a name="l00660"></a>00660       <a class="code" href="_serialization_8h.html#714e24c9b35ae312dc1cd131a57556bb">HT_ENCODE_VINT4</a>(*bufp, val)
-<a name="l00661"></a>00661       <a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(*bufp, val)
-<a name="l00662"></a>00662       <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!<span class="stringliteral">"corrupted vint64"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00663"></a>00663     }
-<a name="l00664"></a>00664 
-<a name="l00672"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95">00672</a>     <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00673"></a>00673       <a class="code" href="_serialization_8h.html#81e4bb06806755364c06be370ce01512">HT_DECODE_VINT0</a>(uint32_t, n, *bufp, remainp)
-<a name="l00674"></a>00674       <a class="code" href="_serialization_8h.html#1fb91ff4c039747a6e48b6145e58178b">HT_DECODE_VINT4</a>(uint32_t, n, *bufp, remainp)
-<a name="l00675"></a>00675       <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(uint32_t, n, *bufp, remainp)
-<a name="l00676"></a>00676       <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2421de061ad517108e58a098f1e75a322">Error::SERIALIZATION_BAD_VINT</a>);
-<a name="l00677"></a>00677     }
-<a name="l00678"></a>00678 
-<a name="l00686"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330">00686</a>     <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00687"></a>00687       <a class="code" href="_serialization_8h.html#81e4bb06806755364c06be370ce01512">HT_DECODE_VINT0</a>(uint64_t, n, *bufp, remainp)
-<a name="l00688"></a>00688       <a class="code" href="_serialization_8h.html#1fb91ff4c039747a6e48b6145e58178b">HT_DECODE_VINT4</a>(uint64_t, n, *bufp, remainp)
-<a name="l00689"></a>00689       <a class="code" href="_serialization_8h.html#1fb91ff4c039747a6e48b6145e58178b">HT_DECODE_VINT4</a>(uint64_t, n, *bufp, remainp)
-<a name="l00690"></a>00690       <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(uint64_t, n, *bufp, remainp)
-<a name="l00691"></a>00691       <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(uint64_t, n, *bufp, remainp)
-<a name="l00692"></a>00692       <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2421de061ad517108e58a098f1e75a322">Error::SERIALIZATION_BAD_VINT</a>);
-<a name="l00693"></a>00693     }
-<a name="l00694"></a>00694 
-<a name="l00701"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78">00701</a>     <span class="keyword">inline</span> uint32_t <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(<span class="keyword">const</span> uint8_t **bufp) {
-<a name="l00702"></a>00702       <span class="keywordtype">size_t</span> remain = 6;
-<a name="l00703"></a>00703       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(bufp, &amp;remain);
-<a name="l00704"></a>00704     }
-<a name="l00705"></a>00705 
-<a name="l00712"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#80faa25d46370b97984c4eab45831d59">00712</a>     <span class="keyword">inline</span> uint64_t <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(<span class="keyword">const</span> uint8_t **bufp) {
-<a name="l00713"></a>00713       <span class="keywordtype">size_t</span> remain = 12;
-<a name="l00714"></a>00714       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#fed7d407d02f79eb17ab31d19f06a330" title="Decode a variable length encoded integer up to 64-bit.">decode_vi64</a>(bufp, &amp;remain);
-<a name="l00715"></a>00715     }
-<a name="l00716"></a>00716 
-<a name="l00717"></a>00717 
-<a name="l00725"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#0e385ec57e4f6a76e0d8197a8bc286d5">00725</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#0e385ec57e4f6a76e0d8197a8bc286d5" title="Computes the variable encoded length of a c-style null-terminated string Assuming...">encoded_length_cstr</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s) {
-<a name="l00726"></a>00726       uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = s ? strlen(s) : 0;
-<a name="l00727"></a>00727       <span class="keywordflow">return</span> 1 + len + <a class="code" href="namespace_hypertable_1_1_serialization.html#07c4640ba62a794c175f05e74ebbd5d3" title="Length of a variable length encoded 32-bit integer (up to 5 bytes).">encoded_length_vi32</a>(len);
-<a name="l00728"></a>00728     }
-<a name="l00729"></a>00729 
-<a name="l00730"></a>00730 
-<a name="l00737"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#d9a95fed35851c1ab000663a54fea004">00737</a>     <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#d9a95fed35851c1ab000663a54fea004" title="Encode a c-style string a long with the terminating null.">encode_cstr</a>(uint8_t **bufp, <span class="keyword">const</span> <span class="keywordtype">char</span> *s) {
-<a name="l00738"></a>00738       uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = s ? strlen(s) : 0;
-<a name="l00739"></a>00739 
-<a name="l00740"></a>00740       <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">encode_vi32</a>(bufp, len);
-<a name="l00741"></a>00741 
-<a name="l00742"></a>00742       <span class="keywordflow">if</span> (len) {
-<a name="l00743"></a>00743         memcpy(*bufp, s, len);
-<a name="l00744"></a>00744         *bufp += len;
-<a name="l00745"></a>00745       }
-<a name="l00746"></a>00746       *(*bufp)++ = 0;
-<a name="l00747"></a>00747     }
-<a name="l00748"></a>00748 
-<a name="l00749"></a>00749 
-<a name="l00757"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#5ac707869e7a986efe39b4e31dc19c53">00757</a>     <span class="keyword">inline</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_serialization.html#5ac707869e7a986efe39b4e31dc19c53" title="Decode a null terminated c-style string.">decode_cstr</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00758"></a>00758       uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a7535faf5efd7eec7a5f8111921e5f95" title="Decode a variable length encoded integer up to 32-bit.">decode_vi32</a>(bufp, remainp) + 1;
-<a name="l00759"></a>00759       <span class="keyword">const</span> <span class="keywordtype">char</span> *buf = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)*bufp;
-<a name="l00760"></a>00760 
-<a name="l00761"></a>00761       <span class="keywordflow">if</span> (*remainp &lt; len)
-<a name="l00762"></a>00762         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>);
-<a name="l00763"></a>00763 
-<a name="l00764"></a>00764       *bufp += len;
-<a name="l00765"></a>00765       *remainp -= len;
-<a name="l00766"></a>00766 
-<a name="l00767"></a>00767       <span class="keywordflow">if</span> ((*bufp)[-1]) <span class="comment">// should be null</span>
-<a name="l00768"></a>00768         <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2df7bf6c3453f3f2090eec1c6f933812f">Error::SERIALIZATION_BAD_CSTR</a>);
-<a name="l00769"></a>00769 
-<a name="l00770"></a>00770       <span class="keywordflow">return</span> buf;
-<a name="l00771"></a>00771     }
-<a name="l00772"></a>00772 
-<a name="l00773"></a>00773 
-<a name="l00774"></a>00774 }} <span class="comment">// namespace Hypertable::Serialization</span>
-<a name="l00775"></a>00775 
-<a name="l00776"></a>00776 <span class="preprocessor">#endif // HYPERTABLE_SERIALIZATION_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00488"></a>00488   <span class="keyword">template</span> &lt;<span class="keyword">class</span> StringT&gt;
+<a name="l00489"></a>00489   <span class="keyword">inline</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_serialization.html#ea801c536672942c9a747f9525d6c597" title="Decode a vstr (vint64, data, null) Note, decoding a vstr longer than 4GiB on a 32-bit...">decode_vstr</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00490"></a>00490     <span class="keywordtype">char</span> *buf;
+<a name="l00491"></a>00491     <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00492"></a>00492     <a class="code" href="serialization-c_8h.html#450134409d0895300ab1c0800b2a7f4b" title="Decode a vstr (vint, data, null).">HT_DECODE_VSTR</a>(*bufp, *remainp, buf, len);
+<a name="l00493"></a>00493     <span class="keywordflow">return</span> StringT(buf, len); <span class="comment">// RVO</span>
+<a name="l00494"></a>00494   }
+<a name="l00495"></a>00495 
+<a name="l00504"></a><a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8">00504</a>   <span class="keyword">inline</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_serialization.html#ea801c536672942c9a747f9525d6c597" title="Decode a vstr (vint64, data, null) Note, decoding a vstr longer than 4GiB on a 32-bit...">decode_vstr</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp,
+<a name="l00505"></a>00505                            uint32_t *lenp) {
+<a name="l00506"></a>00506     <span class="keywordtype">char</span> *buf;
+<a name="l00507"></a>00507     <a class="code" href="serialization-c_8h.html#450134409d0895300ab1c0800b2a7f4b" title="Decode a vstr (vint, data, null).">HT_DECODE_VSTR</a>(*bufp, *remainp, buf, *lenp);
+<a name="l00508"></a>00508     <span class="keywordflow">return</span> buf;
+<a name="l00509"></a>00509   }
+<a name="l00510"></a>00510 
+<a name="l00511"></a>00511 
+<a name="l00512"></a>00512 }} <span class="comment">// namespace Hypertable::Serialization</span>
+<a name="l00513"></a>00513 
+<a name="l00514"></a>00514 <span class="preprocessor">#endif // HYPERTABLE_SERIALIZATION_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

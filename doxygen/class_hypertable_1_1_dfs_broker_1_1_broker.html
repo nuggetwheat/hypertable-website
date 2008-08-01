@@ -46,39 +46,39 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#4f299f74da7675827d069fb190bfb955">~Broker</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#4ff3fd392a0bc8a8430ac2ca8354ceb6">open</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *cb, const char *fieName, uint32_t bufferSize)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#752f737f3f025021badf51d10c3e6fef">open</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *, const char *fname, uint32_t bufsz)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#f1547a744f2b0d77810121f4b7ab65fb">create</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *cb, const char *fileName, bool overwrite, uint32_t bufferSize, uint16_t replication, uint64_t blockSize)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#9cbe479d726ee03671f6a99b9e1d514b">create</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *, const char *fname, bool overwrite, uint32_t bufsz, uint16_t replication, uint64_t blksz)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#36b993532fc230fa42258b24462625ff">close</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint32_t fd)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#0d8e047df84fb7ecd05cc3100d7ec288">close</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, uint32_t fd)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#ca66c430aee7e119d32306d3fc0b98a1">read</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *cb, uint32_t fd, uint32_t amount)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#ab7677d97c8155e07ff8e0ea0b9b3439">read</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *, uint32_t fd, uint32_t amount)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#cf78e64948a66624a687d4b0b43facb3">append</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> *cb, uint32_t fd, uint32_t amount, uint8_t *data, bool flush)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0831f9f4b22d5ad4709d1d3c24732c0">append</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> *, uint32_t fd, uint32_t amount, const void *data, bool flush)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#b58df7e8330356870cd7a451f7f1de2b">seek</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint32_t fd, uint64_t <a class="el" href="_range_server_8cc.html#894bdfa2d603d8343f8ef01dda6fcd23">offset</a>)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#133900b16bcfa91e033dccc135d74b61">seek</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, uint32_t fd, uint64_t <a class="el" href="_range_server_8cc.html#894bdfa2d603d8343f8ef01dda6fcd23">offset</a>)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#fbdbac46cdd7922e769ca8ac0b8b4eb8">remove</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, const char *fileName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0f9c734910fff44ee8d9bfc282d0cfd">remove</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, const char *fname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#f2e4b9ffde6107c649c7e84fb2419835">length</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_length.html">ResponseCallbackLength</a> *cb, const char *fieName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#c2f8ec8336b5c65042e4fcf2242bbdf0">length</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_length.html">ResponseCallbackLength</a> *, const char *fname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#568a881629015eb8b93cd1327997f3a0">pread</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *cb, uint32_t fd, uint64_t <a class="el" href="_range_server_8cc.html#894bdfa2d603d8343f8ef01dda6fcd23">offset</a>, uint32_t amount)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#25df3c0f7391b18aa4f3c1fcb74384fd">pread</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *, uint32_t fd, uint64_t <a class="el" href="_range_server_8cc.html#894bdfa2d603d8343f8ef01dda6fcd23">offset</a>, uint32_t amount)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#bafc22d0a456a65f7089503496cec149">mkdirs</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, const char *dirName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#2c6831d1f2530f1693868865b5077985">mkdirs</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, const char *dname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#968c32fba1815ec8b77e7e792140b103">rmdir</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, const char *dirName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#9d0dafbff5643f8ba2f518539d2820e0">rmdir</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, const char *dname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#5136fc8731dee51c2510be4715a59f70">readdir</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_readdir.html">ResponseCallbackReaddir</a> *cb, const char *dirName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#243b408968d511fc710523d90dc590b9">readdir</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_readdir.html">ResponseCallbackReaddir</a> *, const char *dname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#33be08c2b7fab3bda1a34ea23d610fdb">flush</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint32_t fd)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#7e723ff9999b4699657ba2b9ec884ad3">flush</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, uint32_t fd)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#e0019d44c43d97babca1173264d51bb9">status</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#70a38b9d98e2bd1819ac311ebb1f5edc">status</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#06db4f763159e345aa7edf72a54f09a2">shutdown</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#d01c5f935cbc17fa8813e9297190ccd6">shutdown</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#8017516063b34280bd12b2bf4b4fbae3">exists</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_exists.html">ResponseCallbackExists</a> *cb, const char *fieName)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#32973f4568ce3d092b3b8e6d4c82ea79">exists</a> (<a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_exists.html">ResponseCallbackExists</a> *, const char *fname)=0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#858989e90c7538324c3ccb62a5f6a01f">rename</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, const char *src, const char *<a class="el" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#5d4659c55e88a5c749f201bbdb6c0a9b">rename</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, const char *src, const char *<a class="el" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)=0</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_open_file_map.html">OpenFileMap</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#46a59f1422c3204edc2e392e2bea480d">get_open_file_map</a> ()</td></tr>
 
@@ -88,7 +88,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_broker_8h-source.html#l00042">42</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
+<p>Definition at line <a class="el" href="_broker_8h-source.html#l00041">41</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="4f299f74da7675827d069fb190bfb955"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::~Broker" ref="4f299f74da7675827d069fb190bfb955" args="()" -->
 <div class="memitem">
@@ -107,12 +107,12 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_broker_8h-source.html#l00044">44</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
+<p>Definition at line <a class="el" href="_broker_8h-source.html#l00043">43</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="4ff3fd392a0bc8a8430ac2ca8354ceb6"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::open" ref="4ff3fd392a0bc8a8430ac2ca8354ceb6" args="(ResponseCallbackOpen *cb, const char *fieName, uint32_t bufferSize)=0" -->
+<a class="anchor" name="752f737f3f025021badf51d10c3e6fef"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::open" ref="752f737f3f025021badf51d10c3e6fef" args="(ResponseCallbackOpen *, const char *fname, uint32_t bufsz)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -120,19 +120,19 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::open           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fieName</em>, </td>
+          <td class="paramname"> <em>fname</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>bufsz</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -145,11 +145,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#61376768aabc3e004acc9f51361a7c26">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#7ac47fe502d5eed5bba8fd9863134ae5">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#6ccb02cc6efbf9f0f5e98acd2541bbe2">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#43e7c8eb24a6dba339fabbeda046f4cc">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f1547a744f2b0d77810121f4b7ab65fb"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::create" ref="f1547a744f2b0d77810121f4b7ab65fb" args="(ResponseCallbackOpen *cb, const char *fileName, bool overwrite, uint32_t bufferSize, uint16_t replication, uint64_t blockSize)=0" -->
+<a class="anchor" name="9cbe479d726ee03671f6a99b9e1d514b"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::create" ref="9cbe479d726ee03671f6a99b9e1d514b" args="(ResponseCallbackOpen *, const char *fname, bool overwrite, uint32_t bufsz, uint16_t replication, uint64_t blksz)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -157,13 +157,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::create           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_open.html">ResponseCallbackOpen</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fileName</em>, </td>
+          <td class="paramname"> <em>fname</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -175,7 +175,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em>, </td>
+          <td class="paramname"> <em>bufsz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -187,7 +187,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>blockSize</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>blksz</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -200,11 +200,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#f948c3d62e4ea8133c8c340c11b50e86">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#087b22792f0569408c8bbd95f9eb2431">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#bd0a44ef13e5ac5da7926a435e7a18a0">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#3203ee9ca49ab35844ca9e0d36c2a62f">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="36b993532fc230fa42258b24462625ff"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::close" ref="36b993532fc230fa42258b24462625ff" args="(ResponseCallback *cb, uint32_t fd)=0" -->
+<a class="anchor" name="0d8e047df84fb7ecd05cc3100d7ec288"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::close" ref="0d8e047df84fb7ecd05cc3100d7ec288" args="(ResponseCallback *, uint32_t fd)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -212,7 +212,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::close           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -235,7 +235,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="ca66c430aee7e119d32306d3fc0b98a1"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::read" ref="ca66c430aee7e119d32306d3fc0b98a1" args="(ResponseCallbackRead *cb, uint32_t fd, uint32_t amount)=0" -->
+<a class="anchor" name="ab7677d97c8155e07ff8e0ea0b9b3439"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::read" ref="ab7677d97c8155e07ff8e0ea0b9b3439" args="(ResponseCallbackRead *, uint32_t fd, uint32_t amount)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -243,7 +243,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::read           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -272,7 +272,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="cf78e64948a66624a687d4b0b43facb3"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::append" ref="cf78e64948a66624a687d4b0b43facb3" args="(ResponseCallbackAppend *cb, uint32_t fd, uint32_t amount, uint8_t *data, bool flush)=0" -->
+<a class="anchor" name="a0831f9f4b22d5ad4709d1d3c24732c0"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::append" ref="a0831f9f4b22d5ad4709d1d3c24732c0" args="(ResponseCallbackAppend *, uint32_t fd, uint32_t amount, const void *data, bool flush)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -280,7 +280,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::append           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -297,7 +297,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint8_t *&nbsp;</td>
+          <td class="paramtype">const void *&nbsp;</td>
           <td class="paramname"> <em>data</em>, </td>
         </tr>
         <tr>
@@ -317,11 +317,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#841d9d35493a4333c4a386d70b196282">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#908da930942013e0c393ff99b1c3cb0f">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#fb663838d4afdb1d62d61afc1cf39f8a">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#f12d691af6a78f72a31878a62f046871">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b58df7e8330356870cd7a451f7f1de2b"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::seek" ref="b58df7e8330356870cd7a451f7f1de2b" args="(ResponseCallback *cb, uint32_t fd, uint64_t offset)=0" -->
+<a class="anchor" name="133900b16bcfa91e033dccc135d74b61"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::seek" ref="133900b16bcfa91e033dccc135d74b61" args="(ResponseCallback *, uint32_t fd, uint64_t offset)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -329,7 +329,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::seek           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -358,7 +358,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="fbdbac46cdd7922e769ca8ac0b8b4eb8"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::remove" ref="fbdbac46cdd7922e769ca8ac0b8b4eb8" args="(ResponseCallback *cb, const char *fileName)=0" -->
+<a class="anchor" name="a0f9c734910fff44ee8d9bfc282d0cfd"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::remove" ref="a0f9c734910fff44ee8d9bfc282d0cfd" args="(ResponseCallback *, const char *fname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -366,13 +366,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::remove           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fileName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -385,11 +385,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#07249a9859fdd41f9b700cd27f221ca6">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#01c5c82ccc25815b9a9b6eca05c0d188">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#e7d302225b445f94d302bc4188208487">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#4ec2b8899ad07424eb360a329c10b9a1">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f2e4b9ffde6107c649c7e84fb2419835"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::length" ref="f2e4b9ffde6107c649c7e84fb2419835" args="(ResponseCallbackLength *cb, const char *fieName)=0" -->
+<a class="anchor" name="c2f8ec8336b5c65042e4fcf2242bbdf0"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::length" ref="c2f8ec8336b5c65042e4fcf2242bbdf0" args="(ResponseCallbackLength *, const char *fname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -397,13 +397,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::length           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_length.html">ResponseCallbackLength</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fieName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -416,11 +416,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#0751aa000aec947bf8a5e9412822f81b">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#4bbc75c0c887722d063e1276c33e7e41">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#8562b353d9ad5396d4b3c38e505b0894">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#b680e8038a967e6c71385d4625520c9a">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="568a881629015eb8b93cd1327997f3a0"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::pread" ref="568a881629015eb8b93cd1327997f3a0" args="(ResponseCallbackRead *cb, uint32_t fd, uint64_t offset, uint32_t amount)=0" -->
+<a class="anchor" name="25df3c0f7391b18aa4f3c1fcb74384fd"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::pread" ref="25df3c0f7391b18aa4f3c1fcb74384fd" args="(ResponseCallbackRead *, uint32_t fd, uint64_t offset, uint32_t amount)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -428,7 +428,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::pread           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_read.html">ResponseCallbackRead</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -463,7 +463,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="bafc22d0a456a65f7089503496cec149"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::mkdirs" ref="bafc22d0a456a65f7089503496cec149" args="(ResponseCallback *cb, const char *dirName)=0" -->
+<a class="anchor" name="2c6831d1f2530f1693868865b5077985"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::mkdirs" ref="2c6831d1f2530f1693868865b5077985" args="(ResponseCallback *, const char *dname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -471,13 +471,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::mkdirs           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>dirName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>dname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -490,11 +490,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#d9f7832336f6a2547f81c3b44ab0733b">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#f4cfc50b6747ecc1b84469a80c1a844e">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#69eabb3804b797a086ee454e971837a8">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#3a5829bc1ca4c1e4d922f7f8ac9f1602">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="968c32fba1815ec8b77e7e792140b103"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::rmdir" ref="968c32fba1815ec8b77e7e792140b103" args="(ResponseCallback *cb, const char *dirName)=0" -->
+<a class="anchor" name="9d0dafbff5643f8ba2f518539d2820e0"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::rmdir" ref="9d0dafbff5643f8ba2f518539d2820e0" args="(ResponseCallback *, const char *dname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -502,13 +502,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::rmdir           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>dirName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>dname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -521,11 +521,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#a66ad168060d40fcdacda02566f8df54">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#c2d8f2bc612a6badef57b45ac781ebba">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#29e9e295a6ba09314f2e19d5f1a3c3d2">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#2585ca4f12f5c7687590cdc179ea8a37">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5136fc8731dee51c2510be4715a59f70"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::readdir" ref="5136fc8731dee51c2510be4715a59f70" args="(ResponseCallbackReaddir *cb, const char *dirName)=0" -->
+<a class="anchor" name="243b408968d511fc710523d90dc590b9"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::readdir" ref="243b408968d511fc710523d90dc590b9" args="(ResponseCallbackReaddir *, const char *dname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -533,13 +533,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::readdir           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_readdir.html">ResponseCallbackReaddir</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>dirName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>dname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -552,11 +552,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#969a45d35a972d49c4f0acc336c019db">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#60fd1e4f67192eb0178e477e9decefe4">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#914d5984b28a37d74b102869945bb590">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#c7aa66d209a2a6cf30fbadd698ff3dae">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="33be08c2b7fab3bda1a34ea23d610fdb"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::flush" ref="33be08c2b7fab3bda1a34ea23d610fdb" args="(ResponseCallback *cb, uint32_t fd)=0" -->
+<a class="anchor" name="7e723ff9999b4699657ba2b9ec884ad3"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::flush" ref="7e723ff9999b4699657ba2b9ec884ad3" args="(ResponseCallback *, uint32_t fd)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -564,7 +564,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::flush           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -587,7 +587,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="e0019d44c43d97babca1173264d51bb9"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::status" ref="e0019d44c43d97babca1173264d51bb9" args="(ResponseCallback *cb)=0" -->
+<a class="anchor" name="70a38b9d98e2bd1819ac311ebb1f5edc"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::status" ref="70a38b9d98e2bd1819ac311ebb1f5edc" args="(ResponseCallback *)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -595,7 +595,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::status           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>          </td>
+          <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -609,7 +609,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="06db4f763159e345aa7edf72a54f09a2"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::shutdown" ref="06db4f763159e345aa7edf72a54f09a2" args="(ResponseCallback *cb)=0" -->
+<a class="anchor" name="d01c5f935cbc17fa8813e9297190ccd6"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::shutdown" ref="d01c5f935cbc17fa8813e9297190ccd6" args="(ResponseCallback *)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -617,7 +617,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::shutdown           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>          </td>
+          <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -631,7 +631,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="8017516063b34280bd12b2bf4b4fbae3"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::exists" ref="8017516063b34280bd12b2bf4b4fbae3" args="(ResponseCallbackExists *cb, const char *fieName)=0" -->
+<a class="anchor" name="32973f4568ce3d092b3b8e6d4c82ea79"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::exists" ref="32973f4568ce3d092b3b8e6d4c82ea79" args="(ResponseCallbackExists *, const char *fname)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -639,13 +639,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::exists           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_exists.html">ResponseCallbackExists</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fieName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fname</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -658,11 +658,11 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#989a8d834982dc032bcfda499b08ffbb">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#4894e00504f6363bc820cfdf2da7509a">Hypertable::LocalBroker</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_kosmos_broker.html#de8114cfa79030917e7b53d2cd92b7c2">Hypertable::KosmosBroker</a>, and <a class="el" href="class_hypertable_1_1_local_broker.html#0da01db976ce4a9f4e807e2148645557">Hypertable::LocalBroker</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="858989e90c7538324c3ccb62a5f6a01f"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::rename" ref="858989e90c7538324c3ccb62a5f6a01f" args="(ResponseCallback *cb, const char *src, const char *dst)=0" -->
+<a class="anchor" name="5d4659c55e88a5c749f201bbdb6c0a9b"></a><!-- doxytag: member="Hypertable::DfsBroker::Broker::rename" ref="5d4659c55e88a5c749f201bbdb6c0a9b" args="(ResponseCallback *, const char *src, const char *dst)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -670,7 +670,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
           <td class="memname">virtual void Hypertable::DfsBroker::Broker::rename           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>, </td>
+          <td class="paramname">, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -716,7 +716,7 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_broker_8h-source.html#l00066">66</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
+<p>Definition at line <a class="el" href="_broker_8h-source.html#l00069">69</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
 
 </div>
 </div><p>
@@ -734,13 +734,13 @@ Collaboration diagram for Hypertable::DfsBroker::Broker:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_broker_8h-source.html#l00069">69</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
+<p>Definition at line <a class="el" href="_broker_8h-source.html#l00072">72</a> of file <a class="el" href="_broker_8h-source.html">Broker.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_broker_8h-source.html">Broker.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:27:15 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:35 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

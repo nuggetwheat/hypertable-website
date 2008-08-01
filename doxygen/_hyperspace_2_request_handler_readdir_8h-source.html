@@ -26,29 +26,28 @@
 <a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_event_8h.html">AsyncComm/Event.h</a>"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hyperspace {
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master.html">Master</a>;
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html">00037</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html">RequestHandlerReaddir</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> {
-<a name="l00038"></a>00038   <span class="keyword">public</span>:
-<a name="l00039"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#865240f4209fb0ccf4ab2a1619aaba35">00039</a>     <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#865240f4209fb0ccf4ab2a1619aaba35">RequestHandlerReaddir</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hyperspace_1_1_master.html">Master</a> *master, uint64_t sessionId, <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) : <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a>(eventPtr), <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#b9365866e14a49d524a3cb06f5c239ed">m_comm</a>(comm), <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">m_master</a>(master), <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">m_session_id</a>(sessionId) {
-<a name="l00040"></a>00040       <span class="keywordflow">return</span>;
-<a name="l00041"></a>00041     }
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#628206fea5bb0cf4f04734504af6d0f3" title="Abstract method to carry out the request.">run</a>();
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <span class="keyword">private</span>:
-<a name="l00046"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#b9365866e14a49d524a3cb06f5c239ed">00046</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>        *<a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#b9365866e14a49d524a3cb06f5c239ed">m_comm</a>;
-<a name="l00047"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">00047</a>     <a class="code" href="class_hyperspace_1_1_master.html">Master</a>      *<a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">m_master</a>;
-<a name="l00048"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">00048</a>     uint64_t     <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">m_session_id</a>;
-<a name="l00049"></a>00049   };
-<a name="l00050"></a>00050 }
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052 <span class="preprocessor">#endif // HYPERSPACE_REQUESTHANDLERREADDIR_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>Hyperspace {
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   <span class="keyword">class </span>Master;
+<a name="l00035"></a>00035 
+<a name="l00036"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html">00036</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html">RequestHandlerReaddir</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> {
+<a name="l00037"></a>00037   <span class="keyword">public</span>:
+<a name="l00038"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#645a349ac8639f9a062c6d4abf194353">00038</a>     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html#abd0ef364908f3d5da85db803e3a599e">RequestHandlerReaddir</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hyperspace_1_1_master.html">Master</a> *master, uint64_t session_id, <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) : <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a>(event_ptr), <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html#9b5f27dbe65c9f7a4eaeb4655fa5da11">m_comm</a>(comm), <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">m_master</a>(master), <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">m_session_id</a>(session_id) {
+<a name="l00039"></a>00039       <span class="keywordflow">return</span>;
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html#628206fea5bb0cf4f04734504af6d0f3" title="Abstract method to carry out the request.">run</a>();
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   <span class="keyword">private</span>:
+<a name="l00045"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#b9365866e14a49d524a3cb06f5c239ed">00045</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>        *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_readdir.html#9b5f27dbe65c9f7a4eaeb4655fa5da11">m_comm</a>;
+<a name="l00046"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">00046</a>     <a class="code" href="class_hyperspace_1_1_master.html">Master</a>      *<a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#6d73bda2fd10eaee784c5909296d074d">m_master</a>;
+<a name="l00047"></a><a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">00047</a>     uint64_t     <a class="code" href="class_hyperspace_1_1_request_handler_readdir.html#8a36a0c99cbd43754ac3e4ea8695001b">m_session_id</a>;
+<a name="l00048"></a>00048   };
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="preprocessor">#endif // HYPERSPACE_REQUESTHANDLERREADDIR_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

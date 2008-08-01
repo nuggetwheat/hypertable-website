@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_table_mutator_scatter_buffer__coll__graph.png" border="0" usemap="#_hypertable_1_1_table_mutator_scatter_buffer__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_table_mutator_scatter_buffer__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="183,72,375,99"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="451,124,584,151"><area shape="rect" href="class_hypertable_1_1_range_server_client.html" title="Client proxy interface to RangeServer." alt="" coords="755,92,963,119"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,107,79,133"><area shape="rect" href="class_hypertable_1_1_table_mutator_completion_counter.html" title="Tracks outstanding RangeServer update requests." alt="" coords="712,207,1005,233"><area shape="rect" href="class_hypertable_1_1_flyweight_string.html" title="Hypertable::FlyweightString" alt="" coords="765,257,952,284"><area shape="rect" href="class_hypertable_1_1_table_identifier_copy.html" title="Wrapper for TableIdentifier." alt="" coords="752,308,965,335"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="427,308,608,335"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,63,372,89"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="509,147,643,173"><area shape="rect" href="class_hypertable_1_1_range_server_client.html" title="Client proxy interface to RangeServer." alt="" coords="813,87,1021,113"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,97,79,124"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,184,341,211"><area shape="rect" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier." alt="" coords="799,201,1036,228"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="485,201,667,228"><area shape="rect" href="class_hypertable_1_1_table_mutator_completion_counter.html" title="Tracks outstanding RangeServer update requests." alt="" coords="771,252,1064,279"><area shape="rect" href="class_hypertable_1_1_flyweight_string.html" title="Hypertable::FlyweightString" alt="" coords="824,303,1011,329"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -68,10 +68,12 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#fa3331bfa35b24c298c5ea3a743ba1fc">get_failed_mutations</a> (std::vector&lt; std::pair&lt; <a class="el" href="class_hypertable_1_1_cell.html">Cell</a>, int &gt; &gt; &amp;failed_mutations)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#11966818745971a73dea520d45e75d8c">get_failure_count</a> ()</td></tr>
+
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>,<br>
- <a class="el" href="namespace_hypertable.html#b14c07e333c2b9e113113c5477d8be85">TableMutatorSendBufferPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#ea9ee6821b4d48e6a55a1e02e78b2a10">TableMutatorSendBufferMapT</a></td></tr>
+ <a class="el" href="namespace_hypertable.html#b14c07e333c2b9e113113c5477d8be85">TableMutatorSendBufferPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#5abbf0ecfbe193c7c96de6ad5e7f706f">TableMutatorSendBufferMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#92b8aefa20056c05a1905f473a278d17">m_props_ptr</a></td></tr>
@@ -86,9 +88,9 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_range_server_client.html">RangeServerClient</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#594440d3d5287d17a7a36aa18ba7fd4a">m_range_server</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#18e83e81aff83adc241103a911019207">m_table_identifier</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#b7748cac0ba3ebd93acac66e0f3ae740">m_table_identifier</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#ea9ee6821b4d48e6a55a1e02e78b2a10">TableMutatorSendBufferMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#af9aea01d7403229739fbd1bd2619504">m_buffer_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#5abbf0ecfbe193c7c96de6ad5e7f706f">TableMutatorSendBufferMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#f4ec8e0960fc53694d69d1420d212370">m_buffer_map</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_mutator_completion_counter.html">TableMutatorCompletionCounter</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#913113090cb918746c9cb460130887ec">m_completion_counter</a></td></tr>
 
@@ -110,12 +112,12 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00049">49</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="ea9ee6821b4d48e6a55a1e02e78b2a10"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::TableMutatorSendBufferMapT" ref="ea9ee6821b4d48e6a55a1e02e78b2a10" args="" -->
+<a class="anchor" name="5abbf0ecfbe193c7c96de6ad5e7f706f"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::TableMutatorSendBufferMap" ref="5abbf0ecfbe193c7c96de6ad5e7f706f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#b14c07e333c2b9e113113c5477d8be85">TableMutatorSendBufferPtr</a>&gt; <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#ea9ee6821b4d48e6a55a1e02e78b2a10">Hypertable::TableMutatorScatterBuffer::TableMutatorSendBufferMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#b14c07e333c2b9e113113c5477d8be85">TableMutatorSendBufferPtr</a>&gt; <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#5abbf0ecfbe193c7c96de6ad5e7f706f">Hypertable::TableMutatorScatterBuffer::TableMutatorSendBufferMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -123,7 +125,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00072">72</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00073">73</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -173,7 +175,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00040">40</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00041">41</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -217,7 +219,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00050">50</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00057">57</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -248,7 +250,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00081">81</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00088">88</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -285,7 +287,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00121">121</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00128">128</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -329,7 +331,7 @@ Collaboration diagram for Hypertable::TableMutatorScatterBuffer:</div>
 
 <p>
 Send update 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00172">172</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00179">179</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -350,7 +352,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00224">224</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00245">245</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -372,7 +374,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00233">233</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00254">254</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -393,7 +395,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00319">319</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00340">340</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -415,7 +417,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00281">281</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html#l00302">302</a> of file <a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -462,6 +464,27 @@ Send update
 
 </div>
 </div><p>
+<a class="anchor" name="11966818745971a73dea520d45e75d8c"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::get_failure_count" ref="11966818745971a73dea520d45e75d8c" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t Hypertable::TableMutatorScatterBuffer::get_failure_count           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00067">67</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Friends And Related Function Documentation</h2>
 <a class="anchor" name="5dfd850cec033094536989d6b59d2f44"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::TableMutatorDispatchHandler" ref="5dfd850cec033094536989d6b59d2f44" args="" -->
 <div class="memitem">
@@ -476,7 +499,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00070">70</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00071">71</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -494,7 +517,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00074">74</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00075">75</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -511,7 +534,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00075">75</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00076">76</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -528,7 +551,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00076">76</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00077">77</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -545,7 +568,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00077">77</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00078">78</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -562,7 +585,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00078">78</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00079">79</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -579,33 +602,16 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00079">79</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="18e83e81aff83adc241103a911019207"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::m_table_identifier" ref="18e83e81aff83adc241103a911019207" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a> <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#18e83e81aff83adc241103a911019207">Hypertable::TableMutatorScatterBuffer::m_table_identifier</a><code> [private]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
 <p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00080">80</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="af9aea01d7403229739fbd1bd2619504"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::m_buffer_map" ref="af9aea01d7403229739fbd1bd2619504" args="" -->
+<a class="anchor" name="b7748cac0ba3ebd93acac66e0f3ae740"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::m_table_identifier" ref="b7748cac0ba3ebd93acac66e0f3ae740" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#ea9ee6821b4d48e6a55a1e02e78b2a10">TableMutatorSendBufferMapT</a> <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#af9aea01d7403229739fbd1bd2619504">Hypertable::TableMutatorScatterBuffer::m_buffer_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a> <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#b7748cac0ba3ebd93acac66e0f3ae740">Hypertable::TableMutatorScatterBuffer::m_table_identifier</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -614,6 +620,23 @@ Send update
 <p>
 
 <p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00081">81</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f4ec8e0960fc53694d69d1420d212370"></a><!-- doxytag: member="Hypertable::TableMutatorScatterBuffer::m_buffer_map" ref="f4ec8e0960fc53694d69d1420d212370" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#5abbf0ecfbe193c7c96de6ad5e7f706f">TableMutatorSendBufferMap</a> <a class="el" href="class_hypertable_1_1_table_mutator_scatter_buffer.html#f4ec8e0960fc53694d69d1420d212370">Hypertable::TableMutatorScatterBuffer::m_buffer_map</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00082">82</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -630,7 +653,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00082">82</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00083">83</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -647,7 +670,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00083">83</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00084">84</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -664,7 +687,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00084">84</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00085">85</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -681,7 +704,7 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00085">85</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00086">86</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -698,13 +721,13 @@ Send update
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00086">86</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_scatter_buffer_8h-source.html#l00087">87</a> of file <a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_mutator_scatter_buffer_8h-source.html">TableMutatorScatterBuffer.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_mutator_scatter_buffer_8cc-source.html">TableMutatorScatterBuffer.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:53 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:13 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

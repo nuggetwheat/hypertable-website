@@ -17,161 +17,137 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_44760ae6378a7d9abe41b4e4a4ada92b.html">Tools</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_72fbe18c127b9eb8326f694a67d59b1d.html">rsclient</a></div>
 <h1>rsclient.cc</h1><a href="rsclient_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;cstdlib&gt;</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include &lt;iostream&gt;</span>
 <a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;boost/program_options.hpp&gt;</span>
-<a name="l00026"></a>00026 <span class="keyword">namespace </span>po = boost::program_options;
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_8h.html">AsyncComm/DispatchHandler.h</a>"</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_client_8h.html">Hypertable/Lib/Client.h</a>"</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_command_shell_8h.html">Hypertable/Lib/CommandShell.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_hql_command_interpreter_8h.html">Hypertable/Lib/HqlCommandInterpreter.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_range_server_client_8h.html">Hypertable/Lib/RangeServerClient.h</a>"</span>
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_range_server_command_interpreter_8h.html">RangeServerCommandInterpreter.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_8h.html">AsyncComm/DispatchHandler.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_config_8h.html">Hypertable/Lib/Config.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_client_8h.html">Hypertable/Lib/Client.h</a>"</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_command_shell_8h.html">Hypertable/Lib/CommandShell.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_hql_command_interpreter_8h.html">Hypertable/Lib/HqlCommandInterpreter.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_range_server_client_8h.html">Hypertable/Lib/RangeServerClient.h</a>"</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_range_server_command_interpreter_8h.html">RangeServerCommandInterpreter.h</a>"</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00040"></a>00040 <span class="keyword">using namespace </span>std;
 <a name="l00041"></a>00041 
-<a name="l00042"></a>00042 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00043"></a>00043 <span class="keyword">using namespace </span>std;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 <span class="keyword">namespace </span>{
-<a name="l00046"></a><a class="code" href="rsclient_8cc.html#98cd09e7bd25224f070c2759ead235f7">00046</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="code__search__and__replace_8cc.html#98cd09e7bd25224f070c2759ead235f7">usage_str</a> = 
-<a name="l00047"></a>00047   <span class="stringliteral">"\n"</span> \
-<a name="l00048"></a>00048   <span class="stringliteral">"usage: rsclient [OPTIONS] &lt;host&gt;[:&lt;port&gt;]\n"</span> \
-<a name="l00049"></a>00049   <span class="stringliteral">"\n"</span> \
-<a name="l00050"></a>00050   <span class="stringliteral">"OPTIONS"</span>;
-<a name="l00051"></a>00051 
-<a name="l00055"></a><a class="code" href="rsclient_8cc.html#6d50bb80badb4cb7f465548cff4040b6">00055</a>   <span class="keywordtype">void</span> <a class="code" href="rsclient_8cc.html#6d50bb80badb4cb7f465548cff4040b6">build_inet_address</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, std::string &amp;location) {
-<a name="l00056"></a>00056     std::string host;
-<a name="l00057"></a>00057     uint16_t port;
-<a name="l00058"></a>00058     <span class="keywordtype">size_t</span> colon_offset;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060     <span class="keywordflow">if</span> ((colon_offset = location.find(<span class="stringliteral">":"</span>)) == string::npos) {
-<a name="l00061"></a>00061       host = location;
-<a name="l00062"></a>00062       port = (uint16_t)props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Port"</span>, 38060);
-<a name="l00063"></a>00063     }
-<a name="l00064"></a>00064     <span class="keywordflow">else</span> {
-<a name="l00065"></a>00065       host = location.substr(0, colon_offset);
-<a name="l00066"></a>00066       port = atoi(location.substr(colon_offset+1).c_str());
-<a name="l00067"></a>00067     }
-<a name="l00068"></a>00068       
-<a name="l00069"></a>00069     memset(&amp;addr, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> sockaddr_in));
-<a name="l00070"></a>00070     {
-<a name="l00071"></a>00071       <span class="keyword">struct </span>hostent *he = gethostbyname(host.c_str());
-<a name="l00072"></a>00072       <span class="keywordflow">if</span> (he == 0) {
-<a name="l00073"></a>00073         herror(host.c_str());
-<a name="l00074"></a>00074         exit(1);
-<a name="l00075"></a>00075       }
-<a name="l00076"></a>00076       memcpy(&amp;addr.sin_addr.s_addr, he-&gt;h_addr_list[0], <span class="keyword">sizeof</span>(uint32_t));
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078     addr.sin_family = AF_INET;
-<a name="l00079"></a>00079     addr.sin_port = htons(port);
-<a name="l00080"></a>00080   }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keyword">class </span>NullDispatchHandler : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
-<a name="l00083"></a>00083   <span class="keyword">public</span>:
-<a name="l00084"></a>00084     <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr) { <span class="keywordflow">return</span>; }
-<a name="l00085"></a>00085   };
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="rsclient_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00089</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
-<a name="l00090"></a>00090   <a class="code" href="namespace_hypertable.html#e3b64ae5b1a02e2907badeb41315afe1">CommandShellPtr</a> command_shell_ptr;
-<a name="l00091"></a>00091   <a class="code" href="namespace_hypertable.html#53a1231467c26ed98cb4c0fe219befbc">CommandInterpreterPtr</a> interp_ptr;
-<a name="l00092"></a>00092   <span class="keywordtype">string</span> configFile = <span class="stringliteral">""</span>;
-<a name="l00093"></a>00093   <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = 0;
-<a name="l00094"></a>00094   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = 1;
-<a name="l00095"></a>00095   <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> hyperspace_ptr;
-<a name="l00096"></a>00096   <a class="code" href="namespace_hypertable.html#ac32295cd3d6c1d7bc3e0198aad94a53">RangeServerClientPtr</a> range_server_ptr;
-<a name="l00097"></a>00097   <span class="keyword">struct </span>sockaddr_in addr;
-<a name="l00098"></a>00098   <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> null_handler_ptr = <span class="keyword">new</span> NullDispatchHandler();
-<a name="l00099"></a>00099   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props_ptr;
-<a name="l00100"></a>00100   std::string location_str;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102   <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">System::initialize</a>(argv[0]);
-<a name="l00103"></a>00103   <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">ReactorFactory::initialize</a>((uint16_t)System::get_processor_count());
-<a name="l00104"></a>00104 
-<a name="l00105"></a>00105   <span class="keywordflow">try</span> {
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107     po::options_description <span class="keyword">generic</span>(<a class="code" href="code__search__and__replace_8cc.html#98cd09e7bd25224f070c2759ead235f7">usage_str</a>);
-<a name="l00108"></a>00108     <span class="keyword">generic</span>.add_options()
-<a name="l00109"></a>00109       (<span class="stringliteral">"help"</span>, <span class="stringliteral">"Display this help message"</span>)
-<a name="l00110"></a>00110       ;
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112     CommandShell::add_options(<span class="keyword">generic</span>);
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114     <span class="comment">// Hidden options: server location</span>
-<a name="l00115"></a>00115     po::options_description hidden(<span class="stringliteral">"Hidden options"</span>);
-<a name="l00116"></a>00116     hidden.add_options()
-<a name="l00117"></a>00117       (<span class="stringliteral">"server-location"</span>, po::value&lt;string&gt;(), <span class="stringliteral">"server location"</span>)
-<a name="l00118"></a>00118       ;
+<a name="l00042"></a>00042 <span class="keyword">namespace </span>{
+<a name="l00043"></a><a class="code" href="rsclient_8cc.html#98cd09e7bd25224f070c2759ead235f7">00043</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="code__search__and__replace_8cc.html#98cd09e7bd25224f070c2759ead235f7">usage_str</a> =
+<a name="l00044"></a>00044   <span class="stringliteral">"\n"</span> \
+<a name="l00045"></a>00045   <span class="stringliteral">"usage: rsclient [OPTIONS] &lt;host&gt;[:&lt;port&gt;]\n"</span> \
+<a name="l00046"></a>00046   <span class="stringliteral">"\n"</span> \
+<a name="l00047"></a>00047   <span class="stringliteral">"OPTIONS"</span>;
+<a name="l00048"></a>00048 
+<a name="l00052"></a><a class="code" href="rsclient_8cc.html#9c92e34fcdbc63ba2e7f342f01df650d">00052</a>   <span class="keywordtype">void</span> <a class="code" href="rsclient_8cc.html#9c92e34fcdbc63ba2e7f342f01df650d">build_inet_address</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, std::string &amp;location) {
+<a name="l00053"></a>00053     std::string host;
+<a name="l00054"></a>00054     uint16_t port;
+<a name="l00055"></a>00055     <span class="keywordtype">size_t</span> colon_offset;
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057     <span class="keywordflow">if</span> ((colon_offset = location.find(<span class="stringliteral">":"</span>)) == string::npos) {
+<a name="l00058"></a>00058       host = location;
+<a name="l00059"></a>00059       port = (uint16_t)props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Port"</span>, 38060);
+<a name="l00060"></a>00060     }
+<a name="l00061"></a>00061     <span class="keywordflow">else</span> {
+<a name="l00062"></a>00062       host = location.substr(0, colon_offset);
+<a name="l00063"></a>00063       port = atoi(location.substr(colon_offset+1).c_str());
+<a name="l00064"></a>00064     }
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066     memset(&amp;addr, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> sockaddr_in));
+<a name="l00067"></a>00067     {
+<a name="l00068"></a>00068       <span class="keyword">struct </span>hostent *he = gethostbyname(host.c_str());
+<a name="l00069"></a>00069       <span class="keywordflow">if</span> (he == 0) {
+<a name="l00070"></a>00070         herror(host.c_str());
+<a name="l00071"></a>00071         exit(1);
+<a name="l00072"></a>00072       }
+<a name="l00073"></a>00073       memcpy(&amp;addr.sin_addr.s_addr, he-&gt;h_addr_list[0], <span class="keyword">sizeof</span>(uint32_t));
+<a name="l00074"></a>00074     }
+<a name="l00075"></a>00075     addr.sin_family = AF_INET;
+<a name="l00076"></a>00076     addr.sin_port = htons(port);
+<a name="l00077"></a>00077   }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keyword">class </span>NullDispatchHandler : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
+<a name="l00080"></a>00080   <span class="keyword">public</span>:
+<a name="l00081"></a>00081     <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) { <span class="keywordflow">return</span>; }
+<a name="l00082"></a>00082   };
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 }
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="rsclient_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00086</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
+<a name="l00087"></a>00087   <a class="code" href="namespace_hypertable.html#e3b64ae5b1a02e2907badeb41315afe1">CommandShellPtr</a> shell;
+<a name="l00088"></a>00088   <a class="code" href="namespace_hypertable.html#53a1231467c26ed98cb4c0fe219befbc">CommandInterpreterPtr</a> interp;
+<a name="l00089"></a>00089   <span class="keywordtype">string</span> <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a> = <span class="stringliteral">""</span>;
+<a name="l00090"></a>00090   <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = 0;
+<a name="l00091"></a>00091   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = 1;
+<a name="l00092"></a>00092   <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> hyperspace;
+<a name="l00093"></a>00093   <a class="code" href="namespace_hypertable.html#ac32295cd3d6c1d7bc3e0198aad94a53">RangeServerClientPtr</a> client;
+<a name="l00094"></a>00094   <span class="keyword">struct </span>sockaddr_in addr;
+<a name="l00095"></a>00095   <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> null_handler_ptr = <span class="keyword">new</span> NullDispatchHandler();
+<a name="l00096"></a>00096   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props_ptr;
+<a name="l00097"></a>00097   std::string location_str;
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   <span class="keywordflow">try</span> {
+<a name="l00100"></a>00100     <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Config::Desc</a> <span class="keyword">generic</span>(<a class="code" href="code__search__and__replace_8cc.html#98cd09e7bd25224f070c2759ead235f7">usage_str</a>);
+<a name="l00101"></a>00101     CommandShell::add_options(<span class="keyword">generic</span>);
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103     <span class="comment">// Hidden options: server location</span>
+<a name="l00104"></a>00104     <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Config::Desc</a> hidden(<span class="stringliteral">"Hidden options"</span>);
+<a name="l00105"></a>00105     hidden.add_options()
+<a name="l00106"></a>00106       (<span class="stringliteral">"server-location"</span>, Config::value&lt;string&gt;(), <span class="stringliteral">"server location"</span>);
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108     <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">Config::PositionalDesc</a> p;
+<a name="l00109"></a>00109     p.add(<span class="stringliteral">"server-location"</span>, -1);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111     <a class="code" href="namespace_hypertable_1_1_config.html#9fd29c639899867804354bea6f0c0bc4">Config::init_with_comm</a>(argc, argv, &amp;<span class="keyword">generic</span>, &amp;hidden, &amp;p);
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>.count(<span class="stringliteral">"server-location"</span>) == 0) {
+<a name="l00114"></a>00114       cout &lt;&lt; <a class="code" href="namespace_hypertable_1_1_config.html#7450d14b44fd6e09c8fa510cc1844f53">Config::description</a>() &lt;&lt; <span class="stringliteral">"\n"</span>;
+<a name="l00115"></a>00115       <span class="keywordflow">return</span> 1;
+<a name="l00116"></a>00116     }
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118     props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(<a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">Config::cfgfile</a>);
 <a name="l00119"></a>00119 
-<a name="l00120"></a>00120     po::options_description cmdline_options;
-<a name="l00121"></a>00121     cmdline_options.add(<span class="keyword">generic</span>).add(hidden);
-<a name="l00122"></a>00122 
-<a name="l00123"></a>00123     po::positional_options_description p;
-<a name="l00124"></a>00124     p.add(<span class="stringliteral">"server-location"</span>, -1);
+<a name="l00120"></a>00120     location_str = <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>[<span class="stringliteral">"server-location"</span>].as&lt;<span class="keywordtype">string</span>&gt;();
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122     <a class="code" href="rsclient_8cc.html#9c92e34fcdbc63ba2e7f342f01df650d">build_inet_address</a>(addr, props_ptr, location_str);
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124     comm = Comm::instance();
 <a name="l00125"></a>00125 
-<a name="l00126"></a>00126     po::variables_map vm;
-<a name="l00127"></a>00127     store(po::command_line_parser(argc, argv).
-<a name="l00128"></a>00128           options(cmdline_options).positional(p).run(), vm);
-<a name="l00129"></a>00129     po::notify(vm);
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131     <span class="keywordflow">if</span> (vm.count(<span class="stringliteral">"help"</span>) || vm.count(<span class="stringliteral">"server-location"</span>) == 0) {
-<a name="l00132"></a>00132       cout &lt;&lt; <span class="keyword">generic</span> &lt;&lt; <span class="stringliteral">"\n"</span>;
-<a name="l00133"></a>00133       <span class="keywordflow">return</span> 1;
-<a name="l00134"></a>00134     }
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136     <span class="keywordflow">if</span> (vm.count(<span class="stringliteral">"config"</span>))
-<a name="l00137"></a>00137       configFile = vm[<span class="stringliteral">"config"</span>].as&lt;string&gt;();
-<a name="l00138"></a>00138     <span class="keywordflow">else</span>
-<a name="l00139"></a>00139       configFile = System::installDir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141     props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(configFile);
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143     location_str = vm[<span class="stringliteral">"server-location"</span>].as&lt;<span class="keywordtype">string</span>&gt;();
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145     <a class="code" href="rsclient_8cc.html#6d50bb80badb4cb7f465548cff4040b6">build_inet_address</a>(addr, props_ptr, location_str);
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147     comm = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>();
-<a name="l00148"></a>00148 
-<a name="l00149"></a>00149     <span class="comment">// Create Range Server client object</span>
-<a name="l00150"></a>00150     range_server_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server_client.html" title="Client proxy interface to RangeServer.">RangeServerClient</a>(comm, 30);
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152     <span class="comment">// connect to RangeServer</span>
-<a name="l00153"></a>00153     <span class="keywordflow">if</span> ((error = comm-&gt;<a class="code" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">connect</a>(addr, null_handler_ptr)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00154"></a>00154       cerr &lt;&lt; <span class="stringliteral">"error: unable to connect to RangeServer at "</span> &lt;&lt; endl;
-<a name="l00155"></a>00155       exit(1);
-<a name="l00156"></a>00156     }
-<a name="l00157"></a>00157 
-<a name="l00158"></a>00158     <span class="comment">// Connect to Hyperspace</span>
-<a name="l00159"></a>00159     hyperspace_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Hyperspace::Session</a>(comm, props_ptr, 0);
-<a name="l00160"></a>00160     <span class="keywordflow">if</span> (!hyperspace_ptr-&gt;wait_for_connection(30))
-<a name="l00161"></a>00161       exit(1);
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163     interp_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html">RangeServerCommandInterpreter</a>(comm, hyperspace_ptr, addr, range_server_ptr);
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165     command_shell_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_command_shell.html">CommandShell</a>(<span class="stringliteral">"rsclient"</span>, interp_ptr, vm);
-<a name="l00166"></a>00166     
-<a name="l00167"></a>00167     error = command_shell_ptr-&gt;run();
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169   }
-<a name="l00170"></a>00170   <span class="keywordflow">catch</span>(exception&amp; e) {
-<a name="l00171"></a>00171     cerr &lt;&lt; <span class="stringliteral">"error: "</span> &lt;&lt; e.what() &lt;&lt; <span class="stringliteral">"\n"</span>;
-<a name="l00172"></a>00172   }
-<a name="l00173"></a>00173   <span class="keywordflow">catch</span>(...) {
-<a name="l00174"></a>00174     cerr &lt;&lt; <span class="stringliteral">"Exception of unknown type!\n"</span>;
-<a name="l00175"></a>00175   }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177   <span class="keywordflow">return</span> error;
-<a name="l00178"></a>00178 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:19 2008 for hypertable by&nbsp;
+<a name="l00126"></a>00126     <span class="comment">// Create Range Server client object</span>
+<a name="l00127"></a>00127     client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server_client.html" title="Client proxy interface to RangeServer.">RangeServerClient</a>(comm, 30);
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129     <span class="comment">// connect to RangeServer</span>
+<a name="l00130"></a>00130     <span class="keywordflow">if</span> ((error = comm-&gt;<a class="code" href="class_hypertable_1_1_comm.html#ab29af416a46e5ef940203207fa9ffab" title="Establishes a TCP connection to the address given by the addr argument and associates...">connect</a>(addr, null_handler_ptr)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00131"></a>00131       cerr &lt;&lt; <span class="stringliteral">"error: unable to connect to RangeServer at "</span> &lt;&lt; endl;
+<a name="l00132"></a>00132       exit(1);
+<a name="l00133"></a>00133     }
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135     <span class="comment">// Connect to Hyperspace</span>
+<a name="l00136"></a>00136     hyperspace = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(comm, props_ptr, 0);
+<a name="l00137"></a>00137     <span class="keywordflow">if</span> (!hyperspace-&gt;wait_for_connection(30))
+<a name="l00138"></a>00138       exit(1);
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140     interp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html">RangeServerCommandInterpreter</a>(comm, hyperspace, addr, client);
+<a name="l00141"></a>00141 
+<a name="l00142"></a>00142     shell = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_command_shell.html">CommandShell</a>(<span class="stringliteral">"rsclient"</span>, interp, <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>);
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144     error = shell-&gt;run();
+<a name="l00145"></a>00145   }
+<a name="l00146"></a>00146   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00147"></a>00147     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00148"></a>00148   }
+<a name="l00149"></a>00149   <span class="keywordflow">catch</span>(exception&amp; e) {
+<a name="l00150"></a>00150     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e.what() &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00151"></a>00151   }
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153   <span class="keywordflow">return</span> error;
+<a name="l00154"></a>00154 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -37,21 +37,21 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_access_group__coll__graph.png" border="0" usemap="#_hypertable_1_1_access_group__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_access_group__coll__map">
-<area shape="rect" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs)." alt="" coords="464,8,603,35"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="183,8,375,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="class_hypertable_1_1_timestamp.html" title="Hypertable::Timestamp" alt="" coords="452,59,615,85"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="468,109,599,136"><area shape="rect" href="class_hypertable_1_1_table_identifier_copy.html" title="Wrapper for TableIdentifier." alt="" coords="427,160,640,187"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="188,160,369,187"></map>
+<area shape="rect" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs)." alt="" coords="475,8,613,35"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,8,372,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier." alt="" coords="425,59,663,86"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="185,59,367,86"><area shape="rect" href="class_hypertable_1_1_timestamp.html" title="Hypertable::Timestamp" alt="" coords="463,110,625,136"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="479,160,609,187"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_access_group-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#5f33b630be541f20dabeb57c636bf9c0">AccessGroup</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *identifier, <a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schemaPtr, <a class="el" href="class_hypertable_1_1_schema_1_1_access_group.html">Schema::AccessGroup</a> *ag, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#b552f031bddc4e3e678bdc5a25c516f4">AccessGroup</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *identifier, <a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr, <a class="el" href="class_hypertable_1_1_schema_1_1_access_group.html">Schema::AccessGroup</a> *ag, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#18f68628270d2235d82efe844dee859e">~AccessGroup</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#62d63dd24a522141386b9b8f245a0a15">add</a> (const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, uint64_t real_timestamp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#880642d195b08a1a572065052ef8865c">add</a> (const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, int64_t real_timestamp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This should be called with the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> locked Also, at the end of compaction processing, when m_cell_cache_ptr gets reset to a new value, the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> should be locked as well.  <a href="#62d63dd24a522141386b9b8f245a0a15"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#2acda5488de37e0b6164d4c8e843d780">replay_add</a> (const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, uint64_t real_timestamp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This should be called with the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> locked Also, at the end of compaction processing, when m_cell_cache_ptr gets reset to a new value, the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> should be locked as well.  <a href="#880642d195b08a1a572065052ef8865c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#a1456a2c7a11ff29a1bab18872b77820">replay_add</a> (const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, int64_t real_timestamp)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#05ffa3787cf16b8c7edd6c925a142da8">get_split_row</a> ()</td></tr>
 
@@ -64,10 +64,10 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#5af966a11401db929a031a96499e0700">unlock</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#0c75bf7bda314c73759bdbf049a9cde7">create_scanner</a> (<a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scanContextPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5">create_scanner</a> (<a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this cell list.  <a href="#0c75bf7bda314c73759bdbf049a9cde7"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#2b3396e1f57b240836b4121795100564">include_in_scan</a> (<a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scanContextPtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this cell list.  <a href="#0e25eacc28d335b68bf86504a4fed2d5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#be18c2f794b1f346bf7a6732eeebfad4">include_in_scan</a> (<a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">disk_usage</a> ()</td></tr>
 
@@ -77,9 +77,9 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#93f365006aa07efd772c5d47e759844f">get_compaction_timestamp</a> (<a class="el" href="class_hypertable_1_1_timestamp.html">Timestamp</a> &amp;<a class="el" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#2bf9664225d2f804402c27d964bb2702">get_oldest_cached_timestamp</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#129a66e52fc2d17c0a59dfe41a55da21">get_oldest_cached_timestamp</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#f6201a9724dce9067ebc3a0e856e8a98">get_compaction_priority_data</a> (<a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data_t.html">CompactionPriorityDataT</a> &amp;priority_data)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#d8f152275d767dbe74f25f9ced17d2c0">get_compaction_priority_data</a> (<a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">CompactionPriorityData</a> &amp;priority_data)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#7516ba49bf98b19eef4f40f101f86782">set_compaction_bit</a> ()</td></tr>
 
@@ -101,7 +101,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
-&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, uint32_t &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#387f3e3939cf3dcceaf5619ec3299dab">FileRefCountMapT</a></td></tr>
+&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, uint32_t &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#90950704b79134074c48bbde991748b8">FileRefCountMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#291d3583974d7e29b2a2b25811b46ad1">increment_file_refcount</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;filename)</td></tr>
@@ -117,7 +117,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::condition&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#1e4e65edaef68fcf9680c57f95fc9a22">m_identifier</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a></td></tr>
 
@@ -130,6 +130,8 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector<br>
 &lt; <a class="el" href="namespace_hypertable.html#987bf177e7ff7cd6bd0a9157e020982b">CellStorePtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a></td></tr>
@@ -150,7 +152,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_timestamp.html">Timestamp</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#07b2ffb3bbd22642f48fb7f37eb490a0">m_compaction_timestamp</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#aad76a5b69d13797fde150e14d827dbb">m_oldest_cached_timestamp</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#f1f621fb653786bee42831fdd8966ac1">m_oldest_cached_timestamp</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#0e013dca63e656183a5d9404ec04fbbe">m_collisions</a></td></tr>
 
@@ -164,24 +166,24 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::set&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_access_group.html#387f3e3939cf3dcceaf5619ec3299dab">FileRefCountMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#db38f490c00ee62be2963e144527b94e">m_file_refcounts</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_access_group.html#90950704b79134074c48bbde991748b8">FileRefCountMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data_t.html">CompactionPriorityDataT</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">CompactionPriorityData</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00046">46</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00045">45</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="387f3e3939cf3dcceaf5619ec3299dab"></a><!-- doxytag: member="Hypertable::AccessGroup::FileRefCountMapT" ref="387f3e3939cf3dcceaf5619ec3299dab" args="" -->
+<a class="anchor" name="90950704b79134074c48bbde991748b8"></a><!-- doxytag: member="Hypertable::AccessGroup::FileRefCountMap" ref="90950704b79134074c48bbde991748b8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, uint32_t&gt; <a class="el" href="class_hypertable_1_1_access_group.html#387f3e3939cf3dcceaf5619ec3299dab">Hypertable::AccessGroup::FileRefCountMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, uint32_t&gt; <a class="el" href="class_hypertable_1_1_access_group.html#90950704b79134074c48bbde991748b8">Hypertable::AccessGroup::FileRefCountMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -194,21 +196,21 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="5f33b630be541f20dabeb57c636bf9c0"></a><!-- doxytag: member="Hypertable::AccessGroup::AccessGroup" ref="5f33b630be541f20dabeb57c636bf9c0" args="(TableIdentifier *identifier, SchemaPtr &amp;schemaPtr, Schema::AccessGroup *ag, RangeSpec *range)" -->
+<a class="anchor" name="b552f031bddc4e3e678bdc5a25c516f4"></a><!-- doxytag: member="Hypertable::AccessGroup::AccessGroup" ref="b552f031bddc4e3e678bdc5a25c516f4" args="(const TableIdentifier *identifier, SchemaPtr &amp;schema_ptr, Schema::AccessGroup *ag, const RangeSpec *range)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">AccessGroup::AccessGroup           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *&nbsp;</td>
           <td class="paramname"> <em>identifier</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>schemaPtr</em>, </td>
+          <td class="paramname"> <em>schema_ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -219,7 +221,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
           <td class="paramname"> <em>range</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -233,7 +235,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00046">46</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00047">47</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -254,12 +256,12 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00066">66</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00074">74</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="62d63dd24a522141386b9b8f245a0a15"></a><!-- doxytag: member="Hypertable::AccessGroup::add" ref="62d63dd24a522141386b9b8f245a0a15" args="(const ByteString key, const ByteString value, uint64_t real_timestamp)" -->
+<a class="anchor" name="880642d195b08a1a572065052ef8865c"></a><!-- doxytag: member="Hypertable::AccessGroup::add" ref="880642d195b08a1a572065052ef8865c" args="(const ByteString key, const ByteString value, int64_t real_timestamp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -278,7 +280,7 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint64_t&nbsp;</td>
+          <td class="paramtype">int64_t&nbsp;</td>
           <td class="paramname"> <em>real_timestamp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -294,13 +296,13 @@ Collaboration diagram for Hypertable::AccessGroup:</div>
 This should be called with the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> locked Also, at the end of compaction processing, when m_cell_cache_ptr gets reset to a new value, the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a> should be locked as well. 
 <p>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#a7d95679a7000385f2dcba586fb88ae9">Hypertable::CellList</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#4eb760c37ce11ffc8840b0d6cdf5bcd0">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00102">102</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00110">110</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2acda5488de37e0b6164d4c8e843d780"></a><!-- doxytag: member="Hypertable::AccessGroup::replay_add" ref="2acda5488de37e0b6164d4c8e843d780" args="(const ByteString key, const ByteString value, uint64_t real_timestamp)" -->
+<a class="anchor" name="a1456a2c7a11ff29a1bab18872b77820"></a><!-- doxytag: member="Hypertable::AccessGroup::replay_add" ref="a1456a2c7a11ff29a1bab18872b77820" args="(const ByteString key, const ByteString value, int64_t real_timestamp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -319,7 +321,7 @@ This should be called with the <a class="el" href="class_hypertable_1_1_cell_cac
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint64_t&nbsp;</td>
+          <td class="paramtype">int64_t&nbsp;</td>
           <td class="paramname"> <em>real_timestamp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -333,7 +335,7 @@ This should be called with the <a class="el" href="class_hypertable_1_1_cell_cac
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00112">112</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00120">120</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -360,7 +362,7 @@ This should be an approximation of the middle row key in the list.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#912843dc3f7f586cbec0c460e7cf236a">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00154">154</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00162">162</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -391,7 +393,7 @@ This should be an approximation of the middle row key in the list.<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00164">164</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00172">172</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -413,7 +415,7 @@ This should be an approximation of the middle row key in the list.<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00176">176</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00184">184</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -459,7 +461,7 @@ This should be an approximation of the middle row key in the list.<p>
 
 </div>
 </div><p>
-<a class="anchor" name="0c75bf7bda314c73759bdbf049a9cde7"></a><!-- doxytag: member="Hypertable::AccessGroup::create_scanner" ref="0c75bf7bda314c73759bdbf049a9cde7" args="(ScanContextPtr &amp;scanContextPtr)" -->
+<a class="anchor" name="0e25eacc28d335b68bf86504a4fed2d5"></a><!-- doxytag: member="Hypertable::AccessGroup::create_scanner" ref="0e25eacc28d335b68bf86504a4fed2d5" args="(ScanContextPtr &amp;scan_ctx)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -467,7 +469,7 @@ This should be an approximation of the middle row key in the list.<p>
           <td class="memname"><a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> * AccessGroup::create_scanner           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>scanContextPtr</em>          </td>
+          <td class="paramname"> <em>scan_ctx</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [virtual]</code></td>
         </tr>
@@ -480,18 +482,18 @@ Creates a scanner on this cell list.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>scanContextPtr</em>&nbsp;</td><td>smart pointer to scan context </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>scan_ctx</em>&nbsp;</td><td>smart pointer to scan context </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to newly allocated scanner </dd></dl>
 
-<p>Reimplemented from <a class="el" href="class_hypertable_1_1_cell_list.html#8978798c9d65831fecfc1eead59e6e3e">Hypertable::CellList</a>.</p>
+<p>Reimplemented from <a class="el" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00123">123</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00131">131</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2b3396e1f57b240836b4121795100564"></a><!-- doxytag: member="Hypertable::AccessGroup::include_in_scan" ref="2b3396e1f57b240836b4121795100564" args="(ScanContextPtr &amp;scanContextPtr)" -->
+<a class="anchor" name="be18c2f794b1f346bf7a6732eeebfad4"></a><!-- doxytag: member="Hypertable::AccessGroup::include_in_scan" ref="be18c2f794b1f346bf7a6732eeebfad4" args="(ScanContextPtr &amp;scan_ctx)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -499,7 +501,7 @@ Creates a scanner on this cell list.
           <td class="memname">bool AccessGroup::include_in_scan           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>scanContextPtr</em>          </td>
+          <td class="paramname"> <em>scan_ctx</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -509,7 +511,7 @@ Creates a scanner on this cell list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00145">145</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00153">153</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -530,7 +532,7 @@ Creates a scanner on this cell list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00180">180</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00189">189</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -561,7 +563,7 @@ Creates a scanner on this cell list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00197">197</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00208">208</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -600,7 +602,7 @@ Add the new table to the table vector<p>
 Determine in-use files to prevent from being GC'd<p>
 Re-compute disk usage and compresion ratio<p>
 un-block scanners 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00243">243</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00255">255</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -622,16 +624,16 @@ un-block scanners
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00480">480</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00503">503</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2bf9664225d2f804402c27d964bb2702"></a><!-- doxytag: member="Hypertable::AccessGroup::get_oldest_cached_timestamp" ref="2bf9664225d2f804402c27d964bb2702" args="()" -->
+<a class="anchor" name="129a66e52fc2d17c0a59dfe41a55da21"></a><!-- doxytag: member="Hypertable::AccessGroup::get_oldest_cached_timestamp" ref="129a66e52fc2d17c0a59dfe41a55da21" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t Hypertable::AccessGroup::get_oldest_cached_timestamp           </td>
+          <td class="memname">int64_t Hypertable::AccessGroup::get_oldest_cached_timestamp           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -647,14 +649,14 @@ un-block scanners
 
 </div>
 </div><p>
-<a class="anchor" name="f6201a9724dce9067ebc3a0e856e8a98"></a><!-- doxytag: member="Hypertable::AccessGroup::get_compaction_priority_data" ref="f6201a9724dce9067ebc3a0e856e8a98" args="(CompactionPriorityDataT &amp;priority_data)" -->
+<a class="anchor" name="d8f152275d767dbe74f25f9ced17d2c0"></a><!-- doxytag: member="Hypertable::AccessGroup::get_compaction_priority_data" ref="d8f152275d767dbe74f25f9ced17d2c0" args="(CompactionPriorityData &amp;priority_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void AccessGroup::get_compaction_priority_data           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data_t.html">CompactionPriorityDataT</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">CompactionPriorityData</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>priority_data</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -665,7 +667,7 @@ un-block scanners
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00186">186</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00196">196</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -753,7 +755,7 @@ un-block scanners
 <p>
 Shrink the <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a><p>
 Shrink the CellStores 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00411">411</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00433">433</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -838,7 +840,7 @@ Shrink the CellStores
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00488">488</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00511">511</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -860,7 +862,7 @@ Shrink the CellStores
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00498">498</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00521">521</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -884,7 +886,7 @@ Shrink the CellStores
 Needs to be called with m_mutex locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00558">558</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00581">581</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -908,7 +910,7 @@ Needs to be called with m_mutex locked.
 Needs to be called with m_mutex locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00571">571</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00594">594</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -931,7 +933,7 @@ Needs to be called with m_mutex locked.
 
 <p>
 Get list of files to write into 'Files' column 
-<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00519">519</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8cc-source.html#l00542">542</a> of file <a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a>.</p>
 
 </div>
 </div><p>
@@ -970,12 +972,12 @@ Get list of files to write into 'Files' column
 
 </div>
 </div><p>
-<a class="anchor" name="1e4e65edaef68fcf9680c57f95fc9a22"></a><!-- doxytag: member="Hypertable::AccessGroup::m_identifier" ref="1e4e65edaef68fcf9680c57f95fc9a22" args="" -->
+<a class="anchor" name="b6ed7f1aac399b88b4ca93f6bc3c4320"></a><!-- doxytag: member="Hypertable::AccessGroup::m_identifier" ref="b6ed7f1aac399b88b4ca93f6bc3c4320" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a> <a class="el" href="class_hypertable_1_1_access_group.html#1e4e65edaef68fcf9680c57f95fc9a22">Hypertable::AccessGroup::m_identifier</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a> <a class="el" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">Hypertable::AccessGroup::m_identifier</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1093,6 +1095,23 @@ Get list of files to write into 'Files' column
 
 </div>
 </div><p>
+<a class="anchor" name="c795c49adbe90b285a30f762b5bc4590"></a><!-- doxytag: member="Hypertable::AccessGroup::m_range_name" ref="c795c49adbe90b285a30f762b5bc4590" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> <a class="el" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">Hypertable::AccessGroup::m_range_name</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00128">128</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="aa1e959e9d89c52abe6d344190c94f1d"></a><!-- doxytag: member="Hypertable::AccessGroup::m_stores" ref="aa1e959e9d89c52abe6d344190c94f1d" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1106,7 +1125,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00128">128</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00129">129</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1123,7 +1142,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00129">129</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00130">130</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1140,7 +1159,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00130">130</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00131">131</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1157,7 +1176,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00131">131</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00132">132</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1174,7 +1193,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00132">132</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00133">133</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1191,7 +1210,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00133">133</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00134">134</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1208,7 +1227,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00134">134</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00135">135</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1225,7 +1244,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00135">135</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00136">136</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1242,16 +1261,16 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00136">136</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00137">137</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="aad76a5b69d13797fde150e14d827dbb"></a><!-- doxytag: member="Hypertable::AccessGroup::m_oldest_cached_timestamp" ref="aad76a5b69d13797fde150e14d827dbb" args="" -->
+<a class="anchor" name="f1f621fb653786bee42831fdd8966ac1"></a><!-- doxytag: member="Hypertable::AccessGroup::m_oldest_cached_timestamp" ref="f1f621fb653786bee42831fdd8966ac1" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t <a class="el" href="class_hypertable_1_1_access_group.html#aad76a5b69d13797fde150e14d827dbb">Hypertable::AccessGroup::m_oldest_cached_timestamp</a><code> [private]</code>          </td>
+          <td class="memname">int64_t <a class="el" href="class_hypertable_1_1_access_group.html#f1f621fb653786bee42831fdd8966ac1">Hypertable::AccessGroup::m_oldest_cached_timestamp</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1259,7 +1278,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00137">137</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00138">138</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1276,7 +1295,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00138">138</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00139">139</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1293,7 +1312,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00139">139</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00140">140</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1310,7 +1329,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00140">140</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00141">141</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1327,7 +1346,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00141">141</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00142">142</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1344,7 +1363,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00142">142</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00143">143</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1361,16 +1380,16 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00143">143</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00144">144</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="db38f490c00ee62be2963e144527b94e"></a><!-- doxytag: member="Hypertable::AccessGroup::m_file_refcounts" ref="db38f490c00ee62be2963e144527b94e" args="" -->
+<a class="anchor" name="7fd329022a1fe0ba3c3caca54bbd8ac8"></a><!-- doxytag: member="Hypertable::AccessGroup::m_file_refcounts" ref="7fd329022a1fe0ba3c3caca54bbd8ac8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_access_group.html#387f3e3939cf3dcceaf5619ec3299dab">FileRefCountMapT</a> <a class="el" href="class_hypertable_1_1_access_group.html#db38f490c00ee62be2963e144527b94e">Hypertable::AccessGroup::m_file_refcounts</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_access_group.html#90950704b79134074c48bbde991748b8">FileRefCountMap</a> <a class="el" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">Hypertable::AccessGroup::m_file_refcounts</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1378,7 +1397,7 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00144">144</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00145">145</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
@@ -1395,13 +1414,13 @@ Get list of files to write into 'Files' column
 
 <p>
 
-<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00145">145</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
+<p>Definition at line <a class="el" href="_access_group_8h-source.html#l00146">146</a> of file <a class="el" href="_access_group_8h-source.html">AccessGroup.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_access_group_8h-source.html">AccessGroup.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_access_group_8cc-source.html">AccessGroup.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:59 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:19 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -50,10 +50,10 @@ Collaboration diagram for Hypertable::ReactorFactory:</div>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method returns the 'next' reactor.  <a href="#fe35bd4a5fc54742c3c4c714076f078b"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static vector<br>
-&lt; <a class="el" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor_factory.html#ae7e415093ef5023f496346dd8877a4b">ms_reactors</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::vector<br>
+&lt; <a class="el" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor_factory.html#35b6cfa747124c7e2368edc9435bf254">ms_reactors</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">vector of reactors  <a href="#ae7e415093ef5023f496346dd8877a4b"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">vector of reactors  <a href="#35b6cfa747124c7e2368edc9435bf254"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <br>
 boost::thread_group&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor_factory.html#514e509f9744735246608343d5930f6b">ms_threads</a></td></tr>
 
@@ -67,7 +67,7 @@ boost::thread_group&nbsp;</td><td class="memItemRight" valign="bottom"><a class=
 This class is a static class that is used to setup and manage I/O reactors. 
 <p>
 Since the I/O reactor threads are a process-wide resource, the methods of this class are static. 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00047">47</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00043">43</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 <hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="dda95af73ca29ccaf3f401293495ec76"></a><!-- doxytag: member="Hypertable::ReactorFactory::initialize" ref="dda95af73ca29ccaf3f401293495ec76" args="(uint16_t reactor_count)" -->
 <div class="memitem">
@@ -94,7 +94,7 @@ This method creates and initializes the I/O reactor threads and must be called o
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8cc-source.html#l00041">41</a> of file <a class="el" href="_reactor_factory_8cc-source.html">ReactorFactory.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8cc-source.html#l00043">43</a> of file <a class="el" href="_reactor_factory_8cc-source.html">ReactorFactory.cc</a>.</p>
 
 </div>
 </div><p>
@@ -117,7 +117,7 @@ This method creates and initializes the I/O reactor threads and must be called o
 This method shuts down the reactors. 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8cc-source.html#l00058">58</a> of file <a class="el" href="_reactor_factory_8cc-source.html">ReactorFactory.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8cc-source.html#l00060">60</a> of file <a class="el" href="_reactor_factory_8cc-source.html">ReactorFactory.cc</a>.</p>
 
 </div>
 </div><p>
@@ -141,17 +141,17 @@ This method shuts down the reactors.
 This method returns the 'next' reactor. 
 <p>
 It returns pointers to reactors in round-robin fashion and is used by the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> subsystem to evenly distribute descriptors across all of the reactors. 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00066">66</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00062">62</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="ae7e415093ef5023f496346dd8877a4b"></a><!-- doxytag: member="Hypertable::ReactorFactory::ms_reactors" ref="ae7e415093ef5023f496346dd8877a4b" args="" -->
+<a class="anchor" name="35b6cfa747124c7e2368edc9435bf254"></a><!-- doxytag: member="Hypertable::ReactorFactory::ms_reactors" ref="35b6cfa747124c7e2368edc9435bf254" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">vector&lt; <a class="el" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a> &gt; <a class="el" href="class_hypertable_1_1_reactor_factory.html#ae7e415093ef5023f496346dd8877a4b">ReactorFactory::ms_reactors</a><code> [static]</code>          </td>
+          <td class="memname">std::vector&lt; <a class="el" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a> &gt; <a class="el" href="class_hypertable_1_1_reactor_factory.html#35b6cfa747124c7e2368edc9435bf254">ReactorFactory::ms_reactors</a><code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -161,7 +161,7 @@ It returns pointers to reactors in round-robin fashion and is used by the <a cla
 vector of reactors 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00072">72</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00069">69</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 
 </div>
 </div><p>
@@ -178,7 +178,7 @@ vector of reactors
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00074">74</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00071">71</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 
 </div>
 </div><p>
@@ -195,7 +195,7 @@ vector of reactors
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00077">77</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00074">74</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 
 </div>
 </div><p>
@@ -212,13 +212,13 @@ vector of reactors
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00078">78</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_factory_8h-source.html#l00075">75</a> of file <a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_factory_8h-source.html">ReactorFactory.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_factory_8cc-source.html">ReactorFactory.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:36 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:55 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

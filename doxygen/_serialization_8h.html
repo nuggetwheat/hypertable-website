@@ -16,11 +16,7 @@
 </div>
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_c15830aad3a99e858e4f63b1b1579632.html">Common</a></div>
-<h1>Serialization.h File Reference</h1><code>#include &lt;cstring&gt;</code><br>
-<code>#include &lt;string&gt;</code><br>
-<code>#include &lt;boost/detail/endian.hpp&gt;</code><br>
-<code>#include &quot;<a class="el" href="_error_8h-source.html">Common/Error.h</a>&quot;</code><br>
-<code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
+<h1>Serialization.h File Reference</h1><code>#include &quot;<a class="el" href="serialization-c_8h-source.html">serialization-c.h</a>&quot;</code><br>
 
 <p>
 <div class="dynheader">
@@ -28,7 +24,7 @@ Include dependency graph for Serialization.h:</div>
 <div class="dynsection">
 <p><center><img src="_serialization_8h__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Common/Serialization.h_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Common/Serialization.h_map">
-<area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="142,155,264,181"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="326,80,459,107"><area shape="rect" href="_string_8h.html" title="Common/String.h" alt="" coords="419,229,547,256"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="608,155,718,181"></map>
+<area shape="rect" href="serialization&#45;c_8h.html" title="serialization&#45;c.h" alt="" coords="133,80,251,107"><area shape="rect" href="endian&#45;c_8h.html" title="endian&#45;c.h" alt="" coords="101,155,187,182"></map>
 </div>
 
 <p>
@@ -39,102 +35,22 @@ Include dependency graph for Serialization.h:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html">Hypertable::Serialization</a></td></tr>
 
-<tr><td colspan="2"><br><h2>Defines</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#f4aabb87a7ed28c013cb4b06d96f3804">HT_MAX_V1B</a>&nbsp;&nbsp;&nbsp;0x7f</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Copyright (C) 2008 Doug Judd (Zvents, Inc.  <a href="#f4aabb87a7ed28c013cb4b06d96f3804"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#01dd25a70e35af5b8d7e04689c38534b">HT_MAX_V2B</a>&nbsp;&nbsp;&nbsp;0x3fff</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#c7c4e448d15ae255f810a4bc71cd8465">HT_MAX_V3B</a>&nbsp;&nbsp;&nbsp;0x1fffff</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#735ec71de798b899dee834d0d494bdcd">HT_MAX_V4B</a>&nbsp;&nbsp;&nbsp;0xfffffff</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#29d3cea444e5d4fc277bdf1b1367be33">HT_MAX_V5B</a>&nbsp;&nbsp;&nbsp;0x7ffffffffull</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#10975d615d720940ebe0c98421828000">HT_MAX_V6B</a>&nbsp;&nbsp;&nbsp;0x3ffffffffffull</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#9c9c8090f20ba8ccbf72728037796c60">HT_MAX_V7B</a>&nbsp;&nbsp;&nbsp;0x1ffffffffffffull</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#ffaa1fabf974683f1237f1103586f535">HT_MAX_V8B</a>&nbsp;&nbsp;&nbsp;0xffffffffffffffull</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#ca2f7d683cdca669ff8464a6c18d7cb7">HT_MAX_V9B</a>&nbsp;&nbsp;&nbsp;0x7fffffffffffffffull</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#acb120ebcf132d5d96162ae3814d662a">HT_MAX_LEN_VINT32</a>&nbsp;&nbsp;&nbsp;5</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#9b3979a042cc7650f88a900b627d7079">HT_MAX_LEN_VINT64</a>&nbsp;&nbsp;&nbsp;10</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#1dde44eb7df047336c38cf4668470c7c">HT_ENCODE_VINT0</a>(_op_, _val_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(_op_, _val_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#714e24c9b35ae312dc1cd131a57556bb">HT_ENCODE_VINT4</a>(_op_, _val_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#e0b8fb8450b3cc2fca8a24ffc232906e">HT_DECODE_NEED</a>(_rp_, _n_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#81e4bb06806755364c06be370ce01512">HT_DECODE_VINT0</a>(_type_, _n_, _ip_, _rp_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(_type_, _n_, _ip_, _rp_)</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_serialization_8h.html#1fb91ff4c039747a6e48b6145e58178b">HT_DECODE_VINT4</a>(_type_, _n_, _ip_, _rp_)</td></tr>
-
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b">Hypertable::Serialization::encode_bool</a> (uint8_t **bufp, bool bval)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#84279c65251016ad7adcda9b64cbe52d">Hypertable::Serialization::encode_i8</a> (uint8_t **bufp, uint8_t val)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a boolean into the given buffer.  <a href="#5cf71fe45c648fab615820bc2bf50a4b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#de757fde9815b5fa22fbb58576ebf78c">Hypertable::Serialization::decode_bool</a> (uint8_t **bufp, size_t *remainingp, bool *boolp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a boolean value from the given buffer.  <a href="#de757fde9815b5fa22fbb58576ebf78c"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#c030542188047b53c386f25ec3042c2f">Hypertable::Serialization::decode_byte</a> (uint8_t **bufp, size_t *remainingp, uint8_t *bytePtr)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a single byte from the given buffer.  <a href="#c030542188047b53c386f25ec3042c2f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#dd9bc4ec1b2319c867432466bf77b0d5">Hypertable::Serialization::encode_short</a> (uint8_t **bufp, uint16_t sval)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a short (2 byte integer) into the given buffer.  <a href="#dd9bc4ec1b2319c867432466bf77b0d5"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#87d607f10efd535ca34217a06836b5f4">Hypertable::Serialization::decode_short</a> (uint8_t **bufp, size_t *remainingp, uint16_t *svalp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a short (2 byte integer) from the given buffer.  <a href="#87d607f10efd535ca34217a06836b5f4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#d656abc88dca985c946998e7bfb25dba">Hypertable::Serialization::encode_int</a> (uint8_t **bufp, uint32_t ival)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes an int (4 byte integer) into the given buffer.  <a href="#d656abc88dca985c946998e7bfb25dba"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#a93f49c7191643c260bb53aca2eb18f8">Hypertable::Serialization::decode_int</a> (uint8_t **bufp, size_t *remainingp, uint32_t *ivalp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes an int (4 byte integer) from the given buffer.  <a href="#a93f49c7191643c260bb53aca2eb18f8"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#2faea11813bd892d8d0e77758f0a988b">Hypertable::Serialization::encode_long</a> (uint8_t **bufp, uint64_t lval)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a long (8 byte integer) into the given buffer.  <a href="#2faea11813bd892d8d0e77758f0a988b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#5970b55283b4717ede1240b762d0d3e1">Hypertable::Serialization::decode_long</a> (uint8_t **bufp, size_t *remainingp, uint64_t *lvalp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes an int (4 byte integer) from the given buffer.  <a href="#5970b55283b4717ede1240b762d0d3e1"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#e550bff9e7d0a469aa686b90c3fdf62a">Hypertable::Serialization::encoded_length_byte_array</a> (int32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a byte array.  <a href="#e550bff9e7d0a469aa686b90c3fdf62a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#c8b69bf7b7b2c153c8e1d9ea502a782c">Hypertable::Serialization::encode_byte_array</a> (uint8_t **bufp, const void *data, int32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a variable sized byte array into the given buffer.  <a href="#c8b69bf7b7b2c153c8e1d9ea502a782c"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#660a9e996c22c6661d31680c8926bbd9">Hypertable::Serialization::decode_byte_array</a> (uint8_t **bufp, size_t *remainingp, uint8_t **dstPtr, int32_t *lenp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a variable sized byte array from the given buffer.  <a href="#660a9e996c22c6661d31680c8926bbd9"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#f00eb744da2c588025166abe34f3996a">Hypertable::Serialization::encoded_length_string</a> (const char *str)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a c-style null-terminated string.  <a href="#f00eb744da2c588025166abe34f3996a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#68c4fb1c55bfc323f336c8205093efd8">Hypertable::Serialization::encoded_length_string</a> (const std::string &amp;str)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a std::string.  <a href="#68c4fb1c55bfc323f336c8205093efd8"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#ab31a00ab375e83220337c5eb069b7d8">Hypertable::Serialization::encode_string</a> (uint8_t **bufp, const char *str)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a c-style null-terminated string into the given buffer.  <a href="#ab31a00ab375e83220337c5eb069b7d8"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#e7ec45055aa109089bf33e1988c54741">Hypertable::Serialization::encode_string</a> (uint8_t **bufp, const std::string &amp;str)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a std::string into the given buffer.  <a href="#e7ec45055aa109089bf33e1988c54741"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9">Hypertable::Serialization::decode_string</a> (uint8_t **bufp, size_t *remainingp, const char **strp)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a c-style string from the given buffer.  <a href="#c34c4f77815e637d9b9f7a52e7aa56d9"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#e99d3532afeadd2ec0c0fd8aced93297">Hypertable::Serialization::decode_string</a> (uint8_t **bufp, size_t *remainingp, std::string &amp;str)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a std::string from the given buffer.  <a href="#e99d3532afeadd2ec0c0fd8aced93297"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a byte into the given buffer.  <a href="#84279c65251016ad7adcda9b64cbe52d"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1">Hypertable::Serialization::decode_i8</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decode a 8-bit integer (a byte/character).  <a href="#9172e2982cf93570438f27818fac95c1"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a">Hypertable::Serialization::decode_byte</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a single byte from the given buffer.  <a href="#13c5b005af347bb1da1c9c7fbb33e71a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b">Hypertable::Serialization::encode_bool</a> (uint8_t **bufp, bool bval)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a boolean into the given buffer.  <a href="#5cf71fe45c648fab615820bc2bf50a4b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557">Hypertable::Serialization::decode_bool</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a boolean value from the given buffer.  <a href="#a8b47fcd45ea75658635dc880c3c8557"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18">Hypertable::Serialization::encode_i16</a> (uint8_t **bufp, uint16_t val)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encode a 16-bit integer in little-endian order.  <a href="#3463bbf15b8715bd7a6dd7015b5fde18"></a><br></td></tr>
@@ -177,427 +93,64 @@ Include dependency graph for Serialization.h:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#80faa25d46370b97984c4eab45831d59">Hypertable::Serialization::decode_vi64</a> (const uint8_t **bufp)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decode a variable length encoded integer up to 64-bit.  <a href="#80faa25d46370b97984c4eab45831d59"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#0e385ec57e4f6a76e0d8197a8bc286d5">Hypertable::Serialization::encoded_length_cstr</a> (const char *s)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#4934596786a79b90d5847d08edcf08e9">Hypertable::Serialization::encoded_length_bytes32</a> (int32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the variable encoded length of a c-style null-terminated string Assuming string length can be encoded in 32-bit integer.  <a href="#0e385ec57e4f6a76e0d8197a8bc286d5"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#d9a95fed35851c1ab000663a54fea004">Hypertable::Serialization::encode_cstr</a> (uint8_t **bufp, const char *s)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a 32-bit length byte array (i32, bytes).  <a href="#4934596786a79b90d5847d08edcf08e9"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#697da2b8b8e712f080b3b39355afbc75">Hypertable::Serialization::encode_bytes32</a> (uint8_t **bufp, const void *data, int32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encode a c-style string a long with the terminating null.  <a href="#d9a95fed35851c1ab000663a54fea004"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#5ac707869e7a986efe39b4e31dc19c53">Hypertable::Serialization::decode_cstr</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a variable sized byte array into the given buffer.  <a href="#697da2b8b8e712f080b3b39355afbc75"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#ac64285d2eb0e7713b4cdbae3f2af7ae">Hypertable::Serialization::decode_bytes32</a> (const uint8_t **bufp, size_t *remainp, uint32_t *lenp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decode a null terminated c-style string.  <a href="#5ac707869e7a986efe39b4e31dc19c53"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a variable sized byte array from the given buffer.  <a href="#ac64285d2eb0e7713b4cdbae3f2af7ae"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#8967c9991f7ee857c84c3c8e50db3df9">Hypertable::Serialization::encoded_length_str16</a> (const char *str)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a string16 encoding.  <a href="#8967c9991f7ee857c84c3c8e50db3df9"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#597b1e44ee4e973d1c87719dc4cb04ed">Hypertable::Serialization::encoded_length_str16</a> (const String &amp;str)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of a String.  <a href="#597b1e44ee4e973d1c87719dc4cb04ed"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#0a4afb490822f9b6b0d5fe6576896ca4">Hypertable::Serialization::encode_str16</a> (uint8_t **bufp, const void *str, uint16_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a string buffer into the given buffer.  <a href="#0a4afb490822f9b6b0d5fe6576896ca4"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#10fba8f4cba9b1523e67deac72270b55">Hypertable::Serialization::encode_str16</a> (uint8_t **bufp, const char *str)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a c-style null-terminated string into the given buffer.  <a href="#10fba8f4cba9b1523e67deac72270b55"></a><br></td></tr>
+<tr><td class="memTemplParams" nowrap colspan="2">template&lt;class StringT&gt; </td></tr>
+<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#714b4f163bc2f67d1649a1074e00210b">Hypertable::Serialization::encode_str16</a> (uint8_t **bufp, const StringT &amp;str)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes a string into the given buffer.  <a href="#714b4f163bc2f67d1649a1074e00210b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#f1023f260dede42e5744864c35b6c38f">Hypertable::Serialization::decode_str16</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a c-style string from the given buffer.  <a href="#f1023f260dede42e5744864c35b6c38f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0">Hypertable::Serialization::decode_str16</a> (const uint8_t **bufp, size_t *remainp, uint16_t *lenp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decodes a c-style string from the given buffer.  <a href="#f34adb869c349af75a12b633b883bca0"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#39997cefbef5abff6a0e8e6b8efcc1ec">Hypertable::Serialization::encoded_length_vstr</a> (size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of vstr (vint64, data, null).  <a href="#39997cefbef5abff6a0e8e6b8efcc1ec"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#0a1da082decd9869d834d383f2179974">Hypertable::Serialization::encoded_length_vstr</a> (const char *s)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of vstr Assuming string length can be encoded in 32-bit integer.  <a href="#0a1da082decd9869d834d383f2179974"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27">Hypertable::Serialization::encoded_length_vstr</a> (const String &amp;s)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Computes the encoded length of vstr Assuming string length can be encoded in 32-bit integer.  <a href="#4ca82afa281360df02b9711740567e27"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18">Hypertable::Serialization::encode_vstr</a> (uint8_t **bufp, const void *buf, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encode a buffer as vstr (vint64, data, null).  <a href="#46ee21e21f9ecf2ba6d52e163b8e2f18"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#d0045be4ae68c074f7c25e79d0060727">Hypertable::Serialization::encode_vstr</a> (uint8_t **bufp, const char *s)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encode a c-style string as vstr.  <a href="#d0045be4ae68c074f7c25e79d0060727"></a><br></td></tr>
+<tr><td class="memTemplParams" nowrap colspan="2">template&lt;class StringT&gt; </td></tr>
+<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e">Hypertable::Serialization::encode_vstr</a> (uint8_t **bufp, const StringT &amp;s)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encode a String as vstr.  <a href="#40ce52e8ba556769374a00f7149b167e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#ea801c536672942c9a747f9525d6c597">Hypertable::Serialization::decode_vstr</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decode a vstr (vint64, data, null) Note, decoding a vstr longer than 4GiB on a 32-bit platform is obviously futile (throws bad vstr exception).  <a href="#ea801c536672942c9a747f9525d6c597"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8">Hypertable::Serialization::decode_vstr</a> (const uint8_t **bufp, size_t *remainp, uint32_t *lenp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Decode a vstr (vint64, data, null).  <a href="#fd9186925807e60268fa7a2ae2c128a8"></a><br></td></tr>
 </table>
-<hr><h2>Define Documentation</h2>
-<a class="anchor" name="e0b8fb8450b3cc2fca8a24ffc232906e"></a><!-- doxytag: member="Serialization.h::HT_DECODE_NEED" ref="e0b8fb8450b3cc2fca8a24ffc232906e" args="(_rp_, _n_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_DECODE_NEED          </td>
-          <td>(</td>
-          <td class="paramtype">_rp_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">if</span> (*(_rp_) &lt; _n_) \
-    <span class="keywordflow">throw</span> Exception(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Error::SERIALIZATION_INPUT_OVERRUN</a>); \
-  *(_rp_) -= _n_
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00068">68</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="81e4bb06806755364c06be370ce01512"></a><!-- doxytag: member="Serialization.h::HT_DECODE_VINT0" ref="81e4bb06806755364c06be370ce01512" args="(_type_, _n_, _ip_, _rp_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_DECODE_VINT0          </td>
-          <td>(</td>
-          <td class="paramtype">_type_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_ip_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_rp_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment"><a class="code" href="_serialization_8h.html#e0b8fb8450b3cc2fca8a24ffc232906e">HT_DECODE_NEED</a>(_rp_, 1); \
-  _type_ _n_ = (*(_ip_)++ &amp; 0x7f), shift = 0;
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00073">73</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="1fb91ff4c039747a6e48b6145e58178b"></a><!-- doxytag: member="Serialization.h::HT_DECODE_VINT4" ref="1fb91ff4c039747a6e48b6145e58178b" args="(_type_, _n_, _ip_, _rp_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_DECODE_VINT4          </td>
-          <td>(</td>
-          <td class="paramtype">_type_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_ip_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_rp_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment"><a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(_type_, _n_, _ip_, _rp_) \
-  <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(_type_, _n_, _ip_, _rp_) \
-  <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(_type_, _n_, _ip_, _rp_) \
-  <a class="code" href="_serialization_8h.html#5e3246dc1a69b453207d3341db19c708">HT_DECODE_VINT_</a>(_type_, _n_, _ip_, _rp_)
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00084">84</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="5e3246dc1a69b453207d3341db19c708"></a><!-- doxytag: member="Serialization.h::HT_DECODE_VINT_" ref="5e3246dc1a69b453207d3341db19c708" args="(_type_, _n_, _ip_, _rp_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_DECODE_VINT_          </td>
-          <td>(</td>
-          <td class="paramtype">_type_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_ip_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_rp_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment">shift += 7; \
-  <span class="keywordflow">if</span> ((_ip_)[-1] &amp; 0x80) { \
-    <a class="code" href="_serialization_8h.html#e0b8fb8450b3cc2fca8a24ffc232906e">HT_DECODE_NEED</a>(_rp_, 1); \
-    _n_ |= ((_type_)(*(_ip_)++ &amp; 0x7f) &lt;&lt; shift); \
-  } <span class="keywordflow">else</span> <span class="keywordflow">return</span> _n_;
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00077">77</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="1dde44eb7df047336c38cf4668470c7c"></a><!-- doxytag: member="Serialization.h::HT_ENCODE_VINT0" ref="1dde44eb7df047336c38cf4668470c7c" args="(_op_, _val_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_ENCODE_VINT0          </td>
-          <td>(</td>
-          <td class="paramtype">_op_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_val_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">if</span> (_val_ &lt;= <a class="code" href="_serialization_8h.html#f4aabb87a7ed28c013cb4b06d96f3804" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">HT_MAX_V1B</a>) { \
-    *(_op_)++ = (uint8_t)((_val_) &amp; 0x7f); \
-    <span class="keywordflow">return</span>; \
-  }
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00052">52</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="714e24c9b35ae312dc1cd131a57556bb"></a><!-- doxytag: member="Serialization.h::HT_ENCODE_VINT4" ref="714e24c9b35ae312dc1cd131a57556bb" args="(_op_, _val_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_ENCODE_VINT4          </td>
-          <td>(</td>
-          <td class="paramtype">_op_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_val_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment"><a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(_op_, _val_) <a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(_op_, _val_) \
-  <a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(_op_, _val_) <a class="code" href="_serialization_8h.html#bafbbf71470b0e4cb15c0a428bf76485">HT_ENCODE_VINT_</a>(_op_, _val_)
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00063">63</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="bafbbf71470b0e4cb15c0a428bf76485"></a><!-- doxytag: member="Serialization.h::HT_ENCODE_VINT_" ref="bafbbf71470b0e4cb15c0a428bf76485" args="(_op_, _val_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_ENCODE_VINT_          </td>
-          <td>(</td>
-          <td class="paramtype">_op_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_val_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-<b>Value:</b><div class="fragment"><pre class="fragment">*(_op_)++ = (uint8_t)((_val_) | 0x80); \
-  _val_ &gt;&gt;= 7; \
-  <a class="code" href="_serialization_8h.html#1dde44eb7df047336c38cf4668470c7c">HT_ENCODE_VINT0</a>(_op_, _val_)
-</pre></div>
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00058">58</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="acb120ebcf132d5d96162ae3814d662a"></a><!-- doxytag: member="Serialization.h::HT_MAX_LEN_VINT32" ref="acb120ebcf132d5d96162ae3814d662a" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_LEN_VINT32&nbsp;&nbsp;&nbsp;5          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00048">48</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="9b3979a042cc7650f88a900b627d7079"></a><!-- doxytag: member="Serialization.h::HT_MAX_LEN_VINT64" ref="9b3979a042cc7650f88a900b627d7079" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_LEN_VINT64&nbsp;&nbsp;&nbsp;10          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00049">49</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="f4aabb87a7ed28c013cb4b06d96f3804"></a><!-- doxytag: member="Serialization.h::HT_MAX_V1B" ref="f4aabb87a7ed28c013cb4b06d96f3804" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V1B&nbsp;&nbsp;&nbsp;0x7f          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Copyright (C) 2008 Doug Judd (Zvents, Inc. 
-<p>
-)<p>
-This file is part of <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a>.<p>
-<a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or any later version.<p>
-<a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.<p>
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00038">38</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="01dd25a70e35af5b8d7e04689c38534b"></a><!-- doxytag: member="Serialization.h::HT_MAX_V2B" ref="01dd25a70e35af5b8d7e04689c38534b" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V2B&nbsp;&nbsp;&nbsp;0x3fff          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00039">39</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c7c4e448d15ae255f810a4bc71cd8465"></a><!-- doxytag: member="Serialization.h::HT_MAX_V3B" ref="c7c4e448d15ae255f810a4bc71cd8465" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V3B&nbsp;&nbsp;&nbsp;0x1fffff          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00040">40</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="735ec71de798b899dee834d0d494bdcd"></a><!-- doxytag: member="Serialization.h::HT_MAX_V4B" ref="735ec71de798b899dee834d0d494bdcd" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V4B&nbsp;&nbsp;&nbsp;0xfffffff          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00041">41</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="29d3cea444e5d4fc277bdf1b1367be33"></a><!-- doxytag: member="Serialization.h::HT_MAX_V5B" ref="29d3cea444e5d4fc277bdf1b1367be33" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V5B&nbsp;&nbsp;&nbsp;0x7ffffffffull          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00042">42</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="10975d615d720940ebe0c98421828000"></a><!-- doxytag: member="Serialization.h::HT_MAX_V6B" ref="10975d615d720940ebe0c98421828000" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V6B&nbsp;&nbsp;&nbsp;0x3ffffffffffull          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00043">43</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="9c9c8090f20ba8ccbf72728037796c60"></a><!-- doxytag: member="Serialization.h::HT_MAX_V7B" ref="9c9c8090f20ba8ccbf72728037796c60" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V7B&nbsp;&nbsp;&nbsp;0x1ffffffffffffull          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00044">44</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="ffaa1fabf974683f1237f1103586f535"></a><!-- doxytag: member="Serialization.h::HT_MAX_V8B" ref="ffaa1fabf974683f1237f1103586f535" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V8B&nbsp;&nbsp;&nbsp;0xffffffffffffffull          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00045">45</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="ca2f7d683cdca669ff8464a6c18d7cb7"></a><!-- doxytag: member="Serialization.h::HT_MAX_V9B" ref="ca2f7d683cdca669ff8464a6c18d7cb7" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_MAX_V9B&nbsp;&nbsp;&nbsp;0x7fffffffffffffffull          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_serialization_8h-source.html#l00046">46</a> of file <a class="el" href="_serialization_8h-source.html">Serialization.h</a>.</p>
-
-</div>
-</div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:20:31 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:20:41 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

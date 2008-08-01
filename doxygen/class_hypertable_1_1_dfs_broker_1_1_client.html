@@ -40,7 +40,7 @@ Collaboration diagram for Hypertable::DfsBroker::Client:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_dfs_broker_1_1_client__coll__graph.png" border="0" usemap="#_hypertable_1_1_dfs_broker_1_1_client__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_dfs_broker_1_1_client__coll__map">
-<area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="19,173,179,200"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="203,173,336,200"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="176,96,368,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="64,5,136,32"><area shape="rect" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html" title="Hypertable::DfsBroker::Protocol" alt="" coords="360,173,574,200"><area shape="rect" href="class_hypertable_1_1_protocol.html" title="Hypertable::Protocol" alt="" coords="395,96,539,123"></map>
+<area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="512,6,672,32"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="525,96,659,123"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,84,372,111"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,47,79,74"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,135,341,162"><area shape="rect" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html" title="Hypertable::DfsBroker::Protocol" alt="" coords="485,211,699,238"><area shape="rect" href="class_hypertable_1_1_protocol.html" title="Hypertable::Protocol" alt="" coords="204,211,348,238"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -58,6 +58,9 @@ Collaboration diagram for Hypertable::DfsBroker::Client:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#56d0439d2fa27773abd8d385f944b40e">Client</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, struct sockaddr_in &amp;addr, time_t timeout)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor without connection manager.  <a href="#56d0439d2fa27773abd8d385f944b40e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e6f14c777775ad0cbd5b1350a80bf316">Client</a> (const char *host, int port, time_t timeout)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Convenient contructor for dfs testing.  <a href="#e6f14c777775ad0cbd5b1350a80bf316"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#21631824b64307840929ac38e4def1ae">wait_for_connection</a> (long max_wait_secs)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Waits up to max_wait_secs for a connection to be established with the DFS broker.  <a href="#21631824b64307840929ac38e4def1ae"></a><br></td></tr>
@@ -70,12 +73,12 @@ Collaboration diagram for Hypertable::DfsBroker::Client:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#ac117af0bde413dbf34ab4c64730c782">open_buffered</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, uint32_t buf_size, uint32_t outstanding, uint64_t start_offset=0, uint64_t end_offset=0)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Opens a file in buffered (readahead) mode.  <a href="#ac117af0bde413dbf34ab4c64730c782"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#b2f7441cac6d87bff481419a005c131b">create</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#3adef0f381e2bcc305a56c8afc6d18a2">create</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file asynchronously.  <a href="#b2f7441cac6d87bff481419a005c131b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c65e2b88719f48a43a557bd730d45f1">create</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file asynchronously.  <a href="#3adef0f381e2bcc305a56c8afc6d18a2"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#61f5acae6c5510e1fca00467f6a61580">create</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file.  <a href="#5c65e2b88719f48a43a557bd730d45f1"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file.  <a href="#61f5acae6c5510e1fca00467f6a61580"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#971ea00bb36de37614a81d4c949c90e6">close</a> (int32_t fd, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#bd8e536745649e82761189efe261b6de">close</a> (int32_t fd)</td></tr>
@@ -156,42 +159,40 @@ Collaboration diagram for Hypertable::DfsBroker::Client:</div>
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; uint32_t,<br>
- <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html">ClientBufferedReaderHandler</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1960afec8e65f322e0658bba6fb554b7">BufferedReaderMapT</a></td></tr>
+ <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html">ClientBufferedReaderHandler</a> * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#cfe531adabc16f4f15e7910825edf7f7">BufferedReaderMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#fcaf01174b813e3de80eea27fd7a8299">send_message</a> (<a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbufPtr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24">send_message</a> (<a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbp, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends a message to the DFS broker.  <a href="#fcaf01174b813e3de80eea27fd7a8299"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sends a message to the DFS broker.  <a href="#5c20dc8ba368ba356107bf5cd5482e24"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d91ba45ce848a35d454b3e7235fa0e2d">m_mutex</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#92dfd6259b3b74a2b18b5e8acbe3d565">m_mutex</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#bf4aafe54540aaecb0309065621d02e8">m_conn_manager_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#ad5abd07f4c63717c0e0e1c65536116f">m_conn_mgr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">struct sockaddr_in&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#4f925c557c92f4034d519c0c24db22d5">m_addr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">m_timeout</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">MessageBuilderSimple *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#4fd9ec25a8602e4445a80d3e5004a10c">m_message_builder</a></td></tr>
-
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html">Protocol</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#043fc7db22e4ab960ce18e613e4d4ca2">m_protocol</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1960afec8e65f322e0658bba6fb554b7">BufferedReaderMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#87431bf12ed02f3c94635f603b0d0987">m_buffered_reader_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#cfe531adabc16f4f15e7910825edf7f7">BufferedReaderMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#8e744e59322d85ef7f62251d7744b511">m_buffered_reader_map</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Proxy class for DFS broker. 
 <p>
 As specified in the general contract for a <a class="el" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>, commands that operate on the same file descriptor are serialized by the underlying filesystem. In other words, if you issue three asynchronous commands, they will get carried out and their responses will come back in the same order in which they were issued. 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00063">63</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00048">48</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="1960afec8e65f322e0658bba6fb554b7"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::BufferedReaderMapT" ref="1960afec8e65f322e0658bba6fb554b7" args="" -->
+<a class="anchor" name="cfe531adabc16f4f15e7910825edf7f7"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::BufferedReaderMap" ref="cfe531adabc16f4f15e7910825edf7f7" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;uint32_t, <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html">ClientBufferedReaderHandler</a> *&gt; <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1960afec8e65f322e0658bba6fb554b7">Hypertable::DfsBroker::Client::BufferedReaderMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;uint32_t, <a class="el" href="class_hypertable_1_1_client_buffered_reader_handler.html">ClientBufferedReaderHandler</a> *&gt; <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#cfe531adabc16f4f15e7910825edf7f7">Hypertable::DfsBroker::Client::BufferedReaderMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -199,7 +200,7 @@ As specified in the general contract for a <a class="el" href="class_hypertable_
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00201">201</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00195">195</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -221,7 +222,7 @@ As specified in the general contract for a <a class="el" href="class_hypertable_
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00066">66</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00051">51</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -268,7 +269,7 @@ Connects to the DFS broker at the address given by the addr argument and uses th
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00038">38</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00037">37</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -312,7 +313,7 @@ The following properties are read to determine the location of the broker and th
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00047">47</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00045">45</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -358,7 +359,53 @@ Constructor without connection manager.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00073">73</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00070">70</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e6f14c777775ad0cbd5b1350a80bf316"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::Client" ref="e6f14c777775ad0cbd5b1350a80bf316" args="(const char *host, int port, time_t timeout)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Client::Client           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>host</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">time_t&nbsp;</td>
+          <td class="paramname"> <em>timeout</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Convenient contructor for dfs testing. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>host</em>&nbsp;</td><td>- dfs hostname </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>- dfs port </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>- timeout for requests </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00074">74</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -389,7 +436,7 @@ Waits up to max_wait_secs for a connection to be established with the DFS broker
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if connected, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00105">105</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00098">98</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -431,7 +478,7 @@ Issues an open file request. The caller will get notified of successful completi
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#f566ed0356e11e0e2fadee80f462959a">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00080">80</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00087">87</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -464,7 +511,7 @@ Issues an open file request and waits for it to complete.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#8811a06b750219662f0c094ff4ded202">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00094">94</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00100">100</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -528,11 +575,11 @@ Issues an open file request and waits for it to complete. Turns on readahead mod
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#ce1524fe81ee6080968738cd605169f3">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00116">116</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00121">121</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b2f7441cac6d87bff481419a005c131b"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::create" ref="b2f7441cac6d87bff481419a005c131b" args="(const String &amp;name, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize, DispatchHandler *handler)" -->
+<a class="anchor" name="3adef0f381e2bcc305a56c8afc6d18a2"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::create" ref="3adef0f381e2bcc305a56c8afc6d18a2" args="(const String &amp;name, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -552,7 +599,7 @@ Issues an open file request and waits for it to complete. Turns on readahead mod
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em>, </td>
+          <td class="paramname"> <em>bufsz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -564,7 +611,7 @@ Issues an open file request and waits for it to complete. Turns on readahead mod
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>blockSize</em>, </td>
+          <td class="paramname"> <em>blksz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -589,20 +636,20 @@ Issues a create file request with various create mode parameters. The caller wil
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>absolute path name of file to open </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>overwrite</em>&nbsp;</td><td>overwrite the file if it exists </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>bufferSize</em>&nbsp;</td><td>buffer size to use for the underlying FS </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bufsz</em>&nbsp;</td><td>buffer size to use for the underlying FS </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>replication</em>&nbsp;</td><td>replication factor to use for this file </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>blockSize</em>&nbsp;</td><td>block size to use for the underlying FS </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>blksz</em>&nbsp;</td><td>block size to use for the underlying FS </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>dispatch handler </td></tr>
   </table>
 </dl>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#63b51fd3c8e9459f3e5e1100504cd014">Hypertable::Filesystem</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#6dbb0c7029273eb093b899ff1ebc427a">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00142">142</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00145">145</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5c65e2b88719f48a43a557bd730d45f1"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::create" ref="5c65e2b88719f48a43a557bd730d45f1" args="(const String &amp;name, bool overwrite, int32_t bufferSize, int32_t replication, int64_t blockSize)" -->
+<a class="anchor" name="61f5acae6c5510e1fca00467f6a61580"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::create" ref="61f5acae6c5510e1fca00467f6a61580" args="(const String &amp;name, bool overwrite, int32_t bufsz, int32_t replication, int64_t blksz)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -622,7 +669,7 @@ Issues a create file request with various create mode parameters. The caller wil
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int32_t&nbsp;</td>
-          <td class="paramname"> <em>bufferSize</em>, </td>
+          <td class="paramname"> <em>bufsz</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -634,7 +681,7 @@ Issues a create file request with various create mode parameters. The caller wil
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>blockSize</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>blksz</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -653,16 +700,16 @@ Issues a create file request and waits for completion<p>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>absolute path name of file to open </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>overwrite</em>&nbsp;</td><td>overwrite the file if it exists </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>bufferSize</em>&nbsp;</td><td>buffer size to use for the underlying FS </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>bufsz</em>&nbsp;</td><td>buffer size to use for the underlying FS </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>replication</em>&nbsp;</td><td>replication factor to use for this file </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>blockSize</em>&nbsp;</td><td>block size to use for the underlying FS </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>blksz</em>&nbsp;</td><td>block size to use for the underlying FS </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>file descriptor </dd></dl>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#77e4cccd61df38d4a5adae102adf4862">Hypertable::Filesystem</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#5522181ad1afb9eb8382c7e5abe07a9d">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00158">158</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00160">160</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -693,7 +740,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00181">181</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00182">182</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -715,7 +762,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00204">204</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00205">205</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -752,7 +799,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00234">234</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00235">235</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -789,7 +836,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00248">248</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00249">249</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -832,7 +879,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00280">280</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00281">281</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -869,7 +916,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00293">293</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00294">294</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -906,7 +953,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00320">320</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00321">321</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -937,7 +984,7 @@ Issues a create file request and waits for completion<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00332">332</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00333">333</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -979,7 +1026,7 @@ Issues a remove request. The caller will get notified of successful completion o
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#deb5ac28802270aedb63d3d4fee7f9ad">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00352">352</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00353">353</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1064,7 +1111,7 @@ Issues a length request. The caller will get notified of successful completion o
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00422">422</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00419">419</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1096,7 +1143,7 @@ Issues a length request and waits for it to complete.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#0bf42bd4d594edaab9b94adc686cd1ff">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00434">434</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00431">431</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1139,7 +1186,7 @@ Issues a length request and waits for it to complete.<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00456">456</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00453">453</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1182,7 +1229,7 @@ Issues a length request and waits for it to complete.<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00469">469</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00466">466</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1224,7 +1271,7 @@ Issues a mkdirs request which creates a directory, including all its missing par
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#4479f8cdf6cbb10dc87c1db3c77bd706">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00491">491</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00488">488</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1256,7 +1303,7 @@ Issues a mkdirs request which creates a directory, including all its missing par
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#a0b52e0a3761062254be868139d1e893">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00503">503</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00500">500</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1287,7 +1334,7 @@ Issues a mkdirs request which creates a directory, including all its missing par
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00523">523</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00519">519</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1309,7 +1356,7 @@ Issues a mkdirs request which creates a directory, including all its missing par
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00534">534</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00530">530</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1351,7 +1398,7 @@ Issues a rmdir request. The caller will get notified of successful completion or
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#660432655395f24be406d4c1a781087d">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00553">553</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00549">549</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1393,7 +1440,7 @@ Issues a rmdir request and waits for it to complete.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#1ffc869ea63d6ff342219d1531b9c8bb">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00565">565</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00561">561</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1435,7 +1482,7 @@ Issues a readdir request. The caller will get notified of successful completion 
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#f834e57791fc23b76e6c5297bcf4094a">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00592">592</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00586">586</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1477,7 +1524,7 @@ Issues a readdir request and waits for it to complete.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#47f06e781bbeb0debf40511e2a8dd252">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00607">607</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00601">601</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1519,7 +1566,7 @@ Issues an exists request. The caller will get notified of successful completion 
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#e918339c060e60283516cd1478be601b">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00629">629</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00623">623</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1551,7 +1598,7 @@ Determines if a file exists.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#14567dd8b93a8d2371385267de469866">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00641">641</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00635">635</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1599,7 +1646,7 @@ Rename path asynchronously.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#7d27d1c80ccce66883addcf81271c368">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00663">663</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00657">657</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1640,7 +1687,7 @@ Rename a path.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_filesystem.html#1fc8b74d3c4438f3b46978eba0859165">Hypertable::Filesystem</a>.</p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00675">675</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00669">669</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1665,7 +1712,7 @@ Checks the status of the DFS broker.
 Issues a status command and waits for it to return.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> if broker is up and OK, otherwise an error code </dd></dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00400">400</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00397">397</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1705,7 +1752,7 @@ Issues a shutdown command to the DFS broker. If the flag is set to <a class="el"
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00388">388</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00386">386</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1726,7 +1773,7 @@ Issues a shutdown command to the DFS broker. If the flag is set to <a class="el"
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00184">184</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00177">177</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1750,11 +1797,11 @@ Gets the configured request timeout value.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>timeout value in seconds </dd></dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00190">190</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00183">183</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="fcaf01174b813e3de80eea27fd7a8299"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::send_message" ref="fcaf01174b813e3de80eea27fd7a8299" args="(CommBufPtr &amp;cbufPtr, DispatchHandler *handler)" -->
+<a class="anchor" name="5c20dc8ba368ba356107bf5cd5482e24"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::send_message" ref="5c20dc8ba368ba356107bf5cd5482e24" args="(CommBufPtr &amp;cbp, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1762,7 +1809,7 @@ Gets the configured request timeout value.
           <td class="memname">void Client::send_message           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>cbufPtr</em>, </td>
+          <td class="paramname"> <em>cbp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1784,22 +1831,22 @@ Sends a message to the DFS broker.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>cbufPtr</em>&nbsp;</td><td>message to send </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>cbp</em>&nbsp;</td><td>message to send </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>response handler </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00695">695</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html#l00689">689</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="d91ba45ce848a35d454b3e7235fa0e2d"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_mutex" ref="d91ba45ce848a35d454b3e7235fa0e2d" args="" -->
+<a class="anchor" name="92dfd6259b3b74a2b18b5e8acbe3d565"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_mutex" ref="92dfd6259b3b74a2b18b5e8acbe3d565" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boost::mutex <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d91ba45ce848a35d454b3e7235fa0e2d">Hypertable::DfsBroker::Client::m_mutex</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#92dfd6259b3b74a2b18b5e8acbe3d565">Hypertable::DfsBroker::Client::m_mutex</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1807,7 +1854,7 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00203">203</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00197">197</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1824,16 +1871,16 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00204">204</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00198">198</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="bf4aafe54540aaecb0309065621d02e8"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_conn_manager_ptr" ref="bf4aafe54540aaecb0309065621d02e8" args="" -->
+<a class="anchor" name="ad5abd07f4c63717c0e0e1c65536116f"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_conn_mgr" ref="ad5abd07f4c63717c0e0e1c65536116f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#bf4aafe54540aaecb0309065621d02e8">Hypertable::DfsBroker::Client::m_conn_manager_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#ad5abd07f4c63717c0e0e1c65536116f">Hypertable::DfsBroker::Client::m_conn_mgr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1841,7 +1888,7 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00205">205</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00199">199</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1858,7 +1905,7 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00206">206</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00200">200</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1875,24 +1922,7 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00207">207</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="4fd9ec25a8602e4445a80d3e5004a10c"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_message_builder" ref="4fd9ec25a8602e4445a80d3e5004a10c" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">MessageBuilderSimple* <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#4fd9ec25a8602e4445a80d3e5004a10c">Hypertable::DfsBroker::Client::m_message_builder</a><code> [private]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00208">208</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00201">201</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1909,16 +1939,16 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00209">209</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00202">202</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="87431bf12ed02f3c94635f603b0d0987"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_buffered_reader_map" ref="87431bf12ed02f3c94635f603b0d0987" args="" -->
+<a class="anchor" name="8e744e59322d85ef7f62251d7744b511"></a><!-- doxytag: member="Hypertable::DfsBroker::Client::m_buffered_reader_map" ref="8e744e59322d85ef7f62251d7744b511" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1960afec8e65f322e0658bba6fb554b7">BufferedReaderMapT</a> <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#87431bf12ed02f3c94635f603b0d0987">Hypertable::DfsBroker::Client::m_buffered_reader_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#cfe531adabc16f4f15e7910825edf7f7">BufferedReaderMap</a> <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#8e744e59322d85ef7f62251d7744b511">Hypertable::DfsBroker::Client::m_buffered_reader_map</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1926,13 +1956,13 @@ Sends a message to the DFS broker.
 
 <p>
 
-<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00210">210</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html#l00203">203</a> of file <a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">Client.h</a><li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_dfs_broker_2_lib_2_client_8cc-source.html">Client.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:27:16 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:35 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

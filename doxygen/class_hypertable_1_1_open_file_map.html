@@ -30,11 +30,11 @@
 <a href="class_hypertable_1_1_open_file_map-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#b593c368baa849cb20667b28ae855746">create</a> (int fd, struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;dataPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#693936cddddd6c348647f61a81c478db">create</a> (int fd, struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;fdata)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#51f55404094990601c00fede5a3f7fd2">get</a> (int fd, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;dataPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#c17e7b203dc94bb20c7ded69bf9f9028">get</a> (int fd, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;fdata)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#95a734e2935e6d94b00cf5a5881c5435">remove</a> (int fd, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;dataPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#5f262b8a843a2e37281059a88c1d2de9">remove</a> (int fd, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;fdata)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#75300312ff71065b435cb732f3775b97">remove</a> (int fd)</td></tr>
 
@@ -45,24 +45,24 @@
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; int,<br>
- <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#7d17c92270ba60447217de81c498ea73">OpenFileMapT</a></td></tr>
+ <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#ed3c59cfaa79074fd8382ed3193b540e">FileMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#a03a43657001b158143c9e25c72838f2">m_mutex</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_open_file_map.html#7d17c92270ba60447217de81c498ea73">OpenFileMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#4786acce6fbb294648894f0599a74f34">m_file_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_open_file_map.html#ed3c59cfaa79074fd8382ed3193b540e">FileMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_open_file_map.html#e283f581be26c519e63fb49d68b79142">m_file_map</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00048">48</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00047">47</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="7d17c92270ba60447217de81c498ea73"></a><!-- doxytag: member="Hypertable::OpenFileMap::OpenFileMapT" ref="7d17c92270ba60447217de81c498ea73" args="" -->
+<a class="anchor" name="ed3c59cfaa79074fd8382ed3193b540e"></a><!-- doxytag: member="Hypertable::OpenFileMap::FileMap" ref="ed3c59cfaa79074fd8382ed3193b540e" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;int, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a>&gt; <a class="el" href="class_hypertable_1_1_open_file_map.html#7d17c92270ba60447217de81c498ea73">Hypertable::OpenFileMap::OpenFileMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;int, <a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a>&gt; <a class="el" href="class_hypertable_1_1_open_file_map.html#ed3c59cfaa79074fd8382ed3193b540e">Hypertable::OpenFileMap::FileMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -70,12 +70,12 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00111">111</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00110">110</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="b593c368baa849cb20667b28ae855746"></a><!-- doxytag: member="Hypertable::OpenFileMap::create" ref="b593c368baa849cb20667b28ae855746" args="(int fd, struct sockaddr_in &amp;addr, OpenFileDataPtr &amp;dataPtr)" -->
+<a class="anchor" name="693936cddddd6c348647f61a81c478db"></a><!-- doxytag: member="Hypertable::OpenFileMap::create" ref="693936cddddd6c348647f61a81c478db" args="(int fd, struct sockaddr_in &amp;addr, OpenFileDataPtr &amp;fdata)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -95,7 +95,7 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>dataPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fdata</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -108,11 +108,11 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00052">52</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00051">51</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="51f55404094990601c00fede5a3f7fd2"></a><!-- doxytag: member="Hypertable::OpenFileMap::get" ref="51f55404094990601c00fede5a3f7fd2" args="(int fd, OpenFileDataPtr &amp;dataPtr)" -->
+<a class="anchor" name="c17e7b203dc94bb20c7ded69bf9f9028"></a><!-- doxytag: member="Hypertable::OpenFileMap::get" ref="c17e7b203dc94bb20c7ded69bf9f9028" args="(int fd, OpenFileDataPtr &amp;fdata)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -126,7 +126,7 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>dataPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fdata</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -139,11 +139,11 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00058">58</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00057">57</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="95a734e2935e6d94b00cf5a5881c5435"></a><!-- doxytag: member="Hypertable::OpenFileMap::remove" ref="95a734e2935e6d94b00cf5a5881c5435" args="(int fd, OpenFileDataPtr &amp;dataPtr)" -->
+<a class="anchor" name="5f262b8a843a2e37281059a88c1d2de9"></a><!-- doxytag: member="Hypertable::OpenFileMap::remove" ref="5f262b8a843a2e37281059a88c1d2de9" args="(int fd, OpenFileDataPtr &amp;fdata)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -157,7 +157,7 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#945faf1576e6f3c3157fa9e90a401bff">OpenFileDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>dataPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>fdata</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -170,7 +170,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00068">68</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00067">67</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
@@ -192,7 +192,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00079">79</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00078">78</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
@@ -214,7 +214,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00086">86</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00085">85</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
@@ -235,7 +235,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00104">104</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00103">103</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
@@ -253,16 +253,16 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00113">113</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00112">112</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="4786acce6fbb294648894f0599a74f34"></a><!-- doxytag: member="Hypertable::OpenFileMap::m_file_map" ref="4786acce6fbb294648894f0599a74f34" args="" -->
+<a class="anchor" name="e283f581be26c519e63fb49d68b79142"></a><!-- doxytag: member="Hypertable::OpenFileMap::m_file_map" ref="e283f581be26c519e63fb49d68b79142" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_open_file_map.html#7d17c92270ba60447217de81c498ea73">OpenFileMapT</a> <a class="el" href="class_hypertable_1_1_open_file_map.html#4786acce6fbb294648894f0599a74f34">Hypertable::OpenFileMap::m_file_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_open_file_map.html#ed3c59cfaa79074fd8382ed3193b540e">FileMap</a> <a class="el" href="class_hypertable_1_1_open_file_map.html#e283f581be26c519e63fb49d68b79142">Hypertable::OpenFileMap::m_file_map</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -270,13 +270,13 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00114">114</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
+<p>Definition at line <a class="el" href="_open_file_map_8h-source.html#l00113">113</a> of file <a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/DfsBroker/Lib/<a class="el" href="_open_file_map_8h-source.html">OpenFileMap.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:41 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:59 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

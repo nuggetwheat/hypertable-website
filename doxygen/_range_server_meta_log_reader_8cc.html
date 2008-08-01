@@ -17,7 +17,14 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>RangeServerMetaLogReader.cc File Reference</h1><code>#include &quot;<a class="el" href="_compat_8h-source.html">Common/Compat.h</a>&quot;</code><br>
+<code>#include &lt;set&gt;</code><br>
+<code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_cstr_hash_map_8h-source.html">Common/CstrHashMap.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_serialization_8h-source.html">Common/Serialization.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_filesystem_8h-source.html">Filesystem.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_meta_log_version_8h-source.html">MetaLogVersion.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_range_server_meta_log_reader_8h-source.html">RangeServerMetaLogReader.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_range_server_meta_log_entries_8h-source.html">RangeServerMetaLogEntries.h</a>&quot;</code><br>
 
 <p>
 <div class="dynheader">
@@ -25,14 +32,401 @@ Include dependency graph for RangeServerMetaLogReader.cc:</div>
 <div class="dynsection">
 <p><center><img src="_range_server_meta_log_reader_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Hypertable/Lib/RangeServerMetaLogReader.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Hypertable/Lib/RangeServerMetaLogReader.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="782,80,920,107"><area shape="rect" href="_range_server_meta_log_reader_8h.html" title="RangeServerMetaLogReader.h" alt="" coords="1171,80,1382,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="807,155,895,182"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="480,155,579,182"><area shape="rect" href="_string_8h.html" title="Common/String.h" alt="" coords="543,528,671,555"><area shape="rect" href="_types_8h.html" title="Types.h" alt="" coords="1084,155,1154,182"><area shape="rect" href="_range_server_meta_log_8h.html" title="RangeServerMetaLog.h" alt="" coords="1482,155,1647,182"><area shape="rect" href="_meta_log_reader_8h.html" title="MetaLogReader.h" alt="" coords="1314,155,1444,182"><area shape="rect" href="_byte_string_8h.html" title="Common/ByteString.h" alt="" coords="655,230,810,256"><area shape="rect" href="_dynamic_buffer_8h.html" title="DynamicBuffer.h" alt="" coords="620,304,743,331"><area shape="rect" href="_serialization_8h.html" title="Serialization.h" alt="" coords="178,304,287,331"><area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="68,454,191,480"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="227,379,360,406"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="215,454,324,480"><area shape="rect" href="_meta_log_8h.html" title="MetaLog.h" alt="" coords="1522,230,1607,256"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="1474,304,1663,331"><area shape="rect" href="atomic_8h.html" title="atomic.h" alt="" coords="1680,379,1755,406"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="251,155,389,181"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="833,155,967,181"><area shape="rect" href="_cstr_hash_map_8h.html" title="Common/CstrHashMap.h" alt="" coords="580,80,756,107"><area shape="rect" href="_serialization_8h.html" title="Common/Serialization.h" alt="" coords="687,379,855,405"><area shape="rect" href="_filesystem_8h.html" title="Filesystem.h" alt="" coords="1803,80,1901,107"><area shape="rect" href="_meta_log_version_8h.html" title="MetaLogVersion.h" alt="" coords="1131,80,1261,107"><area shape="rect" href="_range_server_meta_log_reader_8h.html" title="RangeServerMetaLogReader.h" alt="" coords="896,80,1107,107"><area shape="rect" href="_range_server_meta_log_entries_8h.html" title="RangeServerMetaLogEntries.h" alt="" coords="1285,80,1493,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="292,229,380,256"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="119,229,217,256"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="1436,304,1503,331"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="1096,229,1160,256"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="741,229,851,256"><area shape="rect" href="_hash_map_8h.html" title="HashMap.h" alt="" coords="489,155,580,181"><area shape="rect" href="_cstr_hash_traits_8h.html" title="CstrHashTraits.h" alt="" coords="605,155,731,181"><area shape="rect" href="_char_arena_8h.html" title="CharArena.h" alt="" coords="619,229,717,256"><area shape="rect" href="serialization&#45;c_8h.html" title="serialization&#45;c.h" alt="" coords="299,453,416,480"><area shape="rect" href="endian&#45;c_8h.html" title="endian&#45;c.h" alt="" coords="272,528,357,555"><area shape="rect" href="_static_buffer_8h.html" title="Common/StaticBuffer.h" alt="" coords="2052,379,2215,405"><area shape="rect" href="_dispatch_handler_8h.html" title="AsyncComm/DispatchHandler.h" alt="" coords="1889,155,2105,181"><area shape="rect" href="_dynamic_buffer_8h.html" title="DynamicBuffer.h" alt="" coords="1689,453,1812,480"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="1788,379,1977,405"><area shape="rect" href="_async_comm_2_event_8h.html" title="Event.h" alt="" coords="1664,229,1731,256"><area shape="rect" href="_types_8h.html" title="Types.h" alt="" coords="1363,229,1432,256"><area shape="rect" href="_range_state_8h.html" title="RangeState.h" alt="" coords="1235,229,1339,256"><area shape="rect" href="_meta_log_reader_dfs_base_8h.html" title="MetaLogReaderDfsBase.h" alt="" coords="1532,155,1713,181"><area shape="rect" href="_byte_string_8h.html" title="Common/ByteString.h" alt="" coords="1257,304,1412,331"><area shape="rect" href="_timestamp_8h.html" title="Timestamp.h" alt="" coords="1135,304,1233,331"><area shape="rect" href="_meta_log_reader_8h.html" title="MetaLogReader.h" alt="" coords="1755,229,1885,256"><area shape="rect" href="_meta_log_8h.html" title="MetaLog.h" alt="" coords="1931,304,2016,331"><area shape="rect" href="_meta_log_entry_base_8h.html" title="MetaLogEntryBase.h" alt="" coords="1092,155,1241,181"><area shape="rect" href="_range_server_meta_log_entry_factory_8h.html" title="RangeServerMetaLogEntryFactory.h" alt="" coords="1265,155,1508,181"></map>
 </div>
 
 <p>
 <a href="_range_server_meta_log_reader_8cc-source.html">Go to the source code of this file.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Namespaces</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html">Hypertable</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_range_server_txn.html">RangeServerTxn</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_error.html">Error</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Typedefs</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::set<br>
+&lt; <a class="el" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *,<br>
+ RsiSetTraits &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::pair<br>
+&lt; RsiSet::iterator,<br>
+ bool &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#921e581fadb98a9271dfe4a454f8d1c0">RsiInsRes</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
+<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">RangeServerMetaLogReader</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#1d2eab001408adf4d1b98f73d74e8488">Reader</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#077631e04e5284822589a9f58a0b75b4">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_range_loaded.html">RangeLoaded</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#303cd49162cc076329bc7db005d52ff9">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_start.html">SplitStart</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#46bfd3840cc76f6c9d2fc8b6ce393544">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_done.html">SplitDone</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#33f809c3af064d7d4f96a2196389aa52">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_shrunk.html">SplitShrunk</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#b94ef49e913aeb541a6b4025459786a7">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_start.html">MoveStart</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#93d0787b28a54200f2c6bc521f2cba9d">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_prepared.html">MovePrepared</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#5fe6bdec765cddfd418669794946b406">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_done.html">MoveDone</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_range_server_meta_log_reader_8cc.html#8ead70f5082308b62cbafd3b6e6fa230">load_entry</a> (<a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;rd, <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;rsi_set, <a class="el" href="class_hypertable_1_1_range_server_txn_1_1_drop_table.html">DropTable</a> *ep)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#905a4ae6b1390c4b4a3b1ace5685a73d">Hypertable::operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> &amp;info)</td></tr>
+
 </table>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:23:22 2008 for hypertable by&nbsp;
+<hr><h2>Typedef Documentation</h2>
+<a class="anchor" name="1d2eab001408adf4d1b98f73d74e8488"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::Reader" ref="1d2eab001408adf4d1b98f73d74e8488" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef <a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">RangeServerMetaLogReader</a> <a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00055">55</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="921e581fadb98a9271dfe4a454f8d1c0"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::RsiInsRes" ref="921e581fadb98a9271dfe4a454f8d1c0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::pair&lt;RsiSet::iterator, bool&gt; <a class="el" href="_range_server_meta_log_reader_8cc.html#921e581fadb98a9271dfe4a454f8d1c0">RsiInsRes</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00054">54</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4f8b23aca041eeb0e04cfdcdf0936950"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::RsiSet" ref="4f8b23aca041eeb0e04cfdcdf0936950" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::set&lt;<a class="el" href="struct_hypertable_1_1_range_state_info.html">RangeStateInfo</a> *, RsiSetTraits&gt; <a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00053">53</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Function Documentation</h2>
+<a class="anchor" name="8ead70f5082308b62cbafd3b6e6fa230"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="8ead70f5082308b62cbafd3b6e6fa230" args="(Reader &amp;rd, RsiSet &amp;rsi_set, DropTable *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_drop_table.html">DropTable</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00124">124</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="5fe6bdec765cddfd418669794946b406"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="5fe6bdec765cddfd418669794946b406" args="(Reader &amp;rd, RsiSet &amp;rsi_set, MoveDone *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_done.html">MoveDone</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00120">120</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="93d0787b28a54200f2c6bc521f2cba9d"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="93d0787b28a54200f2c6bc521f2cba9d" args="(Reader &amp;rd, RsiSet &amp;rsi_set, MovePrepared *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_prepared.html">MovePrepared</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00116">116</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b94ef49e913aeb541a6b4025459786a7"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="b94ef49e913aeb541a6b4025459786a7" args="(Reader &amp;rd, RsiSet &amp;rsi_set, MoveStart *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_move_start.html">MoveStart</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00112">112</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="33f809c3af064d7d4f96a2196389aa52"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="33f809c3af064d7d4f96a2196389aa52" args="(Reader &amp;rd, RsiSet &amp;rsi_set, SplitShrunk *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_shrunk.html">SplitShrunk</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00096">96</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="46bfd3840cc76f6c9d2fc8b6ce393544"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="46bfd3840cc76f6c9d2fc8b6ce393544" args="(Reader &amp;rd, RsiSet &amp;rsi_set, SplitDone *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_done.html">SplitDone</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00082">82</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="303cd49162cc076329bc7db005d52ff9"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="303cd49162cc076329bc7db005d52ff9" args="(Reader &amp;rd, RsiSet &amp;rsi_set, SplitStart *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_split_start.html">SplitStart</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00070">70</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="077631e04e5284822589a9f58a0b75b4"></a><!-- doxytag: member="RangeServerMetaLogReader.cc::load_entry" ref="077631e04e5284822589a9f58a0b75b4" args="(Reader &amp;rd, RsiSet &amp;rsi_set, RangeLoaded *ep)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @330::load_entry           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">Reader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rd</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="_range_server_meta_log_reader_8cc.html#4f8b23aca041eeb0e04cfdcdf0936950">RsiSet</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>rsi_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_txn_1_1_range_loaded.html">RangeLoaded</a> *&nbsp;</td>
+          <td class="paramname"> <em>ep</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_reader_8cc-source.html#l00057">57</a> of file <a class="el" href="_range_server_meta_log_reader_8cc-source.html">RangeServerMetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:23:34 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

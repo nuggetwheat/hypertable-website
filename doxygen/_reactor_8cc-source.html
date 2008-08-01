@@ -17,211 +17,219 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e65477d41cbea77146d554d167dc9746.html">AsyncComm</a></div>
 <h1>Reactor.cc</h1><a href="_reactor_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;cassert&gt;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstdio&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;set&gt;</span>
-<a name="l00026"></a>00026 <span class="keyword">using namespace </span>std;
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;arpa/inet.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;errno.h&gt;</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;netinet/in.h&gt;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;sys/socket.h&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00038"></a>00038 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#endif</span>
-<a name="l00040"></a>00040 <span class="preprocessor"></span>}
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
-<a name="l00047"></a>00047 <span class="preprocessor">#include "<a class="code" href="_reactor_8h.html">Reactor.h</a>"</span>
-<a name="l00048"></a>00048 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="keyword">const</span> <span class="keywordtype">int</span> Reactor::READ_READY   = 0x01;
-<a name="l00051"></a>00051 <span class="keyword">const</span> <span class="keywordtype">int</span> Reactor::WRITE_READY  = 0x02;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_reactor.html#238368d4aa751762a4173839c689c858">00057</a> Reactor::Reactor() : <a class="code" href="dfsclient_8cc.html#b6cd53732098745970bdd5c71c6ea343">m_mutex</a>(), m_interrupt_in_progress(false) {
-<a name="l00058"></a>00058   <span class="keyword">struct </span>sockaddr_in addr;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00061"></a>00061 <span class="preprocessor"></span>  <span class="keywordflow">if</span> ((pollFd = epoll_create(256)) &lt; 0) {
-<a name="l00062"></a>00062     perror(<span class="stringliteral">"epoll_create"</span>);
-<a name="l00063"></a>00063     exit(1);
-<a name="l00064"></a>00064   }
-<a name="l00065"></a>00065 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00066"></a>00066 <span class="preprocessor"></span>  kQueue = kqueue();
-<a name="l00067"></a>00067 <span class="preprocessor">#endif  </span>
-<a name="l00068"></a>00068 <span class="preprocessor"></span>
-<a name="l00074"></a>00074   <span class="keywordflow">if</span> ((<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a> = socket(AF_INET, SOCK_DGRAM, 0)) &lt; 0) {
-<a name="l00075"></a>00075     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"socket() failure: %s"</span>, strerror(errno));
-<a name="l00076"></a>00076     exit(1);
-<a name="l00077"></a>00077   }
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="comment">// Set to non-blocking</span>
-<a name="l00080"></a>00080   <a class="code" href="class_hypertable_1_1_file_utils.html#2a30b40bbb82792f23fbea2d394b3954">FileUtils::set_flags</a>(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, O_NONBLOCK);
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="comment">// create address structure to bind to - any available port - any address</span>
-<a name="l00083"></a>00083   memset(&amp;addr, 0 , <span class="keyword">sizeof</span>(sockaddr_in));
-<a name="l00084"></a>00084   addr.sin_family = AF_INET;
-<a name="l00085"></a>00085   addr.sin_addr.s_addr = inet_addr(<span class="stringliteral">"127.0.0.1"</span>);
-<a name="l00086"></a>00086   addr.sin_port = 0;
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <span class="comment">// bind socket</span>
-<a name="l00089"></a>00089   <span class="keywordflow">if</span> ((bind(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, (<span class="keyword">const</span> sockaddr *)&amp;addr, <span class="keyword">sizeof</span>(sockaddr_in))) &lt; 0) {
-<a name="l00090"></a>00090     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"bind() failure: %s"</span>, strerror(errno));
-<a name="l00091"></a>00091     exit(1);
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00095"></a>00095 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event event;
-<a name="l00096"></a>00096   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00097"></a>00097   <span class="keyword">event</span>.events = EPOLLERR | EPOLLHUP;
-<a name="l00098"></a>00098   <span class="keywordflow">if</span> (epoll_ctl(pollFd, EPOLL_CTL_ADD, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, &amp;event) &lt; 0) {
-<a name="l00099"></a>00099     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(%d, EPOLL_CTL_ADD, %d, EPOLLERR|EPOLLHUP) failed : %s"</span>,
-<a name="l00100"></a>00100                  pollFd, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
-<a name="l00101"></a>00101     exit(1);
-<a name="l00102"></a>00102   }
-<a name="l00103"></a>00103 <span class="preprocessor">#endif</span>
-<a name="l00104"></a>00104 <span class="preprocessor"></span>
-<a name="l00105"></a>00105   memset(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
-<a name="l00106"></a>00106 }
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108 
-<a name="l00109"></a><a class="code" href="class_hypertable_1_1_reactor.html#68d614710247588c8618d7dc4edafaa0">00109</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#68d614710247588c8618d7dc4edafaa0">Reactor::handle_timeouts</a>(<a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;nextTimeout) {
-<a name="l00110"></a>00110   vector&lt;struct TimerT&gt; expiredTimers;
-<a name="l00111"></a>00111   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> eventPtr;
-<a name="l00112"></a>00112   boost::xtime     now, nextRequestTimeout;
-<a name="l00113"></a>00113   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_timer_t.html">TimerT</a> timer;
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115   {
-<a name="l00116"></a>00116     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00117"></a>00117     <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a>       *handler;
-<a name="l00118"></a>00118     <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;cassert&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;cstdio&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;set&gt;</span>
+<a name="l00028"></a>00028 <span class="keyword">using namespace </span>std;
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;arpa/inet.h&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;errno.h&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;netinet/in.h&gt;</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;stdio.h&gt;</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include &lt;sys/socket.h&gt;</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include &lt;sys/time.h&gt;</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#if defined(__APPLE__)</span>
+<a name="l00040"></a>00040 <span class="preprocessor"></span><span class="preprocessor">#include &lt;sys/event.h&gt;</span>
+<a name="l00041"></a>00041 <span class="preprocessor">#endif</span>
+<a name="l00042"></a>00042 <span class="preprocessor"></span>}
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
+<a name="l00046"></a>00046 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="preprocessor">#include "<a class="code" href="_i_o_handler_data_8h.html">IOHandlerData.h</a>"</span>
+<a name="l00049"></a>00049 <span class="preprocessor">#include "<a class="code" href="_reactor_8h.html">Reactor.h</a>"</span>
+<a name="l00050"></a>00050 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052 <span class="keyword">const</span> <span class="keywordtype">int</span> Reactor::READ_READY   = 0x01;
+<a name="l00053"></a>00053 <span class="keyword">const</span> <span class="keywordtype">int</span> Reactor::WRITE_READY  = 0x02;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_reactor.html#238368d4aa751762a4173839c689c858">00059</a> Reactor::Reactor() : <a class="code" href="dfsclient_8cc.html#b6cd53732098745970bdd5c71c6ea343">m_mutex</a>(), m_interrupt_in_progress(false) {
+<a name="l00060"></a>00060   <span class="keyword">struct </span>sockaddr_in addr;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00063"></a>00063 <span class="preprocessor"></span>  <span class="keywordflow">if</span> ((poll_fd = epoll_create(256)) &lt; 0) {
+<a name="l00064"></a>00064     perror(<span class="stringliteral">"epoll_create"</span>);
+<a name="l00065"></a>00065     exit(1);
+<a name="l00066"></a>00066   }
+<a name="l00067"></a>00067 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00068"></a>00068 <span class="preprocessor"></span>  kqd = kqueue();
+<a name="l00069"></a>00069 <span class="preprocessor">#endif</span>
+<a name="l00070"></a>00070 <span class="preprocessor"></span>
+<a name="l00076"></a>00076   <span class="keywordflow">if</span> ((<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a> = socket(AF_INET, SOCK_DGRAM, 0)) &lt; 0) {
+<a name="l00077"></a>00077     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"socket() failure: %s"</span>, strerror(errno));
+<a name="l00078"></a>00078     exit(1);
+<a name="l00079"></a>00079   }
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081   <span class="comment">// Set to non-blocking</span>
+<a name="l00082"></a>00082   <a class="code" href="class_hypertable_1_1_file_utils.html#2a30b40bbb82792f23fbea2d394b3954">FileUtils::set_flags</a>(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, O_NONBLOCK);
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="comment">// create address structure to bind to - any available port - any address</span>
+<a name="l00085"></a>00085   memset(&amp;addr, 0 , <span class="keyword">sizeof</span>(sockaddr_in));
+<a name="l00086"></a>00086   addr.sin_family = AF_INET;
+<a name="l00087"></a>00087   addr.sin_addr.s_addr = inet_addr(<span class="stringliteral">"127.0.0.1"</span>);
+<a name="l00088"></a>00088   addr.sin_port = 0;
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <span class="comment">// bind socket</span>
+<a name="l00091"></a>00091   <span class="keywordflow">if</span> ((bind(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, (<span class="keyword">const</span> sockaddr *)&amp;addr, <span class="keyword">sizeof</span>(sockaddr_in))) &lt; 0) {
+<a name="l00092"></a>00092     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"bind() failure: %s"</span>, strerror(errno));
+<a name="l00093"></a>00093     exit(1);
+<a name="l00094"></a>00094   }
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096   <span class="comment">// get the assigned address</span>
+<a name="l00097"></a>00097   socklen_t namelen = <span class="keyword">sizeof</span>(addr);
+<a name="l00098"></a>00098   getsockname(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, (sockaddr *)&amp;addr, &amp;namelen);
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <span class="comment">// connect to ourself</span>
+<a name="l00101"></a>00101   <span class="keywordflow">if</span> (connect(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, (<span class="keyword">const</span> <span class="keyword">struct</span> sockaddr *)&amp;addr, <span class="keyword">sizeof</span>(addr)) &lt; 0) {
+<a name="l00102"></a>00102     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"connect(interrupt_sd) failed - %s"</span>, strerror(errno));
+<a name="l00103"></a>00103     exit(1);
+<a name="l00104"></a>00104   }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00107"></a>00107 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event event;
+<a name="l00108"></a>00108   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
+<a name="l00109"></a>00109   <span class="keyword">event</span>.events = EPOLLIN | EPOLLOUT | EPOLLERR | EPOLLHUP | EPOLLET;
+<a name="l00110"></a>00110   <span class="keywordflow">if</span> (epoll_ctl(poll_fd, EPOLL_CTL_ADD, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, &amp;event) &lt; 0) {
+<a name="l00111"></a>00111     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(%d, EPOLL_CTL_ADD, %d, EPOLLERR|EPOLLHUP) failed : %s"</span>,
+<a name="l00112"></a>00112                  poll_fd, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
+<a name="l00113"></a>00113     exit(1);
+<a name="l00114"></a>00114   }
+<a name="l00115"></a>00115 <span class="preprocessor">#endif</span>
+<a name="l00116"></a>00116 <span class="preprocessor"></span>
+<a name="l00117"></a>00117   memset(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
+<a name="l00118"></a>00118 }
 <a name="l00119"></a>00119 
-<a name="l00120"></a>00120     boost::xtime_get(&amp;now, boost::TIME_UTC);
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122     <span class="keywordflow">while</span> ((dh = <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#61c1ae9c67edd50617b3ddadb625632f">get_next_timeout</a>(now, handler, &amp;nextRequestTimeout)) != 0) {
-<a name="l00123"></a>00123       handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>( <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc1507c9a2369c71d6d4470e9bd5ae0895">Event::ERROR</a>, 0, ((<a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a> *)handler)-&gt;get_address(), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b5f954c9379f7c6d23688daca9a44c24">Error::COMM_REQUEST_TIMEOUT</a>), dh );
-<a name="l00124"></a>00124     }
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126     <span class="keywordflow">if</span> (nextRequestTimeout.sec != 0) {
-<a name="l00127"></a>00127       nextTimeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, nextRequestTimeout);
-<a name="l00128"></a>00128       memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;nextRequestTimeout, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
-<a name="l00129"></a>00129     }
-<a name="l00130"></a>00130     <span class="keywordflow">else</span> {
-<a name="l00131"></a>00131       nextTimeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#4e4093fbee78db2dc9e27c7fa38ce668">set_indefinite</a>();
-<a name="l00132"></a>00132       memset(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
-<a name="l00133"></a>00133     }
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.empty()) {
-<a name="l00136"></a>00136       <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_timer_t.html">TimerT</a> timer;
+<a name="l00120"></a>00120 
+<a name="l00121"></a><a class="code" href="class_hypertable_1_1_reactor.html#d05df16fbcad0de291af683834efed1f">00121</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#d05df16fbcad0de291af683834efed1f">Reactor::handle_timeouts</a>(<a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;next_timeout) {
+<a name="l00122"></a>00122   vector&lt;ExpireTimer&gt; expired_timers;
+<a name="l00123"></a>00123   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00124"></a>00124   boost::xtime     now, next_req_timeout;
+<a name="l00125"></a>00125   <a class="code" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> timer;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127   {
+<a name="l00128"></a>00128     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
+<a name="l00129"></a>00129     <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a>       *handler;
+<a name="l00130"></a>00130     <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh;
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132     boost::xtime_get(&amp;now, boost::TIME_UTC);
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134     <span class="keywordflow">while</span> ((dh = <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#00cdd854c0ec7646c22d436bc274ac97">get_next_timeout</a>(now, handler, &amp;next_req_timeout)) != 0) {
+<a name="l00135"></a>00135       handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc1507c9a2369c71d6d4470e9bd5ae0895">Event::ERROR</a>, 0, ((<a class="code" href="class_hypertable_1_1_i_o_handler_data.html">IOHandlerData</a> *)handler)-&gt;get_address(), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b5f954c9379f7c6d23688daca9a44c24">Error::COMM_REQUEST_TIMEOUT</a>), dh);
+<a name="l00136"></a>00136     }
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138       <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.empty()) {
-<a name="l00139"></a>00139         timer = <a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.top();
-<a name="l00140"></a>00140         <span class="keywordflow">if</span> (xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, now) &gt; 0) {
-<a name="l00141"></a>00141           <span class="keywordflow">if</span> (nextRequestTimeout.sec == 0 || xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, nextRequestTimeout) &lt; 0) {
-<a name="l00142"></a>00142             nextTimeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>);
-<a name="l00143"></a>00143             memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
-<a name="l00144"></a>00144           }
-<a name="l00145"></a>00145           <span class="keywordflow">break</span>;
-<a name="l00146"></a>00146         }
-<a name="l00147"></a>00147         expiredTimers.push_back(timer);
-<a name="l00148"></a>00148         <a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.pop();
-<a name="l00149"></a>00149       }
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151     }
-<a name="l00152"></a>00152   }
-<a name="l00153"></a>00153 
-<a name="l00157"></a>00157   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;expiredTimers.size(); i++) {
-<a name="l00158"></a>00158     eventPtr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc6fb1fd4ec9a59406ecf01c9cef4f4332">Event::TIMER</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>);
-<a name="l00159"></a>00159     <span class="keywordflow">if</span> (expiredTimers[i].handler)
-<a name="l00160"></a>00160       expiredTimers[i].handler-&gt;handle(eventPtr);
-<a name="l00161"></a>00161   }
+<a name="l00138"></a>00138     <span class="keywordflow">if</span> (next_req_timeout.sec != 0) {
+<a name="l00139"></a>00139       next_timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, next_req_timeout);
+<a name="l00140"></a>00140       memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;next_req_timeout, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
+<a name="l00141"></a>00141     }
+<a name="l00142"></a>00142     <span class="keywordflow">else</span> {
+<a name="l00143"></a>00143       next_timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#4e4093fbee78db2dc9e27c7fa38ce668">set_indefinite</a>();
+<a name="l00144"></a>00144       memset(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
+<a name="l00145"></a>00145     }
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.empty()) {
+<a name="l00148"></a>00148       <a class="code" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> timer;
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150       <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.empty()) {
+<a name="l00151"></a>00151         timer = <a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.top();
+<a name="l00152"></a>00152         <span class="keywordflow">if</span> (xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, now) &gt; 0) {
+<a name="l00153"></a>00153           <span class="keywordflow">if</span> (next_req_timeout.sec == 0 || xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, next_req_timeout) &lt; 0) {
+<a name="l00154"></a>00154             next_timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>);
+<a name="l00155"></a>00155             memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
+<a name="l00156"></a>00156           }
+<a name="l00157"></a>00157           <span class="keywordflow">break</span>;
+<a name="l00158"></a>00158         }
+<a name="l00159"></a>00159         expired_timers.push_back(timer);
+<a name="l00160"></a>00160         <a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.pop();
+<a name="l00161"></a>00161       }
 <a name="l00162"></a>00162 
-<a name="l00163"></a>00163   {
-<a name="l00164"></a>00164     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
+<a name="l00163"></a>00163     }
+<a name="l00164"></a>00164   }
 <a name="l00165"></a>00165 
-<a name="l00166"></a>00166     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.empty()) {
-<a name="l00167"></a>00167       timer = <a class="code" href="class_hypertable_1_1_reactor.html#126dc1bb190c8ac1a10247ece76959d7">m_timer_heap</a>.top();
-<a name="l00168"></a>00168       <span class="keywordflow">if</span> (nextRequestTimeout.sec == 0 || xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, nextRequestTimeout) &lt; 0) {
-<a name="l00169"></a>00169         nextTimeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>);
-<a name="l00170"></a>00170         memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;timer.<a class="code" href="struct_hypertable_1_1_timer_t.html#56fa1a657c6c43070a78bcb1fcd6509f">expireTime</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
-<a name="l00171"></a>00171       }
-<a name="l00172"></a>00172     }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174     <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">poll_loop_continue</a>();
-<a name="l00175"></a>00175   }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177 }
-<a name="l00178"></a>00178 
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180 
-<a name="l00184"></a><a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">00184</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">Reactor::poll_loop_interrupt</a>() {
+<a name="l00169"></a>00169   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;expired_timers.size(); i++) {
+<a name="l00170"></a>00170     event_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc6fb1fd4ec9a59406ecf01c9cef4f4332">Event::TIMER</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>);
+<a name="l00171"></a>00171     <span class="keywordflow">if</span> (expired_timers[i].handler)
+<a name="l00172"></a>00172       expired_timers[i].handler-&gt;handle(event_ptr);
+<a name="l00173"></a>00173   }
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175   {
+<a name="l00176"></a>00176     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.empty()) {
+<a name="l00179"></a>00179       timer = <a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.top();
+<a name="l00180"></a>00180       <span class="keywordflow">if</span> (next_req_timeout.sec == 0 || xtime_cmp(timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, next_req_timeout) &lt; 0) {
+<a name="l00181"></a>00181         next_timeout.<a class="code" href="class_hypertable_1_1_poll_timeout.html#a8e0794049d3570797485d6de448acb1">set</a>(now, timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>);
+<a name="l00182"></a>00182         memcpy(&amp;<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>, &amp;timer.<a class="code" href="struct_hypertable_1_1_expire_timer.html#90d55ac2f3d0c57e36ec8856045f69aa">expire_time</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>));
+<a name="l00183"></a>00183       }
+<a name="l00184"></a>00184     }
 <a name="l00185"></a>00185 
-<a name="l00186"></a>00186   <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a> = <span class="keyword">true</span>;
-<a name="l00187"></a>00187 
-<a name="l00188"></a>00188 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00189"></a>00189 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event event;
+<a name="l00186"></a>00186     <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">poll_loop_continue</a>();
+<a name="l00187"></a>00187   }
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 }
 <a name="l00190"></a>00190 
-<a name="l00191"></a>00191   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00192"></a>00192   <span class="keyword">event</span>.events = EPOLLOUT | EPOLLERR | EPOLLHUP;
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194   <span class="keywordflow">if</span> (epoll_ctl(pollFd, EPOLL_CTL_MOD, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, &amp;event) &lt; 0) {
-<a name="l00200"></a>00200   }
-<a name="l00201"></a>00201 
-<a name="l00202"></a>00202 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00203"></a>00203 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent event;
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192 
+<a name="l00196"></a><a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">00196</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">Reactor::poll_loop_interrupt</a>() {
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198   <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a> = <span class="keyword">true</span>;
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00201"></a>00201 <span class="preprocessor"></span>
+<a name="l00202"></a>00202   <span class="keywordtype">char</span> buf[8];
+<a name="l00203"></a>00203   ssize_t n;
 <a name="l00204"></a>00204 
-<a name="l00205"></a>00205   EV_SET(&amp;event, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, 0);
-<a name="l00206"></a>00206 
-<a name="l00207"></a>00207   <span class="keywordflow">if</span> (kevent(kQueue, &amp;event, 1, 0, 0, 0) == -1) {
-<a name="l00208"></a>00208     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
-<a name="l00209"></a>00209     exit(1);
-<a name="l00210"></a>00210   }
-<a name="l00211"></a>00211 <span class="preprocessor">#endif</span>
-<a name="l00212"></a>00212 <span class="preprocessor"></span>
-<a name="l00213"></a>00213 }
-<a name="l00214"></a>00214 
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216 
-<a name="l00220"></a><a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">00220</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">Reactor::poll_loop_continue</a>() {
+<a name="l00209"></a>00209   <span class="keywordflow">if</span> ((n = <a class="code" href="class_hypertable_1_1_file_utils.html#e5fef5ba732d61e0217eba7dc3b48c00">FileUtils::send</a>(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, <span class="stringliteral">"1"</span>, 1)) &lt; 0) {
+<a name="l00210"></a>00210     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"send(interrupt_sd) failed - %s"</span>, strerror(errno));
+<a name="l00211"></a>00211     exit(1);
+<a name="l00212"></a>00212   }
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214   <span class="keywordflow">if</span> ((n = <a class="code" href="class_hypertable_1_1_file_utils.html#efeb5f92803dfe67658d7dcffa455890">FileUtils::recv</a>(<a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, buf, 8)) == -1) {
+<a name="l00215"></a>00215     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"recv(interrupt_sd) failed - %s"</span>, strerror(errno));
+<a name="l00216"></a>00216     exit(1);
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218 
+<a name="l00219"></a>00219 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00220"></a>00220 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent event;
 <a name="l00221"></a>00221 
-<a name="l00222"></a>00222   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a>)
-<a name="l00223"></a>00223     <span class="keywordflow">return</span>;
-<a name="l00224"></a>00224 
-<a name="l00225"></a>00225 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00226"></a>00226 <span class="preprocessor"></span>  <span class="keyword">struct </span>epoll_event event;
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228   memset(&amp;event, 0, <span class="keyword">sizeof</span>(<span class="keyword">struct</span> epoll_event));
-<a name="l00229"></a>00229   <span class="keyword">event</span>.events = EPOLLERR | EPOLLHUP;
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231   <span class="keywordflow">if</span> (epoll_ctl(pollFd, EPOLL_CTL_MOD, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, &amp;event) &lt; 0) {
-<a name="l00232"></a>00232     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"epoll_ctl(EPOLL_CTL_MOD, sd=%d) : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
-<a name="l00233"></a>00233     exit(1);
-<a name="l00234"></a>00234   }
-<a name="l00235"></a>00235 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00236"></a>00236 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent devent;
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238   EV_SET(&amp;devent, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, EVFILT_WRITE, EV_DELETE, 0, 0, 0);
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240   <span class="keywordflow">if</span> (kevent(kQueue, &amp;devent, 1, 0, 0, 0) == -1 &amp;&amp; errno != ENOENT) {
-<a name="l00241"></a>00241     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
-<a name="l00242"></a>00242     exit(1);
-<a name="l00243"></a>00243   }
-<a name="l00244"></a>00244 <span class="preprocessor">#endif</span>
-<a name="l00245"></a>00245 <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a> = <span class="keyword">false</span>;
-<a name="l00246"></a>00246 }
-<a name="l00247"></a>00247 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00222"></a>00222   EV_SET(&amp;event, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, EVFILT_WRITE, EV_ADD | EV_ENABLE, 0, 0, 0);
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224   <span class="keywordflow">if</span> (kevent(kqd, &amp;event, 1, 0, 0, 0) == -1) {
+<a name="l00225"></a>00225     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
+<a name="l00226"></a>00226     exit(1);
+<a name="l00227"></a>00227   }
+<a name="l00228"></a>00228 <span class="preprocessor">#endif</span>
+<a name="l00229"></a>00229 <span class="preprocessor"></span>
+<a name="l00230"></a>00230 }
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233 
+<a name="l00237"></a><a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">00237</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">Reactor::poll_loop_continue</a>() {
+<a name="l00238"></a>00238 
+<a name="l00239"></a>00239   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a>)
+<a name="l00240"></a>00240     <span class="keywordflow">return</span>;
+<a name="l00241"></a>00241 
+<a name="l00242"></a>00242 <span class="preprocessor">#if defined(__APPLE__)</span>
+<a name="l00243"></a>00243 <span class="preprocessor"></span>  <span class="keyword">struct </span>kevent devent;
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245   EV_SET(&amp;devent, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, EVFILT_WRITE, EV_DELETE, 0, 0, 0);
+<a name="l00246"></a>00246 
+<a name="l00247"></a>00247   <span class="keywordflow">if</span> (kevent(kqd, &amp;devent, 1, 0, 0, 0) == -1 &amp;&amp; errno != ENOENT) {
+<a name="l00248"></a>00248     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"kevent(sd=%d) : %s"</span>, <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>, strerror(errno));
+<a name="l00249"></a>00249     exit(1);
+<a name="l00250"></a>00250   }
+<a name="l00251"></a>00251 <span class="preprocessor">#endif</span>
+<a name="l00252"></a>00252 <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a> = <span class="keyword">false</span>;
+<a name="l00253"></a>00253 }
+<a name="l00254"></a>00254 
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

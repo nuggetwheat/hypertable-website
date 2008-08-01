@@ -21,65 +21,60 @@
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_HEADERBUILDER_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00026"></a>00026 <span class="keyword">using namespace </span>std;
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
-<a name="l00030"></a>00030 }
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="atomic_8h.html">Common/atomic.h</a>"</span>
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_header_8h.html">Header.h</a>"</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable {
-<a name="l00037"></a>00037 
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_header_builder.html">00048</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> {
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="keyword">public</span>:
-<a name="l00051"></a>00051 
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841">00054</a>     <a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841" title="Constructor.">HeaderBuilder</a>() : <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>(0) {
-<a name="l00055"></a>00055       <span class="keywordflow">return</span>;
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057 
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_header_builder.html#e6b90144842c0211f15d308af24a8792">00067</a>     <a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841" title="Constructor.">HeaderBuilder</a>(uint8_t protocol, uint32_t gid=0) : <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>(gid), <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>(protocol), <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>(0) {
-<a name="l00068"></a>00068       <span class="keywordflow">return</span>;
-<a name="l00069"></a>00069     }
-<a name="l00070"></a>00070 
-<a name="l00076"></a><a class="code" href="class_hypertable_1_1_header_builder.html#d9d23ccef55da065b6a5104ece850d1c">00076</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#d9d23ccef55da065b6a5104ece850d1c" title="This method is used to initialize a response header from a give request header.">initialize_from_request</a>(Header::HeaderT *header) {
-<a name="l00077"></a>00077       <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>        = header-&gt;id;
-<a name="l00078"></a>00078       <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>  = header-&gt;gid;
-<a name="l00079"></a>00079       <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>  = header-&gt;protocol;
-<a name="l00080"></a>00080       <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>     = header-&gt;flags;
-<a name="l00081"></a>00081       <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a> = 0;
-<a name="l00082"></a>00082     }
-<a name="l00083"></a>00083 
-<a name="l00085"></a><a class="code" href="class_hypertable_1_1_header_builder.html#a174cad7aa956693a6f9d461579ea9db">00085</a>     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_header_builder.html#a174cad7aa956693a6f9d461579ea9db" title="Returns the length of the header that would be generated.">header_length</a>() { <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(Header::HeaderT); }
-<a name="l00086"></a>00086 
-<a name="l00092"></a>00092     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#4e3ec38f01eb80b0309b40e364acf0af" title="Encodes the header to the given buffer.">encode</a>(uint8_t **bufPtr);
-<a name="l00093"></a>00093 
-<a name="l00100"></a><a class="code" href="class_hypertable_1_1_header_builder.html#2a627e6f9117254d989c86264f3e7466">00100</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#2a627e6f9117254d989c86264f3e7466" title="Sets the flags member of the header builder.">set_flags</a>(uint8_t flags) { <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a> = flags; }
-<a name="l00101"></a>00101 
-<a name="l00106"></a><a class="code" href="class_hypertable_1_1_header_builder.html#0229ea3a8c30d54b93e15da06fe2e0bb">00106</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#0229ea3a8c30d54b93e15da06fe2e0bb" title="ORs in some flag bits to the existing flags.">add_flag</a>(uint8_t flags) { <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a> |= flags; }
-<a name="l00107"></a>00107 
-<a name="l00112"></a><a class="code" href="class_hypertable_1_1_header_builder.html#fde40608de98dd895a7bc8d7c787d105">00112</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#fde40608de98dd895a7bc8d7c787d105" title="Sets the protocol family of the message.">set_protocol</a>(uint8_t protocol) { <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a> = protocol; }
-<a name="l00113"></a>00113 
-<a name="l00118"></a><a class="code" href="class_hypertable_1_1_header_builder.html#3aa5adf8d54ffe71535d9c61ac3c957e">00118</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#3aa5adf8d54ffe71535d9c61ac3c957e" title="Sets the group ID of the message.">set_group_id</a>(uint32_t group_id) { <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a> = group_id; }
-<a name="l00119"></a>00119 
-<a name="l00124"></a><a class="code" href="class_hypertable_1_1_header_builder.html#529aebdda14181793824bffe6252bfcd">00124</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#529aebdda14181793824bffe6252bfcd" title="Sets the total length of the message.">set_total_len</a>(uint32_t total_len) { <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a> = total_len; }
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126   <span class="keyword">protected</span>:
-<a name="l00127"></a><a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">00127</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>;
-<a name="l00128"></a><a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">00128</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>;
-<a name="l00129"></a><a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">00129</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>;
-<a name="l00130"></a><a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">00130</a>     uint8_t   <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>;
-<a name="l00131"></a><a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">00131</a>     uint8_t   <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>;
-<a name="l00132"></a>00132   };
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134 }
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137 <span class="preprocessor">#endif // HYPERTABLE_HEADERBUILDER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="atomic_8h.html">Common/atomic.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_header_8h.html">Header.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hypertable {
+<a name="l00032"></a>00032 
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_header_builder.html">00043</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> {
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045   <span class="keyword">public</span>:
+<a name="l00046"></a>00046 
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841">00049</a>     <a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841" title="Constructor.">HeaderBuilder</a>() : <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>(0) {
+<a name="l00050"></a>00050       <span class="keywordflow">return</span>;
+<a name="l00051"></a>00051     }
+<a name="l00052"></a>00052 
+<a name="l00062"></a><a class="code" href="class_hypertable_1_1_header_builder.html#e6b90144842c0211f15d308af24a8792">00062</a>     <a class="code" href="class_hypertable_1_1_header_builder.html#9b9aeb6f4905bf11a7c6ec1a68873841" title="Constructor.">HeaderBuilder</a>(uint8_t protocol, uint32_t gid=0) : <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>(gid), <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>(0), <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>(protocol), <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>(0) {
+<a name="l00063"></a>00063       <span class="keywordflow">return</span>;
+<a name="l00064"></a>00064     }
+<a name="l00065"></a>00065 
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7">00071</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7" title="This method is used to initialize a response header from a give request header.">initialize_from_request</a>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *header) {
+<a name="l00072"></a>00072       <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>        = header-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#3457d310bb63871c8b453e7c8e20337d">id</a>;
+<a name="l00073"></a>00073       <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>  = header-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#c91af2ce4d25150312d94b237fa5bf2a">gid</a>;
+<a name="l00074"></a>00074       <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>  = header-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#17fec05c8768d27b782cb08df2100b60">protocol</a>;
+<a name="l00075"></a>00075       <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>     = header-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#0fca519b5c0fd2942d6d81963cae0d57">flags</a>;
+<a name="l00076"></a>00076       <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a> = 0;
+<a name="l00077"></a>00077     }
+<a name="l00078"></a>00078 
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_header_builder.html#a174cad7aa956693a6f9d461579ea9db">00080</a>     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_header_builder.html#a174cad7aa956693a6f9d461579ea9db" title="Returns the length of the header that would be generated.">header_length</a>() { <span class="keywordflow">return</span> <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>); }
+<a name="l00081"></a>00081 
+<a name="l00087"></a>00087     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#18390b40bc72b458f7f4df99ae829f21" title="Encodes the header to the given buffer.">encode</a>(uint8_t **bufp);
+<a name="l00088"></a>00088 
+<a name="l00095"></a><a class="code" href="class_hypertable_1_1_header_builder.html#2a627e6f9117254d989c86264f3e7466">00095</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#2a627e6f9117254d989c86264f3e7466" title="Sets the flags member of the header builder.">set_flags</a>(uint8_t flags) { <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a> = flags; }
+<a name="l00096"></a>00096 
+<a name="l00101"></a><a class="code" href="class_hypertable_1_1_header_builder.html#0229ea3a8c30d54b93e15da06fe2e0bb">00101</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#0229ea3a8c30d54b93e15da06fe2e0bb" title="ORs in some flag bits to the existing flags.">add_flag</a>(uint8_t flags) { <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a> |= flags; }
+<a name="l00102"></a>00102 
+<a name="l00107"></a><a class="code" href="class_hypertable_1_1_header_builder.html#fde40608de98dd895a7bc8d7c787d105">00107</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#fde40608de98dd895a7bc8d7c787d105" title="Sets the protocol family of the message.">set_protocol</a>(uint8_t protocol) { <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a> = protocol; }
+<a name="l00108"></a>00108 
+<a name="l00113"></a><a class="code" href="class_hypertable_1_1_header_builder.html#3aa5adf8d54ffe71535d9c61ac3c957e">00113</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#3aa5adf8d54ffe71535d9c61ac3c957e" title="Sets the group ID of the message.">set_group_id</a>(uint32_t group_id) { <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a> = group_id; }
+<a name="l00114"></a>00114 
+<a name="l00119"></a><a class="code" href="class_hypertable_1_1_header_builder.html#529aebdda14181793824bffe6252bfcd">00119</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_header_builder.html#529aebdda14181793824bffe6252bfcd" title="Sets the total length of the message.">set_total_len</a>(uint32_t total_len) { <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a> = total_len; }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121   <span class="keyword">protected</span>:
+<a name="l00122"></a><a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">00122</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#1b208f118560566947a14b82c5697eac">m_id</a>;
+<a name="l00123"></a><a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">00123</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#1c9973df3b77f8ccdfc1f892e80a84dc">m_group_id</a>;
+<a name="l00124"></a><a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">00124</a>     uint32_t  <a class="code" href="class_hypertable_1_1_header_builder.html#4e33828d13c925dea1c1412d1cfdd0ec">m_total_len</a>;
+<a name="l00125"></a><a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">00125</a>     uint8_t   <a class="code" href="class_hypertable_1_1_header_builder.html#236c6d4791ceb3c1b34ff02ab653a183">m_protocol</a>;
+<a name="l00126"></a><a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">00126</a>     uint8_t   <a class="code" href="class_hypertable_1_1_header_builder.html#7e1efc52735f0b9887a5a10f99df7be6">m_flags</a>;
+<a name="l00127"></a>00127   };
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129 }
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132 <span class="preprocessor">#endif // HYPERTABLE_HEADERBUILDER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

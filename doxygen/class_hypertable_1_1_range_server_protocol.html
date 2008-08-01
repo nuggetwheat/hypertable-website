@@ -46,13 +46,19 @@ Collaboration diagram for Hypertable::RangeServerProtocol:</div>
 <p>
 <a href="class_hypertable_1_1_range_server_protocol-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Public Types</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#569ea5be8d1ada5550f46cd743a12353">RangeGroup</a> { <a class="el" href="class_hypertable_1_1_range_server_protocol.html#569ea5be8d1ada5550f46cd743a123531ca682d698872694db71670db7700f05">GROUP_METADATA_ROOT</a>, 
+<a class="el" href="class_hypertable_1_1_range_server_protocol.html#569ea5be8d1ada5550f46cd743a12353ca8f49c958441f904fb75becb8a28bcc">GROUP_METADATA</a>, 
+<a class="el" href="class_hypertable_1_1_range_server_protocol.html#569ea5be8d1ada5550f46cd743a12353c4bde2c3e75ef39526acd717324f091f">GROUP_USER</a>
+ }</td></tr>
+
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#78b5f35a99a701e8b00e82eef3f97469">command_text</a> (short command)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#d7725308fc52cc9cf3b8fa71b8a2b8d7">create_request_load_range</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state, uint16_t flags)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#ec49837910767d1573cb409fc5307f24">create_request_load_range</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "load range" request message.  <a href="#d7725308fc52cc9cf3b8fa71b8a2b8d7"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "load range" request message.  <a href="#ec49837910767d1573cb409fc5307f24"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#b9837b21093c0865b1322d9ff68d12ff">create_request_update</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an "update" request message.  <a href="#b9837b21093c0865b1322d9ff68d12ff"></a><br></td></tr>
@@ -77,9 +83,12 @@ Collaboration diagram for Hypertable::RangeServerProtocol:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#06be1deb2ada42062e8eeaebda800cb2">create_request_drop_table</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "drop table" request message.  <a href="#06be1deb2ada42062e8eeaebda800cb2"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#6ea8d040f90709519860ba5c5a885b3a">create_request_replay_start</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#25698801f4805216cbd7dd1fee0b9bc6">create_request_replay_begin</a> (uint16_t group)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "replay start" request message.  <a href="#6ea8d040f90709519860ba5c5a885b3a"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "replay begin" request message.  <a href="#25698801f4805216cbd7dd1fee0b9bc6"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#97f227119c96236262c577edeaf801d0">create_request_replay_load_range</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "replay load range" request message.  <a href="#97f227119c96236262c577edeaf801d0"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#301f5244e95dc7037f4a40bc4bde3580">create_request_replay_update</a> (<a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a "replay update" request message.  <a href="#301f5244e95dc7037f4a40bc4bde3580"></a><br></td></tr>
@@ -110,26 +119,54 @@ Collaboration diagram for Hypertable::RangeServerProtocol:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#48b08e4a41d99bed4c0ce841a1581bf8">COMMAND_DROP_TABLE</a> = 9</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#9c4062eb704b0400acb26cdf60bcfcb1">COMMAND_REPLAY_START</a> = 10</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#2c96489d54577dcc19386c7d4d45f10c">COMMAND_DROP_RANGE</a> = 10</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#a8a1701b6b5068a57e78348922eed617">COMMAND_REPLAY_UPDATE</a> = 11</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#78743cfa433e914ecfa04221256f0ac2">COMMAND_REPLAY_BEGIN</a> = 11</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#45bc4a0f2552378ca1acfb4deab49455">COMMAND_REPLAY_COMMIT</a> = 12</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#1985525ed1817c0bdd5cde85acd573dd">COMMAND_REPLAY_LOAD_RANGE</a> = 12</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#2c96489d54577dcc19386c7d4d45f10c">COMMAND_DROP_RANGE</a> = 13</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#a8a1701b6b5068a57e78348922eed617">COMMAND_REPLAY_UPDATE</a> = 13</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#0f86de251904bbb5c4de3ea15574e2a7">COMMAND_MAX</a> = 14</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#45bc4a0f2552378ca1acfb4deab49455">COMMAND_REPLAY_COMMIT</a> = 14</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#c17642d97b90944c4301cdfb32914135">LOAD_RANGE_FLAG_REPLAY</a> = 0x0001</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#0f86de251904bbb5c4de3ea15574e2a7">COMMAND_MAX</a> = 15</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_protocol.html#32243704e2b1a0bb902fb6dcbfc444d8">m_command_strings</a> []</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Generates <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> protocol request messages. 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00033">33</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00034">34</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<hr><h2>Member Enumeration Documentation</h2>
+<a class="anchor" name="569ea5be8d1ada5550f46cd743a12353"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::RangeGroup" ref="569ea5be8d1ada5550f46cd743a12353" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="class_hypertable_1_1_range_server_protocol.html#569ea5be8d1ada5550f46cd743a12353">Hypertable::RangeServerProtocol::RangeGroup</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+<dl compact><dt><b>Enumerator: </b></dt><dd>
+<table border="0" cellspacing="2" cellpadding="0">
+<tr><td valign="top"><em><a class="anchor" name="569ea5be8d1ada5550f46cd743a123531ca682d698872694db71670db7700f05"></a><!-- doxytag: member="GROUP_METADATA_ROOT" ref="569ea5be8d1ada5550f46cd743a123531ca682d698872694db71670db7700f05" args="" -->GROUP_METADATA_ROOT</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" name="569ea5be8d1ada5550f46cd743a12353ca8f49c958441f904fb75becb8a28bcc"></a><!-- doxytag: member="GROUP_METADATA" ref="569ea5be8d1ada5550f46cd743a12353ca8f49c958441f904fb75becb8a28bcc" args="" -->GROUP_METADATA</em>&nbsp;</td><td>
+</td></tr>
+<tr><td valign="top"><em><a class="anchor" name="569ea5be8d1ada5550f46cd743a12353c4bde2c3e75ef39526acd717324f091f"></a><!-- doxytag: member="GROUP_USER" ref="569ea5be8d1ada5550f46cd743a12353c4bde2c3e75ef39526acd717324f091f" args="" -->GROUP_USER</em>&nbsp;</td><td>
+</td></tr>
+</table>
+</dl>
+
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00056">56</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="d7725308fc52cc9cf3b8fa71b8a2b8d7"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::create_request_load_range" ref="d7725308fc52cc9cf3b8fa71b8a2b8d7" args="(TableIdentifier &amp;table, RangeSpec &amp;range, const char *transfer_log, RangeState &amp;range_state, uint16_t flags)" -->
+<a class="anchor" name="ec49837910767d1573cb409fc5307f24"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::create_request_load_range" ref="ec49837910767d1573cb409fc5307f24" args="(TableIdentifier &amp;table, RangeSpec &amp;range, const char *transfer_log, RangeState &amp;range_state)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -155,13 +192,7 @@ Generates <a class="el" href="class_hypertable_1_1_range_server.html">RangeServe
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>range_state</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint16_t&nbsp;</td>
-          <td class="paramname"> <em>flags</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>range_state</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -181,12 +212,11 @@ Creates a "load range" request message.
     <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>range specification </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>transfer_log</em>&nbsp;</td><td>transfer log to replay </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>range_state</em>&nbsp;</td><td>range state </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>flags</em>&nbsp;</td><td>load flags </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00053">53</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00057">57</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -218,7 +248,7 @@ Creates a "load range" request message.
 <p>
 Creates an "update" request message. 
 <p>
-The data argument holds a sequence of key/value pairs. Each key/value pair is encoded as two variable lenght ByteString32T records back-to-back. This method transfers ownership of the data buffer to the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> that gets returned.<p>
+The data argument holds a sequence of key/value pairs. Each key/value pair is encoded as two variable lenght ByteStringrecords back-to-back. This method transfers ownership of the data buffer to the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> that gets returned.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>table</em>&nbsp;</td><td>table identifier </td></tr>
@@ -227,7 +257,7 @@ The data argument holds a sequence of key/value pairs. Each key/value pair is en
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00065">65</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00068">68</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -274,7 +304,7 @@ Creates a "create scanner" request message.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00073">73</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00076">76</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -304,7 +334,7 @@ Creates a "destroy scanner" request message.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00083">83</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00086">86</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -334,7 +364,7 @@ Creates a "fetch scanblock" request message.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00091">91</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00094">94</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -358,7 +388,7 @@ Creates a "status" request message.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00107">107</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00110">110</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -382,7 +412,7 @@ Creates a "shutdown" request message.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00114">114</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00117">117</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -406,7 +436,7 @@ Creates a "dump stats" command (for testint).
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00121">121</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00124">124</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -436,18 +466,19 @@ Creates a "drop table" request message.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00099">99</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00102">102</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="6ea8d040f90709519860ba5c5a885b3a"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::create_request_replay_start" ref="6ea8d040f90709519860ba5c5a885b3a" args="()" -->
+<a class="anchor" name="25698801f4805216cbd7dd1fee0b9bc6"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::create_request_replay_begin" ref="25698801f4805216cbd7dd1fee0b9bc6" args="(uint16_t group)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::RangeServerProtocol::create_request_replay_start           </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::RangeServerProtocol::create_request_replay_begin           </td>
           <td>(</td>
-          <td class="paramname">          </td>
+          <td class="paramtype">uint16_t&nbsp;</td>
+          <td class="paramname"> <em>group</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
         </tr>
@@ -456,11 +487,56 @@ Creates a "drop table" request message.
 <div class="memdoc">
 
 <p>
-Creates a "replay start" request message. 
+Creates a "replay begin" request message. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>group</em>&nbsp;</td><td>replay group to begin (METADATA_ROOT, METADATA, USER) </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
+
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00131">131</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="97f227119c96236262c577edeaf801d0"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::create_request_replay_load_range" ref="97f227119c96236262c577edeaf801d0" args="(TableIdentifier &amp;table, RangeSpec &amp;range, RangeState &amp;range_state)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::RangeServerProtocol::create_request_replay_load_range           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>range</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>range_state</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Creates a "replay load range" request message. 
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00128">128</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00139">139</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -491,7 +567,7 @@ The data argument holds a sequence of blocks. Each block consists of ...<p>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00135">135</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00149">149</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -515,7 +591,7 @@ Creates a "replay commit" request message.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00142">142</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00156">156</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -555,7 +631,7 @@ Creates a "drop range" request message.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>protocol message </dd></dl>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00149">149</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00163">163</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -579,7 +655,7 @@ Creates a "drop range" request message.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_protocol.html#7a1396871f0d0db47ad436530017bd0a">Hypertable::Protocol</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00047">47</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8cc-source.html#l00051">51</a> of file <a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -597,7 +673,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00036">36</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00037">37</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -614,7 +690,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00037">37</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00038">38</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -631,7 +707,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00038">38</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00039">39</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -648,7 +724,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00039">39</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00040">40</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -665,7 +741,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00040">40</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00041">41</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -682,7 +758,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00041">41</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00042">42</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -699,7 +775,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00042">42</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00043">43</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -716,7 +792,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00043">43</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00044">44</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -733,7 +809,7 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00044">44</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00045">45</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -750,33 +826,16 @@ Creates a "drop range" request message.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00045">45</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="9c4062eb704b0400acb26cdf60bcfcb1"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_START" ref="9c4062eb704b0400acb26cdf60bcfcb1" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#9c4062eb704b0400acb26cdf60bcfcb1">Hypertable::RangeServerProtocol::COMMAND_REPLAY_START</a> = 10<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
 <p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00046">46</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a8a1701b6b5068a57e78348922eed617"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_UPDATE" ref="a8a1701b6b5068a57e78348922eed617" args="" -->
+<a class="anchor" name="2c96489d54577dcc19386c7d4d45f10c"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_DROP_RANGE" ref="2c96489d54577dcc19386c7d4d45f10c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#a8a1701b6b5068a57e78348922eed617">Hypertable::RangeServerProtocol::COMMAND_REPLAY_UPDATE</a> = 11<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#2c96489d54577dcc19386c7d4d45f10c">Hypertable::RangeServerProtocol::COMMAND_DROP_RANGE</a> = 10<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -788,12 +847,12 @@ Creates a "drop range" request message.
 
 </div>
 </div><p>
-<a class="anchor" name="45bc4a0f2552378ca1acfb4deab49455"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_COMMIT" ref="45bc4a0f2552378ca1acfb4deab49455" args="" -->
+<a class="anchor" name="78743cfa433e914ecfa04221256f0ac2"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_BEGIN" ref="78743cfa433e914ecfa04221256f0ac2" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#45bc4a0f2552378ca1acfb4deab49455">Hypertable::RangeServerProtocol::COMMAND_REPLAY_COMMIT</a> = 12<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#78743cfa433e914ecfa04221256f0ac2">Hypertable::RangeServerProtocol::COMMAND_REPLAY_BEGIN</a> = 11<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -805,12 +864,12 @@ Creates a "drop range" request message.
 
 </div>
 </div><p>
-<a class="anchor" name="2c96489d54577dcc19386c7d4d45f10c"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_DROP_RANGE" ref="2c96489d54577dcc19386c7d4d45f10c" args="" -->
+<a class="anchor" name="1985525ed1817c0bdd5cde85acd573dd"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_LOAD_RANGE" ref="1985525ed1817c0bdd5cde85acd573dd" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#2c96489d54577dcc19386c7d4d45f10c">Hypertable::RangeServerProtocol::COMMAND_DROP_RANGE</a> = 13<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#1985525ed1817c0bdd5cde85acd573dd">Hypertable::RangeServerProtocol::COMMAND_REPLAY_LOAD_RANGE</a> = 12<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -822,12 +881,12 @@ Creates a "drop range" request message.
 
 </div>
 </div><p>
-<a class="anchor" name="0f86de251904bbb5c4de3ea15574e2a7"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_MAX" ref="0f86de251904bbb5c4de3ea15574e2a7" args="" -->
+<a class="anchor" name="a8a1701b6b5068a57e78348922eed617"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_UPDATE" ref="a8a1701b6b5068a57e78348922eed617" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#0f86de251904bbb5c4de3ea15574e2a7">Hypertable::RangeServerProtocol::COMMAND_MAX</a> = 14<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#a8a1701b6b5068a57e78348922eed617">Hypertable::RangeServerProtocol::COMMAND_REPLAY_UPDATE</a> = 13<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -839,12 +898,29 @@ Creates a "drop range" request message.
 
 </div>
 </div><p>
-<a class="anchor" name="c17642d97b90944c4301cdfb32914135"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::LOAD_RANGE_FLAG_REPLAY" ref="c17642d97b90944c4301cdfb32914135" args="" -->
+<a class="anchor" name="45bc4a0f2552378ca1acfb4deab49455"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_REPLAY_COMMIT" ref="45bc4a0f2552378ca1acfb4deab49455" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hypertable_1_1_range_server_protocol.html#c17642d97b90944c4301cdfb32914135">Hypertable::RangeServerProtocol::LOAD_RANGE_FLAG_REPLAY</a> = 0x0001<code> [static]</code>          </td>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#45bc4a0f2552378ca1acfb4deab49455">Hypertable::RangeServerProtocol::COMMAND_REPLAY_COMMIT</a> = 14<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_protocol_8h-source.html#l00051">51</a> of file <a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0f86de251904bbb5c4de3ea15574e2a7"></a><!-- doxytag: member="Hypertable::RangeServerProtocol::COMMAND_MAX" ref="0f86de251904bbb5c4de3ea15574e2a7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const short <a class="el" href="class_hypertable_1_1_range_server_protocol.html#0f86de251904bbb5c4de3ea15574e2a7">Hypertable::RangeServerProtocol::COMMAND_MAX</a> = 15<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -879,10 +955,11 @@ Creates a "drop range" request message.
     <span class="stringliteral">"dump stats"</span>,
     <span class="stringliteral">"destroy scanner"</span>,
     <span class="stringliteral">"drop table"</span>,
-    <span class="stringliteral">"replay start"</span>,
-    <span class="stringliteral">"replay update"</span>,
-    <span class="stringliteral">"replay commit"</span>,    
     <span class="stringliteral">"drop range"</span>,
+    <span class="stringliteral">"replay begin"</span>,
+    <span class="stringliteral">"replay load range"</span>,
+    <span class="stringliteral">"replay update"</span>,
+    <span class="stringliteral">"replay commit"</span>,
     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
   }
 </pre></div>
@@ -892,7 +969,7 @@ Creates a "drop range" request message.
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_protocol_8h-source.html">RangeServerProtocol.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_protocol_8cc-source.html">RangeServerProtocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:51 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:10 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

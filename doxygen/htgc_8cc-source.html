@@ -17,66 +17,50 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_e618129a8e69f36ca5b12077e594f26b.html">Master</a></div>
 <h1>htgc.cc</h1><a href="htgc_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_thread_8h.html">Common/Thread.h</a>"</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_client_8h.html">Hypertable/Lib/Client.h</a>"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_client_8h.html">DfsBroker/Lib/Client.h</a>"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_master_gc_8h.html">MasterGc.h</a>"</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00032"></a>00032 <span class="keyword">using namespace </span>std;
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">namespace </span>{
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keywordtype">void</span> 
-<a name="l00037"></a><a class="code" href="htgc_8cc.html#403756a511054e117fed9c8489795b21">00037</a> <a class="code" href="htgc_8cc.html#403756a511054e117fed9c8489795b21">do_tfgc</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *config, <span class="keywordtype">bool</span> debug, <span class="keywordtype">bool</span> dryrun) {
-<a name="l00038"></a>00038   <span class="keywordflow">if</span> (debug)
-<a name="l00039"></a>00039     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(log4cpp::Priority::DEBUG);
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <span class="keywordflow">try</span> {
-<a name="l00042"></a>00042     <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config);
-<a name="l00043"></a>00043     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>();
-<a name="l00044"></a>00044     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(comm);
-<a name="l00045"></a>00045     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *fs = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_mgr, props);
-<a name="l00046"></a>00046     <a class="code" href="namespace_hypertable.html#7274226dc46034ccdf1dc8d6523c17f0">ClientPtr</a> ht_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_client.html">Hypertable::Client</a>(<span class="stringliteral">"testgc"</span>, config);
-<a name="l00047"></a>00047     <a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">TablePtr</a> table_ptr;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_thread_8h.html">Common/Thread.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_config_8h.html">Hypertable/Lib/Config.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_client_8h.html">Hypertable/Lib/Client.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_client_8h.html">DfsBroker/Lib/Client.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_master_gc_8h.html">MasterGc.h</a>"</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 <span class="keyword">namespace </span>{
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keywordtype">void</span>
+<a name="l00038"></a><a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">00038</a> <a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">do_tfgc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config, <span class="keywordtype">bool</span> dryrun) {
+<a name="l00039"></a>00039   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config);
+<a name="l00040"></a>00040   <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
+<a name="l00041"></a>00041   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *fs = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_mgr, props);
+<a name="l00042"></a>00042   <a class="code" href="namespace_hypertable_1_1_dfs_broker.html#96d666546a596365c805e6be6b08e810">ClientPtr</a> client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">Hypertable::Client</a>(<span class="stringliteral">"htgc"</span>, config);
+<a name="l00043"></a>00043   <a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">TablePtr</a> table = client-&gt;open_table(<span class="stringliteral">"METADATA"</span>);
+<a name="l00044"></a>00044   <a class="code" href="namespace_hypertable.html#56dbaa0a91471887dc18b0a27a919c3d">master_gc_once</a>(table, fs, dryrun);
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 } <span class="comment">// local namespace</span>
 <a name="l00048"></a>00048 
-<a name="l00049"></a>00049     table_ptr = ht_ptr-&gt;open_table(<span class="stringliteral">"METADATA"</span>);
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051     <a class="code" href="namespace_hypertable.html#56dbaa0a91471887dc18b0a27a919c3d">master_gc_once</a>(table_ptr, fs, dryrun);
-<a name="l00052"></a>00052   }
-<a name="l00053"></a>00053   <span class="keywordflow">catch</span> (exception &amp;e) {
-<a name="l00054"></a>00054     cerr &lt;&lt; <span class="stringliteral">"Error: "</span>&lt;&lt; e.what() &lt;&lt; endl;
-<a name="l00055"></a>00055     exit(1);
-<a name="l00056"></a>00056   }
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059 } <span class="comment">// local namespace</span>
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 <span class="keywordtype">int</span> 
-<a name="l00062"></a><a class="code" href="htgc_8cc.html#dacbe0175a79dff748855d8c9839f82b">00062</a> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> ac, <span class="keywordtype">char</span> *av[]) {
-<a name="l00063"></a>00063   <span class="keywordtype">char</span> **it = av + 1, **arg_end = av + ac;
-<a name="l00064"></a>00064   <span class="keywordtype">bool</span> debug = <span class="keyword">false</span>, dryrun = <span class="keyword">false</span>;
-<a name="l00065"></a>00065   <span class="keywordtype">char</span> *config = <span class="stringliteral">"conf/hypertable.cfg"</span>;
-<a name="l00066"></a>00066   <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">System::initialize</a>(av[0]);
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="keywordflow">for</span> (; it &lt; arg_end; ++it) {
-<a name="l00069"></a>00069     <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"-d"</span>, *it))
-<a name="l00070"></a>00070       debug = <span class="keyword">true</span>;
-<a name="l00071"></a>00071     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"-n"</span>, *it))
-<a name="l00072"></a>00072       dryrun = <span class="keyword">true</span>;
-<a name="l00073"></a>00073     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(<span class="stringliteral">"-f"</span>, *it))
-<a name="l00074"></a>00074       config = *++it;
-<a name="l00075"></a>00075   }
-<a name="l00076"></a>00076   <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">ReactorFactory::initialize</a>(4);
-<a name="l00077"></a>00077   <a class="code" href="htgc_8cc.html#403756a511054e117fed9c8489795b21">do_tfgc</a>(config, debug, dryrun);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   <span class="keywordflow">return</span> 0;
-<a name="l00080"></a>00080 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00049"></a>00049 <span class="keywordtype">int</span>
+<a name="l00050"></a><a class="code" href="htgc_8cc.html#dacbe0175a79dff748855d8c9839f82b">00050</a> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> ac, <span class="keywordtype">char</span> *av[]) {
+<a name="l00051"></a>00051   <span class="keywordflow">try</span> {
+<a name="l00052"></a>00052     <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Config::Desc</a> desc(<span class="stringliteral">"Usage: htgc [options]\nOptions"</span>);
+<a name="l00053"></a>00053     desc.add_options()
+<a name="l00054"></a>00054       (<span class="stringliteral">"dryrun,n"</span>, <span class="stringliteral">"Dryrun, don't modify (delete files etc.)"</span>)
+<a name="l00055"></a>00055       ;
+<a name="l00056"></a>00056     <a class="code" href="namespace_hypertable_1_1_config.html#9fd29c639899867804354bea6f0c0bc4">Config::init_with_comm</a>(ac, av, &amp;desc);
+<a name="l00057"></a>00057     <a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">do_tfgc</a>(<a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">Config::cfgfile</a>, <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>.count(<span class="stringliteral">"dryrun"</span>));
+<a name="l00058"></a>00058   }
+<a name="l00059"></a>00059   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00060"></a>00060     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00061"></a>00061     <span class="keywordflow">return</span> 1;
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063   <span class="keywordflow">return</span> 0;
+<a name="l00064"></a>00064 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -47,10 +47,10 @@ Collaboration diagram for ResponseHandler:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#9c80a5c17e7410c25e581c107d7dba20">~ResponseHandler</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#e18dbd74ee713517639d28792b2b9c39">handle</a> (EventPtr &amp;eventPtr)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#e6413b05c2b763e08e3badc762251a79">handle</a> (EventPtr &amp;event_ptr)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Callback method.  <a href="#e18dbd74ee713517639d28792b2b9c39"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#cf9e3ac2d36cc0a667b05d1682b2bc9c">get_response</a> (EventPtr &amp;eventPtr)=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Callback method.  <a href="#e6413b05c2b763e08e3badc762251a79"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#dfe68c2297892295f9981de141ddd136">get_response</a> (EventPtr &amp;event_ptr)=0</td></tr>
 
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">queue&lt; EventPtr &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_response_handler.html#212abb4429a85e9e1559f9301e2871fd">m_queue</a></td></tr>
@@ -62,7 +62,7 @@ Collaboration diagram for ResponseHandler:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 (somewhat) Abstract base class for response handlers; Defines the message queue and the mutex and condition variable to protect it. 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00092">92</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00095">95</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="d89c619fd467111029c6ea099e9d5e74"></a><!-- doxytag: member="ResponseHandler::ResponseHandler" ref="d89c619fd467111029c6ea099e9d5e74" args="()" -->
 <div class="memitem">
@@ -81,7 +81,7 @@ Collaboration diagram for ResponseHandler:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00096">96</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00099">99</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -102,12 +102,12 @@ Collaboration diagram for ResponseHandler:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00097">97</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00100">100</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="e18dbd74ee713517639d28792b2b9c39"></a><!-- doxytag: member="ResponseHandler::handle" ref="e18dbd74ee713517639d28792b2b9c39" args="(EventPtr &amp;eventPtr)=0" -->
+<a class="anchor" name="e6413b05c2b763e08e3badc762251a79"></a><!-- doxytag: member="ResponseHandler::handle" ref="e6413b05c2b763e08e3badc762251a79" args="(EventPtr &amp;event_ptr)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -115,7 +115,7 @@ Collaboration diagram for ResponseHandler:</div>
           <td class="memname">virtual void ResponseHandler::handle           </td>
           <td>(</td>
           <td class="paramtype">EventPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>          </td>
+          <td class="paramname"> <em>event_ptr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -129,17 +129,17 @@ Callback method.
 When the Comm layer needs to deliver an event to the application, this method is called to do so. The set of event types include, CONNECTION_ESTABLISHED, DISCONNECT, MESSAGE, ERROR, and TIMER.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>eventPtr</em>&nbsp;</td><td>smart pointer to Event object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>event_ptr</em>&nbsp;</td><td>smart pointer to Event object </td></tr>
   </table>
 </dl>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_dispatch_handler.html#d8c7975d126c64104e48c26b03034b18">Hypertable::DispatchHandler</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_dispatch_handler.html#e1f871312036aeb52e8e391ad0d70b55">Hypertable::DispatchHandler</a>.</p>
 
-<p>Implemented in <a class="el" href="class_response_handler_t_c_p.html#029dcb9b49abfb86868232b9647d768c">ResponseHandlerTCP</a>, and <a class="el" href="class_response_handler_u_d_p.html#c37f0faf4c3e122e35f61835ffc1e2e1">ResponseHandlerUDP</a>.</p>
+<p>Implemented in <a class="el" href="class_response_handler_t_c_p.html#309b93d1a76cfad23eb269f2aa1bd227">ResponseHandlerTCP</a>, and <a class="el" href="class_response_handler_u_d_p.html#8ec6bdb0551ae2aa0440e8e072218028">ResponseHandlerUDP</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cf9e3ac2d36cc0a667b05d1682b2bc9c"></a><!-- doxytag: member="ResponseHandler::get_response" ref="cf9e3ac2d36cc0a667b05d1682b2bc9c" args="(EventPtr &amp;eventPtr)=0" -->
+<a class="anchor" name="dfe68c2297892295f9981de141ddd136"></a><!-- doxytag: member="ResponseHandler::get_response" ref="dfe68c2297892295f9981de141ddd136" args="(EventPtr &amp;event_ptr)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -147,7 +147,7 @@ When the Comm layer needs to deliver an event to the application, this method is
           <td class="memname">virtual bool ResponseHandler::get_response           </td>
           <td>(</td>
           <td class="paramtype">EventPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>          </td>
+          <td class="paramname"> <em>event_ptr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -157,7 +157,7 @@ When the Comm layer needs to deliver an event to the application, this method is
 
 <p>
 
-<p>Implemented in <a class="el" href="class_response_handler_t_c_p.html#61d6ef289f60ce62593db5ef07e0e273">ResponseHandlerTCP</a>, and <a class="el" href="class_response_handler_u_d_p.html#ee9954b9108aa7a6941bf4179e435761">ResponseHandlerUDP</a>.</p>
+<p>Implemented in <a class="el" href="class_response_handler_t_c_p.html#7c6bb6a001674ed2b5cbfbe554d9667a">ResponseHandlerTCP</a>, and <a class="el" href="class_response_handler_u_d_p.html#248d548e8bbe0139a497f0dab2e681e8">ResponseHandlerUDP</a>.</p>
 
 </div>
 </div><p>
@@ -175,7 +175,7 @@ When the Comm layer needs to deliver an event to the application, this method is
 
 <p>
 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00104">104</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00107">107</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -192,7 +192,7 @@ When the Comm layer needs to deliver an event to the application, this method is
 
 <p>
 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00105">105</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00108">108</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -209,13 +209,13 @@ When the Comm layer needs to deliver an event to the application, this method is
 
 <p>
 
-<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00106">106</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="sample_client_8cc-source.html#l00109">109</a> of file <a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="sample_client_8cc-source.html">sampleClient.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:03 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

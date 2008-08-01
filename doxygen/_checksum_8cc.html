@@ -16,9 +16,9 @@
 </div>
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_c15830aad3a99e858e4f63b1b1579632.html">Common</a></div>
-<h1>Checksum.cc File Reference</h1><code>#include &lt;stdlib.h&gt;</code><br>
-<code>#include &lt;stdint.h&gt;</code><br>
+<h1>Checksum.cc File Reference</h1><code>#include &quot;<a class="el" href="_compat_8h-source.html">Compat.h</a>&quot;</code><br>
 <code>#include &lt;arpa/inet.h&gt;</code><br>
+<code>#include &lt;zlib.h&gt;</code><br>
 <code>#include &quot;<a class="el" href="_checksum_8h-source.html">Checksum.h</a>&quot;</code><br>
 
 <p>
@@ -27,7 +27,7 @@ Include dependency graph for Checksum.cc:</div>
 <div class="dynsection">
 <p><center><img src="_checksum_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Common/Checksum.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Common/Checksum.cc_map">
-<area shape="rect" href="_checksum_8h.html" title="Checksum.h" alt="" coords="84,80,180,107"></map>
+<area shape="rect" href="_compat_8h.html" title="Compat.h" alt="" coords="336,80,416,107"><area shape="rect" href="_checksum_8h.html" title="Checksum.h" alt="" coords="627,80,723,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="225,155,313,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="433,155,532,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="189,229,256,256"></map>
 </div>
 
 <p>
@@ -76,16 +76,22 @@ Include dependency graph for Checksum.cc:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#e53b06d464f103fb303e7c361047ff74">Hypertable::fletcher32a</a> (const uint16_t *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Compute fletcher32 checksum for 16-bit aligned and padded data slightly faster than fletcher32.  <a href="#e53b06d464f103fb303e7c361047ff74"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#cf38f5ee1731dddddf763a9ed110afb7">Hypertable::update_adler32_wp</a> (uint32_t adler, const void *data8, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">Hypertable::adler32_update_wp</a> (uint32_t adler, const void *data8, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#4daafcfceec2cdfdf7c2855f3ea862a1">Hypertable::adler32_wp</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#86d15a73663c589ba9e25e9e2b1e69cc">Hypertable::update_adler32</a> (uint32_t adler, const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb">Hypertable::adler32_update</a> (uint32_t adler, const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Update adler32 checksum incrementally.  <a href="#86d15a73663c589ba9e25e9e2b1e69cc"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Update adler32 checksum incrementally.  <a href="#3864b2b02d7f421c0af1f575ef350abb"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#b7b7d2e70fa05101e8f53e0994f2b932">Hypertable::adler32</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Compute adler32 checksum.  <a href="#b7b7d2e70fa05101e8f53e0994f2b932"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685">Hypertable::crc32</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Compute crc32 checksum.  <a href="#1380d7acd2de773b097dcaf6fe35f685"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a">Hypertable::crc32_update</a> (uint32_t crc, const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Update crc32 checksum incrementally.  <a href="#d6b58456652be2fbaced0c34770b252a"></a><br></td></tr>
 </table>
 <hr><h2>Define Documentation</h2>
 <a class="anchor" name="c833d00e6836f73e475f051dab329c85"></a><!-- doxytag: member="Checksum.cc::HT_A32_DO1" ref="c833d00e6836f73e475f051dab329c85" args="(buf, i)" -->
@@ -480,7 +486,7 @@ Include dependency graph for Checksum.cc:</div>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:20:12 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:20:15 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

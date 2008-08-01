@@ -37,63 +37,63 @@ Collaboration diagram for Hyperspace::Master:</div>
 <div class="dynsection">
 <p><center><img src="class_hyperspace_1_1_master__coll__graph.png" border="0" usemap="#_hyperspace_1_1_master__coll__map" alt="Collaboration graph"></center>
 <map name="_hyperspace_1_1_master__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="6,96,198,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="66,5,138,32"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="5,96,197,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="65,6,137,32"><area shape="rect" href="class_hyperspace_1_1_berkeley_db_filesystem.html" title="Hyperspace::BerkeleyDbFilesystem" alt="" coords="221,96,456,123"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hyperspace_1_1_master-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#956af82223217fe754110710258621d3">Master</a> (ConnectionManagerPtr &amp;connManagerPtr, PropertiesPtr &amp;propsPtr, <a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;keepaliveHandlerPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5efa12b4f86734c451f106aa599e600f">Master</a> (ConnectionManagerPtr &amp;, PropertiesPtr &amp;, <a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This constructor reads the properties file and pulls out some relevant properties.  <a href="#956af82223217fe754110710258621d3"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets up the m_base_dir variable to be the absolute path of the root of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> directory (with no trailing slash); Locks this root directory to prevent concurrent masters and then reads/increments/writes the 32-bit integer attribute 'generation'; Creates the server Keepalive handler.  <a href="#5efa12b4f86734c451f106aa599e600f"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#20f70958ed75532ba672af1b780f59eb">~Master</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ad89f05cb7592ad720d9bd6b4ae72a2b">mkdir</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, const char *name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ffb4120218185ca6935f38987f0df956">mkdir</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, const char *name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This method creates a directory with absolute path 'name'.  <a href="#ad89f05cb7592ad720d9bd6b4ae72a2b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#79329c126c6ee68ebb62262b36831090">unlink</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, const char *name)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a directory with absolute path 'name'.  <a href="#ffb4120218185ca6935f38987f0df956"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#f421f36137d330ee9adac823c244eb3c">unlink</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, const char *name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Delete.  <a href="#79329c126c6ee68ebb62262b36831090"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#3450dd11430c81890fe28a463a45dff3">open</a> (<a class="el" href="class_hyperspace_1_1_response_callback_open.html">ResponseCallbackOpen</a> *cb, uint64_t sessionId, const char *name, uint32_t flags, uint32_t eventMask, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute_t.html">AttributeT</a> &gt; &amp;initAttrs)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Delete.  <a href="#f421f36137d330ee9adac823c244eb3c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#6344199cfd07ae410908d8344d6a3d8c">open</a> (<a class="el" href="class_hyperspace_1_1_response_callback_open.html">ResponseCallbackOpen</a> *cb, uint64_t session_id, const char *name, uint32_t flags, uint32_t event_mask, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;init_attrs)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Open.  <a href="#3450dd11430c81890fe28a463a45dff3"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#0e3ef8b78c4c8825a9ea7bcb769f552e">close</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, uint64_t handle)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Open.  <a href="#6344199cfd07ae410908d8344d6a3d8c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#8ba65afd1547cac97ab5ad2510e02e34">close</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, uint64_t handle)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#d764f26d5cacaa788e65895a9bd3bea4">attr_set</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, uint64_t handle, const char *name, const void *value, size_t valueLen)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#00ee27aea56fa8c17cfe6ad1f1e6c71d">attr_set</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, uint64_t handle, const char *name, const void *value, size_t value_len)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ad7b4fca2da241c193b8e293b46f5702">attr_get</a> (<a class="el" href="class_hyperspace_1_1_response_callback_attr_get.html">ResponseCallbackAttrGet</a> *cb, uint64_t sessionId, uint64_t handle, const char *name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#25f1e3e31b52e2d3cf4174559d99030b">attr_get</a> (<a class="el" href="class_hyperspace_1_1_response_callback_attr_get.html">ResponseCallbackAttrGet</a> *cb, uint64_t session_id, uint64_t handle, const char *name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#57a190cc05b5852add1fb0aeb2928dbf">attr_del</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, uint64_t handle, const char *name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5b43b624a1672c7774a3e39bc6ca9dfa">attr_del</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, uint64_t handle, const char *name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#73d483effd69e28848ae355c9d3fa3bb">exists</a> (<a class="el" href="class_hyperspace_1_1_response_callback_exists.html">ResponseCallbackExists</a> *cb, uint64_t sessionId, const char *name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#646865e97a872790f9090e39309460d3">exists</a> (<a class="el" href="class_hyperspace_1_1_response_callback_exists.html">ResponseCallbackExists</a> *cb, uint64_t session_id, const char *name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#f94a0b1ff5f93b886e178ea5a88e02f2">readdir</a> (<a class="el" href="class_hyperspace_1_1_response_callback_readdir.html">ResponseCallbackReaddir</a> *cb, uint64_t sessionId, uint64_t handle)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ac608b275e306f66b019c6f5ac9ac937">readdir</a> (<a class="el" href="class_hyperspace_1_1_response_callback_readdir.html">ResponseCallbackReaddir</a> *cb, uint64_t session_id, uint64_t handle)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#d751999f9658f26d0ec873ea2c572b6c">lock</a> (<a class="el" href="class_hyperspace_1_1_response_callback_lock.html">ResponseCallbackLock</a> *cb, uint64_t sessionId, uint64_t handle, uint32_t mode, bool tryAcquire)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#e9ff9f9b68e57c5a9c1f8ab1b06bc9a1">lock</a> (<a class="el" href="class_hyperspace_1_1_response_callback_lock.html">ResponseCallbackLock</a> *cb, uint64_t session_id, uint64_t handle, uint32_t mode, bool try_lock)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#cfa7143f16c6093ba80329ccd65bca66">release</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t sessionId, uint64_t handle)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#e4e1b58c6606e16819cc514d4e036967">release</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, uint64_t handle)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#56daab02dae50f0b0facb14ba268911f">create_session</a> (struct sockaddr_in &amp;addr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new session by allocating a new <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object, obtaining a new session ID and inserting the object into the <a class="el" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> map.  <a href="#56daab02dae50f0b0facb14ba268911f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#9ba969edf9f0eccac1ed2238dc524d42">get_session</a> (uint64_t sessionId, <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;sessionPtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new session by allocating a new <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object, obtaining a new session ID and inserting the object into the <a class="el" href="class_hyperspace_1_1_session.html">Session</a> map.  <a href="#56daab02dae50f0b0facb14ba268911f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#17b107ae3e2489ebef7f692006153e5a">get_session</a> (uint64_t session_id, <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;session_data)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object for the given id from the session map.  <a href="#9ba969edf9f0eccac1ed2238dc524d42"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#e0f0f5042b33d761466f71309951682a">destroy_session</a> (uint64_t sessionId)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object for the given id from the session map.  <a href="#17b107ae3e2489ebef7f692006153e5a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#debd5fdfe694e94c6864b62930dc70bc">destroy_session</a> (uint64_t session_id)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#a603e0921663151fb1401e45b5fd9271">renew_session_lease</a> (uint64_t sessionId)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#a9f9e3d5a12375c4e4d7978513c6b309">renew_session_lease</a> (uint64_t session_id)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to renew the session lease for session with the given ID.  <a href="#a603e0921663151fb1401e45b5fd9271"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ef909ac89ebdd7ddb6d1d6cdd6617f96">next_expired_session</a> (<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;sessionPtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to renew the session lease for session with the given ID.  <a href="#a9f9e3d5a12375c4e4d7978513c6b309"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#68fd1107475d50d0edb992f3a14db417">next_expired_session</a> (<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;session_data)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ff4b480032f1e1efeb10bb8276c00e57">remove_expired_sessions</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5e909d404b996afece1431c00e63e65b">create_handle</a> (uint64_t *handlep, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#db33762164787046f118055e4b251e71">create_handle</a> (uint64_t *handlep, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#800dbc2eb68a553e25088c23c5382d78">get_handle_data</a> (uint64_t sessionId, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#98aa2672c33477a4d8c6321e23685967">get_handle_data</a> (uint64_t session_id, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#0cddc709db5afce8e1999104033bdade">remove_handle_data</a> (uint64_t sessionId, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5d802afc2f4fd3f46f26c7e7ea15ed74">remove_handle_data</a> (uint64_t session_id, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#c0e86bac801a18e7150a689264fcd2d7">get_datagram_send_address</a> (struct sockaddr_in *addr)</td></tr>
 
@@ -109,44 +109,46 @@ Collaboration diagram for Hyperspace::Master:</div>
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; std::string,<br>
- <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#6eebeb61cc16df6e68fbc61f39ade17a">NodeMapT</a></td></tr>
+ <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#684a86c95bd53a5ccf00f7d98dd5d991">NodeMap</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; uint64_t,<br>
- <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#cf6538015f3e82a43612d556bae11084">HandleMapT</a></td></tr>
+ <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#8b1f11aeec6f5ee27928bc56136f44ed">HandleMap</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
 &lt; uint64_t,<br>
- <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#fdbe393584df7d2ce5cca04eb6464f1b">SessionMapT</a></td></tr>
+ <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#4e46988cfbee58b282358fc40ab9777b">SessionMap</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::vector<br>
+&lt; <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#0217cde583eda5c4d9e376597f18123c">SessionDataVec</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#631dcd174faee7255073daf5ed8b719b">report_error</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#a5ead2c369448b90638d650e53037ef9">get_generation_number</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">report_error  <a href="#631dcd174faee7255073daf5ed8b719b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5bc5eee8561b704ac258640b2ea49141">normalize_name</a> (std::string name, std::string &amp;normal)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#d3fe16cdacfbaf3afd56d68b4a64934e">normalize_name</a> (std::string name, std::string &amp;normal)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#6788b5933fb41311f3146522cfac221a">deliver_event_notifications</a> (<a class="el" href="class_hyperspace_1_1_node_data.html">NodeData</a> *node, <a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;eventPtr, bool waitForNotify=true)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#b8942dfb7988bc920c74bf8d4deb2217">deliver_event_notifications</a> (<a class="el" href="class_hyperspace_1_1_node_data.html">NodeData</a> *node, <a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;, bool wait_for_notify=true)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#6788b5933fb41311f3146522cfac221a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#06888d56d30be847aeaaad824a3454d5">deliver_event_notification</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr, <a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;eventPtr, bool waitForNotify=true)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#b8942dfb7988bc920c74bf8d4deb2217"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#a37ce1748f420bab8c21e1b35603265f">deliver_event_notification</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data, <a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;event_ptr, bool wait_for_notify=true)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#06888d56d30be847aeaaad824a3454d5"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#39e066b74760dda221432f001417fd76">find_parent_node</a> (std::string normalName, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;parentNodePtr, std::string &amp;childName)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#a37ce1748f420bab8c21e1b35603265f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#22c21b63b74d6a8485ea273d18631500">find_parent_node</a> (const std::string &amp;normal_name, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;parent_node, std::string &amp;child_name)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Locates the parent 'node' of the given pathname.  <a href="#39e066b74760dda221432f001417fd76"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#1fa21ff1fa94cab4baed30b36034b6f2">destroy_handle</a> (uint64_t handle, int *errorp, std::string &amp;errMsg, bool waitForNotify=true)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Locates the parent 'node' of the given pathname.  <a href="#22c21b63b74d6a8485ea273d18631500"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#1d410ddf0a2b4b5f167cda1a79ecf5ed">destroy_handle</a> (uint64_t handle, int *errorp, std::string &amp;errmsg, bool wait_for_notify=true)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#a315368a161dd995dd04232e7d709de9">release_lock</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr, bool waitForNotify=true)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#4787da2e7f83ef32e9b7ff37cac45a9f">release_lock</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data, bool wait_for_notify=true)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ba41a14ec09b0a09b735bc498c2311f8">lock_handle</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr, uint32_t mode)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#fb8229dc56d4c14f1e0597e6118b40b7">lock_handle</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data, uint32_t mode)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#ba41a14ec09b0a09b735bc498c2311f8"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#e56e417cd8525554d81035c4f07acfc6">lock_handle_with_notification</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handlePtr, uint32_t mode, bool waitForNotify=true)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#fb8229dc56d4c14f1e0597e6118b40b7"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#201bd977c2e1175876e5076852582ed5">lock_handle_with_notification</a> (<a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;handle_data, uint32_t mode, bool wait_for_notify=true)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#e56e417cd8525554d81035c4f07acfc6"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ff1ec2cfae047970907e8ae624320ae4">get_node</a> (std::string name, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;nodePtr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Assumes node is locked.  <a href="#201bd977c2e1175876e5076852582ed5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#260cebfd9def600a5fafb4ebefad61c8">get_node</a> (std::string name, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;node_data)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Safely obtains the node with the given pathname from the NodeMap, creating one and inserting it into the map if it is not found.  <a href="#ff1ec2cfae047970907e8ae624320ae4"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Safely obtains the node with the given pathname from the NodeMap, creating one and inserting it into the map if it is not found.  <a href="#260cebfd9def600a5fafb4ebefad61c8"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#74924c1db7e0185ad3101079fe639193">m_verbose</a></td></tr>
 
@@ -154,11 +156,11 @@ Collaboration diagram for Hyperspace::Master:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#aa0d1cd2ea51b5ea02f4f2b2e48c7e23">m_keep_alive_interval</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#6eebeb61cc16df6e68fbc61f39ade17a">NodeMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#cb4dd035d420703d7df1cf2a07a10773">m_node_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#684a86c95bd53a5ccf00f7d98dd5d991">NodeMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#c3e6abe4728305392b01e19263406ae9">m_node_map</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#cf6538015f3e82a43612d556bae11084">HandleMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#2916c2864ab1fc4075d4ece0f517e345">m_handle_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#8b1f11aeec6f5ee27928bc56136f44ed">HandleMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#f4602500be052394c86434fabd34aee4">m_handle_map</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#fdbe393584df7d2ce5cca04eb6464f1b">SessionMapT</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#84ec72b900ec1967ff488abf5675279b">m_session_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#4e46988cfbee58b282358fc40ab9777b">SessionMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#88e33a8e7788ddd2b6500058a7fd21cf">m_session_map</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#f551e5b32ccd050cb2e94ba84a53af2c">m_node_map_mutex</a></td></tr>
 
@@ -180,20 +182,21 @@ Collaboration diagram for Hyperspace::Master:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">struct sockaddr_in&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5d57a150539189795c452165d8dd3615">m_local_addr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector<br>
-&lt; <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#b5177498a5d3267ec14bbb36071e3006">m_session_heap</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_master.html#0217cde583eda5c4d9e376597f18123c">SessionDataVec</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ac5b803b7e72d03883aed01971611e34">m_session_heap</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html">BerkeleyDbFilesystem</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#f85cc02c2b361e3417a244d862a40d0b">m_bdb_fs</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
 <p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00056">56</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="6eebeb61cc16df6e68fbc61f39ade17a"></a><!-- doxytag: member="Hyperspace::Master::NodeMapT" ref="6eebeb61cc16df6e68fbc61f39ade17a" args="" -->
+<a class="anchor" name="684a86c95bd53a5ccf00f7d98dd5d991"></a><!-- doxytag: member="Hyperspace::Master::NodeMap" ref="684a86c95bd53a5ccf00f7d98dd5d991" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;std::string, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#6eebeb61cc16df6e68fbc61f39ade17a">Hyperspace::Master::NodeMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;std::string, <a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#684a86c95bd53a5ccf00f7d98dd5d991">Hyperspace::Master::NodeMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -201,16 +204,16 @@ Collaboration diagram for Hyperspace::Master:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00163">163</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00187">187</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cf6538015f3e82a43612d556bae11084"></a><!-- doxytag: member="Hyperspace::Master::HandleMapT" ref="cf6538015f3e82a43612d556bae11084" args="" -->
+<a class="anchor" name="8b1f11aeec6f5ee27928bc56136f44ed"></a><!-- doxytag: member="Hyperspace::Master::HandleMap" ref="8b1f11aeec6f5ee27928bc56136f44ed" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#cf6538015f3e82a43612d556bae11084">Hyperspace::Master::HandleMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#8b1f11aeec6f5ee27928bc56136f44ed">Hyperspace::Master::HandleMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -218,16 +221,16 @@ Collaboration diagram for Hyperspace::Master:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00164">164</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00188">188</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="fdbe393584df7d2ce5cca04eb6464f1b"></a><!-- doxytag: member="Hyperspace::Master::SessionMapT" ref="fdbe393584df7d2ce5cca04eb6464f1b" args="" -->
+<a class="anchor" name="4e46988cfbee58b282358fc40ab9777b"></a><!-- doxytag: member="Hyperspace::Master::SessionMap" ref="4e46988cfbee58b282358fc40ab9777b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#fdbe393584df7d2ce5cca04eb6464f1b">Hyperspace::Master::SessionMapT</a><code> [private]</code>          </td>
+          <td class="memname">typedef hash_map&lt;uint64_t, <a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#4e46988cfbee58b282358fc40ab9777b">Hyperspace::Master::SessionMap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -235,12 +238,29 @@ Collaboration diagram for Hyperspace::Master:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00165">165</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00189">189</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0217cde583eda5c4d9e376597f18123c"></a><!-- doxytag: member="Hyperspace::Master::SessionDataVec" ref="0217cde583eda5c4d9e376597f18123c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::vector&lt;<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#0217cde583eda5c4d9e376597f18123c">Hyperspace::Master::SessionDataVec</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00190">190</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="956af82223217fe754110710258621d3"></a><!-- doxytag: member="Hyperspace::Master::Master" ref="956af82223217fe754110710258621d3" args="(ConnectionManagerPtr &amp;connManagerPtr, PropertiesPtr &amp;propsPtr, ServerKeepaliveHandlerPtr &amp;keepaliveHandlerPtr)" -->
+<a class="anchor" name="5efa12b4f86734c451f106aa599e600f"></a><!-- doxytag: member="Hyperspace::Master::Master" ref="5efa12b4f86734c451f106aa599e600f" args="(ConnectionManagerPtr &amp;, PropertiesPtr &amp;, ServerKeepaliveHandlerPtr &amp;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -248,19 +268,19 @@ Collaboration diagram for Hyperspace::Master:</div>
           <td class="memname">Master::Master           </td>
           <td>(</td>
           <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>connManagerPtr</em>, </td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">PropertiesPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>propsPtr</em>, </td>
+          <td class="paramname"> <em>props</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>keepaliveHandlerPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>keepalive_handler</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -272,12 +292,12 @@ Collaboration diagram for Hyperspace::Master:</div>
 <div class="memdoc">
 
 <p>
-This constructor reads the properties file and pulls out some relevant properties. 
+Sets up the m_base_dir variable to be the absolute path of the root of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> directory (with no trailing slash); Locks this root directory to prevent concurrent masters and then reads/increments/writes the 32-bit integer attribute 'generation'; Creates the server Keepalive handler. 
 <p>
-It also sets up the m_base_dir variable to be the absolute path of the root of the <a class="el" href="namespace_hyperspace.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hyperspace</a> directory (with no trailing slash). It locks this root directory to prevent concurrent masters and then reads/increments/writes the 32-bit integer extended attribute 'generation'. It also creates the server Keepalive handler. 
+
 <p>
 Lock the base directory to prevent concurrent masters<p>
-Increment generation number and save 
+Load and increment generation number 
 <p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00066">66</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
@@ -299,12 +319,12 @@ Increment generation number and save
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00163">163</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00153">153</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="ad89f05cb7592ad720d9bd6b4ae72a2b"></a><!-- doxytag: member="Hyperspace::Master::mkdir" ref="ad89f05cb7592ad720d9bd6b4ae72a2b" args="(ResponseCallback *cb, uint64_t sessionId, const char *name)" -->
+<a class="anchor" name="ffb4120218185ca6935f38987f0df956"></a><!-- doxytag: member="Hyperspace::Master::mkdir" ref="ffb4120218185ca6935f38987f0df956" args="(ResponseCallback *cb, uint64_t session_id, const char *name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -318,7 +338,7 @@ Increment generation number and save
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -336,14 +356,14 @@ Increment generation number and save
 <div class="memdoc">
 
 <p>
-This method creates a directory with absolute path 'name'. 
+Creates a directory with absolute path 'name'. 
 <p>
 It locks the parent node to prevent concurrent modifications. 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00314">314</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00310">310</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="79329c126c6ee68ebb62262b36831090"></a><!-- doxytag: member="Hyperspace::Master::unlink" ref="79329c126c6ee68ebb62262b36831090" args="(ResponseCallback *cb, uint64_t sessionId, const char *name)" -->
+<a class="anchor" name="f421f36137d330ee9adac823c244eb3c"></a><!-- doxytag: member="Hyperspace::Master::unlink" ref="f421f36137d330ee9adac823c244eb3c" args="(ResponseCallback *cb, uint64_t session_id, const char *name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -357,7 +377,7 @@ It locks the parent node to prevent concurrent modifications.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -378,11 +398,11 @@ It locks the parent node to prevent concurrent modifications.
 Delete. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00353">353</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00356">356</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="3450dd11430c81890fe28a463a45dff3"></a><!-- doxytag: member="Hyperspace::Master::open" ref="3450dd11430c81890fe28a463a45dff3" args="(ResponseCallbackOpen *cb, uint64_t sessionId, const char *name, uint32_t flags, uint32_t eventMask, std::vector&lt; AttributeT &gt; &amp;initAttrs)" -->
+<a class="anchor" name="6344199cfd07ae410908d8344d6a3d8c"></a><!-- doxytag: member="Hyperspace::Master::open" ref="6344199cfd07ae410908d8344d6a3d8c" args="(ResponseCallbackOpen *cb, uint64_t session_id, const char *name, uint32_t flags, uint32_t event_mask, std::vector&lt; Attribute &gt; &amp;init_attrs)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -396,7 +416,7 @@ Delete.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -414,13 +434,13 @@ Delete.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&nbsp;</td>
-          <td class="paramname"> <em>eventMask</em>, </td>
+          <td class="paramname"> <em>event_mask</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute_t.html">AttributeT</a> &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>initAttrs</em></td><td>&nbsp;</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>init_attrs</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -436,14 +456,12 @@ Open.
 <p>
 
 <p>
-if (flags &amp; OPEN_FLAG_WRITE) { cb-&gt;error(Error::HYPERSPACE_IS_DIRECTORY, ""); return; }<p>
-Set the initial attributes<p>
 If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00415">415</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00407">407</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="0e3ef8b78c4c8825a9ea7bcb769f552e"></a><!-- doxytag: member="Hyperspace::Master::close" ref="0e3ef8b78c4c8825a9ea7bcb769f552e" args="(ResponseCallback *cb, uint64_t sessionId, uint64_t handle)" -->
+<a class="anchor" name="8ba65afd1547cac97ab5ad2510e02e34"></a><!-- doxytag: member="Hyperspace::Master::close" ref="8ba65afd1547cac97ab5ad2510e02e34" args="(ResponseCallback *cb, uint64_t session_id, uint64_t handle)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -457,7 +475,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -476,11 +494,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00628">628</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00558">558</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d764f26d5cacaa788e65895a9bd3bea4"></a><!-- doxytag: member="Hyperspace::Master::attr_set" ref="d764f26d5cacaa788e65895a9bd3bea4" args="(ResponseCallback *cb, uint64_t sessionId, uint64_t handle, const char *name, const void *value, size_t valueLen)" -->
+<a class="anchor" name="00ee27aea56fa8c17cfe6ad1f1e6c71d"></a><!-- doxytag: member="Hyperspace::Master::attr_set" ref="00ee27aea56fa8c17cfe6ad1f1e6c71d" args="(ResponseCallback *cb, uint64_t session_id, uint64_t handle, const char *name, const void *value, size_t value_len)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -494,7 +512,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -518,7 +536,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>valueLen</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value_len</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -531,11 +549,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00663">663</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00596">596</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ad7b4fca2da241c193b8e293b46f5702"></a><!-- doxytag: member="Hyperspace::Master::attr_get" ref="ad7b4fca2da241c193b8e293b46f5702" args="(ResponseCallbackAttrGet *cb, uint64_t sessionId, uint64_t handle, const char *name)" -->
+<a class="anchor" name="25f1e3e31b52e2d3cf4174559d99030b"></a><!-- doxytag: member="Hyperspace::Master::attr_get" ref="25f1e3e31b52e2d3cf4174559d99030b" args="(ResponseCallbackAttrGet *cb, uint64_t session_id, uint64_t handle, const char *name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -549,7 +567,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -574,11 +592,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00705">705</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00643">643</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="57a190cc05b5852add1fb0aeb2928dbf"></a><!-- doxytag: member="Hyperspace::Master::attr_del" ref="57a190cc05b5852add1fb0aeb2928dbf" args="(ResponseCallback *cb, uint64_t sessionId, uint64_t handle, const char *name)" -->
+<a class="anchor" name="5b43b624a1672c7774a3e39bc6ca9dfa"></a><!-- doxytag: member="Hyperspace::Master::attr_del" ref="5b43b624a1672c7774a3e39bc6ca9dfa" args="(ResponseCallback *cb, uint64_t session_id, uint64_t handle, const char *name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -592,7 +610,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -617,11 +635,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00756">756</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00686">686</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="73d483effd69e28848ae355c9d3fa3bb"></a><!-- doxytag: member="Hyperspace::Master::exists" ref="73d483effd69e28848ae355c9d3fa3bb" args="(ResponseCallbackExists *cb, uint64_t sessionId, const char *name)" -->
+<a class="anchor" name="646865e97a872790f9090e39309460d3"></a><!-- doxytag: member="Hyperspace::Master::exists" ref="646865e97a872790f9090e39309460d3" args="(ResponseCallbackExists *cb, uint64_t session_id, const char *name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -635,7 +653,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -654,11 +672,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00796">796</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00728">728</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f94a0b1ff5f93b886e178ea5a88e02f2"></a><!-- doxytag: member="Hyperspace::Master::readdir" ref="f94a0b1ff5f93b886e178ea5a88e02f2" args="(ResponseCallbackReaddir *cb, uint64_t sessionId, uint64_t handle)" -->
+<a class="anchor" name="ac608b275e306f66b019c6f5ac9ac937"></a><!-- doxytag: member="Hyperspace::Master::readdir" ref="ac608b275e306f66b019c6f5ac9ac937" args="(ResponseCallbackReaddir *cb, uint64_t session_id, uint64_t handle)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -672,7 +690,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -691,11 +709,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00814">814</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00757">757</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d751999f9658f26d0ec873ea2c572b6c"></a><!-- doxytag: member="Hyperspace::Master::lock" ref="d751999f9658f26d0ec873ea2c572b6c" args="(ResponseCallbackLock *cb, uint64_t sessionId, uint64_t handle, uint32_t mode, bool tryAcquire)" -->
+<a class="anchor" name="e9ff9f9b68e57c5a9c1f8ab1b06bc9a1"></a><!-- doxytag: member="Hyperspace::Master::lock" ref="e9ff9f9b68e57c5a9c1f8ab1b06bc9a1" args="(ResponseCallbackLock *cb, uint64_t session_id, uint64_t handle, uint32_t mode, bool try_lock)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -709,7 +727,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -727,7 +745,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>tryAcquire</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>try_lock</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -740,11 +758,11 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00882">882</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00797">797</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cfa7143f16c6093ba80329ccd65bca66"></a><!-- doxytag: member="Hyperspace::Master::release" ref="cfa7143f16c6093ba80329ccd65bca66" args="(ResponseCallback *cb, uint64_t sessionId, uint64_t handle)" -->
+<a class="anchor" name="e4e1b58c6606e16819cc514d4e036967"></a><!-- doxytag: member="Hyperspace::Master::release" ref="e4e1b58c6606e16819cc514d4e036967" args="(ResponseCallback *cb, uint64_t session_id, uint64_t handle)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -758,7 +776,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -777,7 +795,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01001">1001</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00935">935</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -798,7 +816,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 <div class="memdoc">
 
 <p>
-Creates a new session by allocating a new <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object, obtaining a new session ID and inserting the object into the <a class="el" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> map. 
+Creates a new session by allocating a new <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object, obtaining a new session ID and inserting the object into the <a class="el" href="class_hyperspace_1_1_session.html">Session</a> map. 
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
@@ -807,11 +825,11 @@ Creates a new session by allocating a new <a class="el" href="class_hyperspace_1
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the new session ID </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00169">169</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00163">163</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="9ba969edf9f0eccac1ed2238dc524d42"></a><!-- doxytag: member="Hyperspace::Master::get_session" ref="9ba969edf9f0eccac1ed2238dc524d42" args="(uint64_t sessionId, SessionDataPtr &amp;sessionPtr)" -->
+<a class="anchor" name="17b107ae3e2489ebef7f692006153e5a"></a><!-- doxytag: member="Hyperspace::Master::get_session" ref="17b107ae3e2489ebef7f692006153e5a" args="(uint64_t session_id, SessionDataPtr &amp;session_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -819,13 +837,13 @@ Creates a new session by allocating a new <a class="el" href="class_hyperspace_1
           <td class="memname">bool Master::get_session           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>sessionPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>session_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -841,17 +859,17 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>sessionId</em>&nbsp;</td><td><a class="el" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> ID to lookup </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>sessionPtr</em>&nbsp;</td><td>Reference to <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> smart pointer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session_id</em>&nbsp;</td><td><a class="el" href="class_hyperspace_1_1_session.html">Session</a> ID to lookup </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session_data</em>&nbsp;</td><td>Reference to <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> smart pointer </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if found, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00180">180</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00174">174</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e0f0f5042b33d761466f71309951682a"></a><!-- doxytag: member="Hyperspace::Master::destroy_session" ref="e0f0f5042b33d761466f71309951682a" args="(uint64_t sessionId)" -->
+<a class="anchor" name="debd5fdfe694e94c6864b62930dc70bc"></a><!-- doxytag: member="Hyperspace::Master::destroy_session" ref="debd5fdfe694e94c6864b62930dc70bc" args="(uint64_t session_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -859,7 +877,7 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
           <td class="memname">void Master::destroy_session           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>          </td>
+          <td class="paramname"> <em>session_id</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -869,11 +887,11 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00189">189</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00183">183</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a603e0921663151fb1401e45b5fd9271"></a><!-- doxytag: member="Hyperspace::Master::renew_session_lease" ref="a603e0921663151fb1401e45b5fd9271" args="(uint64_t sessionId)" -->
+<a class="anchor" name="a9f9e3d5a12375c4e4d7978513c6b309"></a><!-- doxytag: member="Hyperspace::Master::renew_session_lease" ref="a9f9e3d5a12375c4e4d7978513c6b309" args="(uint64_t session_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -881,7 +899,7 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
           <td class="memname">int Master::renew_session_lease           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>          </td>
+          <td class="paramname"> <em>session_id</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -895,16 +913,16 @@ Attempts to renew the session lease for session with the given ID.
 If the session cannot be found or if it is expired, the method returns Error::HYPERSPACE_EXPIRED_SESSION otherwise, it renews the session lease by invoking the RenewLease method of the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionData</a> object.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>sessionId</em>&nbsp;</td><td><a class="el" href="class_hyperspace_1_1_session.html" title="Hyperspace session.">Session</a> ID to renew </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>session_id</em>&nbsp;</td><td><a class="el" href="class_hyperspace_1_1_session.html">Session</a> ID to renew </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>Error::OK if successful </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00203">203</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00197">197</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ef909ac89ebdd7ddb6d1d6cdd6617f96"></a><!-- doxytag: member="Hyperspace::Master::next_expired_session" ref="ef909ac89ebdd7ddb6d1d6cdd6617f96" args="(SessionDataPtr &amp;sessionPtr)" -->
+<a class="anchor" name="68fd1107475d50d0edb992f3a14db417"></a><!-- doxytag: member="Hyperspace::Master::next_expired_session" ref="68fd1107475d50d0edb992f3a14db417" args="(SessionDataPtr &amp;session_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -912,7 +930,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
           <td class="memname">bool Master::next_expired_session           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>sessionPtr</em>          </td>
+          <td class="paramname"> <em>session_data</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -922,7 +940,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00216">216</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00210">210</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -943,11 +961,11 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00240">240</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00234">234</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5e909d404b996afece1431c00e63e65b"></a><!-- doxytag: member="Hyperspace::Master::create_handle" ref="5e909d404b996afece1431c00e63e65b" args="(uint64_t *handlep, HandleDataPtr &amp;handlePtr)" -->
+<a class="anchor" name="db33762164787046f118055e4b251e71"></a><!-- doxytag: member="Hyperspace::Master::create_handle" ref="db33762164787046f118055e4b251e71" args="(uint64_t *handlep, HandleDataPtr &amp;handle_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -961,7 +979,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handle_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -974,11 +992,11 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00274">274</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00269">269</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="800dbc2eb68a553e25088c23c5382d78"></a><!-- doxytag: member="Hyperspace::Master::get_handle_data" ref="800dbc2eb68a553e25088c23c5382d78" args="(uint64_t sessionId, HandleDataPtr &amp;handlePtr)" -->
+<a class="anchor" name="98aa2672c33477a4d8c6321e23685967"></a><!-- doxytag: member="Hyperspace::Master::get_handle_data" ref="98aa2672c33477a4d8c6321e23685967" args="(uint64_t session_id, HandleDataPtr &amp;handle_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -986,13 +1004,13 @@ If the session cannot be found or if it is expired, the method returns Error::HY
           <td class="memname">bool Master::get_handle_data           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handle_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1005,11 +1023,11 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00286">286</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00281">281</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="0cddc709db5afce8e1999104033bdade"></a><!-- doxytag: member="Hyperspace::Master::remove_handle_data" ref="0cddc709db5afce8e1999104033bdade" args="(uint64_t sessionId, HandleDataPtr &amp;handlePtr)" -->
+<a class="anchor" name="5d802afc2f4fd3f46f26c7e7ea15ed74"></a><!-- doxytag: member="Hyperspace::Master::remove_handle_data" ref="5d802afc2f4fd3f46f26c7e7ea15ed74" args="(uint64_t session_id, HandleDataPtr &amp;handle_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1017,13 +1035,13 @@ If the session cannot be found or if it is expired, the method returns Error::HY
           <td class="memname">bool Master::remove_handle_data           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handle_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1036,7 +1054,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00298">298</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00293">293</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1058,19 +1076,18 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00117">117</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00127">127</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="631dcd174faee7255073daf5ed8b719b"></a><!-- doxytag: member="Hyperspace::Master::report_error" ref="631dcd174faee7255073daf5ed8b719b" args="(ResponseCallback *cb)" -->
+<a class="anchor" name="a5ead2c369448b90638d650e53037ef9"></a><!-- doxytag: member="Hyperspace::Master::get_generation_number" ref="a5ead2c369448b90638d650e53037ef9" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Master::report_error           </td>
+          <td class="memname">void Master::get_generation_number           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
-          <td class="paramname"> <em>cb</em>          </td>
+          <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [private]</code></td>
         </tr>
@@ -1079,19 +1096,17 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 <div class="memdoc">
 
 <p>
-report_error 
-<p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01108">1108</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01194">1194</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5bc5eee8561b704ac258640b2ea49141"></a><!-- doxytag: member="Hyperspace::Master::normalize_name" ref="5bc5eee8561b704ac258640b2ea49141" args="(std::string name, std::string &amp;normal)" -->
+<a class="anchor" name="d3fe16cdacfbaf3afd56d68b4a64934e"></a><!-- doxytag: member="Hyperspace::Master::normalize_name" ref="d3fe16cdacfbaf3afd56d68b4a64934e" args="(std::string name, std::string &amp;normal)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Master::normalize_name           </td>
+          <td class="memname">void Hyperspace::Master::normalize_name           </td>
           <td>(</td>
           <td class="paramtype">std::string&nbsp;</td>
           <td class="paramname"> <em>name</em>, </td>
@@ -1113,11 +1128,9 @@ report_error
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01133">1133</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
-
 </div>
 </div><p>
-<a class="anchor" name="6788b5933fb41311f3146522cfac221a"></a><!-- doxytag: member="Hyperspace::Master::deliver_event_notifications" ref="6788b5933fb41311f3146522cfac221a" args="(NodeData *node, HyperspaceEventPtr &amp;eventPtr, bool waitForNotify=true)" -->
+<a class="anchor" name="b8942dfb7988bc920c74bf8d4deb2217"></a><!-- doxytag: member="Hyperspace::Master::deliver_event_notifications" ref="b8942dfb7988bc920c74bf8d4deb2217" args="(NodeData *node, HyperspaceEventPtr &amp;, bool wait_for_notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1131,13 +1144,13 @@ report_error
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>, </td>
+          <td class="paramname"> <em>event_ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>waitForNotify</em> = <code>true</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>wait_for_notify</em> = <code>true</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1152,11 +1165,11 @@ report_error
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01148">1148</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01048">1048</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="06888d56d30be847aeaaad824a3454d5"></a><!-- doxytag: member="Hyperspace::Master::deliver_event_notification" ref="06888d56d30be847aeaaad824a3454d5" args="(HandleDataPtr &amp;handlePtr, HyperspaceEventPtr &amp;eventPtr, bool waitForNotify=true)" -->
+<a class="anchor" name="a37ce1748f420bab8c21e1b35603265f"></a><!-- doxytag: member="Hyperspace::Master::deliver_event_notification" ref="a37ce1748f420bab8c21e1b35603265f" args="(HandleDataPtr &amp;handle_data, HyperspaceEventPtr &amp;event_ptr, bool wait_for_notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1164,19 +1177,19 @@ Assumes node is locked.
           <td class="memname">void Master::deliver_event_notification           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em>, </td>
+          <td class="paramname"> <em>handle_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#5a0d997757fe62feaa83461afd2abe54">HyperspaceEventPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>eventPtr</em>, </td>
+          <td class="paramname"> <em>event_ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>waitForNotify</em> = <code>true</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>wait_for_notify</em> = <code>true</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1191,31 +1204,31 @@ Assumes node is locked.
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01170">1170</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01074">1074</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="39e066b74760dda221432f001417fd76"></a><!-- doxytag: member="Hyperspace::Master::find_parent_node" ref="39e066b74760dda221432f001417fd76" args="(std::string normalName, NodeDataPtr &amp;parentNodePtr, std::string &amp;childName)" -->
+<a class="anchor" name="22c21b63b74d6a8485ea273d18631500"></a><!-- doxytag: member="Hyperspace::Master::find_parent_node" ref="22c21b63b74d6a8485ea273d18631500" args="(const std::string &amp;normal_name, NodeDataPtr &amp;parent_node, std::string &amp;child_name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool Master::find_parent_node           </td>
           <td>(</td>
-          <td class="paramtype">std::string&nbsp;</td>
-          <td class="paramname"> <em>normalName</em>, </td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>normal_name</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>parentNodePtr</em>, </td>
+          <td class="paramname"> <em>parent_node</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>childName</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>child_name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1229,21 +1242,21 @@ Assumes node is locked.
 <p>
 Locates the parent 'node' of the given pathname. 
 <p>
-It determines the name of the parent node by stripping off the characters incuding and after the last '/' character. It then looks up the name in the m_node_map and sets the pointer reference 'parentNodePtr' to it. As a side effect, it also saves the child name (e.g. characters after the last '/' character to the string reference childName. NOTE: This method locks the m_node_map_mutex.<p>
+It determines the name of the parent node by stripping off the characters incuding and after the last '/' character. It then looks up the name in the m_node_map and sets the pointer reference 'parent_node' to it. As a side effect, it also saves the child name (e.g. characters after the last '/' character to the string reference child_name. NOTE: This method locks the m_node_map_mutex.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>normalName</em>&nbsp;</td><td>Normalized (e.g. no trailing '/') name of path to find parent of </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>parentNodePtr</em>&nbsp;</td><td>pointer reference to hold return pointer </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>childName</em>&nbsp;</td><td>reference to string to hold the child directory entry name </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>normal_name</em>&nbsp;</td><td>Normalized (e.g. no trailing '/') name of path to find parent of </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>parent_node</em>&nbsp;</td><td>pointer reference to hold return pointer </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>child_name</em>&nbsp;</td><td>reference to string to hold the child directory entry name </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if parent node found, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01187">1187</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01094">1094</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="1fa21ff1fa94cab4baed30b36034b6f2"></a><!-- doxytag: member="Hyperspace::Master::destroy_handle" ref="1fa21ff1fa94cab4baed30b36034b6f2" args="(uint64_t handle, int *errorp, std::string &amp;errMsg, bool waitForNotify=true)" -->
+<a class="anchor" name="1d410ddf0a2b4b5f167cda1a79ecf5ed"></a><!-- doxytag: member="Hyperspace::Master::destroy_handle" ref="1d410ddf0a2b4b5f167cda1a79ecf5ed" args="(uint64_t handle, int *errorp, std::string &amp;errmsg, bool wait_for_notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1263,13 +1276,13 @@ It determines the name of the parent node by stripping off the characters incudi
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>errMsg</em>, </td>
+          <td class="paramname"> <em>errmsg</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>waitForNotify</em> = <code>true</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>wait_for_notify</em> = <code>true</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1282,11 +1295,11 @@ It determines the name of the parent node by stripping off the characters incudi
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01223">1223</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01135">1135</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a315368a161dd995dd04232e7d709de9"></a><!-- doxytag: member="Hyperspace::Master::release_lock" ref="a315368a161dd995dd04232e7d709de9" args="(HandleDataPtr &amp;handlePtr, bool waitForNotify=true)" -->
+<a class="anchor" name="4787da2e7f83ef32e9b7ff37cac45a9f"></a><!-- doxytag: member="Hyperspace::Master::release_lock" ref="4787da2e7f83ef32e9b7ff37cac45a9f" args="(HandleDataPtr &amp;handle_data, bool wait_for_notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1294,13 +1307,13 @@ It determines the name of the parent node by stripping off the characters incudi
           <td class="memname">void Master::release_lock           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em>, </td>
+          <td class="paramname"> <em>handle_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>waitForNotify</em> = <code>true</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>wait_for_notify</em> = <code>true</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1313,11 +1326,11 @@ It determines the name of the parent node by stripping off the characters incudi
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01025">1025</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00960">960</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ba41a14ec09b0a09b735bc498c2311f8"></a><!-- doxytag: member="Hyperspace::Master::lock_handle" ref="ba41a14ec09b0a09b735bc498c2311f8" args="(HandleDataPtr &amp;handlePtr, uint32_t mode)" -->
+<a class="anchor" name="fb8229dc56d4c14f1e0597e6118b40b7"></a><!-- doxytag: member="Hyperspace::Master::lock_handle" ref="fb8229dc56d4c14f1e0597e6118b40b7" args="(HandleDataPtr &amp;handle_data, uint32_t mode)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1325,7 +1338,7 @@ It determines the name of the parent node by stripping off the characters incudi
           <td class="memname">void Master::lock_handle           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em>, </td>
+          <td class="paramname"> <em>handle_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1346,11 +1359,11 @@ It determines the name of the parent node by stripping off the characters incudi
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00971">971</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00905">905</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e56e417cd8525554d81035c4f07acfc6"></a><!-- doxytag: member="Hyperspace::Master::lock_handle_with_notification" ref="e56e417cd8525554d81035c4f07acfc6" args="(HandleDataPtr &amp;handlePtr, uint32_t mode, bool waitForNotify=true)" -->
+<a class="anchor" name="201bd977c2e1175876e5076852582ed5"></a><!-- doxytag: member="Hyperspace::Master::lock_handle_with_notification" ref="201bd977c2e1175876e5076852582ed5" args="(HandleDataPtr &amp;handle_data, uint32_t mode, bool wait_for_notify=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1358,7 +1371,7 @@ Assumes node is locked.
           <td class="memname">void Master::lock_handle_with_notification           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#10c2f43e6bf999559f90bad8c67500fc">HandleDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>handlePtr</em>, </td>
+          <td class="paramname"> <em>handle_data</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1370,7 +1383,7 @@ Assumes node is locked.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>waitForNotify</em> = <code>true</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>wait_for_notify</em> = <code>true</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1385,11 +1398,11 @@ Assumes node is locked.
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00984">984</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00919">919</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ff1ec2cfae047970907e8ae624320ae4"></a><!-- doxytag: member="Hyperspace::Master::get_node" ref="ff1ec2cfae047970907e8ae624320ae4" args="(std::string name, NodeDataPtr &amp;nodePtr)" -->
+<a class="anchor" name="260cebfd9def600a5fafb4ebefad61c8"></a><!-- doxytag: member="Hyperspace::Master::get_node" ref="260cebfd9def600a5fafb4ebefad61c8" args="(std::string name, NodeDataPtr &amp;node_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1403,7 +1416,7 @@ Assumes node is locked.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#ea6276fa0665b02c8f6f505c2255a2f1">NodeDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>nodePtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>node_data</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1420,11 +1433,11 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>pathname of node </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>nodePtr</em>&nbsp;</td><td>Reference of node smart pointer to hold return node </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>node_data</em>&nbsp;</td><td>Reference of node smart pointer to hold return node </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00151">151</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00175">175</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1510,7 +1523,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00167">167</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00192">192</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1527,7 +1540,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00168">168</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00193">193</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1544,16 +1557,16 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00169">169</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00194">194</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cb4dd035d420703d7df1cf2a07a10773"></a><!-- doxytag: member="Hyperspace::Master::m_node_map" ref="cb4dd035d420703d7df1cf2a07a10773" args="" -->
+<a class="anchor" name="c3e6abe4728305392b01e19263406ae9"></a><!-- doxytag: member="Hyperspace::Master::m_node_map" ref="c3e6abe4728305392b01e19263406ae9" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#6eebeb61cc16df6e68fbc61f39ade17a">NodeMapT</a> <a class="el" href="class_hyperspace_1_1_master.html#cb4dd035d420703d7df1cf2a07a10773">Hyperspace::Master::m_node_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#684a86c95bd53a5ccf00f7d98dd5d991">NodeMap</a> <a class="el" href="class_hyperspace_1_1_master.html#c3e6abe4728305392b01e19263406ae9">Hyperspace::Master::m_node_map</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1561,16 +1574,16 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00170">170</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00195">195</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2916c2864ab1fc4075d4ece0f517e345"></a><!-- doxytag: member="Hyperspace::Master::m_handle_map" ref="2916c2864ab1fc4075d4ece0f517e345" args="" -->
+<a class="anchor" name="f4602500be052394c86434fabd34aee4"></a><!-- doxytag: member="Hyperspace::Master::m_handle_map" ref="f4602500be052394c86434fabd34aee4" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#cf6538015f3e82a43612d556bae11084">HandleMapT</a> <a class="el" href="class_hyperspace_1_1_master.html#2916c2864ab1fc4075d4ece0f517e345">Hyperspace::Master::m_handle_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#8b1f11aeec6f5ee27928bc56136f44ed">HandleMap</a> <a class="el" href="class_hyperspace_1_1_master.html#f4602500be052394c86434fabd34aee4">Hyperspace::Master::m_handle_map</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1578,16 +1591,16 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00171">171</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00196">196</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="84ec72b900ec1967ff488abf5675279b"></a><!-- doxytag: member="Hyperspace::Master::m_session_map" ref="84ec72b900ec1967ff488abf5675279b" args="" -->
+<a class="anchor" name="88e33a8e7788ddd2b6500058a7fd21cf"></a><!-- doxytag: member="Hyperspace::Master::m_session_map" ref="88e33a8e7788ddd2b6500058a7fd21cf" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#fdbe393584df7d2ce5cca04eb6464f1b">SessionMapT</a> <a class="el" href="class_hyperspace_1_1_master.html#84ec72b900ec1967ff488abf5675279b">Hyperspace::Master::m_session_map</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#4e46988cfbee58b282358fc40ab9777b">SessionMap</a> <a class="el" href="class_hyperspace_1_1_master.html#88e33a8e7788ddd2b6500058a7fd21cf">Hyperspace::Master::m_session_map</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1595,7 +1608,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00172">172</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00197">197</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1612,7 +1625,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00173">173</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00198">198</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1629,7 +1642,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00174">174</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00199">199</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1646,7 +1659,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00175">175</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00200">200</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1663,7 +1676,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00176">176</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00201">201</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1680,7 +1693,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00177">177</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00202">202</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1697,7 +1710,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00178">178</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00203">203</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1714,7 +1727,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00179">179</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00204">204</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1731,7 +1744,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00180">180</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00205">205</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1748,7 +1761,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00181">181</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00206">206</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -1765,16 +1778,16 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00182">182</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00207">207</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b5177498a5d3267ec14bbb36071e3006"></a><!-- doxytag: member="Hyperspace::Master::m_session_heap" ref="b5177498a5d3267ec14bbb36071e3006" args="" -->
+<a class="anchor" name="ac5b803b7e72d03883aed01971611e34"></a><!-- doxytag: member="Hyperspace::Master::m_session_heap" ref="ac5b803b7e72d03883aed01971611e34" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>&gt; <a class="el" href="class_hyperspace_1_1_master.html#b5177498a5d3267ec14bbb36071e3006">Hyperspace::Master::m_session_heap</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_master.html#0217cde583eda5c4d9e376597f18123c">SessionDataVec</a> <a class="el" href="class_hyperspace_1_1_master.html#ac5b803b7e72d03883aed01971611e34">Hyperspace::Master::m_session_heap</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1782,13 +1795,30 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00183">183</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00208">208</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f85cc02c2b361e3417a244d862a40d0b"></a><!-- doxytag: member="Hyperspace::Master::m_bdb_fs" ref="f85cc02c2b361e3417a244d862a40d0b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html">BerkeleyDbFilesystem</a>* <a class="el" href="class_hyperspace_1_1_master.html#f85cc02c2b361e3417a244d862a40d0b">Hyperspace::Master::m_bdb_fs</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8h-source.html#l00211">211</a> of file <a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a><li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:21 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:39 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

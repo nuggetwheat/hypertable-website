@@ -30,40 +30,40 @@
 <a name="l00037"></a><a class="code" href="class_hypertable_1_1_scan_block.html">00037</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_scan_block.html" title="Encapsulates a block of scan results.">ScanBlock</a> {
 <a name="l00038"></a>00038   <span class="keyword">public</span>:
 <a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">00040</a>     <span class="keyword">typedef</span> std::vector&lt; std::pair&lt;ByteString, ByteString&gt; &gt; <a class="code" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">VectorT</a>;
+<a name="l00040"></a><a class="code" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">00040</a>     <span class="keyword">typedef</span> std::vector&lt; std::pair&lt;ByteString, ByteString&gt; &gt; <a class="code" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Vector</a>;
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042     <a class="code" href="class_hypertable_1_1_scan_block.html#577c1e6424b90cce0b2d3999923b21a3">ScanBlock</a>();
 <a name="l00043"></a>00043 
-<a name="l00050"></a>00050     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_scan_block.html#0c623adecfc8e0feb38eacd43ebe4a06" title="Loads scanblock data returned from RangeServer.">load</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr);
+<a name="l00050"></a>00050     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_scan_block.html#ccf73fdeee55e4cdf4ae9dd021307ed3" title="Loads scanblock data returned from RangeServer.">load</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr);
 <a name="l00051"></a>00051 
-<a name="l00056"></a><a class="code" href="class_hypertable_1_1_scan_block.html#4327fccbaa6789a95889ef55e6650ae5">00056</a>     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_scan_block.html#4327fccbaa6789a95889ef55e6650ae5" title="Returns the number of key/value pairs in the scanblock.">size</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">m_vec</a>.size(); }
+<a name="l00056"></a><a class="code" href="class_hypertable_1_1_scan_block.html#4327fccbaa6789a95889ef55e6650ae5">00056</a>     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_scan_block.html#4327fccbaa6789a95889ef55e6650ae5" title="Returns the number of key/value pairs in the scanblock.">size</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">m_vec</a>.size(); }
 <a name="l00057"></a>00057 
-<a name="l00059"></a><a class="code" href="class_hypertable_1_1_scan_block.html#54d0e43644e259060bfa57722e74821b">00059</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scan_block.html#54d0e43644e259060bfa57722e74821b" title="Resets iterator to first key/value pair in the scanblock.">reset</a>() { <a class="code" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">m_iter</a> = <a class="code" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">m_vec</a>.begin(); }
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_scan_block.html#54d0e43644e259060bfa57722e74821b">00059</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scan_block.html#54d0e43644e259060bfa57722e74821b" title="Resets iterator to first key/value pair in the scanblock.">reset</a>() { <a class="code" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">m_iter</a> = <a class="code" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">m_vec</a>.begin(); }
 <a name="l00060"></a>00060 
 <a name="l00068"></a>00068     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_block.html#602b94730b0ab4375c7f7aeeec59ab59" title="Returns the next key/value pair in the scanblock.">next</a>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value);
 <a name="l00069"></a>00069 
 <a name="l00074"></a><a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933">00074</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933" title="Returns true if this is the final scanblock returned by the scanner.">eos</a>() { <span class="keywordflow">return</span> ((<a class="code" href="class_hypertable_1_1_scan_block.html#efa2a05ec37e4e21bca46f10514fa9d1">m_flags</a> &amp; 0x0001) == 0x0001); }
 <a name="l00075"></a>00075 
-<a name="l00080"></a><a class="code" href="class_hypertable_1_1_scan_block.html#a759928df0ce25b267a364c829136e95">00080</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_block.html#a759928df0ce25b267a364c829136e95" title="Indicates whether or not there are more key/value pairs in block.">more</a>() {  
-<a name="l00081"></a>00081       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">m_iter</a> == <a class="code" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">m_vec</a>.end())
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_scan_block.html#a759928df0ce25b267a364c829136e95">00080</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_block.html#a759928df0ce25b267a364c829136e95" title="Indicates whether or not there are more key/value pairs in block.">more</a>() {
+<a name="l00081"></a>00081       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">m_iter</a> == <a class="code" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">m_vec</a>.end())
 <a name="l00082"></a>00082         <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00083"></a>00083       <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00084"></a>00084     }
 <a name="l00085"></a>00085 
 <a name="l00090"></a><a class="code" href="class_hypertable_1_1_scan_block.html#50dacabc4448324030bb3801403a871a">00090</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_scan_block.html#50dacabc4448324030bb3801403a871a" title="Returns scanner ID associated with this scanblock.">get_scanner_id</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_scan_block.html#ef6222e09abc6be70c7e678fea35e669">m_scanner_id</a>; }
-<a name="l00091"></a>00091     
+<a name="l00091"></a>00091 
 <a name="l00092"></a>00092   <span class="keyword">private</span>:
 <a name="l00093"></a><a class="code" href="class_hypertable_1_1_scan_block.html#90742b4631048266821bba2f8c697e9c">00093</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_scan_block.html#90742b4631048266821bba2f8c697e9c">m_error</a>;
 <a name="l00094"></a><a class="code" href="class_hypertable_1_1_scan_block.html#efa2a05ec37e4e21bca46f10514fa9d1">00094</a>     uint16_t <a class="code" href="class_hypertable_1_1_scan_block.html#efa2a05ec37e4e21bca46f10514fa9d1">m_flags</a>;
 <a name="l00095"></a><a class="code" href="class_hypertable_1_1_scan_block.html#ef6222e09abc6be70c7e678fea35e669">00095</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_scan_block.html#ef6222e09abc6be70c7e678fea35e669">m_scanner_id</a>;
-<a name="l00096"></a><a class="code" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">00096</a>     <a class="code" href="class_hypertable_1_1_scan_block.html#07dd471754fde97da7da1599d95ddfca">VectorT</a> <a class="code" href="class_hypertable_1_1_scan_block.html#69451f07a220cd92abb7105bc3067f64">m_vec</a>;
-<a name="l00097"></a><a class="code" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">00097</a>     VectorT::iterator <a class="code" href="class_hypertable_1_1_scan_block.html#aaf04084ece03bed69f2b117fbf6743f">m_iter</a>;
+<a name="l00096"></a><a class="code" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">00096</a>     <a class="code" href="class_hypertable_1_1_scan_block.html#12490cbe38f11f51a456f416df434065">Vector</a> <a class="code" href="class_hypertable_1_1_scan_block.html#933e55f9cdaea5abb5a1cbbfe05d299d">m_vec</a>;
+<a name="l00097"></a><a class="code" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">00097</a>     Vector::iterator <a class="code" href="class_hypertable_1_1_scan_block.html#6d267ec517ee38203a85baa3d642c102">m_iter</a>;
 <a name="l00098"></a><a class="code" href="class_hypertable_1_1_scan_block.html#b12ea39f038c80a6279f0e66d9ed2115">00098</a>     <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> <a class="code" href="class_hypertable_1_1_scan_block.html#b12ea39f038c80a6279f0e66d9ed2115">m_event_ptr</a>;
 <a name="l00099"></a>00099   };
 <a name="l00100"></a>00100 }
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102 <span class="preprocessor">#endif // HYPERTABLE_SCANBLOCK_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

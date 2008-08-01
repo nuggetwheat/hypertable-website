@@ -33,45 +33,60 @@ Inheritance diagram for Hypertable::RangeState:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_range_state__inherit__graph.png" border="0" usemap="#_hypertable_1_1_range_state__inherit__map" alt="Inheritance graph"></center>
 <map name="_hypertable_1_1_range_state__inherit__map">
-<area shape="rect" href="class_hypertable_1_1_range_state_copy.html" title="Complete copy of the persistent state of a Range." alt="" coords="5,80,203,107"></map>
+<area shape="rect" href="class_hypertable_1_1_range_state_managed.html" title="Holds the storage the persistent state of a Range." alt="" coords="5,80,227,107"></map>
+<center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
+<div class="dynheader">
+Collaboration diagram for Hypertable::RangeState:</div>
+<div class="dynsection">
+<p><center><img src="class_hypertable_1_1_range_state__coll__graph.png" border="0" usemap="#_hypertable_1_1_range_state__coll__map" alt="Collaboration graph"></center>
+<map name="_hypertable_1_1_range_state__coll__map">
+<area shape="rect" href="class_hypertable_1_1_timestamp.html" title="Hypertable::Timestamp" alt="" coords="7,5,169,32"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_range_state-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Types</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="class_hypertable_1_1_range_state.html#c1a3318e6a0dadbf7a37648f70f95585bd7ae9005c4b48858c0e8fb951430f3d">STEADY</a>, 
-<a class="el" href="class_hypertable_1_1_range_state.html#c1a3318e6a0dadbf7a37648f70f955856d3dc244813d229616bd80635fbc528b">SPLIT_LOG_INSTALLED</a>, 
-<a class="el" href="class_hypertable_1_1_range_state.html#c1a3318e6a0dadbf7a37648f70f95585907646948834a9d06fc4e8ff191ba8d2">SPLIT_SHRUNK</a>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4">StateType</a> { <a class="el" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4bd7ae9005c4b48858c0e8fb951430f3d">STEADY</a>, 
+<a class="el" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db46d3dc244813d229616bd80635fbc528b">SPLIT_LOG_INSTALLED</a>, 
+<a class="el" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4907646948834a9d06fc4e8ff191ba8d2">SPLIT_SHRUNK</a>
  }</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#10a1ddced7ada19ba9bfa425d3fcbe30">RangeState</a> ()</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#9809d7bf7888816b1dbbc22b2b79224e">clear</a> ()</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#2ed6dc2ab911ddff2790df2017b1571a">encoded_length</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#86005455ee31db5894dcfaa15c074709">encode</a> (uint8_t **bufPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#d8c921d8ec1441c44646f376b803b6fe">encode</a> (uint8_t **bufp)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#08627ef7465019afbddcaa678a3dc347">decode</a> (uint8_t **bufPtr, size_t *remainingPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">decode</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_timestamp.html">Timestamp</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a></td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a></td></tr>
+
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.html" title="Represents a table row range.">Range</a>. 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00032">32</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00034">34</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 <hr><h2>Member Enumeration Documentation</h2>
-<a class="anchor" name="c1a3318e6a0dadbf7a37648f70f95585"></a><!-- doxytag: member="Hypertable::RangeState::@9" ref="c1a3318e6a0dadbf7a37648f70f95585" args="" -->
+<a class="anchor" name="9b19a7c25013bf6797e207a1fe448db4"></a><!-- doxytag: member="Hypertable::RangeState::StateType" ref="9b19a7c25013bf6797e207a1fe448db4" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">anonymous enum          </td>
+          <td class="memname">enum <a class="el" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4">Hypertable::RangeState::StateType</a>          </td>
         </tr>
       </table>
 </div>
@@ -80,16 +95,16 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 <p>
 <dl compact><dt><b>Enumerator: </b></dt><dd>
 <table border="0" cellspacing="2" cellpadding="0">
-<tr><td valign="top"><em><a class="anchor" name="c1a3318e6a0dadbf7a37648f70f95585bd7ae9005c4b48858c0e8fb951430f3d"></a><!-- doxytag: member="STEADY" ref="c1a3318e6a0dadbf7a37648f70f95585bd7ae9005c4b48858c0e8fb951430f3d" args="" -->STEADY</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" name="9b19a7c25013bf6797e207a1fe448db4bd7ae9005c4b48858c0e8fb951430f3d"></a><!-- doxytag: member="STEADY" ref="9b19a7c25013bf6797e207a1fe448db4bd7ae9005c4b48858c0e8fb951430f3d" args="" -->STEADY</em>&nbsp;</td><td>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" name="c1a3318e6a0dadbf7a37648f70f955856d3dc244813d229616bd80635fbc528b"></a><!-- doxytag: member="SPLIT_LOG_INSTALLED" ref="c1a3318e6a0dadbf7a37648f70f955856d3dc244813d229616bd80635fbc528b" args="" -->SPLIT_LOG_INSTALLED</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" name="9b19a7c25013bf6797e207a1fe448db46d3dc244813d229616bd80635fbc528b"></a><!-- doxytag: member="SPLIT_LOG_INSTALLED" ref="9b19a7c25013bf6797e207a1fe448db46d3dc244813d229616bd80635fbc528b" args="" -->SPLIT_LOG_INSTALLED</em>&nbsp;</td><td>
 </td></tr>
-<tr><td valign="top"><em><a class="anchor" name="c1a3318e6a0dadbf7a37648f70f95585907646948834a9d06fc4e8ff191ba8d2"></a><!-- doxytag: member="SPLIT_SHRUNK" ref="c1a3318e6a0dadbf7a37648f70f95585907646948834a9d06fc4e8ff191ba8d2" args="" -->SPLIT_SHRUNK</em>&nbsp;</td><td>
+<tr><td valign="top"><em><a class="anchor" name="9b19a7c25013bf6797e207a1fe448db4907646948834a9d06fc4e8ff191ba8d2"></a><!-- doxytag: member="SPLIT_SHRUNK" ref="9b19a7c25013bf6797e207a1fe448db4907646948834a9d06fc4e8ff191ba8d2" args="" -->SPLIT_SHRUNK</em>&nbsp;</td><td>
 </td></tr>
 </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00034">34</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00036">36</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 
 </div>
 </div><p>
@@ -111,11 +126,32 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00035">35</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00037">37</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="9809d7bf7888816b1dbbc22b2b79224e"></a><!-- doxytag: member="Hypertable::RangeState::clear" ref="9809d7bf7888816b1dbbc22b2b79224e" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::RangeState::clear           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00040">40</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="2ed6dc2ab911ddff2790df2017b1571a"></a><!-- doxytag: member="Hypertable::RangeState::encoded_length" ref="2ed6dc2ab911ddff2790df2017b1571a" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -133,11 +169,11 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00028">28</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00030">30</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="86005455ee31db5894dcfaa15c074709"></a><!-- doxytag: member="Hypertable::RangeState::encode" ref="86005455ee31db5894dcfaa15c074709" args="(uint8_t **bufPtr)" -->
+<a class="anchor" name="d8c921d8ec1441c44646f376b803b6fe"></a><!-- doxytag: member="Hypertable::RangeState::encode" ref="d8c921d8ec1441c44646f376b803b6fe" args="(uint8_t **bufp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -145,7 +181,7 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
           <td class="memname">void RangeState::encode           </td>
           <td>(</td>
           <td class="paramtype">uint8_t **&nbsp;</td>
-          <td class="paramname"> <em>bufPtr</em>          </td>
+          <td class="paramname"> <em>bufp</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -155,25 +191,25 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00034">34</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00036">36</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="08627ef7465019afbddcaa678a3dc347"></a><!-- doxytag: member="Hypertable::RangeState::decode" ref="08627ef7465019afbddcaa678a3dc347" args="(uint8_t **bufPtr, size_t *remainingPtr)" -->
+<a class="anchor" name="094ba1894c857dc6ab2e7273f30c4eec"></a><!-- doxytag: member="Hypertable::RangeState::decode" ref="094ba1894c857dc6ab2e7273f30c4eec" args="(const uint8_t **bufp, size_t *remainp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">bool RangeState::decode           </td>
+          <td class="memname">void RangeState::decode           </td>
           <td>(</td>
-          <td class="paramtype">uint8_t **&nbsp;</td>
-          <td class="paramname"> <em>bufPtr</em>, </td>
+          <td class="paramtype">const uint8_t **&nbsp;</td>
+          <td class="paramname"> <em>bufp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t *&nbsp;</td>
-          <td class="paramname"> <em>remainingPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>remainp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -186,7 +222,7 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00042">42</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8cc-source.html#l00046">46</a> of file <a class="el" href="_range_state_8cc-source.html">RangeState.cc</a>.</p>
 
 </div>
 </div><p>
@@ -204,7 +240,24 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00039">39</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00051">51</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="aaeda097894742f10d11e8fed0f05e9b"></a><!-- doxytag: member="Hypertable::RangeState::timestamp" ref="aaeda097894742f10d11e8fed0f05e9b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_timestamp.html">Timestamp</a> <a class="el" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">Hypertable::RangeState::timestamp</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00052">52</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 
 </div>
 </div><p>
@@ -221,7 +274,7 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00040">40</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00053">53</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 
 </div>
 </div><p>
@@ -238,13 +291,47 @@ Holds the persistent state of a <a class="el" href="class_hypertable_1_1_range.h
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00041">41</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00054">54</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8d24fb9e0a5b043a2eec2c24e181eab1"></a><!-- doxytag: member="Hypertable::RangeState::split_point" ref="8d24fb9e0a5b043a2eec2c24e181eab1" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* <a class="el" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">Hypertable::RangeState::split_point</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00055">55</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="3ea4bad680f811a37d2d0359aaa19c4b"></a><!-- doxytag: member="Hypertable::RangeState::old_start_row" ref="3ea4bad680f811a37d2d0359aaa19c4b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* <a class="el" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">Hypertable::RangeState::old_start_row</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_state_8h-source.html#l00056">56</a> of file <a class="el" href="_range_state_8h-source.html">RangeState.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_state_8h-source.html">RangeState.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_state_8cc-source.html">RangeState.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:51 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:10 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -57,9 +57,9 @@ Collaboration diagram for Hypertable::CellStoreTrailerV0:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#a8dd78cf2300e7fe0f14117ad4dd1e5e">serialize</a> (uint8_t *buf)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Serializes this trailer to the given buffer;.  <a href="#a8dd78cf2300e7fe0f14117ad4dd1e5e"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#7fc95c08ca1b65b79142434eda533692">deserialize</a> (uint8_t *buf)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#dbe91d87d67c4f9e9c1c9a5ee9bf3bab">deserialize</a> (const uint8_t *buf)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Deserializes the trailer from the given buffer.  <a href="#7fc95c08ca1b65b79142434eda533692"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Deserializes the trailer from the given buffer.  <a href="#dbe91d87d67c4f9e9c1c9a5ee9bf3bab"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#9acf4f6ca348ecd2a63d94ae9167ff73">display</a> (std::ostream &amp;os)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Prints the trailer to the given ostream.  <a href="#9acf4f6ca348ecd2a63d94ae9167ff73"></a><br></td></tr>
@@ -78,7 +78,13 @@ Collaboration diagram for Hypertable::CellStoreTrailerV0:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_timestamp.html">Timestamp</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#f8c16b7a4e6dcb8a42e30174514db5f9">timestamp</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">float&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a></td></tr>
+<tr><td class="memItemLeft" nowrap>union {</td></tr>
+
+<tr><td class="memItemLeft" nowrap>&nbsp;&nbsp;&nbsp;float&nbsp;&nbsp;&nbsp;<a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap>&nbsp;&nbsp;&nbsp;uint32_t&nbsp;&nbsp;&nbsp;<a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#1f0e094e02a496d6a9f9b0b14d3c5412">compression_ratio_i32</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap valign="top">};&nbsp;</td><td class="memItemRight" valign="bottom"></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#e854addc1824ada64b145f3f7e4cdc47">compression_type</a></td></tr>
 
@@ -87,7 +93,7 @@ Collaboration diagram for Hypertable::CellStoreTrailerV0:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00034">34</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00031">31</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="0222ea63ffe20c4102f337590c573556"></a><!-- doxytag: member="Hypertable::CellStoreTrailerV0::CellStoreTrailerV0" ref="0222ea63ffe20c4102f337590c573556" args="()" -->
 <div class="memitem">
@@ -106,7 +112,7 @@ Collaboration diagram for Hypertable::CellStoreTrailerV0:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00036">36</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00038">38</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
 
 </div>
 </div><p>
@@ -127,7 +133,7 @@ Collaboration diagram for Hypertable::CellStoreTrailerV0:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00037">37</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00034">34</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -153,7 +159,7 @@ Clears the contents of this trailer;.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#16b0fdd7c64b76e2ee66623d54b0571a">Hypertable::CellStoreTrailer</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00044">44</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00046">46</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
 
 </div>
 </div><p>
@@ -179,7 +185,7 @@ Returns the serialized size of the trailer.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#a0578cd50cc7b65fcb500612aceee2be">Hypertable::CellStoreTrailer</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00039">39</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00036">36</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -210,18 +216,18 @@ Serializes this trailer to the given buffer;.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#36a3614104d80d17eee10f89cfe730ae">Hypertable::CellStoreTrailer</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00062">62</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00064">64</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="7fc95c08ca1b65b79142434eda533692"></a><!-- doxytag: member="Hypertable::CellStoreTrailerV0::deserialize" ref="7fc95c08ca1b65b79142434eda533692" args="(uint8_t *buf)" -->
+<a class="anchor" name="dbe91d87d67c4f9e9c1c9a5ee9bf3bab"></a><!-- doxytag: member="Hypertable::CellStoreTrailerV0::deserialize" ref="dbe91d87d67c4f9e9c1c9a5ee9bf3bab" args="(const uint8_t *buf)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void CellStoreTrailerV0::deserialize           </td>
           <td>(</td>
-          <td class="paramtype">uint8_t *&nbsp;</td>
+          <td class="paramtype">const uint8_t *&nbsp;</td>
           <td class="paramname"> <em>buf</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [virtual]</code></td>
@@ -239,7 +245,7 @@ Deserializes the trailer from the given buffer.
   </table>
 </dl>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#c37c69eb835a631e1ae0146b25658ff4">Hypertable::CellStoreTrailer</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#34c0410e16fef764310c67e32677ac45">Hypertable::CellStoreTrailer</a>.</p>
 
 <p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00085">85</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
 
@@ -272,7 +278,7 @@ Prints the trailer to the given ostream.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_store_trailer.html#6a477d18745652154ffbddbfdc6681e5">Hypertable::CellStoreTrailer</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00106">106</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8cc-source.html#l00105">105</a> of file <a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a>.</p>
 
 </div>
 </div><p>
@@ -290,7 +296,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00044">44</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00041">41</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -307,7 +313,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00045">45</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00042">42</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -324,7 +330,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00046">46</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00043">43</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -341,7 +347,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00047">47</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00044">44</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -358,7 +364,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00048">48</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00045">45</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -375,7 +381,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00049">49</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00046">46</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -392,7 +398,7 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00050">50</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00047">47</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
 
 </div>
 </div><p>
@@ -409,7 +415,39 @@ Prints the trailer to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00051">51</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00049">49</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1f0e094e02a496d6a9f9b0b14d3c5412"></a><!-- doxytag: member="Hypertable::CellStoreTrailerV0::compression_ratio_i32" ref="1f0e094e02a496d6a9f9b0b14d3c5412" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_cell_store_trailer_v0.html#1f0e094e02a496d6a9f9b0b14d3c5412">Hypertable::CellStoreTrailerV0::compression_ratio_i32</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_store_trailer_v0_8h-source.html#l00050">50</a> of file <a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b056c3d925427632503ca33ac450631d"></a><!-- doxytag: member="Hypertable::CellStoreTrailerV0::@11" ref="b056c3d925427632503ca33ac450631d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">union { ... }           </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
 
 </div>
 </div><p>
@@ -449,7 +487,7 @@ Prints the trailer to the given ostream.
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_store_trailer_v0_8h-source.html">CellStoreTrailerV0.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_store_trailer_v0_8cc-source.html">CellStoreTrailerV0.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:27:02 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

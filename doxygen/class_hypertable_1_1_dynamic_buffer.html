@@ -30,9 +30,7 @@
 <a href="class_hypertable_1_1_dynamic_buffer-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#cf0bdc53badac5417288fa11441a246a">DynamicBuffer</a> ()</td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#068119ff41f515d6bd9ebf5752c23be8">DynamicBuffer</a> (size_t initial_size, bool own_buffer=true)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#39dc8d06f4a553414a14cc9787050c77">DynamicBuffer</a> (size_t initialSize=0, bool own_buffer=true)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#6243115cd0a6b40bcb70496720a9dc02">~DynamicBuffer</a> ()</td></tr>
 
@@ -42,9 +40,11 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c">ensure</a> (size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Ensure space for additional data Will grow the space to 1.5 of the needed space with existing data unchanged.  <a href="#964e910bedd2a7bf294277cf0d1ecf5c"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a> (size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>, bool nocopy=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#649b9243c48b7a0c3691621717ac47aa">addNoCheck</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Reserve space for additional data Will grow the space to exactly what's needed.  <a href="#1af91ec703645dbb3a91f62bbcb674ac"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#f232bbce348a344cba925ebbc0eebc9d">add</a> (const void *data, size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
 
@@ -56,7 +56,7 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a> (size_t *lenp=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#81d11f134406905e78428a996c018d4c">grow</a> (size_t newSize, bool nocopy=false)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#c670097e3690260a59ffbd7d33f13473">grow</a> (size_t new_size, bool nocopy=false)</td></tr>
 
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a></td></tr>
@@ -70,30 +70,9 @@
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00031">31</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00032">32</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="cf0bdc53badac5417288fa11441a246a"></a><!-- doxytag: member="Hypertable::DynamicBuffer::DynamicBuffer" ref="cf0bdc53badac5417288fa11441a246a" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Hypertable::DynamicBuffer::DynamicBuffer           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00035">35</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="068119ff41f515d6bd9ebf5752c23be8"></a><!-- doxytag: member="Hypertable::DynamicBuffer::DynamicBuffer" ref="068119ff41f515d6bd9ebf5752c23be8" args="(size_t initial_size, bool own_buffer=true)" -->
+<a class="anchor" name="39dc8d06f4a553414a14cc9787050c77"></a><!-- doxytag: member="Hypertable::DynamicBuffer::DynamicBuffer" ref="39dc8d06f4a553414a14cc9787050c77" args="(size_t initialSize=0, bool own_buffer=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -101,7 +80,7 @@
           <td class="memname">Hypertable::DynamicBuffer::DynamicBuffer           </td>
           <td>(</td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>initial_size</em>, </td>
+          <td class="paramname"> <em>initialSize</em> = <code>0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -112,7 +91,7 @@
         <tr>
           <td></td>
           <td>)</td>
-          <td></td><td></td><td width="100%"><code> [inline]</code></td>
+          <td></td><td></td><td width="100%"><code> [inline, explicit]</code></td>
         </tr>
       </table>
 </div>
@@ -120,7 +99,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00037">37</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00035">35</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -141,7 +120,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00046">46</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00043">43</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -163,7 +142,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00048">48</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00045">45</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -184,7 +163,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00050">50</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00047">47</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -205,8 +184,15 @@
 <div class="memdoc">
 
 <p>
+Ensure space for additional data Will grow the space to 1.5 of the needed space with existing data unchanged. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>- additional data in bytes </td></tr>
+  </table>
+</dl>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00052">52</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00056">56</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -236,17 +222,19 @@
 <div class="memdoc">
 
 <p>
-
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00057">57</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+Reserve space for additional data Will grow the space to exactly what's needed. 
+<p>
+Existing data is NOT preserved by default 
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00066">66</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="649b9243c48b7a0c3691621717ac47aa"></a><!-- doxytag: member="Hypertable::DynamicBuffer::addNoCheck" ref="649b9243c48b7a0c3691621717ac47aa" args="(const void *data, size_t len)" -->
+<a class="anchor" name="3b63edd17b6635607926114f41e5eba2"></a><!-- doxytag: member="Hypertable::DynamicBuffer::add_unchecked" ref="3b63edd17b6635607926114f41e5eba2" args="(const void *data, size_t len)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint8_t* Hypertable::DynamicBuffer::addNoCheck           </td>
+          <td class="memname">uint8_t* Hypertable::DynamicBuffer::add_unchecked           </td>
           <td>(</td>
           <td class="paramtype">const void *&nbsp;</td>
           <td class="paramname"> <em>data</em>, </td>
@@ -268,7 +256,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00062">62</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00071">71</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -299,7 +287,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00071">71</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00080">80</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -330,7 +318,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00077">77</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00085">85</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -351,7 +339,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00082">82</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00091">91</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -372,7 +360,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00086">86</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00095">95</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -394,11 +382,11 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00093">93</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00102">102</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="81d11f134406905e78428a996c018d4c"></a><!-- doxytag: member="Hypertable::DynamicBuffer::grow" ref="81d11f134406905e78428a996c018d4c" args="(size_t newSize, bool nocopy=false)" -->
+<a class="anchor" name="c670097e3690260a59ffbd7d33f13473"></a><!-- doxytag: member="Hypertable::DynamicBuffer::grow" ref="c670097e3690260a59ffbd7d33f13473" args="(size_t new_size, bool nocopy=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -406,7 +394,7 @@
           <td class="memname">void Hypertable::DynamicBuffer::grow           </td>
           <td>(</td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>newSize</em>, </td>
+          <td class="paramname"> <em>new_size</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -425,7 +413,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00102">102</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00111">111</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -443,7 +431,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00115">115</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00124">124</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -460,7 +448,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00116">116</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00125">125</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -477,7 +465,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00117">117</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00126">126</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
@@ -494,13 +482,13 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00118">118</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
+<p>Definition at line <a class="el" href="_dynamic_buffer_8h-source.html#l00127">127</a> of file <a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_dynamic_buffer_8h-source.html">DynamicBuffer.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:38 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:56 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

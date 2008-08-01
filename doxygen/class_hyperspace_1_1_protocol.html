@@ -47,37 +47,37 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#6922ad18aceb9887fc1a5e04dd035d20">command_text</a> (short command)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#21fcfa8d429fc4613f903823dc542f48">create_client_keepalive_request</a> (uint64_t sessionId, uint64_t lastKnownEvent)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#df14b58279ba8d8d614ab452f742b2e5">create_client_keepalive_request</a> (uint64_t session_id, uint64_t last_known_event, bool shutdown=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#11592035baab634def359179570684bf">create_server_keepalive_request</a> (uint64_t sessionId, int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#8e962fd439b7e2d33e585d3f303284de">create_server_keepalive_request</a> (uint64_t session_id, int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#bac8378a4678a955906e60036993bfd4">create_server_keepalive_request</a> (<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;sessionPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#faafa5394a738a0336c1ea89a7e76b5d">create_server_keepalive_request</a> (<a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;session_data)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#47ecd7d6bbed2af881bae050ae312678">create_handshake_request</a> (uint64_t sessionId)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#04423d8553d26efa4d523e11ff0e92b2">create_handshake_request</a> (uint64_t session_id)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#142153483ff0461c6d2c0a6eeba5aac5">create_open_request</a> (std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;callbackPtr, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute_t.html">AttributeT</a> &gt; &amp;initAttrs)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#eeb6a62c34a7a43610272d7cee304634">create_open_request</a> (const std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;callback, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;init_attrs)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#8e3b05cfb9ac3c05bad8a75e9516c9c2">create_close_request</a> (uint64_t handle)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#1351f2b8887c6a57559c26e248a232eb">create_mkdir_request</a> (std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#7e941bcadda18eb548568541abbfe437">create_mkdir_request</a> (const std::string &amp;name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#c7ebccc7e69b2dce6812f8d4581cbe5a">create_delete_request</a> (std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#0d0f307e6630ad8e260b9c88ffbab269">create_delete_request</a> (const std::string &amp;name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#5b8de41ad673f039f071164b0b6a65b0">create_attr_set_request</a> (uint64_t handle, std::string &amp;name, const void *value, size_t valueLen)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#0f54a3cfd0bffcf94ec20fa4ac2146cd">create_attr_set_request</a> (uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#cfce17febdffe91bfb4a791141f84c1f">create_attr_get_request</a> (uint64_t handle, std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#b38ca182ef17cd0b4b7932b52de7b3a1">create_attr_get_request</a> (uint64_t handle, const std::string &amp;name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#ecd8ad3078496a09f10ed07136d0b2ba">create_attr_del_request</a> (uint64_t handle, std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#2737110f0496ad2e1264a3f92235a678">create_attr_del_request</a> (uint64_t handle, const std::string &amp;name)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#a1c5657e76597284b923433b515aa83b">create_readdir_request</a> (uint64_t handle)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#e7b13fea3abaf3561ff44b680f582955">create_exists_request</a> (std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#ef4d5b205a02ba7826747e8cad13f6e4">create_exists_request</a> (const std::string &amp;name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#a92799ccc88013a06ef61fcb1f564967">create_lock_request</a> (uint64_t handle, uint32_t mode, bool tryAcquire)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#04a077797225c31c9b4ac016b644b45f">create_lock_request</a> (uint64_t handle, uint32_t mode, bool try_lock)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#3fca02677bb066f4793e82fa68fb0340">create_release_request</a> (uint64_t handle)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#d50655b5ffb1612b6bbd85df7fd09d7b">create_event_notification</a> (uint64_t handle, std::string &amp;name, const void *value, size_t valueLen)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#792d1c6621d277f2039051efc3cec021">create_event_notification</a> (uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#bd0b3a5b59ff20d1a0258494adddf8e2">create_status_request</a> ()</td></tr>
 
@@ -120,17 +120,17 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#f951dd06c90de165899a271f2bd90011">COMMAND_MAX</a> = 18</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#4920e4f68b5dd578ae8f83d130c94d2e">commandStrings</a> [<a class="el" href="class_hyperspace_1_1_protocol.html#f951dd06c90de165899a271f2bd90011">COMMAND_MAX</a>]</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#c0ef83f801adf91513c64480836b31b6">command_strs</a> [COMMAND_MAX]</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#a6940dd270069beeab97feb88d1ab8f8">fileNameToGroupId</a> (const char *fname)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#f4267043a581c9a115fcee03cd0c14fb">filename_to_group</a> (const char *fname)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#93393a711d6acf801cae97a537ecaa4a">fileNameToGroupId</a> (std::string &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_protocol.html#d2e3111995723a31c7313db39b64a66f">filename_to_group</a> (const std::string &amp;name)</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00054">54</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00048">48</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
 <hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="6922ad18aceb9887fc1a5e04dd035d20"></a><!-- doxytag: member="Hyperspace::Protocol::command_text" ref="6922ad18aceb9887fc1a5e04dd035d20" args="(short command)" -->
 <div class="memitem">
@@ -152,11 +152,11 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_protocol.html#7a1396871f0d0db47ad436530017bd0a">Hypertable::Protocol</a>.</p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00061">61</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00063">63</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="21fcfa8d429fc4613f903823dc542f48"></a><!-- doxytag: member="Hyperspace::Protocol::create_client_keepalive_request" ref="21fcfa8d429fc4613f903823dc542f48" args="(uint64_t sessionId, uint64_t lastKnownEvent)" -->
+<a class="anchor" name="df14b58279ba8d8d614ab452f742b2e5"></a><!-- doxytag: member="Hyperspace::Protocol::create_client_keepalive_request" ref="df14b58279ba8d8d614ab452f742b2e5" args="(uint64_t session_id, uint64_t last_known_event, bool shutdown=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -164,13 +164,19 @@ Collaboration diagram for Hyperspace::Protocol:</div>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_client_keepalive_request           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>lastKnownEvent</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>last_known_event</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>shutdown</em> = <code>false</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -183,11 +189,11 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00070">70</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00072">72</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="11592035baab634def359179570684bf"></a><!-- doxytag: member="Hyperspace::Protocol::create_server_keepalive_request" ref="11592035baab634def359179570684bf" args="(uint64_t sessionId, int error)" -->
+<a class="anchor" name="8e962fd439b7e2d33e585d3f303284de"></a><!-- doxytag: member="Hyperspace::Protocol::create_server_keepalive_request" ref="8e962fd439b7e2d33e585d3f303284de" args="(uint64_t session_id, int error)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -195,7 +201,7 @@ Collaboration diagram for Hyperspace::Protocol:</div>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_server_keepalive_request           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>, </td>
+          <td class="paramname"> <em>session_id</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -214,11 +220,11 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00083">83</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00086">86</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="bac8378a4678a955906e60036993bfd4"></a><!-- doxytag: member="Hyperspace::Protocol::create_server_keepalive_request" ref="bac8378a4678a955906e60036993bfd4" args="(SessionDataPtr &amp;sessionPtr)" -->
+<a class="anchor" name="faafa5394a738a0336c1ea89a7e76b5d"></a><!-- doxytag: member="Hyperspace::Protocol::create_server_keepalive_request" ref="faafa5394a738a0336c1ea89a7e76b5d" args="(SessionDataPtr &amp;session_data)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -226,7 +232,7 @@ Collaboration diagram for Hyperspace::Protocol:</div>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_server_keepalive_request           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>sessionPtr</em>          </td>
+          <td class="paramname"> <em>session_data</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
         </tr>
@@ -237,12 +243,12 @@ Collaboration diagram for Hyperspace::Protocol:</div>
 <p>
 
 <p>
-HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", sessionPtr-&gt;id, (*iter)-&gt;handle, (*iter)-&gt;eventPtr-&gt;get_mask(), (*iter)-&gt;eventPtr-&gt;get_id()); 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00097">97</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+HT_ERRORF("Encoding session=%lld handle=%lld event_mask=%d event_id=%lld", session_data-&gt;id, (*iter)-&gt;handle, (*iter)-&gt;event_ptr-&gt;get_mask(), (*iter)-&gt;event_ptr-&gt;get_id()); 
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00100">100</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="47ecd7d6bbed2af881bae050ae312678"></a><!-- doxytag: member="Hyperspace::Protocol::create_handshake_request" ref="47ecd7d6bbed2af881bae050ae312678" args="(uint64_t sessionId)" -->
+<a class="anchor" name="04423d8553d26efa4d523e11ff0e92b2"></a><!-- doxytag: member="Hyperspace::Protocol::create_handshake_request" ref="04423d8553d26efa4d523e11ff0e92b2" args="(uint64_t session_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -250,7 +256,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_handshake_request           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>sessionId</em>          </td>
+          <td class="paramname"> <em>session_id</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
         </tr>
@@ -260,18 +266,18 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00130">130</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00133">133</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="142153483ff0461c6d2c0a6eeba5aac5"></a><!-- doxytag: member="Hyperspace::Protocol::create_open_request" ref="142153483ff0461c6d2c0a6eeba5aac5" args="(std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callbackPtr, std::vector&lt; AttributeT &gt; &amp;initAttrs)" -->
+<a class="anchor" name="eeb6a62c34a7a43610272d7cee304634"></a><!-- doxytag: member="Hyperspace::Protocol::create_open_request" ref="eeb6a62c34a7a43610272d7cee304634" args="(const std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callback, std::vector&lt; Attribute &gt; &amp;init_attrs)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_open_request           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>, </td>
         </tr>
         <tr>
@@ -284,13 +290,13 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>callbackPtr</em>, </td>
+          <td class="paramname"> <em>callback</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute_t.html">AttributeT</a> &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>initAttrs</em></td><td>&nbsp;</td>
+          <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>init_attrs</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -303,7 +309,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00142">142</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00145">145</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -325,18 +331,18 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00169">169</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00172">172</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="1351f2b8887c6a57559c26e248a232eb"></a><!-- doxytag: member="Hyperspace::Protocol::create_mkdir_request" ref="1351f2b8887c6a57559c26e248a232eb" args="(std::string &amp;name)" -->
+<a class="anchor" name="7e941bcadda18eb548568541abbfe437"></a><!-- doxytag: member="Hyperspace::Protocol::create_mkdir_request" ref="7e941bcadda18eb548568541abbfe437" args="(const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_mkdir_request           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
@@ -347,18 +353,18 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00177">177</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00180">180</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="c7ebccc7e69b2dce6812f8d4581cbe5a"></a><!-- doxytag: member="Hyperspace::Protocol::create_delete_request" ref="c7ebccc7e69b2dce6812f8d4581cbe5a" args="(std::string &amp;name)" -->
+<a class="anchor" name="0d0f307e6630ad8e260b9c88ffbab269"></a><!-- doxytag: member="Hyperspace::Protocol::create_delete_request" ref="0d0f307e6630ad8e260b9c88ffbab269" args="(const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_delete_request           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
@@ -369,11 +375,11 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00186">186</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00189">189</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5b8de41ad673f039f071164b0b6a65b0"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_set_request" ref="5b8de41ad673f039f071164b0b6a65b0" args="(uint64_t handle, std::string &amp;name, const void *value, size_t valueLen)" -->
+<a class="anchor" name="0f54a3cfd0bffcf94ec20fa4ac2146cd"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_set_request" ref="0f54a3cfd0bffcf94ec20fa4ac2146cd" args="(uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -386,7 +392,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>, </td>
         </tr>
         <tr>
@@ -399,7 +405,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>valueLen</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value_len</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -412,11 +418,11 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00195">195</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00198">198</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cfce17febdffe91bfb4a791141f84c1f"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_get_request" ref="cfce17febdffe91bfb4a791141f84c1f" args="(uint64_t handle, std::string &amp;name)" -->
+<a class="anchor" name="b38ca182ef17cd0b4b7932b52de7b3a1"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_get_request" ref="b38ca182ef17cd0b4b7932b52de7b3a1" args="(uint64_t handle, const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -429,7 +435,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -443,11 +449,11 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00206">206</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00209">209</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ecd8ad3078496a09f10ed07136d0b2ba"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_del_request" ref="ecd8ad3078496a09f10ed07136d0b2ba" args="(uint64_t handle, std::string &amp;name)" -->
+<a class="anchor" name="2737110f0496ad2e1264a3f92235a678"></a><!-- doxytag: member="Hyperspace::Protocol::create_attr_del_request" ref="2737110f0496ad2e1264a3f92235a678" args="(uint64_t handle, const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -460,7 +466,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -474,7 +480,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00216">216</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00219">219</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -496,18 +502,18 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00226">226</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00229">229</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e7b13fea3abaf3561ff44b680f582955"></a><!-- doxytag: member="Hyperspace::Protocol::create_exists_request" ref="e7b13fea3abaf3561ff44b680f582955" args="(std::string &amp;name)" -->
+<a class="anchor" name="ef4d5b205a02ba7826747e8cad13f6e4"></a><!-- doxytag: member="Hyperspace::Protocol::create_exists_request" ref="ef4d5b205a02ba7826747e8cad13f6e4" args="(const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hyperspace::Protocol::create_exists_request           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [static]</code></td>
@@ -518,11 +524,11 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00235">235</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00238">238</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a92799ccc88013a06ef61fcb1f564967"></a><!-- doxytag: member="Hyperspace::Protocol::create_lock_request" ref="a92799ccc88013a06ef61fcb1f564967" args="(uint64_t handle, uint32_t mode, bool tryAcquire)" -->
+<a class="anchor" name="04a077797225c31c9b4ac016b644b45f"></a><!-- doxytag: member="Hyperspace::Protocol::create_lock_request" ref="04a077797225c31c9b4ac016b644b45f" args="(uint64_t handle, uint32_t mode, bool try_lock)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -542,7 +548,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>tryAcquire</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>try_lock</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -555,7 +561,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00244">244</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00247">247</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -577,11 +583,11 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00255">255</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00258">258</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d50655b5ffb1612b6bbd85df7fd09d7b"></a><!-- doxytag: member="Hyperspace::Protocol::create_event_notification" ref="d50655b5ffb1612b6bbd85df7fd09d7b" args="(uint64_t handle, std::string &amp;name, const void *value, size_t valueLen)" -->
+<a class="anchor" name="792d1c6621d277f2039051efc3cec021"></a><!-- doxytag: member="Hyperspace::Protocol::create_event_notification" ref="792d1c6621d277f2039051efc3cec021" args="(uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -594,7 +600,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>, </td>
         </tr>
         <tr>
@@ -607,7 +613,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>valueLen</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value_len</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -639,16 +645,16 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00267">267</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8cc-source.html#l00270">270</a> of file <a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a6940dd270069beeab97feb88d1ab8f8"></a><!-- doxytag: member="Hyperspace::Protocol::fileNameToGroupId" ref="a6940dd270069beeab97feb88d1ab8f8" args="(const char *fname)" -->
+<a class="anchor" name="f4267043a581c9a115fcee03cd0c14fb"></a><!-- doxytag: member="Hyperspace::Protocol::filename_to_group" ref="f4267043a581c9a115fcee03cd0c14fb" args="(const char *fname)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t Hyperspace::Protocol::fileNameToGroupId           </td>
+          <td class="memname">static uint32_t Hyperspace::Protocol::filename_to_group           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>fname</em>          </td>
@@ -661,18 +667,18 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00106">106</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00100">100</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="93393a711d6acf801cae97a537ecaa4a"></a><!-- doxytag: member="Hyperspace::Protocol::fileNameToGroupId" ref="93393a711d6acf801cae97a537ecaa4a" args="(std::string &amp;name)" -->
+<a class="anchor" name="d2e3111995723a31c7313db39b64a66f"></a><!-- doxytag: member="Hyperspace::Protocol::filename_to_group" ref="d2e3111995723a31c7313db39b64a66f" args="(const std::string &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static uint32_t Hyperspace::Protocol::fileNameToGroupId           </td>
+          <td class="memname">static uint32_t Hyperspace::Protocol::filename_to_group           </td>
           <td>(</td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramtype">const std::string &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline, static, private]</code></td>
@@ -683,7 +689,7 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00120">120</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00114">114</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -693,7 +699,109 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#7e1c72d807d192b06d407b69477f7354">Hyperspace::Protocol::COMMAND_KEEPALIVE</a> = 0<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_KEEPALIVE = 0<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00076">76</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d4ab08c7a7474f90da3da47b9054f60a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_HANDSHAKE" ref="d4ab08c7a7474f90da3da47b9054f60a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_HANDSHAKE = 1<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00077">77</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4ceb2893eec7f348cbecc120bf94a46f"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_OPEN" ref="4ceb2893eec7f348cbecc120bf94a46f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_OPEN = 2<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00078">78</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f5818d47c8934058a8683ef324955492"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_STAT" ref="f5818d47c8934058a8683ef324955492" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_STAT = 3<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00079">79</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4e0dd8c7c2bd5748fcadcf3afe0ce152"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CANCEL" ref="4e0dd8c7c2bd5748fcadcf3afe0ce152" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_CANCEL = 4<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00080">80</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6f8eb7aded2323bb49903048df085226"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CLOSE" ref="6f8eb7aded2323bb49903048df085226" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_CLOSE = 5<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00081">81</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6a15899fcc5b1a1634089f739cbe04e9"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_POISON" ref="6a15899fcc5b1a1634089f739cbe04e9" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_POISON = 6<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -705,12 +813,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="d4ab08c7a7474f90da3da47b9054f60a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_HANDSHAKE" ref="d4ab08c7a7474f90da3da47b9054f60a" args="" -->
+<a class="anchor" name="e57219145971aba2f9f9703c8c78e69b"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_MKDIR" ref="e57219145971aba2f9f9703c8c78e69b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#d4ab08c7a7474f90da3da47b9054f60a">Hyperspace::Protocol::COMMAND_HANDSHAKE</a> = 1<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_MKDIR = 7<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -722,12 +830,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="4ceb2893eec7f348cbecc120bf94a46f"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_OPEN" ref="4ceb2893eec7f348cbecc120bf94a46f" args="" -->
+<a class="anchor" name="d79f44cde2871967e7630c48ead4844a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRSET" ref="d79f44cde2871967e7630c48ead4844a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#4ceb2893eec7f348cbecc120bf94a46f">Hyperspace::Protocol::COMMAND_OPEN</a> = 2<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_ATTRSET = 8<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -739,12 +847,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="f5818d47c8934058a8683ef324955492"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_STAT" ref="f5818d47c8934058a8683ef324955492" args="" -->
+<a class="anchor" name="c762579bec206b209ecc0856d95340b0"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRGET" ref="c762579bec206b209ecc0856d95340b0" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#f5818d47c8934058a8683ef324955492">Hyperspace::Protocol::COMMAND_STAT</a> = 3<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_ATTRGET = 9<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -756,12 +864,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="4e0dd8c7c2bd5748fcadcf3afe0ce152"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CANCEL" ref="4e0dd8c7c2bd5748fcadcf3afe0ce152" args="" -->
+<a class="anchor" name="67158be6d6573f8919d17ee30a5ecfd5"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRDEL" ref="67158be6d6573f8919d17ee30a5ecfd5" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#4e0dd8c7c2bd5748fcadcf3afe0ce152">Hyperspace::Protocol::COMMAND_CANCEL</a> = 4<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_ATTRDEL = 10<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -773,12 +881,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="6f8eb7aded2323bb49903048df085226"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CLOSE" ref="6f8eb7aded2323bb49903048df085226" args="" -->
+<a class="anchor" name="72902a06b249e44fb6b25c9e8010e734"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_EXISTS" ref="72902a06b249e44fb6b25c9e8010e734" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#6f8eb7aded2323bb49903048df085226">Hyperspace::Protocol::COMMAND_CLOSE</a> = 5<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_EXISTS = 11<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -790,12 +898,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="6a15899fcc5b1a1634089f739cbe04e9"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_POISON" ref="6a15899fcc5b1a1634089f739cbe04e9" args="" -->
+<a class="anchor" name="e545ea3078a47740c6612d8c2b2ee4a9"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_DELETE" ref="e545ea3078a47740c6612d8c2b2ee4a9" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#6a15899fcc5b1a1634089f739cbe04e9">Hyperspace::Protocol::COMMAND_POISON</a> = 6<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_DELETE = 12<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -807,12 +915,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="e57219145971aba2f9f9703c8c78e69b"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_MKDIR" ref="e57219145971aba2f9f9703c8c78e69b" args="" -->
+<a class="anchor" name="87fd4170a7b67b911f783d7cda0ed364"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_READDIR" ref="87fd4170a7b67b911f783d7cda0ed364" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#e57219145971aba2f9f9703c8c78e69b">Hyperspace::Protocol::COMMAND_MKDIR</a> = 7<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_READDIR = 13<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -824,12 +932,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="d79f44cde2871967e7630c48ead4844a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRSET" ref="d79f44cde2871967e7630c48ead4844a" args="" -->
+<a class="anchor" name="c4eeb1182a12e4b0848d3c04b7e7159a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_LOCK" ref="c4eeb1182a12e4b0848d3c04b7e7159a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#d79f44cde2871967e7630c48ead4844a">Hyperspace::Protocol::COMMAND_ATTRSET</a> = 8<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_LOCK = 14<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -841,12 +949,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="c762579bec206b209ecc0856d95340b0"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRGET" ref="c762579bec206b209ecc0856d95340b0" args="" -->
+<a class="anchor" name="f52db0986cde727401d1bf7f511fa07b"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_RELEASE" ref="f52db0986cde727401d1bf7f511fa07b" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#c762579bec206b209ecc0856d95340b0">Hyperspace::Protocol::COMMAND_ATTRGET</a> = 9<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_RELEASE = 15<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -858,12 +966,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="67158be6d6573f8919d17ee30a5ecfd5"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_ATTRDEL" ref="67158be6d6573f8919d17ee30a5ecfd5" args="" -->
+<a class="anchor" name="ca7fd17b6104770c70c2d78b07eb60b6"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CHECKSEQUENCER" ref="ca7fd17b6104770c70c2d78b07eb60b6" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#67158be6d6573f8919d17ee30a5ecfd5">Hyperspace::Protocol::COMMAND_ATTRDEL</a> = 10<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_CHECKSEQUENCER = 16<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -875,12 +983,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="72902a06b249e44fb6b25c9e8010e734"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_EXISTS" ref="72902a06b249e44fb6b25c9e8010e734" args="" -->
+<a class="anchor" name="12f831c4e4b5d70b4d04415d132029ac"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_STATUS" ref="12f831c4e4b5d70b4d04415d132029ac" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#72902a06b249e44fb6b25c9e8010e734">Hyperspace::Protocol::COMMAND_EXISTS</a> = 11<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_STATUS = 17<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -892,12 +1000,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="e545ea3078a47740c6612d8c2b2ee4a9"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_DELETE" ref="e545ea3078a47740c6612d8c2b2ee4a9" args="" -->
+<a class="anchor" name="f951dd06c90de165899a271f2bd90011"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_MAX" ref="f951dd06c90de165899a271f2bd90011" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#e545ea3078a47740c6612d8c2b2ee4a9">Hyperspace::Protocol::COMMAND_DELETE</a> = 12<code> [static]</code>          </td>
+          <td class="memname">const uint16_t Hyperspace::Protocol::COMMAND_MAX = 18<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -909,114 +1017,12 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
 
 </div>
 </div><p>
-<a class="anchor" name="87fd4170a7b67b911f783d7cda0ed364"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_READDIR" ref="87fd4170a7b67b911f783d7cda0ed364" args="" -->
+<a class="anchor" name="c0ef83f801adf91513c64480836b31b6"></a><!-- doxytag: member="Hyperspace::Protocol::command_strs" ref="c0ef83f801adf91513c64480836b31b6" args="[COMMAND_MAX]" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#87fd4170a7b67b911f783d7cda0ed364">Hyperspace::Protocol::COMMAND_READDIR</a> = 13<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00095">95</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c4eeb1182a12e4b0848d3c04b7e7159a"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_LOCK" ref="c4eeb1182a12e4b0848d3c04b7e7159a" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#c4eeb1182a12e4b0848d3c04b7e7159a">Hyperspace::Protocol::COMMAND_LOCK</a> = 14<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00096">96</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="f52db0986cde727401d1bf7f511fa07b"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_RELEASE" ref="f52db0986cde727401d1bf7f511fa07b" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#f52db0986cde727401d1bf7f511fa07b">Hyperspace::Protocol::COMMAND_RELEASE</a> = 15<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00097">97</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="ca7fd17b6104770c70c2d78b07eb60b6"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_CHECKSEQUENCER" ref="ca7fd17b6104770c70c2d78b07eb60b6" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#ca7fd17b6104770c70c2d78b07eb60b6">Hyperspace::Protocol::COMMAND_CHECKSEQUENCER</a> = 16<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00098">98</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="12f831c4e4b5d70b4d04415d132029ac"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_STATUS" ref="12f831c4e4b5d70b4d04415d132029ac" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#12f831c4e4b5d70b4d04415d132029ac">Hyperspace::Protocol::COMMAND_STATUS</a> = 17<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00099">99</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="f951dd06c90de165899a271f2bd90011"></a><!-- doxytag: member="Hyperspace::Protocol::COMMAND_MAX" ref="f951dd06c90de165899a271f2bd90011" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const uint16_t <a class="el" href="class_hyperspace_1_1_protocol.html#f951dd06c90de165899a271f2bd90011">Hyperspace::Protocol::COMMAND_MAX</a> = 18<code> [static]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00100">100</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="4920e4f68b5dd578ae8f83d130c94d2e"></a><!-- doxytag: member="Hyperspace::Protocol::commandStrings" ref="4920e4f68b5dd578ae8f83d130c94d2e" args="[COMMAND_MAX]" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char * <a class="el" href="class_hyperspace_1_1_protocol.html#4920e4f68b5dd578ae8f83d130c94d2e">Hyperspace::Protocol::commandStrings</a><code> [static]</code>          </td>
+          <td class="memname">const char * Hyperspace::Protocol::command_strs<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1044,13 +1050,13 @@ HT_ERRORF("Encoding session=%lld handle=%lld eventMask=%d eventId=%lld", session
   <span class="stringliteral">"status"</span>
 }
 </pre></div>
-<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00102">102</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_protocol_8h-source.html#l00096">96</a> of file <a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_protocol_8h-source.html">Protocol.h</a><li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_protocol_8cc-source.html">Protocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:21 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:40 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

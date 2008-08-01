@@ -29,19 +29,19 @@
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="keyword">namespace </span>Hypertable {
 <a name="l00033"></a>00033 
-<a name="l00034"></a>00034   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>;
+<a name="l00034"></a>00034   <span class="keyword">class </span>Comm;
 <a name="l00035"></a>00035 
-<a name="l00038"></a>00038   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_connection_handler.html">ConnectionHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
+<a name="l00038"></a>00038   <span class="keyword">class </span>ConnectionHandler : <span class="keyword">public</span> DispatchHandler {
 <a name="l00039"></a>00039   <span class="keyword">public</span>:
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_connection_handler.html#f3ab3f4ae3d3f315b782a73d87db93d2">ConnectionHandler</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;appQueue, <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> rangeServerPtr, <a class="code" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a> &amp;masterClientPtr);
-<a name="l00042"></a>00042     <a class="code" href="class_hypertable_1_1_connection_handler.html#f3ab3f4ae3d3f315b782a73d87db93d2">ConnectionHandler</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;appQueue, <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> rangeServerPtr);
+<a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37e96ad5e1c6d73851b7e060a3a9059a">ConnectionHandler</a>(Comm *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue, <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> range_server, <a class="code" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a> &amp;master_client);
+<a name="l00042"></a>00042     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#37e96ad5e1c6d73851b7e060a3a9059a">ConnectionHandler</a>(Comm *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue, <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> range_server);
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_handler.html#b87d5e59566ddb1c45ed60b6d8e20418" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;eventPtr);
+<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#398ab75661a2da867854eab7a9f069c2" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr);
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046   <span class="keyword">private</span>:
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#3e964798582e371b813ac986e9d1d151">00047</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                *<a class="code" href="class_hypertable_1_1_connection_handler.html#3e964798582e371b813ac986e9d1d151">m_comm</a>;
-<a name="l00048"></a>00048     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>  <a class="code" href="class_hypertable_1_1_connection_handler.html#6d0201de7bbfb040792ef0e0d2e61d68">m_app_queue_ptr</a>;
+<a name="l00047"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#3e964798582e371b813ac986e9d1d151">00047</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                *<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>;
+<a name="l00048"></a>00048     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>  <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>;
 <a name="l00049"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#592368ccb4e20e4a60a92f17040058d0">00049</a>     <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a>       <a class="code" href="class_hypertable_1_1_connection_handler.html#592368ccb4e20e4a60a92f17040058d0">m_range_server_ptr</a>;
 <a name="l00050"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#ed615ebd2d207dc9b41a97d8f0bc2be9">00050</a>     <a class="code" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a>      <a class="code" href="class_hypertable_1_1_connection_handler.html#ed615ebd2d207dc9b41a97d8f0bc2be9">m_master_client_ptr</a>;
 <a name="l00051"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#9c653b3c7b5fc6b6f2449f1303bb2e99">00051</a>     <span class="keywordtype">bool</span>                 <a class="code" href="class_hypertable_1_1_connection_handler.html#9c653b3c7b5fc6b6f2449f1303bb2e99">m_shutdown</a>;
@@ -51,7 +51,7 @@
 <a name="l00055"></a>00055 
 <a name="l00056"></a>00056 <span class="preprocessor">#endif // HYPERTABLE_RANGESERVER_CONNECTIONHANDLER_H</span>
 <a name="l00057"></a>00057 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

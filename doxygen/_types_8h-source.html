@@ -23,91 +23,101 @@
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;utility&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;vector&gt;</span>
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;stddef.h&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
-<a name="l00031"></a>00031 }
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_byte_string_8h.html">Common/ByteString.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hypertable {
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_byte_string_8h.html">Common/ByteString.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable {
-<a name="l00037"></a>00037 
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_table_identifier.html">00039</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> {
-<a name="l00040"></a>00040   <span class="keyword">public</span>:
-<a name="l00041"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">00041</a>     <a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">TableIdentifier</a>() : <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>(0), <a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>(0), <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>(0) { <span class="keywordflow">return</span>; }
-<a name="l00042"></a>00042     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#cc83246e8c1d3bf0d66ec3a140c988eb">encoded_length</a>();
-<a name="l00043"></a>00043     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#f0d87022eb1bc4914d92ad2f3eb7f48a">encode</a>(uint8_t **bufPtr);
-<a name="l00044"></a>00044     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#863a9553d043d060d18e7a2e64b8c2cd">decode</a>(uint8_t **bufPtr, <span class="keywordtype">size_t</span> *remainingPtr);
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">00045</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
-<a name="l00046"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">00046</a>     uint32_t <a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">00047</a>     uint32_t <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
-<a name="l00048"></a>00048   };
-<a name="l00049"></a>00049 
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_table_identifier_copy.html">00051</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_identifier_copy.html" title="Wrapper for TableIdentifier.">TableIdentifierCopy</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> {
-<a name="l00052"></a>00052   <span class="keyword">public</span>:
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_table_identifier_copy.html#664fc16bcbeff1833ce18f4c551e6e57">00053</a>     <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#664fc16bcbeff1833ce18f4c551e6e57">TableIdentifierCopy</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *identifier) : <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>(identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>) {
-<a name="l00054"></a>00054       <span class="keywordtype">id</span> = identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
-<a name="l00055"></a>00055       <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
-<a name="l00056"></a>00056       <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>.c_str();
-<a name="l00057"></a>00057     }
-<a name="l00058"></a><a class="code" href="class_hypertable_1_1_table_identifier_copy.html#23274e2717e8099fc855a8f2cdb54f4b">00058</a>     <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#664fc16bcbeff1833ce18f4c551e6e57">TableIdentifierCopy</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;identifier) : <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>(identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>) {
-<a name="l00059"></a>00059       <span class="keywordtype">id</span> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
-<a name="l00060"></a>00060       <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
-<a name="l00061"></a>00061       <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>.c_str();
-<a name="l00062"></a>00062     }
-<a name="l00063"></a><a class="code" href="class_hypertable_1_1_table_identifier_copy.html#c59bdf9aa7a205316c5dfecf3cf35084">00063</a>     <a class="code" href="class_hypertable_1_1_table_identifier_copy.html" title="Wrapper for TableIdentifier.">TableIdentifierCopy</a> &amp;<a class="code" href="class_hypertable_1_1_table_identifier_copy.html#c59bdf9aa7a205316c5dfecf3cf35084">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;identifier) {
-<a name="l00064"></a>00064       <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
-<a name="l00065"></a>00065       <span class="keywordtype">id</span> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
-<a name="l00066"></a>00066       <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
-<a name="l00067"></a>00067       <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>.c_str();
-<a name="l00068"></a>00068       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
-<a name="l00069"></a>00069     }
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071   <span class="keyword">private</span>:
-<a name="l00072"></a><a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">00072</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_table_identifier_copy.html#1eb421558f9cfae3fe4899be6f12e655">m_name</a>;
-<a name="l00073"></a>00073   };
-<a name="l00074"></a>00074 
-<a name="l00076"></a><a class="code" href="class_hypertable_1_1_range_spec.html">00076</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> {
-<a name="l00077"></a>00077   <span class="keyword">public</span>:
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">00078</a>     <a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">RangeSpec</a>() : <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>(0), <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>(0) { <span class="keywordflow">return</span>; }
-<a name="l00079"></a>00079     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_range_spec.html#610bfd593c45eaf7148f5ad6d615121f">encoded_length</a>();
-<a name="l00080"></a>00080     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#ea92a987aadff1c253a0e8bd352a6d25">encode</a>(uint8_t **bufPtr);
-<a name="l00081"></a>00081     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_range_spec.html#2711a2e9d210198de2c0f9acf13ca912">decode</a>(uint8_t **bufPtr, <span class="keywordtype">size_t</span> *remainingPtr);
-<a name="l00082"></a><a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">00082</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>;
-<a name="l00083"></a><a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">00083</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>;
-<a name="l00084"></a>00084   };
+<a name="l00034"></a><a class="code" href="class_hypertable_1_1_table_identifier.html">00034</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> {
+<a name="l00035"></a>00035   <span class="keyword">public</span>:
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">00036</a>     <a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">TableIdentifier</a>() : <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>(0), <a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>(0), <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>(0) { <span class="keywordflow">return</span>; }
+<a name="l00037"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#2da377c06a900a416feaa8eee55dabd4">00037</a>     <span class="keyword">explicit</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">TableIdentifier</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *s) : <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>(s), <a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>(0), <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>(0) {}
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#cc17393caf830c5e6b9b9bfef961688d">00038</a>     <a class="code" href="class_hypertable_1_1_table_identifier.html#852ec498a3d7d20174efe51475dc9a2c">TableIdentifier</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00039"></a>00039       <a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(bufp, remainp);
+<a name="l00040"></a>00040     }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#067d39338ef81a14bfff6957a6ece4f1">encoded_length</a>() <span class="keyword">const</span>;
+<a name="l00043"></a>00043     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#64566d666c41364b54934bbae2c681dd">encode</a>(uint8_t **bufp) <span class="keyword">const</span>;
+<a name="l00044"></a>00044     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp);
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">00046</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
+<a name="l00047"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">00047</a>     uint32_t <a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">00048</a>     uint32_t <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
+<a name="l00049"></a>00049   };
+<a name="l00050"></a>00050 
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_table_identifier_managed.html">00052</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier.">TableIdentifierManaged</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> {
+<a name="l00053"></a>00053   <span class="keyword">public</span>:
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_table_identifier_managed.html#9a43f6d54cf436577b0b74281d4ce02b">00054</a>     <a class="code" href="class_hypertable_1_1_table_identifier_managed.html#9a43f6d54cf436577b0b74281d4ce02b">TableIdentifierManaged</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;identifier) {
+<a name="l00055"></a>00055       <a class="code" href="class_hypertable_1_1_table_identifier_managed.html#4142410154b0da8feff92ed9e39a5529">operator=</a>(identifier);
+<a name="l00056"></a>00056     }
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_table_identifier_managed.html#4142410154b0da8feff92ed9e39a5529">00057</a>     <a class="code" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier.">TableIdentifierManaged</a> &amp;<a class="code" href="class_hypertable_1_1_table_identifier_managed.html#4142410154b0da8feff92ed9e39a5529">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;identifier) {
+<a name="l00058"></a>00058       <span class="keywordtype">id</span> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
+<a name="l00059"></a>00059       <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>) {
+<a name="l00062"></a>00062         <a class="code" href="class_hypertable_1_1_table_identifier_managed.html#26f661d31ad3bc84c1eb0ce5dd3bff0e">m_name</a> = identifier.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
+<a name="l00063"></a>00063         <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="class_hypertable_1_1_table_identifier_managed.html#26f661d31ad3bc84c1eb0ce5dd3bff0e">m_name</a>.c_str();
+<a name="l00064"></a>00064       }
+<a name="l00065"></a>00065       <span class="keywordflow">else</span>
+<a name="l00066"></a>00066         <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = 0;
+<a name="l00067"></a>00067       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="keyword">private</span>:
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_table_identifier_managed.html#26f661d31ad3bc84c1eb0ce5dd3bff0e">00071</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_table_identifier_managed.html#26f661d31ad3bc84c1eb0ce5dd3bff0e">m_name</a>;
+<a name="l00072"></a>00072   };
+<a name="l00073"></a>00073 
+<a name="l00075"></a><a class="code" href="class_hypertable_1_1_range_spec.html">00075</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> {
+<a name="l00076"></a>00076   <span class="keyword">public</span>:
+<a name="l00077"></a><a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">00077</a>     <a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">RangeSpec</a>() : <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>(0), <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>(0) { <span class="keywordflow">return</span>; }
+<a name="l00078"></a><a class="code" href="class_hypertable_1_1_range_spec.html#423f59e19bae63ff52a456af353949ed">00078</a>     <a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">RangeSpec</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>)
+<a name="l00079"></a>00079         : <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>(start), <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>(end) {}
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_range_spec.html#f50319f660e636ad2e9d8e982f3929ee">00080</a>     <a class="code" href="class_hypertable_1_1_range_spec.html#bbcd9ae4273d5fbcff9ec7bf4c029fb7">RangeSpec</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) { <a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">decode</a>(bufp, remainp); }
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_range_spec.html#3f1a000850aa27eb4cae11a3c64acf4e">encoded_length</a>() <span class="keyword">const</span>;
+<a name="l00083"></a>00083     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#56fe338143544ff555690ce611b7b369">encode</a>(uint8_t **bufp) <span class="keyword">const</span>;
+<a name="l00084"></a>00084     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp);
 <a name="l00085"></a>00085 
-<a name="l00087"></a><a class="code" href="class_hypertable_1_1_scan_spec.html">00087</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_scan_spec.html" title="Scan specification.">ScanSpec</a> {
-<a name="l00088"></a>00088   <span class="keyword">public</span>:
-<a name="l00089"></a>00089     <a class="code" href="class_hypertable_1_1_scan_spec.html#10b951e92b00b12c7235e8694c509120">ScanSpec</a>();
-<a name="l00090"></a>00090     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#32e4b8b88a82d7d2e2fcfc081f022d12">encoded_length</a>();
-<a name="l00091"></a>00091     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#dac2e459da2e81abbd3251e24767b9f1">encode</a>(uint8_t **bufPtr);
-<a name="l00092"></a>00092     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#aaa43ff85e207229e93eb121180d3897">decode</a>(uint8_t **bufPtr, <span class="keywordtype">size_t</span> *remainingPtr);
-<a name="l00093"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#b420af7a4803fcc2e85ad724bccde34b">00093</a>     uint32_t <a class="code" href="class_hypertable_1_1_scan_spec.html#b420af7a4803fcc2e85ad724bccde34b">row_limit</a>;
-<a name="l00094"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">00094</a>     uint32_t <a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a>;
-<a name="l00095"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">00095</a>     std::vector&lt;const char *&gt; <a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>;
-<a name="l00096"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#de0d505f0d080baf7e678942f1077a7c">00096</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_scan_spec.html#de0d505f0d080baf7e678942f1077a7c">start_row</a>;
-<a name="l00097"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#6ccc92aa214c85d2194236fe39e53f89">00097</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#6ccc92aa214c85d2194236fe39e53f89">start_row_inclusive</a>;
-<a name="l00098"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#595e26a58a860be723c864c4f6656715">00098</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_scan_spec.html#595e26a58a860be723c864c4f6656715">end_row</a>;
-<a name="l00099"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#c3938b9d476eb71cd9feb8b5ce11f871">00099</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#c3938b9d476eb71cd9feb8b5ce11f871">end_row_inclusive</a>;
-<a name="l00100"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#4a62bc6cbbf7397442c64208c91a1d3f">00100</a>     std::pair&lt;uint64_t,uint64_t&gt; <a class="code" href="class_hypertable_1_1_scan_spec.html#4a62bc6cbbf7397442c64208c91a1d3f">interval</a>;
-<a name="l00101"></a><a class="code" href="class_hypertable_1_1_scan_spec.html#6b9a9320103ee2d39ee876c9a9f40f53">00101</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_spec.html#6b9a9320103ee2d39ee876c9a9f40f53">return_deletes</a>;
-<a name="l00102"></a>00102   };
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   <span class="keyword">extern</span> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable.html#ab472a12305039a54ccd2f67fdac5940">END_OF_TIME</a>;
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;table_identifier);
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range);
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Scan specification.">ScanSpec</a> &amp;scannerSpec);
+<a name="l00086"></a><a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">00086</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>;
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">00087</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>;
+<a name="l00088"></a>00088   };
+<a name="l00089"></a>00089 
+<a name="l00091"></a><a class="code" href="class_hypertable_1_1_range_spec_managed.html">00091</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_range_spec_managed.html" title="RangeSpec with storage.">RangeSpecManaged</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> {
+<a name="l00092"></a>00092   <span class="keyword">public</span>:
+<a name="l00093"></a><a class="code" href="class_hypertable_1_1_range_spec_managed.html#b635c991fbdce94dfa95dd498b2653fe">00093</a>     <a class="code" href="class_hypertable_1_1_range_spec_managed.html#b635c991fbdce94dfa95dd498b2653fe">RangeSpecManaged</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range) { <a class="code" href="class_hypertable_1_1_range_spec_managed.html#6d03d6b3eb7fb8a58a15fb2ac0537819">operator=</a>(range); }
+<a name="l00094"></a>00094 
+<a name="l00095"></a><a class="code" href="class_hypertable_1_1_range_spec_managed.html#6d03d6b3eb7fb8a58a15fb2ac0537819">00095</a>     <a class="code" href="class_hypertable_1_1_range_spec_managed.html" title="RangeSpec with storage.">RangeSpecManaged</a> &amp;<a class="code" href="class_hypertable_1_1_range_spec_managed.html#6d03d6b3eb7fb8a58a15fb2ac0537819">operator=</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range) {
+<a name="l00096"></a>00096       <span class="keywordflow">if</span> (range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>) {
+<a name="l00097"></a>00097         <a class="code" href="class_hypertable_1_1_range_spec_managed.html#a6b62220ef7b7e2ccfef8c4687e6d935">m_start</a> = range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>;
+<a name="l00098"></a>00098         <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = <a class="code" href="class_hypertable_1_1_range_spec_managed.html#a6b62220ef7b7e2ccfef8c4687e6d935">m_start</a>.c_str();
+<a name="l00099"></a>00099       }
+<a name="l00100"></a>00100       <span class="keywordflow">else</span>
+<a name="l00101"></a>00101         <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = 0;
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103       <span class="keywordflow">if</span> (range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>) {
+<a name="l00104"></a>00104         <a class="code" href="class_hypertable_1_1_range_spec_managed.html#3c5e404505f8243bc66a0c74dd1652e7">m_end</a> = range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>;
+<a name="l00105"></a>00105         <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = <a class="code" href="class_hypertable_1_1_range_spec_managed.html#3c5e404505f8243bc66a0c74dd1652e7">m_end</a>.c_str();
+<a name="l00106"></a>00106       }
+<a name="l00107"></a>00107       <span class="keywordflow">else</span>
+<a name="l00108"></a>00108         <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = 0;
+<a name="l00109"></a>00109       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00110"></a>00110     }
 <a name="l00111"></a>00111 
-<a name="l00112"></a>00112 }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif // HYPERTABLE_REQUEST_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00112"></a>00112   <span class="keyword">private</span>:
+<a name="l00113"></a><a class="code" href="class_hypertable_1_1_range_spec_managed.html#a6b62220ef7b7e2ccfef8c4687e6d935">00113</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_range_spec_managed.html#a6b62220ef7b7e2ccfef8c4687e6d935">m_start</a>, <a class="code" href="class_hypertable_1_1_range_spec_managed.html#3c5e404505f8243bc66a0c74dd1652e7">m_end</a>;
+<a name="l00114"></a>00114   };
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;);
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;);
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122 } <span class="comment">// namespace Hypertable</span>
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124 
+<a name="l00125"></a>00125 <span class="preprocessor">#endif // HYPERTABLE_REQUEST_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

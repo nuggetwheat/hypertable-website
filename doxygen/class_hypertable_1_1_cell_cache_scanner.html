@@ -47,9 +47,8 @@ Collaboration diagram for Hypertable::CellCacheScanner:</div>
 <a href="class_hypertable_1_1_cell_cache_scanner-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#b7d421450e283670ce1f69842793a428">CellCacheScanner</a> (<a class="el" href="namespace_hypertable.html#2a3997b50dcf22e0aabbbccee21b6a2b">CellCachePtr</a> &amp;cellCachePtr, <a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scanContextPtr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#c61d4144518131a8cd4ecd0ced0d36a5">CellCacheScanner</a> (<a class="el" href="namespace_hypertable.html#2a3997b50dcf22e0aabbbccee21b6a2b">CellCachePtr</a> &amp;cellcache, <a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.  <a href="#b7d421450e283670ce1f69842793a428"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#0f959a370ae43d3d84b3cb0bbf9b6600">~CellCacheScanner</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#a33fad302a83a53971edf67ba7743442">forward</a> ()</td></tr>
@@ -57,11 +56,11 @@ Collaboration diagram for Hypertable::CellCacheScanner:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#6439a15632d1812412f48a624845ae85">get</a> (<a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMapT::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#bafae3744f263300058cd9bee6cc15c9">m_start_iter</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMap::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#b0c4579d9fd9c45340f5490c035c1bf3">m_start_iter</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMapT::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#a7b8534a931c39fcd540a7edaf78b99d">m_end_iter</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMap::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#f50e7100b72b8b4f1ae2f65a24cba3ee">m_end_iter</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMapT::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#8bdb0f6fce2709670c22bfb9bbec97de">m_cur_iter</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">CellCache::CellMap::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#f12778719aa89f0dad9faae821826d0d">m_cur_iter</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#2a3997b50dcf22e0aabbbccee21b6a2b">CellCachePtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#69cb19295571a4a08e5dd25a5b870566">m_cell_cache_ptr</a></td></tr>
 
@@ -76,9 +75,9 @@ Collaboration diagram for Hypertable::CellCacheScanner:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Provides a scanning interface to a <a class="el" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>. 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00036">36</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00035">35</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="b7d421450e283670ce1f69842793a428"></a><!-- doxytag: member="Hypertable::CellCacheScanner::CellCacheScanner" ref="b7d421450e283670ce1f69842793a428" args="(CellCachePtr &amp;cellCachePtr, ScanContextPtr &amp;scanContextPtr)" -->
+<a class="anchor" name="c61d4144518131a8cd4ecd0ced0d36a5"></a><!-- doxytag: member="Hypertable::CellCacheScanner::CellCacheScanner" ref="c61d4144518131a8cd4ecd0ced0d36a5" args="(CellCachePtr &amp;cellcache, ScanContextPtr &amp;scan_ctx)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -86,13 +85,13 @@ Provides a scanning interface to a <a class="el" href="class_hypertable_1_1_cell
           <td class="memname">CellCacheScanner::CellCacheScanner           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#2a3997b50dcf22e0aabbbccee21b6a2b">CellCachePtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>cellCachePtr</em>, </td>
+          <td class="paramname"> <em>cellcache</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>scanContextPtr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>scan_ctx</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -104,17 +103,11 @@ Provides a scanning interface to a <a class="el" href="class_hypertable_1_1_cell
 <div class="memdoc">
 
 <p>
--*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc. 
-<p>
-)<p>
-This file is part of <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a>.<p>
-<a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; version 2 of the License.<p>
-<a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.<p>
-You should have received a copy of the GNU General Public License along with this program; if not, write to the Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA. 
+
 <p>
 set start iterator<p>
 set end iterator 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00035">35</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00037">37</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
 
 </div>
 </div><p>
@@ -135,7 +128,7 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00039">39</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00038">38</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -159,7 +152,7 @@ set end iterator
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">Hypertable::CellListScanner</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00090">90</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00092">92</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
 
 </div>
 </div><p>
@@ -192,17 +185,34 @@ set end iterator
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list_scanner.html#c4c4ba59e631fc05068ba61005d4b35b">Hypertable::CellListScanner</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00079">79</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8cc-source.html#l00081">81</a> of file <a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="bafae3744f263300058cd9bee6cc15c9"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_start_iter" ref="bafae3744f263300058cd9bee6cc15c9" args="" -->
+<a class="anchor" name="b0c4579d9fd9c45340f5490c035c1bf3"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_start_iter" ref="b0c4579d9fd9c45340f5490c035c1bf3" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CellCache::CellMapT::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#bafae3744f263300058cd9bee6cc15c9">Hypertable::CellCacheScanner::m_start_iter</a><code> [private]</code>          </td>
+          <td class="memname">CellCache::CellMap::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#b0c4579d9fd9c45340f5490c035c1bf3">Hypertable::CellCacheScanner::m_start_iter</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00043">43</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="f50e7100b72b8b4f1ae2f65a24cba3ee"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_end_iter" ref="f50e7100b72b8b4f1ae2f65a24cba3ee" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">CellCache::CellMap::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#f50e7100b72b8b4f1ae2f65a24cba3ee">Hypertable::CellCacheScanner::m_end_iter</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -214,12 +224,12 @@ set end iterator
 
 </div>
 </div><p>
-<a class="anchor" name="a7b8534a931c39fcd540a7edaf78b99d"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_end_iter" ref="a7b8534a931c39fcd540a7edaf78b99d" args="" -->
+<a class="anchor" name="f12778719aa89f0dad9faae821826d0d"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_cur_iter" ref="f12778719aa89f0dad9faae821826d0d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">CellCache::CellMapT::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#a7b8534a931c39fcd540a7edaf78b99d">Hypertable::CellCacheScanner::m_end_iter</a><code> [private]</code>          </td>
+          <td class="memname">CellCache::CellMap::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#f12778719aa89f0dad9faae821826d0d">Hypertable::CellCacheScanner::m_cur_iter</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -228,23 +238,6 @@ set end iterator
 <p>
 
 <p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00045">45</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="8bdb0f6fce2709670c22bfb9bbec97de"></a><!-- doxytag: member="Hypertable::CellCacheScanner::m_cur_iter" ref="8bdb0f6fce2709670c22bfb9bbec97de" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">CellCache::CellMapT::iterator <a class="el" href="class_hypertable_1_1_cell_cache_scanner.html#8bdb0f6fce2709670c22bfb9bbec97de">Hypertable::CellCacheScanner::m_cur_iter</a><code> [private]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00046">46</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -261,7 +254,7 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00047">47</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00046">46</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -278,7 +271,7 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00048">48</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00047">47</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -295,7 +288,7 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00049">49</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00048">48</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -312,7 +305,7 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00050">50</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00049">49</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -329,13 +322,13 @@ set end iterator
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00051">51</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_cache_scanner_8h-source.html#l00050">50</a> of file <a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_cache_scanner_8h-source.html">CellCacheScanner.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_cache_scanner_8cc-source.html">CellCacheScanner.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:27:00 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:20 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -33,101 +33,100 @@
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Logger.h</a>"</span>
 <a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="keyword">using namespace </span>std;
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 <span class="keyword">namespace </span>Hypertable {
-<a name="l00041"></a>00041 
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html">00045</a>   <span class="keyword">class  </span><a class="code" href="class_hypertable_1_1_no_time_layout.html" title="Log4cpp layout class that drops timestamp from log messages.">NoTimeLayout</a> : <span class="keyword">public</span> log4cpp::Layout {
-<a name="l00046"></a>00046   <span class="keyword">public</span>:
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#4a4fa4bd9e9babcca335a7b4e83354b8">00047</a>     <a class="code" href="class_hypertable_1_1_no_time_layout.html#4a4fa4bd9e9babcca335a7b4e83354b8">NoTimeLayout</a>() { }
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#b9340863a06b71c3c22f2c3d8be9a98a">00048</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_no_time_layout.html#b9340863a06b71c3c22f2c3d8be9a98a">~NoTimeLayout</a>() { }
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#a6055b860e5effed7bbd9669074a6921">00049</a>     <span class="keyword">virtual</span> <span class="keywordtype">string</span> <a class="code" href="class_hypertable_1_1_no_time_layout.html#a6055b860e5effed7bbd9669074a6921">format</a>(<span class="keyword">const</span> log4cpp::LoggingEvent&amp; event) {
-<a name="l00050"></a>00050       std::ostringstream message;
-<a name="l00051"></a>00051       <span class="keyword">const</span> std::string&amp; priorityName = log4cpp::Priority::getPriorityName(event.priority);
-<a name="l00052"></a>00052       message &lt;&lt; priorityName &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; <span class="keyword">event</span>.categoryName &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; <span class="keyword">event</span>.ndc &lt;&lt; <span class="stringliteral">": "</span> &lt;&lt; <span class="keyword">event</span>.message &lt;&lt; std::endl;
-<a name="l00053"></a>00053       <span class="keywordflow">return</span> message.str();
-<a name="l00054"></a>00054     }
-<a name="l00055"></a>00055   };
-<a name="l00056"></a>00056 
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_test_harness.html">00057</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_test_harness.html">TestHarness</a> {
-<a name="l00058"></a>00058   <span class="keyword">public</span>:
-<a name="l00059"></a><a class="code" href="class_hypertable_1_1_test_harness.html#47c92473f99435f8a99b6e9bcd39ffcd">00059</a>     <a class="code" href="class_hypertable_1_1_test_harness.html#47c92473f99435f8a99b6e9bcd39ffcd">TestHarness</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061       <a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">m_name</a> = name;
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063       <a class="code" href="namespace_hypertable_1_1_logger.html#0886f5be21dbafebc5a9d0724aed33d5">Logger::initialize</a>(name);
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065       <span class="comment">// open temporary output file</span>
-<a name="l00066"></a>00066       sprintf(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, <span class="stringliteral">"%s%d"</span>, name, getpid());
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068       <span class="keywordflow">if</span> ((<a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a> = open(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, O_CREAT | O_TRUNC | O_WRONLY, 0644)) &lt; 0) {
-<a name="l00069"></a>00069         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"open(%s) failed - %s"</span>, <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, strerror(errno));
-<a name="l00070"></a>00070         exit(1);
-<a name="l00071"></a>00071       }
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073       <a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">m_log_stream</a>.open(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075       <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;removeAllAppenders();
-<a name="l00076"></a>00076       <a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a> = <span class="keyword">new</span> log4cpp::FileAppender((<span class="keywordtype">string</span>)name, <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>);
-<a name="l00077"></a>00077       <a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>-&gt;setLayout(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_no_time_layout.html" title="Log4cpp layout class that drops timestamp from log messages.">NoTimeLayout</a>());
-<a name="l00078"></a>00078       <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;setAppender(<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>);
-<a name="l00079"></a>00079     }
-<a name="l00080"></a><a class="code" href="class_hypertable_1_1_test_harness.html#3573b150409d634ede31db51d6756d40">00080</a>     <a class="code" href="class_hypertable_1_1_test_harness.html#3573b150409d634ede31db51d6756d40">~TestHarness</a>() {
-<a name="l00081"></a>00081       unlink(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
-<a name="l00082"></a>00082     }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="class_hypertable_1_1_test_harness.html#c9d66975530c71764f40518eade18c18">00084</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_test_harness.html#c9d66975530c71764f40518eade18c18">get_log_file_descriptor</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>; }
-<a name="l00085"></a>00085 
-<a name="l00086"></a><a class="code" href="class_hypertable_1_1_test_harness.html#4846d680e2771d6e61cfdc2d1bc52477">00086</a>     ostream &amp;<a class="code" href="class_hypertable_1_1_test_harness.html#4846d680e2771d6e61cfdc2d1bc52477">get_log_stream</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">m_log_stream</a>; }
-<a name="l00087"></a>00087 
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_test_harness.html#239d98501604291fcc0ca4dedded12f7">00088</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#239d98501604291fcc0ca4dedded12f7">validate_and_exit</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *goldenFile) {
-<a name="l00089"></a>00089       <span class="keywordtype">int</span> exitVal = 0;
-<a name="l00090"></a>00090       <a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">m_log_stream</a> &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00091"></a>00091       <span class="keywordtype">string</span> command = (string)<span class="stringliteral">"diff "</span> + <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> + <span class="stringliteral">" "</span> + goldenFile;
-<a name="l00092"></a>00092       <span class="keywordflow">if</span> (system(command.c_str()))
-<a name="l00093"></a>00093         exitVal = 1;
-<a name="l00094"></a>00094       <span class="keywordflow">if</span> (exitVal == 0)
-<a name="l00095"></a>00095         unlink(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
-<a name="l00096"></a>00096       <span class="keywordflow">else</span>
-<a name="l00097"></a>00097         cerr &lt;&lt; <span class="stringliteral">"Diff Error:  "</span> &lt;&lt; command &lt;&lt; endl;
-<a name="l00098"></a>00098       exit(exitVal);
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100 
-<a name="l00101"></a><a class="code" href="class_hypertable_1_1_test_harness.html#65df81a666310c4caf4d22a58b198c60">00101</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#65df81a666310c4caf4d22a58b198c60">regenerate_golden_file</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *goldenFile) {
-<a name="l00102"></a>00102       <span class="keywordtype">string</span> command = (string)<span class="stringliteral">"cp "</span> + <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> + <span class="stringliteral">" "</span> + goldenFile;      
-<a name="l00103"></a>00103       system(command.c_str());
-<a name="l00104"></a>00104     }
-<a name="l00105"></a>00105 
-<a name="l00106"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6960ab573edf0be58db0cc478a2e7d50">00106</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#6960ab573edf0be58db0cc478a2e7d50">clear_output</a>() {
-<a name="l00107"></a>00107       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>-&gt;reopen()) {
-<a name="l00108"></a>00108         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem re-opening logging output file %s"</span>, <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
-<a name="l00109"></a>00109         <a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">display_error_and_exit</a>();
-<a name="l00110"></a>00110       }
-<a name="l00111"></a>00111     }
-<a name="l00112"></a>00112 
-<a name="l00113"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">00113</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">display_error_and_exit</a>() {
-<a name="l00114"></a>00114       <a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">m_log_stream</a> &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00115"></a>00115       cerr &lt;&lt; <span class="stringliteral">"Error, see '"</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl;
-<a name="l00116"></a>00116       <span class="comment">/*</span>
-<a name="l00117"></a>00117 <span class="comment">      string command = (string)"cat " + m_output_file;</span>
-<a name="l00118"></a>00118 <span class="comment">      system(command.c_str());</span>
-<a name="l00119"></a>00119 <span class="comment">      unlink(m_output_file);</span>
-<a name="l00120"></a>00120 <span class="comment">      */</span>
-<a name="l00121"></a>00121       exit(1);
-<a name="l00122"></a>00122     }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="keyword">private</span>:
-<a name="l00125"></a><a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">00125</a>     <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>[128];
-<a name="l00126"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">00126</a>     log4cpp::FileAppender *<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>;
-<a name="l00127"></a><a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">00127</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">m_name</a>;
-<a name="l00128"></a><a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">00128</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>;
-<a name="l00129"></a><a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">00129</a>     ofstream <a class="code" href="class_hypertable_1_1_test_harness.html#d6d69533a9fdb838546108c93694777d">m_log_stream</a>;
-<a name="l00130"></a>00130   };
-<a name="l00131"></a>00131   
-<a name="l00132"></a>00132 }
-<a name="l00133"></a>00133 
-<a name="l00134"></a>00134 <span class="preprocessor">#endif // HYPERTABLE_TESTHARNESS_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:16 2008 for hypertable by&nbsp;
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="keyword">namespace </span>Hypertable {
+<a name="l00040"></a>00040 
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html">00044</a>   <span class="keyword">class  </span><a class="code" href="class_hypertable_1_1_no_time_layout.html" title="Log4cpp layout class that drops timestamp from log messages.">NoTimeLayout</a> : <span class="keyword">public</span> log4cpp::Layout {
+<a name="l00045"></a>00045   <span class="keyword">public</span>:
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#4a4fa4bd9e9babcca335a7b4e83354b8">00046</a>     <a class="code" href="class_hypertable_1_1_no_time_layout.html#4a4fa4bd9e9babcca335a7b4e83354b8">NoTimeLayout</a>() { }
+<a name="l00047"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#b9340863a06b71c3c22f2c3d8be9a98a">00047</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_no_time_layout.html#b9340863a06b71c3c22f2c3d8be9a98a">~NoTimeLayout</a>() { }
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_no_time_layout.html#6b6231afe3ede5e279a63818519d909f">00048</a>     <span class="keyword">virtual</span> std::string <a class="code" href="class_hypertable_1_1_no_time_layout.html#6b6231afe3ede5e279a63818519d909f">format</a>(<span class="keyword">const</span> log4cpp::LoggingEvent&amp; event) {
+<a name="l00049"></a>00049       std::ostringstream message;
+<a name="l00050"></a>00050       <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>&amp; pri_name = log4cpp::Priority::getPriorityName(event.priority);
+<a name="l00051"></a>00051       message &lt;&lt; pri_name &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; <span class="keyword">event</span>.categoryName &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; <span class="keyword">event</span>.ndc &lt;&lt; <span class="stringliteral">": "</span> &lt;&lt; <span class="keyword">event</span>.message &lt;&lt; std::endl;
+<a name="l00052"></a>00052       <span class="keywordflow">return</span> message.str();
+<a name="l00053"></a>00053     }
+<a name="l00054"></a>00054   };
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="class_hypertable_1_1_test_harness.html">00056</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_test_harness.html">TestHarness</a> {
+<a name="l00057"></a>00057   <span class="keyword">public</span>:
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_test_harness.html#47c92473f99435f8a99b6e9bcd39ffcd">00058</a>     <a class="code" href="class_hypertable_1_1_test_harness.html#47c92473f99435f8a99b6e9bcd39ffcd">TestHarness</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060       <a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">m_name</a> = name;
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062       <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Logger::initialize</a>(name);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064       <span class="comment">// open temporary output file</span>
+<a name="l00065"></a>00065       sprintf(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, <span class="stringliteral">"%s%d"</span>, name, getpid());
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067       <span class="keywordflow">if</span> ((<a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a> = open(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, O_CREAT | O_TRUNC | O_WRONLY, 0644)) &lt; 0) {
+<a name="l00068"></a>00068         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"open(%s) failed - %s"</span>, <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>, strerror(errno));
+<a name="l00069"></a>00069         exit(1);
+<a name="l00070"></a>00070       }
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072       <a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">m_log_stream</a>.open(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074       <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;removeAllAppenders();
+<a name="l00075"></a>00075       <a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a> = <span class="keyword">new</span> log4cpp::FileAppender((<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)name, <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>);
+<a name="l00076"></a>00076       <a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>-&gt;setLayout(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_no_time_layout.html" title="Log4cpp layout class that drops timestamp from log messages.">NoTimeLayout</a>());
+<a name="l00077"></a>00077       <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;setAppender(<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>);
+<a name="l00078"></a>00078     }
+<a name="l00079"></a><a class="code" href="class_hypertable_1_1_test_harness.html#3573b150409d634ede31db51d6756d40">00079</a>     <a class="code" href="class_hypertable_1_1_test_harness.html#3573b150409d634ede31db51d6756d40">~TestHarness</a>() {
+<a name="l00080"></a>00080       unlink(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
+<a name="l00081"></a>00081     }
+<a name="l00082"></a>00082 
+<a name="l00083"></a><a class="code" href="class_hypertable_1_1_test_harness.html#c9d66975530c71764f40518eade18c18">00083</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_test_harness.html#c9d66975530c71764f40518eade18c18">get_log_file_descriptor</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>; }
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_test_harness.html#beb750997e9bb207ef7eef2dccf6ef9a">00085</a>     std::ostream &amp;<a class="code" href="class_hypertable_1_1_test_harness.html#beb750997e9bb207ef7eef2dccf6ef9a">get_log_stream</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">m_log_stream</a>; }
+<a name="l00086"></a>00086 
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_test_harness.html#c0f3713b08d8907d314d4bf2ab48e4fb">00087</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#c0f3713b08d8907d314d4bf2ab48e4fb">validate_and_exit</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *golden_file) {
+<a name="l00088"></a>00088       <span class="keywordtype">int</span> exitval = 0;
+<a name="l00089"></a>00089       <a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">m_log_stream</a> &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">std::flush</a>;
+<a name="l00090"></a>00090       <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> command = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"diff "</span> + <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> + <span class="stringliteral">" "</span> + golden_file;
+<a name="l00091"></a>00091       <span class="keywordflow">if</span> (system(command.c_str()))
+<a name="l00092"></a>00092         exitval = 1;
+<a name="l00093"></a>00093       <span class="keywordflow">if</span> (exitval == 0)
+<a name="l00094"></a>00094         unlink(<a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
+<a name="l00095"></a>00095       <span class="keywordflow">else</span>
+<a name="l00096"></a>00096         std::cerr &lt;&lt; <span class="stringliteral">"Diff Error:  "</span> &lt;&lt; command &lt;&lt; std::endl;
+<a name="l00097"></a>00097       exit(exitval);
+<a name="l00098"></a>00098     }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="class_hypertable_1_1_test_harness.html#338fbe48d74b6d73daf3338b82a88b27">00100</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#338fbe48d74b6d73daf3338b82a88b27">regenerate_golden_file</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *golden_file) {
+<a name="l00101"></a>00101       <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> command = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"cp "</span> + <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> + <span class="stringliteral">" "</span> + golden_file;
+<a name="l00102"></a>00102       system(command.c_str());
+<a name="l00103"></a>00103     }
+<a name="l00104"></a>00104 
+<a name="l00105"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6960ab573edf0be58db0cc478a2e7d50">00105</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#6960ab573edf0be58db0cc478a2e7d50">clear_output</a>() {
+<a name="l00106"></a>00106       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>-&gt;reopen()) {
+<a name="l00107"></a>00107         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem re-opening logging output file %s"</span>, <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>);
+<a name="l00108"></a>00108         <a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">display_error_and_exit</a>();
+<a name="l00109"></a>00109       }
+<a name="l00110"></a>00110     }
+<a name="l00111"></a>00111 
+<a name="l00112"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">00112</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_test_harness.html#6c7dab58ffc709e443c1f229bfca8761">display_error_and_exit</a>() {
+<a name="l00113"></a>00113       <a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">m_log_stream</a> &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">std::flush</a>;
+<a name="l00114"></a>00114       std::cerr &lt;&lt; <span class="stringliteral">"Error, see '"</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a> &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; std::endl;
+<a name="l00115"></a>00115       <span class="comment">/*</span>
+<a name="l00116"></a>00116 <span class="comment">      string command = (string)"cat " + m_output_file;</span>
+<a name="l00117"></a>00117 <span class="comment">      system(command.c_str());</span>
+<a name="l00118"></a>00118 <span class="comment">      unlink(m_output_file);</span>
+<a name="l00119"></a>00119 <span class="comment">      */</span>
+<a name="l00120"></a>00120       exit(1);
+<a name="l00121"></a>00121     }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123   <span class="keyword">private</span>:
+<a name="l00124"></a><a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">00124</a>     <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_test_harness.html#48587f2116dbba5147c470b26cc0e0be">m_output_file</a>[128];
+<a name="l00125"></a><a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">00125</a>     log4cpp::FileAppender *<a class="code" href="class_hypertable_1_1_test_harness.html#6027dc11c998be4dd43c196d4be0fcec">m_appender</a>;
+<a name="l00126"></a><a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">00126</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_test_harness.html#f3c90f948a8d59805766b3b0b2a053f3">m_name</a>;
+<a name="l00127"></a><a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">00127</a>     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_test_harness.html#ae15165bb632d4e9a00e7359340646f0">m_fd</a>;
+<a name="l00128"></a><a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">00128</a>     std::ofstream <a class="code" href="class_hypertable_1_1_test_harness.html#aa85ab09b909c330abc9698c1e9a9894">m_log_stream</a>;
+<a name="l00129"></a>00129   };
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 }
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133 <span class="preprocessor">#endif // HYPERTABLE_TESTHARNESS_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:21 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

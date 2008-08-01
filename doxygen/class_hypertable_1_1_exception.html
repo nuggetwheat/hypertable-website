@@ -42,17 +42,23 @@ Collaboration diagram for Hypertable::Exception:</div>
 std::runtime_error&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#8c49287f443d1e63172a63285a123ee9">Parent</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#105a16347be7b42e0e777ccbf95de697">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#5e26a06de94914741002542a7b22b092">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, int l=0, const char *fn=0, const char *fl=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#c42d30b280075b7821b501a4b8ba7332">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#afd364aeeae6636044f2440e9b081145">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;msg, int l=0, const char *fn=0, const char *fl=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#a5e41b637d5ad32625eeb5cc61f1f6c8">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;msg, const <a class="el" href="class_hypertable_1_1_exception.html">Exception</a> &amp;ex)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#09bab7d75b1bca001170e10bddf4873e">Exception</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;msg, const <a class="el" href="class_hypertable_1_1_exception.html">Exception</a> &amp;ex, int l=0, const char *fn=0, const char *fl=0)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#655f37f9fa26cd17d7de5742dd2a490e">Exception</a> (const <a class="el" href="class_hypertable_1_1_exception.html">Exception</a> &amp;ex)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#fd20eeb32fac8abb7c4c3fcf3a265a0c">~Exception</a> ()  throw ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#2198ffeeb206b0831bdf1a1236276f5b">line</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#7a205465e494d20c5875840faccd8969">func</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#ec1b139c16c9481cd54623e82970f9d3">file</a> () const </td></tr>
 
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_exception.html">Exception</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#3160a986ca0df143acd70daa5e28cd76">prev</a></td></tr>
@@ -63,12 +69,18 @@ std::runtime_error&nbsp;</td><td class="memItemRight" valign="bottom"><a class="
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#d597235fb1ef8dc9619f93e9506609b2">m_error</a></td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#1954d47c821ee1b63310c07cb3b48010">m_line</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#3d0be8732707989488223f8d89b7959f">m_func</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html#ae3780bdaf95243c1ec6898f1c712f9a">m_file</a></td></tr>
+
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 This is a generic exception class for <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a>. 
 <p>
 It takes an error code as a constructor argument and translates it into an error message. 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00134">134</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00151">151</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
 <a class="anchor" name="8c49287f443d1e63172a63285a123ee9"></a><!-- doxytag: member="Hypertable::Exception::Parent" ref="8c49287f443d1e63172a63285a123ee9" args="" -->
 <div class="memitem">
@@ -83,12 +95,12 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00139">139</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00160">160</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="105a16347be7b42e0e777ccbf95de697"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="105a16347be7b42e0e777ccbf95de697" args="(int error)" -->
+<a class="anchor" name="5e26a06de94914741002542a7b22b092"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="5e26a06de94914741002542a7b22b092" args="(int error, int l=0, const char *fn=0, const char *fl=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -96,9 +108,30 @@ It takes an error code as a constructor argument and translates it into an error
           <td class="memname">Hypertable::Exception::Exception           </td>
           <td>(</td>
           <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>error</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
+          <td class="paramname"> <em>error</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>l</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fn</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fl</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [inline]</code></td>
         </tr>
       </table>
 </div>
@@ -106,11 +139,11 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00141">141</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00162">162</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="c42d30b280075b7821b501a4b8ba7332"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="c42d30b280075b7821b501a4b8ba7332" args="(int error, const String &amp;msg)" -->
+<a class="anchor" name="afd364aeeae6636044f2440e9b081145"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="afd364aeeae6636044f2440e9b081145" args="(int error, const String &amp;msg, int l=0, const char *fn=0, const char *fl=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -124,7 +157,25 @@ It takes an error code as a constructor argument and translates it into an error
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>msg</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>msg</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>l</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fn</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fl</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -137,11 +188,11 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00142">142</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00165">165</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a5e41b637d5ad32625eeb5cc61f1f6c8"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="a5e41b637d5ad32625eeb5cc61f1f6c8" args="(int error, const String &amp;msg, const Exception &amp;ex)" -->
+<a class="anchor" name="09bab7d75b1bca001170e10bddf4873e"></a><!-- doxytag: member="Hypertable::Exception::Exception" ref="09bab7d75b1bca001170e10bddf4873e" args="(int error, const String &amp;msg, const Exception &amp;ex, int l=0, const char *fn=0, const char *fl=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -161,7 +212,25 @@ It takes an error code as a constructor argument and translates it into an error
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="class_hypertable_1_1_exception.html">Exception</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>ex</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>ex</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>l</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fn</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>fl</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,7 +243,7 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00144">144</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00169">169</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -196,7 +265,7 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00147">147</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00174">174</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -217,7 +286,7 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00151">151</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00178">178</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -259,7 +328,70 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00153">153</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00180">180</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2198ffeeb206b0831bdf1a1236276f5b"></a><!-- doxytag: member="Hypertable::Exception::line" ref="2198ffeeb206b0831bdf1a1236276f5b" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int Hypertable::Exception::line           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00181">181</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7a205465e494d20c5875840faccd8969"></a><!-- doxytag: member="Hypertable::Exception::func" ref="7a205465e494d20c5875840faccd8969" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* Hypertable::Exception::func           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00182">182</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ec1b139c16c9481cd54623e82970f9d3"></a><!-- doxytag: member="Hypertable::Exception::file" ref="ec1b139c16c9481cd54623e82970f9d3" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* Hypertable::Exception::file           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00183">183</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -277,7 +409,58 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00137">137</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00154">154</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1954d47c821ee1b63310c07cb3b48010"></a><!-- doxytag: member="Hypertable::Exception::m_line" ref="1954d47c821ee1b63310c07cb3b48010" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_hypertable_1_1_exception.html#1954d47c821ee1b63310c07cb3b48010">Hypertable::Exception::m_line</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00155">155</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="3d0be8732707989488223f8d89b7959f"></a><!-- doxytag: member="Hypertable::Exception::m_func" ref="3d0be8732707989488223f8d89b7959f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* <a class="el" href="class_hypertable_1_1_exception.html#3d0be8732707989488223f8d89b7959f">Hypertable::Exception::m_func</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00156">156</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ae3780bdaf95243c1ec6898f1c712f9a"></a><!-- doxytag: member="Hypertable::Exception::m_file" ref="ae3780bdaf95243c1ec6898f1c712f9a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* <a class="el" href="class_hypertable_1_1_exception.html#ae3780bdaf95243c1ec6898f1c712f9a">Hypertable::Exception::m_file</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00157">157</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -294,13 +477,13 @@ It takes an error code as a constructor argument and translates it into an error
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00155">155</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00185">185</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_error_8h-source.html">Error.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:38 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:26:56 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -21,39 +21,46 @@
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_METALOG_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>Hypertable {
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">class </span>DynamicBuffer;
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html">00036</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00037"></a>00037 <span class="keyword">public</span>:
-<a name="l00038"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html#59f3f8ceb0aada850d4fe0635de01357">00038</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#59f3f8ceb0aada850d4fe0635de01357">~MetaLogEntry</a>() {}
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#058fb5aa0369e3ee8c068a4d83cb7236">write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;) = 0;
-<a name="l00041"></a>00041   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#a8d85b95bafdea5baccd4a62795645f8">read</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) = 0;
-<a name="l00042"></a>00042   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#ce7072732e06f13e963aa738fcbf68ae">get_type</a>() = 0;
-<a name="l00043"></a>00043 };
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="namespace_hypertable.html#6ca35df6ef1e71c527f9e75300648050">00045</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLogEntry&gt; <a class="code" href="namespace_hypertable.html#6ca35df6ef1e71c527f9e75300648050">MetaLogEntryPtr</a>;
-<a name="l00046"></a>00046 
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_meta_log.html">00047</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_meta_log.html">MetaLog</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00048"></a>00048 <span class="keyword">public</span>:
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_meta_log.html#0293af80592328aaaefd5fce9d25ee6d">00049</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log.html#0293af80592328aaaefd5fce9d25ee6d">~MetaLog</a>() {}
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log.html#075afadeb95070462e2641ec18e558a0">write</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *) = 0;
-<a name="l00052"></a>00052   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log.html#df3266396cd92e1b507fc96063f8ac2c">close</a>() = 0;
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="comment">// Remove finished entries except rs_range_loaded</span>
-<a name="l00055"></a>00055   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log.html#4a1e154519997ac336a6fce730ad70b9">purge</a>() = 0;
-<a name="l00056"></a>00056 };
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="namespace_hypertable.html#b466993249e09051d7d6ad369d2f290f">00058</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLog&gt; <a class="code" href="namespace_hypertable.html#b466993249e09051d7d6ad369d2f290f">MetaLogPtr</a>;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 } <span class="comment">// namespace Hypertable</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="preprocessor">#endif // HYPERTABLE_METALOG_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_static_buffer_8h.html">Common/StaticBuffer.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_time_8h.html">Common/Time.h</a>"</span>
+<a name="l00029"></a>00029 
+<a name="l00035"></a>00035 <span class="keyword">namespace </span>Hypertable {
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html">00037</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00038"></a>00038 <span class="keyword">public</span>:
+<a name="l00039"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html#3ceed58a524ffe4c721b9b543c15286f">00039</a>   <a class="code" href="class_hypertable_1_1_meta_log_entry.html#3ceed58a524ffe4c721b9b543c15286f">MetaLogEntry</a>() : <a class="code" href="class_hypertable_1_1_meta_log_entry.html#406cdb3f5a82956831dcfd7ccb41e76e">timestamp</a>(<a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">get_ts64</a>()) {}
+<a name="l00040"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html#59f3f8ceb0aada850d4fe0635de01357">00040</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#59f3f8ceb0aada850d4fe0635de01357">~MetaLogEntry</a>() {}
+<a name="l00041"></a>00041 
+<a name="l00047"></a>00047   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#47ea176165006361e61158f43ba840b1" title="Serialize to buffer.">write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;buf) = 0;
+<a name="l00048"></a>00048 
+<a name="l00055"></a>00055   <span class="keyword">virtual</span> <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_meta_log_entry.html#25893a286514018ae7becb29473c2687" title="Deserialize from buffer.">read</a>(<a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buf) = 0;
+<a name="l00056"></a>00056 
+<a name="l00062"></a>00062   <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#b0f440ac02762a21cb3b043a7a523170" title="Get the most derived type of the entry.">get_type</a>() <span class="keyword">const</span> = 0;
+<a name="l00063"></a>00063 
+<a name="l00064"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html#406cdb3f5a82956831dcfd7ccb41e76e">00064</a>   uint64_t <a class="code" href="class_hypertable_1_1_meta_log_entry.html#406cdb3f5a82956831dcfd7ccb41e76e">timestamp</a>;
+<a name="l00065"></a><a class="code" href="class_hypertable_1_1_meta_log_entry.html#feb1934a91b423bacd0a94fa08a332e8">00065</a>   <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> <a class="code" href="class_hypertable_1_1_meta_log_entry.html#feb1934a91b423bacd0a94fa08a332e8">buffer</a>;
+<a name="l00066"></a>00066 };
+<a name="l00067"></a>00067 
+<a name="l00068"></a><a class="code" href="namespace_hypertable.html#6ca35df6ef1e71c527f9e75300648050">00068</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLogEntry&gt; <a class="code" href="namespace_hypertable.html#6ca35df6ef1e71c527f9e75300648050">MetaLogEntryPtr</a>;
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070 std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *);
+<a name="l00071"></a>00071 
+<a name="l00072"></a><a class="code" href="class_hypertable_1_1_meta_log.html">00072</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_meta_log.html">MetaLog</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00073"></a>00073 <span class="keyword">public</span>:
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_meta_log.html#0293af80592328aaaefd5fce9d25ee6d">00074</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log.html#0293af80592328aaaefd5fce9d25ee6d">~MetaLog</a>() {}
+<a name="l00075"></a>00075 
+<a name="l00081"></a>00081   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log.html#73d129c534ed36b6d12b0cbce6fa8c20" title="Write a metalog entry.">write</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *mle) = 0;
+<a name="l00082"></a>00082 
+<a name="l00087"></a>00087   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_meta_log.html#df3266396cd92e1b507fc96063f8ac2c" title="Close the metalog Implementation should handle multiple close calls.">close</a>() = 0;
+<a name="l00088"></a>00088 };
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="namespace_hypertable.html#b466993249e09051d7d6ad369d2f290f">00090</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLog&gt; <a class="code" href="namespace_hypertable.html#b466993249e09051d7d6ad369d2f290f">MetaLogPtr</a>;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 } <span class="comment">// namespace Hypertable</span>
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094 <span class="preprocessor">#endif // HYPERTABLE_METALOG_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

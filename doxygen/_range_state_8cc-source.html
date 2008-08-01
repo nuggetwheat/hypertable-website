@@ -17,38 +17,63 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>RangeState.cc</h1><a href="_range_state_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_range_state_8h.html">RangeState.h</a>"</span>
-<a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="class_hypertable_1_1_range_state.html#2ed6dc2ab911ddff2790df2017b1571a">00028</a> <span class="keywordtype">size_t</span> RangeState::encoded_length() {
-<a name="l00029"></a>00029   <span class="keywordflow">return</span> 9 + <a class="code" href="namespace_hypertable_1_1_serialization.html#68c4fb1c55bfc323f336c8205093efd8" title="Computes the encoded length of a std::string.">Serialization::encoded_length_string</a>(<a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>);
-<a name="l00030"></a>00030 }
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="class_hypertable_1_1_range_state.html#86005455ee31db5894dcfaa15c074709">00034</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_state.html#86005455ee31db5894dcfaa15c074709">RangeState::encode</a>(uint8_t **bufPtr) {
-<a name="l00035"></a>00035   *(*bufPtr)++ = <a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a>;
-<a name="l00036"></a>00036   <a class="code" href="namespace_hypertable_1_1_serialization.html#2faea11813bd892d8d0e77758f0a988b" title="Encodes a long (8 byte integer) into the given buffer.">Serialization::encode_long</a>(bufPtr, <a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a>);
-<a name="l00037"></a>00037   <a class="code" href="namespace_hypertable_1_1_serialization.html#e7ec45055aa109089bf33e1988c54741" title="Encodes a std::string into the given buffer.">Serialization::encode_string</a>(bufPtr, <a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>);
-<a name="l00038"></a>00038 }
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="class_hypertable_1_1_range_state.html#08627ef7465019afbddcaa678a3dc347">00042</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_range_state.html#08627ef7465019afbddcaa678a3dc347">RangeState::decode</a>(uint8_t **bufPtr, <span class="keywordtype">size_t</span> *remainingPtr) {
-<a name="l00043"></a>00043   uint8_t bval;
-<a name="l00044"></a>00044   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#c030542188047b53c386f25ec3042c2f" title="Decodes a single byte from the given buffer.">Serialization::decode_byte</a>(bufPtr, remainingPtr, &amp;bval))
-<a name="l00045"></a>00045     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00046"></a>00046   <a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a> = bval;
-<a name="l00047"></a>00047   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#5970b55283b4717ede1240b762d0d3e1" title="Decodes an int (4 byte integer) from the given buffer.">Serialization::decode_long</a>(bufPtr, remainingPtr, &amp;<a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a>))
-<a name="l00048"></a>00048     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00049"></a>00049   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_serialization.html#c34c4f77815e637d9b9f7a52e7aa56d9" title="Decodes a c-style string from the given buffer.">Serialization::decode_string</a>(bufPtr, remainingPtr, &amp;<a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>))
-<a name="l00050"></a>00050     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00051"></a>00051   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00052"></a>00052 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_range_state_8h.html">RangeState.h</a>"</span>
+<a name="l00024"></a>00024 
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00028"></a>00028 <span class="keyword">using namespace </span>Serialization;
+<a name="l00029"></a>00029 
+<a name="l00030"></a><a class="code" href="class_hypertable_1_1_range_state.html#2ed6dc2ab911ddff2790df2017b1571a">00030</a> <span class="keywordtype">size_t</span> RangeState::encoded_length() {
+<a name="l00031"></a>00031   <span class="keywordflow">return</span> 9 + <a class="code" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a>.<a class="code" href="class_hypertable_1_1_timestamp.html#829b60d9ab3e9ae9d775a1148d5c1395">encoded_length</a>() + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>) +
+<a name="l00032"></a>00032     <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a>) + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a>);
+<a name="l00033"></a>00033 }
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035 
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_range_state.html#d8c921d8ec1441c44646f376b803b6fe">00036</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_state.html#d8c921d8ec1441c44646f376b803b6fe">RangeState::encode</a>(uint8_t **bufp) {
+<a name="l00037"></a>00037   *(*bufp)++ = <a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a>;
+<a name="l00038"></a>00038   <a class="code" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a>.<a class="code" href="class_hypertable_1_1_timestamp.html#b158c48c86162bf8a0420d89f779bd3f">encode</a>(bufp);
+<a name="l00039"></a>00039   <a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae" title="Encode a 64-bit integer in little-endian order.">encode_i64</a>(bufp, <a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a>);
+<a name="l00040"></a>00040   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>);
+<a name="l00041"></a>00041   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a>);
+<a name="l00042"></a>00042   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a>);
+<a name="l00043"></a>00043 }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045 
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">00046</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">RangeState::decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00047"></a>00047   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding range state"</span>,
+<a name="l00048"></a>00048     <a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(bufp, remainp);
+<a name="l00049"></a>00049     <a class="code" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a>.<a class="code" href="class_hypertable_1_1_timestamp.html#692668147701d6bc3e85742fd696d1af">decode</a>(bufp, remainp);
+<a name="l00050"></a>00050     <a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(bufp, remainp);
+<a name="l00051"></a>00051     <a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
+<a name="l00052"></a>00052     <a class="code" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
+<a name="l00053"></a>00053     <a class="code" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp));
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 }
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="namespace_hypertable.html#4cd7c09b99c62cbdc6b8ded6ca077049">00057</a> std::ostream&amp; <a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">Hypertable::operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range.">RangeState</a> &amp;st) {
+<a name="l00058"></a>00058   out &lt;&lt;<span class="stringliteral">"{RangeState: state="</span>;
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keywordflow">switch</span> (st.<a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a>) {
+<a name="l00061"></a>00061   <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4bd7ae9005c4b48858c0e8fb951430f3d">RangeState::STEADY</a>: out &lt;&lt;<span class="stringliteral">"STEADY"</span>;              <span class="keywordflow">break</span>;
+<a name="l00062"></a>00062   <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db46d3dc244813d229616bd80635fbc528b">RangeState::SPLIT_LOG_INSTALLED</a>: out &lt;&lt;<span class="stringliteral">"SLI"</span>;    <span class="keywordflow">break</span>;
+<a name="l00063"></a>00063   <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_range_state.html#9b19a7c25013bf6797e207a1fe448db4907646948834a9d06fc4e8ff191ba8d2">RangeState::SPLIT_SHRUNK</a>: out &lt;&lt;<span class="stringliteral">"SHRUNK"</span>;        <span class="keywordflow">break</span>;
+<a name="l00064"></a>00064   <span class="keywordflow">default</span>:
+<a name="l00065"></a>00065     out &lt;&lt;<span class="stringliteral">"unknown ("</span>&lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#2c9398fa50a792749537147253aa8a02">state</a>;
+<a name="l00066"></a>00066   }
+<a name="l00067"></a>00067   out &lt;&lt; <span class="stringliteral">" ts.logical="</span> &lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a>.<a class="code" href="class_hypertable_1_1_timestamp.html#a7eefa54952e45ca4a405c7468089253">logical</a> &lt;&lt; <span class="stringliteral">" ts.real="</span> &lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#aaeda097894742f10d11e8fed0f05e9b">timestamp</a>.<a class="code" href="class_hypertable_1_1_timestamp.html#85752136c362192db525a2a233e9eb8a">real</a>;
+<a name="l00068"></a>00068   out &lt;&lt;<span class="stringliteral">" soft_limit="</span>&lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a>;
+<a name="l00069"></a>00069   <span class="keywordflow">if</span> (st.<a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a>)
+<a name="l00070"></a>00070     out &lt;&lt;<span class="stringliteral">" transfer_log='"</span>&lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#634af646f2f49c09599820125a1c077b">transfer_log</a> &lt;&lt; <span class="stringliteral">"'"</span>;
+<a name="l00071"></a>00071   <span class="keywordflow">if</span> (st.<a class="code" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a>)
+<a name="l00072"></a>00072     out &lt;&lt;<span class="stringliteral">" split_point='"</span>&lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#8d24fb9e0a5b043a2eec2c24e181eab1">split_point</a> &lt;&lt; <span class="stringliteral">"'"</span>;
+<a name="l00073"></a>00073   <span class="keywordflow">if</span> (st.<a class="code" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a>)
+<a name="l00074"></a>00074     out &lt;&lt;<span class="stringliteral">" old_start_row='"</span>&lt;&lt; st.<a class="code" href="class_hypertable_1_1_range_state.html#3ea4bad680f811a37d2d0359aaa19c4b">old_start_row</a> &lt;&lt; <span class="stringliteral">"'"</span>;
+<a name="l00075"></a>00075   out &lt;&lt;<span class="stringliteral">"}"</span>;
+<a name="l00076"></a>00076   <span class="keywordflow">return</span> out;
+<a name="l00077"></a>00077 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -40,7 +40,7 @@ Collaboration diagram for Hypertable::TableMutator:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_table_mutator__coll__graph.png" border="0" usemap="#_hypertable_1_1_table_mutator__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_table_mutator__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="183,19,375,45"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="467,56,600,83"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,48,79,75"><area shape="rect" href="class_hypertable_1_1_key_spec.html" title="Hypertable::KeySpec" alt="" coords="460,107,607,133"><area shape="rect" href="class_hypertable_1_1_table_identifier_copy.html" title="Wrapper for TableIdentifier." alt="" coords="427,157,640,184"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="188,157,370,184"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,19,372,45"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="539,96,672,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,48,79,75"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,133,341,160"><area shape="rect" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier." alt="" coords="487,147,724,173"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="185,184,367,211"><area shape="rect" href="class_hypertable_1_1_key_spec.html" title="Hypertable::KeySpec" alt="" coords="532,197,679,224"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -82,6 +82,9 @@ Collaboration diagram for Hypertable::TableMutator:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#621037e3c453141971b9abd169eaebf5">get_failed</a> (std::vector&lt; std::pair&lt; <a class="el" href="class_hypertable_1_1_cell.html">Cell</a>, int &gt; &gt; &amp;failed_mutations)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the failed mutations.  <a href="#621037e3c453141971b9abd169eaebf5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#ed3649b781a7c6f87e9c5588b1572dd4">need_retry</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Indicates whether or not there are failed updates to be retried.  <a href="#ed3649b781a7c6f87e9c5588b1572dd4"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">enum &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#9db1b3c2ebdfddf009c27ad78e3be60b">Operation</a> { <a class="el" href="class_hypertable_1_1_table_mutator.html#9db1b3c2ebdfddf009c27ad78e3be60b27cb6f7b2bbbe63b02d68b9c701d890a">SET</a> =  1, 
 <a class="el" href="class_hypertable_1_1_table_mutator.html#9db1b3c2ebdfddf009c27ad78e3be60b1b73794db93e05701547616b52851c3a">SET_DELETE</a> =  2, 
@@ -102,7 +105,7 @@ Collaboration diagram for Hypertable::TableMutator:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#05c08609ae0d86a26a0b8d1f9c239e07">RangeLocatorPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#5f308cc1de644cf517da7ec2caa325a6">m_range_locator_ptr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#853a60a4839c064692f611253627309d">m_table_identifier</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#cef5765f2b042bee534d09d5037707ca">m_table_identifier</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table_mutator.html#3ec2924850c1499e7491160355bba79f">m_memory_used</a></td></tr>
 
@@ -158,7 +161,7 @@ Objects of this class are used to collect mutations and periodically flush them 
 </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00174">174</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00185">185</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -226,7 +229,7 @@ Constructs the <a class="el" href="class_hypertable_1_1_table_mutator.html" titl
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00044">44</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00047">47</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -302,7 +305,7 @@ NOTE: Use of this method is discouraged. The system uses timestamps internally t
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00058">58</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00068">68</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -427,7 +430,7 @@ NOTE: Use of this method is discouraged. The system uses timestamps internally t
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00119">119</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00129">129</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -481,7 +484,7 @@ Flushes the accumulated mutations to their respective range servers.
 
 <p>
 If there are buffered updates, send them and wait for completion 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00179">179</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00189">189</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -511,7 +514,7 @@ Retries the last operation.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if successfully flushed, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00212">212</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00222">222</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -591,6 +594,30 @@ Returns the failed mutations.
 
 </div>
 </div><p>
+<a class="anchor" name="ed3649b781a7c6f87e9c5588b1572dd4"></a><!-- doxytag: member="Hypertable::TableMutator::need_retry" ref="ed3649b781a7c6f87e9c5588b1572dd4" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::TableMutator::need_retry           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Indicates whether or not there are failed updates to be retried. 
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true if there are failed updates to retry, false otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00177">177</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="fc204551dd64bc2be94622410f41a30d"></a><!-- doxytag: member="Hypertable::TableMutator::wait_for_previous_buffer" ref="fc204551dd64bc2be94622410f41a30d" args="(Timer &amp;timer)" -->
 <div class="memitem">
 <div class="memproto">
@@ -612,7 +639,7 @@ Returns the failed mutations.
 <p>
 Make several attempts to create redo buffer<p>
 Re-send failed sends 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00239">239</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00249">249</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -637,7 +664,7 @@ Re-send failed sends
 <p>
 Sanity check the row key<p>
 Sanity check the column qualifier 
-<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00272">272</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8cc-source.html#l00282">282</a> of file <a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a>.</p>
 
 </div>
 </div><p>
@@ -655,7 +682,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00184">184</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00195">195</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -672,7 +699,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00185">185</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00196">196</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -689,7 +716,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00186">186</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00197">197</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -706,16 +733,16 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00187">187</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00198">198</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="853a60a4839c064692f611253627309d"></a><!-- doxytag: member="Hypertable::TableMutator::m_table_identifier" ref="853a60a4839c064692f611253627309d" args="" -->
+<a class="anchor" name="cef5765f2b042bee534d09d5037707ca"></a><!-- doxytag: member="Hypertable::TableMutator::m_table_identifier" ref="cef5765f2b042bee534d09d5037707ca" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_copy.html">TableIdentifierCopy</a> <a class="el" href="class_hypertable_1_1_table_mutator.html#853a60a4839c064692f611253627309d">Hypertable::TableMutator::m_table_identifier</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_table_identifier_managed.html">TableIdentifierManaged</a> <a class="el" href="class_hypertable_1_1_table_mutator.html#cef5765f2b042bee534d09d5037707ca">Hypertable::TableMutator::m_table_identifier</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -723,7 +750,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00188">188</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00199">199</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -740,7 +767,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00189">189</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00200">200</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -757,7 +784,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00190">190</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00201">201</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -774,7 +801,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00191">191</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00202">202</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -791,7 +818,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00192">192</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00203">203</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -808,7 +835,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00193">193</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00204">204</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -825,7 +852,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00194">194</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00205">205</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -842,7 +869,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00196">196</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00207">207</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -859,7 +886,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00197">197</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00208">208</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -876,7 +903,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00198">198</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00209">209</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -893,7 +920,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00199">199</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00210">210</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -910,7 +937,7 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00200">200</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00211">211</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
@@ -927,13 +954,13 @@ Sanity check the column qualifier
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00201">201</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_mutator_8h-source.html#l00212">212</a> of file <a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_mutator_8h-source.html">TableMutator.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_mutator_8cc-source.html">TableMutator.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:26:52 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:27:12 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

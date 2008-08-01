@@ -38,8 +38,8 @@
 <a name="l00040"></a>00040 
 <a name="l00041"></a>00041   <span class="keyword">public</span>:
 <a name="l00042"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#8596cb505f5bc6ef161e61a4663b6304">00042</a>     <a class="code" href="class_hypertable_1_1_scanner_map.html#8596cb505f5bc6ef161e61a4663b6304">ScannerMap</a>() : <a class="code" href="class_hypertable_1_1_scanner_map.html#232def943fb0afc270c9f0ac1185ee34">m_mutex</a>() { <span class="keywordflow">return</span>; }
-<a name="l00043"></a>00043     uint32_t <a class="code" href="class_hypertable_1_1_scanner_map.html#aa6e37f393174376ec19321e18b03515">put</a>(<a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scannerPtr, <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> &amp;rangePtr);
-<a name="l00044"></a>00044     <span class="keywordtype">bool</span> <span class="keyword">get</span>(uint32_t id, <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scannerPtr, <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> &amp;rangePtr);
+<a name="l00043"></a>00043     uint32_t <a class="code" href="class_hypertable_1_1_scanner_map.html#4bd31f0a27b6b5fd51f816953d102e1a">put</a>(<a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scanner_ptr, <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> &amp;<a class="code" href="_range_server_8cc.html#5dd8a77e5b83918b10309c19d0d929e9">range_ptr</a>);
+<a name="l00044"></a>00044     <span class="keywordtype">bool</span> <span class="keyword">get</span>(uint32_t id, <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scanner_ptr, <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> &amp;<a class="code" href="_range_server_8cc.html#5dd8a77e5b83918b10309c19d0d929e9">range_ptr</a>);
 <a name="l00045"></a>00045     <span class="keywordtype">bool</span> <span class="keyword">remove</span>(uint32_t id);
 <a name="l00046"></a>00046     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scanner_map.html#32002082393dcbf570a4cdb433592b9a">purge_expired</a>(time_t expire_time);
 <a name="l00047"></a>00047 
@@ -50,22 +50,23 @@
 <a name="l00052"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#33f9b75c456b70c70186617c17f21de4">00052</a>     <span class="keyword">static</span> <a class="code" href="structatomic__t.html">atomic_t</a> <a class="code" href="class_hypertable_1_1_scanner_map.html#33f9b75c456b70c70186617c17f21de4">ms_next_id</a>;
 <a name="l00053"></a>00053 
 <a name="l00054"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#232def943fb0afc270c9f0ac1185ee34">00054</a>     boost::mutex   <a class="code" href="class_hypertable_1_1_scanner_map.html#232def943fb0afc270c9f0ac1185ee34">m_mutex</a>;
-<a name="l00055"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info_t.html">00055</a>     <span class="keyword">typedef</span> <span class="keyword">struct </span>{
-<a name="l00056"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info_t.html#f7e8000dae3a6bb49de3574e7b2e799a">00056</a>       <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scannerPtr;
-<a name="l00057"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info_t.html#c574c0e7c8e64094a04a53072b8482a3">00057</a>       <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> rangePtr;
-<a name="l00058"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info_t.html#998fff774243cbac4ee4c2379da85ff8">00058</a>       time_t last_access;
-<a name="l00059"></a>00059     } <a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info_t.html">ScanInfoT</a>;
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#bfa6d29a69289267ffa1ac84d553ea7e">00060</a>     <span class="keyword">typedef</span> hash_map&lt;uint32_t, ScanInfoT&gt; <a class="code" href="class_hypertable_1_1_scanner_map.html#bfa6d29a69289267ffa1ac84d553ea7e">CellListScannerMapT</a>;
-<a name="l00061"></a>00061 
-<a name="l00062"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#5870daa1e4d4ba59bf6fe8b8fc9d5318">00062</a>     <a class="code" href="class_hypertable_1_1_scanner_map.html#bfa6d29a69289267ffa1ac84d553ea7e">CellListScannerMapT</a> <a class="code" href="class_hypertable_1_1_scanner_map.html#5870daa1e4d4ba59bf6fe8b8fc9d5318">m_scanner_map</a>;
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064   };
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 }
-<a name="l00067"></a>00067 
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html">00056</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html">ScanInfo</a> {
+<a name="l00057"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#fe3c478f892f58009af162a4051f29dd">00057</a>       <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> <a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#fe3c478f892f58009af162a4051f29dd">scanner_ptr</a>;
+<a name="l00058"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#847673851878b514f010edade18deb57">00058</a>       <a class="code" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> <a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#847673851878b514f010edade18deb57">range_ptr</a>;
+<a name="l00059"></a><a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#6e8c9dc5eca6445f2139dceaffa3f800">00059</a>       time_t <a class="code" href="struct_hypertable_1_1_scanner_map_1_1_scan_info.html#6e8c9dc5eca6445f2139dceaffa3f800">last_access</a>;
+<a name="l00060"></a>00060     };
+<a name="l00061"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#0d71dc5275b7f0bec5a6fd04ca06e54f">00061</a>     <span class="keyword">typedef</span> hash_map&lt;uint32_t, ScanInfo&gt; <a class="code" href="class_hypertable_1_1_scanner_map.html#0d71dc5275b7f0bec5a6fd04ca06e54f">CellListScannerMap</a>;
+<a name="l00062"></a>00062 
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_scanner_map.html#540691d58ff6d1b0632b3293701bf91a">00063</a>     <a class="code" href="class_hypertable_1_1_scanner_map.html#0d71dc5275b7f0bec5a6fd04ca06e54f">CellListScannerMap</a> <a class="code" href="class_hypertable_1_1_scanner_map.html#540691d58ff6d1b0632b3293701bf91a">m_scanner_map</a>;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   };
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 }
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069 <span class="preprocessor">#endif // HYPERTABLE_SCANNERMAP_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070 <span class="preprocessor">#endif // HYPERTABLE_SCANNERMAP_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

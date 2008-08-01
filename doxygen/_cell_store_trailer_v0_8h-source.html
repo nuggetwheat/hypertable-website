@@ -20,33 +20,33 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_CELLSTORETRAILERV0_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_CELLSTORETRAILERV0_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;stdint.h&gt;</span>
-<a name="l00027"></a>00027 }
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_timestamp_8h.html">Hypertable/Lib/Timestamp.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
 <a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_timestamp_8h.html">Timestamp.h</a>"</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>Hypertable {
-<a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html">00034</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html">CellStoreTrailerV0</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> {
-<a name="l00035"></a>00035   <span class="keyword">public</span>:
-<a name="l00036"></a>00036     <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#0222ea63ffe20c4102f337590c573556">CellStoreTrailerV0</a>();
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#af06329a7d2b019ae7848dead6d9d57a">00037</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#af06329a7d2b019ae7848dead6d9d57a">~CellStoreTrailerV0</a>() { <span class="keywordflow">return</span>; }
-<a name="l00038"></a>00038     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#0298eb5afd82ab1af89d0c97d2dfe418" title="Clears the contents of this trailer;.">clear</a>();
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b">00039</a>     <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>() { <span class="keywordflow">return</span> 48; }
-<a name="l00040"></a>00040     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#a8dd78cf2300e7fe0f14117ad4dd1e5e" title="Serializes this trailer to the given buffer;.">serialize</a>(uint8_t *buf);
-<a name="l00041"></a>00041     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7fc95c08ca1b65b79142434eda533692" title="Deserializes the trailer from the given buffer.">deserialize</a>(uint8_t *buf);
-<a name="l00042"></a>00042     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#9acf4f6ca348ecd2a63d94ae9167ff73" title="Prints the trailer to the given ostream.">display</a>(std::ostream &amp;os);
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">00044</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>;
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">00045</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>;
-<a name="l00046"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">00046</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a>;
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">00047</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>;
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">00048</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">total_entries</a>;
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">00049</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">blocksize</a>;
-<a name="l00050"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#f8c16b7a4e6dcb8a42e30174514db5f9">00050</a>     <a class="code" href="class_hypertable_1_1_timestamp.html">Timestamp</a> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#f8c16b7a4e6dcb8a42e30174514db5f9">timestamp</a>;
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">00051</a>     <span class="keywordtype">float</span>     <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a>;
+<a name="l00029"></a>00029 <span class="keyword">namespace </span>Hypertable {
+<a name="l00030"></a>00030 
+<a name="l00031"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html">00031</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html">CellStoreTrailerV0</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> {
+<a name="l00032"></a>00032   <span class="keyword">public</span>:
+<a name="l00033"></a>00033     <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#0222ea63ffe20c4102f337590c573556">CellStoreTrailerV0</a>();
+<a name="l00034"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#af06329a7d2b019ae7848dead6d9d57a">00034</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#af06329a7d2b019ae7848dead6d9d57a">~CellStoreTrailerV0</a>() { <span class="keywordflow">return</span>; }
+<a name="l00035"></a>00035     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#0298eb5afd82ab1af89d0c97d2dfe418" title="Clears the contents of this trailer;.">clear</a>();
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b">00036</a>     <span class="keyword">virtual</span> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>() { <span class="keywordflow">return</span> 48; }
+<a name="l00037"></a>00037     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#a8dd78cf2300e7fe0f14117ad4dd1e5e" title="Serializes this trailer to the given buffer;.">serialize</a>(uint8_t *buf);
+<a name="l00038"></a>00038     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dbe91d87d67c4f9e9c1c9a5ee9bf3bab" title="Deserializes the trailer from the given buffer.">deserialize</a>(<span class="keyword">const</span> uint8_t *buf);
+<a name="l00039"></a>00039     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#9acf4f6ca348ecd2a63d94ae9167ff73" title="Prints the trailer to the given ostream.">display</a>(std::ostream &amp;os);
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">00041</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>;
+<a name="l00042"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">00042</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>;
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">00043</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a>;
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">00044</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>;
+<a name="l00045"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">00045</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">total_entries</a>;
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">00046</a>     uint32_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">blocksize</a>;
+<a name="l00047"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#f8c16b7a4e6dcb8a42e30174514db5f9">00047</a>     <a class="code" href="class_hypertable_1_1_timestamp.html">Timestamp</a> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#f8c16b7a4e6dcb8a42e30174514db5f9">timestamp</a>;
+<a name="l00048"></a>00048     <span class="keyword">union </span>{
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">00049</a>       <span class="keywordtype">float</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a>;
+<a name="l00050"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#1f0e094e02a496d6a9f9b0b14d3c5412">00050</a>       uint32_t <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#1f0e094e02a496d6a9f9b0b14d3c5412">compression_ratio_i32</a>;
+<a name="l00051"></a>00051     };
 <a name="l00052"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e854addc1824ada64b145f3f7e4cdc47">00052</a>     uint16_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e854addc1824ada64b145f3f7e4cdc47">compression_type</a>;
 <a name="l00053"></a><a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">00053</a>     uint16_t  <a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a>;
 <a name="l00054"></a>00054   };
@@ -54,7 +54,7 @@
 <a name="l00056"></a>00056 }
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058 <span class="preprocessor">#endif // HYPERTABLE_CELLSTORETRAILERV0_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

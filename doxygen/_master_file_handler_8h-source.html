@@ -26,21 +26,22 @@
 <a name="l00028"></a>00028 
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_master_client_8h.html">MasterClient.h</a>"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hyperspace;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hypertable {
-<a name="l00034"></a>00034 
-<a name="l00038"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master_file_handler.html">MasterFileHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hyperspace_1_1_handle_callback.html" title="A callback object derived from this class gets passed into each Open() call.">HandleCallback</a> {
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>Hypertable {
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034   <span class="keyword">using namespace </span>Hyperspace;
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_master_file_handler.html">MasterFileHandler</a> : <span class="keyword">public</span> Hyperspace::<a class="code" href="class_hyperspace_1_1_handle_callback.html" title="A callback object derived from this class gets passed into each Open() call.">HandleCallback</a> {
 <a name="l00039"></a>00039   <span class="keyword">public</span>:
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#cc04d377fd476c81cd6ae064d5c44889">00040</a>     <a class="code" href="class_hypertable_1_1_master_file_handler.html#cc04d377fd476c81cd6ae064d5c44889">MasterFileHandler</a>(<a class="code" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a> masterClientPtr, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;appQueuePtr) : <a class="code" href="class_hyperspace_1_1_handle_callback.html" title="A callback object derived from this class gets passed into each Open() call.">HandleCallback</a>(<a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976bfffbd4da4ca2cb7ee950e458efdbf2">EVENT_MASK_ATTR_SET</a>), <a class="code" href="class_hypertable_1_1_master_file_handler.html#0d01db6857b906c6cb5aacf4c09b4236">m_master_client_ptr</a>(masterClientPtr), <a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">m_app_queue_ptr</a>(appQueuePtr) { <span class="keywordflow">return</span>; }
-<a name="l00041"></a>00041     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_file_handler.html#5d7aa4753969254bee0fd55d494752cd" title="Invoked when an attribute gets set on the file associated with the registered handle...">attr_set</a>(std::string name);
-<a name="l00042"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#0d01db6857b906c6cb5aacf4c09b4236">00042</a>     <a class="code" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a>      <a class="code" href="class_hypertable_1_1_master_file_handler.html#0d01db6857b906c6cb5aacf4c09b4236">m_master_client_ptr</a>;
-<a name="l00043"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">00043</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>  <a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">m_app_queue_ptr</a>;
-<a name="l00044"></a>00044   };
-<a name="l00045"></a>00045 }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="preprocessor">#endif // HYPERTABLE_MASTERFILEHANDLER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:18 2008 for hypertable by&nbsp;
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#271afb9172ab91d688ca046468e5a832">00041</a>     <a class="code" href="class_hypertable_1_1_master_file_handler.html#271afb9172ab91d688ca046468e5a832">MasterFileHandler</a>(<a class="code" href="class_hypertable_1_1_master_client.html">MasterClient</a> *master_client, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue) : <a class="code" href="class_hyperspace_1_1_handle_callback.html" title="A callback object derived from this class gets passed into each Open() call.">HandleCallback</a>(<a class="code" href="namespace_hyperspace.html#8faaea70d69604e80613dd4e8da8f5976bfffbd4da4ca2cb7ee950e458efdbf2">EVENT_MASK_ATTR_SET</a>), <a class="code" href="class_hypertable_1_1_master_file_handler.html#a854eabc0b41c2e0577b8aa342454c47">m_master_client</a>(master_client), <a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">m_app_queue_ptr</a>(app_queue) { <span class="keywordflow">return</span>; }
+<a name="l00042"></a>00042     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_file_handler.html#5d7aa4753969254bee0fd55d494752cd">attr_set</a>(std::string name);
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#a854eabc0b41c2e0577b8aa342454c47">00043</a>     <a class="code" href="class_hypertable_1_1_master_client.html">MasterClient</a>         *<a class="code" href="class_hypertable_1_1_master_file_handler.html#a854eabc0b41c2e0577b8aa342454c47">m_master_client</a>;
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">00044</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>   <a class="code" href="class_hypertable_1_1_master_file_handler.html#a7b3dc13d4a5b54b671df5d4313a2c95">m_app_queue_ptr</a>;
+<a name="l00045"></a>00045   };
+<a name="l00046"></a>00046 }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="preprocessor">#endif // HYPERTABLE_MASTERFILEHANDLER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

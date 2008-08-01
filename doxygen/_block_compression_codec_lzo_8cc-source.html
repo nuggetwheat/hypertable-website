@@ -17,114 +17,110 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>BlockCompressionCodecLzo.cc</h1><a href="_block_compression_codec_lzo_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
-<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_checksum_8h.html">Common/Checksum.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="minilzo_8h.html">lzo/minilzo.h</a>"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_lzo_8h.html">BlockCompressionCodecLzo.h</a>"</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_checksum_8h.html">Common/Checksum.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="minilzo_8h.html">lzo/minilzo.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_lzo_8h.html">BlockCompressionCodecLzo.h</a>"</span>
 <a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">namespace </span>{
-<a name="l00033"></a><a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">00033</a>   <span class="keyword">const</span> uint8_t <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>[4] = { 0x11, 0x11, 0x11, 0x11 };
-<a name="l00034"></a>00034 }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#8519b400cd7646f1868da6cdf0126ea8">00040</a> BlockCompressionCodecLzo::BlockCompressionCodecLzo(<span class="keyword">const</span> Args &amp;args) {
-<a name="l00041"></a>00041   <span class="keywordflow">if</span> (<a class="code" href="lzoconf_8h.html#b37847919b4ac4f81505077f7438c6db">lzo_init</a>() != <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a>)
-<a name="l00042"></a>00042     <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b25eae4ff9ed5e2405f164e5cf694b8e91">Error::BLOCK_COMPRESSOR_INIT_ERROR</a>, <span class="stringliteral">"Problem initializing lzo library"</span>);
-<a name="l00043"></a>00043   <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a> = <span class="keyword">new</span> uint8_t [ <a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a> + 4 ];
-<a name="l00044"></a>00044   memcpy(&amp;<a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>[<a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a>], <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4);
-<a name="l00045"></a>00045 }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c72372ae5812077654f2579856d24166">00051</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c72372ae5812077654f2579856d24166">BlockCompressionCodecLzo::~BlockCompressionCodecLzo</a>() {
-<a name="l00052"></a>00052   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>;
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055 
+<a name="l00032"></a>00032 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>{
+<a name="l00035"></a><a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">00035</a>   <span class="keyword">const</span> uint8_t <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>[4] = { 0x11, 0x11, 0x11, 0x11 };
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 
+<a name="l00042"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#8519b400cd7646f1868da6cdf0126ea8">00042</a> BlockCompressionCodecLzo::BlockCompressionCodecLzo(<span class="keyword">const</span> Args &amp;args) {
+<a name="l00043"></a>00043   <span class="keywordflow">if</span> (<a class="code" href="lzoconf_8h.html#b37847919b4ac4f81505077f7438c6db">lzo_init</a>() != <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a>)
+<a name="l00044"></a>00044     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b25eae4ff9ed5e2405f164e5cf694b8e91">Error::BLOCK_COMPRESSOR_INIT_ERROR</a>, <span class="stringliteral">"Problem initializing lzo library"</span>);
+<a name="l00045"></a>00045   <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a> = <span class="keyword">new</span> uint8_t [<a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a> + 4];
+<a name="l00046"></a>00046   memcpy(&amp;<a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>[<a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a>], <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4);
+<a name="l00047"></a>00047 }
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 
+<a name="l00053"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c72372ae5812077654f2579856d24166">00053</a> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#c72372ae5812077654f2579856d24166">BlockCompressionCodecLzo::~BlockCompressionCodecLzo</a>() {
+<a name="l00054"></a>00054   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>;
+<a name="l00055"></a>00055 }
 <a name="l00056"></a>00056 
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#085e787e4d1ef6e056274613227d22f8">00060</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#085e787e4d1ef6e056274613227d22f8">BlockCompressionCodecLzo::deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header, <span class="keywordtype">size_t</span> reserve) {
-<a name="l00061"></a>00061   uint32_t avail_out = (input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() + input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() / 16 + 64 + 3 + 4);
-<a name="l00062"></a>00062   <span class="keywordtype">int</span> ret;
-<a name="l00063"></a>00063   <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> out_len = avail_out;
-<a name="l00064"></a>00064   uint8_t *fence_ptr = 0;
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
-<a name="l00067"></a>00067   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>( header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() + avail_out + reserve );
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069   fence_ptr = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() + (avail_out-4);
-<a name="l00070"></a>00070   memcpy(fence_ptr, <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4);
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   ret = <a class="code" href="minilzo_8h.html#1a1b44b6186cab6dad41c98edef0ece7">lzo1x_1_compress</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>+header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), &amp;out_len, <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>);
-<a name="l00073"></a>00073   assert(ret == <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a>);
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075   <span class="comment">/* check for an incompressible block */</span>
-<a name="l00076"></a>00076   <span class="keywordflow">if</span> (out_len &gt;= input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()) {
-<a name="l00077"></a>00077     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>);
-<a name="l00078"></a>00078     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>+header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
-<a name="l00079"></a>00079     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
-<a name="l00080"></a>00080     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
-<a name="l00081"></a>00081   }
-<a name="l00082"></a>00082   <span class="keywordflow">else</span> {
-<a name="l00083"></a>00083     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99757954b2685cbc8b612b7b279bcab5198e">LZO</a>);
-<a name="l00084"></a>00084     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
-<a name="l00085"></a>00085     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(out_len);
-<a name="l00086"></a>00086   }
-<a name="l00087"></a>00087   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#ee0b3d20cd8caeb050a7d036fe7a4c53">set_data_checksum</a>(<a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>()) );
-<a name="l00088"></a>00088   
-<a name="l00089"></a>00089   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00090"></a>00090   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c27464ff16cdbc7d2b3604e886d8cf7a">encode</a>(&amp;output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
-<a name="l00091"></a>00091   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>();
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!memcmp(fence_ptr, <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00094"></a>00094   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!memcmp(&amp;<a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>[<a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a>], <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 
+<a name="l00062"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#b75f4d8984f2ec2fb04c7872b4f2b2bc">00062</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#b75f4d8984f2ec2fb04c7872b4f2b2bc">BlockCompressionCodecLzo::deflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header, <span class="keywordtype">size_t</span> reserve) {
+<a name="l00063"></a>00063   uint32_t avail_out = (input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() + input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() / 16 + 64 + 3 + 4);
+<a name="l00064"></a>00064   <span class="keywordtype">int</span> ret;
+<a name="l00065"></a>00065   <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> out_len = avail_out;
+<a name="l00066"></a>00066   uint8_t *fence_ptr = 0;
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
+<a name="l00069"></a>00069   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() + avail_out + reserve);
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071   fence_ptr = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() + (avail_out-4);
+<a name="l00072"></a>00072   memcpy(fence_ptr, <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4);
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   ret = <a class="code" href="minilzo_8h.html#1a1b44b6186cab6dad41c98edef0ece7">lzo1x_1_compress</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>+header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), &amp;out_len, <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>);
+<a name="l00075"></a>00075   assert(ret == <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a>);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   <span class="comment">/* check for an incompressible block */</span>
+<a name="l00078"></a>00078   <span class="keywordflow">if</span> (out_len &gt;= input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()) {
+<a name="l00079"></a>00079     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>);
+<a name="l00080"></a>00080     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>+header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00081"></a>00081     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00082"></a>00082     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00083"></a>00083   }
+<a name="l00084"></a>00084   <span class="keywordflow">else</span> {
+<a name="l00085"></a>00085     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#5a1e7f7f25337c0eba6ecc2bbd4b66f5">set_compression_type</a>(<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99757954b2685cbc8b612b7b279bcab5198e">LZO</a>);
+<a name="l00086"></a>00086     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f6fd4d709715c62e4c8a1606f64d9404">set_data_length</a>(input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00087"></a>00087     header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#cb0a39e2cf579ffbc2985d8a7900f3a8">set_data_zlength</a>(out_len);
+<a name="l00088"></a>00088   }
+<a name="l00089"></a>00089   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#ee0b3d20cd8caeb050a7d036fe7a4c53">set_data_checksum</a>(<a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>(), header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>()));
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00092"></a>00092   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">encode</a>(&amp;output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
+<a name="l00093"></a>00093   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>();
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!memcmp(fence_ptr, <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
+<a name="l00096"></a>00096   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(!memcmp(&amp;<a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#0ee016bcfc10b6c5e3ca8840bf499c8d">m_workmem</a>[<a class="code" href="minilzo_8h.html#43d8cc9b730ea903427e0ead9688d521">LZO1X_1_MEM_COMPRESS</a>], <a class="code" href="_block_compression_codec_lzo_8cc.html#ba0ae42ace5ad34588f065688b1d5e6c">fence_marker</a>, 4), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
 <a name="l00097"></a>00097 }
 <a name="l00098"></a>00098 
 <a name="l00099"></a>00099 
-<a name="l00103"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#016866d6223b846d601650c0e93d526c">00103</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#016866d6223b846d601650c0e93d526c">BlockCompressionCodecLzo::inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header) {
+<a name="l00103"></a><a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#f9681bd2721da0ae4e5484cf34b9f714">00103</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_codec_lzo.html#f9681bd2721da0ae4e5484cf34b9f714">BlockCompressionCodecLzo::inflate</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;output, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> &amp;header) {
 <a name="l00104"></a>00104   <span class="keywordtype">int</span> ret;
-<a name="l00105"></a>00105   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00106"></a>00106   uint8_t *msg_ptr = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00107"></a>00107   <span class="keywordtype">size_t</span> remaining = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00108"></a>00108   <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> new_len;
-<a name="l00109"></a>00109 
-<a name="l00110"></a>00110   <span class="keywordflow">if</span> ((error = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#e0ef276907be66d3b97a0bb5a2e76b04">decode</a>(&amp;msg_ptr, &amp;remaining)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00111"></a>00111     <span class="keywordflow">return</span> error;
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>() != remaining) {
-<a name="l00114"></a>00114     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Block decompression error, header zlength = %d, actual = %d"</span>, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), remaining);
-<a name="l00115"></a>00115     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>;
-<a name="l00116"></a>00116   }
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118   uint32_t checksum = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(msg_ptr, remaining);
-<a name="l00119"></a>00119   <span class="keywordflow">if</span> (checksum != header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>()) {
-<a name="l00120"></a>00120     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Compressed block checksum mismatch header=%d, computed=%d"</span>, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>(), checksum);
-<a name="l00121"></a>00121     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28b4327c75266ae09ae145b36ec3307a4">Error::BLOCK_COMPRESSOR_CHECKSUM_MISMATCH</a>;
-<a name="l00122"></a>00122   }
+<a name="l00105"></a>00105   <span class="keyword">const</span> uint8_t *msg_ptr = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00106"></a>00106   <span class="keywordtype">size_t</span> remaining = input.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00107"></a>00107   <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> new_len;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109   header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">decode</a>(&amp;msg_ptr, &amp;remaining);
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>() != remaining) {
+<a name="l00112"></a>00112     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Block decompression error, header zlength = %d, actual = %d"</span>, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), remaining);
+<a name="l00113"></a>00113     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">""</span>);
+<a name="l00114"></a>00114   }
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   uint32_t checksum = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(msg_ptr, remaining);
+<a name="l00117"></a>00117   <span class="keywordflow">if</span> (checksum != header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>()) {
+<a name="l00118"></a>00118     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Compressed block checksum mismatch header=%d, computed=%d"</span>, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#f999b614e098217f6ea3e809e2a1cd0c">get_data_checksum</a>(), checksum);
+<a name="l00119"></a>00119     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28b4327c75266ae09ae145b36ec3307a4">Error::BLOCK_COMPRESSOR_CHECKSUM_MISMATCH</a>, <span class="stringliteral">""</span>);
+<a name="l00120"></a>00120   }
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
 <a name="l00123"></a>00123 
-<a name="l00124"></a>00124   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac">reserve</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126    <span class="comment">// check compress bit</span>
-<a name="l00127"></a>00127   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>() == <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>)
-<a name="l00128"></a>00128     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, msg_ptr, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
-<a name="l00129"></a>00129   <span class="keywordflow">else</span> {
-<a name="l00130"></a>00130     new_len = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
-<a name="l00131"></a>00131     ret = <a class="code" href="minilzo_8h.html#56d80346d5050546f13920548481426d">lzo1x_decompress</a>(msg_ptr, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, &amp;new_len, 0);
-<a name="l00132"></a>00132     <span class="keywordflow">if</span> (ret != <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a> || new_len != header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>()) {
-<a name="l00133"></a>00133       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Lzo decompression error, rval = %d"</span>, ret);
-<a name="l00134"></a>00134       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>;
-<a name="l00135"></a>00135     }
-<a name="l00136"></a>00136   }
-<a name="l00137"></a>00137   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
-<a name="l00138"></a>00138 
-<a name="l00139"></a>00139   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00140"></a>00140 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri May 23 15:19:17 2008 for hypertable by&nbsp;
+<a name="l00124"></a>00124    <span class="comment">// check compress bit</span>
+<a name="l00125"></a>00125   <span class="keywordflow">if</span> (header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>() == <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975492cc5e9a5ef574de7375ab8e0fd1d62">NONE</a>)
+<a name="l00126"></a>00126     memcpy(output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, msg_ptr, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
+<a name="l00127"></a>00127   <span class="keywordflow">else</span> {
+<a name="l00128"></a>00128     new_len = header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
+<a name="l00129"></a>00129     ret = <a class="code" href="minilzo_8h.html#56d80346d5050546f13920548481426d">lzo1x_decompress</a>(msg_ptr, header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, &amp;new_len, 0);
+<a name="l00130"></a>00130     <span class="keywordflow">if</span> (ret != <a class="code" href="lzoconf_8h.html#95ee0d3ad214da3df73208e04697ebcc">LZO_E_OK</a> || new_len != header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>()) {
+<a name="l00131"></a>00131       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Lzo decompression error, rval = %d"</span>, ret);
+<a name="l00132"></a>00132       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22100c522bdab3a6bf95d4960e3724c1b">Error::BLOCK_COMPRESSOR_INFLATE_ERROR</a>, <span class="stringliteral">""</span>);
+<a name="l00133"></a>00133     }
+<a name="l00134"></a>00134   }
+<a name="l00135"></a>00135   output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = output.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>();
+<a name="l00136"></a>00136 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

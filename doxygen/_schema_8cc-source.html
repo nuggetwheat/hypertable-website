@@ -49,455 +49,438 @@
 <a name="l00051"></a>00051 <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> Schema::ms_collected_text = <span class="stringliteral">""</span>;
 <a name="l00052"></a>00052 boost::mutex Schema::ms_mutex;
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054 
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_schema.html#0206c5a3c264cbb0bafe5b658114cae3">00057</a> Schema::Schema(<span class="keywordtype">bool</span> read_ids) : m_error_string(), m_next_column_id(0), m_access_group_map(), m_column_family_map(), m_generation(1), m_access_groups(), m_open_access_group(0), m_open_column_family(0), m_read_ids(read_ids), m_output_ids(false), m_max_column_family_id(0) {
-<a name="l00058"></a>00058   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a> == 0) {
-<a name="l00059"></a>00059     cerr &lt;&lt; <span class="stringliteral">"Logger::initialize must be called before using Schema class"</span> &lt;&lt; endl;
-<a name="l00060"></a>00060     exit(1);
-<a name="l00061"></a>00061   }
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_schema.html#fbc49c08e6c07e4a252e0b4a2f01b231">00065</a> <a class="code" href="class_hypertable_1_1_schema.html#fbc49c08e6c07e4a252e0b4a2f01b231">Schema::~Schema</a>() {
-<a name="l00066"></a>00066   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::const_iterator agiter = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); agiter != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); agiter++)
-<a name="l00067"></a>00067     <span class="keyword">delete</span> *agiter;
-<a name="l00068"></a>00068   <span class="keywordflow">for</span> (ColumnFamilyMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end(); iter++)
-<a name="l00069"></a>00069     <span class="keyword">delete</span> (*iter).second;
-<a name="l00070"></a>00070 }
+<a name="l00054"></a>00054 <span class="keyword">namespace </span>{
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="_schema_8cc.html#ce9ec4bc82b48cea9c17817f1b7183f8">00056</a> <span class="keywordtype">bool</span> <a class="code" href="_schema_8cc.html#ce9ec4bc82b48cea9c17817f1b7183f8">hql_needs_quotes</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
+<a name="l00057"></a>00057   <span class="keywordflow">if</span> (!isalpha(*name))
+<a name="l00058"></a>00058     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00059"></a>00059   <span class="keywordflow">else</span> {
+<a name="l00060"></a>00060     <span class="keywordflow">for</span> (; *name; name++) {
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (!isalnum(*name)) {
+<a name="l00062"></a>00062         <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00063"></a>00063       }
+<a name="l00064"></a>00064     }
+<a name="l00065"></a>00065   }
+<a name="l00066"></a>00066   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00067"></a>00067 }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 } <span class="comment">// local namespace</span>
+<a name="l00070"></a>00070 
 <a name="l00071"></a>00071 
-<a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="class_hypertable_1_1_schema.html#05b45dcae5ecf3c28d06067d8f74b8e1">00073</a> <a class="code" href="class_hypertable_1_1_schema.html">Schema</a> *<a class="code" href="class_hypertable_1_1_schema.html#05b45dcae5ecf3c28d06067d8f74b8e1">Schema::new_instance</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *buf, <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">bool</span> read_ids) {
-<a name="l00074"></a>00074   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_schema.html#a9e269578cc69ebe08815afb7c005c42">ms_mutex</a>);
-<a name="l00075"></a>00075   XML_Parser parser = XML_ParserCreate(<span class="stringliteral">"US-ASCII"</span>);
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077   XML_SetElementHandler(parser, &amp;<a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">start_element_handler</a>, &amp;<a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">end_element_handler</a>);
-<a name="l00078"></a>00078   XML_SetCharacterDataHandler(parser, &amp;<a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">character_data_handler</a>);
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema.html#0206c5a3c264cbb0bafe5b658114cae3">Schema</a>(read_ids);
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_schema.html#0206c5a3c264cbb0bafe5b658114cae3">00074</a> Schema::Schema(<span class="keywordtype">bool</span> read_ids) : m_error_string(), m_next_column_id(0), m_access_group_map(), m_column_family_map(), m_generation(1), m_access_groups(), m_open_access_group(0), m_open_column_family(0), m_read_ids(read_ids), m_output_ids(false), m_max_column_family_id(0) {
+<a name="l00075"></a>00075   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a> == 0) {
+<a name="l00076"></a>00076     cerr &lt;&lt; <span class="stringliteral">"Logger::initialize must be called before using Schema class"</span> &lt;&lt; endl;
+<a name="l00077"></a>00077     exit(1);
+<a name="l00078"></a>00078   }
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keywordflow">if</span> (XML_Parse(parser, buf, len, 1) == 0) {
-<a name="l00083"></a>00083     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> errstr = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Schema Parse Error: "</span> + (<span class="keyword">const</span> <span class="keywordtype">char</span> *)XML_ErrorString(XML_GetErrorCode(parser)) + <span class="stringliteral">" line "</span> + (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)XML_GetCurrentLineNumber(parser) + <span class="stringliteral">", offset "</span> + (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)XML_GetCurrentByteIndex(parser);
-<a name="l00084"></a>00084     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>(errstr);
-<a name="l00085"></a>00085   }
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   XML_ParserFree(parser);
+<a name="l00082"></a><a class="code" href="class_hypertable_1_1_schema.html#fbc49c08e6c07e4a252e0b4a2f01b231">00082</a> <a class="code" href="class_hypertable_1_1_schema.html#fbc49c08e6c07e4a252e0b4a2f01b231">Schema::~Schema</a>() {
+<a name="l00083"></a>00083   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::const_iterator agiter = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); agiter != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); agiter++)
+<a name="l00084"></a>00084     <span class="keyword">delete</span> *agiter;
+<a name="l00085"></a>00085   <span class="keywordflow">for</span> (ColumnFamilyMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end(); iter++)
+<a name="l00086"></a>00086     <span class="keyword">delete</span> (*iter).second;
+<a name="l00087"></a>00087 }
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089   <a class="code" href="class_hypertable_1_1_schema.html">Schema</a> *schema = <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>;
-<a name="l00090"></a>00090   <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a> = 0;
-<a name="l00091"></a>00091   <span class="keywordflow">return</span> schema;
-<a name="l00092"></a>00092 }
+<a name="l00089"></a>00089 
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_schema.html#05b45dcae5ecf3c28d06067d8f74b8e1">00090</a> <a class="code" href="class_hypertable_1_1_schema.html">Schema</a> *<a class="code" href="class_hypertable_1_1_schema.html#05b45dcae5ecf3c28d06067d8f74b8e1">Schema::new_instance</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *buf, <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">bool</span> read_ids) {
+<a name="l00091"></a>00091   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_schema.html#a9e269578cc69ebe08815afb7c005c42">ms_mutex</a>);
+<a name="l00092"></a>00092   XML_Parser parser = XML_ParserCreate(<span class="stringliteral">"US-ASCII"</span>);
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094 
-<a name="l00097"></a><a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">00097</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">Schema::start_element_handler</a>(<span class="keywordtype">void</span> *userdata,
-<a name="l00098"></a>00098                          <span class="keyword">const</span> XML_Char *name,
-<a name="l00099"></a>00099                          <span class="keyword">const</span> XML_Char **atts) {
-<a name="l00100"></a>00100   <span class="keywordtype">int</span> i;
-<a name="l00101"></a>00101 
-<a name="l00102"></a>00102   <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"Schema"</span>)) {
-<a name="l00103"></a>00103     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
-<a name="l00104"></a>00104       <span class="keywordflow">if</span> (atts[i+1] == 0)
-<a name="l00105"></a>00105         <span class="keywordflow">return</span>;
-<a name="l00106"></a>00106       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; !strcasecmp(atts[i], <span class="stringliteral">"generation"</span>))
-<a name="l00107"></a>00107         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">set_generation</a>(atts[i+1]);
-<a name="l00108"></a>00108       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(atts[i], <span class="stringliteral">"compressor"</span>))
-<a name="l00109"></a>00109         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#356070b58e42f85a75e9ed65613d7359">set_compressor</a>((<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)atts[i+1]);
-<a name="l00110"></a>00110       <span class="keywordflow">else</span>
-<a name="l00111"></a>00111         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unrecognized 'Schema' attribute : "</span> + atts[i]);
-<a name="l00112"></a>00112     }
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"AccessGroup"</span>)) {
-<a name="l00115"></a>00115     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">open_access_group</a>();
-<a name="l00116"></a>00116     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
-<a name="l00117"></a>00117       <span class="keywordflow">if</span> (atts[i+1] == 0)
-<a name="l00118"></a>00118         <span class="keywordflow">return</span>;
-<a name="l00119"></a>00119       <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">set_access_group_parameter</a>(atts[i], atts[i+1]);
-<a name="l00120"></a>00120     }
-<a name="l00121"></a>00121   }
-<a name="l00122"></a>00122   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"ColumnFamily"</span>)) {
-<a name="l00123"></a>00123     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">open_column_family</a>();
-<a name="l00124"></a>00124     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
-<a name="l00125"></a>00125       <span class="keywordflow">if</span> (atts[i+1] == 0)
-<a name="l00126"></a>00126         <span class="keywordflow">return</span>;
-<a name="l00127"></a>00127       <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">set_column_family_parameter</a>(atts[i], atts[i+1]);
-<a name="l00128"></a>00128     }
-<a name="l00129"></a>00129   }
-<a name="l00130"></a>00130   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"MaxVersions"</span>) || !strcasecmp(name, <span class="stringliteral">"ttl"</span>) || !strcasecmp(name, <span class="stringliteral">"Name"</span>))
-<a name="l00131"></a>00131     <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a> = <span class="stringliteral">""</span>;
-<a name="l00132"></a>00132   <span class="keywordflow">else</span>
-<a name="l00133"></a>00133     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unrecognized element - '"</span> + name + <span class="stringliteral">"'"</span>);
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135   <span class="keywordflow">return</span>;
-<a name="l00136"></a>00136 }
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138 
-<a name="l00139"></a><a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">00139</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">Schema::end_element_handler</a>(<span class="keywordtype">void</span> *userdata, <span class="keyword">const</span> XML_Char *name) {
-<a name="l00140"></a>00140   <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"AccessGroup"</span>))
-<a name="l00141"></a>00141     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">close_access_group</a>();
-<a name="l00142"></a>00142   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"ColumnFamily"</span>))
-<a name="l00143"></a>00143     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">close_column_family</a>();
-<a name="l00144"></a>00144   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"MaxVersions"</span>) || !strcasecmp(name, <span class="stringliteral">"ttl"</span>) || !strcasecmp(name, <span class="stringliteral">"Name"</span>)) {
-<a name="l00145"></a>00145     boost::trim(<a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>);
-<a name="l00146"></a>00146     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">set_column_family_parameter</a>(name, <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>.c_str());
-<a name="l00147"></a>00147   }
-<a name="l00148"></a>00148 }
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150 
+<a name="l00094"></a>00094   XML_SetElementHandler(parser, &amp;<a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">start_element_handler</a>, &amp;<a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">end_element_handler</a>);
+<a name="l00095"></a>00095   XML_SetCharacterDataHandler(parser, &amp;<a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">character_data_handler</a>);
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097   <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema.html#0206c5a3c264cbb0bafe5b658114cae3">Schema</a>(read_ids);
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   <span class="keywordflow">if</span> (XML_Parse(parser, buf, len, 1) == 0) {
+<a name="l00100"></a>00100     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> errstr = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Schema Parse Error: "</span> + (<span class="keyword">const</span> <span class="keywordtype">char</span> *)XML_ErrorString(XML_GetErrorCode(parser)) + <span class="stringliteral">" line "</span> + (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)XML_GetCurrentLineNumber(parser) + <span class="stringliteral">", offset "</span> + (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)XML_GetCurrentByteIndex(parser);
+<a name="l00101"></a>00101     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>(errstr);
+<a name="l00102"></a>00102   }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104   XML_ParserFree(parser);
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <a class="code" href="class_hypertable_1_1_schema.html">Schema</a> *schema = <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>;
+<a name="l00107"></a>00107   <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a> = 0;
+<a name="l00108"></a>00108   <span class="keywordflow">return</span> schema;
+<a name="l00109"></a>00109 }
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111 
+<a name="l00114"></a><a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">00114</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#3bdf945a0f4f7c38dd000189d077f622">Schema::start_element_handler</a>(<span class="keywordtype">void</span> *userdata,
+<a name="l00115"></a>00115                          <span class="keyword">const</span> XML_Char *name,
+<a name="l00116"></a>00116                          <span class="keyword">const</span> XML_Char **atts) {
+<a name="l00117"></a>00117   <span class="keywordtype">int</span> i;
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119   <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"Schema"</span>)) {
+<a name="l00120"></a>00120     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
+<a name="l00121"></a>00121       <span class="keywordflow">if</span> (atts[i+1] == 0)
+<a name="l00122"></a>00122         <span class="keywordflow">return</span>;
+<a name="l00123"></a>00123       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; !strcasecmp(atts[i], <span class="stringliteral">"generation"</span>))
+<a name="l00124"></a>00124         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">set_generation</a>(atts[i+1]);
+<a name="l00125"></a>00125       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(atts[i], <span class="stringliteral">"compressor"</span>))
+<a name="l00126"></a>00126         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#356070b58e42f85a75e9ed65613d7359">set_compressor</a>((<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)atts[i+1]);
+<a name="l00127"></a>00127       <span class="keywordflow">else</span>
+<a name="l00128"></a>00128         <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unrecognized 'Schema' attribute : "</span> + atts[i]);
+<a name="l00129"></a>00129     }
+<a name="l00130"></a>00130   }
+<a name="l00131"></a>00131   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"AccessGroup"</span>)) {
+<a name="l00132"></a>00132     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">open_access_group</a>();
+<a name="l00133"></a>00133     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
+<a name="l00134"></a>00134       <span class="keywordflow">if</span> (atts[i+1] == 0)
+<a name="l00135"></a>00135         <span class="keywordflow">return</span>;
+<a name="l00136"></a>00136       <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">set_access_group_parameter</a>(atts[i], atts[i+1]);
+<a name="l00137"></a>00137     }
+<a name="l00138"></a>00138   }
+<a name="l00139"></a>00139   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"ColumnFamily"</span>)) {
+<a name="l00140"></a>00140     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">open_column_family</a>();
+<a name="l00141"></a>00141     <span class="keywordflow">for</span> (i=0; atts[i] != 0; i+=2) {
+<a name="l00142"></a>00142       <span class="keywordflow">if</span> (atts[i+1] == 0)
+<a name="l00143"></a>00143         <span class="keywordflow">return</span>;
+<a name="l00144"></a>00144       <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">set_column_family_parameter</a>(atts[i], atts[i+1]);
+<a name="l00145"></a>00145     }
+<a name="l00146"></a>00146   }
+<a name="l00147"></a>00147   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"MaxVersions"</span>) || !strcasecmp(name, <span class="stringliteral">"ttl"</span>) || !strcasecmp(name, <span class="stringliteral">"Name"</span>))
+<a name="l00148"></a>00148     <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a> = <span class="stringliteral">""</span>;
+<a name="l00149"></a>00149   <span class="keywordflow">else</span>
+<a name="l00150"></a>00150     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unrecognized element - '"</span> + name + <span class="stringliteral">"'"</span>);
 <a name="l00151"></a>00151 
-<a name="l00152"></a><a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">00152</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">Schema::character_data_handler</a>(<span class="keywordtype">void</span> *userdata, <span class="keyword">const</span> XML_Char *s, <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
-<a name="l00153"></a>00153   <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>.assign(s, len);
-<a name="l00154"></a>00154 }
+<a name="l00152"></a>00152   <span class="keywordflow">return</span>;
+<a name="l00153"></a>00153 }
+<a name="l00154"></a>00154 
 <a name="l00155"></a>00155 
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157 
-<a name="l00158"></a><a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">00158</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">Schema::open_access_group</a>() {
-<a name="l00159"></a>00159   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> != 0)
-<a name="l00160"></a>00160     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Nested AccessGroup elements not allowed"</span>);
-<a name="l00161"></a>00161   <span class="keywordflow">else</span> {
-<a name="l00162"></a>00162     <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a>();
-<a name="l00163"></a>00163   }
-<a name="l00164"></a>00164 }
-<a name="l00165"></a>00165 
+<a name="l00156"></a><a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">00156</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#bcefb69969e39a5bcb165f3c795ea387">Schema::end_element_handler</a>(<span class="keywordtype">void</span> *userdata, <span class="keyword">const</span> XML_Char *name) {
+<a name="l00157"></a>00157   <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"AccessGroup"</span>))
+<a name="l00158"></a>00158     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">close_access_group</a>();
+<a name="l00159"></a>00159   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"ColumnFamily"</span>))
+<a name="l00160"></a>00160     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">close_column_family</a>();
+<a name="l00161"></a>00161   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(name, <span class="stringliteral">"MaxVersions"</span>) || !strcasecmp(name, <span class="stringliteral">"ttl"</span>) || !strcasecmp(name, <span class="stringliteral">"Name"</span>)) {
+<a name="l00162"></a>00162     boost::trim(<a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>);
+<a name="l00163"></a>00163     <a class="code" href="class_hypertable_1_1_schema.html#5f8c38b2c51f65af1b509c0e3afb7fae">ms_schema</a>-&gt;<a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">set_column_family_parameter</a>(name, <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>.c_str());
+<a name="l00164"></a>00164   }
+<a name="l00165"></a>00165 }
 <a name="l00166"></a>00166 
 <a name="l00167"></a>00167 
-<a name="l00168"></a><a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">00168</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">Schema::close_access_group</a>() {
-<a name="l00169"></a>00169   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
-<a name="l00170"></a>00170     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to close locality group, not open"</span>);
-<a name="l00171"></a>00171   <span class="keywordflow">else</span> {
-<a name="l00172"></a>00172     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> == <span class="stringliteral">""</span>)
-<a name="l00173"></a>00173       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Name attribute required for all AccessGroup elements"</span>);
-<a name="l00174"></a>00174     <span class="keywordflow">else</span> {
-<a name="l00175"></a>00175       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>) != <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end())
-<a name="l00176"></a>00176         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Multiply defined locality group  '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> + <span class="stringliteral">"'"</span>);
-<a name="l00177"></a>00177       <span class="keywordflow">else</span> {
-<a name="l00178"></a>00178         <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>] = <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>;
-<a name="l00179"></a>00179         <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.push_back(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>);
-<a name="l00180"></a>00180       }
-<a name="l00181"></a>00181     }
-<a name="l00182"></a>00182     <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> = 0;
-<a name="l00183"></a>00183   }
-<a name="l00184"></a>00184 }
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186 
-<a name="l00187"></a>00187 
-<a name="l00188"></a><a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">00188</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">Schema::open_column_family</a>() {
-<a name="l00189"></a>00189   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
-<a name="l00190"></a>00190     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily defined outside of AccessGroup"</span>);
-<a name="l00191"></a>00191   <span class="keywordflow">else</span> {
-<a name="l00192"></a>00192     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> != 0)
-<a name="l00193"></a>00193       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Nested ColumnFamily elements not allowed"</span>);
-<a name="l00194"></a>00194     <span class="keywordflow">else</span> {
-<a name="l00195"></a>00195       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a>();
-<a name="l00196"></a>00196       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> = 0;
-<a name="l00197"></a>00197       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> = 0;
-<a name="l00198"></a>00198       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#dfd2949429fa30dcd1ac82d314078422">ttl</a> = 0;
-<a name="l00199"></a>00199       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a> = <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>;
-<a name="l00200"></a>00200     }
-<a name="l00201"></a>00201   }
-<a name="l00202"></a>00202 }
+<a name="l00168"></a>00168 
+<a name="l00169"></a><a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">00169</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#aa2b61f38fc5fe9de5b96a2c72ba499c">Schema::character_data_handler</a>(<span class="keywordtype">void</span> *userdata, <span class="keyword">const</span> XML_Char *s, <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00170"></a>00170   <a class="code" href="class_hypertable_1_1_schema.html#a5b67b8bb2ae5728398f3d280e207eb5">ms_collected_text</a>.assign(s, len);
+<a name="l00171"></a>00171 }
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173 
+<a name="l00174"></a>00174 
+<a name="l00175"></a><a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">00175</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#b58ce95c806214b03940447c07e65605">Schema::open_access_group</a>() {
+<a name="l00176"></a>00176   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> != 0)
+<a name="l00177"></a>00177     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Nested AccessGroup elements not allowed"</span>);
+<a name="l00178"></a>00178   <span class="keywordflow">else</span> {
+<a name="l00179"></a>00179     <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a>();
+<a name="l00180"></a>00180   }
+<a name="l00181"></a>00181 }
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 
+<a name="l00184"></a>00184 
+<a name="l00185"></a><a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">00185</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f86a9a41ec7609766570f28ef5cede88">Schema::close_access_group</a>() {
+<a name="l00186"></a>00186   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
+<a name="l00187"></a>00187     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to close locality group, not open"</span>);
+<a name="l00188"></a>00188   <span class="keywordflow">else</span> {
+<a name="l00189"></a>00189     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> == <span class="stringliteral">""</span>)
+<a name="l00190"></a>00190       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Name attribute required for all AccessGroup elements"</span>);
+<a name="l00191"></a>00191     <span class="keywordflow">else</span> {
+<a name="l00192"></a>00192       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>) != <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end())
+<a name="l00193"></a>00193         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Multiply defined locality group  '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> + <span class="stringliteral">"'"</span>);
+<a name="l00194"></a>00194       <span class="keywordflow">else</span> {
+<a name="l00195"></a>00195         <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>] = <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>;
+<a name="l00196"></a>00196         <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.push_back(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>);
+<a name="l00197"></a>00197       }
+<a name="l00198"></a>00198     }
+<a name="l00199"></a>00199     <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> = 0;
+<a name="l00200"></a>00200   }
+<a name="l00201"></a>00201 }
+<a name="l00202"></a>00202 
 <a name="l00203"></a>00203 
 <a name="l00204"></a>00204 
-<a name="l00205"></a>00205 
-<a name="l00206"></a><a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">00206</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">Schema::close_column_family</a>() {
-<a name="l00207"></a>00207   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
-<a name="l00208"></a>00208     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily defined outside of AccessGroup"</span>);
-<a name="l00209"></a>00209   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> == 0)
-<a name="l00210"></a>00210     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to close column family, not open"</span>);
-<a name="l00211"></a>00211   <span class="keywordflow">else</span> {
-<a name="l00212"></a>00212     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> == <span class="stringliteral">""</span>)
-<a name="l00213"></a>00213       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily must have Name child element"</span>);
-<a name="l00214"></a>00214     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> == 0) {
-<a name="l00215"></a>00215       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"No id specifid for ColumnFamily '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>);
-<a name="l00216"></a>00216     }
-<a name="l00217"></a>00217     <span class="keywordflow">else</span> {
-<a name="l00218"></a>00218       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.find(<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>) != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end())
-<a name="l00219"></a>00219         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Multiply defined column families '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>);
-<a name="l00220"></a>00220       <span class="keywordflow">else</span> {
-<a name="l00221"></a>00221         <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>] = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>;
-<a name="l00222"></a>00222         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a>)
-<a name="l00223"></a>00223           <a class="code" href="class_hypertable_1_1_schema.html#c91f0409cf79c95cac93f79ac070329b">m_column_family_id_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>] = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>;
-<a name="l00224"></a>00224         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#c19dc38ffdfeeb03cb793b37d0270871">columns</a>.push_back(<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>);
-<a name="l00225"></a>00225       }
-<a name="l00226"></a>00226       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> = 0;
-<a name="l00227"></a>00227     }
-<a name="l00228"></a>00228   }
-<a name="l00229"></a>00229 }
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 
-<a name="l00233"></a><a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">00233</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">Schema::set_access_group_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
-<a name="l00234"></a>00234   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
-<a name="l00235"></a>00235     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to set AccessGroup attribute '"</span> + param + <span class="stringliteral">"', locality group not open"</span>);
-<a name="l00236"></a>00236   <span class="keywordflow">else</span> {
-<a name="l00237"></a>00237     <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"name"</span>))
-<a name="l00238"></a>00238       <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> = value;
-<a name="l00239"></a>00239     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"inMemory"</span>)) {
-<a name="l00240"></a>00240       <span class="keywordflow">if</span> (!strcasecmp(value, <span class="stringliteral">"true"</span>) || !strcmp(value, <span class="stringliteral">"1"</span>))
-<a name="l00241"></a>00241         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a> = <span class="keyword">true</span>;
-<a name="l00242"></a>00242       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(value, <span class="stringliteral">"false"</span>) || !strcmp(value, <span class="stringliteral">"0"</span>))
-<a name="l00243"></a>00243         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a> = <span class="keyword">false</span>;
-<a name="l00244"></a>00244       <span class="keywordflow">else</span>
-<a name="l00245"></a>00245         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
-<a name="l00246"></a>00246     }
-<a name="l00247"></a>00247     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"blksz"</span>)) {
-<a name="l00248"></a>00248       <span class="keywordtype">long</span> <span class="keywordtype">long</span> blocksize = strtoll(value, 0, 10);
-<a name="l00249"></a>00249       <span class="keywordflow">if</span> (blocksize == 0 || blocksize &gt;= 4294967296LL)
-<a name="l00250"></a>00250         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
-<a name="l00251"></a>00251       <span class="keywordflow">else</span>
-<a name="l00252"></a>00252         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a> = (uint32_t)blocksize;
-<a name="l00253"></a>00253     }
-<a name="l00254"></a>00254     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"compressor"</span>)) {
-<a name="l00255"></a>00255       <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> = value;
-<a name="l00256"></a>00256       boost::trim(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a>);
-<a name="l00257"></a>00257     }
-<a name="l00258"></a>00258     <span class="keywordflow">else</span>
-<a name="l00259"></a>00259       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
-<a name="l00260"></a>00260   }
-<a name="l00261"></a>00261 }
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 
-<a name="l00265"></a><a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">00265</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">Schema::set_column_family_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
-<a name="l00266"></a>00266   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> == 0)
-<a name="l00267"></a>00267     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to set ColumnFamily parameter '"</span> + param + <span class="stringliteral">"', column family not open"</span>);
-<a name="l00268"></a>00268   <span class="keywordflow">else</span> {
-<a name="l00269"></a>00269     <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"Name"</span>))
-<a name="l00270"></a>00270       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> = value;
-<a name="l00271"></a>00271     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"ttl"</span>)) {
-<a name="l00272"></a>00272       <span class="keywordtype">long</span> <span class="keywordtype">long</span> secs = strtoll(value, 0, 10);
-<a name="l00273"></a>00273       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#dfd2949429fa30dcd1ac82d314078422">ttl</a> = (time_t)secs;
+<a name="l00205"></a><a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">00205</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#a9f7ba89aae544a15ef395726d38ccc4">Schema::open_column_family</a>() {
+<a name="l00206"></a>00206   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
+<a name="l00207"></a>00207     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily defined outside of AccessGroup"</span>);
+<a name="l00208"></a>00208   <span class="keywordflow">else</span> {
+<a name="l00209"></a>00209     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> != 0)
+<a name="l00210"></a>00210       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Nested ColumnFamily elements not allowed"</span>);
+<a name="l00211"></a>00211     <span class="keywordflow">else</span> {
+<a name="l00212"></a>00212       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a>();
+<a name="l00213"></a>00213       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> = 0;
+<a name="l00214"></a>00214       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> = 0;
+<a name="l00215"></a>00215       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#dfd2949429fa30dcd1ac82d314078422">ttl</a> = 0;
+<a name="l00216"></a>00216       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a> = <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>;
+<a name="l00217"></a>00217     }
+<a name="l00218"></a>00218   }
+<a name="l00219"></a>00219 }
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222 
+<a name="l00223"></a><a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">00223</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#802629316e539d6c8d70c1519ece1266">Schema::close_column_family</a>() {
+<a name="l00224"></a>00224   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
+<a name="l00225"></a>00225     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily defined outside of AccessGroup"</span>);
+<a name="l00226"></a>00226   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> == 0)
+<a name="l00227"></a>00227     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to close column family, not open"</span>);
+<a name="l00228"></a>00228   <span class="keywordflow">else</span> {
+<a name="l00229"></a>00229     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> == <span class="stringliteral">""</span>)
+<a name="l00230"></a>00230       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"ColumnFamily must have Name child element"</span>);
+<a name="l00231"></a>00231     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> == 0) {
+<a name="l00232"></a>00232       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"No id specifid for ColumnFamily '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>);
+<a name="l00233"></a>00233     }
+<a name="l00234"></a>00234     <span class="keywordflow">else</span> {
+<a name="l00235"></a>00235       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.find(<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>) != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end())
+<a name="l00236"></a>00236         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Multiply defined column families '"</span> + <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>);
+<a name="l00237"></a>00237       <span class="keywordflow">else</span> {
+<a name="l00238"></a>00238         <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>] = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>;
+<a name="l00239"></a>00239         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a>)
+<a name="l00240"></a>00240           <a class="code" href="class_hypertable_1_1_schema.html#c91f0409cf79c95cac93f79ac070329b">m_column_family_id_map</a>[<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>] = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>;
+<a name="l00241"></a>00241         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#c19dc38ffdfeeb03cb793b37d0270871">columns</a>.push_back(<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>);
+<a name="l00242"></a>00242       }
+<a name="l00243"></a>00243       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> = 0;
+<a name="l00244"></a>00244     }
+<a name="l00245"></a>00245   }
+<a name="l00246"></a>00246 }
+<a name="l00247"></a>00247 
+<a name="l00248"></a>00248 
+<a name="l00249"></a>00249 
+<a name="l00250"></a><a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">00250</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f7353770a71ea8c3d9431fe900710a6c">Schema::set_access_group_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
+<a name="l00251"></a>00251   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a> == 0)
+<a name="l00252"></a>00252     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to set AccessGroup attribute '"</span> + param + <span class="stringliteral">"', locality group not open"</span>);
+<a name="l00253"></a>00253   <span class="keywordflow">else</span> {
+<a name="l00254"></a>00254     <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"name"</span>))
+<a name="l00255"></a>00255       <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> = value;
+<a name="l00256"></a>00256     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"inMemory"</span>)) {
+<a name="l00257"></a>00257       <span class="keywordflow">if</span> (!strcasecmp(value, <span class="stringliteral">"true"</span>) || !strcmp(value, <span class="stringliteral">"1"</span>))
+<a name="l00258"></a>00258         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a> = <span class="keyword">true</span>;
+<a name="l00259"></a>00259       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(value, <span class="stringliteral">"false"</span>) || !strcmp(value, <span class="stringliteral">"0"</span>))
+<a name="l00260"></a>00260         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a> = <span class="keyword">false</span>;
+<a name="l00261"></a>00261       <span class="keywordflow">else</span>
+<a name="l00262"></a>00262         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
+<a name="l00263"></a>00263     }
+<a name="l00264"></a>00264     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"blksz"</span>)) {
+<a name="l00265"></a>00265       <span class="keywordtype">long</span> <span class="keywordtype">long</span> blocksize = strtoll(value, 0, 10);
+<a name="l00266"></a>00266       <span class="keywordflow">if</span> (blocksize == 0 || blocksize &gt;= 4294967296LL)
+<a name="l00267"></a>00267         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
+<a name="l00268"></a>00268       <span class="keywordflow">else</span>
+<a name="l00269"></a>00269         <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a> = (uint32_t)blocksize;
+<a name="l00270"></a>00270     }
+<a name="l00271"></a>00271     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"compressor"</span>)) {
+<a name="l00272"></a>00272       <a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> = value;
+<a name="l00273"></a>00273       boost::trim(<a class="code" href="class_hypertable_1_1_schema.html#d7f800e677f5db022bdd4d198e3b20cd">m_open_access_group</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a>);
 <a name="l00274"></a>00274     }
-<a name="l00275"></a>00275     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"MaxVersions"</span>)) {
-<a name="l00276"></a>00276       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> = atoi(value);
-<a name="l00277"></a>00277       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> == 0)
-<a name="l00278"></a>00278         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for MaxVersions"</span>);
-<a name="l00279"></a>00279     }
-<a name="l00280"></a>00280     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; !strcasecmp(param, <span class="stringliteral">"id"</span>)) {
-<a name="l00281"></a>00281       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> = atoi(value);
-<a name="l00282"></a>00282       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> == 0)
-<a name="l00283"></a>00283         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for ColumnFamily id attribute"</span>);
-<a name="l00284"></a>00284       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> &gt; <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a>)
-<a name="l00285"></a>00285         <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a> = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>;
-<a name="l00286"></a>00286     }
-<a name="l00287"></a>00287     <span class="keywordflow">else</span>
-<a name="l00288"></a>00288       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid ColumnFamily parameter '"</span> + param + <span class="stringliteral">"'"</span>);
-<a name="l00289"></a>00289   }
-<a name="l00290"></a>00290 }
-<a name="l00291"></a>00291 
-<a name="l00292"></a>00292 
-<a name="l00293"></a><a class="code" href="class_hypertable_1_1_schema.html#feb7ecf255406a938be3523c0cc56e81">00293</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#feb7ecf255406a938be3523c0cc56e81">Schema::assign_ids</a>() {
-<a name="l00294"></a>00294   <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a> = 0;
-<a name="l00295"></a>00295   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::iterator ag_it = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); ag_it != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); ag_it++) {
-<a name="l00296"></a>00296     <span class="keywordflow">for</span> (list&lt;ColumnFamily *&gt;::iterator cf_it = (*ag_it)-&gt;columns.begin(); cf_it != (*ag_it)-&gt;columns.end(); cf_it++) {
-<a name="l00297"></a>00297       (*cf_it)-&gt;id = ++<a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a>;
-<a name="l00298"></a>00298     }
-<a name="l00299"></a>00299   }
-<a name="l00300"></a>00300   <a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> = 1;
-<a name="l00301"></a>00301   <a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>=<span class="keyword">true</span>;
-<a name="l00302"></a>00302 }
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304 
-<a name="l00305"></a><a class="code" href="class_hypertable_1_1_schema.html#d84ae389bb590835dc49cdd1cf08003c">00305</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#d84ae389bb590835dc49cdd1cf08003c">Schema::render</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;output) {
-<a name="l00306"></a>00306   <span class="keywordtype">char</span> buf[64];
-<a name="l00307"></a>00307 
-<a name="l00308"></a>00308   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f" title="Protected methods.">is_valid</a>()) {
-<a name="l00309"></a>00309     output = <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a>;
-<a name="l00310"></a>00310     <span class="keywordflow">return</span>;
-<a name="l00311"></a>00311   }
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313   output += <span class="stringliteral">"&lt;Schema"</span>;
-<a name="l00314"></a>00314   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>)
-<a name="l00315"></a>00315     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" generation=\""</span> + (uint32_t)<a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> + <span class="stringliteral">"\""</span>;
-<a name="l00316"></a>00316   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> != <span class="stringliteral">""</span>)
-<a name="l00317"></a>00317     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" compressor=\""</span> + <a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> + <span class="stringliteral">"\""</span>;
-<a name="l00318"></a>00318   output += <span class="stringliteral">"&gt;\n"</span>;
-<a name="l00319"></a>00319 
-<a name="l00320"></a>00320   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); iter++) {
-<a name="l00321"></a>00321     output += (string)<span class="stringliteral">"  &lt;AccessGroup name=\""</span> + (*iter)-&gt;name + <span class="stringliteral">"\""</span>;
-<a name="l00322"></a>00322     if ((*iter)-&gt;in_memory)
-<a name="l00323"></a>00323       output += <span class="stringliteral">" inMemory=\"true\""</span>;
-<a name="l00324"></a>00324     <span class="keywordflow">if</span> ((*iter)-&gt;blocksize &gt; 0)
-<a name="l00325"></a>00325       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" blksz=\""</span> + (*iter)-&gt;blocksize + <span class="stringliteral">"\""</span>;
-<a name="l00326"></a>00326     if ((*iter)-&gt;compressor != <span class="stringliteral">""</span>)
-<a name="l00327"></a>00327       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" compressor=\""</span> + (*iter)-&gt;compressor + <span class="stringliteral">"\""</span>;
-<a name="l00328"></a>00328     output += <span class="stringliteral">"&gt;\n"</span>;
-<a name="l00329"></a>00329     for (list&lt;ColumnFamily *&gt;::iterator cfiter = (*iter)-&gt;columns.begin(); cfiter != (*iter)-&gt;columns.end(); cfiter++) {
-<a name="l00330"></a>00330       output += (string)<span class="stringliteral">"    &lt;ColumnFamily"</span>;
-<a name="l00331"></a>00331       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>) {
-<a name="l00332"></a>00332         output += <span class="stringliteral">" id=\""</span>;
-<a name="l00333"></a>00333         sprintf(buf, <span class="stringliteral">"%d"</span>, (*cfiter)-&gt;id);
-<a name="l00334"></a>00334         output += (string)buf + <span class="stringliteral">"\""</span>;
-<a name="l00335"></a>00335       }
-<a name="l00336"></a>00336       output += <span class="stringliteral">"&gt;\n"</span>;
-<a name="l00337"></a>00337       output += (string)<span class="stringliteral">"      &lt;Name&gt;"</span> + (*cfiter)-&gt;name + <span class="stringliteral">"&lt;/Name&gt;\n"</span>;
-<a name="l00338"></a>00338       if ((*cfiter)-&gt;max_versions != 0)
-<a name="l00339"></a>00339         output += (string)<span class="stringliteral">"      &lt;MaxVersions&gt;"</span> + (*cfiter)-&gt;max_versions + <span class="stringliteral">"&lt;/MaxVersions&gt;\n"</span>;
-<a name="l00340"></a>00340       if ((*cfiter)-&gt;ttl != 0)
-<a name="l00341"></a>00341         output += (string)<span class="stringliteral">"      &lt;ttl&gt;"</span> + (uint32_t)(*cfiter)-&gt;ttl + <span class="stringliteral">"&lt;/ttl&gt;\n"</span>;
-<a name="l00342"></a>00342       output += (string)<span class="stringliteral">"    &lt;/ColumnFamily&gt;\n"</span>;
-<a name="l00343"></a>00343     }
-<a name="l00344"></a>00344     output += (string)<span class="stringliteral">"  &lt;/AccessGroup&gt;\n"</span>;
-<a name="l00345"></a>00345   }
-<a name="l00346"></a>00346 
-<a name="l00347"></a>00347   output += <span class="stringliteral">"&lt;/Schema&gt;\n"</span>;
-<a name="l00348"></a>00348   <span class="keywordflow">return</span>;
-<a name="l00349"></a>00349 }
-<a name="l00350"></a>00350 
-<a name="l00351"></a><a class="code" href="class_hypertable_1_1_schema.html#5bb599ec0f13b884faca34661ec0c296">00351</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#5bb599ec0f13b884faca34661ec0c296">Schema::render_hql_create_table</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;table_name, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;output) {
-<a name="l00352"></a>00352   <span class="keywordtype">bool</span> needs_quotes = <span class="keyword">false</span>;
-<a name="l00353"></a>00353   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
-<a name="l00354"></a>00354 
-<a name="l00355"></a>00355   output += <span class="stringliteral">"\n"</span>;
-<a name="l00356"></a>00356   output += <span class="stringliteral">"CREATE TABLE "</span>;
-<a name="l00357"></a>00357   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> != <span class="stringliteral">""</span>)
-<a name="l00358"></a>00358     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"COMPRESSOR=\""</span> + <a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> + <span class="stringliteral">"\" "</span>;
-<a name="l00359"></a>00359   output += table_name + <span class="stringliteral">" (\n"</span>;
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361   <span class="keywordflow">for</span> (ColumnFamilyMap::const_iterator cf_iter = <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.begin(); cf_iter != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end(); cf_iter++) {
-<a name="l00362"></a>00362 
-<a name="l00363"></a>00363     <span class="comment">// check to see if column family name needs quotes around it</span>
-<a name="l00364"></a>00364     needs_quotes = <span class="keyword">false</span>;
-<a name="l00365"></a>00365     ptr = (*cf_iter).first.c_str();
-<a name="l00366"></a>00366     <span class="keywordflow">if</span> (!isalpha(*ptr))
-<a name="l00367"></a>00367       needs_quotes = <span class="keyword">true</span>;
-<a name="l00368"></a>00368     <span class="keywordflow">else</span> {
-<a name="l00369"></a>00369       <span class="keywordflow">for</span> (; *ptr; ptr++) {
-<a name="l00370"></a>00370         <span class="keywordflow">if</span> (!isalnum(*ptr)) {
-<a name="l00371"></a>00371           needs_quotes = <span class="keyword">true</span>;
-<a name="l00372"></a>00372           <span class="keywordflow">break</span>;
-<a name="l00373"></a>00373         }
-<a name="l00374"></a>00374       }
-<a name="l00375"></a>00375     }
+<a name="l00275"></a>00275     <span class="keywordflow">else</span>
+<a name="l00276"></a>00276       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid AccessGroup attribute '"</span> + param + <span class="stringliteral">"'"</span>);
+<a name="l00277"></a>00277   }
+<a name="l00278"></a>00278 }
+<a name="l00279"></a>00279 
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281 
+<a name="l00282"></a><a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">00282</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#9f215c29b00785b426ebe0fb3500f7ee">Schema::set_column_family_parameter</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *param, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
+<a name="l00283"></a>00283   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a> == 0)
+<a name="l00284"></a>00284     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Unable to set ColumnFamily parameter '"</span> + param + <span class="stringliteral">"', column family not open"</span>);
+<a name="l00285"></a>00285   <span class="keywordflow">else</span> {
+<a name="l00286"></a>00286     <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"Name"</span>))
+<a name="l00287"></a>00287       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> = value;
+<a name="l00288"></a>00288     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"ttl"</span>)) {
+<a name="l00289"></a>00289       <span class="keywordtype">long</span> <span class="keywordtype">long</span> secs = strtoll(value, 0, 10);
+<a name="l00290"></a>00290       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#dfd2949429fa30dcd1ac82d314078422">ttl</a> = (time_t)secs;
+<a name="l00291"></a>00291     }
+<a name="l00292"></a>00292     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(param, <span class="stringliteral">"MaxVersions"</span>)) {
+<a name="l00293"></a>00293       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> = atoi(value);
+<a name="l00294"></a>00294       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cd48ee0c45da9a3658da60e366616c4f">max_versions</a> == 0)
+<a name="l00295"></a>00295         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for MaxVersions"</span>);
+<a name="l00296"></a>00296     }
+<a name="l00297"></a>00297     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#b89b8b0cc448bdf299ff69526e2d7480">m_read_ids</a> &amp;&amp; !strcasecmp(param, <span class="stringliteral">"id"</span>)) {
+<a name="l00298"></a>00298       <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> = atoi(value);
+<a name="l00299"></a>00299       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> == 0)
+<a name="l00300"></a>00300         <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid value ("</span> + value + <span class="stringliteral">") for ColumnFamily id attribute"</span>);
+<a name="l00301"></a>00301       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a> &gt; <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a>)
+<a name="l00302"></a>00302         <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a> = <a class="code" href="class_hypertable_1_1_schema.html#4129a2b366689d1abaa5eb54ced6f57c">m_open_column_family</a>-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>;
+<a name="l00303"></a>00303     }
+<a name="l00304"></a>00304     <span class="keywordflow">else</span>
+<a name="l00305"></a>00305       <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid ColumnFamily parameter '"</span> + param + <span class="stringliteral">"'"</span>);
+<a name="l00306"></a>00306   }
+<a name="l00307"></a>00307 }
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309 
+<a name="l00310"></a><a class="code" href="class_hypertable_1_1_schema.html#feb7ecf255406a938be3523c0cc56e81">00310</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#feb7ecf255406a938be3523c0cc56e81">Schema::assign_ids</a>() {
+<a name="l00311"></a>00311   <a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a> = 0;
+<a name="l00312"></a>00312   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::iterator ag_it = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); ag_it != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); ag_it++) {
+<a name="l00313"></a>00313     <span class="keywordflow">for</span> (list&lt;ColumnFamily *&gt;::iterator cf_it = (*ag_it)-&gt;columns.begin(); cf_it != (*ag_it)-&gt;columns.end(); cf_it++) {
+<a name="l00314"></a>00314       (*cf_it)-&gt;id = ++<a class="code" href="class_hypertable_1_1_schema.html#5e4b7eb9fa07105caeab62b44bc918e0">m_max_column_family_id</a>;
+<a name="l00315"></a>00315     }
+<a name="l00316"></a>00316   }
+<a name="l00317"></a>00317   <a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> = 1;
+<a name="l00318"></a>00318   <a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>=<span class="keyword">true</span>;
+<a name="l00319"></a>00319 }
+<a name="l00320"></a>00320 
+<a name="l00321"></a>00321 
+<a name="l00322"></a><a class="code" href="class_hypertable_1_1_schema.html#d84ae389bb590835dc49cdd1cf08003c">00322</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#d84ae389bb590835dc49cdd1cf08003c">Schema::render</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;output) {
+<a name="l00323"></a>00323   <span class="keywordtype">char</span> buf[64];
+<a name="l00324"></a>00324 
+<a name="l00325"></a>00325   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f" title="Protected methods.">is_valid</a>()) {
+<a name="l00326"></a>00326     output = <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a>;
+<a name="l00327"></a>00327     <span class="keywordflow">return</span>;
+<a name="l00328"></a>00328   }
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330   output += <span class="stringliteral">"&lt;Schema"</span>;
+<a name="l00331"></a>00331   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>)
+<a name="l00332"></a>00332     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" generation=\""</span> + (uint32_t)<a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> + <span class="stringliteral">"\""</span>;
+<a name="l00333"></a>00333   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> != <span class="stringliteral">""</span>)
+<a name="l00334"></a>00334     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" compressor=\""</span> + <a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> + <span class="stringliteral">"\""</span>;
+<a name="l00335"></a>00335   output += <span class="stringliteral">"&gt;\n"</span>;
+<a name="l00336"></a>00336 
+<a name="l00337"></a>00337   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); iter++) {
+<a name="l00338"></a>00338     output += (string)<span class="stringliteral">"  &lt;AccessGroup name=\""</span> + (*iter)-&gt;name + <span class="stringliteral">"\""</span>;
+<a name="l00339"></a>00339     if ((*iter)-&gt;in_memory)
+<a name="l00340"></a>00340       output += <span class="stringliteral">" inMemory=\"true\""</span>;
+<a name="l00341"></a>00341     <span class="keywordflow">if</span> ((*iter)-&gt;blocksize &gt; 0)
+<a name="l00342"></a>00342       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" blksz=\""</span> + (*iter)-&gt;blocksize + <span class="stringliteral">"\""</span>;
+<a name="l00343"></a>00343     if ((*iter)-&gt;compressor != <span class="stringliteral">""</span>)
+<a name="l00344"></a>00344       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" compressor=\""</span> + (*iter)-&gt;compressor + <span class="stringliteral">"\""</span>;
+<a name="l00345"></a>00345     output += <span class="stringliteral">"&gt;\n"</span>;
+<a name="l00346"></a>00346     for (list&lt;ColumnFamily *&gt;::iterator cfiter = (*iter)-&gt;columns.begin(); cfiter != (*iter)-&gt;columns.end(); cfiter++) {
+<a name="l00347"></a>00347       output += (string)<span class="stringliteral">"    &lt;ColumnFamily"</span>;
+<a name="l00348"></a>00348       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#c488d5489d6d4963ef8bfffe4b1c7c65">m_output_ids</a>) {
+<a name="l00349"></a>00349         output += <span class="stringliteral">" id=\""</span>;
+<a name="l00350"></a>00350         sprintf(buf, <span class="stringliteral">"%d"</span>, (*cfiter)-&gt;id);
+<a name="l00351"></a>00351         output += (string)buf + <span class="stringliteral">"\""</span>;
+<a name="l00352"></a>00352       }
+<a name="l00353"></a>00353       output += <span class="stringliteral">"&gt;\n"</span>;
+<a name="l00354"></a>00354       output += (string)<span class="stringliteral">"      &lt;Name&gt;"</span> + (*cfiter)-&gt;name + <span class="stringliteral">"&lt;/Name&gt;\n"</span>;
+<a name="l00355"></a>00355       if ((*cfiter)-&gt;max_versions != 0)
+<a name="l00356"></a>00356         output += (string)<span class="stringliteral">"      &lt;MaxVersions&gt;"</span> + (*cfiter)-&gt;max_versions + <span class="stringliteral">"&lt;/MaxVersions&gt;\n"</span>;
+<a name="l00357"></a>00357       if ((*cfiter)-&gt;ttl != 0)
+<a name="l00358"></a>00358         output += (string)<span class="stringliteral">"      &lt;ttl&gt;"</span> + (uint32_t)(*cfiter)-&gt;ttl + <span class="stringliteral">"&lt;/ttl&gt;\n"</span>;
+<a name="l00359"></a>00359       output += (string)<span class="stringliteral">"    &lt;/ColumnFamily&gt;\n"</span>;
+<a name="l00360"></a>00360     }
+<a name="l00361"></a>00361     output += (string)<span class="stringliteral">"  &lt;/AccessGroup&gt;\n"</span>;
+<a name="l00362"></a>00362   }
+<a name="l00363"></a>00363 
+<a name="l00364"></a>00364   output += <span class="stringliteral">"&lt;/Schema&gt;\n"</span>;
+<a name="l00365"></a>00365   <span class="keywordflow">return</span>;
+<a name="l00366"></a>00366 }
+<a name="l00367"></a>00367 
+<a name="l00368"></a><a class="code" href="class_hypertable_1_1_schema.html#5bb599ec0f13b884faca34661ec0c296">00368</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#5bb599ec0f13b884faca34661ec0c296">Schema::render_hql_create_table</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;table_name, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;output) {
+<a name="l00369"></a>00369   output += <span class="stringliteral">"\n"</span>;
+<a name="l00370"></a>00370   output += <span class="stringliteral">"CREATE TABLE "</span>;
+<a name="l00371"></a>00371 
+<a name="l00372"></a>00372   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> != <span class="stringliteral">""</span>)
+<a name="l00373"></a>00373     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"COMPRESSOR=\""</span> + <a class="code" href="class_hypertable_1_1_schema.html#dea131c7a0f7fca619f65ca325298c37">m_compressor</a> + <span class="stringliteral">"\" "</span>;
+<a name="l00374"></a>00374 
+<a name="l00375"></a>00375   output += table_name + <span class="stringliteral">" (\n"</span>;
 <a name="l00376"></a>00376 
-<a name="l00377"></a>00377     <span class="keywordflow">if</span> (needs_quotes)
-<a name="l00378"></a>00378       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  '"</span> + (*cf_iter).first + <span class="stringliteral">"'"</span>;
-<a name="l00379"></a>00379     <span class="keywordflow">else</span>
-<a name="l00380"></a>00380       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  "</span> + (*cf_iter).first;
-<a name="l00381"></a>00381     <span class="keywordflow">if</span> ((*cf_iter).second-&gt;max_versions != 0)
-<a name="l00382"></a>00382       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" MAX_VERSIONS="</span> + (*cf_iter).second-&gt;max_versions;
-<a name="l00383"></a>00383     if ((*cf_iter).second-&gt;ttl != 0)
-<a name="l00384"></a>00384       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" TTL="</span> + (uint32_t)(*cf_iter).second-&gt;ttl;
-<a name="l00385"></a>00385     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">",\n"</span>;
-<a name="l00386"></a>00386   }
-<a name="l00387"></a>00387 
-<a name="l00388"></a>00388   <span class="keywordtype">size_t</span> i=1;
-<a name="l00389"></a>00389   <span class="keywordflow">for</span> (list&lt;AccessGroup *&gt;::iterator ag_iter = <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.begin(); ag_iter != <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.end(); ag_iter++, i++) {
-<a name="l00390"></a>00390     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  ACCESS GROUP "</span>;
-<a name="l00391"></a>00391 
-<a name="l00392"></a>00392     needs_quotes = <span class="keyword">false</span>;
-<a name="l00393"></a>00393     ptr = (*ag_iter)-&gt;name.c_str();
-<a name="l00394"></a>00394     <span class="keywordflow">if</span> (!isalpha(*ptr))
-<a name="l00395"></a>00395       needs_quotes = <span class="keyword">true</span>;
-<a name="l00396"></a>00396     <span class="keywordflow">else</span> {
-<a name="l00397"></a>00397       <span class="keywordflow">for</span> (++ptr; *ptr; ptr++) {
-<a name="l00398"></a>00398         <span class="keywordflow">if</span> (!isalnum(*ptr)) {
-<a name="l00399"></a>00399           needs_quotes = <span class="keyword">true</span>;
-<a name="l00400"></a>00400           <span class="keywordflow">break</span>;
-<a name="l00401"></a>00401         }
-<a name="l00402"></a>00402       }
-<a name="l00403"></a>00403     }
-<a name="l00404"></a>00404     <span class="keywordflow">if</span> (needs_quotes)
-<a name="l00405"></a>00405       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"'"</span> + (*ag_iter)-&gt;name + <span class="stringliteral">"'"</span>;
-<a name="l00406"></a>00406     <span class="keywordflow">else</span>
-<a name="l00407"></a>00407       output += (*ag_iter)-&gt;name;
+<a name="l00377"></a>00377   <span class="keywordflow">foreach</span>(<span class="keyword">const</span> ColumnFamilyMap::value_type &amp;v, <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>) {
+<a name="l00378"></a>00378     <span class="comment">// check to see if column family name needs quotes around it</span>
+<a name="l00379"></a>00379     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#ce9ec4bc82b48cea9c17817f1b7183f8">hql_needs_quotes</a>(v.first.c_str()))
+<a name="l00380"></a>00380       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  '"</span> + v.first + <span class="stringliteral">"'"</span>;
+<a name="l00381"></a>00381     <span class="keywordflow">else</span>
+<a name="l00382"></a>00382       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  "</span> + v.first;
+<a name="l00383"></a>00383 
+<a name="l00384"></a>00384     <span class="keywordflow">if</span> (v.second-&gt;max_versions != 0)
+<a name="l00385"></a>00385       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" MAX_VERSIONS="</span> + v.second-&gt;max_versions;
+<a name="l00386"></a>00386 
+<a name="l00387"></a>00387     if (v.second-&gt;ttl != 0)
+<a name="l00388"></a>00388       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" TTL="</span> + (uint32_t)v.second-&gt;ttl;
+<a name="l00389"></a>00389 
+<a name="l00390"></a>00390     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">",\n"</span>;
+<a name="l00391"></a>00391   }
+<a name="l00392"></a>00392 
+<a name="l00393"></a>00393   <span class="keywordtype">size_t</span> i = 1;
+<a name="l00394"></a>00394 
+<a name="l00395"></a>00395   <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a> *ag, <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>) {
+<a name="l00396"></a>00396     output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"  ACCESS GROUP "</span>;
+<a name="l00397"></a>00397 
+<a name="l00398"></a>00398     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#ce9ec4bc82b48cea9c17817f1b7183f8">hql_needs_quotes</a>(ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>.c_str()))
+<a name="l00399"></a>00399       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"'"</span> + ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> + <span class="stringliteral">"'"</span>;
+<a name="l00400"></a>00400     <span class="keywordflow">else</span>
+<a name="l00401"></a>00401       output += ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>;
+<a name="l00402"></a>00402 
+<a name="l00403"></a>00403     if (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a>)
+<a name="l00404"></a>00404       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" IN_MEMORY"</span>;
+<a name="l00405"></a>00405 
+<a name="l00406"></a>00406     <span class="keywordflow">if</span> (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a> != 0)
+<a name="l00407"></a>00407       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" BLOCKSIZE="</span> + ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a>;
 <a name="l00408"></a>00408 
-<a name="l00409"></a>00409     if ((*ag_iter)-&gt;in_memory)
-<a name="l00410"></a>00410       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" IN_MEMORY"</span>;
-<a name="l00411"></a>00411     <span class="keywordflow">if</span> ((*ag_iter)-&gt;blocksize != 0)
-<a name="l00412"></a>00412       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" BLOCKSIZE="</span> + (*ag_iter)-&gt;blocksize;
-<a name="l00413"></a>00413     if ((*ag_iter)-&gt;compressor != <span class="stringliteral">""</span>)
-<a name="l00414"></a>00414       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" COMPRESSOR=\""</span> + (*ag_iter)-&gt;compressor + <span class="stringliteral">"\""</span>;
-<a name="l00415"></a>00415     if (!(*ag_iter)-&gt;columns.empty()) {
-<a name="l00416"></a>00416       <span class="keywordtype">bool</span> display_comma = <span class="keyword">false</span>;
-<a name="l00417"></a>00417       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" ("</span>;
-<a name="l00418"></a>00418       <span class="keywordflow">for</span> (list&lt;ColumnFamily *&gt;::iterator cfl_iter = (*ag_iter)-&gt;columns.begin(); cfl_iter != (*ag_iter)-&gt;columns.end(); cfl_iter++) {
-<a name="l00419"></a>00419 
-<a name="l00420"></a>00420         <span class="comment">// check to see if column family name needs quotes around it</span>
-<a name="l00421"></a>00421         needs_quotes = <span class="keyword">false</span>;
-<a name="l00422"></a>00422         ptr = (*cfl_iter)-&gt;name.c_str();
-<a name="l00423"></a>00423         <span class="keywordflow">if</span> (!isalpha(*ptr))
-<a name="l00424"></a>00424           needs_quotes = <span class="keyword">true</span>;
-<a name="l00425"></a>00425         <span class="keywordflow">else</span> {
-<a name="l00426"></a>00426           <span class="keywordflow">for</span> (++ptr; *ptr; ptr++) {
-<a name="l00427"></a>00427             <span class="keywordflow">if</span> (!isalnum(*ptr)) {
-<a name="l00428"></a>00428               needs_quotes = <span class="keyword">true</span>;
-<a name="l00429"></a>00429               <span class="keywordflow">break</span>;
-<a name="l00430"></a>00430             }
-<a name="l00431"></a>00431           }
-<a name="l00432"></a>00432         }
-<a name="l00433"></a>00433 
-<a name="l00434"></a>00434         <span class="keywordflow">if</span> (display_comma)
-<a name="l00435"></a>00435           output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">","</span>;
-<a name="l00436"></a>00436         <span class="keywordflow">else</span>
-<a name="l00437"></a>00437           display_comma = <span class="keyword">true</span>;
-<a name="l00438"></a>00438 
-<a name="l00439"></a>00439         <span class="keywordflow">if</span> (needs_quotes)
-<a name="l00440"></a>00440           output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" '"</span> + (*cfl_iter)-&gt;name + <span class="stringliteral">"'"</span>;
-<a name="l00441"></a>00441         <span class="keywordflow">else</span>
-<a name="l00442"></a>00442           output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" "</span> + (*cfl_iter)-&gt;name;
-<a name="l00443"></a>00443       }
-<a name="l00444"></a>00444       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">")"</span>;
-<a name="l00445"></a>00445     }
-<a name="l00446"></a>00446     <span class="keywordflow">if</span> (i == <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.size())
-<a name="l00447"></a>00447       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"\n"</span>;
-<a name="l00448"></a>00448     <span class="keywordflow">else</span>
-<a name="l00449"></a>00449       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">",\n"</span>;
-<a name="l00450"></a>00450   }
-<a name="l00451"></a>00451 
-<a name="l00452"></a>00452   output += <span class="stringliteral">")\n"</span>;
-<a name="l00453"></a>00453   output += <span class="stringliteral">"\n"</span>;
-<a name="l00454"></a>00454 
-<a name="l00455"></a>00455 }
-<a name="l00456"></a>00456 
-<a name="l00457"></a>00457 
-<a name="l00462"></a><a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f">00462</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f" title="Protected methods.">Schema::is_valid</a>() {
-<a name="l00463"></a>00463   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#70aab413af15f3e2370a31437487d0be">get_error_string</a>() != 0)
-<a name="l00464"></a>00464     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00465"></a>00465   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00466"></a>00466 }
-<a name="l00467"></a>00467 
-<a name="l00471"></a><a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">00471</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">Schema::set_generation</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *generation) {
-<a name="l00472"></a>00472   <span class="keywordtype">int</span> gen_num = atoi(generation);
-<a name="l00473"></a>00473   <span class="keywordflow">if</span> (gen_num &lt;= 0)
-<a name="l00474"></a>00474     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid Table 'generation' value ("</span> + generation + <span class="stringliteral">")"</span>);
-<a name="l00475"></a>00475   <a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> = gen_num;
-<a name="l00476"></a>00476 }
+<a name="l00409"></a>00409     if (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> != <span class="stringliteral">""</span>)
+<a name="l00410"></a>00410       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" COMPRESSOR=\""</span> + ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> + <span class="stringliteral">"\""</span>;
+<a name="l00411"></a>00411 
+<a name="l00412"></a>00412     if (!ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#c19dc38ffdfeeb03cb793b37d0270871">columns</a>.empty()) {
+<a name="l00413"></a>00413       <span class="keywordtype">bool</span> display_comma = <span class="keyword">false</span>;
+<a name="l00414"></a>00414       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">" ("</span>;
+<a name="l00415"></a>00415 
+<a name="l00416"></a>00416       <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a> *cf, ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#c19dc38ffdfeeb03cb793b37d0270871">columns</a>) {
+<a name="l00417"></a>00417         <span class="comment">// check to see if column family name needs quotes around it</span>
+<a name="l00418"></a>00418         <span class="keywordflow">if</span> (display_comma)
+<a name="l00419"></a>00419           output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">", "</span>;
+<a name="l00420"></a>00420         <span class="keywordflow">else</span>
+<a name="l00421"></a>00421           display_comma = <span class="keyword">true</span>;
+<a name="l00422"></a>00422 
+<a name="l00423"></a>00423         <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#ce9ec4bc82b48cea9c17817f1b7183f8">hql_needs_quotes</a>(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str()))
+<a name="l00424"></a>00424           output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"'"</span> + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>;
+<a name="l00425"></a>00425         <span class="keywordflow">else</span>
+<a name="l00426"></a>00426           output += cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>;
+<a name="l00427"></a>00427       }
+<a name="l00428"></a>00428       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">")"</span>;
+<a name="l00429"></a>00429     }
+<a name="l00430"></a>00430     <span class="keywordflow">if</span> (i == <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.size())
+<a name="l00431"></a>00431       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"\n"</span>;
+<a name="l00432"></a>00432     <span class="keywordflow">else</span>
+<a name="l00433"></a>00433       output += (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">",\n"</span>;
+<a name="l00434"></a>00434   }
+<a name="l00435"></a>00435 
+<a name="l00436"></a>00436   output += <span class="stringliteral">")\n"</span>;
+<a name="l00437"></a>00437   output += <span class="stringliteral">"\n"</span>;
+<a name="l00438"></a>00438 }
+<a name="l00439"></a>00439 
+<a name="l00440"></a>00440 
+<a name="l00445"></a><a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f">00445</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_schema.html#83436b0f8fb8147c7b11f26a67f6655f" title="Protected methods.">Schema::is_valid</a>() {
+<a name="l00446"></a>00446   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_schema.html#70aab413af15f3e2370a31437487d0be">get_error_string</a>() != 0)
+<a name="l00447"></a>00447     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00448"></a>00448   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00449"></a>00449 }
+<a name="l00450"></a>00450 
+<a name="l00454"></a><a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">00454</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#5e36d56aef59e6d96e6d8839fafe7e6c">Schema::set_generation</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *generation) {
+<a name="l00455"></a>00455   <span class="keywordtype">int</span> gen_num = atoi(generation);
+<a name="l00456"></a>00456   <span class="keywordflow">if</span> (gen_num &lt;= 0)
+<a name="l00457"></a>00457     <a class="code" href="class_hypertable_1_1_schema.html#5d2c96bbdf74a58ec86157c520e09718">set_error_string</a>((<span class="keywordtype">string</span>)<span class="stringliteral">"Invalid Table 'generation' value ("</span> + generation + <span class="stringliteral">")"</span>);
+<a name="l00458"></a>00458   <a class="code" href="class_hypertable_1_1_schema.html#72c497625f3425183459928c40575e0d">m_generation</a> = gen_num;
+<a name="l00459"></a>00459 }
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461 
+<a name="l00462"></a><a class="code" href="class_hypertable_1_1_schema.html#b012cf53bf45ada6b13f7d92e9140ff1">00462</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#b012cf53bf45ada6b13f7d92e9140ff1">Schema::add_access_group</a>(<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a> *ag) {
+<a name="l00463"></a>00463   AccessGroupMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>);
+<a name="l00464"></a>00464 
+<a name="l00465"></a>00465   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end()) {
+<a name="l00466"></a>00466     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Access group '"</span>) + ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> + <span class="stringliteral">"' multiply defined"</span>;
+<a name="l00467"></a>00467     <span class="keyword">delete</span> ag;
+<a name="l00468"></a>00468     <span class="keywordflow">return</span>;
+<a name="l00469"></a>00469   }
+<a name="l00470"></a>00470 
+<a name="l00471"></a>00471   <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>[ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>] = ag;
+<a name="l00472"></a>00472   <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.push_back(ag);
+<a name="l00473"></a>00473 }
+<a name="l00474"></a>00474 
+<a name="l00475"></a><a class="code" href="class_hypertable_1_1_schema.html#f40f964b1f4eea6f3d2dfec82189a506">00475</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f40f964b1f4eea6f3d2dfec82189a506">Schema::add_column_family</a>(<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a> *cf) {
+<a name="l00476"></a>00476   ColumnFamilyMap::const_iterator cf_iter = <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.find(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>);
 <a name="l00477"></a>00477 
-<a name="l00478"></a>00478 
-<a name="l00479"></a><a class="code" href="class_hypertable_1_1_schema.html#b012cf53bf45ada6b13f7d92e9140ff1">00479</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#b012cf53bf45ada6b13f7d92e9140ff1">Schema::add_access_group</a>(<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a> *ag) {
-<a name="l00480"></a>00480   AccessGroupMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>);
-<a name="l00481"></a>00481 
-<a name="l00482"></a>00482   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end()) {
-<a name="l00483"></a>00483     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Access group '"</span>) + ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a> + <span class="stringliteral">"' multiply defined"</span>;
-<a name="l00484"></a>00484     <span class="keyword">delete</span> ag;
-<a name="l00485"></a>00485     <span class="keywordflow">return</span>;
-<a name="l00486"></a>00486   }
-<a name="l00487"></a>00487 
-<a name="l00488"></a>00488   <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>[ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>] = ag;
-<a name="l00489"></a>00489   <a class="code" href="class_hypertable_1_1_schema.html#d1f616553395d0d56db3e4dd6ad12c29">m_access_groups</a>.push_back(ag);
-<a name="l00490"></a>00490 }
+<a name="l00478"></a>00478   <span class="keywordflow">if</span> (cf_iter != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end()) {
+<a name="l00479"></a>00479     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Column family '"</span>) + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"' multiply defined"</span>;
+<a name="l00480"></a>00480     <span class="keyword">delete</span> cf;
+<a name="l00481"></a>00481     <span class="keywordflow">return</span>;
+<a name="l00482"></a>00482   }
+<a name="l00483"></a>00483 
+<a name="l00484"></a>00484   AccessGroupMap::const_iterator ag_iter = <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a>);
+<a name="l00485"></a>00485 
+<a name="l00486"></a>00486   <span class="keywordflow">if</span> (ag_iter == <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end()) {
+<a name="l00487"></a>00487     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Invalid access group '"</span>) + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a> + <span class="stringliteral">"' for column family '"</span> + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>;
+<a name="l00488"></a>00488     <span class="keyword">delete</span> cf;
+<a name="l00489"></a>00489     <span class="keywordflow">return</span>;
+<a name="l00490"></a>00490   }
 <a name="l00491"></a>00491 
-<a name="l00492"></a><a class="code" href="class_hypertable_1_1_schema.html#f40f964b1f4eea6f3d2dfec82189a506">00492</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_schema.html#f40f964b1f4eea6f3d2dfec82189a506">Schema::add_column_family</a>(<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a> *cf) {
-<a name="l00493"></a>00493   ColumnFamilyMap::const_iterator cf_iter = <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.find(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>);
+<a name="l00492"></a>00492   <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>[cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>] = cf;
+<a name="l00493"></a>00493   (*ag_iter).second-&gt;columns.push_back(cf);
 <a name="l00494"></a>00494 
-<a name="l00495"></a>00495   <span class="keywordflow">if</span> (cf_iter != <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>.end()) {
-<a name="l00496"></a>00496     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Column family '"</span>) + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"' multiply defined"</span>;
-<a name="l00497"></a>00497     <span class="keyword">delete</span> cf;
-<a name="l00498"></a>00498     <span class="keywordflow">return</span>;
-<a name="l00499"></a>00499   }
-<a name="l00500"></a>00500 
-<a name="l00501"></a>00501   AccessGroupMap::const_iterator ag_iter = <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.find(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a>);
-<a name="l00502"></a>00502 
-<a name="l00503"></a>00503   <span class="keywordflow">if</span> (ag_iter == <a class="code" href="class_hypertable_1_1_schema.html#6f9a3c3bc7b9d75d5af454ab5e5d0405">m_access_group_map</a>.end()) {
-<a name="l00504"></a>00504     <a class="code" href="class_hypertable_1_1_schema.html#7966315ad6ff659971afe05a8f5b08e0">m_error_string</a> = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Invalid access group '"</span>) + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#cfc4e253ca8590c5abee81172d9b705a">ag</a> + <span class="stringliteral">"' for column family '"</span> + cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> + <span class="stringliteral">"'"</span>;
-<a name="l00505"></a>00505     <span class="keyword">delete</span> cf;
-<a name="l00506"></a>00506     <span class="keywordflow">return</span>;
-<a name="l00507"></a>00507   }
-<a name="l00508"></a>00508 
-<a name="l00509"></a>00509   <a class="code" href="class_hypertable_1_1_schema.html#d77ee5c9da2e4ed59988bcecc57a00da">m_column_family_map</a>[cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>] = cf;
-<a name="l00510"></a>00510   (*ag_iter).second-&gt;columns.push_back(cf);
-<a name="l00511"></a>00511 
-<a name="l00512"></a>00512 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:23 2008 for hypertable by&nbsp;
+<a name="l00495"></a>00495 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:07:02 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

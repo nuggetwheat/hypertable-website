@@ -43,7 +43,7 @@
 <a name="l00045"></a>00045     <span class="stringliteral">"a specific statement, type 'help &lt;statement&gt;', where &lt;statement&gt; is one from"</span>,
 <a name="l00046"></a>00046     <span class="stringliteral">"the preceeding list."</span>,
 <a name="l00047"></a>00047     <span class="stringliteral">""</span>,
-<a name="l00048"></a>00048     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
+<a name="l00048"></a>00048     0
 <a name="l00049"></a>00049   };
 <a name="l00050"></a>00050 
 <a name="l00051"></a><a class="code" href="_hql_help_text_8cc.html#638f123d1b69c28bbc6b4c37c53b5dd7">00051</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#638f123d1b69c28bbc6b4c37c53b5dd7">help_text_rsclient_contents</a>[] = {
@@ -63,7 +63,7 @@
 <a name="l00065"></a>00065     <span class="stringliteral">"a specific statement, type 'help &lt;statement&gt;', where &lt;statement&gt; is one from"</span>,
 <a name="l00066"></a>00066     <span class="stringliteral">"the preceeding list."</span>,
 <a name="l00067"></a>00067     <span class="stringliteral">""</span>,
-<a name="l00068"></a>00068     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
+<a name="l00068"></a>00068     0
 <a name="l00069"></a>00069   };
 <a name="l00070"></a>00070 
 <a name="l00071"></a><a class="code" href="_hql_help_text_8cc.html#23cf5a20aa92b56a5525826a8a552f7a">00071</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#23cf5a20aa92b56a5525826a8a552f7a">help_text_create_scanner</a>[] = {
@@ -89,527 +89,549 @@
 <a name="l00091"></a>00091     <span class="stringliteral">""</span>,
 <a name="l00092"></a>00092     <span class="stringliteral">"cell_predicate: "</span>,
 <a name="l00093"></a>00093     <span class="stringliteral">"    [cell_spec relop] CELL relop cell_spec"</span>,
-<a name="l00094"></a>00094     <span class="stringliteral">"    | '(' [cell_spec relop] CELL relop cell_spec (OR [cell_spec relop] CELL relop cell_spec)* ')'"</span>,
-<a name="l00095"></a>00095     <span class="stringliteral">""</span>,
-<a name="l00096"></a>00096     <span class="stringliteral">"row_predicate: "</span>,
-<a name="l00097"></a>00097     <span class="stringliteral">"    [row_key relop] ROW relop row_key"</span>,
-<a name="l00098"></a>00098     <span class="stringliteral">"    | '(' [row_key relop] ROW relop row_key (OR [row_key relop] ROW relop row_key)* ')'"</span>,
-<a name="l00099"></a>00099     <span class="stringliteral">""</span>,
-<a name="l00100"></a>00100     <span class="stringliteral">"timestamp_predicate: "</span>,
-<a name="l00101"></a>00101     <span class="stringliteral">"    [timestamp relop] TIMESTAMP relop timestamp"</span>,
-<a name="l00102"></a>00102     <span class="stringliteral">""</span>,
-<a name="l00103"></a>00103     <span class="stringliteral">"options_spec:"</span>,
-<a name="l00104"></a>00104     <span class="stringliteral">"    (REVS = revision_count"</span>,
-<a name="l00105"></a>00105     <span class="stringliteral">"    | LIMIT = row_count"</span>,
-<a name="l00106"></a>00106     <span class="stringliteral">"    | INTO FILE 'file_name'"</span>,
-<a name="l00107"></a>00107     <span class="stringliteral">"    | DISPLAY_TIMESTAMPS"</span>,
-<a name="l00108"></a>00108     <span class="stringliteral">"    | RETURN_DELETES"</span>,
-<a name="l00109"></a>00109     <span class="stringliteral">"    | KEYS_ONLY)*"</span>,
-<a name="l00110"></a>00110     <span class="stringliteral">""</span>,
-<a name="l00111"></a>00111     <span class="stringliteral">"timestamp:"</span>,
-<a name="l00112"></a>00112     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
-<a name="l00113"></a>00113     <span class="stringliteral">""</span>,
-<a name="l00114"></a>00114     <span class="stringliteral">"NOTES:  If the start_row is absent from a range_spec, it means NULL or"</span>,
-<a name="l00115"></a>00115     <span class="stringliteral">"the beginning of the range.  If the end_row is specified as ??, then it"</span>,
-<a name="l00116"></a>00116     <span class="stringliteral">"will get converted to 0xff 0xff which indicates the end of the range."</span>,
-<a name="l00117"></a>00117     <span class="stringliteral">""</span>,
-<a name="l00118"></a>00118     <span class="stringliteral">"Example:"</span>,
+<a name="l00094"></a>00094     <span class="stringliteral">"    | '(' [cell_spec relop] CELL relop cell_spec"</span>,
+<a name="l00095"></a>00095     <span class="stringliteral">"          (OR [cell_spec relop] CELL relop cell_spec)* ')'"</span>,
+<a name="l00096"></a>00096     <span class="stringliteral">""</span>,
+<a name="l00097"></a>00097     <span class="stringliteral">"row_predicate: "</span>,
+<a name="l00098"></a>00098     <span class="stringliteral">"    [row_key relop] ROW relop row_key"</span>,
+<a name="l00099"></a>00099     <span class="stringliteral">"    | '(' [row_key relop] ROW relop row_key"</span>,
+<a name="l00100"></a>00100     <span class="stringliteral">"          (OR [row_key relop] ROW relop row_key)* ')'"</span>,
+<a name="l00101"></a>00101     <span class="stringliteral">""</span>,
+<a name="l00102"></a>00102     <span class="stringliteral">"timestamp_predicate: "</span>,
+<a name="l00103"></a>00103     <span class="stringliteral">"    [timestamp relop] TIMESTAMP relop timestamp"</span>,
+<a name="l00104"></a>00104     <span class="stringliteral">""</span>,
+<a name="l00105"></a>00105     <span class="stringliteral">"options_spec:"</span>,
+<a name="l00106"></a>00106     <span class="stringliteral">"    (REVS = revision_count"</span>,
+<a name="l00107"></a>00107     <span class="stringliteral">"    | LIMIT = row_count"</span>,
+<a name="l00108"></a>00108     <span class="stringliteral">"    | INTO FILE 'file_name'"</span>,
+<a name="l00109"></a>00109     <span class="stringliteral">"    | DISPLAY_TIMESTAMPS"</span>,
+<a name="l00110"></a>00110     <span class="stringliteral">"    | RETURN_DELETES"</span>,
+<a name="l00111"></a>00111     <span class="stringliteral">"    | KEYS_ONLY)*"</span>,
+<a name="l00112"></a>00112     <span class="stringliteral">""</span>,
+<a name="l00113"></a>00113     <span class="stringliteral">"timestamp:"</span>,
+<a name="l00114"></a>00114     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
+<a name="l00115"></a>00115     <span class="stringliteral">""</span>,
+<a name="l00116"></a>00116     <span class="stringliteral">"NOTES:  If the start_row is absent from a range_spec, it means NULL or"</span>,
+<a name="l00117"></a>00117     <span class="stringliteral">"the beginning of the range.  If the end_row is specified as ??, then it"</span>,
+<a name="l00118"></a>00118     <span class="stringliteral">"will get converted to 0xff 0xff which indicates the end of the range."</span>,
 <a name="l00119"></a>00119     <span class="stringliteral">""</span>,
-<a name="l00120"></a>00120     <span class="stringliteral">"  CREATE SCANNER ON Test[..??]"</span>,
+<a name="l00120"></a>00120     <span class="stringliteral">"Example:"</span>,
 <a name="l00121"></a>00121     <span class="stringliteral">""</span>,
-<a name="l00122"></a>00122     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00123"></a>00123   };
-<a name="l00124"></a>00124 
-<a name="l00125"></a><a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">00125</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">help_text_destroy_scanner</a>[] = {
-<a name="l00126"></a>00126     <span class="stringliteral">""</span>,
-<a name="l00127"></a>00127     <span class="stringliteral">"DESTROY SCANNER [scanner_id]"</span>,
+<a name="l00122"></a>00122     <span class="stringliteral">"  CREATE SCANNER ON Test[..??]"</span>,
+<a name="l00123"></a>00123     <span class="stringliteral">""</span>,
+<a name="l00124"></a>00124     0
+<a name="l00125"></a>00125   };
+<a name="l00126"></a>00126 
+<a name="l00127"></a><a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">00127</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">help_text_destroy_scanner</a>[] = {
 <a name="l00128"></a>00128     <span class="stringliteral">""</span>,
-<a name="l00129"></a>00129     <span class="stringliteral">"This command will destroy a scanner previously created with"</span>,
-<a name="l00130"></a>00130     <span class="stringliteral">"a CREATE SCANNER command.  If a scanner_id is supplied, then"</span>,
-<a name="l00131"></a>00131     <span class="stringliteral">"the scanner corresponding to that ID will be destroyed, otherwise"</span>,
-<a name="l00132"></a>00132     <span class="stringliteral">"the \"current\" or most recently created scanner will get destroyed."</span>,
-<a name="l00133"></a>00133     <span class="stringliteral">""</span>,
-<a name="l00134"></a>00134     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00135"></a>00135   };
-<a name="l00136"></a>00136 
-<a name="l00137"></a><a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">00137</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">help_text_fetch_scanblock</a>[] = {
-<a name="l00138"></a>00138     <span class="stringliteral">""</span>,
-<a name="l00139"></a>00139     <span class="stringliteral">"FETCH SCANBLOCK [scanner_id]"</span>,
+<a name="l00129"></a>00129     <span class="stringliteral">"DESTROY SCANNER [scanner_id]"</span>,
+<a name="l00130"></a>00130     <span class="stringliteral">""</span>,
+<a name="l00131"></a>00131     <span class="stringliteral">"This command will destroy a scanner previously created with"</span>,
+<a name="l00132"></a>00132     <span class="stringliteral">"a CREATE SCANNER command.  If a scanner_id is supplied, then"</span>,
+<a name="l00133"></a>00133     <span class="stringliteral">"the scanner corresponding to that ID will be destroyed, otherwise"</span>,
+<a name="l00134"></a>00134     <span class="stringliteral">"the \"current\" or most recently created scanner will get destroyed."</span>,
+<a name="l00135"></a>00135     <span class="stringliteral">""</span>,
+<a name="l00136"></a>00136     0
+<a name="l00137"></a>00137   };
+<a name="l00138"></a>00138 
+<a name="l00139"></a><a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">00139</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">help_text_fetch_scanblock</a>[] = {
 <a name="l00140"></a>00140     <span class="stringliteral">""</span>,
-<a name="l00141"></a>00141     <span class="stringliteral">"This command will fetch and display the next block of results"</span>,
-<a name="l00142"></a>00142     <span class="stringliteral">"of a scanner.  If a scanner_id is supplied, then the scanner"</span>,
-<a name="l00143"></a>00143     <span class="stringliteral">"corresponding to that ID will be destroyed, otherwise the"</span>,
-<a name="l00144"></a>00144     <span class="stringliteral">"\"current\" or most recently created scanner will get destroyed."</span>,
-<a name="l00145"></a>00145     <span class="stringliteral">""</span>,
-<a name="l00146"></a>00146     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00147"></a>00147   };
-<a name="l00148"></a>00148 
-<a name="l00149"></a><a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">00149</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">help_text_load_range</a>[] = {
-<a name="l00150"></a>00150     <span class="stringliteral">""</span>,
-<a name="l00151"></a>00151     <span class="stringliteral">"LOAD RANGE range_spec"</span>,
+<a name="l00141"></a>00141     <span class="stringliteral">"FETCH SCANBLOCK [scanner_id]"</span>,
+<a name="l00142"></a>00142     <span class="stringliteral">""</span>,
+<a name="l00143"></a>00143     <span class="stringliteral">"This command will fetch and display the next block of results"</span>,
+<a name="l00144"></a>00144     <span class="stringliteral">"of a scanner.  If a scanner_id is supplied, then the scanner"</span>,
+<a name="l00145"></a>00145     <span class="stringliteral">"corresponding to that ID will be destroyed, otherwise the"</span>,
+<a name="l00146"></a>00146     <span class="stringliteral">"\"current\" or most recently created scanner will get destroyed."</span>,
+<a name="l00147"></a>00147     <span class="stringliteral">""</span>,
+<a name="l00148"></a>00148     0
+<a name="l00149"></a>00149   };
+<a name="l00150"></a>00150 
+<a name="l00151"></a><a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">00151</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">help_text_load_range</a>[] = {
 <a name="l00152"></a>00152     <span class="stringliteral">""</span>,
-<a name="l00153"></a>00153     <span class="stringliteral">"range_spec:"</span>,
-<a name="l00154"></a>00154     <span class="stringliteral">"    table_name '[' [start_row] \"..\" (end_row | ?? ) ']'"</span>,
-<a name="l00155"></a>00155     <span class="stringliteral">""</span>,
-<a name="l00156"></a>00156     <span class="stringliteral">"This command will issue a 'load range' command to the RangeServer"</span>,
-<a name="l00157"></a>00157     <span class="stringliteral">"for the range specified with range_spec."</span>,
-<a name="l00158"></a>00158     <span class="stringliteral">""</span>,
-<a name="l00159"></a>00159     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00160"></a>00160   };
-<a name="l00161"></a>00161 
-<a name="l00162"></a><a class="code" href="_hql_help_text_8cc.html#173d4d9d2e91bc5722fbed066d0e7493">00162</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#173d4d9d2e91bc5722fbed066d0e7493">help_text_update</a>[] = {
-<a name="l00163"></a>00163     <span class="stringliteral">""</span>,
-<a name="l00164"></a>00164     <span class="stringliteral">"UPDATE table_name input_file"</span>,
+<a name="l00153"></a>00153     <span class="stringliteral">"LOAD RANGE range_spec"</span>,
+<a name="l00154"></a>00154     <span class="stringliteral">""</span>,
+<a name="l00155"></a>00155     <span class="stringliteral">"range_spec:"</span>,
+<a name="l00156"></a>00156     <span class="stringliteral">"    table_name '[' [start_row] \"..\" (end_row | ?? ) ']'"</span>,
+<a name="l00157"></a>00157     <span class="stringliteral">""</span>,
+<a name="l00158"></a>00158     <span class="stringliteral">"This command will issue a 'load range' command to the RangeServer"</span>,
+<a name="l00159"></a>00159     <span class="stringliteral">"for the range specified with range_spec."</span>,
+<a name="l00160"></a>00160     <span class="stringliteral">""</span>,
+<a name="l00161"></a>00161     0
+<a name="l00162"></a>00162   };
+<a name="l00163"></a>00163 
+<a name="l00164"></a><a class="code" href="_hql_help_text_8cc.html#173d4d9d2e91bc5722fbed066d0e7493">00164</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#173d4d9d2e91bc5722fbed066d0e7493">help_text_update</a>[] = {
 <a name="l00165"></a>00165     <span class="stringliteral">""</span>,
-<a name="l00166"></a>00166     <span class="stringliteral">"This command will read blocks of key/value pairs from input_file"</span>,
-<a name="l00167"></a>00167     <span class="stringliteral">"and send them to the range server.  Here are some example input file"</span>,
-<a name="l00168"></a>00168     <span class="stringliteral">"lines that illustrate the format of this file:"</span>,
-<a name="l00169"></a>00169     <span class="stringliteral">""</span>,
-<a name="l00170"></a>00170     <span class="stringliteral">"1189631331826108        acaleph DELETE"</span>,
-<a name="l00171"></a>00171     <span class="stringliteral">"1189631331826202        acrostolion     apple:http://www.baseball.com/       Vilia miretur vulgus"</span>,
-<a name="l00172"></a>00172     <span class="stringliteral">"1189631331826211        acerin  banana:http://sports.espn.go.com/       DELETE"</span>,
-<a name="l00173"></a>00173     <span class="stringliteral">""</span>,
-<a name="l00174"></a>00174     <span class="stringliteral">"The fields are separated by the tab character.  The lines have the following format:"</span>,
-<a name="l00175"></a>00175     <span class="stringliteral">""</span>
-<a name="l00176"></a>00176     <span class="stringliteral">"&lt;timestamp&gt; '\t' &lt;row-key&gt; '\t' &lt;column-family&gt;[:&lt;column-qualfier&gt;] '\t' &lt;value&gt;"</span>,
-<a name="l00177"></a>00177     <span class="stringliteral">""</span>,
-<a name="l00178"></a>00178     <span class="stringliteral">"The string \"DELETE\" has special meaning.  In the first example line"</span>,
-<a name="l00179"></a>00179     <span class="stringliteral">"above, it generates a 'delete row' for the row key 'acaleph'.  In the"</span>,
-<a name="l00180"></a>00180     <span class="stringliteral">"third example line above, it generates a 'delete cell' for the column"</span>,
-<a name="l00181"></a>00181     <span class="stringliteral">"'banana:http://sports.espn.go.com/' of row 'acerin'."</span>,
-<a name="l00182"></a>00182     <span class="stringliteral">""</span>,
-<a name="l00183"></a>00183     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00184"></a>00184   };
-<a name="l00185"></a>00185 
-<a name="l00186"></a><a class="code" href="_hql_help_text_8cc.html#9b05e0931e08c8a473a77f7ef9e2f350">00186</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#9b05e0931e08c8a473a77f7ef9e2f350">help_text_shutdown_rangeserver</a>[] = {
-<a name="l00187"></a>00187     <span class="stringliteral">""</span>,
-<a name="l00188"></a>00188     <span class="stringliteral">"SHUTDOWN"</span>,
+<a name="l00166"></a>00166     <span class="stringliteral">"UPDATE table_name input_file"</span>,
+<a name="l00167"></a>00167     <span class="stringliteral">""</span>,
+<a name="l00168"></a>00168     <span class="stringliteral">"This command will read blocks of key/value pairs from input_file"</span>,
+<a name="l00169"></a>00169     <span class="stringliteral">"and send them to the range server.  Here are some example input file"</span>,
+<a name="l00170"></a>00170     <span class="stringliteral">"lines that illustrate the format of this file:"</span>,
+<a name="l00171"></a>00171     <span class="stringliteral">""</span>,
+<a name="l00172"></a>00172     <span class="stringliteral">"1189631331826108        acaleph DELETE"</span>,
+<a name="l00173"></a>00173     <span class="stringliteral">"1189631331826202        acrostolion     apple:http://www.baseball.com/       Vilia miretur vulgus"</span>,
+<a name="l00174"></a>00174     <span class="stringliteral">"1189631331826211        acerin  banana:http://sports.espn.go.com/       DELETE"</span>,
+<a name="l00175"></a>00175     <span class="stringliteral">""</span>,
+<a name="l00176"></a>00176     <span class="stringliteral">"The fields are separated by the tab character.  The lines have the following format:"</span>,
+<a name="l00177"></a>00177     <span class="stringliteral">""</span>
+<a name="l00178"></a>00178     <span class="stringliteral">"&lt;timestamp&gt; '\t' &lt;row-key&gt; '\t' &lt;column-family&gt;[:&lt;column-qualfier&gt;] '\t' &lt;value&gt;"</span>,
+<a name="l00179"></a>00179     <span class="stringliteral">""</span>,
+<a name="l00180"></a>00180     <span class="stringliteral">"The string \"DELETE\" has special meaning.  In the first example line"</span>,
+<a name="l00181"></a>00181     <span class="stringliteral">"above, it generates a 'delete row' for the row key 'acaleph'.  In the"</span>,
+<a name="l00182"></a>00182     <span class="stringliteral">"third example line above, it generates a 'delete cell' for the column"</span>,
+<a name="l00183"></a>00183     <span class="stringliteral">"'banana:http://sports.espn.go.com/' of row 'acerin'."</span>,
+<a name="l00184"></a>00184     <span class="stringliteral">""</span>,
+<a name="l00185"></a>00185     0
+<a name="l00186"></a>00186   };
+<a name="l00187"></a>00187 
+<a name="l00188"></a><a class="code" href="_hql_help_text_8cc.html#9b05e0931e08c8a473a77f7ef9e2f350">00188</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#9b05e0931e08c8a473a77f7ef9e2f350">help_text_shutdown_rangeserver</a>[] = {
 <a name="l00189"></a>00189     <span class="stringliteral">""</span>,
-<a name="l00190"></a>00190     <span class="stringliteral">"This command causes the RangeServer to shutdown.  It will"</span>,
-<a name="l00191"></a>00191     <span class="stringliteral">"return immediately, but the RangeServer will wait for all"</span>,
-<a name="l00192"></a>00192     <span class="stringliteral">"running requests to complete before shutting down."</span>,
-<a name="l00193"></a>00193     <span class="stringliteral">""</span>,
-<a name="l00194"></a>00194     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00195"></a>00195   };
-<a name="l00196"></a>00196 
-<a name="l00197"></a><a class="code" href="_hql_help_text_8cc.html#8c8ff941afa402896670253a450e232f">00197</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#8c8ff941afa402896670253a450e232f">help_text_drop_range</a>[] = {
-<a name="l00198"></a>00198     <span class="stringliteral">""</span>,
-<a name="l00199"></a>00199     <span class="stringliteral">"DROP RANGE range_spec"</span>,
+<a name="l00190"></a>00190     <span class="stringliteral">"SHUTDOWN"</span>,
+<a name="l00191"></a>00191     <span class="stringliteral">""</span>,
+<a name="l00192"></a>00192     <span class="stringliteral">"This command causes the RangeServer to shutdown.  It will"</span>,
+<a name="l00193"></a>00193     <span class="stringliteral">"return immediately, but the RangeServer will wait for all"</span>,
+<a name="l00194"></a>00194     <span class="stringliteral">"running requests to complete before shutting down."</span>,
+<a name="l00195"></a>00195     <span class="stringliteral">""</span>,
+<a name="l00196"></a>00196     0
+<a name="l00197"></a>00197   };
+<a name="l00198"></a>00198 
+<a name="l00199"></a><a class="code" href="_hql_help_text_8cc.html#8c8ff941afa402896670253a450e232f">00199</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#8c8ff941afa402896670253a450e232f">help_text_drop_range</a>[] = {
 <a name="l00200"></a>00200     <span class="stringliteral">""</span>,
-<a name="l00201"></a>00201     <span class="stringliteral">"range_spec:"</span>,
-<a name="l00202"></a>00202     <span class="stringliteral">"    table_name '[' [start_row] \"..\" (end_row | ?? ) ']'"</span>,
-<a name="l00203"></a>00203     <span class="stringliteral">""</span>,
-<a name="l00204"></a>00204     <span class="stringliteral">"This command will issue a 'drop range' command to the RangeServer"</span>,
-<a name="l00205"></a>00205     <span class="stringliteral">"for the range specified with range_spec."</span>,
-<a name="l00206"></a>00206     <span class="stringliteral">""</span>,
-<a name="l00207"></a>00207     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00208"></a>00208   };
-<a name="l00209"></a>00209 
-<a name="l00210"></a><a class="code" href="_hql_help_text_8cc.html#246700f78d8c689705152ceb8e120767">00210</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#246700f78d8c689705152ceb8e120767">help_text_replay_start</a>[] = {
-<a name="l00211"></a>00211     <span class="stringliteral">""</span>,
-<a name="l00212"></a>00212     <span class="stringliteral">"REPLAY START"</span>,
+<a name="l00201"></a>00201     <span class="stringliteral">"DROP RANGE range_spec"</span>,
+<a name="l00202"></a>00202     <span class="stringliteral">""</span>,
+<a name="l00203"></a>00203     <span class="stringliteral">"range_spec:"</span>,
+<a name="l00204"></a>00204     <span class="stringliteral">"    table_name '[' [start_row] \"..\" (end_row | ?? ) ']'"</span>,
+<a name="l00205"></a>00205     <span class="stringliteral">""</span>,
+<a name="l00206"></a>00206     <span class="stringliteral">"This command will issue a 'drop range' command to the RangeServer"</span>,
+<a name="l00207"></a>00207     <span class="stringliteral">"for the range specified with range_spec."</span>,
+<a name="l00208"></a>00208     <span class="stringliteral">""</span>,
+<a name="l00209"></a>00209     0
+<a name="l00210"></a>00210   };
+<a name="l00211"></a>00211 
+<a name="l00212"></a><a class="code" href="_hql_help_text_8cc.html#246700f78d8c689705152ceb8e120767">00212</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#246700f78d8c689705152ceb8e120767">help_text_replay_start</a>[] = {
 <a name="l00213"></a>00213     <span class="stringliteral">""</span>,
-<a name="l00214"></a>00214     <span class="stringliteral">"This command will issue a 'replay start' command to the RangeServer."</span>,
-<a name="l00215"></a>00215     <span class="stringliteral">"This has the effect of clearing the replay table/range map, droppin any"</span>,
-<a name="l00216"></a>00216     <span class="stringliteral">"existing replay commit log and creating a new one."</span>
-<a name="l00217"></a>00217     <span class="stringliteral">""</span>,
-<a name="l00218"></a>00218     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00219"></a>00219   };
-<a name="l00220"></a>00220 
-<a name="l00221"></a><a class="code" href="_hql_help_text_8cc.html#1c83db6efd34c724f5ff4b4a32573206">00221</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#1c83db6efd34c724f5ff4b4a32573206">help_text_replay_log</a>[] = {
-<a name="l00222"></a>00222     <span class="stringliteral">""</span>,
-<a name="l00223"></a>00223     <span class="stringliteral">"REPLAY LOG"</span>,
+<a name="l00214"></a>00214     <span class="stringliteral">"REPLAY START"</span>,
+<a name="l00215"></a>00215     <span class="stringliteral">""</span>,
+<a name="l00216"></a>00216     <span class="stringliteral">"This command will issue a 'replay start' command to the RangeServer."</span>,
+<a name="l00217"></a>00217     <span class="stringliteral">"This has the effect of clearing the replay table/range map, droppin any"</span>,
+<a name="l00218"></a>00218     <span class="stringliteral">"existing replay commit log and creating a new one."</span>
+<a name="l00219"></a>00219     <span class="stringliteral">""</span>,
+<a name="l00220"></a>00220     0
+<a name="l00221"></a>00221   };
+<a name="l00222"></a>00222 
+<a name="l00223"></a><a class="code" href="_hql_help_text_8cc.html#1c83db6efd34c724f5ff4b4a32573206">00223</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#1c83db6efd34c724f5ff4b4a32573206">help_text_replay_log</a>[] = {
 <a name="l00224"></a>00224     <span class="stringliteral">""</span>,
-<a name="l00225"></a>00225     <span class="stringliteral">"This command will issue a 'replay log' command to the RangeServer."</span>,
-<a name="l00226"></a>00226     <span class="stringliteral">"[...]"</span>,
-<a name="l00227"></a>00227     <span class="stringliteral">""</span>,
-<a name="l00228"></a>00228     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00229"></a>00229   };
-<a name="l00230"></a>00230 
-<a name="l00231"></a><a class="code" href="_hql_help_text_8cc.html#15c97ca908c737a2c06da6fcf4d39687">00231</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#15c97ca908c737a2c06da6fcf4d39687">help_text_replay_commit</a>[] = {
-<a name="l00232"></a>00232     <span class="stringliteral">""</span>,
-<a name="l00233"></a>00233     <span class="stringliteral">"REPLAY COMMIT"</span>,
+<a name="l00225"></a>00225     <span class="stringliteral">"REPLAY LOG"</span>,
+<a name="l00226"></a>00226     <span class="stringliteral">""</span>,
+<a name="l00227"></a>00227     <span class="stringliteral">"This command will issue a 'replay log' command to the RangeServer."</span>,
+<a name="l00228"></a>00228     <span class="stringliteral">"[...]"</span>,
+<a name="l00229"></a>00229     <span class="stringliteral">""</span>,
+<a name="l00230"></a>00230     0
+<a name="l00231"></a>00231   };
+<a name="l00232"></a>00232 
+<a name="l00233"></a><a class="code" href="_hql_help_text_8cc.html#15c97ca908c737a2c06da6fcf4d39687">00233</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#15c97ca908c737a2c06da6fcf4d39687">help_text_replay_commit</a>[] = {
 <a name="l00234"></a>00234     <span class="stringliteral">""</span>,
-<a name="l00235"></a>00235     <span class="stringliteral">"This command will issue a 'replay commit' command to the RangeServer."</span>,
-<a name="l00236"></a>00236     <span class="stringliteral">"This has the effect of atomically merging the 'replay' range map into the"</span>,
-<a name="l00237"></a>00237     <span class="stringliteral">"'live' range map and linking the replay log into the main log."</span>,
-<a name="l00238"></a>00238     <span class="stringliteral">""</span>,
-<a name="l00239"></a>00239     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00240"></a>00240   };
-<a name="l00241"></a>00241 
-<a name="l00242"></a>00242 
-<a name="l00243"></a><a class="code" href="_hql_help_text_8cc.html#427efc88079b876a18fcac7eaef3b8db">00243</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#427efc88079b876a18fcac7eaef3b8db">help_text_create_table</a>[] = {
-<a name="l00244"></a>00244     <span class="stringliteral">""</span>,
-<a name="l00245"></a>00245     <span class="stringliteral">"CREATE TABLE [table_option ...] name '(' [create_definition, ...] ')'"</span>,
+<a name="l00235"></a>00235     <span class="stringliteral">"REPLAY COMMIT"</span>,
+<a name="l00236"></a>00236     <span class="stringliteral">""</span>,
+<a name="l00237"></a>00237     <span class="stringliteral">"This command will issue a 'replay commit' command to the RangeServer."</span>,
+<a name="l00238"></a>00238     <span class="stringliteral">"This has the effect of atomically merging the 'replay' range map into the"</span>,
+<a name="l00239"></a>00239     <span class="stringliteral">"'live' range map and linking the replay log into the main log."</span>,
+<a name="l00240"></a>00240     <span class="stringliteral">""</span>,
+<a name="l00241"></a>00241     0
+<a name="l00242"></a>00242   };
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244 
+<a name="l00245"></a><a class="code" href="_hql_help_text_8cc.html#427efc88079b876a18fcac7eaef3b8db">00245</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#427efc88079b876a18fcac7eaef3b8db">help_text_create_table</a>[] = {
 <a name="l00246"></a>00246     <span class="stringliteral">""</span>,
-<a name="l00247"></a>00247     <span class="stringliteral">"table_option:"</span>,
-<a name="l00248"></a>00248     <span class="stringliteral">"    COMPRESSOR '=' string_literal"</span>,
+<a name="l00247"></a>00247     <span class="stringliteral">"CREATE TABLE [table_option ...] name '(' [create_definition, ...] ')'"</span>,
+<a name="l00248"></a>00248     <span class="stringliteral">"CREATE TABLE name LIKE example_name"</span>,
 <a name="l00249"></a>00249     <span class="stringliteral">""</span>,
-<a name="l00250"></a>00250     <span class="stringliteral">"create_definition:"</span>,
-<a name="l00251"></a>00251     <span class="stringliteral">"    column_family_name [MAX_VERSIONS '=' value] [TTL '=' duration]"</span>,
-<a name="l00252"></a>00252     <span class="stringliteral">"    | ACCESS GROUP name [access_group_option ...] ['(' [column_family_name, ...] ')']"</span>,
-<a name="l00253"></a>00253     <span class="stringliteral">""</span>,
-<a name="l00254"></a>00254     <span class="stringliteral">"duration:"</span>,
-<a name="l00255"></a>00255     <span class="stringliteral">"    num MONTHS"</span>,
-<a name="l00256"></a>00256     <span class="stringliteral">"    | num WEEKS"</span>,
-<a name="l00257"></a>00257     <span class="stringliteral">"    | num DAYS"</span>,
-<a name="l00258"></a>00258     <span class="stringliteral">"    | num HOURS"</span>,
-<a name="l00259"></a>00259     <span class="stringliteral">"    | num MINUTES"</span>,
-<a name="l00260"></a>00260     <span class="stringliteral">"    | num SECONDS"</span>,
-<a name="l00261"></a>00261     <span class="stringliteral">""</span>,
-<a name="l00262"></a>00262     <span class="stringliteral">"access_group_option:"</span>,
-<a name="l00263"></a>00263     <span class="stringliteral">"    IN_MEMORY"</span>,
-<a name="l00264"></a>00264     <span class="stringliteral">"    | BLOCKSIZE '=' value"</span>,
-<a name="l00265"></a>00265     <span class="stringliteral">"    | COMPRESSOR '=' string_literal"</span>,
-<a name="l00266"></a>00266     <span class="stringliteral">""</span>,
-<a name="l00267"></a>00267     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00268"></a>00268   };
-<a name="l00269"></a>00269 
-<a name="l00270"></a><a class="code" href="_hql_help_text_8cc.html#1529dae45491f01d4cbc334238bf9fce">00270</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#1529dae45491f01d4cbc334238bf9fce">help_text_select</a>[] = {
-<a name="l00271"></a>00271     <span class="stringliteral">""</span>,
-<a name="l00272"></a>00272     <span class="stringliteral">"SELECT ('*' | column_family_name [',' column_family_name]*)"</span>,
-<a name="l00273"></a>00273     <span class="stringliteral">"    FROM table_name"</span>,
-<a name="l00274"></a>00274     <span class="stringliteral">"    [where_clause]"</span>,
-<a name="l00275"></a>00275     <span class="stringliteral">"    [options_spec]"</span>,
-<a name="l00276"></a>00276     <span class="stringliteral">""</span>,
-<a name="l00277"></a>00277     <span class="stringliteral">"where_clause:"</span>,
-<a name="l00278"></a>00278     <span class="stringliteral">"    WHERE where_predicate [AND where_predicate ...] "</span>,
+<a name="l00250"></a>00250     <span class="stringliteral">"table_option:"</span>,
+<a name="l00251"></a>00251     <span class="stringliteral">"    COMPRESSOR '=' string_literal"</span>,
+<a name="l00252"></a>00252     <span class="stringliteral">""</span>,
+<a name="l00253"></a>00253     <span class="stringliteral">"create_definition:"</span>,
+<a name="l00254"></a>00254     <span class="stringliteral">"    column_family_name [MAX_VERSIONS '=' value] [TTL '=' duration]"</span>,
+<a name="l00255"></a>00255     <span class="stringliteral">"    | ACCESS GROUP name [access_group_option ...] ['(' [column_family_name, ...] ')']"</span>,
+<a name="l00256"></a>00256     <span class="stringliteral">""</span>,
+<a name="l00257"></a>00257     <span class="stringliteral">"duration:"</span>,
+<a name="l00258"></a>00258     <span class="stringliteral">"    num MONTHS"</span>,
+<a name="l00259"></a>00259     <span class="stringliteral">"    | num WEEKS"</span>,
+<a name="l00260"></a>00260     <span class="stringliteral">"    | num DAYS"</span>,
+<a name="l00261"></a>00261     <span class="stringliteral">"    | num HOURS"</span>,
+<a name="l00262"></a>00262     <span class="stringliteral">"    | num MINUTES"</span>,
+<a name="l00263"></a>00263     <span class="stringliteral">"    | num SECONDS"</span>,
+<a name="l00264"></a>00264     <span class="stringliteral">""</span>,
+<a name="l00265"></a>00265     <span class="stringliteral">"access_group_option:"</span>,
+<a name="l00266"></a>00266     <span class="stringliteral">"    IN_MEMORY"</span>,
+<a name="l00267"></a>00267     <span class="stringliteral">"    | BLOCKSIZE '=' value"</span>,
+<a name="l00268"></a>00268     <span class="stringliteral">"    | COMPRESSOR '=' string_literal"</span>,
+<a name="l00269"></a>00269     <span class="stringliteral">""</span>,
+<a name="l00270"></a>00270     0
+<a name="l00271"></a>00271   };
+<a name="l00272"></a>00272 
+<a name="l00273"></a><a class="code" href="_hql_help_text_8cc.html#1529dae45491f01d4cbc334238bf9fce">00273</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#1529dae45491f01d4cbc334238bf9fce">help_text_select</a>[] = {
+<a name="l00274"></a>00274     <span class="stringliteral">""</span>,
+<a name="l00275"></a>00275     <span class="stringliteral">"SELECT ('*' | column_family_name [',' column_family_name]*)"</span>,
+<a name="l00276"></a>00276     <span class="stringliteral">"    FROM table_name"</span>,
+<a name="l00277"></a>00277     <span class="stringliteral">"    [where_clause]"</span>,
+<a name="l00278"></a>00278     <span class="stringliteral">"    [options_spec]"</span>,
 <a name="l00279"></a>00279     <span class="stringliteral">""</span>,
-<a name="l00280"></a>00280     <span class="stringliteral">"where_predicate: "</span>,
-<a name="l00281"></a>00281     <span class="stringliteral">"    cell_predicate"</span>,
-<a name="l00282"></a>00282     <span class="stringliteral">"    | row_predicate"</span>,
-<a name="l00283"></a>00283     <span class="stringliteral">"    | timestamp_predicate"</span>,
-<a name="l00284"></a>00284     <span class="stringliteral">""</span>,
-<a name="l00285"></a>00285     <span class="stringliteral">"relop: '=' | '&lt;' | '&lt;=' | '&gt;' | '&gt;=' | '=^'"</span>,
-<a name="l00286"></a>00286     <span class="stringliteral">""</span>,
-<a name="l00287"></a>00287     <span class="stringliteral">"cell_spec: row_key ',' qualified_column"</span>,
-<a name="l00288"></a>00288     <span class="stringliteral">""</span>,
-<a name="l00289"></a>00289     <span class="stringliteral">"cell_predicate: "</span>,
-<a name="l00290"></a>00290     <span class="stringliteral">"    [cell_spec relop] CELL relop cell_spec"</span>,
-<a name="l00291"></a>00291     <span class="stringliteral">"    | '(' [cell_spec relop] CELL relop cell_spec (OR [cell_spec relop] CELL relop cell_spec)* ')'"</span>,
-<a name="l00292"></a>00292     <span class="stringliteral">""</span>,
-<a name="l00293"></a>00293     <span class="stringliteral">"row_predicate: "</span>,
-<a name="l00294"></a>00294     <span class="stringliteral">"    [row_key relop] ROW relop row_key"</span>,
-<a name="l00295"></a>00295     <span class="stringliteral">"    | '(' [row_key relop] ROW relop row_key (OR [row_key relop] ROW relop row_key)* ')'"</span>,
+<a name="l00280"></a>00280     <span class="stringliteral">"where_clause:"</span>,
+<a name="l00281"></a>00281     <span class="stringliteral">"    WHERE where_predicate [AND where_predicate ...] "</span>,
+<a name="l00282"></a>00282     <span class="stringliteral">""</span>,
+<a name="l00283"></a>00283     <span class="stringliteral">"where_predicate: "</span>,
+<a name="l00284"></a>00284     <span class="stringliteral">"    cell_predicate"</span>,
+<a name="l00285"></a>00285     <span class="stringliteral">"    | row_predicate"</span>,
+<a name="l00286"></a>00286     <span class="stringliteral">"    | timestamp_predicate"</span>,
+<a name="l00287"></a>00287     <span class="stringliteral">""</span>,
+<a name="l00288"></a>00288     <span class="stringliteral">"relop: '=' | '&lt;' | '&lt;=' | '&gt;' | '&gt;=' | '=^'"</span>,
+<a name="l00289"></a>00289     <span class="stringliteral">""</span>,
+<a name="l00290"></a>00290     <span class="stringliteral">"cell_spec: row_key ',' qualified_column"</span>,
+<a name="l00291"></a>00291     <span class="stringliteral">""</span>,
+<a name="l00292"></a>00292     <span class="stringliteral">"cell_predicate: "</span>,
+<a name="l00293"></a>00293     <span class="stringliteral">"    [cell_spec relop] CELL relop cell_spec"</span>,
+<a name="l00294"></a>00294     <span class="stringliteral">"    | '(' [cell_spec relop] CELL relop cell_spec"</span>,
+<a name="l00295"></a>00295     <span class="stringliteral">"          (OR [cell_spec relop] CELL relop cell_spec)* ')'"</span>,
 <a name="l00296"></a>00296     <span class="stringliteral">""</span>,
-<a name="l00297"></a>00297     <span class="stringliteral">"timestamp_predicate: "</span>,
-<a name="l00298"></a>00298     <span class="stringliteral">"    [timestamp relop] TIMESTAMP relop timestamp"</span>,
-<a name="l00299"></a>00299     <span class="stringliteral">""</span>,
-<a name="l00300"></a>00300     <span class="stringliteral">"options_spec:"</span>,
-<a name="l00301"></a>00301     <span class="stringliteral">"    (REVS = revision_count"</span>,
-<a name="l00302"></a>00302     <span class="stringliteral">"    | LIMIT = row_count"</span>,
-<a name="l00303"></a>00303     <span class="stringliteral">"    | INTO FILE 'file_name'"</span>,
-<a name="l00304"></a>00304     <span class="stringliteral">"    | DISPLAY_TIMESTAMPS"</span>,
-<a name="l00305"></a>00305     <span class="stringliteral">"    | RETURN_DELETES"</span>,
-<a name="l00306"></a>00306     <span class="stringliteral">"    | KEYS_ONLY)*"</span>,
-<a name="l00307"></a>00307     <span class="stringliteral">""</span>,
-<a name="l00308"></a>00308     <span class="stringliteral">"timestamp:"</span>,
-<a name="l00309"></a>00309     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
-<a name="l00310"></a>00310     <span class="stringliteral">""</span>,
-<a name="l00311"></a>00311     <span class="stringliteral">"NOTES:"</span>,
-<a name="l00312"></a>00312     <span class="stringliteral">"The parser only accepts a single timestamp predicate.  The '=^' operator is the"</span>,
-<a name="l00313"></a>00313     <span class="stringliteral">"\"starts with\" operator.  It will return all rows that have the same prefix as the"</span>,
-<a name="l00314"></a>00314     <span class="stringliteral">"operand."</span>,
+<a name="l00297"></a>00297     <span class="stringliteral">"row_predicate: "</span>,
+<a name="l00298"></a>00298     <span class="stringliteral">"    [row_key relop] ROW relop row_key"</span>,
+<a name="l00299"></a>00299     <span class="stringliteral">"    | '(' [row_key relop] ROW relop row_key"</span>,
+<a name="l00300"></a>00300     <span class="stringliteral">"          (OR [row_key relop] ROW relop row_key)* ')'"</span>,
+<a name="l00301"></a>00301     <span class="stringliteral">""</span>,
+<a name="l00302"></a>00302     <span class="stringliteral">"timestamp_predicate: "</span>,
+<a name="l00303"></a>00303     <span class="stringliteral">"    [timestamp relop] TIMESTAMP relop timestamp"</span>,
+<a name="l00304"></a>00304     <span class="stringliteral">""</span>,
+<a name="l00305"></a>00305     <span class="stringliteral">"options_spec:"</span>,
+<a name="l00306"></a>00306     <span class="stringliteral">"    (REVS = revision_count"</span>,
+<a name="l00307"></a>00307     <span class="stringliteral">"    | LIMIT = row_count"</span>,
+<a name="l00308"></a>00308     <span class="stringliteral">"    | INTO FILE 'file_name'"</span>,
+<a name="l00309"></a>00309     <span class="stringliteral">"    | DISPLAY_TIMESTAMPS"</span>,
+<a name="l00310"></a>00310     <span class="stringliteral">"    | RETURN_DELETES"</span>,
+<a name="l00311"></a>00311     <span class="stringliteral">"    | KEYS_ONLY)*"</span>,
+<a name="l00312"></a>00312     <span class="stringliteral">""</span>,
+<a name="l00313"></a>00313     <span class="stringliteral">"timestamp:"</span>,
+<a name="l00314"></a>00314     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
 <a name="l00315"></a>00315     <span class="stringliteral">""</span>,
-<a name="l00316"></a>00316     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00317"></a>00317   };
-<a name="l00318"></a>00318 
-<a name="l00319"></a><a class="code" href="_hql_help_text_8cc.html#9cf6ab0232f8e5a482ccf5065ae17500">00319</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#9cf6ab0232f8e5a482ccf5065ae17500">help_text_describe_table</a>[] = {
-<a name="l00320"></a>00320     <span class="stringliteral">""</span>,
-<a name="l00321"></a>00321     <span class="stringliteral">"DESCRIBE TABLE name"</span>,
-<a name="l00322"></a>00322     <span class="stringliteral">""</span>,
-<a name="l00323"></a>00323     <span class="stringliteral">"Example:"</span>,
-<a name="l00324"></a>00324     <span class="stringliteral">""</span>,
-<a name="l00325"></a>00325     <span class="stringliteral">"hypertable&gt; describe table Test1;"</span>,
-<a name="l00326"></a>00326     <span class="stringliteral">""</span>,
-<a name="l00327"></a>00327     <span class="stringliteral">"&lt;Schema generation=\"1\"&gt;"</span>,
-<a name="l00328"></a>00328     <span class="stringliteral">"  &lt;AccessGroup name=\"jan\"&gt;"</span>,
-<a name="l00329"></a>00329     <span class="stringliteral">"    &lt;ColumnFamily id=\"4\"&gt;"</span>,
-<a name="l00330"></a>00330     <span class="stringliteral">"      &lt;Name&gt;cherry&lt;/Name&gt;"</span>,
-<a name="l00331"></a>00331     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
-<a name="l00332"></a>00332     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
-<a name="l00333"></a>00333     <span class="stringliteral">"  &lt;AccessGroup name=\"default\"&gt;"</span>,
-<a name="l00334"></a>00334     <span class="stringliteral">"    &lt;ColumnFamily id=\"5\"&gt;"</span>,
-<a name="l00335"></a>00335     <span class="stringliteral">"      &lt;Name&gt;banana&lt;/Name&gt;"</span>,
-<a name="l00336"></a>00336     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
-<a name="l00337"></a>00337     <span class="stringliteral">"    &lt;ColumnFamily id=\"6\"&gt;"</span>,
-<a name="l00338"></a>00338     <span class="stringliteral">"      &lt;Name&gt;apple&lt;/Name&gt;"</span>,
-<a name="l00339"></a>00339     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
-<a name="l00340"></a>00340     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
-<a name="l00341"></a>00341     <span class="stringliteral">"  &lt;AccessGroup name=\"marsha\"&gt;"</span>,
-<a name="l00342"></a>00342     <span class="stringliteral">"    &lt;ColumnFamily id=\"7\"&gt;"</span>,
-<a name="l00343"></a>00343     <span class="stringliteral">"      &lt;Name&gt;onion&lt;/Name&gt;"</span>,
-<a name="l00344"></a>00344     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
-<a name="l00345"></a>00345     <span class="stringliteral">"    &lt;ColumnFamily id=\"8\"&gt;"</span>,
-<a name="l00346"></a>00346     <span class="stringliteral">"      &lt;Name&gt;cassis&lt;/Name&gt;"</span>,
-<a name="l00347"></a>00347     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
-<a name="l00348"></a>00348     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
-<a name="l00349"></a>00349     <span class="stringliteral">"&lt;/Schema&gt;"</span>,
-<a name="l00350"></a>00350     <span class="stringliteral">""</span>,
-<a name="l00351"></a>00351     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00352"></a>00352   };
-<a name="l00353"></a>00353 
-<a name="l00354"></a><a class="code" href="_hql_help_text_8cc.html#6172a435af4ec89f3a95e101723d1d71">00354</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#6172a435af4ec89f3a95e101723d1d71">help_text_show_create_table</a>[] = {
-<a name="l00355"></a>00355   <span class="stringliteral">""</span>,
-<a name="l00356"></a>00356     <span class="stringliteral">"SHOW CREATE TABLE name"</span>,
-<a name="l00357"></a>00357     <span class="stringliteral">""</span>,
-<a name="l00358"></a>00358     <span class="stringliteral">"Example:"</span>,
-<a name="l00359"></a>00359     <span class="stringliteral">""</span>,
-<a name="l00360"></a>00360     <span class="stringliteral">"hypertable&gt; show create table Test1;"</span>,
-<a name="l00361"></a>00361     <span class="stringliteral">""</span>,
-<a name="l00362"></a>00362     <span class="stringliteral">"CREATE TABLE Test1 ("</span>,
-<a name="l00363"></a>00363     <span class="stringliteral">"  banana,"</span>,
-<a name="l00364"></a>00364     <span class="stringliteral">"  apple,"</span>,
-<a name="l00365"></a>00365     <span class="stringliteral">"  cherry,"</span>,
-<a name="l00366"></a>00366     <span class="stringliteral">"  onion,"</span>,
-<a name="l00367"></a>00367     <span class="stringliteral">"  cassis,"</span>,
-<a name="l00368"></a>00368     <span class="stringliteral">"  ACCESS GROUP jan (cherry),"</span>,
-<a name="l00369"></a>00369     <span class="stringliteral">"  ACCESS GROUP default (banana apple),"</span>,
-<a name="l00370"></a>00370     <span class="stringliteral">"  ACCESS GROUP marsha (onion cassis)"</span>,
-<a name="l00371"></a>00371     <span class="stringliteral">")"</span>,
+<a name="l00316"></a>00316     <span class="stringliteral">"The parser only accepts a single timestamp predicate.  The '=^' operator is the"</span>,
+<a name="l00317"></a>00317     <span class="stringliteral">"\"starts with\" operator.  It will return all rows that have the same prefix as the"</span>,
+<a name="l00318"></a>00318     <span class="stringliteral">"operand."</span>,
+<a name="l00319"></a>00319     <span class="stringliteral">""</span>,
+<a name="l00320"></a>00320     <span class="stringliteral">"EXAMPLES:"</span>,
+<a name="l00321"></a>00321     <span class="stringliteral">""</span>,
+<a name="l00322"></a>00322     <span class="stringliteral">"SELECT * FROM test WHERE ('a' &lt;= ROW &lt;= 'e') and '2008-07-28 00:00:02' &lt; TIMESTAMP &lt; '2008-07-28 00:00:07';"</span>,
+<a name="l00323"></a>00323     <span class="stringliteral">"SELECT * FROM test WHERE ROW =^ 'b';"</span>,
+<a name="l00324"></a>00324     <span class="stringliteral">"SELECT * FROM test WHERE (ROW = 'a' or ROW = 'c' or ROW = 'g');"</span>,
+<a name="l00325"></a>00325     <span class="stringliteral">"SELECT * FROM test WHERE ('a' &lt; ROW &lt;= 'c' or ROW = 'g' or ROW = 'c');"</span>,
+<a name="l00326"></a>00326     <span class="stringliteral">"SELECT * FROM test WHERE (ROW &lt; 'c' or ROW &gt; 'd');"</span>,
+<a name="l00327"></a>00327     <span class="stringliteral">"SELECT * FROM test WHERE (ROW &lt; 'b' or ROW =^ 'b');"</span>,
+<a name="l00328"></a>00328     <span class="stringliteral">"SELECT * FROM test WHERE \"farm\",\"tag:abaca\" &lt; CELL &lt;= \"had\",\"tag:abacinate\";"</span>,
+<a name="l00329"></a>00329     <span class="stringliteral">"SELECT * FROM test WHERE \"farm\",\"tag:abaca\" &lt;= CELL &lt;= \"had\",\"tag:abacinate\";"</span>,
+<a name="l00330"></a>00330     <span class="stringliteral">"SELECT * FROM test WHERE CELL = \"foo\",\"tag:adactylism\";"</span>,
+<a name="l00331"></a>00331     <span class="stringliteral">"SELECT * FROM test WHERE CELL =^ \"foo\",\"tag:ac\";"</span>,
+<a name="l00332"></a>00332     <span class="stringliteral">"SELECT * FROM test WHERE CELL =^ \"foo\",\"tag:a\";"</span>,
+<a name="l00333"></a>00333     <span class="stringliteral">"SELECT * FROM test WHERE CELL &gt; \"old\",\"tag:abacate\";"</span>,
+<a name="l00334"></a>00334     <span class="stringliteral">"SELECT * FROM test WHERE CELL &gt;= \"old\",\"tag:abacate\";"</span>,
+<a name="l00335"></a>00335     <span class="stringliteral">"SELECT * FROM test WHERE \"old\",\"tag:foo\" &lt; CELL &gt;= \"old\",\"tag:abacate\";"</span>,
+<a name="l00336"></a>00336     <span class="stringliteral">"SELECT * FROM test WHERE ( CELL = \"maui\",\"tag:abaisance\" OR CELL = \"foo\",\"tag:adage\" OR CELL = \"cow\",\"tag:Ab\" OR CELL =^ \"foo\",\"tag:acya\");"</span>,
+<a name="l00337"></a>00337     <span class="stringliteral">""</span>,
+<a name="l00338"></a>00338     0
+<a name="l00339"></a>00339   };
+<a name="l00340"></a>00340 
+<a name="l00341"></a><a class="code" href="_hql_help_text_8cc.html#9cf6ab0232f8e5a482ccf5065ae17500">00341</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#9cf6ab0232f8e5a482ccf5065ae17500">help_text_describe_table</a>[] = {
+<a name="l00342"></a>00342     <span class="stringliteral">""</span>,
+<a name="l00343"></a>00343     <span class="stringliteral">"DESCRIBE TABLE name"</span>,
+<a name="l00344"></a>00344     <span class="stringliteral">""</span>,
+<a name="l00345"></a>00345     <span class="stringliteral">"Example:"</span>,
+<a name="l00346"></a>00346     <span class="stringliteral">""</span>,
+<a name="l00347"></a>00347     <span class="stringliteral">"hypertable&gt; describe table Test1;"</span>,
+<a name="l00348"></a>00348     <span class="stringliteral">""</span>,
+<a name="l00349"></a>00349     <span class="stringliteral">"&lt;Schema generation=\"1\"&gt;"</span>,
+<a name="l00350"></a>00350     <span class="stringliteral">"  &lt;AccessGroup name=\"jan\"&gt;"</span>,
+<a name="l00351"></a>00351     <span class="stringliteral">"    &lt;ColumnFamily id=\"4\"&gt;"</span>,
+<a name="l00352"></a>00352     <span class="stringliteral">"      &lt;Name&gt;cherry&lt;/Name&gt;"</span>,
+<a name="l00353"></a>00353     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
+<a name="l00354"></a>00354     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
+<a name="l00355"></a>00355     <span class="stringliteral">"  &lt;AccessGroup name=\"default\"&gt;"</span>,
+<a name="l00356"></a>00356     <span class="stringliteral">"    &lt;ColumnFamily id=\"5\"&gt;"</span>,
+<a name="l00357"></a>00357     <span class="stringliteral">"      &lt;Name&gt;banana&lt;/Name&gt;"</span>,
+<a name="l00358"></a>00358     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
+<a name="l00359"></a>00359     <span class="stringliteral">"    &lt;ColumnFamily id=\"6\"&gt;"</span>,
+<a name="l00360"></a>00360     <span class="stringliteral">"      &lt;Name&gt;apple&lt;/Name&gt;"</span>,
+<a name="l00361"></a>00361     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
+<a name="l00362"></a>00362     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
+<a name="l00363"></a>00363     <span class="stringliteral">"  &lt;AccessGroup name=\"marsha\"&gt;"</span>,
+<a name="l00364"></a>00364     <span class="stringliteral">"    &lt;ColumnFamily id=\"7\"&gt;"</span>,
+<a name="l00365"></a>00365     <span class="stringliteral">"      &lt;Name&gt;onion&lt;/Name&gt;"</span>,
+<a name="l00366"></a>00366     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
+<a name="l00367"></a>00367     <span class="stringliteral">"    &lt;ColumnFamily id=\"8\"&gt;"</span>,
+<a name="l00368"></a>00368     <span class="stringliteral">"      &lt;Name&gt;cassis&lt;/Name&gt;"</span>,
+<a name="l00369"></a>00369     <span class="stringliteral">"    &lt;/ColumnFamily&gt;"</span>,
+<a name="l00370"></a>00370     <span class="stringliteral">"  &lt;/AccessGroup&gt;"</span>,
+<a name="l00371"></a>00371     <span class="stringliteral">"&lt;/Schema&gt;"</span>,
 <a name="l00372"></a>00372     <span class="stringliteral">""</span>,
-<a name="l00373"></a>00373     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
+<a name="l00373"></a>00373     0
 <a name="l00374"></a>00374   };
 <a name="l00375"></a>00375 
-<a name="l00376"></a><a class="code" href="_hql_help_text_8cc.html#7ea79f6634c5d1ab91767d6cf03374c6">00376</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7ea79f6634c5d1ab91767d6cf03374c6">help_text_load_data_infile</a>[] = {
-<a name="l00377"></a>00377     <span class="stringliteral">""</span>,
-<a name="l00378"></a>00378     <span class="stringliteral">"LOAD DATA INFILE [options] fname INTO TABLE name"</span>,
+<a name="l00376"></a><a class="code" href="_hql_help_text_8cc.html#6172a435af4ec89f3a95e101723d1d71">00376</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#6172a435af4ec89f3a95e101723d1d71">help_text_show_create_table</a>[] = {
+<a name="l00377"></a>00377   <span class="stringliteral">""</span>,
+<a name="l00378"></a>00378     <span class="stringliteral">"SHOW CREATE TABLE name"</span>,
 <a name="l00379"></a>00379     <span class="stringliteral">""</span>,
-<a name="l00380"></a>00380     <span class="stringliteral">"LOAD DATA INFILE [options] fname INTO FILE fname"</span>,
+<a name="l00380"></a>00380     <span class="stringliteral">"Example:"</span>,
 <a name="l00381"></a>00381     <span class="stringliteral">""</span>,
-<a name="l00382"></a>00382     <span class="stringliteral">"options:"</span>,
+<a name="l00382"></a>00382     <span class="stringliteral">"hypertable&gt; show create table Test1;"</span>,
 <a name="l00383"></a>00383     <span class="stringliteral">""</span>,
-<a name="l00384"></a>00384     <span class="stringliteral">"  (ROW_KEY_COLUMN '=' name ['+' name ...] |"</span>,
-<a name="l00385"></a>00385     <span class="stringliteral">"    TIMESTAMP_COLUMN '=' name |"</span>,
-<a name="l00386"></a>00386     <span class="stringliteral">"    HEADER_FILE '=' '\"' filename '\"' |"</span>,
-<a name="l00387"></a>00387     <span class="stringliteral">"    ROW_UNIQIFY_CHARS '=' n)* |"</span>,
-<a name="l00388"></a>00388     <span class="stringliteral">""</span>,
-<a name="l00389"></a>00389     <span class="stringliteral">"The following is an example of the timestamp format that is"</span>,
-<a name="l00390"></a>00390     <span class="stringliteral">"expected in the timestamp column:"</span>,
-<a name="l00391"></a>00391     <span class="stringliteral">""</span>,
-<a name="l00392"></a>00392     <span class="stringliteral">"  2008-01-09 09:46:51"</span>,
-<a name="l00393"></a>00393     <span class="stringliteral">""</span>,
-<a name="l00394"></a>00394     <span class="stringliteral">"Example:"</span>,
-<a name="l00395"></a>00395     <span class="stringliteral">""</span>,
-<a name="l00396"></a>00396     <span class="stringliteral">"hypertable&gt; load data infile row_key_column=AnonID \"all-no-timestamps.tsv\" into table 'query-log';"</span>,
-<a name="l00397"></a>00397     <span class="stringliteral">""</span>,
-<a name="l00398"></a>00398     <span class="stringliteral">"Loading   1,551,351,425 bytes of input data..."</span>,
+<a name="l00384"></a>00384     <span class="stringliteral">"CREATE TABLE Test1 ("</span>,
+<a name="l00385"></a>00385     <span class="stringliteral">"  banana,"</span>,
+<a name="l00386"></a>00386     <span class="stringliteral">"  apple,"</span>,
+<a name="l00387"></a>00387     <span class="stringliteral">"  cherry,"</span>,
+<a name="l00388"></a>00388     <span class="stringliteral">"  onion,"</span>,
+<a name="l00389"></a>00389     <span class="stringliteral">"  cassis,"</span>,
+<a name="l00390"></a>00390     <span class="stringliteral">"  ACCESS GROUP jan (cherry),"</span>,
+<a name="l00391"></a>00391     <span class="stringliteral">"  ACCESS GROUP default (banana apple),"</span>,
+<a name="l00392"></a>00392     <span class="stringliteral">"  ACCESS GROUP marsha (onion cassis)"</span>,
+<a name="l00393"></a>00393     <span class="stringliteral">")"</span>,
+<a name="l00394"></a>00394     <span class="stringliteral">""</span>,
+<a name="l00395"></a>00395     0
+<a name="l00396"></a>00396   };
+<a name="l00397"></a>00397 
+<a name="l00398"></a><a class="code" href="_hql_help_text_8cc.html#7ea79f6634c5d1ab91767d6cf03374c6">00398</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7ea79f6634c5d1ab91767d6cf03374c6">help_text_load_data_infile</a>[] = {
 <a name="l00399"></a>00399     <span class="stringliteral">""</span>,
-<a name="l00400"></a>00400     <span class="stringliteral">"0%   10   20   30   40   50   60   70   80   90   100%"</span>,
-<a name="l00401"></a>00401     <span class="stringliteral">"|----|----|----|----|----|----|----|----|----|----|"</span>,
-<a name="l00402"></a>00402     <span class="stringliteral">"***************************************************"</span>,
-<a name="l00403"></a>00403     <span class="stringliteral">"Load complete."</span>,
-<a name="l00404"></a>00404     <span class="stringliteral">""</span>,
-<a name="l00405"></a>00405     <span class="stringliteral">"  Elapsed time:  247.19 s"</span>,
-<a name="l00406"></a>00406     <span class="stringliteral">"Avg value size:  15.23 bytes"</span>,
-<a name="l00407"></a>00407     <span class="stringliteral">"  Avg key size:  7.09 bytes"</span>,
-<a name="l00408"></a>00408     <span class="stringliteral">"    Throughput:  6276028.06 bytes/s"</span>,
-<a name="l00409"></a>00409     <span class="stringliteral">" Total inserts:  75274825"</span>,
-<a name="l00410"></a>00410     <span class="stringliteral">"    Throughput:  304526.05 inserts/s"</span>,
-<a name="l00411"></a>00411     <span class="stringliteral">"       Resends:  269130"</span>,
-<a name="l00412"></a>00412     <span class="stringliteral">""</span>,
-<a name="l00413"></a>00413     <span class="stringliteral">"The second form (INTO FILE) is really for testing purposes.  It allows"</span>,
-<a name="l00414"></a>00414     <span class="stringliteral">"you to convert your .tsv file into a load file that contains one"</span>,
-<a name="l00415"></a>00415     <span class="stringliteral">"insert per line which can be helpful for debugging."</span>,
-<a name="l00416"></a>00416     <span class="stringliteral">""</span>,
-<a name="l00417"></a>00417     <span class="stringliteral">"The first line in the file 'fname' should contain a tab separated list"</span>,
-<a name="l00418"></a>00418     <span class="stringliteral">"of column names which indicates what is contained in the fields of each"</span>,
-<a name="l00419"></a>00419     <span class="stringliteral">"line of data.  This header line can optionally start with a comment '#'"</span>,
-<a name="l00420"></a>00420     <span class="stringliteral">"character and can also be supplied in a separate file with the HEADER_FILE"</span>,
-<a name="l00421"></a>00421     <span class="stringliteral">"option."</span>,
-<a name="l00422"></a>00422     <span class="stringliteral">""</span>,
-<a name="l00423"></a>00423     <span class="stringliteral">"The ROW_UNIQIFY_CHARS option provides a way to append a random string of"</span>,
-<a name="l00424"></a>00424     <span class="stringliteral">"characters to the end of the row keys to ensure that they are unique."</span>,
-<a name="l00425"></a>00425     <span class="stringliteral">"The maximum number of characters you can specify is 21 and each character"</span>,
-<a name="l00426"></a>00426     <span class="stringliteral">"represents 6 random bits."</span>,
-<a name="l00427"></a>00427     <span class="stringliteral">""</span>,
-<a name="l00428"></a>00428     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00429"></a>00429   };
-<a name="l00430"></a>00430 
-<a name="l00431"></a><a class="code" href="_hql_help_text_8cc.html#7283ff798517c68ab2c1b06a806f0c18">00431</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7283ff798517c68ab2c1b06a806f0c18">help_text_insert</a>[] = {
-<a name="l00432"></a>00432     <span class="stringliteral">""</span>,
-<a name="l00433"></a>00433     <span class="stringliteral">"INSERT INTO table_name VALUES value_list"</span>,
+<a name="l00400"></a>00400     <span class="stringliteral">"LOAD DATA INFILE [options] fname INTO TABLE name"</span>,
+<a name="l00401"></a>00401     <span class="stringliteral">""</span>,
+<a name="l00402"></a>00402     <span class="stringliteral">"LOAD DATA INFILE [options] fname INTO FILE fname"</span>,
+<a name="l00403"></a>00403     <span class="stringliteral">""</span>,
+<a name="l00404"></a>00404     <span class="stringliteral">"options:"</span>,
+<a name="l00405"></a>00405     <span class="stringliteral">""</span>,
+<a name="l00406"></a>00406     <span class="stringliteral">"  (ROW_KEY_COLUMN '=' name ['+' name ...] |"</span>,
+<a name="l00407"></a>00407     <span class="stringliteral">"    TIMESTAMP_COLUMN '=' name |"</span>,
+<a name="l00408"></a>00408     <span class="stringliteral">"    HEADER_FILE '=' '\"' filename '\"' |"</span>,
+<a name="l00409"></a>00409     <span class="stringliteral">"    ROW_UNIQIFY_CHARS '=' n)* |"</span>,
+<a name="l00410"></a>00410     <span class="stringliteral">""</span>,
+<a name="l00411"></a>00411     <span class="stringliteral">"The following is an example of the timestamp format that is"</span>,
+<a name="l00412"></a>00412     <span class="stringliteral">"expected in the timestamp column:"</span>,
+<a name="l00413"></a>00413     <span class="stringliteral">""</span>,
+<a name="l00414"></a>00414     <span class="stringliteral">"  2008-01-09 09:46:51"</span>,
+<a name="l00415"></a>00415     <span class="stringliteral">""</span>,
+<a name="l00416"></a>00416     <span class="stringliteral">"Example:"</span>,
+<a name="l00417"></a>00417     <span class="stringliteral">""</span>,
+<a name="l00418"></a>00418     <span class="stringliteral">"hypertable&gt; load data infile row_key_column=AnonID \"all-no-timestamps.tsv\" into table 'query-log';"</span>,
+<a name="l00419"></a>00419     <span class="stringliteral">""</span>,
+<a name="l00420"></a>00420     <span class="stringliteral">"Loading   1,551,351,425 bytes of input data..."</span>,
+<a name="l00421"></a>00421     <span class="stringliteral">""</span>,
+<a name="l00422"></a>00422     <span class="stringliteral">"0%   10   20   30   40   50   60   70   80   90   100%"</span>,
+<a name="l00423"></a>00423     <span class="stringliteral">"|----|----|----|----|----|----|----|----|----|----|"</span>,
+<a name="l00424"></a>00424     <span class="stringliteral">"***************************************************"</span>,
+<a name="l00425"></a>00425     <span class="stringliteral">"Load complete."</span>,
+<a name="l00426"></a>00426     <span class="stringliteral">""</span>,
+<a name="l00427"></a>00427     <span class="stringliteral">"  Elapsed time:  247.19 s"</span>,
+<a name="l00428"></a>00428     <span class="stringliteral">"Avg value size:  15.23 bytes"</span>,
+<a name="l00429"></a>00429     <span class="stringliteral">"  Avg key size:  7.09 bytes"</span>,
+<a name="l00430"></a>00430     <span class="stringliteral">"    Throughput:  6276028.06 bytes/s"</span>,
+<a name="l00431"></a>00431     <span class="stringliteral">" Total inserts:  75274825"</span>,
+<a name="l00432"></a>00432     <span class="stringliteral">"    Throughput:  304526.05 inserts/s"</span>,
+<a name="l00433"></a>00433     <span class="stringliteral">"       Resends:  269130"</span>,
 <a name="l00434"></a>00434     <span class="stringliteral">""</span>,
-<a name="l00435"></a>00435     <span class="stringliteral">"value_list:"</span>,
-<a name="l00436"></a>00436     <span class="stringliteral">"    value_spec [',' value_spec ...]"</span>,
-<a name="l00437"></a>00437     <span class="stringliteral">""</span>,
-<a name="l00438"></a>00438     <span class="stringliteral">"value_spec:"</span>,
-<a name="l00439"></a>00439     <span class="stringliteral">"    '(' row_key ',' column_key ',' value ')'"</span>,
-<a name="l00440"></a>00440     <span class="stringliteral">"    '(' timestamp ',' row_key ',' column_key ',' value ')'"</span>,
-<a name="l00441"></a>00441     <span class="stringliteral">""</span>,
-<a name="l00442"></a>00442     <span class="stringliteral">"timestamp:"</span>,
-<a name="l00443"></a>00443     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
+<a name="l00435"></a>00435     <span class="stringliteral">"The second form (INTO FILE) is really for testing purposes.  It allows"</span>,
+<a name="l00436"></a>00436     <span class="stringliteral">"you to convert your .tsv file into a load file that contains one"</span>,
+<a name="l00437"></a>00437     <span class="stringliteral">"insert per line which can be helpful for debugging."</span>,
+<a name="l00438"></a>00438     <span class="stringliteral">""</span>,
+<a name="l00439"></a>00439     <span class="stringliteral">"The first line in the file 'fname' should contain a tab separated list"</span>,
+<a name="l00440"></a>00440     <span class="stringliteral">"of column names which indicates what is contained in the fields of each"</span>,
+<a name="l00441"></a>00441     <span class="stringliteral">"line of data.  This header line can optionally start with a comment '#'"</span>,
+<a name="l00442"></a>00442     <span class="stringliteral">"character and can also be supplied in a separate file with the HEADER_FILE"</span>,
+<a name="l00443"></a>00443     <span class="stringliteral">"option."</span>,
 <a name="l00444"></a>00444     <span class="stringliteral">""</span>,
-<a name="l00445"></a>00445     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00446"></a>00446   };
-<a name="l00447"></a>00447 
-<a name="l00448"></a><a class="code" href="_hql_help_text_8cc.html#d3ab496bb7e72968c5d6ef66cd48d1f1">00448</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#d3ab496bb7e72968c5d6ef66cd48d1f1">help_text_delete</a>[] = {
+<a name="l00445"></a>00445     <span class="stringliteral">"The ROW_UNIQIFY_CHARS option provides a way to append a random string of"</span>,
+<a name="l00446"></a>00446     <span class="stringliteral">"characters to the end of the row keys to ensure that they are unique."</span>,
+<a name="l00447"></a>00447     <span class="stringliteral">"The maximum number of characters you can specify is 21 and each character"</span>,
+<a name="l00448"></a>00448     <span class="stringliteral">"represents 6 random bits."</span>,
 <a name="l00449"></a>00449     <span class="stringliteral">""</span>,
-<a name="l00450"></a>00450     <span class="stringliteral">"DELETE Syntax"</span>,
-<a name="l00451"></a>00451     <span class="stringliteral">""</span>,
-<a name="l00452"></a>00452     <span class="stringliteral">"  DELETE ('*' | column_key [',' column_key ...])"</span>,
-<a name="l00453"></a>00453     <span class="stringliteral">"    FROM table_name"</span>,
-<a name="l00454"></a>00454     <span class="stringliteral">"    WHERE ROW '=' row_key"</span>,
-<a name="l00455"></a>00455     <span class="stringliteral">"    [TIMESTAMP timestamp]"</span>,
+<a name="l00450"></a>00450     0
+<a name="l00451"></a>00451   };
+<a name="l00452"></a>00452 
+<a name="l00453"></a><a class="code" href="_hql_help_text_8cc.html#7283ff798517c68ab2c1b06a806f0c18">00453</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#7283ff798517c68ab2c1b06a806f0c18">help_text_insert</a>[] = {
+<a name="l00454"></a>00454     <span class="stringliteral">""</span>,
+<a name="l00455"></a>00455     <span class="stringliteral">"INSERT INTO table_name VALUES value_list"</span>,
 <a name="l00456"></a>00456     <span class="stringliteral">""</span>,
-<a name="l00457"></a>00457     <span class="stringliteral">"  column_key:"</span>,
-<a name="l00458"></a>00458     <span class="stringliteral">"    column_family [':' column_qualifier]"</span>,
+<a name="l00457"></a>00457     <span class="stringliteral">"value_list:"</span>,
+<a name="l00458"></a>00458     <span class="stringliteral">"    value_spec [',' value_spec ...]"</span>,
 <a name="l00459"></a>00459     <span class="stringliteral">""</span>,
-<a name="l00460"></a>00460     <span class="stringliteral">"  timestamp:"</span>,
-<a name="l00461"></a>00461     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
-<a name="l00462"></a>00462     <span class="stringliteral">""</span>,
-<a name="l00463"></a>00463     <span class="stringliteral">"The DELETE command provides a way to delete cells from a row in a table."</span>,
-<a name="l00464"></a>00464     <span class="stringliteral">"The command applies to a single row only and can be used to delete, for"</span>,
-<a name="l00465"></a>00465     <span class="stringliteral">"a given row, all of the cells in a qualified column, all the cells in a"</span>,
-<a name="l00466"></a>00466     <span class="stringliteral">"column family, or all of the cells in the row.  An example of each"</span>,
-<a name="l00467"></a>00467     <span class="stringliteral">"type of delete is shown below.  Assume that we're starting with a table"</span>,
-<a name="l00468"></a>00468     <span class="stringliteral">"that contains the following:"</span>,
-<a name="l00469"></a>00469     <span class="stringliteral">""</span>,
-<a name="l00470"></a>00470     <span class="stringliteral">"hypertable&gt; SELECT * FROM CrawlDb;"</span>,
-<a name="l00471"></a>00471     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
-<a name="l00472"></a>00472     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
-<a name="l00473"></a>00473     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00474"></a>00474     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00475"></a>00475     <span class="stringliteral">"2008-01-28 11:42:27.550602001   org.hypertable.www      anchor:http://www.opensource.org/       Hypertable.org"</span>,
-<a name="l00476"></a>00476     <span class="stringliteral">"2008-01-28 11:42:27.534581001   org.hypertable.www      anchor:http://www.opensource.org/       Hypertable.org"</span>,
-<a name="l00477"></a>00477     <span class="stringliteral">"2008-01-28 11:42:27.550602003   org.hypertable.www      checksum        822828699"</span>,
-<a name="l00478"></a>00478     <span class="stringliteral">"2008-01-28 11:42:27.534581003   org.hypertable.www      checksum        2921728"</span>,
-<a name="l00479"></a>00479     <span class="stringliteral">""</span>,
-<a name="l00480"></a>00480     <span class="stringliteral">"The first example shows how to delete the cells in the column"</span>,
-<a name="l00481"></a>00481     <span class="stringliteral">"'anchor:http://www.opensource.org/' of the row 'org.hypertable.www'."</span>,
-<a name="l00482"></a>00482     <span class="stringliteral">""</span>,
-<a name="l00483"></a>00483     <span class="stringliteral">"hypertable&gt; DELETE \"anchor:http://www.opensource.org/\" FROM CrawlDb WHERE ROW = 'org.hypertable.www';"</span>,
+<a name="l00460"></a>00460     <span class="stringliteral">"value_spec:"</span>,
+<a name="l00461"></a>00461     <span class="stringliteral">"    '(' row_key ',' column_key ',' value ')'"</span>,
+<a name="l00462"></a>00462     <span class="stringliteral">"    '(' timestamp ',' row_key ',' column_key ',' value ')'"</span>,
+<a name="l00463"></a>00463     <span class="stringliteral">""</span>,
+<a name="l00464"></a>00464     <span class="stringliteral">"timestamp:"</span>,
+<a name="l00465"></a>00465     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
+<a name="l00466"></a>00466     <span class="stringliteral">""</span>,
+<a name="l00467"></a>00467     0
+<a name="l00468"></a>00468   };
+<a name="l00469"></a>00469 
+<a name="l00470"></a><a class="code" href="_hql_help_text_8cc.html#d3ab496bb7e72968c5d6ef66cd48d1f1">00470</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#d3ab496bb7e72968c5d6ef66cd48d1f1">help_text_delete</a>[] = {
+<a name="l00471"></a>00471     <span class="stringliteral">""</span>,
+<a name="l00472"></a>00472     <span class="stringliteral">"DELETE Syntax"</span>,
+<a name="l00473"></a>00473     <span class="stringliteral">""</span>,
+<a name="l00474"></a>00474     <span class="stringliteral">"  DELETE ('*' | column_key [',' column_key ...])"</span>,
+<a name="l00475"></a>00475     <span class="stringliteral">"    FROM table_name"</span>,
+<a name="l00476"></a>00476     <span class="stringliteral">"    WHERE ROW '=' row_key"</span>,
+<a name="l00477"></a>00477     <span class="stringliteral">"    [TIMESTAMP timestamp]"</span>,
+<a name="l00478"></a>00478     <span class="stringliteral">""</span>,
+<a name="l00479"></a>00479     <span class="stringliteral">"  column_key:"</span>,
+<a name="l00480"></a>00480     <span class="stringliteral">"    column_family [':' column_qualifier]"</span>,
+<a name="l00481"></a>00481     <span class="stringliteral">""</span>,
+<a name="l00482"></a>00482     <span class="stringliteral">"  timestamp:"</span>,
+<a name="l00483"></a>00483     <span class="stringliteral">"    'YYYY-MM-DD HH:MM:SS[.nanoseconds]'"</span>,
 <a name="l00484"></a>00484     <span class="stringliteral">""</span>,
-<a name="l00485"></a>00485     <span class="stringliteral">"hypertable&gt; select * from CrawlDb;"</span>,
-<a name="l00486"></a>00486     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
-<a name="l00487"></a>00487     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
-<a name="l00488"></a>00488     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00489"></a>00489     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00490"></a>00490     <span class="stringliteral">"2008-01-28 11:42:27.550602003   org.hypertable.www      checksum        822828699"</span>,
-<a name="l00491"></a>00491     <span class="stringliteral">"2008-01-28 11:42:27.534581003   org.hypertable.www      checksum        2921728"</span>,
-<a name="l00492"></a>00492     <span class="stringliteral">""</span>,
-<a name="l00493"></a>00493     <span class="stringliteral">"The next example shows how to delete all of the cells in the column"</span>,
-<a name="l00494"></a>00494     <span class="stringliteral">"family 'checksum' of the row 'org.hypertable.www'."</span>,
-<a name="l00495"></a>00495     <span class="stringliteral">""</span>,
-<a name="l00496"></a>00496     <span class="stringliteral">"hypertable&gt; DELETE checksum FROM CrawlDb WHERE ROW = \"org.hypertable.www\";"</span>,
-<a name="l00497"></a>00497     <span class="stringliteral">""</span>,
-<a name="l00498"></a>00498     <span class="stringliteral">"hypertable&gt; select * from CrawlDb;"</span>,
-<a name="l00499"></a>00499     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
-<a name="l00500"></a>00500     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
-<a name="l00501"></a>00501     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00502"></a>00502     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
-<a name="l00503"></a>00503     <span class="stringliteral">""</span>,
-<a name="l00504"></a>00504     <span class="stringliteral">"And finaly, here's how to delete all of the cells in the row 'org.hypertable.www'."</span>,
-<a name="l00505"></a>00505     <span class="stringliteral">""</span>,
-<a name="l00506"></a>00506     <span class="stringliteral">"hypertable&gt; DELETE * FROM CrawlDb WHERE ROW = \"org.hypertable.www\";"</span>,
-<a name="l00507"></a>00507     <span class="stringliteral">""</span>,
-<a name="l00508"></a>00508     <span class="stringliteral">"hypertable&gt; SELECT * FROM CrawlDb;"</span>,
-<a name="l00509"></a>00509     <span class="stringliteral">""</span>,
-<a name="l00510"></a>00510     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00511"></a>00511   };
-<a name="l00512"></a>00512 
-<a name="l00513"></a><a class="code" href="_hql_help_text_8cc.html#614bb498d6278e98d799d9cc35bb7433">00513</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#614bb498d6278e98d799d9cc35bb7433">help_text_show_tables</a>[] = {
+<a name="l00485"></a>00485     <span class="stringliteral">"The DELETE command provides a way to delete cells from a row in a table."</span>,
+<a name="l00486"></a>00486     <span class="stringliteral">"The command applies to a single row only and can be used to delete, for"</span>,
+<a name="l00487"></a>00487     <span class="stringliteral">"a given row, all of the cells in a qualified column, all the cells in a"</span>,
+<a name="l00488"></a>00488     <span class="stringliteral">"column family, or all of the cells in the row.  An example of each"</span>,
+<a name="l00489"></a>00489     <span class="stringliteral">"type of delete is shown below.  Assume that we're starting with a table"</span>,
+<a name="l00490"></a>00490     <span class="stringliteral">"that contains the following:"</span>,
+<a name="l00491"></a>00491     <span class="stringliteral">""</span>,
+<a name="l00492"></a>00492     <span class="stringliteral">"hypertable&gt; SELECT * FROM CrawlDb;"</span>,
+<a name="l00493"></a>00493     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
+<a name="l00494"></a>00494     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
+<a name="l00495"></a>00495     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00496"></a>00496     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00497"></a>00497     <span class="stringliteral">"2008-01-28 11:42:27.550602001   org.hypertable.www      anchor:http://www.opensource.org/       Hypertable.org"</span>,
+<a name="l00498"></a>00498     <span class="stringliteral">"2008-01-28 11:42:27.534581001   org.hypertable.www      anchor:http://www.opensource.org/       Hypertable.org"</span>,
+<a name="l00499"></a>00499     <span class="stringliteral">"2008-01-28 11:42:27.550602003   org.hypertable.www      checksum        822828699"</span>,
+<a name="l00500"></a>00500     <span class="stringliteral">"2008-01-28 11:42:27.534581003   org.hypertable.www      checksum        2921728"</span>,
+<a name="l00501"></a>00501     <span class="stringliteral">""</span>,
+<a name="l00502"></a>00502     <span class="stringliteral">"The first example shows how to delete the cells in the column"</span>,
+<a name="l00503"></a>00503     <span class="stringliteral">"'anchor:http://www.opensource.org/' of the row 'org.hypertable.www'."</span>,
+<a name="l00504"></a>00504     <span class="stringliteral">""</span>,
+<a name="l00505"></a>00505     <span class="stringliteral">"hypertable&gt; DELETE \"anchor:http://www.opensource.org/\" FROM CrawlDb WHERE ROW = 'org.hypertable.www';"</span>,
+<a name="l00506"></a>00506     <span class="stringliteral">""</span>,
+<a name="l00507"></a>00507     <span class="stringliteral">"hypertable&gt; select * from CrawlDb;"</span>,
+<a name="l00508"></a>00508     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
+<a name="l00509"></a>00509     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
+<a name="l00510"></a>00510     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00511"></a>00511     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00512"></a>00512     <span class="stringliteral">"2008-01-28 11:42:27.550602003   org.hypertable.www      checksum        822828699"</span>,
+<a name="l00513"></a>00513     <span class="stringliteral">"2008-01-28 11:42:27.534581003   org.hypertable.www      checksum        2921728"</span>,
 <a name="l00514"></a>00514     <span class="stringliteral">""</span>,
-<a name="l00515"></a>00515     <span class="stringliteral">"SHOW TABLES"</span>,
-<a name="l00516"></a>00516     <span class="stringliteral">""</span>,
-<a name="l00517"></a>00517     <span class="stringliteral">"Example:"</span>,
-<a name="l00518"></a>00518     <span class="stringliteral">""</span>,
-<a name="l00519"></a>00519     <span class="stringliteral">"hypertable&gt; show tables;"</span>,
-<a name="l00520"></a>00520     <span class="stringliteral">""</span>,
-<a name="l00521"></a>00521     <span class="stringliteral">"CrawlDb"</span>,
-<a name="l00522"></a>00522     <span class="stringliteral">"Query-Log"</span>,
-<a name="l00523"></a>00523     <span class="stringliteral">""</span>,
-<a name="l00524"></a>00524     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00525"></a>00525   };
-<a name="l00526"></a>00526 
-<a name="l00527"></a><a class="code" href="_hql_help_text_8cc.html#71f90b15b21f1bf0718510fc47c316a5">00527</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#71f90b15b21f1bf0718510fc47c316a5">help_text_drop_table</a>[] = {
-<a name="l00528"></a>00528     <span class="stringliteral">""</span>,
-<a name="l00529"></a>00529     <span class="stringliteral">"DROP TABLE [IF EXISTS] name"</span>,
-<a name="l00530"></a>00530     <span class="stringliteral">""</span>,
-<a name="l00531"></a>00531     <span class="stringliteral">"Removes the table 'name' from the system.  If the IF EXIST clause is given,"</span>,
-<a name="l00532"></a>00532     <span class="stringliteral">"then the command will succeed (i.e. won't generate an error) if a table"</span>,
-<a name="l00533"></a>00533     <span class="stringliteral">"by the name of 'name' does not exist."</span>,
-<a name="l00534"></a>00534     <span class="stringliteral">""</span>,
-<a name="l00535"></a>00535     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00536"></a>00536   };
-<a name="l00537"></a>00537 
-<a name="l00538"></a><a class="code" href="_hql_help_text_8cc.html#14ddacb9c1ca1a9bb90fc19f9ef26455">00538</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#14ddacb9c1ca1a9bb90fc19f9ef26455">help_text_shutdown</a>[] = {
-<a name="l00539"></a>00539     <span class="stringliteral">""</span>,
-<a name="l00540"></a>00540     <span class="stringliteral">"SHUTDOWN"</span>,
-<a name="l00541"></a>00541     <span class="stringliteral">""</span>,
-<a name="l00542"></a>00542     <span class="stringliteral">"Issues a shutdown request to the Master which, in turn, issues a shutdown"</span>,
-<a name="l00543"></a>00543     <span class="stringliteral">"request to all RangeServers.  Upon receiving a shutdown request, each"</span>,
-<a name="l00544"></a>00544     <span class="stringliteral">"RangeServer will quiesce, close its commit logs, destroy its Hyperspace"</span>,
-<a name="l00545"></a>00545     <span class="stringliteral">"session and then exit."</span>,
-<a name="l00546"></a>00546     <span class="stringliteral">""</span>,
-<a name="l00547"></a>00547     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00548"></a>00548   };
-<a name="l00549"></a>00549 
-<a name="l00550"></a>00550 
-<a name="l00551"></a><a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">00551</a>   <span class="keyword">typedef</span> hash_map&lt;std::string, const char **&gt;  <a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">HelpTextMap</a>;
-<a name="l00552"></a>00552 
-<a name="l00553"></a><a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">00553</a>   HelpTextMap &amp;<a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">build_help_text_map</a>() {
-<a name="l00554"></a>00554     HelpTextMap *map = <span class="keyword">new</span> <a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">HelpTextMap</a>();
-<a name="l00555"></a>00555     (*map)[<span class="stringliteral">""</span>] = help_text_contents;
-<a name="l00556"></a>00556     (*map)[<span class="stringliteral">"contents"</span>] = help_text_contents;
-<a name="l00557"></a>00557     (*map)[<span class="stringliteral">"create table"</span>] = help_text_create_table;
-<a name="l00558"></a>00558     (*map)[<span class="stringliteral">"delete"</span>] = help_text_delete;
-<a name="l00559"></a>00559     (*map)[<span class="stringliteral">"insert"</span>] = help_text_insert;
-<a name="l00560"></a>00560     (*map)[<span class="stringliteral">"select"</span>] = help_text_select;
-<a name="l00561"></a>00561     (*map)[<span class="stringliteral">"describe table"</span>] = help_text_describe_table;
-<a name="l00562"></a>00562     (*map)[<span class="stringliteral">"describe"</span>] = help_text_describe_table;
-<a name="l00563"></a>00563     (*map)[<span class="stringliteral">"show create table"</span>] = help_text_show_create_table;
-<a name="l00564"></a>00564     (*map)[<span class="stringliteral">"show create"</span>] = help_text_show_create_table;
-<a name="l00565"></a>00565     (*map)[<span class="stringliteral">"load data infile"</span>] = help_text_load_data_infile;
-<a name="l00566"></a>00566     (*map)[<span class="stringliteral">"load data"</span>] = help_text_load_data_infile;
-<a name="l00567"></a>00567     (*map)[<span class="stringliteral">"load"</span>] = help_text_load_data_infile;
-<a name="l00568"></a>00568     (*map)[<span class="stringliteral">"show tables"</span>] = help_text_show_tables;
-<a name="l00569"></a>00569     (*map)[<span class="stringliteral">"drop"</span>] = help_text_drop_table;
-<a name="l00570"></a>00570     (*map)[<span class="stringliteral">"drop table"</span>] = help_text_drop_table;
-<a name="l00571"></a>00571     (*map)[<span class="stringliteral">"shutdown"</span>] = help_text_shutdown;
-<a name="l00572"></a>00572     <span class="keywordflow">return</span> *map;
-<a name="l00573"></a>00573   }
+<a name="l00515"></a>00515     <span class="stringliteral">"The next example shows how to delete all of the cells in the column"</span>,
+<a name="l00516"></a>00516     <span class="stringliteral">"family 'checksum' of the row 'org.hypertable.www'."</span>,
+<a name="l00517"></a>00517     <span class="stringliteral">""</span>,
+<a name="l00518"></a>00518     <span class="stringliteral">"hypertable&gt; DELETE checksum FROM CrawlDb WHERE ROW = \"org.hypertable.www\";"</span>,
+<a name="l00519"></a>00519     <span class="stringliteral">""</span>,
+<a name="l00520"></a>00520     <span class="stringliteral">"hypertable&gt; select * from CrawlDb;"</span>,
+<a name="l00521"></a>00521     <span class="stringliteral">"2008-01-28 11:42:27.550602004   org.hypertable.www      status-code     200"</span>,
+<a name="l00522"></a>00522     <span class="stringliteral">"2008-01-28 11:42:27.534581004   org.hypertable.www      status-code     200"</span>,
+<a name="l00523"></a>00523     <span class="stringliteral">"2008-01-28 11:42:27.550602002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00524"></a>00524     <span class="stringliteral">"2008-01-28 11:42:27.534581002   org.hypertable.www      anchor:http://www.news.com/     Hypertable"</span>,
+<a name="l00525"></a>00525     <span class="stringliteral">""</span>,
+<a name="l00526"></a>00526     <span class="stringliteral">"And finaly, here's how to delete all of the cells in the row 'org.hypertable.www'."</span>,
+<a name="l00527"></a>00527     <span class="stringliteral">""</span>,
+<a name="l00528"></a>00528     <span class="stringliteral">"hypertable&gt; DELETE * FROM CrawlDb WHERE ROW = \"org.hypertable.www\";"</span>,
+<a name="l00529"></a>00529     <span class="stringliteral">""</span>,
+<a name="l00530"></a>00530     <span class="stringliteral">"hypertable&gt; SELECT * FROM CrawlDb;"</span>,
+<a name="l00531"></a>00531     <span class="stringliteral">""</span>,
+<a name="l00532"></a>00532     0
+<a name="l00533"></a>00533   };
+<a name="l00534"></a>00534 
+<a name="l00535"></a><a class="code" href="_hql_help_text_8cc.html#614bb498d6278e98d799d9cc35bb7433">00535</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#614bb498d6278e98d799d9cc35bb7433">help_text_show_tables</a>[] = {
+<a name="l00536"></a>00536     <span class="stringliteral">""</span>,
+<a name="l00537"></a>00537     <span class="stringliteral">"SHOW TABLES"</span>,
+<a name="l00538"></a>00538     <span class="stringliteral">""</span>,
+<a name="l00539"></a>00539     <span class="stringliteral">"Example:"</span>,
+<a name="l00540"></a>00540     <span class="stringliteral">""</span>,
+<a name="l00541"></a>00541     <span class="stringliteral">"hypertable&gt; show tables;"</span>,
+<a name="l00542"></a>00542     <span class="stringliteral">""</span>,
+<a name="l00543"></a>00543     <span class="stringliteral">"CrawlDb"</span>,
+<a name="l00544"></a>00544     <span class="stringliteral">"Query-Log"</span>,
+<a name="l00545"></a>00545     <span class="stringliteral">""</span>,
+<a name="l00546"></a>00546     0
+<a name="l00547"></a>00547   };
+<a name="l00548"></a>00548 
+<a name="l00549"></a><a class="code" href="_hql_help_text_8cc.html#71f90b15b21f1bf0718510fc47c316a5">00549</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#71f90b15b21f1bf0718510fc47c316a5">help_text_drop_table</a>[] = {
+<a name="l00550"></a>00550     <span class="stringliteral">""</span>,
+<a name="l00551"></a>00551     <span class="stringliteral">"DROP TABLE [IF EXISTS] name"</span>,
+<a name="l00552"></a>00552     <span class="stringliteral">""</span>,
+<a name="l00553"></a>00553     <span class="stringliteral">"Removes the table 'name' from the system.  If the IF EXIST clause is given,"</span>,
+<a name="l00554"></a>00554     <span class="stringliteral">"then the command will succeed (i.e. won't generate an error) if a table"</span>,
+<a name="l00555"></a>00555     <span class="stringliteral">"by the name of 'name' does not exist."</span>,
+<a name="l00556"></a>00556     <span class="stringliteral">""</span>,
+<a name="l00557"></a>00557     0
+<a name="l00558"></a>00558   };
+<a name="l00559"></a>00559 
+<a name="l00560"></a><a class="code" href="_hql_help_text_8cc.html#14ddacb9c1ca1a9bb90fc19f9ef26455">00560</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="_hql_help_text_8cc.html#14ddacb9c1ca1a9bb90fc19f9ef26455">help_text_shutdown</a>[] = {
+<a name="l00561"></a>00561     <span class="stringliteral">""</span>,
+<a name="l00562"></a>00562     <span class="stringliteral">"SHUTDOWN"</span>,
+<a name="l00563"></a>00563     <span class="stringliteral">""</span>,
+<a name="l00564"></a>00564     <span class="stringliteral">"Issues a shutdown request to the Master which, in turn, issues a shutdown"</span>,
+<a name="l00565"></a>00565     <span class="stringliteral">"request to all RangeServers.  Upon receiving a shutdown request, each"</span>,
+<a name="l00566"></a>00566     <span class="stringliteral">"RangeServer will quiesce, close its commit logs, destroy its Hyperspace"</span>,
+<a name="l00567"></a>00567     <span class="stringliteral">"session and then exit."</span>,
+<a name="l00568"></a>00568     <span class="stringliteral">""</span>,
+<a name="l00569"></a>00569     0
+<a name="l00570"></a>00570   };
+<a name="l00571"></a>00571 
+<a name="l00572"></a>00572 
+<a name="l00573"></a><a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">00573</a>   <span class="keyword">typedef</span> hash_map&lt;std::string, const char **&gt;  <a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">HelpTextMap</a>;
 <a name="l00574"></a>00574 
-<a name="l00575"></a><a class="code" href="_hql_help_text_8cc.html#17f2979e2d047092a0da403ffa274b23">00575</a>   HelpTextMap &amp;<a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a> = <a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">build_help_text_map</a>();
-<a name="l00576"></a>00576 }
-<a name="l00577"></a>00577 
-<a name="l00578"></a>00578 
-<a name="l00579"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">00579</a> <span class="keyword">const</span> <span class="keywordtype">char</span> **HqlHelpText::Get(<span class="keyword">const</span> <span class="keywordtype">char</span> *subject) {
-<a name="l00580"></a>00580   HelpTextMap::const_iterator iter = <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.find(subject);
-<a name="l00581"></a>00581   <span class="keywordflow">if</span> (iter == <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.end())
-<a name="l00582"></a>00582     <span class="keywordflow">return</span> 0;
-<a name="l00583"></a>00583   <span class="keywordflow">return</span> (*iter).second;
-<a name="l00584"></a>00584 }
-<a name="l00585"></a>00585 
-<a name="l00586"></a>00586 
-<a name="l00587"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#9dc6de358596ee154cdf9effa77f0ad2">00587</a> <span class="keyword">const</span> <span class="keywordtype">char</span> **<a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">HqlHelpText::Get</a>(std::string &amp;subject) {
-<a name="l00588"></a>00588   HelpTextMap::const_iterator iter = <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.find(subject);
-<a name="l00589"></a>00589   <span class="keywordflow">if</span> (iter == <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.end())
-<a name="l00590"></a>00590     <span class="keywordflow">return</span> 0;
-<a name="l00591"></a>00591   <span class="keywordflow">return</span> (*iter).second;
-<a name="l00592"></a>00592 }
-<a name="l00593"></a>00593 
-<a name="l00594"></a>00594 
-<a name="l00595"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#2a5d4b91920799d36d2f13267626169d">00595</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_hql_help_text.html#2a5d4b91920799d36d2f13267626169d">HqlHelpText::install_range_server_client_text</a>() {
-<a name="l00596"></a>00596   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">""</span>] = help_text_rsclient_contents;
-<a name="l00597"></a>00597   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"contents"</span>] = help_text_rsclient_contents;
-<a name="l00598"></a>00598   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"select"</span>] = help_text_select;
-<a name="l00599"></a>00599   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"create"</span>] = help_text_create_scanner;
-<a name="l00600"></a>00600   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"create scanner"</span>] = help_text_create_scanner;
-<a name="l00601"></a>00601   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"destroy"</span>] = help_text_destroy_scanner;
-<a name="l00602"></a>00602   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"destroy scanner"</span>] = help_text_destroy_scanner;
-<a name="l00603"></a>00603   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"drop range"</span>] = help_text_drop_range;
-<a name="l00604"></a>00604   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"fetch"</span>] = help_text_fetch_scanblock;
-<a name="l00605"></a>00605   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"fetch scanblock"</span>] = help_text_fetch_scanblock;
-<a name="l00606"></a>00606   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"load"</span>] = help_text_load_range;
-<a name="l00607"></a>00607   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"load range"</span>] = help_text_load_range;
-<a name="l00608"></a>00608   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"update"</span>] = help_text_update;
-<a name="l00609"></a>00609   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay start"</span>] = help_text_replay_start;
-<a name="l00610"></a>00610   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay log"</span>] = help_text_replay_log;
-<a name="l00611"></a>00611   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay commit"</span>] = help_text_replay_commit;
-<a name="l00612"></a>00612   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"shutdown"</span>] = help_text_shutdown_rangeserver;
-<a name="l00613"></a>00613 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Fri Aug 1 14:19:22 2008 for hypertable by&nbsp;
+<a name="l00575"></a><a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">00575</a>   HelpTextMap &amp;<a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">build_help_text_map</a>() {
+<a name="l00576"></a>00576     HelpTextMap *map = <span class="keyword">new</span> <a class="code" href="_hql_help_text_8cc.html#9b32af0956c43b3067c5cd2c7a771172">HelpTextMap</a>();
+<a name="l00577"></a>00577     (*map)[<span class="stringliteral">""</span>] = help_text_contents;
+<a name="l00578"></a>00578     (*map)[<span class="stringliteral">"contents"</span>] = help_text_contents;
+<a name="l00579"></a>00579     (*map)[<span class="stringliteral">"create table"</span>] = help_text_create_table;
+<a name="l00580"></a>00580     (*map)[<span class="stringliteral">"delete"</span>] = help_text_delete;
+<a name="l00581"></a>00581     (*map)[<span class="stringliteral">"insert"</span>] = help_text_insert;
+<a name="l00582"></a>00582     (*map)[<span class="stringliteral">"select"</span>] = help_text_select;
+<a name="l00583"></a>00583     (*map)[<span class="stringliteral">"describe table"</span>] = help_text_describe_table;
+<a name="l00584"></a>00584     (*map)[<span class="stringliteral">"describe"</span>] = help_text_describe_table;
+<a name="l00585"></a>00585     (*map)[<span class="stringliteral">"show create table"</span>] = help_text_show_create_table;
+<a name="l00586"></a>00586     (*map)[<span class="stringliteral">"show create"</span>] = help_text_show_create_table;
+<a name="l00587"></a>00587     (*map)[<span class="stringliteral">"load data infile"</span>] = help_text_load_data_infile;
+<a name="l00588"></a>00588     (*map)[<span class="stringliteral">"load data"</span>] = help_text_load_data_infile;
+<a name="l00589"></a>00589     (*map)[<span class="stringliteral">"load"</span>] = help_text_load_data_infile;
+<a name="l00590"></a>00590     (*map)[<span class="stringliteral">"show tables"</span>] = help_text_show_tables;
+<a name="l00591"></a>00591     (*map)[<span class="stringliteral">"drop"</span>] = help_text_drop_table;
+<a name="l00592"></a>00592     (*map)[<span class="stringliteral">"drop table"</span>] = help_text_drop_table;
+<a name="l00593"></a>00593     (*map)[<span class="stringliteral">"shutdown"</span>] = help_text_shutdown;
+<a name="l00594"></a>00594     <span class="keywordflow">return</span> *map;
+<a name="l00595"></a>00595   }
+<a name="l00596"></a>00596 
+<a name="l00597"></a><a class="code" href="_hql_help_text_8cc.html#17f2979e2d047092a0da403ffa274b23">00597</a>   HelpTextMap &amp;<a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a> = <a class="code" href="_hql_help_text_8cc.html#4da4a6b4d1043c653a058df0f440b3e5">build_help_text_map</a>();
+<a name="l00598"></a>00598 }
+<a name="l00599"></a>00599 
+<a name="l00600"></a>00600 
+<a name="l00601"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">00601</a> <span class="keyword">const</span> <span class="keywordtype">char</span> **HqlHelpText::Get(<span class="keyword">const</span> <span class="keywordtype">char</span> *subject) {
+<a name="l00602"></a>00602   HelpTextMap::const_iterator iter = <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.find(subject);
+<a name="l00603"></a>00603   <span class="keywordflow">if</span> (iter == <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.end())
+<a name="l00604"></a>00604     <span class="keywordflow">return</span> 0;
+<a name="l00605"></a>00605   <span class="keywordflow">return</span> (*iter).second;
+<a name="l00606"></a>00606 }
+<a name="l00607"></a>00607 
+<a name="l00608"></a>00608 
+<a name="l00609"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#9dc6de358596ee154cdf9effa77f0ad2">00609</a> <span class="keyword">const</span> <span class="keywordtype">char</span> **<a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">HqlHelpText::Get</a>(std::string &amp;subject) {
+<a name="l00610"></a>00610   HelpTextMap::const_iterator iter = <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.find(subject);
+<a name="l00611"></a>00611   <span class="keywordflow">if</span> (iter == <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>.end())
+<a name="l00612"></a>00612     <span class="keywordflow">return</span> 0;
+<a name="l00613"></a>00613   <span class="keywordflow">return</span> (*iter).second;
+<a name="l00614"></a>00614 }
+<a name="l00615"></a>00615 
+<a name="l00616"></a>00616 
+<a name="l00617"></a><a class="code" href="class_hypertable_1_1_hql_help_text.html#2a5d4b91920799d36d2f13267626169d">00617</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_hql_help_text.html#2a5d4b91920799d36d2f13267626169d">HqlHelpText::install_range_server_client_text</a>() {
+<a name="l00618"></a>00618   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">""</span>] = <a class="code" href="_hql_help_text_8cc.html#638f123d1b69c28bbc6b4c37c53b5dd7">help_text_rsclient_contents</a>;
+<a name="l00619"></a>00619   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"contents"</span>] = <a class="code" href="_hql_help_text_8cc.html#638f123d1b69c28bbc6b4c37c53b5dd7">help_text_rsclient_contents</a>;
+<a name="l00620"></a>00620   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"select"</span>] = <a class="code" href="_hql_help_text_8cc.html#1529dae45491f01d4cbc334238bf9fce">help_text_select</a>;
+<a name="l00621"></a>00621   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"create"</span>] = <a class="code" href="_hql_help_text_8cc.html#23cf5a20aa92b56a5525826a8a552f7a">help_text_create_scanner</a>;
+<a name="l00622"></a>00622   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"create scanner"</span>] = <a class="code" href="_hql_help_text_8cc.html#23cf5a20aa92b56a5525826a8a552f7a">help_text_create_scanner</a>;
+<a name="l00623"></a>00623   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"destroy"</span>] = <a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">help_text_destroy_scanner</a>;
+<a name="l00624"></a>00624   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"destroy scanner"</span>] = <a class="code" href="_hql_help_text_8cc.html#7156070dfd63cfc46c2a43e5eb27e0df">help_text_destroy_scanner</a>;
+<a name="l00625"></a>00625   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"drop range"</span>] = <a class="code" href="_hql_help_text_8cc.html#8c8ff941afa402896670253a450e232f">help_text_drop_range</a>;
+<a name="l00626"></a>00626   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"fetch"</span>] = <a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">help_text_fetch_scanblock</a>;
+<a name="l00627"></a>00627   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"fetch scanblock"</span>] = <a class="code" href="_hql_help_text_8cc.html#fce28acb64e6b856603f937adb671de5">help_text_fetch_scanblock</a>;
+<a name="l00628"></a>00628   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"load"</span>] = <a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">help_text_load_range</a>;
+<a name="l00629"></a>00629   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"load range"</span>] = <a class="code" href="_hql_help_text_8cc.html#5f916834f90bdc7419d3b363bdd59489">help_text_load_range</a>;
+<a name="l00630"></a>00630   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"update"</span>] = <a class="code" href="_hql_help_text_8cc.html#173d4d9d2e91bc5722fbed066d0e7493">help_text_update</a>;
+<a name="l00631"></a>00631   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay start"</span>] = <a class="code" href="_hql_help_text_8cc.html#246700f78d8c689705152ceb8e120767">help_text_replay_start</a>;
+<a name="l00632"></a>00632   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay log"</span>] = <a class="code" href="_hql_help_text_8cc.html#1c83db6efd34c724f5ff4b4a32573206">help_text_replay_log</a>;
+<a name="l00633"></a>00633   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"replay commit"</span>] = <a class="code" href="_hql_help_text_8cc.html#15c97ca908c737a2c06da6fcf4d39687">help_text_replay_commit</a>;
+<a name="l00634"></a>00634   <a class="code" href="_error_8cc.html#cfc166cf4679311cd4ca154dd25c5d6c">text_map</a>[<span class="stringliteral">"shutdown"</span>] = <a class="code" href="_hql_help_text_8cc.html#9b05e0931e08c8a473a77f7ef9e2f350">help_text_shutdown_rangeserver</a>;
+<a name="l00635"></a>00635 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:07:02 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -35,18 +35,18 @@
 <a name="l00037"></a>00037 <span class="keyword">using namespace </span>Serialization;
 <a name="l00038"></a>00038 
 <a name="l00042"></a><a class="code" href="class_hypertable_1_1_master_client.html#f0b63147e838a17a38ce3b291fdfefcc">00042</a> MasterClient::MasterClient(<a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;conn_mgr, <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace, time_t timeout, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue) : m_verbose(true), m_conn_manager_ptr(conn_mgr), m_hyperspace_ptr(hyperspace), <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a>(app_queue), m_timeout(timeout), m_initiated(false) {
-<a name="l00043"></a>00043   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045   <a class="code" href="class_hypertable_1_1_master_client.html#81df12d384687dcb1639b7e5d86d72f2">m_comm</a> = <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;get_comm();
-<a name="l00046"></a>00046   memset(&amp;<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>));
-<a name="l00047"></a>00047 
-<a name="l00051"></a>00051   <a class="code" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_master_file_handler.html">MasterFileHandler</a>(<span class="keyword">this</span>, <a class="code" href="class_hypertable_1_1_master_client.html#262c1697cbf0bcfb2c52f9b99680a3ea">m_app_queue_ptr</a>);
-<a name="l00052"></a>00052   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#b3518454e0a5751396599e3f64d2dd55">m_hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/master"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, <a class="code" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a>, &amp;<a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00053"></a>00053     <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6eeed0b88f986319667fadf32c7a3eb">Error::HYPERSPACE_FILE_NOT_FOUND</a> &amp;&amp; error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b280d6ae041bebcdd03e0c06a63f553eb6">Error::HYPERSPACE_BAD_PATHNAME</a>) {
-<a name="l00054"></a>00054       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unable to open Hyperspace file '/hypertable/master' - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00055"></a>00055       exit(1);
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057     <a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a> = 0;
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044   <a class="code" href="class_hypertable_1_1_master_client.html#81df12d384687dcb1639b7e5d86d72f2">m_comm</a> = <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;get_comm();
+<a name="l00045"></a>00045   memset(&amp;<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, 0, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>));
+<a name="l00046"></a>00046 
+<a name="l00050"></a>00050   <a class="code" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_master_file_handler.html">MasterFileHandler</a>(<span class="keyword">this</span>, <a class="code" href="class_hypertable_1_1_master_client.html#262c1697cbf0bcfb2c52f9b99680a3ea">m_app_queue_ptr</a>);
+<a name="l00051"></a>00051   <a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a> = 0;
+<a name="l00052"></a>00052   <span class="keywordflow">try</span> {
+<a name="l00053"></a>00053     <a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b3518454e0a5751396599e3f64d2dd55">m_hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/master"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, <a class="code" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a>);
+<a name="l00054"></a>00054   }
+<a name="l00055"></a>00055   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00056"></a>00056     <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6eeed0b88f986319667fadf32c7a3eb">Error::HYPERSPACE_FILE_NOT_FOUND</a> &amp;&amp; e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b280d6ae041bebcdd03e0c06a63f553eb6">Error::HYPERSPACE_BAD_PATHNAME</a>)
+<a name="l00057"></a>00057       <a class="code" href="_error_8h.html#b49551352d22486918141c548daffc80">HT_THROW2</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, e.what());
 <a name="l00058"></a>00058   }
 <a name="l00059"></a>00059 }
 <a name="l00060"></a>00060 
@@ -62,217 +62,218 @@
 <a name="l00073"></a>00073   <a class="code" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">m_dispatcher_handler_ptr</a> = dhp;
 <a name="l00074"></a>00074   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a> == 0)
 <a name="l00075"></a>00075     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2220e350af23aa7fb7b0cad7089424da4">Error::MASTER_NOT_RUNNING</a>;
-<a name="l00076"></a>00076   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#77825f3327cc7aaa4b1348216d31ac51">reload_master</a>();
-<a name="l00077"></a>00077 }
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080 
-<a name="l00081"></a><a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">00081</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">MasterClient::create_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <span class="keyword">const</span> <span class="keywordtype">char</span> *schemastr, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00082"></a>00082   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">MasterProtocol::create_create_table_request</a>(tablename, schemastr));
-<a name="l00083"></a>00083   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
-<a name="l00084"></a>00084 }
+<a name="l00076"></a>00076   <span class="keywordflow">try</span> {
+<a name="l00077"></a>00077     <a class="code" href="class_hypertable_1_1_master_client.html#e82cb739c2a9511c0308f6487bf62014">reload_master</a>();
+<a name="l00078"></a>00078   }
+<a name="l00079"></a>00079   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00080"></a>00080     <span class="keywordflow">return</span> e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>();
+<a name="l00081"></a>00081   }
+<a name="l00082"></a>00082   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00083"></a>00083 }
+<a name="l00084"></a>00084 
 <a name="l00085"></a>00085 
 <a name="l00086"></a>00086 
-<a name="l00087"></a>00087 
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_master_client.html#869f5a622d612da32cb2d3b3c63c1722">00088</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">MasterClient::create_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <span class="keyword">const</span> <span class="keywordtype">char</span> *schemastr) {
-<a name="l00089"></a>00089   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00090"></a>00090   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00091"></a>00091   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">MasterProtocol::create_create_table_request</a>(tablename, schemastr));
-<a name="l00092"></a>00092   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00093"></a>00093   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00094"></a>00094     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00095"></a>00095       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00096"></a>00096         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'create table' error, tablename=%s : %s"</span>, tablename, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00097"></a>00097       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00098"></a>00098     }
-<a name="l00099"></a>00099   }
-<a name="l00100"></a>00100   <span class="keywordflow">return</span> error;
-<a name="l00101"></a>00101 }
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103 
-<a name="l00104"></a><a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">00104</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">MasterClient::get_schema</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00105"></a>00105   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#0d18f5430ffd576cde4ceedf0c78b739">MasterProtocol::create_get_schema_request</a>(tablename));
-<a name="l00106"></a>00106   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">00087</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">MasterClient::create_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <span class="keyword">const</span> <span class="keywordtype">char</span> *schemastr, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00088"></a>00088   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">MasterProtocol::create_create_table_request</a>(tablename, schemastr));
+<a name="l00089"></a>00089   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00090"></a>00090 }
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093 
+<a name="l00094"></a><a class="code" href="class_hypertable_1_1_master_client.html#869f5a622d612da32cb2d3b3c63c1722">00094</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">MasterClient::create_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <span class="keyword">const</span> <span class="keywordtype">char</span> *schemastr) {
+<a name="l00095"></a>00095   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00096"></a>00096   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00097"></a>00097   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">MasterProtocol::create_create_table_request</a>(tablename, schemastr));
+<a name="l00098"></a>00098   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00099"></a>00099   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00100"></a>00100     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00101"></a>00101       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00102"></a>00102         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'create table' error, tablename=%s : %s"</span>, tablename, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00103"></a>00103       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00104"></a>00104     }
+<a name="l00105"></a>00105   }
+<a name="l00106"></a>00106   <span class="keywordflow">return</span> error;
 <a name="l00107"></a>00107 }
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109 
-<a name="l00110"></a><a class="code" href="class_hypertable_1_1_master_client.html#3c7cc6367bb479fc76f1e2e176e2640c">00110</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">MasterClient::get_schema</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, std::string &amp;schema) {
-<a name="l00111"></a>00111   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00112"></a>00112   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00113"></a>00113   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#0d18f5430ffd576cde4ceedf0c78b739">MasterProtocol::create_get_schema_request</a>(tablename));
-<a name="l00114"></a>00114   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00115"></a>00115   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00116"></a>00116     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00117"></a>00117       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00118"></a>00118         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'get schema' error, tablename=%s : %s"</span>, tablename,
-<a name="l00119"></a>00119                   <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00120"></a>00120       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00121"></a>00121     }
-<a name="l00122"></a>00122     <span class="keywordflow">else</span> {
-<a name="l00123"></a>00123       <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = event_ptr-&gt;message + <span class="keyword">sizeof</span>(int32_t);
-<a name="l00124"></a>00124       <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len - <span class="keyword">sizeof</span>(int32_t);
-<a name="l00125"></a>00125       schema = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(&amp;ptr, &amp;remaining);
-<a name="l00126"></a>00126     }
-<a name="l00127"></a>00127   }
-<a name="l00128"></a>00128   <span class="keywordflow">return</span> error;
-<a name="l00129"></a>00129 }
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131 
-<a name="l00132"></a><a class="code" href="class_hypertable_1_1_master_client.html#61c42f2ad135253142c02ae37f12e068">00132</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#61c42f2ad135253142c02ae37f12e068">MasterClient::status</a>() {
-<a name="l00133"></a>00133   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00134"></a>00134   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00135"></a>00135   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#488c1cb9cad8db9dc62da8471f6cce24">MasterProtocol::create_status_request</a>());
-<a name="l00136"></a>00136   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00137"></a>00137   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00138"></a>00138     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00139"></a>00139       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00140"></a>00140         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'status' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00141"></a>00141       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00142"></a>00142     }
-<a name="l00143"></a>00143   }
-<a name="l00144"></a>00144   <span class="keywordflow">return</span> error;
-<a name="l00145"></a>00145 }
-<a name="l00146"></a>00146 
-<a name="l00147"></a>00147 
-<a name="l00148"></a><a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">00148</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">MasterClient::register_server</a>(std::string &amp;location, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00149"></a>00149   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">MasterProtocol::create_register_server_request</a>(location));
-<a name="l00150"></a>00150   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00110"></a><a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">00110</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">MasterClient::get_schema</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00111"></a>00111   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#0d18f5430ffd576cde4ceedf0c78b739">MasterProtocol::create_get_schema_request</a>(tablename));
+<a name="l00112"></a>00112   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00113"></a>00113 }
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="class_hypertable_1_1_master_client.html#3c7cc6367bb479fc76f1e2e176e2640c">00116</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">MasterClient::get_schema</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *tablename, std::string &amp;schema) {
+<a name="l00117"></a>00117   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00118"></a>00118   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00119"></a>00119   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#0d18f5430ffd576cde4ceedf0c78b739">MasterProtocol::create_get_schema_request</a>(tablename));
+<a name="l00120"></a>00120   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00121"></a>00121   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00122"></a>00122     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00123"></a>00123       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00124"></a>00124         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'get schema' error, tablename=%s : %s"</span>, tablename,
+<a name="l00125"></a>00125                   <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00126"></a>00126       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00127"></a>00127     }
+<a name="l00128"></a>00128     <span class="keywordflow">else</span> {
+<a name="l00129"></a>00129       <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = event_ptr-&gt;message + <span class="keyword">sizeof</span>(int32_t);
+<a name="l00130"></a>00130       <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len - <span class="keyword">sizeof</span>(int32_t);
+<a name="l00131"></a>00131       schema = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(&amp;ptr, &amp;remaining);
+<a name="l00132"></a>00132     }
+<a name="l00133"></a>00133   }
+<a name="l00134"></a>00134   <span class="keywordflow">return</span> error;
+<a name="l00135"></a>00135 }
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137 
+<a name="l00138"></a><a class="code" href="class_hypertable_1_1_master_client.html#61c42f2ad135253142c02ae37f12e068">00138</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#61c42f2ad135253142c02ae37f12e068">MasterClient::status</a>() {
+<a name="l00139"></a>00139   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00140"></a>00140   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00141"></a>00141   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#488c1cb9cad8db9dc62da8471f6cce24">MasterProtocol::create_status_request</a>());
+<a name="l00142"></a>00142   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00143"></a>00143   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00144"></a>00144     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00145"></a>00145       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00146"></a>00146         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'status' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00147"></a>00147       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00148"></a>00148     }
+<a name="l00149"></a>00149   }
+<a name="l00150"></a>00150   <span class="keywordflow">return</span> error;
 <a name="l00151"></a>00151 }
 <a name="l00152"></a>00152 
 <a name="l00153"></a>00153 
-<a name="l00154"></a><a class="code" href="class_hypertable_1_1_master_client.html#34803a33fdb0a60071ca3c5c770f20a3">00154</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">MasterClient::register_server</a>(std::string &amp;location) {
-<a name="l00155"></a>00155   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00156"></a>00156   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00157"></a>00157   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">MasterProtocol::create_register_server_request</a>(location));
-<a name="l00158"></a>00158   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00159"></a>00159   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00160"></a>00160     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00161"></a>00161       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00162"></a>00162         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'register server' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00163"></a>00163       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00164"></a>00164     }
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166   <span class="keywordflow">return</span> error;
-<a name="l00167"></a>00167 }
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169 
-<a name="l00170"></a><a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">00170</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">MasterClient::report_split</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range, <span class="keyword">const</span> <span class="keywordtype">char</span> *log_dir, uint64_t soft_limit, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00171"></a>00171   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">MasterProtocol::create_report_split_request</a>(table, range, log_dir, soft_limit));
-<a name="l00172"></a>00172   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00154"></a><a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">00154</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">MasterClient::register_server</a>(std::string &amp;location, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00155"></a>00155   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">MasterProtocol::create_register_server_request</a>(location));
+<a name="l00156"></a>00156   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00157"></a>00157 }
+<a name="l00158"></a>00158 
+<a name="l00159"></a>00159 
+<a name="l00160"></a><a class="code" href="class_hypertable_1_1_master_client.html#34803a33fdb0a60071ca3c5c770f20a3">00160</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">MasterClient::register_server</a>(std::string &amp;location) {
+<a name="l00161"></a>00161   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00162"></a>00162   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00163"></a>00163   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">MasterProtocol::create_register_server_request</a>(location));
+<a name="l00164"></a>00164   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00165"></a>00165   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00166"></a>00166     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00167"></a>00167       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00168"></a>00168         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'register server' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00169"></a>00169       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00170"></a>00170     }
+<a name="l00171"></a>00171   }
+<a name="l00172"></a>00172   <span class="keywordflow">return</span> error;
 <a name="l00173"></a>00173 }
 <a name="l00174"></a>00174 
 <a name="l00175"></a>00175 
-<a name="l00176"></a><a class="code" href="class_hypertable_1_1_master_client.html#f83d5d3ebed83ad8cad455d97fbb5dde">00176</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">MasterClient::report_split</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range, <span class="keyword">const</span> <span class="keywordtype">char</span> *log_dir, uint64_t soft_limit) {
-<a name="l00177"></a>00177   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00178"></a>00178   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00179"></a>00179   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">MasterProtocol::create_report_split_request</a>(table, range, log_dir, soft_limit));
-<a name="l00180"></a>00180   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00181"></a>00181   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00182"></a>00182     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00183"></a>00183       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00184"></a>00184         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'report split' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00185"></a>00185       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00186"></a>00186     }
-<a name="l00187"></a>00187   }
-<a name="l00188"></a>00188   <span class="keywordflow">return</span> error;
-<a name="l00189"></a>00189 }
-<a name="l00190"></a>00190 
-<a name="l00191"></a>00191 
-<a name="l00192"></a>00192 
-<a name="l00193"></a><a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">00193</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">MasterClient::drop_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, <span class="keywordtype">bool</span> if_exists, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00194"></a>00194   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">MasterProtocol::create_drop_table_request</a>(table_name, if_exists));
-<a name="l00195"></a>00195   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
-<a name="l00196"></a>00196 }
+<a name="l00176"></a><a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">00176</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">MasterClient::report_split</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range, <span class="keyword">const</span> <span class="keywordtype">char</span> *log_dir, uint64_t soft_limit, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00177"></a>00177   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">MasterProtocol::create_report_split_request</a>(table, range, log_dir, soft_limit));
+<a name="l00178"></a>00178   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00179"></a>00179 }
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181 
+<a name="l00182"></a><a class="code" href="class_hypertable_1_1_master_client.html#f83d5d3ebed83ad8cad455d97fbb5dde">00182</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">MasterClient::report_split</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range, <span class="keyword">const</span> <span class="keywordtype">char</span> *log_dir, uint64_t soft_limit) {
+<a name="l00183"></a>00183   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00184"></a>00184   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00185"></a>00185   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">MasterProtocol::create_report_split_request</a>(table, range, log_dir, soft_limit));
+<a name="l00186"></a>00186   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00187"></a>00187   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00188"></a>00188     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00189"></a>00189       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00190"></a>00190         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'report split' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00191"></a>00191       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00192"></a>00192     }
+<a name="l00193"></a>00193   }
+<a name="l00194"></a>00194   <span class="keywordflow">return</span> error;
+<a name="l00195"></a>00195 }
+<a name="l00196"></a>00196 
 <a name="l00197"></a>00197 
 <a name="l00198"></a>00198 
-<a name="l00199"></a>00199 
-<a name="l00200"></a><a class="code" href="class_hypertable_1_1_master_client.html#4c2266e45f8124f134565810616bdc7c">00200</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">MasterClient::drop_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, <span class="keywordtype">bool</span> if_exists) {
-<a name="l00201"></a>00201   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00202"></a>00202   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00203"></a>00203   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">MasterProtocol::create_drop_table_request</a>(table_name, if_exists));
-<a name="l00204"></a>00204   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00205"></a>00205   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00206"></a>00206     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00207"></a>00207       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00208"></a>00208         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'drop table' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00209"></a>00209       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00210"></a>00210     }
-<a name="l00211"></a>00211   }
-<a name="l00212"></a>00212   <span class="keywordflow">return</span> error;
-<a name="l00213"></a>00213 }
-<a name="l00214"></a>00214 
-<a name="l00215"></a><a class="code" href="class_hypertable_1_1_master_client.html#334f74bda61b02cc9a26755e617ff0cb">00215</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#334f74bda61b02cc9a26755e617ff0cb">MasterClient::shutdown</a>() {
-<a name="l00216"></a>00216   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00217"></a>00217   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00218"></a>00218   <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#a729ff7109424239375e3ba8d6799730">MasterProtocol::create_shutdown_request</a>());
-<a name="l00219"></a>00219   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
-<a name="l00220"></a>00220   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00221"></a>00221     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00222"></a>00222       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00223"></a>00223         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'shutdown' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00224"></a>00224       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
-<a name="l00225"></a>00225     }
-<a name="l00226"></a>00226   }
-<a name="l00227"></a>00227   <span class="keywordflow">return</span> error;
-<a name="l00228"></a>00228 }
-<a name="l00229"></a>00229 
-<a name="l00230"></a>00230 
-<a name="l00231"></a>00231 
-<a name="l00232"></a>00232 
-<a name="l00233"></a><a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">00233</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">MasterClient::send_message</a>(<a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbp, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00234"></a>00234   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">m_mutex</a>);
-<a name="l00235"></a>00235   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00199"></a><a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">00199</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">MasterClient::drop_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, <span class="keywordtype">bool</span> if_exists, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00200"></a>00200   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">MasterProtocol::create_drop_table_request</a>(table_name, if_exists));
+<a name="l00201"></a>00201   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, handler);
+<a name="l00202"></a>00202 }
+<a name="l00203"></a>00203 
+<a name="l00204"></a>00204 
+<a name="l00205"></a>00205 
+<a name="l00206"></a><a class="code" href="class_hypertable_1_1_master_client.html#4c2266e45f8124f134565810616bdc7c">00206</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">MasterClient::drop_table</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, <span class="keywordtype">bool</span> if_exists) {
+<a name="l00207"></a>00207   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00208"></a>00208   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00209"></a>00209   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">MasterProtocol::create_drop_table_request</a>(table_name, if_exists));
+<a name="l00210"></a>00210   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00211"></a>00211   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00212"></a>00212     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00213"></a>00213       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00214"></a>00214         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'drop table' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00215"></a>00215       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00216"></a>00216     }
+<a name="l00217"></a>00217   }
+<a name="l00218"></a>00218   <span class="keywordflow">return</span> error;
+<a name="l00219"></a>00219 }
+<a name="l00220"></a>00220 
+<a name="l00221"></a><a class="code" href="class_hypertable_1_1_master_client.html#334f74bda61b02cc9a26755e617ff0cb">00221</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#334f74bda61b02cc9a26755e617ff0cb">MasterClient::shutdown</a>() {
+<a name="l00222"></a>00222   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00223"></a>00223   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00224"></a>00224   <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_master_protocol.html#a729ff7109424239375e3ba8d6799730">MasterProtocol::create_shutdown_request</a>());
+<a name="l00225"></a>00225   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00226"></a>00226   <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00227"></a>00227     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00228"></a>00228       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00229"></a>00229         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Master 'shutdown' error : %s"</span>, <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">MasterProtocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00230"></a>00230       error = (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">MasterProtocol::response_code</a>(event_ptr);
+<a name="l00231"></a>00231     }
+<a name="l00232"></a>00232   }
+<a name="l00233"></a>00233   <span class="keywordflow">return</span> error;
+<a name="l00234"></a>00234 }
+<a name="l00235"></a>00235 
 <a name="l00236"></a>00236 
-<a name="l00237"></a>00237   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#81df12d384687dcb1639b7e5d86d72f2">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#bd216d0b11df28363c9dc509da01a1f3" title="Sends a request message over a connection, expecting a response.">send_request</a>(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, <a class="code" href="class_hypertable_1_1_master_client.html#d724aaa776accd4ff73b80bb863e8edd">m_timeout</a>, cbp, handler)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00238"></a>00238     std::string addr_str;
-<a name="l00239"></a>00239     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00240"></a>00240       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Comm::send_request to %s failed - %s"</span>, <a class="code" href="struct_hypertable_1_1_inet_addr.html#d8f44211e7b89743d7ed4282c6d7f307" title="Format a socket address.">InetAddr::string_format</a>(addr_str, <a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>), <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00241"></a>00241   }
+<a name="l00237"></a>00237 
+<a name="l00238"></a>00238 
+<a name="l00239"></a><a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">00239</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">MasterClient::send_message</a>(<a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00240"></a>00240   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">m_mutex</a>);
+<a name="l00241"></a>00241   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
 <a name="l00242"></a>00242 
-<a name="l00243"></a>00243   <span class="keywordflow">return</span> error;
-<a name="l00244"></a>00244 }
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246 
-<a name="l00250"></a><a class="code" href="class_hypertable_1_1_master_client.html#77825f3327cc7aaa4b1348216d31ac51">00250</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_master_client.html#77825f3327cc7aaa4b1348216d31ac51">MasterClient::reload_master</a>() {
-<a name="l00251"></a>00251   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">m_mutex</a>);
-<a name="l00252"></a>00252   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00253"></a>00253   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
-<a name="l00254"></a>00254   std::string addr_str;
-<a name="l00255"></a>00255 
-<a name="l00256"></a>00256   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#b3518454e0a5751396599e3f64d2dd55">m_hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a>, <span class="stringliteral">"address"</span>, value)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00257"></a>00257     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00258"></a>00258       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem reading 'address' attribute of Hyperspace file /hypertable/master - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00259"></a>00259     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2220e350af23aa7fb7b0cad7089424da4">Error::MASTER_NOT_RUNNING</a>;
-<a name="l00260"></a>00260   }
+<a name="l00243"></a>00243   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#81df12d384687dcb1639b7e5d86d72f2">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#bd216d0b11df28363c9dc509da01a1f3" title="Sends a request message over a connection, expecting a response.">send_request</a>(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, <a class="code" href="class_hypertable_1_1_master_client.html#d724aaa776accd4ff73b80bb863e8edd">m_timeout</a>, cbp, handler)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00244"></a>00244     std::string addr_str;
+<a name="l00245"></a>00245     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00246"></a>00246       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Comm::send_request to %s failed - %s"</span>, <a class="code" href="struct_hypertable_1_1_inet_addr.html#d8f44211e7b89743d7ed4282c6d7f307" title="Format a socket address.">InetAddr::string_format</a>(addr_str, <a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>), <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
+<a name="l00247"></a>00247   }
+<a name="l00248"></a>00248 
+<a name="l00249"></a>00249   <span class="keywordflow">return</span> error;
+<a name="l00250"></a>00250 }
+<a name="l00251"></a>00251 
+<a name="l00252"></a>00252 
+<a name="l00256"></a><a class="code" href="class_hypertable_1_1_master_client.html#e82cb739c2a9511c0308f6487bf62014">00256</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master_client.html#e82cb739c2a9511c0308f6487bf62014">MasterClient::reload_master</a>() {
+<a name="l00257"></a>00257   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">m_mutex</a>);
+<a name="l00258"></a>00258   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00259"></a>00259   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
+<a name="l00260"></a>00260   std::string addr_str;
 <a name="l00261"></a>00261 
-<a name="l00262"></a>00262   addr_str = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00262"></a>00262   <a class="code" href="class_hypertable_1_1_master_client.html#b3518454e0a5751396599e3f64d2dd55">m_hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a>, <span class="stringliteral">"address"</span>, value);
 <a name="l00263"></a>00263 
-<a name="l00264"></a>00264   if (addr_str != <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>) {
+<a name="l00264"></a>00264   addr_str = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
 <a name="l00265"></a>00265 
-<a name="l00266"></a>00266     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>.sin_port != 0) {
-<a name="l00267"></a>00267       <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;remove(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00268"></a>00268         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00269"></a>00269           <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Problem removing connection to Master - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00270"></a>00270       }
-<a name="l00271"></a>00271       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
-<a name="l00272"></a>00272         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Connecting to new Master (old=%s, new=%s)"</span>, <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>.c_str(), addr_str.c_str());
-<a name="l00273"></a>00273     }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275     <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a> = addr_str;
+<a name="l00266"></a>00266   if (addr_str != <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>) {
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>.sin_port != 0) {
+<a name="l00269"></a>00269       <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;remove(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00270"></a>00270         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00271"></a>00271           <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Problem removing connection to Master - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
+<a name="l00272"></a>00272       }
+<a name="l00273"></a>00273       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a>)
+<a name="l00274"></a>00274         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Connecting to new Master (old=%s, new=%s)"</span>, <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>.c_str(), addr_str.c_str());
+<a name="l00275"></a>00275     }
 <a name="l00276"></a>00276 
-<a name="l00277"></a>00277     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">InetAddr::initialize</a>(&amp;<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>.c_str());
+<a name="l00277"></a>00277     <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a> = addr_str;
 <a name="l00278"></a>00278 
-<a name="l00279"></a>00279     <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;add(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, 15, <span class="stringliteral">"Master"</span>, <a class="code" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">m_dispatcher_handler_ptr</a>);
-<a name="l00280"></a>00280   }
-<a name="l00281"></a>00281 
-<a name="l00282"></a>00282   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00283"></a>00283 }
-<a name="l00284"></a>00284 
+<a name="l00279"></a>00279     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">InetAddr::initialize</a>(&amp;<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, <a class="code" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a>.c_str());
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281     <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;add(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, 15, <span class="stringliteral">"Master"</span>, <a class="code" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">m_dispatcher_handler_ptr</a>);
+<a name="l00282"></a>00282   }
+<a name="l00283"></a>00283 
+<a name="l00284"></a>00284 }
 <a name="l00285"></a>00285 
-<a name="l00286"></a><a class="code" href="class_hypertable_1_1_master_client.html#4d7b9b4a10391ccfc9011a47fe3eef55">00286</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_master_client.html#4d7b9b4a10391ccfc9011a47fe3eef55">MasterClient::wait_for_connection</a>(<span class="keywordtype">long</span> max_wait_secs) {
-<a name="l00287"></a>00287   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;wait_for_connection(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, max_wait_secs);
-<a name="l00288"></a>00288 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:10 2008 for hypertable by&nbsp;
+<a name="l00286"></a>00286 
+<a name="l00287"></a><a class="code" href="class_hypertable_1_1_master_client.html#4d7b9b4a10391ccfc9011a47fe3eef55">00287</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_master_client.html#4d7b9b4a10391ccfc9011a47fe3eef55">MasterClient::wait_for_connection</a>(<span class="keywordtype">long</span> max_wait_secs) {
+<a name="l00288"></a>00288   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_master_client.html#1f660967777a005572559efb0e56e85e">m_conn_manager_ptr</a>-&gt;wait_for_connection(<a class="code" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a>, max_wait_secs);
+<a name="l00289"></a>00289 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

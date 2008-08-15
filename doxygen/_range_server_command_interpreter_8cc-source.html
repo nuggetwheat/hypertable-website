@@ -55,7 +55,7 @@
 <a name="l00057"></a>00057 
 <a name="l00058"></a>00058 <span class="keyword">namespace </span>{
 <a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="_range_server_command_interpreter_8cc.html#f8df378c7c0510a9a61f62883e4308fe">00060</a>   <span class="keywordtype">void</span> <a class="code" href="_range_server_command_interpreter_8cc.html#f8df378c7c0510a9a61f62883e4308fe">process_event</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00060"></a><a class="code" href="_range_server_command_interpreter_8cc.html#f3f9d90030c95212cfa870a085449db5">00060</a>   <span class="keywordtype">void</span> <a class="code" href="_range_server_command_interpreter_8cc.html#f3f9d90030c95212cfa870a085449db5">process_event</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
 <a name="l00061"></a>00061     int32_t <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
 <a name="l00062"></a>00062     <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = event_ptr-&gt;message + 4;
 <a name="l00063"></a>00063     <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len - 4;
@@ -87,290 +87,288 @@
 <a name="l00089"></a>00089 
 <a name="l00090"></a>00090 
 <a name="l00091"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#4249fc7cf8897348e89716caf49a83ac">00091</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#4249fc7cf8897348e89716caf49a83ac">RangeServerCommandInterpreter::execute_line</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;line) {
-<a name="l00092"></a>00092   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00093"></a>00093   <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table = 0;
-<a name="l00094"></a>00094   <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> range;
-<a name="l00095"></a>00095   <a class="code" href="class_hypertable_1_1_table_info.html">TableInfo</a> *table_info;
-<a name="l00096"></a>00096   std::string schema_str;
-<a name="l00097"></a>00097   std::string out_str;
-<a name="l00098"></a>00098   <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> schema_ptr;
-<a name="l00099"></a>00099   <a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html">hql_interpreter_state</a> state;
-<a name="l00100"></a>00100   <a class="code" href="struct_hypertable_1_1_hql_parser_1_1hql__interpreter.html">hql_interpreter</a> interp(state);
-<a name="l00101"></a>00101   parse_info&lt;&gt; info;
-<a name="l00102"></a>00102   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
-<a name="l00103"></a>00103   <a class="code" href="class_hypertable_1_1_scan_block.html" title="Encapsulates a block of scan results.">ScanBlock</a> scanblock;
-<a name="l00104"></a>00104   int32_t scanner_id;
-<a name="l00105"></a>00105   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107   info = parse(line.c_str(), interp, space_p);
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="keywordflow">if</span> (info.full) {
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111     <span class="comment">// if table name specified, get associated objects</span>
-<a name="l00112"></a>00112     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a> != <span class="stringliteral">""</span>) {
-<a name="l00113"></a>00113       table_info = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">m_table_map</a>[state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>];
-<a name="l00114"></a>00114       <span class="keywordflow">if</span> (table_info == 0) {
-<a name="l00115"></a>00115         table_info = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_table_info.html">TableInfo</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>);
-<a name="l00116"></a>00116         <span class="keywordflow">if</span> ((error = table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#b80dbe45be2b82a6e8d94eb7dae30d9e">load</a>(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#519a3c79f2a97d6cb127d10ac66767cd">m_hyperspace_ptr</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00117"></a>00117           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, std::string(<span class="stringliteral">"Problem loading table '"</span>) + state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a> + <span class="stringliteral">"'"</span>);
-<a name="l00118"></a>00118         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">m_table_map</a>[state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>] = table_info;
-<a name="l00119"></a>00119       }
-<a name="l00120"></a>00120       table = table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#9ce2f72d897bf318fa8126dd2c615bf5">get_table_identifier</a>();
-<a name="l00121"></a>00121       table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#f32b78c953eb7cf8e46fb34a7603958c">get_schema_ptr</a>(schema_ptr);
-<a name="l00122"></a>00122     }
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124     <span class="comment">// if end row is "??", transform it to 0xff 0xff</span>
-<a name="l00125"></a>00125     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> == <span class="stringliteral">"??"</span>)
-<a name="l00126"></a>00126       state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> = <a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">Key::END_ROW_MARKER</a>;
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020d7527e9d76d2dbd22f91f3411cd64d1d">COMMAND_LOAD_RANGE</a>) {
-<a name="l00129"></a>00129       <a class="code" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range.">RangeState</a> range_state;
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131       cout &lt;&lt; <span class="stringliteral">"TableName  = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a> &lt;&lt; endl;
-<a name="l00132"></a>00132       cout &lt;&lt; <span class="stringliteral">"StartRow   = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a> &lt;&lt; endl;
-<a name="l00133"></a>00133       cout &lt;&lt; <span class="stringliteral">"EndRow     = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> &lt;&lt; endl;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
-<a name="l00136"></a>00136       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
+<a name="l00092"></a>00092   <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table = 0;
+<a name="l00093"></a>00093   <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> range;
+<a name="l00094"></a>00094   <a class="code" href="class_hypertable_1_1_table_info.html">TableInfo</a> *table_info;
+<a name="l00095"></a>00095   std::string schema_str;
+<a name="l00096"></a>00096   std::string out_str;
+<a name="l00097"></a>00097   <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> schema_ptr;
+<a name="l00098"></a>00098   <a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html">hql_interpreter_state</a> state;
+<a name="l00099"></a>00099   <a class="code" href="struct_hypertable_1_1_hql_parser_1_1hql__interpreter.html">hql_interpreter</a> interp(state);
+<a name="l00100"></a>00100   parse_info&lt;&gt; info;
+<a name="l00101"></a>00101   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00102"></a>00102   <a class="code" href="class_hypertable_1_1_scan_block.html" title="Encapsulates a block of scan results.">ScanBlock</a> scanblock;
+<a name="l00103"></a>00103   int32_t scanner_id;
+<a name="l00104"></a>00104   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   info = parse(line.c_str(), interp, space_p);
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108   <span class="keywordflow">if</span> (info.full) {
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110     <span class="comment">// if table name specified, get associated objects</span>
+<a name="l00111"></a>00111     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a> != <span class="stringliteral">""</span>) {
+<a name="l00112"></a>00112       table_info = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">m_table_map</a>[state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>];
+<a name="l00113"></a>00113       <span class="keywordflow">if</span> (table_info == 0) {
+<a name="l00114"></a>00114         table_info = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_table_info.html">TableInfo</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>);
+<a name="l00115"></a>00115         table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#5c55bd25da03136e50a6efe7f6e30af5">load</a>(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#519a3c79f2a97d6cb127d10ac66767cd">m_hyperspace_ptr</a>);
+<a name="l00116"></a>00116         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#aa762f3c09796cffbe8e9e3dd70cdb51">m_table_map</a>[state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a>] = table_info;
+<a name="l00117"></a>00117       }
+<a name="l00118"></a>00118       table = table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#9ce2f72d897bf318fa8126dd2c615bf5">get_table_identifier</a>();
+<a name="l00119"></a>00119       table_info-&gt;<a class="code" href="class_hypertable_1_1_table_info.html#f32b78c953eb7cf8e46fb34a7603958c">get_schema_ptr</a>(schema_ptr);
+<a name="l00120"></a>00120     }
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122     <span class="comment">// if end row is "??", transform it to 0xff 0xff</span>
+<a name="l00123"></a>00123     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> == <span class="stringliteral">"??"</span>)
+<a name="l00124"></a>00124       state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> = <a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">Key::END_ROW_MARKER</a>;
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126     <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020d7527e9d76d2dbd22f91f3411cd64d1d">COMMAND_LOAD_RANGE</a>) {
+<a name="l00127"></a>00127       <a class="code" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range.">RangeState</a> range_state;
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129       cout &lt;&lt; <span class="stringliteral">"TableName  = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#db4e35c63c43f2ac476a494661c73e1b">table_name</a> &lt;&lt; endl;
+<a name="l00130"></a>00130       cout &lt;&lt; <span class="stringliteral">"StartRow   = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a> &lt;&lt; endl;
+<a name="l00131"></a>00131       cout &lt;&lt; <span class="stringliteral">"EndRow     = "</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a> &lt;&lt; endl;
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
+<a name="l00134"></a>00134       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136       range_state.<a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a> = 200000000LL;
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138       range_state.<a class="code" href="class_hypertable_1_1_range_state.html#d5394166ae0ff0eebacac5c54534e567">soft_limit</a> = 200000000LL;
+<a name="l00138"></a>00138       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;load_range(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, 0, range_state, 0);
 <a name="l00139"></a>00139 
-<a name="l00140"></a>00140       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;load_range(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, 0, range_state, 0);
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142     }
-<a name="l00143"></a>00143     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020fa289d21bf09f8d0419d82d44bd953f5">COMMAND_UPDATE</a>) {
-<a name="l00144"></a>00144       <a class="code" href="class_hypertable_1_1_test_source.html">TestSource</a> *tsource = 0;
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_file_utils.html#48b1de9157dfbb028a55d8e9d17090ae">FileUtils::exists</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a>.c_str()))
-<a name="l00147"></a>00147         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2aa17b0d355b25bc0b964c55babb49e44">Error::FILE_NOT_FOUND</a>, std::string(<span class="stringliteral">"Input file '"</span>) + state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a> + <span class="stringliteral">"' does not exist"</span>);
+<a name="l00140"></a>00140     }
+<a name="l00141"></a>00141     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020fa289d21bf09f8d0419d82d44bd953f5">COMMAND_UPDATE</a>) {
+<a name="l00142"></a>00142       <a class="code" href="class_hypertable_1_1_test_source.html">TestSource</a> *tsource = 0;
+<a name="l00143"></a>00143 
+<a name="l00144"></a>00144       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_file_utils.html#48b1de9157dfbb028a55d8e9d17090ae">FileUtils::exists</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a>.c_str()))
+<a name="l00145"></a>00145         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2aa17b0d355b25bc0b964c55babb49e44">Error::FILE_NOT_FOUND</a>, std::string(<span class="stringliteral">"Input file '"</span>) + state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a> + <span class="stringliteral">"' does not exist"</span>);
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147       tsource = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_test_source.html">TestSource</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a>, schema_ptr.get());
 <a name="l00148"></a>00148 
-<a name="l00149"></a>00149       tsource = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_test_source.html">TestSource</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#4788626c1dc009d83c6d0cb67ef9a717">input_file</a>, schema_ptr.get());
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151       uint8_t *send_buf = 0;
-<a name="l00152"></a>00152       <span class="keywordtype">size_t</span>   send_buf_len = 0;
-<a name="l00153"></a>00153       <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> buf(<a class="code" href="_range_server_command_interpreter_8cc.html#6b20d41d6252e9871430c242cb1a56e7" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">BUFFER_SIZE</a>);
-<a name="l00154"></a>00154       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
-<a name="l00155"></a>00155       <span class="keywordtype">size_t</span> key_len, value_len;
-<a name="l00156"></a>00156       <span class="keywordtype">bool</span> outstanding = <span class="keyword">false</span>;
+<a name="l00149"></a>00149       uint8_t *send_buf = 0;
+<a name="l00150"></a>00150       <span class="keywordtype">size_t</span>   send_buf_len = 0;
+<a name="l00151"></a>00151       <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> buf(<a class="code" href="_range_server_command_interpreter_8cc.html#6b20d41d6252e9871430c242cb1a56e7" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">BUFFER_SIZE</a>);
+<a name="l00152"></a>00152       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
+<a name="l00153"></a>00153       <span class="keywordtype">size_t</span> key_len, value_len;
+<a name="l00154"></a>00154       <span class="keywordtype">bool</span> outstanding = <span class="keyword">false</span>;
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156       <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
 <a name="l00157"></a>00157 
-<a name="l00158"></a>00158       <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160         <span class="keywordflow">while</span> (tsource-&gt;<a class="code" href="class_hypertable_1_1_test_source.html#e8408ca6770b3c20cd2d32045b22dc45">next</a>(key, value)) {
-<a name="l00161"></a>00161           key_len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00162"></a>00162           value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00163"></a>00163           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key_len + value_len);
-<a name="l00164"></a>00164           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key_len);
-<a name="l00165"></a>00165           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
-<a name="l00166"></a>00166           <span class="keywordflow">if</span> (buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; <a class="code" href="_range_server_command_interpreter_8cc.html#6b20d41d6252e9871430c242cb1a56e7" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">BUFFER_SIZE</a>)
-<a name="l00167"></a>00167             <span class="keywordflow">break</span>;
-<a name="l00168"></a>00168         }
-<a name="l00169"></a>00169 
-<a name="l00173"></a>00173         <span class="keywordflow">if</span> (buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()) {
-<a name="l00174"></a>00174           std::vector&lt;ByteString&gt; keys;
-<a name="l00175"></a>00175           <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_lt_byte_string.html">LtByteString</a> ltbs;
-<a name="l00176"></a>00176           <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
-<a name="l00177"></a>00177           <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00158"></a>00158         <span class="keywordflow">while</span> (tsource-&gt;<a class="code" href="class_hypertable_1_1_test_source.html#e8408ca6770b3c20cd2d32045b22dc45">next</a>(key, value)) {
+<a name="l00159"></a>00159           key_len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00160"></a>00160           value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00161"></a>00161           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key_len + value_len);
+<a name="l00162"></a>00162           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key_len);
+<a name="l00163"></a>00163           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
+<a name="l00164"></a>00164           <span class="keywordflow">if</span> (buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; <a class="code" href="_range_server_command_interpreter_8cc.html#6b20d41d6252e9871430c242cb1a56e7" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">BUFFER_SIZE</a>)
+<a name="l00165"></a>00165             <span class="keywordflow">break</span>;
+<a name="l00166"></a>00166         }
+<a name="l00167"></a>00167 
+<a name="l00171"></a>00171         <span class="keywordflow">if</span> (buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()) {
+<a name="l00172"></a>00172           std::vector&lt;ByteString&gt; keys;
+<a name="l00173"></a>00173           <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_lt_byte_string.html">LtByteString</a> ltbs;
+<a name="l00174"></a>00174           <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
+<a name="l00175"></a>00175           <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177           key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = ptr = buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
 <a name="l00178"></a>00178 
-<a name="l00179"></a>00179           key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = ptr = buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181           <span class="keywordflow">while</span> (ptr &lt; buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>) {
-<a name="l00182"></a>00182             keys.push_back(key);
-<a name="l00183"></a>00183             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00184"></a>00184             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00185"></a>00185             ptr = key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
-<a name="l00186"></a>00186           }
+<a name="l00179"></a>00179           <span class="keywordflow">while</span> (ptr &lt; buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>) {
+<a name="l00180"></a>00180             keys.push_back(key);
+<a name="l00181"></a>00181             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00182"></a>00182             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00183"></a>00183             ptr = key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
+<a name="l00184"></a>00184           }
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186           std::sort(keys.begin(), keys.end(), ltbs);
 <a name="l00187"></a>00187 
-<a name="l00188"></a>00188           std::sort(keys.begin(), keys.end(), ltbs);
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190           send_buf = <span class="keyword">new</span> uint8_t [buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()];
-<a name="l00191"></a>00191           uint8_t *sendp = send_buf;
-<a name="l00192"></a>00192           <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;keys.size(); i++) {
-<a name="l00193"></a>00193             key = keys[i];
-<a name="l00194"></a>00194             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00195"></a>00195             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00196"></a>00196             len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> - keys[i].ptr;
-<a name="l00197"></a>00197             memcpy(sendp, keys[i].ptr, len);
-<a name="l00198"></a>00198             sendp += len;
-<a name="l00199"></a>00199           }
-<a name="l00200"></a>00200           send_buf_len = sendp - send_buf;
-<a name="l00201"></a>00201           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
-<a name="l00202"></a>00202         }
-<a name="l00203"></a>00203         <span class="keywordflow">else</span>
-<a name="l00204"></a>00204           send_buf_len = 0;
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206         <span class="keywordflow">if</span> (outstanding) {
-<a name="l00207"></a>00207           <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
-<a name="l00208"></a>00208             <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
-<a name="l00209"></a>00209           <a class="code" href="_range_server_command_interpreter_8cc.html#f8df378c7c0510a9a61f62883e4308fe">process_event</a>(event_ptr);
-<a name="l00210"></a>00210         }
+<a name="l00188"></a>00188           send_buf = <span class="keyword">new</span> uint8_t [buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>()];
+<a name="l00189"></a>00189           uint8_t *sendp = send_buf;
+<a name="l00190"></a>00190           <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;keys.size(); i++) {
+<a name="l00191"></a>00191             key = keys[i];
+<a name="l00192"></a>00192             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00193"></a>00193             key.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00194"></a>00194             len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> - keys[i].ptr;
+<a name="l00195"></a>00195             memcpy(sendp, keys[i].ptr, len);
+<a name="l00196"></a>00196             sendp += len;
+<a name="l00197"></a>00197           }
+<a name="l00198"></a>00198           send_buf_len = sendp - send_buf;
+<a name="l00199"></a>00199           buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
+<a name="l00200"></a>00200         }
+<a name="l00201"></a>00201         <span class="keywordflow">else</span>
+<a name="l00202"></a>00202           send_buf_len = 0;
+<a name="l00203"></a>00203 
+<a name="l00204"></a>00204         <span class="keywordflow">if</span> (outstanding) {
+<a name="l00205"></a>00205           <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00206"></a>00206             <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
+<a name="l00207"></a>00207           <a class="code" href="_range_server_command_interpreter_8cc.html#f3f9d90030c95212cfa870a085449db5">process_event</a>(event_ptr);
+<a name="l00208"></a>00208         }
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210         outstanding = <span class="keyword">false</span>;
 <a name="l00211"></a>00211 
-<a name="l00212"></a>00212         outstanding = <span class="keyword">false</span>;
-<a name="l00213"></a>00213 
-<a name="l00214"></a>00214         <span class="keywordflow">if</span> (send_buf_len &gt; 0) {
-<a name="l00215"></a>00215           <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> mybuf(send_buf, send_buf_len);
-<a name="l00216"></a>00216           <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;update(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, mybuf, &amp;sync_handler);
-<a name="l00217"></a>00217           outstanding = <span class="keyword">true</span>;
-<a name="l00218"></a>00218         }
-<a name="l00219"></a>00219         <span class="keywordflow">else</span>
-<a name="l00220"></a>00220           <span class="keywordflow">break</span>;
-<a name="l00221"></a>00221       }
-<a name="l00222"></a>00222 
-<a name="l00223"></a>00223       <span class="keywordflow">if</span> (outstanding) {
-<a name="l00224"></a>00224         <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
-<a name="l00225"></a>00225           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
-<a name="l00226"></a>00226         <a class="code" href="_range_server_command_interpreter_8cc.html#f8df378c7c0510a9a61f62883e4308fe">process_event</a>(event_ptr);
-<a name="l00227"></a>00227       }
-<a name="l00228"></a>00228 
-<a name="l00229"></a>00229     }
-<a name="l00230"></a>00230     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702073be3ad3eccacef46bce45b68b6d47f3">COMMAND_CREATE_SCANNER</a>) {
-<a name="l00231"></a>00231       <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> scan_spec;
-<a name="l00232"></a>00232       <a class="code" href="class_hypertable_1_1_row_interval.html" title="Represents a row interval.">RowInterval</a> ri;
-<a name="l00233"></a>00233 
-<a name="l00234"></a>00234       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
-<a name="l00235"></a>00235       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
-<a name="l00236"></a>00236 
-<a name="l00240"></a>00240       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#97e2254194926d6d5dc60eea2c0e7315">row_limit</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#94caddbc600b6f73f4e49ef7839ead79">limit</a>;
-<a name="l00241"></a>00241       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#04d2039d5daa4ea07aef0ff3c757c7e6">max_versions</a>;
-<a name="l00242"></a>00242       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#5ba06986be363f468170ed5a2e9124b6">columns</a>.size(); i++)
-<a name="l00243"></a>00243         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#5ba06986be363f468170ed5a2e9124b6">columns</a>[i].c_str());
-<a name="l00244"></a>00244 
-<a name="l00245"></a>00245       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>.size(); i++) {
-<a name="l00246"></a>00246         <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start &gt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end ||
-<a name="l00247"></a>00247             (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start == state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end &amp;&amp;
-<a name="l00248"></a>00248              !(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start_inclusive || state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end_inclusive)))
-<a name="l00249"></a>00249           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, <span class="stringliteral">"Bad row range"</span>);
-<a name="l00250"></a>00250         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#05d415110f00f1273f449f7e4bf653d4">start</a> = (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start == <span class="stringliteral">""</span>) ? <span class="stringliteral">""</span>
-<a name="l00251"></a>00251           : state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start.c_str();
-<a name="l00252"></a>00252         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#0be1ce0d7c81a1550eebeb5db5f38020">start_inclusive</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start_inclusive;
-<a name="l00253"></a>00253         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#780ab1bf0f06ccf506544717be0f4ae1">end</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end.c_str();
-<a name="l00254"></a>00254         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#25edc1b310769163788e2c275cf23f79">end_inclusive</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end_inclusive;
-<a name="l00255"></a>00255         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(ri);
-<a name="l00256"></a>00256       }
-<a name="l00257"></a>00257 
-<a name="l00258"></a>00258       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#69f0befd6e6d2ebedb00b2fefe3e1d1f">time_interval</a>.first  = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#1aaa601c98ffcad73184deb61c609040">start_time</a>;
-<a name="l00259"></a>00259       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#69f0befd6e6d2ebedb00b2fefe3e1d1f">time_interval</a>.second = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#7001a28da8699800710bbc8c65190a00">end_time</a>;
-<a name="l00260"></a>00260       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#6b9a9320103ee2d39ee876c9a9f40f53">return_deletes</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#0d960be39eed36f2d19b14dd95435f4e">return_deletes</a>;
-<a name="l00261"></a>00261 
-<a name="l00264"></a>00264       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;create_scanner(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, scan_spec, scanblock);
+<a name="l00212"></a>00212         <span class="keywordflow">if</span> (send_buf_len &gt; 0) {
+<a name="l00213"></a>00213           <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> mybuf(send_buf, send_buf_len);
+<a name="l00214"></a>00214           <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;update(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, mybuf, &amp;sync_handler);
+<a name="l00215"></a>00215           outstanding = <span class="keyword">true</span>;
+<a name="l00216"></a>00216         }
+<a name="l00217"></a>00217         <span class="keywordflow">else</span>
+<a name="l00218"></a>00218           <span class="keywordflow">break</span>;
+<a name="l00219"></a>00219       }
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221       <span class="keywordflow">if</span> (outstanding) {
+<a name="l00222"></a>00222         <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00223"></a>00223           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
+<a name="l00224"></a>00224         <a class="code" href="_range_server_command_interpreter_8cc.html#f3f9d90030c95212cfa870a085449db5">process_event</a>(event_ptr);
+<a name="l00225"></a>00225       }
+<a name="l00226"></a>00226 
+<a name="l00227"></a>00227     }
+<a name="l00228"></a>00228     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702073be3ad3eccacef46bce45b68b6d47f3">COMMAND_CREATE_SCANNER</a>) {
+<a name="l00229"></a>00229       <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> scan_spec;
+<a name="l00230"></a>00230       <a class="code" href="class_hypertable_1_1_row_interval.html" title="Represents a row interval.">RowInterval</a> ri;
+<a name="l00231"></a>00231 
+<a name="l00232"></a>00232       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
+<a name="l00233"></a>00233       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
+<a name="l00234"></a>00234 
+<a name="l00238"></a>00238       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#97e2254194926d6d5dc60eea2c0e7315">row_limit</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#94caddbc600b6f73f4e49ef7839ead79">limit</a>;
+<a name="l00239"></a>00239       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#04d2039d5daa4ea07aef0ff3c757c7e6">max_versions</a>;
+<a name="l00240"></a>00240       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#5ba06986be363f468170ed5a2e9124b6">columns</a>.size(); i++)
+<a name="l00241"></a>00241         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#5ba06986be363f468170ed5a2e9124b6">columns</a>[i].c_str());
+<a name="l00242"></a>00242 
+<a name="l00243"></a>00243       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>.size(); i++) {
+<a name="l00244"></a>00244         <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start &gt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end ||
+<a name="l00245"></a>00245             (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start == state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end &amp;&amp;
+<a name="l00246"></a>00246              !(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start_inclusive || state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end_inclusive)))
+<a name="l00247"></a>00247           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, <span class="stringliteral">"Bad row range"</span>);
+<a name="l00248"></a>00248         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#05d415110f00f1273f449f7e4bf653d4">start</a> = (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start == <span class="stringliteral">""</span>) ? <span class="stringliteral">""</span>
+<a name="l00249"></a>00249           : state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start.c_str();
+<a name="l00250"></a>00250         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#0be1ce0d7c81a1550eebeb5db5f38020">start_inclusive</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].start_inclusive;
+<a name="l00251"></a>00251         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#780ab1bf0f06ccf506544717be0f4ae1">end</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end.c_str();
+<a name="l00252"></a>00252         ri.<a class="code" href="class_hypertable_1_1_row_interval.html#25edc1b310769163788e2c275cf23f79">end_inclusive</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#024d6892e333d79038aceb6367bece7d">row_intervals</a>[i].end_inclusive;
+<a name="l00253"></a>00253         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(ri);
+<a name="l00254"></a>00254       }
+<a name="l00255"></a>00255 
+<a name="l00256"></a>00256       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#69f0befd6e6d2ebedb00b2fefe3e1d1f">time_interval</a>.first  = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#1aaa601c98ffcad73184deb61c609040">start_time</a>;
+<a name="l00257"></a>00257       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#69f0befd6e6d2ebedb00b2fefe3e1d1f">time_interval</a>.second = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#7001a28da8699800710bbc8c65190a00">end_time</a>;
+<a name="l00258"></a>00258       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#6b9a9320103ee2d39ee876c9a9f40f53">return_deletes</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#ccd0d5620f5c3b2ce64717283c401210">scan</a>.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__scan__state.html#0d960be39eed36f2d19b14dd95435f4e">return_deletes</a>;
+<a name="l00259"></a>00259 
+<a name="l00262"></a>00262       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;create_scanner(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, scan_spec, scanblock);
+<a name="l00263"></a>00263 
+<a name="l00264"></a>00264       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#50dacabc4448324030bb3801403a871a" title="Returns scanner ID associated with this scanblock.">get_scanner_id</a>();
 <a name="l00265"></a>00265 
-<a name="l00266"></a>00266       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#50dacabc4448324030bb3801403a871a" title="Returns scanner ID associated with this scanblock.">get_scanner_id</a>();
+<a name="l00266"></a>00266       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
 <a name="l00267"></a>00267 
-<a name="l00268"></a>00268       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
-<a name="l00269"></a>00269 
-<a name="l00270"></a>00270       <span class="keywordflow">while</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#602b94730b0ab4375c7f7aeeec59ab59" title="Returns the next key/value pair in the scanblock.">next</a>(key, value))
-<a name="l00271"></a>00271         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">display_scan_data</a>(key, value, schema_ptr);
-<a name="l00272"></a>00272 
-<a name="l00273"></a>00273       <span class="keywordflow">if</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933" title="Returns true if this is the final scanblock returned by the scanner.">eos</a>())
-<a name="l00274"></a>00274         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
-<a name="l00275"></a>00275 
-<a name="l00276"></a>00276     }
-<a name="l00277"></a>00277     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702060813b95277041afdae0b31c9a33f017">COMMAND_FETCH_SCANBLOCK</a>) {
-<a name="l00278"></a>00278 
-<a name="l00279"></a>00279       <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a> == -1) {
-<a name="l00280"></a>00280         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> == -1)
-<a name="l00281"></a>00281           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24993ce1514cffdb9b1970a50e2c461ac">Error::RANGESERVER_INVALID_SCANNER_ID</a>, <span class="stringliteral">"No currently open scanner"</span>);
-<a name="l00282"></a>00282         scanner_id = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a>;
-<a name="l00283"></a>00283         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
-<a name="l00284"></a>00284       }
-<a name="l00285"></a>00285       <span class="keywordflow">else</span>
-<a name="l00286"></a>00286         scanner_id = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a>;
-<a name="l00287"></a>00287 
-<a name="l00290"></a>00290       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;fetch_scanblock(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, scanner_id, scanblock);
+<a name="l00268"></a>00268       <span class="keywordflow">while</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#602b94730b0ab4375c7f7aeeec59ab59" title="Returns the next key/value pair in the scanblock.">next</a>(key, value))
+<a name="l00269"></a>00269         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">display_scan_data</a>(key, value, schema_ptr);
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271       <span class="keywordflow">if</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933" title="Returns true if this is the final scanblock returned by the scanner.">eos</a>())
+<a name="l00272"></a>00272         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
+<a name="l00273"></a>00273 
+<a name="l00274"></a>00274     }
+<a name="l00275"></a>00275     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702060813b95277041afdae0b31c9a33f017">COMMAND_FETCH_SCANBLOCK</a>) {
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277       <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a> == -1) {
+<a name="l00278"></a>00278         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> == -1)
+<a name="l00279"></a>00279           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24993ce1514cffdb9b1970a50e2c461ac">Error::RANGESERVER_INVALID_SCANNER_ID</a>, <span class="stringliteral">"No currently open scanner"</span>);
+<a name="l00280"></a>00280         scanner_id = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a>;
+<a name="l00281"></a>00281         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
+<a name="l00282"></a>00282       }
+<a name="l00283"></a>00283       <span class="keywordflow">else</span>
+<a name="l00284"></a>00284         scanner_id = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a>;
+<a name="l00285"></a>00285 
+<a name="l00288"></a>00288       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;fetch_scanblock(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, scanner_id, scanblock);
+<a name="l00289"></a>00289 
+<a name="l00290"></a>00290       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
 <a name="l00291"></a>00291 
-<a name="l00292"></a>00292       <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, value;
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294       <span class="keywordflow">while</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#602b94730b0ab4375c7f7aeeec59ab59" title="Returns the next key/value pair in the scanblock.">next</a>(key, value))
-<a name="l00295"></a>00295         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">display_scan_data</a>(key, value, schema_ptr);
-<a name="l00296"></a>00296 
-<a name="l00297"></a>00297       <span class="keywordflow">if</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933" title="Returns true if this is the final scanblock returned by the scanner.">eos</a>())
-<a name="l00298"></a>00298         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
-<a name="l00299"></a>00299 
-<a name="l00300"></a>00300     }
-<a name="l00301"></a>00301     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070206b9f70d544b7765955c279040c21f004">COMMAND_DESTROY_SCANNER</a>) {
-<a name="l00302"></a>00302 
-<a name="l00303"></a>00303       <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a> == -1) {
-<a name="l00304"></a>00304         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> == -1)
-<a name="l00305"></a>00305           <span class="keywordflow">return</span>;
-<a name="l00306"></a>00306         scanner_id = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a>;
-<a name="l00307"></a>00307         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
-<a name="l00308"></a>00308       }
-<a name="l00309"></a>00309       <span class="keywordflow">else</span>
-<a name="l00310"></a>00310         scanner_id = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a>;
+<a name="l00292"></a>00292       <span class="keywordflow">while</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#602b94730b0ab4375c7f7aeeec59ab59" title="Returns the next key/value pair in the scanblock.">next</a>(key, value))
+<a name="l00293"></a>00293         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">display_scan_data</a>(key, value, schema_ptr);
+<a name="l00294"></a>00294 
+<a name="l00295"></a>00295       <span class="keywordflow">if</span> (scanblock.<a class="code" href="class_hypertable_1_1_scan_block.html#e1d6657c941908d42a36fc9b99d07933" title="Returns true if this is the final scanblock returned by the scanner.">eos</a>())
+<a name="l00296"></a>00296         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
+<a name="l00297"></a>00297 
+<a name="l00298"></a>00298     }
+<a name="l00299"></a>00299     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070206b9f70d544b7765955c279040c21f004">COMMAND_DESTROY_SCANNER</a>) {
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301       <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a> == -1) {
+<a name="l00302"></a>00302         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> == -1)
+<a name="l00303"></a>00303           <span class="keywordflow">return</span>;
+<a name="l00304"></a>00304         scanner_id = <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a>;
+<a name="l00305"></a>00305         <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#65a3e2998a4ea1de1618150b27e8e2a8">m_cur_scanner_id</a> = -1;
+<a name="l00306"></a>00306       }
+<a name="l00307"></a>00307       <span class="keywordflow">else</span>
+<a name="l00308"></a>00308         scanner_id = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#5fabc7a6252f619f5a50cc8716ece4e2">scanner_id</a>;
+<a name="l00309"></a>00309 
+<a name="l00310"></a>00310       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;destroy_scanner(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, scanner_id);
 <a name="l00311"></a>00311 
-<a name="l00312"></a>00312       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;destroy_scanner(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, scanner_id);
-<a name="l00313"></a>00313 
-<a name="l00314"></a>00314     }
-<a name="l00315"></a>00315     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020301a6c7c212a5d8750d1a66bbc9622c1">COMMAND_DROP_RANGE</a>) {
-<a name="l00316"></a>00316 
-<a name="l00317"></a>00317       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
-<a name="l00318"></a>00318       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
+<a name="l00312"></a>00312     }
+<a name="l00313"></a>00313     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020301a6c7c212a5d8750d1a66bbc9622c1">COMMAND_DROP_RANGE</a>) {
+<a name="l00314"></a>00314 
+<a name="l00315"></a>00315       range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#e926bc7b5f5c76542616ca7cc5eeca51">range_start_row</a>.c_str();
+<a name="l00316"></a>00316       range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#39d2150886682348cbe6cf97a71dc2eb">range_end_row</a>.c_str();
+<a name="l00317"></a>00317 
+<a name="l00318"></a>00318       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;drop_range(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, &amp;sync_handler);
 <a name="l00319"></a>00319 
-<a name="l00320"></a>00320       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;drop_range(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, *table, range, &amp;sync_handler);
-<a name="l00321"></a>00321 
-<a name="l00322"></a>00322       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
-<a name="l00323"></a>00323         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325     }
-<a name="l00326"></a>00326     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020360a82a3b7a21992563d06971cc6373e">COMMAND_REPLAY_BEGIN</a>) {
-<a name="l00327"></a>00327       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;replay_begin(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, <span class="keyword">false</span>, &amp;sync_handler);  <span class="comment">// fix me!!  added metadata boolean</span>
-<a name="l00328"></a>00328       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
-<a name="l00329"></a>00329         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
-<a name="l00330"></a>00330     }
-<a name="l00331"></a>00331     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702091bb4cd7b900bddcbabf2a0033be7833">COMMAND_REPLAY_LOG</a>) {
-<a name="l00332"></a>00332       cout &lt;&lt; <span class="stringliteral">"Not implemented."</span> &lt;&lt; endl;
-<a name="l00333"></a>00333     }
-<a name="l00334"></a>00334     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070208ca0c3e820e479fb9d85ce4f0f00e27f">COMMAND_REPLAY_COMMIT</a>) {
-<a name="l00335"></a>00335       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;replay_commit(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, &amp;sync_handler);
-<a name="l00336"></a>00336       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
-<a name="l00337"></a>00337         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
-<a name="l00338"></a>00338     }
-<a name="l00339"></a>00339     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070205301214f07ab56ffb6a9f2e81545bcd7">COMMAND_HELP</a>) {
-<a name="l00340"></a>00340       <span class="keyword">const</span> <span class="keywordtype">char</span> **<a class="code" href="_error_8cc.html#16343090e80c4472521560f30113d96c">text</a> = <a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">HqlHelpText::Get</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#cc687126426b18f6c68797316a8b00be">str</a>);
-<a name="l00341"></a>00341       <span class="keywordflow">if</span> (text) {
-<a name="l00342"></a>00342         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; text[i]; i++)
-<a name="l00343"></a>00343           cout &lt;&lt; text[i] &lt;&lt; endl;
-<a name="l00344"></a>00344       }
-<a name="l00345"></a>00345       <span class="keywordflow">else</span>
-<a name="l00346"></a>00346         cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">"no help for '"</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#cc687126426b18f6c68797316a8b00be">str</a> &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl &lt;&lt; endl;
-<a name="l00347"></a>00347     }
-<a name="l00348"></a>00348     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020cd446798f21f457f1227b786004a733d">COMMAND_SHUTDOWN</a>) {
-<a name="l00349"></a>00349       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;shutdown(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>);
-<a name="l00350"></a>00350     }
-<a name="l00351"></a>00351     <span class="keywordflow">else</span>
-<a name="l00352"></a>00352       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, <span class="stringliteral">"unsupported command"</span>);
-<a name="l00353"></a>00353   }
-<a name="l00354"></a>00354   <span class="keywordflow">else</span>
-<a name="l00355"></a>00355     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, std::string(<span class="stringliteral">"parse error at: "</span>) + info.stop);
-<a name="l00356"></a>00356 }
+<a name="l00320"></a>00320       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00321"></a>00321         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
+<a name="l00322"></a>00322 
+<a name="l00323"></a>00323     }
+<a name="l00324"></a>00324     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020360a82a3b7a21992563d06971cc6373e">COMMAND_REPLAY_BEGIN</a>) {
+<a name="l00325"></a>00325       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;replay_begin(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, <span class="keyword">false</span>, &amp;sync_handler);  <span class="comment">// fix me!!  added metadata boolean</span>
+<a name="l00326"></a>00326       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00327"></a>00327         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
+<a name="l00328"></a>00328     }
+<a name="l00329"></a>00329     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f0702091bb4cd7b900bddcbabf2a0033be7833">COMMAND_REPLAY_LOG</a>) {
+<a name="l00330"></a>00330       cout &lt;&lt; <span class="stringliteral">"Not implemented."</span> &lt;&lt; endl;
+<a name="l00331"></a>00331     }
+<a name="l00332"></a>00332     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070208ca0c3e820e479fb9d85ce4f0f00e27f">COMMAND_REPLAY_COMMIT</a>) {
+<a name="l00333"></a>00333       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;replay_commit(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>, &amp;sync_handler);
+<a name="l00334"></a>00334       <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00335"></a>00335         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr), (<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr)));
+<a name="l00336"></a>00336     }
+<a name="l00337"></a>00337     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f070205301214f07ab56ffb6a9f2e81545bcd7">COMMAND_HELP</a>) {
+<a name="l00338"></a>00338       <span class="keyword">const</span> <span class="keywordtype">char</span> **<a class="code" href="_error_8cc.html#16343090e80c4472521560f30113d96c">text</a> = <a class="code" href="class_hypertable_1_1_hql_help_text.html#f92faf4d9203ff4f9dc36f50f09fcebc">HqlHelpText::Get</a>(state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#cc687126426b18f6c68797316a8b00be">str</a>);
+<a name="l00339"></a>00339       <span class="keywordflow">if</span> (text) {
+<a name="l00340"></a>00340         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; text[i]; i++)
+<a name="l00341"></a>00341           cout &lt;&lt; text[i] &lt;&lt; endl;
+<a name="l00342"></a>00342       }
+<a name="l00343"></a>00343       <span class="keywordflow">else</span>
+<a name="l00344"></a>00344         cout &lt;&lt; endl &lt;&lt; <span class="stringliteral">"no help for '"</span> &lt;&lt; state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#cc687126426b18f6c68797316a8b00be">str</a> &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl &lt;&lt; endl;
+<a name="l00345"></a>00345     }
+<a name="l00346"></a>00346     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (state.<a class="code" href="class_hypertable_1_1_hql_parser_1_1hql__interpreter__state.html#b535c2e53edb8220eb15799f546c63f1">command</a> == <a class="code" href="namespace_hypertable_1_1_hql_parser.html#a8e40fec9069bfe124f5b0c769f07020cd446798f21f457f1227b786004a733d">COMMAND_SHUTDOWN</a>) {
+<a name="l00347"></a>00347       <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#636be6819a1f23197ca6a47494b98f4a">m_range_server_ptr</a>-&gt;shutdown(<a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#7183091bc6392814fdec29f29fd4af54">m_addr</a>);
+<a name="l00348"></a>00348     }
+<a name="l00349"></a>00349     <span class="keywordflow">else</span>
+<a name="l00350"></a>00350       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, <span class="stringliteral">"unsupported command"</span>);
+<a name="l00351"></a>00351   }
+<a name="l00352"></a>00352   <span class="keywordflow">else</span>
+<a name="l00353"></a>00353     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2310fad45ca881ccdbff9a91b78ddfa4b">Error::HQL_PARSE_ERROR</a>, std::string(<span class="stringliteral">"parse error at: "</span>) + info.stop);
+<a name="l00354"></a>00354 }
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356 
 <a name="l00357"></a>00357 
-<a name="l00358"></a>00358 
-<a name="l00359"></a>00359 
-<a name="l00363"></a>00363 <span class="keywordtype">void</span>
-<a name="l00364"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">00364</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">RangeServerCommandInterpreter::display_scan_data</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;bskey,
-<a name="l00365"></a>00365     <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr) {
-<a name="l00366"></a>00366   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key(bskey);
-<a name="l00367"></a>00367   <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">Schema::ColumnFamily</a> *cf;
-<a name="l00368"></a>00368 
-<a name="l00369"></a>00369   <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a> == <a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">FLAG_DELETE_ROW</a>) {
-<a name="l00370"></a>00370     cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" DELETE"</span> &lt;&lt; endl;
-<a name="l00371"></a>00371   }
-<a name="l00372"></a>00372   <span class="keywordflow">else</span> {
-<a name="l00373"></a>00373     <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a> &gt; 0) {
-<a name="l00374"></a>00374       cf = schema_ptr-&gt;get_column_family(key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a>);
-<a name="l00375"></a>00375       <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a> == <a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">FLAG_DELETE_CELL</a>)
-<a name="l00376"></a>00376         cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> &lt;&lt; <span class="stringliteral">":"</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a> &lt;&lt; <span class="stringliteral">" DELETE"</span> &lt;&lt; endl;
-<a name="l00377"></a>00377       <span class="keywordflow">else</span> {
-<a name="l00378"></a>00378         cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> &lt;&lt; <span class="stringliteral">":"</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>;
-<a name="l00379"></a>00379         cout &lt;&lt; endl;
-<a name="l00380"></a>00380       }
-<a name="l00381"></a>00381     }
-<a name="l00382"></a>00382     <span class="keywordflow">else</span> {
-<a name="l00383"></a>00383       cerr &lt;&lt; <span class="stringliteral">"Bad column family ("</span> &lt;&lt; (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a> &lt;&lt; <span class="stringliteral">") for row key "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>;
-<a name="l00384"></a>00384       cerr &lt;&lt; endl;
-<a name="l00385"></a>00385     }
-<a name="l00386"></a>00386   }
-<a name="l00387"></a>00387 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+<a name="l00361"></a>00361 <span class="keywordtype">void</span>
+<a name="l00362"></a><a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">00362</a> <a class="code" href="class_hypertable_1_1_range_server_command_interpreter.html#f1e635e039a39bb4bc0787b7b53f2628">RangeServerCommandInterpreter::display_scan_data</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;bskey,
+<a name="l00363"></a>00363     <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr) {
+<a name="l00364"></a>00364   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key(bskey);
+<a name="l00365"></a>00365   <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">Schema::ColumnFamily</a> *cf;
+<a name="l00366"></a>00366 
+<a name="l00367"></a>00367   <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a> == <a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">FLAG_DELETE_ROW</a>) {
+<a name="l00368"></a>00368     cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" DELETE"</span> &lt;&lt; endl;
+<a name="l00369"></a>00369   }
+<a name="l00370"></a>00370   <span class="keywordflow">else</span> {
+<a name="l00371"></a>00371     <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a> &gt; 0) {
+<a name="l00372"></a>00372       cf = schema_ptr-&gt;get_column_family(key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a>);
+<a name="l00373"></a>00373       <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a> == <a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">FLAG_DELETE_CELL</a>)
+<a name="l00374"></a>00374         cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> &lt;&lt; <span class="stringliteral">":"</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a> &lt;&lt; <span class="stringliteral">" DELETE"</span> &lt;&lt; endl;
+<a name="l00375"></a>00375       <span class="keywordflow">else</span> {
+<a name="l00376"></a>00376         cout &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a> &lt;&lt; <span class="stringliteral">" "</span> &lt;&lt; cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a> &lt;&lt; <span class="stringliteral">":"</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>;
+<a name="l00377"></a>00377         cout &lt;&lt; endl;
+<a name="l00378"></a>00378       }
+<a name="l00379"></a>00379     }
+<a name="l00380"></a>00380     <span class="keywordflow">else</span> {
+<a name="l00381"></a>00381       cerr &lt;&lt; <span class="stringliteral">"Bad column family ("</span> &lt;&lt; (<a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)key.<a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a> &lt;&lt; <span class="stringliteral">") for row key "</span> &lt;&lt; key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>;
+<a name="l00382"></a>00382       cerr &lt;&lt; endl;
+<a name="l00383"></a>00383     }
+<a name="l00384"></a>00384   }
+<a name="l00385"></a>00385 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

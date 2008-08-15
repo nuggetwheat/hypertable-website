@@ -41,140 +41,139 @@
 <a name="l00043"></a>00043 <span class="keyword">using namespace </span>Hypertable;
 <a name="l00044"></a>00044 <span class="keyword">using namespace </span>Hyperspace;
 <a name="l00045"></a>00045 
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_client.html#cb873ca6cb7e03c76860d8a4aac960ba">00049</a> Client::Client(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_dir, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config_file) {
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_client.html#93a87af812cd48f663abed450c6e734b">00049</a> Client::Client(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_dir, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config_file, time_t timeout) : m_timeout(timeout) {
 <a name="l00050"></a>00050   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(install_dir);
 <a name="l00051"></a>00051   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>((uint16_t)<a class="code" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">System::get_processor_count</a>());
-<a name="l00052"></a>00052   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>(config_file);
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_client.html#4d83227bec7635a23f7484427a40f880">00055</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#32d474798eb6bff269190bee8279b1b5" title="Constructor with explicit values.">Client::Client</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_dir) {
-<a name="l00056"></a>00056   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(install_dir);
-<a name="l00057"></a>00057   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>((uint16_t)<a class="code" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">System::get_processor_count</a>());
-<a name="l00058"></a>00058   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a> + <span class="stringliteral">"/conf/hypertable.cfg"</span>);
-<a name="l00059"></a>00059 }
-<a name="l00060"></a>00060 
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_client.html#4494a122d417a7fee3620bbe4a9ab032">00064</a> <span class="keywordtype">void</span> Client::create_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;schema) {
-<a name="l00065"></a>00065   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00066"></a>00066   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;create_table(name.c_str(), schema.c_str())) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00067"></a>00067     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00068"></a>00068 }
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 
-<a name="l00074"></a><a class="code" href="class_hypertable_1_1_client.html#f4d3cefe275207863612d136db84ee96">00074</a> <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> *Client::open_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
-<a name="l00075"></a>00075   <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a>(<a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>, name);
-<a name="l00076"></a>00076 }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 
-<a name="l00082"></a><a class="code" href="class_hypertable_1_1_client.html#37230227eb341d731e67601c41bbf646">00082</a> uint32_t Client::get_table_id(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
-<a name="l00083"></a>00083   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00084"></a>00084   <span class="comment">// TODO: issue 11</span>
-<a name="l00085"></a>00085   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> table_file = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"/hypertable/tables/"</span> + name;
-<a name="l00086"></a>00086   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value_buf(0);
-<a name="l00087"></a>00087   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">Hyperspace::HandleCallbackPtr</a> null_handle_callback;
-<a name="l00088"></a>00088   uint64_t handle;
-<a name="l00089"></a>00089   uint32_t uval;
-<a name="l00090"></a>00090 
-<a name="l00094"></a>00094   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;open(table_file.c_str(), <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_handle_callback, &amp;handle)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00095"></a>00095     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Hyperspace::open("</span> + table_file + <span class="stringliteral">") failed"</span>);
-<a name="l00096"></a>00096 
-<a name="l00100"></a>00100   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;attr_get(handle, <span class="stringliteral">"table_id"</span>, value_buf)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00101"></a>00101     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Hyperspace::attr_get(file='"</span> + table_file + <span class="stringliteral">"', attr=table_id) failed"</span>);
+<a name="l00052"></a>00052   <span class="keywordflow">if</span> (config_file == <span class="stringliteral">""</span>)
+<a name="l00053"></a>00053     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a> + <span class="stringliteral">"/conf/hypertable.cfg"</span>);
+<a name="l00054"></a>00054   <span class="keywordflow">else</span>
+<a name="l00055"></a>00055     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>(config_file);
+<a name="l00056"></a>00056 }
+<a name="l00057"></a>00057 
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_client.html#74ef75c28a249b965ff588e37a5220cd">00058</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#32d474798eb6bff269190bee8279b1b5" title="Constructor with explicit values.">Client::Client</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_dir, time_t timeout) : <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">m_timeout</a>(timeout) {
+<a name="l00059"></a>00059   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(install_dir);
+<a name="l00060"></a>00060   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>((uint16_t)<a class="code" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">System::get_processor_count</a>());
+<a name="l00061"></a>00061   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a> + <span class="stringliteral">"/conf/hypertable.cfg"</span>);
+<a name="l00062"></a>00062 }
+<a name="l00063"></a>00063 
+<a name="l00067"></a><a class="code" href="class_hypertable_1_1_client.html#4494a122d417a7fee3620bbe4a9ab032">00067</a> <span class="keywordtype">void</span> Client::create_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;schema) {
+<a name="l00068"></a>00068   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00069"></a>00069   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;create_table(name.c_str(), schema.c_str())) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00070"></a>00070     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00071"></a>00071 }
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 
+<a name="l00077"></a><a class="code" href="class_hypertable_1_1_client.html#f4d3cefe275207863612d136db84ee96">00077</a> <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> *Client::open_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00078"></a>00078   <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a>(<a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>, name);
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081 
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_client.html#37230227eb341d731e67601c41bbf646">00085</a> uint32_t Client::get_table_id(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00086"></a>00086   <span class="comment">// TODO: issue 11</span>
+<a name="l00087"></a>00087   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> table_file = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"/hypertable/tables/"</span> + name;
+<a name="l00088"></a>00088   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value_buf(0);
+<a name="l00089"></a>00089   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">Hyperspace::HandleCallbackPtr</a> null_handle_callback;
+<a name="l00090"></a>00090   uint64_t handle;
+<a name="l00091"></a>00091   uint32_t uval;
+<a name="l00092"></a>00092 
+<a name="l00096"></a>00096   handle = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;open(table_file.c_str(), <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_handle_callback);
+<a name="l00097"></a>00097 
+<a name="l00101"></a>00101   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;attr_get(handle, <span class="stringliteral">"table_id"</span>, value_buf);
 <a name="l00102"></a>00102 
-<a name="l00106"></a>00106   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;close(handle)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00107"></a>00107     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109   assert(value_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() == <span class="keyword">sizeof</span>(int32_t));
-<a name="l00110"></a>00110 
-<a name="l00111"></a>00111   memcpy(&amp;uval, value_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, <span class="keyword">sizeof</span>(int32_t));
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113   <span class="keywordflow">return</span> uval;
-<a name="l00114"></a>00114 }
+<a name="l00106"></a>00106   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;close(handle);
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108   assert(value_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() == <span class="keyword">sizeof</span>(int32_t));
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   memcpy(&amp;uval, value_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, <span class="keyword">sizeof</span>(int32_t));
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112   <span class="keywordflow">return</span> uval;
+<a name="l00113"></a>00113 }
+<a name="l00114"></a>00114 
 <a name="l00115"></a>00115 
-<a name="l00116"></a>00116 
-<a name="l00120"></a><a class="code" href="class_hypertable_1_1_client.html#5412636d62d8be60bfc1894374b0744a">00120</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> Client::get_schema(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
-<a name="l00121"></a>00121   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00122"></a>00122   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> schema;
-<a name="l00123"></a>00123   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;get_schema(name.c_str(), schema)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00124"></a>00124     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00125"></a>00125   <span class="keywordflow">return</span> schema;
-<a name="l00126"></a>00126 }
+<a name="l00119"></a><a class="code" href="class_hypertable_1_1_client.html#5412636d62d8be60bfc1894374b0744a">00119</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> Client::get_schema(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00120"></a>00120   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00121"></a>00121   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> schema;
+<a name="l00122"></a>00122   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;get_schema(name.c_str(), schema)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00123"></a>00123     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00124"></a>00124   <span class="keywordflow">return</span> schema;
+<a name="l00125"></a>00125 }
+<a name="l00126"></a>00126 
 <a name="l00127"></a>00127 
 <a name="l00128"></a>00128 
-<a name="l00129"></a>00129 
-<a name="l00132"></a><a class="code" href="class_hypertable_1_1_client.html#f8a1ff240e9587a7b3d1fb4d118f5ef1">00132</a> <span class="keywordtype">void</span> Client::get_tables(std::vector&lt;String&gt; &amp;tables) {
-<a name="l00133"></a>00133   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00134"></a>00134   uint64_t handle;
-<a name="l00135"></a>00135   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> null_handle_callback;
-<a name="l00136"></a>00136   std::vector&lt;Hyperspace::DirEntry&gt; listing;
+<a name="l00131"></a><a class="code" href="class_hypertable_1_1_client.html#f8a1ff240e9587a7b3d1fb4d118f5ef1">00131</a> <span class="keywordtype">void</span> Client::get_tables(std::vector&lt;String&gt; &amp;tables) {
+<a name="l00132"></a>00132   uint64_t handle;
+<a name="l00133"></a>00133   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> null_handle_callback;
+<a name="l00134"></a>00134   std::vector&lt;Hyperspace::DirEntry&gt; listing;
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136   handle = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/tables"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_handle_callback);
 <a name="l00137"></a>00137 
-<a name="l00138"></a>00138   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/tables"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_handle_callback, &amp;handle)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00139"></a>00139     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00140"></a>00140 
-<a name="l00141"></a>00141   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;readdir(handle, listing)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00142"></a>00142     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;listing.size(); i++) {
-<a name="l00145"></a>00145     <span class="keywordflow">if</span> (!listing[i].is_dir)
-<a name="l00146"></a>00146       tables.push_back(listing[i].name);
-<a name="l00147"></a>00147   }
+<a name="l00138"></a>00138   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;readdir(handle, listing);
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;listing.size(); i++) {
+<a name="l00141"></a>00141     <span class="keywordflow">if</span> (!listing[i].is_dir)
+<a name="l00142"></a>00142       tables.push_back(listing[i].name);
+<a name="l00143"></a>00143   }
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;close(handle);
+<a name="l00146"></a>00146 
+<a name="l00147"></a>00147 }
 <a name="l00148"></a>00148 
-<a name="l00149"></a>00149   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;close(handle);
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151 }
-<a name="l00152"></a>00152 
-<a name="l00153"></a>00153 
-<a name="l00154"></a><a class="code" href="class_hypertable_1_1_client.html#e6cdb5c83a4eca78c57ffd571abdd644">00154</a> <span class="keywordtype">void</span> Client::drop_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keywordtype">bool</span> if_exists) {
-<a name="l00155"></a>00155   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00156"></a>00156   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;drop_table(name.c_str(), if_exists)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00157"></a>00157     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00158"></a>00158 }
-<a name="l00159"></a>00159 
-<a name="l00160"></a><a class="code" href="class_hypertable_1_1_client.html#3c1f75dd30ecd5a2817f3b47c2afc458">00160</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#aca1d768a1eaa6e31699624d1830620f" title="Shuts down the DFS broker.">Client::shutdown</a>() {
-<a name="l00161"></a>00161   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00162"></a>00162   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;shutdown()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00163"></a>00163     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00164"></a>00164 }
-<a name="l00165"></a>00165 
+<a name="l00149"></a>00149 
+<a name="l00150"></a><a class="code" href="class_hypertable_1_1_client.html#e6cdb5c83a4eca78c57ffd571abdd644">00150</a> <span class="keywordtype">void</span> Client::drop_table(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keywordtype">bool</span> if_exists) {
+<a name="l00151"></a>00151   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00152"></a>00152   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;drop_table(name.c_str(), if_exists)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00153"></a>00153     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00154"></a>00154 }
+<a name="l00155"></a>00155 
+<a name="l00156"></a><a class="code" href="class_hypertable_1_1_client.html#3c1f75dd30ecd5a2817f3b47c2afc458">00156</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#aca1d768a1eaa6e31699624d1830620f" title="Shuts down the DFS broker.">Client::shutdown</a>() {
+<a name="l00157"></a>00157   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00158"></a>00158   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;shutdown()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00159"></a>00159     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00160"></a>00160 }
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 
+<a name="l00163"></a><a class="code" href="class_hypertable_1_1_client.html#fd5523760f67ab8df1d822791eece99f">00163</a> <a class="code" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a> *Client::create_hql_interpreter() {
+<a name="l00164"></a>00164   <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a>(<span class="keyword">this</span>);
+<a name="l00165"></a>00165 }
 <a name="l00166"></a>00166 
-<a name="l00167"></a><a class="code" href="class_hypertable_1_1_client.html#fd5523760f67ab8df1d822791eece99f">00167</a> <a class="code" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a> *Client::create_hql_interpreter() {
-<a name="l00168"></a>00168   <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a>(<span class="keyword">this</span>);
-<a name="l00169"></a>00169 }
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169 <span class="comment">// ------------- PRIVATE METHODS -----------------</span>
 <a name="l00170"></a>00170 
 <a name="l00171"></a>00171 
 <a name="l00172"></a>00172 
-<a name="l00173"></a>00173 <span class="comment">// ------------- PRIVATE METHODS -----------------</span>
+<a name="l00173"></a><a class="code" href="class_hypertable_1_1_client.html#111cab9d55c885b3238f1de3dec0da1e">00173</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Client::initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config_file) {
 <a name="l00174"></a>00174 
-<a name="l00175"></a>00175 
+<a name="l00175"></a>00175   <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config_file);
 <a name="l00176"></a>00176 
-<a name="l00177"></a><a class="code" href="class_hypertable_1_1_client.html#111cab9d55c885b3238f1de3dec0da1e">00177</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Client::initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config_file) {
-<a name="l00178"></a>00178   time_t master_timeout;
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180   <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config_file);
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a> = <a class="code" href="class_hypertable_1_1_comm.html#193565c5dddb894233ad534e5f11b8f7">Comm::instance</a>();
-<a name="l00183"></a>00183   <a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>);
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>, <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>);
-<a name="l00186"></a>00186   <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;wait_for_connection(2)) {
-<a name="l00187"></a>00187     cout &lt;&lt; <span class="stringliteral">"Waiting for connection to Hyperspace..."</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1e4764e9f936f36709466d60f346c8aa">flush</a>;
-<a name="l00188"></a>00188     poll(0, 0, 5000);
-<a name="l00189"></a>00189     cout &lt;&lt; endl &lt;&lt; flush;
-<a name="l00190"></a>00190   }
-<a name="l00191"></a>00191 
-<a name="l00192"></a>00192   <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(1);
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194   master_timeout = <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>-&gt;get_int(<span class="stringliteral">"Hypertable.Master.Client.Timeout"</span>, 180);
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196   <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_master_client.html">MasterClient</a>(<a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>, master_timeout, <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a>);
-<a name="l00197"></a>00197   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;initiate_connection(0) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00198"></a>00198     <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to establish connection with Master, exiting..."</span>);
-<a name="l00199"></a>00199     exit(1);
-<a name="l00200"></a>00200   }
-<a name="l00201"></a>00201 }
+<a name="l00177"></a>00177   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">m_timeout</a> == -1) {
+<a name="l00178"></a>00178     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">m_timeout</a> = (time_t)<a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>-&gt;get_int(<span class="stringliteral">"Hypertable.Client.Timeout"</span>, <a class="code" href="namespace_hypertable.html#faa9a81e9dd1b06a34dbe30d3af61c6a" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">HYPERTABLE_CLIENT_TIMEOUT</a>);
+<a name="l00179"></a>00179   }
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a> = <a class="code" href="class_hypertable_1_1_comm.html#193565c5dddb894233ad534e5f11b8f7">Comm::instance</a>();
+<a name="l00182"></a>00182   <a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>);
+<a name="l00183"></a>00183   
+<a name="l00184"></a>00184   <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>-&gt;set_int(<span class="stringliteral">"Hyperspace.Client.Timeout"</span>, (<span class="keywordtype">int</span>)<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">m_timeout</a>);
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186   <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>, <a class="code" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a>);
+<a name="l00187"></a>00187   <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>-&gt;wait_for_connection(2)) {
+<a name="l00188"></a>00188     cout &lt;&lt; <span class="stringliteral">"Waiting for connection to Hyperspace..."</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#1e4764e9f936f36709466d60f346c8aa">flush</a>;
+<a name="l00189"></a>00189     poll(0, 0, 5000);
+<a name="l00190"></a>00190     cout &lt;&lt; endl &lt;&lt; flush;
+<a name="l00191"></a>00191   }
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193   <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(1);
+<a name="l00194"></a>00194 
+<a name="l00195"></a>00195   <a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_master_client.html">MasterClient</a>(<a class="code" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a>, <a class="code" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a>, m_timeout, <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a>);
+<a name="l00196"></a>00196   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a>-&gt;initiate_connection(0) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00197"></a>00197     <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to establish connection with Master, exiting..."</span>);
+<a name="l00198"></a>00198     exit(1);
+<a name="l00199"></a>00199   }
+<a name="l00200"></a>00200 }
+<a name="l00201"></a>00201 
 <a name="l00202"></a>00202 
 <a name="l00203"></a>00203 
-<a name="l00204"></a>00204 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:09 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

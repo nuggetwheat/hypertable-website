@@ -39,63 +39,50 @@
 <a name="l00041"></a>00041 };
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="class_hyperspace_1_1_command_attr_get.html#80a2b73e48991b10b51f1a811f612e26">00044</a> <span class="keywordtype">int</span> CommandAttrGet::run() {
+<a name="l00044"></a><a class="code" href="class_hyperspace_1_1_command_attr_get.html#9e06dca1344d239ca55a6081f5ab717b">00044</a> <span class="keywordtype">void</span> CommandAttrGet::run() {
 <a name="l00045"></a>00045   uint64_t handle;
-<a name="l00046"></a>00046   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00047"></a>00047   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() &lt; 2 || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() &gt; 3) {
-<a name="l00050"></a>00050     cerr &lt;&lt; <span class="stringliteral">"Wrong number of arguments.  Type 'help' for usage."</span> &lt;&lt; endl;
-<a name="l00051"></a>00051     <span class="keywordflow">return</span> -1;
-<a name="l00052"></a>00052   }
+<a name="l00046"></a>00046   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() &lt; 2 || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() &gt; 3)
+<a name="l00049"></a>00049     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6dab66564f876c3b482e19a19c59ff7">Error::PARSE_ERROR</a>, <span class="stringliteral">"Wrong number of arguments.  Type 'help' for usage."</span>);
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].second != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second != <span class="stringliteral">""</span>)
+<a name="l00052"></a>00052     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6dab66564f876c3b482e19a19c59ff7">Error::PARSE_ERROR</a>, <span class="stringliteral">"Invalid character '=' in argument."</span>);
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].second != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second != <span class="stringliteral">""</span>) {
-<a name="l00055"></a>00055     cerr &lt;&lt; <span class="stringliteral">"Invalid character '=' in argument."</span> &lt;&lt; endl;
-<a name="l00056"></a>00056     <span class="keywordflow">return</span> -1;
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hyperspace_1_1_util.html#bdd0a167366ad39dee27238b4462c463">Util::get_handle</a>(<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].first, &amp;handle))
-<a name="l00060"></a>00060     <span class="keywordflow">return</span> -1;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_command_attr_get.html#d8321fe35fa2d01fb09d5f78f61c255d">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#aa47f501275f77de829addbb65bed5a1" title="Gets an extended attribute of a file.">attr_get</a>(handle, <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first, value)) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00063"></a>00063     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() == 3) {
-<a name="l00064"></a>00064       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"short"</span>) {
-<a name="l00065"></a>00065         <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 2) {
-<a name="l00066"></a>00066           cerr &lt;&lt; <span class="stringliteral">"Expected 2 byte short, but got "</span> &lt;&lt; value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &lt;&lt; <span class="stringliteral">" bytes"</span> &lt;&lt; endl;
-<a name="l00067"></a>00067           <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>;
-<a name="l00068"></a>00068         }
-<a name="l00069"></a>00069         <span class="keywordtype">short</span> sval;
-<a name="l00070"></a>00070         memcpy(&amp;sval, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 2);
-<a name="l00071"></a>00071         cout &lt;&lt; sval &lt;&lt; endl;
-<a name="l00072"></a>00072       }
-<a name="l00073"></a>00073       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"int"</span>) {
-<a name="l00074"></a>00074         <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 4) {
-<a name="l00075"></a>00075           cerr &lt;&lt; <span class="stringliteral">"Expected 4 byte int, but got "</span> &lt;&lt; value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &lt;&lt; <span class="stringliteral">" bytes"</span> &lt;&lt; endl;
-<a name="l00076"></a>00076           <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>;
-<a name="l00077"></a>00077         }
-<a name="l00078"></a>00078         uint32_t ival;
-<a name="l00079"></a>00079         memcpy(&amp;ival, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 4);
-<a name="l00080"></a>00080         cout &lt;&lt; ival &lt;&lt; endl;
-<a name="l00081"></a>00081       }
-<a name="l00082"></a>00082       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"long"</span>) {
-<a name="l00083"></a>00083         <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 8) {
-<a name="l00084"></a>00084           cerr &lt;&lt; <span class="stringliteral">"Expected 8 byte int, but got "</span> &lt;&lt; value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &lt;&lt; <span class="stringliteral">" bytes"</span> &lt;&lt; endl;
-<a name="l00085"></a>00085           <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>;
-<a name="l00086"></a>00086         }
-<a name="l00087"></a>00087         uint64_t lval;
-<a name="l00088"></a>00088         memcpy(&amp;lval, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 8);
-<a name="l00089"></a>00089         cout &lt;&lt; lval &lt;&lt; endl;
-<a name="l00090"></a>00090       }
-<a name="l00091"></a>00091     }
-<a name="l00092"></a>00092     <span class="keywordflow">else</span> {
-<a name="l00093"></a>00093       std::string valstr = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
-<a name="l00094"></a>00094       cout &lt;&lt; valstr &lt;&lt; endl;
-<a name="l00095"></a>00095     }
-<a name="l00096"></a>00096   }
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098   <span class="keywordflow">return</span> error;
-<a name="l00099"></a>00099 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+<a name="l00054"></a>00054   handle = <a class="code" href="namespace_hyperspace_1_1_util.html#a386bc89daeb13cb931bf9d42ae4f9a9">Util::get_handle</a>(<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].first);
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056   <a class="code" href="class_hyperspace_1_1_command_attr_get.html#d8321fe35fa2d01fb09d5f78f61c255d">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#63a518cdab912e0094a31af7efbe7771" title="Gets an extended attribute of a file.">attr_get</a>(handle, <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first, value);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() == 3) {
+<a name="l00059"></a>00059     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"short"</span>) {
+<a name="l00060"></a>00060       <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 2)
+<a name="l00061"></a>00061         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>, <span class="stringliteral">"Expected 2 byte short, but got %lu bytes"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00062"></a>00062       <span class="keywordtype">short</span> sval;
+<a name="l00063"></a>00063       memcpy(&amp;sval, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 2);
+<a name="l00064"></a>00064       cout &lt;&lt; sval &lt;&lt; endl;
+<a name="l00065"></a>00065     }
+<a name="l00066"></a>00066     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"int"</span>) {
+<a name="l00067"></a>00067       <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 4)
+<a name="l00068"></a>00068         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>, <span class="stringliteral">"Expected 4 byte int, but got %lu bytes"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00069"></a>00069       uint32_t ival;
+<a name="l00070"></a>00070       memcpy(&amp;ival, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 4);
+<a name="l00071"></a>00071       cout &lt;&lt; ival &lt;&lt; endl;
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[2].first == <span class="stringliteral">"long"</span>) {
+<a name="l00074"></a>00074       <span class="keywordflow">if</span> (value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() != 8)
+<a name="l00075"></a>00075         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Error::HYPERSPACE_BAD_ATTRIBUTE</a>, <span class="stringliteral">"Expected 8 byte int, but got %lu bytes"</span>, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00076"></a>00076       uint64_t lval;
+<a name="l00077"></a>00077       memcpy(&amp;lval, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, 8);
+<a name="l00078"></a>00078       cout &lt;&lt; lval &lt;&lt; endl;
+<a name="l00079"></a>00079     }
+<a name="l00080"></a>00080   }
+<a name="l00081"></a>00081   <span class="keywordflow">else</span> {
+<a name="l00082"></a>00082     std::string valstr = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>, value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>());
+<a name="l00083"></a>00083     cout &lt;&lt; valstr &lt;&lt; endl;
+<a name="l00084"></a>00084   }
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

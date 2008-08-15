@@ -31,73 +31,79 @@
 <a name="l00033"></a>00033 <span class="keyword">using namespace </span>Hyperspace;
 <a name="l00034"></a>00034 
 <a name="l00038"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#a80acb1c63d0e083a684d811bcb5d284">00038</a> MetadataRoot::MetadataRoot(<a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr) : m_next(0) {
-<a name="l00039"></a>00039   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00040"></a>00040   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> null_callback;
-<a name="l00041"></a>00041   <span class="keyword">typedef</span> std::list&lt;Schema::AccessGroup *&gt; AgList;
-<a name="l00042"></a>00042   AgList *ag_list = schema_ptr-&gt;get_access_group_list();
-<a name="l00043"></a>00043   <span class="keywordflow">for</span> (AgList::iterator ag_iter = ag_list-&gt;begin(); ag_iter != ag_list-&gt;end(); ag_iter++)
-<a name="l00044"></a>00044     <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>.push_back((*ag_iter)-&gt;name);
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/root"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_callback, &amp;<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00047"></a>00047     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem creating Hyperspace root file '/hypertable/root' - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00048"></a>00048     <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>;
-<a name="l00049"></a>00049   }
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 }
+<a name="l00039"></a>00039   <a class="code" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> null_callback;
+<a name="l00040"></a>00040   <span class="keyword">typedef</span> std::list&lt;Schema::AccessGroup *&gt; AgList;
+<a name="l00041"></a>00041   AgList *ag_list = schema_ptr-&gt;get_access_group_list();
+<a name="l00042"></a>00042   <span class="keywordflow">for</span> (AgList::iterator ag_iter = ag_list-&gt;begin(); ag_iter != ag_list-&gt;end(); ag_iter++)
+<a name="l00043"></a>00043     <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>.push_back((*ag_iter)-&gt;name);
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045   <span class="keywordflow">try</span> {
+<a name="l00046"></a>00046     <a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a> = <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;open(<span class="stringliteral">"/hypertable/root"</span>, <a class="code" href="namespace_hyperspace.html#ec471c22ce7c508c84ea82ac2470374919c89ca87d7b3de63bd78fe36a493622" title="Open file for reading.">OPEN_FLAG_READ</a>, null_callback);
+<a name="l00047"></a>00047   }
+<a name="l00048"></a>00048   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00049"></a>00049     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem opening Hyperspace root file '/hypertable/root' - %s - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()), e.what());
+<a name="l00050"></a>00050     <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>;
+<a name="l00051"></a>00051   }
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053 
+<a name="l00053"></a>00053 }
 <a name="l00054"></a>00054 
-<a name="l00058"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#7ca4257c9e00e6f6195e3ac83e14cbb2">00058</a> <a class="code" href="class_hypertable_1_1_metadata_root.html#7ca4257c9e00e6f6195e3ac83e14cbb2">MetadataRoot::~MetadataRoot</a>() {
-<a name="l00059"></a>00059   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00060"></a>00060   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;close(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00061"></a>00061     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Problem closing Hyperspace handle - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00062"></a>00062   }
-<a name="l00063"></a>00063 }
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066 
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#995c6a09bc12552fdaaca4f8651c0102">00067</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#995c6a09bc12552fdaaca4f8651c0102">MetadataRoot::reset_files_scan</a>() {
-<a name="l00068"></a>00068   <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a> = 0;
-<a name="l00069"></a>00069 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#7ca4257c9e00e6f6195e3ac83e14cbb2">00060</a> <a class="code" href="class_hypertable_1_1_metadata_root.html#7ca4257c9e00e6f6195e3ac83e14cbb2">MetadataRoot::~MetadataRoot</a>() {
+<a name="l00061"></a>00061   <span class="keywordflow">try</span> {
+<a name="l00062"></a>00062     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;close(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>);
+<a name="l00063"></a>00063   }
+<a name="l00064"></a>00064   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00065"></a>00065     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00066"></a>00066   }
+<a name="l00067"></a>00067 }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 
 <a name="l00070"></a>00070 
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#d331aaccab475afb3e9fa58e2363517c">00073</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#d331aaccab475afb3e9fa58e2363517c">MetadataRoot::get_next_files</a>(std::string &amp;ag_name, std::string &amp;files) {
-<a name="l00074"></a>00074   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#995c6a09bc12552fdaaca4f8651c0102">00071</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#995c6a09bc12552fdaaca4f8651c0102">MetadataRoot::reset_files_scan</a>() {
+<a name="l00072"></a>00072   <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a> = 0;
+<a name="l00073"></a>00073 }
+<a name="l00074"></a>00074 
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a> &lt; <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>.size()) {
-<a name="l00077"></a>00077     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
-<a name="l00078"></a>00078     std::string attrname = (std::string)<span class="stringliteral">"files."</span> + <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>[<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>];
-<a name="l00079"></a>00079     <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>++;
-<a name="l00080"></a>00080     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;set_silent_flag(<span class="keyword">true</span>);
-<a name="l00081"></a>00081     <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), value)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00082"></a>00082       <span class="keywordflow">if</span> (error == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Error::HYPERSPACE_ATTR_NOT_FOUND</a>)
-<a name="l00083"></a>00083         <span class="keywordflow">continue</span>;
-<a name="l00084"></a>00084       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem getting attribute '%s' on Hyperspace file '/hypertable/root' - %s"</span>,
-<a name="l00085"></a>00085                    attrname.c_str(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(error));
-<a name="l00086"></a>00086       <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;set_silent_flag(<span class="keyword">false</span>);
-<a name="l00087"></a>00087       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00088"></a>00088     }
-<a name="l00089"></a>00089     files = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00090"></a>00090     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;set_silent_flag(<span class="keyword">false</span>);
-<a name="l00091"></a>00091     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094   <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;set_silent_flag(<span class="keyword">false</span>);
-<a name="l00095"></a>00095   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00096"></a>00096 }
+<a name="l00076"></a>00076 
+<a name="l00077"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#d331aaccab475afb3e9fa58e2363517c">00077</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#d331aaccab475afb3e9fa58e2363517c">MetadataRoot::get_next_files</a>(std::string &amp;ag_name, std::string &amp;files) {
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a> &lt; <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>.size()) {
+<a name="l00080"></a>00080     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
+<a name="l00081"></a>00081     std::string attrname = (std::string)<span class="stringliteral">"files."</span> + <a class="code" href="class_hypertable_1_1_metadata_root.html#5defc8198286ce8a6c5b799d120377fe">m_agnames</a>[<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>];
+<a name="l00082"></a>00082     <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>++;
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084     <span class="keywordflow">try</span> {
+<a name="l00085"></a>00085       <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), value);
+<a name="l00086"></a>00086     }
+<a name="l00087"></a>00087     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00088"></a>00088       <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Error::HYPERSPACE_ATTR_NOT_FOUND</a>)
+<a name="l00089"></a>00089         <span class="keywordflow">continue</span>;
+<a name="l00090"></a>00090       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem getting attribute '%s' on Hyperspace file '/hypertable/root' - %s"</span>,
+<a name="l00091"></a>00091                 attrname.c_str(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00092"></a>00092       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00093"></a>00093     }
+<a name="l00094"></a>00094     files = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00095"></a>00095     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00096"></a>00096   }
 <a name="l00097"></a>00097 
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099 
-<a name="l00100"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#84e4c562e4370847fe38814f3a3a7641">00100</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#84e4c562e4370847fe38814f3a3a7641">MetadataRoot::write_files</a>(std::string &amp;ag_name, std::string &amp;files) {
-<a name="l00101"></a>00101   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00102"></a>00102   std::string attrname = (std::string)<span class="stringliteral">"files."</span> + ag_name;
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_set(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), files.c_str(), files.length())) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00105"></a>00105     <span class="keywordflow">throw</span> <a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a>(error, (std::string)<span class="stringliteral">"Problem creating attribute '"</span> + attrname + <span class="stringliteral">"' on Hyperspace file '/hypertable/root'"</span>);
-<a name="l00106"></a>00106 
-<a name="l00107"></a>00107 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+<a name="l00098"></a>00098   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00099"></a>00099 }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 
+<a name="l00103"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#84e4c562e4370847fe38814f3a3a7641">00103</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#84e4c562e4370847fe38814f3a3a7641">MetadataRoot::write_files</a>(std::string &amp;ag_name, std::string &amp;files) {
+<a name="l00104"></a>00104   std::string attrname = (std::string)<span class="stringliteral">"files."</span> + ag_name;
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <span class="keywordflow">try</span> {
+<a name="l00107"></a>00107     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_set(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), files.c_str(), files.length());
+<a name="l00108"></a>00108   }
+<a name="l00109"></a>00109   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00110"></a>00110     <a class="code" href="_error_8h.html#b49551352d22486918141c548daffc80">HT_THROW2</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, (std::string)<span class="stringliteral">"Problem creating attribute '"</span> + attrname + <span class="stringliteral">"' on Hyperspace file '/hypertable/root'"</span>);
+<a name="l00111"></a>00111   }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

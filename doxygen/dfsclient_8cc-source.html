@@ -54,7 +54,7 @@
 <a name="l00056"></a>00056 
 <a name="l00057"></a><a class="code" href="dfsclient_8cc.html#4deb21328aef40f0e915d5a8026676bf">00057</a>   <span class="keywordtype">char</span> *<a class="code" href="dfsclient_8cc.html#4deb21328aef40f0e915d5a8026676bf">line_read</a> = 0;
 <a name="l00058"></a>00058 
-<a name="l00059"></a><a class="code" href="dfsclient_8cc.html#37d875b670529f88e99d9a73456a0939">00059</a>   <span class="keywordtype">char</span> *<a class="code" href="dfsclient_8cc.html#37d875b670529f88e99d9a73456a0939">rl_gets</a> () {
+<a name="l00059"></a><a class="code" href="dfsclient_8cc.html#e75a372ebf299de23cd383bb848b247c">00059</a>   <span class="keywordtype">char</span> *<a class="code" href="dfsclient_8cc.html#e75a372ebf299de23cd383bb848b247c">rl_gets</a> () {
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061     <span class="keywordflow">if</span> (line_read) {
 <a name="l00062"></a>00062       free (line_read);
@@ -209,61 +209,61 @@
 <a name="l00219"></a>00219         <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
 <a name="l00220"></a>00220           <span class="keywordflow">if</span> (commands[i]-&gt;matches(cmd_str.c_str())) {
 <a name="l00221"></a>00221             commands[i]-&gt;parse_command_line(cmd_str.c_str());
-<a name="l00222"></a>00222             <span class="keywordflow">if</span> (commands[i]-&gt;run() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00223"></a>00223               <span class="keywordflow">return</span> 1;
-<a name="l00224"></a>00224             <span class="keywordflow">break</span>;
-<a name="l00225"></a>00225           }
-<a name="l00226"></a>00226         }
-<a name="l00227"></a>00227         <span class="keywordflow">if</span> (i == commands.size()) {
-<a name="l00228"></a>00228           <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unrecognized command : %s"</span>, cmd_str.c_str());
-<a name="l00229"></a>00229           <span class="keywordflow">return</span> 1;
-<a name="l00230"></a>00230         }
-<a name="l00231"></a>00231         str = strtok(0, <span class="stringliteral">";"</span>);
-<a name="l00232"></a>00232       }
-<a name="l00233"></a>00233       <span class="keywordflow">return</span> 0;
-<a name="l00234"></a>00234     }
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236     cout &lt;&lt; <span class="stringliteral">"Welcome to dsftool, a command-line interface to the DFS broker."</span> &lt;&lt; endl;
-<a name="l00237"></a>00237     cout &lt;&lt; <span class="stringliteral">"Type 'help' for a description of commands."</span> &lt;&lt; endl;
-<a name="l00238"></a>00238     cout &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00239"></a>00239 
-<a name="l00240"></a>00240     using_history();
-<a name="l00241"></a>00241     <span class="keywordflow">while</span> ((line = <a class="code" href="dfsclient_8cc.html#37d875b670529f88e99d9a73456a0939">rl_gets</a>()) != 0) {
-<a name="l00242"></a>00242 
-<a name="l00243"></a>00243       <span class="keywordflow">if</span> (*line == 0)
-<a name="l00244"></a>00244         <span class="keywordflow">continue</span>;
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246       <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
-<a name="l00247"></a>00247         <span class="keywordflow">if</span> (commands[i]-&gt;matches(line)) {
-<a name="l00248"></a>00248           commands[i]-&gt;parse_command_line(line);
-<a name="l00249"></a>00249           commands[i]-&gt;run();
-<a name="l00250"></a>00250           <span class="keywordflow">break</span>;
-<a name="l00251"></a>00251         }
-<a name="l00252"></a>00252       }
-<a name="l00253"></a>00253 
-<a name="l00254"></a>00254       <span class="keywordflow">if</span> (i == commands.size()) {
-<a name="l00255"></a>00255         <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"quit"</span>) || !strcmp(line, <span class="stringliteral">"exit"</span>))
-<a name="l00256"></a>00256           exit(0);
-<a name="l00257"></a>00257         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"help"</span>)) {
-<a name="l00258"></a>00258           cout &lt;&lt; endl;
-<a name="l00259"></a>00259           <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
-<a name="l00260"></a>00260             Usage::dump(commands[i]-&gt;<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>());
-<a name="l00261"></a>00261             cout &lt;&lt; endl;
-<a name="l00262"></a>00262           }
-<a name="l00263"></a>00263         }
-<a name="l00264"></a>00264         <span class="keywordflow">else</span>
-<a name="l00265"></a>00265           cout &lt;&lt; <span class="stringliteral">"Unrecognized command."</span> &lt;&lt; endl;
-<a name="l00266"></a>00266       }
-<a name="l00267"></a>00267 
-<a name="l00268"></a>00268     }
-<a name="l00269"></a>00269   }
-<a name="l00270"></a>00270   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00271"></a>00271     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"exception: %s - %s"</span>, <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()), e.what());
+<a name="l00222"></a>00222             commands[i]-&gt;run();
+<a name="l00223"></a>00223             <span class="keywordflow">break</span>;
+<a name="l00224"></a>00224           }
+<a name="l00225"></a>00225         }
+<a name="l00226"></a>00226         <span class="keywordflow">if</span> (i == commands.size()) {
+<a name="l00227"></a>00227           <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unrecognized command : %s"</span>, cmd_str.c_str());
+<a name="l00228"></a>00228           <span class="keywordflow">return</span> 1;
+<a name="l00229"></a>00229         }
+<a name="l00230"></a>00230         str = strtok(0, <span class="stringliteral">";"</span>);
+<a name="l00231"></a>00231       }
+<a name="l00232"></a>00232       <span class="keywordflow">return</span> 0;
+<a name="l00233"></a>00233     }
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235     cout &lt;&lt; <span class="stringliteral">"Welcome to dsftool, a command-line interface to the DFS broker."</span> &lt;&lt; endl;
+<a name="l00236"></a>00236     cout &lt;&lt; <span class="stringliteral">"Type 'help' for a description of commands."</span> &lt;&lt; endl;
+<a name="l00237"></a>00237     cout &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
+<a name="l00238"></a>00238 
+<a name="l00239"></a>00239     using_history();
+<a name="l00240"></a>00240     <span class="keywordflow">while</span> ((line = <a class="code" href="dfsclient_8cc.html#e75a372ebf299de23cd383bb848b247c">rl_gets</a>()) != 0) {
+<a name="l00241"></a>00241 
+<a name="l00242"></a>00242       <span class="keywordflow">if</span> (*line == 0)
+<a name="l00243"></a>00243         <span class="keywordflow">continue</span>;
+<a name="l00244"></a>00244 
+<a name="l00245"></a>00245       <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
+<a name="l00246"></a>00246         <span class="keywordflow">if</span> (commands[i]-&gt;matches(line)) {
+<a name="l00247"></a>00247           commands[i]-&gt;parse_command_line(line);
+<a name="l00248"></a>00248           commands[i]-&gt;run();
+<a name="l00249"></a>00249           <span class="keywordflow">break</span>;
+<a name="l00250"></a>00250         }
+<a name="l00251"></a>00251       }
+<a name="l00252"></a>00252 
+<a name="l00253"></a>00253       <span class="keywordflow">if</span> (i == commands.size()) {
+<a name="l00254"></a>00254         <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"quit"</span>) || !strcmp(line, <span class="stringliteral">"exit"</span>))
+<a name="l00255"></a>00255           exit(0);
+<a name="l00256"></a>00256         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"help"</span>)) {
+<a name="l00257"></a>00257           cout &lt;&lt; endl;
+<a name="l00258"></a>00258           <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
+<a name="l00259"></a>00259             Usage::dump(commands[i]-&gt;<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>());
+<a name="l00260"></a>00260             cout &lt;&lt; endl;
+<a name="l00261"></a>00261           }
+<a name="l00262"></a>00262         }
+<a name="l00263"></a>00263         <span class="keywordflow">else</span>
+<a name="l00264"></a>00264           cout &lt;&lt; <span class="stringliteral">"Unrecognized command."</span> &lt;&lt; endl;
+<a name="l00265"></a>00265       }
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267     }
+<a name="l00268"></a>00268   }
+<a name="l00269"></a>00269   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00270"></a>00270     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"exception: %s - %s"</span>, <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()), e.what());
+<a name="l00271"></a>00271     <span class="keywordflow">return</span> 1;
 <a name="l00272"></a>00272   }
 <a name="l00273"></a>00273 
 <a name="l00274"></a>00274   <span class="keywordflow">return</span> 0;
 <a name="l00275"></a>00275 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

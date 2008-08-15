@@ -84,7 +84,7 @@
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092     <span class="keyword">virtual</span> <span class="keywordtype">void</span> run() {
 <a name="l00093"></a>00093       <a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>.<a class="code" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7" title="This method is used to initialize a response header from a give request header.">initialize_from_request</a>(m_event_ptr-&gt;header);
-<a name="l00094"></a>00094       <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, m_event_ptr-&gt;message_len));
+<a name="l00094"></a>00094       <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, m_event_ptr-&gt;message_len));
 <a name="l00095"></a>00095       cbp-&gt;append_bytes((uint8_t *)m_event_ptr-&gt;message, m_event_ptr-&gt;message_len);
 <a name="l00096"></a>00096       <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="test_server_8cc.html#ffb7a36560f93bdb01c809443608e3eb">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#e753713dc98a1f852b550bde4f9f1f96" title="Sends a response message back over a connection.">send_response</a>(m_event_ptr-&gt;addr, cbp);
 <a name="l00097"></a>00097       <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
@@ -121,7 +121,7 @@
 <a name="l00132"></a>00132       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (event_ptr-&gt;type == Event::MESSAGE) {
 <a name="l00133"></a>00133         <span class="keywordflow">if</span> (<a class="code" href="test_server_8cc.html#b0b0aca6ca5b70bc6153a69c1e62fe92">m_app_queue</a> == 0) {
 <a name="l00134"></a>00134           <a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>.<a class="code" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7" title="This method is used to initialize a response header from a give request header.">initialize_from_request</a>(event_ptr-&gt;header);
-<a name="l00135"></a>00135           <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, event_ptr-&gt;message_len));
+<a name="l00135"></a>00135           <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, event_ptr-&gt;message_len));
 <a name="l00136"></a>00136           cbp-&gt;append_bytes((uint8_t *)event_ptr-&gt;message, event_ptr-&gt;message_len);
 <a name="l00137"></a>00137           <span class="keywordflow">if</span> (<a class="code" href="test_server_8cc.html#d3cc63b9db1513fe470754d9fb6e2f81">g_delay</a> &gt; 0)
 <a name="l00138"></a>00138             poll(0, 0, <a class="code" href="test_server_8cc.html#d3cc63b9db1513fe470754d9fb6e2f81">g_delay</a>);
@@ -151,7 +151,7 @@
 <a name="l00166"></a>00166     <span class="keyword">virtual</span> <span class="keywordtype">void</span> handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
 <a name="l00167"></a>00167       <span class="keywordflow">if</span> (event_ptr-&gt;type == Event::MESSAGE) {
 <a name="l00168"></a>00168         <a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>.<a class="code" href="class_hypertable_1_1_header_builder.html#64a0e791e54c74bb4c1cd6d8f9a977a7" title="This method is used to initialize a response header from a give request header.">initialize_from_request</a>(event_ptr-&gt;header);
-<a name="l00169"></a>00169         <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, event_ptr-&gt;message_len));
+<a name="l00169"></a>00169         <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="test_server_8cc.html#7a4b18924799d4d17375d1105d08f5af">m_header_builder</a>, event_ptr-&gt;message_len));
 <a name="l00170"></a>00170         cbp-&gt;append_bytes((uint8_t *)event_ptr-&gt;message, event_ptr-&gt;message_len);
 <a name="l00171"></a>00171         <span class="keywordflow">if</span> (<a class="code" href="test_server_8cc.html#d3cc63b9db1513fe470754d9fb6e2f81">g_delay</a> &gt; 0)
 <a name="l00172"></a>00172           poll(0, 0, <a class="code" href="test_server_8cc.html#d3cc63b9db1513fe470754d9fb6e2f81">g_delay</a>);
@@ -267,7 +267,7 @@
 <a name="l00289"></a>00289 
 <a name="l00290"></a>00290   <span class="keywordflow">return</span> 0;
 <a name="l00291"></a>00291 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:08 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

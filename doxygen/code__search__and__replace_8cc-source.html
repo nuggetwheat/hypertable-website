@@ -54,7 +54,7 @@
 <a name="l00056"></a>00056     }
 <a name="l00057"></a>00057   };
 <a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordtype">bool</span> <a class="code" href="code__search__and__replace_8cc.html#165a31abf0ff3279e9156a04bfd53e0f">convert_file</a>(<span class="keywordtype">string</span> input_filename, <span class="keywordtype">string</span> license_filename, vector&lt; pair&lt;string, string&gt; &gt; &amp;exchange_strings, <span class="keywordtype">string</span> &amp;converted_contents);
+<a name="l00059"></a>00059   <span class="keywordtype">bool</span> <a class="code" href="code__search__and__replace_8cc.html#458c953dfa2dd71419c2cabfd47c7297">convert_file</a>(<span class="keywordtype">string</span> input_filename, <span class="keywordtype">string</span> license_filename, vector&lt; pair&lt;string, string&gt; &gt; &amp;exchange_strings, <span class="keywordtype">string</span> &amp;converted_contents);
 <a name="l00060"></a>00060 
 <a name="l00061"></a>00061 }
 <a name="l00062"></a>00062 
@@ -153,7 +153,7 @@
 <a name="l00158"></a>00158     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;input_file.size(); i++) {
 <a name="l00159"></a>00159       converted_contents = <span class="stringliteral">""</span>;
 <a name="l00160"></a>00160       cout &lt;&lt; <span class="stringliteral">"Converting '"</span> &lt;&lt; input_file[i] &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00161"></a>00161       <span class="keywordflow">if</span> (!<a class="code" href="code__search__and__replace_8cc.html#165a31abf0ff3279e9156a04bfd53e0f">convert_file</a>(input_file[i], license_name, exchange_strings, converted_contents))
+<a name="l00161"></a>00161       <span class="keywordflow">if</span> (!<a class="code" href="code__search__and__replace_8cc.html#458c953dfa2dd71419c2cabfd47c7297">convert_file</a>(input_file[i], license_name, exchange_strings, converted_contents))
 <a name="l00162"></a>00162         cerr &lt;&lt; <span class="stringliteral">"Problem converting '"</span> &lt;&lt; input_file[i] &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl;
 <a name="l00163"></a>00163       <span class="keywordflow">else</span> {
 <a name="l00164"></a>00164         orig_name = input_file[i];
@@ -192,7 +192,7 @@
 <a name="l00197"></a>00197     }
 <a name="l00198"></a>00198   };
 <a name="l00199"></a>00199 
-<a name="l00200"></a><a class="code" href="code__search__and__replace_8cc.html#165a31abf0ff3279e9156a04bfd53e0f">00200</a>   <span class="keywordtype">bool</span> <a class="code" href="code__search__and__replace_8cc.html#165a31abf0ff3279e9156a04bfd53e0f">convert_file</a>(<span class="keywordtype">string</span> input_filename, <span class="keywordtype">string</span> license_filename, vector&lt; pair&lt;string, string&gt; &gt; &amp;exchange_strings, <span class="keywordtype">string</span> &amp;converted_contents) {
+<a name="l00200"></a><a class="code" href="code__search__and__replace_8cc.html#458c953dfa2dd71419c2cabfd47c7297">00200</a>   <span class="keywordtype">bool</span> <a class="code" href="code__search__and__replace_8cc.html#458c953dfa2dd71419c2cabfd47c7297">convert_file</a>(<span class="keywordtype">string</span> input_filename, <span class="keywordtype">string</span> license_filename, vector&lt; pair&lt;string, string&gt; &gt; &amp;exchange_strings, <span class="keywordtype">string</span> &amp;converted_contents) {
 <a name="l00201"></a>00201     off_t last_offset, flen, license_len;
 <a name="l00202"></a>00202     <span class="keywordtype">char</span> *fcontents = FileUtils::file_to_buffer(input_filename.c_str(), &amp;flen);
 <a name="l00203"></a>00203     <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = fcontents;
@@ -270,7 +270,7 @@
 <a name="l00275"></a>00275 }
 <a name="l00276"></a>00276 
 <a name="l00277"></a>00277 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:08 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -33,7 +33,7 @@
 <a name="l00035"></a>00035 <span class="keyword">namespace </span>{
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 <span class="keywordtype">void</span>
-<a name="l00038"></a><a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">00038</a> <a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">do_tfgc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config, <span class="keywordtype">bool</span> dryrun) {
+<a name="l00038"></a><a class="code" href="htgc_8cc.html#606c2162d99b5f781d677660eda6ae91">00038</a> <a class="code" href="htgc_8cc.html#606c2162d99b5f781d677660eda6ae91">do_tfgc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;config, <span class="keywordtype">bool</span> dryrun) {
 <a name="l00039"></a>00039   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config);
 <a name="l00040"></a>00040   <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
 <a name="l00041"></a>00041   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *fs = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_mgr, props);
@@ -52,7 +52,7 @@
 <a name="l00054"></a>00054       (<span class="stringliteral">"dryrun,n"</span>, <span class="stringliteral">"Dryrun, don't modify (delete files etc.)"</span>)
 <a name="l00055"></a>00055       ;
 <a name="l00056"></a>00056     <a class="code" href="namespace_hypertable_1_1_config.html#9fd29c639899867804354bea6f0c0bc4">Config::init_with_comm</a>(ac, av, &amp;desc);
-<a name="l00057"></a>00057     <a class="code" href="htgc_8cc.html#d330f1540b39d783e1a7d4977b18a6ea">do_tfgc</a>(<a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">Config::cfgfile</a>, <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>.count(<span class="stringliteral">"dryrun"</span>));
+<a name="l00057"></a>00057     <a class="code" href="htgc_8cc.html#606c2162d99b5f781d677660eda6ae91">do_tfgc</a>(<a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">Config::cfgfile</a>, <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">Config::varmap</a>.count(<span class="stringliteral">"dryrun"</span>));
 <a name="l00058"></a>00058   }
 <a name="l00059"></a>00059   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
 <a name="l00060"></a>00060     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
@@ -60,7 +60,7 @@
 <a name="l00062"></a>00062   }
 <a name="l00063"></a>00063   <span class="keywordflow">return</span> 0;
 <a name="l00064"></a>00064 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

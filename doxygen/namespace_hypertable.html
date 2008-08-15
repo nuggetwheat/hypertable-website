@@ -248,6 +248,8 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_hql_help_text.html">HqlHelpText</a></td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a></td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key.html">Key</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Provides access to internal components of opaque key.  <a href="class_hypertable_1_1_key.html#_details">More...</a><br></td></tr>
@@ -314,8 +316,6 @@
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Holds the storage the persistent state of a <a class="el" href="class_hypertable_1_1_range.html" title="Represents a table row range.">Range</a>.  <a href="class_hypertable_1_1_range_state_managed.html#_details">More...</a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_root_file_handler.html">RootFileHandler</a></td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_row_interval_scanner.html">RowIntervalScanner</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_block.html">ScanBlock</a></td></tr>
 
@@ -559,8 +559,8 @@ boost::intrusive_ptr<br>
 &lt; <a class="el" href="class_hypertable_1_1_application_queue.html">ApplicationQueue</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
-boost::shared_ptr<br>
-&lt; <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a></td></tr>
+boost::intrusive_ptr<br>
+&lt; <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
 boost::intrusive_ptr<br>
@@ -674,6 +674,10 @@ boost::intrusive_ptr<br>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
 boost::intrusive_ptr<br>
+&lt; <a class="el" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#ef173465a5b9882abad6254f01771fac">IntervalScannerPtr</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
+boost::intrusive_ptr<br>
 &lt; <a class="el" href="class_hypertable_1_1_location_cache.html">LocationCache</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#64e53ad3fc1019dc1947892704f0bf4f">LocationCachePtr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
@@ -724,10 +728,6 @@ intrusive_ptr<br>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
 intrusive_ptr<br>
 &lt; <a class="el" href="class_hypertable_1_1_range_server_meta_log_reader.html">RangeServerMetaLogReader</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#931a127d778ff4ad42346aa47ec8bdfe">RangeServerMetaLogReaderPtr</a></td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
-boost::intrusive_ptr<br>
-&lt; <a class="el" href="class_hypertable_1_1_row_interval_scanner.html">RowIntervalScanner</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#437b6d60e31ad638dcbccc2ac3a83d84">RowIntervalScannerPtr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
 boost::intrusive_ptr<br>
@@ -1193,7 +1193,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00135">135</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00142">142</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -1231,12 +1231,12 @@ You should have received a copy of the GNU General Public License along with thi
 
 </div>
 </div><p>
-<a class="anchor" name="b8eaad4b43f9b57c9a894a5db2b94989"></a><!-- doxytag: member="Hypertable::CommBufPtr" ref="b8eaad4b43f9b57c9a894a5db2b94989" args="" -->
+<a class="anchor" name="f0d346ab99aa69d3d04df7fa6899f78c"></a><!-- doxytag: member="Hypertable::CommBufPtr" ref="f0d346ab99aa69d3d04df7fa6899f78c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef boost::shared_ptr&lt;<a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a>&gt; <a class="el" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">Hypertable::CommBufPtr</a>          </td>
+          <td class="memname">typedef boost::intrusive_ptr&lt;<a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a>&gt; <a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">Hypertable::CommBufPtr</a>          </td>
         </tr>
       </table>
 </div>
@@ -1244,7 +1244,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00272">272</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00273">273</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
@@ -1418,6 +1418,23 @@ You should have received a copy of the GNU General Public License along with thi
 
 </div>
 </div><p>
+<a class="anchor" name="ef173465a5b9882abad6254f01771fac"></a><!-- doxytag: member="Hypertable::IntervalScannerPtr" ref="ef173465a5b9882abad6254f01771fac" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef boost::intrusive_ptr&lt;<a class="el" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>&gt; <a class="el" href="namespace_hypertable.html#ef173465a5b9882abad6254f01771fac">Hypertable::IntervalScannerPtr</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_interval_scanner_8h-source.html#l00089">89</a> of file <a class="el" href="_interval_scanner_8h-source.html">IntervalScanner.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="82fa393364e88b7eb5372a68372dad20"></a><!-- doxytag: member="Hypertable::IOHandlerAcceptPtr" ref="82fa393364e88b7eb5372a68372dad20" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1482,7 +1499,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 <p>
 
-<p>Definition at line <a class="el" href="_i_o_handler_8h-source.html#l00182">182</a> of file <a class="el" href="_i_o_handler_8h-source.html">IOHandler.h</a>.</p>
+<p>Definition at line <a class="el" href="_i_o_handler_8h-source.html#l00195">195</a> of file <a class="el" href="_i_o_handler_8h-source.html">IOHandler.h</a>.</p>
 
 </div>
 </div><p>
@@ -1788,7 +1805,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00066">66</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00072">72</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
 
 </div>
 </div><p>
@@ -1959,23 +1976,6 @@ You should have received a copy of the GNU General Public License along with thi
 <p>
 
 <p>Definition at line <a class="el" href="_reactor_8h-source.html#l00110">110</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="437b6d60e31ad638dcbccc2ac3a83d84"></a><!-- doxytag: member="Hypertable::RowIntervalScannerPtr" ref="437b6d60e31ad638dcbccc2ac3a83d84" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">typedef boost::intrusive_ptr&lt;<a class="el" href="class_hypertable_1_1_row_interval_scanner.html">RowIntervalScanner</a>&gt; <a class="el" href="namespace_hypertable.html#437b6d60e31ad638dcbccc2ac3a83d84">Hypertable::RowIntervalScannerPtr</a>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_row_interval_scanner_8h-source.html#l00089">89</a> of file <a class="el" href="_row_interval_scanner_8h-source.html">RowIntervalScanner.h</a>.</p>
 
 </div>
 </div><p>
@@ -3720,7 +3720,7 @@ Prints a one-line representation of the key to the given ostream.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8cc-source.html#l00160">160</a> of file <a class="el" href="_error_8cc-source.html">Error.cc</a>.</p>
+<p>Definition at line <a class="el" href="_error_8cc-source.html#l00162">162</a> of file <a class="el" href="_error_8cc-source.html">Error.cc</a>.</p>
 
 </div>
 </div><p>
@@ -4308,7 +4308,7 @@ You should have received a copy of the GNU General Public License along with thi
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:27:48 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:00 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

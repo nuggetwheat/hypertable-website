@@ -58,9 +58,9 @@
 <a name="l00118"></a>00118                 <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;default_handler_ptr);
 <a name="l00119"></a>00119 
 <a name="l00151"></a>00151     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#bd216d0b11df28363c9dc509da01a1f3" title="Sends a request message over a connection, expecting a response.">send_request</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, time_t timeout,
-<a name="l00152"></a>00152                      <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbuf_ptr, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *response_handler);
+<a name="l00152"></a>00152                      <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbuf_ptr, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *response_handler);
 <a name="l00153"></a>00153 
-<a name="l00176"></a>00176     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#e753713dc98a1f852b550bde4f9f1f96" title="Sends a response message back over a connection.">send_response</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbuf_ptr);
+<a name="l00176"></a>00176     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#e753713dc98a1f852b550bde4f9f1f96" title="Sends a response message back over a connection.">send_response</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbuf_ptr);
 <a name="l00177"></a>00177 
 <a name="l00187"></a>00187     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#566a43959b335ffc8b42a49e173c9476" title="Obtains the local address of a socket connection.">get_local_address</a>(<span class="keyword">struct</span> sockaddr_in addr,
 <a name="l00188"></a>00188                           <span class="keyword">struct</span> sockaddr_in *local_addr);
@@ -69,7 +69,7 @@
 <a name="l00202"></a>00202                                         <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> &amp;handler_ptr);
 <a name="l00203"></a>00203 
 <a name="l00216"></a>00216     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#93140a1cd19fa5d1385f210005bbf9b8" title="Sends a datagram to a remote address.">send_datagram</a>(<span class="keyword">struct</span> sockaddr_in &amp;addr, <span class="keyword">struct</span> sockaddr_in &amp;send_addr,
-<a name="l00217"></a>00217                       <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbuf_ptr);
+<a name="l00217"></a>00217                       <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbuf_ptr);
 <a name="l00218"></a>00218 
 <a name="l00230"></a>00230     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_comm.html#546b1ca37db9e0b9d800af2544632413" title="Sets a timer that will generate a TIMER event after some number of milliseconds have...">set_timer</a>(uint64_t duration_millis, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler);
 <a name="l00231"></a>00231 
@@ -96,7 +96,7 @@
 <a name="l00271"></a>00271 } <span class="comment">// namespace Hypertable</span>
 <a name="l00272"></a>00272 
 <a name="l00273"></a>00273 <span class="preprocessor">#endif // HYPERTABLE_COMMENGINE_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:08 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:24 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

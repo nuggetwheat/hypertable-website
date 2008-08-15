@@ -23,23 +23,27 @@
 <a name="l00025"></a>00025 }
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_master_client_8h.html">MasterClient.h</a>"</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_event_handler_master_change_8h.html">EventHandlerMasterChange.h</a>"</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_master_client_8h.html">MasterClient.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_event_handler_master_change_8h.html">EventHandlerMasterChange.h</a>"</span>
 <a name="l00033"></a>00033 
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_event_handler_master_change.html#b2990340ceda0ddf6ee020938ceb4187">00037</a> <span class="keywordtype">void</span> EventHandlerMasterChange::run() {
-<a name="l00038"></a>00038   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   poll(0, 0, rand() % 3000);  <span class="comment">// Randomly wait between 0 and 3 seconds</span>
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_event_handler_master_change.html#e1a350159debfa5082b1dc8b5d60246a">m_master_client</a>-&gt;<a class="code" href="class_hypertable_1_1_master_client.html#77825f3327cc7aaa4b1348216d31ac51">reload_master</a>()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00043"></a>00043     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem reloading master connection - %s"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(error));
-<a name="l00044"></a>00044   }
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:10 2008 for hypertable by&nbsp;
+<a name="l00034"></a>00034 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00035"></a>00035 
+<a name="l00039"></a><a class="code" href="class_hypertable_1_1_event_handler_master_change.html#b2990340ceda0ddf6ee020938ceb4187">00039</a> <span class="keywordtype">void</span> EventHandlerMasterChange::run() {
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041   poll(0, 0, <a class="code" href="class_hypertable_1_1_system.html#bf382bb57751a14f23a9fedd4d2e55d2">System::rand32</a>() % 3000);  <span class="comment">// Randomly wait between 0 and 3 seconds</span>
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043   <span class="keywordflow">try</span> {
+<a name="l00044"></a>00044     <a class="code" href="class_hypertable_1_1_event_handler_master_change.html#e1a350159debfa5082b1dc8b5d60246a">m_master_client</a>-&gt;<a class="code" href="class_hypertable_1_1_master_client.html#e82cb739c2a9511c0308f6487bf62014">reload_master</a>();
+<a name="l00045"></a>00045   }
+<a name="l00046"></a>00046   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00047"></a>00047     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00048"></a>00048   }
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

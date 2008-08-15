@@ -37,153 +37,192 @@
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Logger.h</a>"</span>
 <a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Properties.h</a>"</span>
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="keyword">using namespace </span>std;
-<a name="l00044"></a>00044 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00045"></a>00045 
+<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_string_ext_8h.html">StringExt.h</a>"</span>
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="keyword">using namespace </span>std;
+<a name="l00045"></a>00045 <span class="keyword">using namespace </span>Hypertable;
 <a name="l00046"></a>00046 
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_properties.html#9776373315b3c02f36c479a8ad975bd4">00047</a> <span class="keywordtype">void</span> Properties::load(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname) <span class="keywordflow">throw</span>(std::invalid_argument) {
-<a name="l00048"></a>00048   <span class="keyword">struct </span>stat statbuf;
-<a name="l00049"></a>00049   <span class="keywordtype">char</span> *name, *value, *last, *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *linep;
-<a name="l00050"></a>00050   std::string valstr;
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052   <span class="keywordflow">if</span> (stat(fname, &amp;statbuf) != 0)
-<a name="l00053"></a>00053     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Could not stat properties file '"</span>) + fname + <span class="stringliteral">"' - "</span> + <span class="keywordtype">string</span>(strerror(errno)));
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055   ifstream ifs(fname);
-<a name="l00056"></a>00056   <span class="keywordtype">string</span> line;
-<a name="l00057"></a>00057   <span class="keywordflow">while</span>(getline(ifs, line)) {
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059     linep = (<span class="keywordtype">char</span> *)line.c_str();
-<a name="l00060"></a>00060     <span class="keywordflow">while</span> (*linep &amp;&amp; isspace(*linep))
-<a name="l00061"></a>00061       linep++;
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063     <span class="keywordflow">if</span> (*linep == 0 || *linep == <span class="charliteral">'#'</span>)
-<a name="l00064"></a>00064       <span class="keywordflow">continue</span>;
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066     <span class="keywordflow">if</span> ((name = strtok_r(linep, <span class="stringliteral">"="</span>, &amp;last)) != 0) {
-<a name="l00067"></a>00067       <span class="keywordflow">if</span> ((value = strtok_r(0, <span class="stringliteral">"="</span>, &amp;last)) != 0) {
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069         ptr = name + strlen(name);
-<a name="l00070"></a>00070         <span class="keywordflow">while</span> (ptr &gt; name &amp;&amp; (isspace(*(ptr-1))))
-<a name="l00071"></a>00071           ptr--;
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073         <span class="keywordflow">if</span> (ptr == name)
-<a name="l00074"></a>00074           <span class="keywordflow">continue</span>;
-<a name="l00075"></a>00075         *ptr = 0;
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077         <span class="keywordflow">while</span> (*value &amp;&amp; isspace(*value))
-<a name="l00078"></a>00078           value++;
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080         <span class="keywordflow">if</span> (*value == 0)
-<a name="l00081"></a>00081           <span class="keywordflow">continue</span>;
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083         ptr = value + strlen(value);
-<a name="l00084"></a>00084         <span class="keywordflow">while</span> (ptr &gt; value &amp;&amp; (isspace(*(ptr-1))))
-<a name="l00085"></a>00085           ptr--;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087         <span class="keywordflow">if</span> (ptr == value)
-<a name="l00088"></a>00088           <span class="keywordflow">continue</span>;
-<a name="l00089"></a>00089         *ptr = 0;
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091         <span class="keywordflow">if</span> (*value == <span class="charliteral">'\''</span> &amp;&amp; *(ptr-1) == <span class="charliteral">'\''</span>) {
-<a name="l00092"></a>00092           value++;
-<a name="l00093"></a>00093           *(ptr-1) = 0;
-<a name="l00094"></a>00094           <span class="keywordflow">if</span> (*value == 0)
-<a name="l00095"></a>00095             <span class="keywordflow">continue</span>;
-<a name="l00096"></a>00096         }
-<a name="l00097"></a>00097         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (*value == <span class="charliteral">'"'</span> &amp;&amp; *(ptr-1) == <span class="charliteral">'"'</span>) {
-<a name="l00098"></a>00098           value++;
-<a name="l00099"></a>00099           *(ptr-1) = 0;
-<a name="l00100"></a>00100           <span class="keywordflow">if</span> (*value == 0)
-<a name="l00101"></a>00101             <span class="keywordflow">continue</span>;
-<a name="l00102"></a>00102         }
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104         valstr = value;
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106         m_map[name] = valstr;
-<a name="l00107"></a>00107       }
-<a name="l00108"></a>00108     }
-<a name="l00109"></a>00109   }
-<a name="l00110"></a>00110 }
-<a name="l00111"></a>00111 
-<a name="l00112"></a><a class="code" href="class_hypertable_1_1_properties.html#c0e58480b1fa6fdf29882ba084a0aefd">00112</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *Properties::get(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keyword">const</span> <span class="keywordtype">char</span> *defaultval) {
-<a name="l00113"></a>00113   PropertyMap::iterator iter =  <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(str);
-<a name="l00114"></a>00114   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
-<a name="l00115"></a>00115     <span class="keywordflow">return</span> defaultval;
-<a name="l00116"></a>00116   <span class="keywordflow">return</span> ((*iter).second.c_str());
-<a name="l00117"></a>00117 }
-<a name="l00118"></a>00118 
+<a name="l00047"></a>00047 
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_properties.html#9776373315b3c02f36c479a8ad975bd4">00048</a> <span class="keywordtype">void</span> Properties::load(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname) <span class="keywordflow">throw</span>(std::invalid_argument) {
+<a name="l00049"></a>00049   <span class="keyword">struct </span>stat statbuf;
+<a name="l00050"></a>00050   <span class="keywordtype">char</span> *name, *value, *last, *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *linep;
+<a name="l00051"></a>00051   std::string valstr;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="keywordflow">if</span> (stat(fname, &amp;statbuf) != 0)
+<a name="l00054"></a>00054     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Could not stat properties file '"</span>) + fname + <span class="stringliteral">"' - "</span> + <span class="keywordtype">string</span>(strerror(errno)));
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056   ifstream ifs(fname);
+<a name="l00057"></a>00057   <span class="keywordtype">string</span> line;
+<a name="l00058"></a>00058   <span class="keywordflow">while</span>(getline(ifs, line)) {
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060     linep = (<span class="keywordtype">char</span> *)line.c_str();
+<a name="l00061"></a>00061     <span class="keywordflow">while</span> (*linep &amp;&amp; isspace(*linep))
+<a name="l00062"></a>00062       linep++;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     <span class="keywordflow">if</span> (*linep == 0 || *linep == <span class="charliteral">'#'</span>)
+<a name="l00065"></a>00065       <span class="keywordflow">continue</span>;
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067     <span class="keywordflow">if</span> ((name = strtok_r(linep, <span class="stringliteral">"="</span>, &amp;last)) != 0) {
+<a name="l00068"></a>00068       <span class="keywordflow">if</span> ((value = strtok_r(0, <span class="stringliteral">"="</span>, &amp;last)) != 0) {
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070         ptr = name + strlen(name);
+<a name="l00071"></a>00071         <span class="keywordflow">while</span> (ptr &gt; name &amp;&amp; (isspace(*(ptr-1))))
+<a name="l00072"></a>00072           ptr--;
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074         <span class="keywordflow">if</span> (ptr == name)
+<a name="l00075"></a>00075           <span class="keywordflow">continue</span>;
+<a name="l00076"></a>00076         *ptr = 0;
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078         <span class="keywordflow">while</span> (*value &amp;&amp; isspace(*value))
+<a name="l00079"></a>00079           value++;
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081         <span class="keywordflow">if</span> (*value == 0)
+<a name="l00082"></a>00082           <span class="keywordflow">continue</span>;
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084         ptr = value + strlen(value);
+<a name="l00085"></a>00085         <span class="keywordflow">while</span> (ptr &gt; value &amp;&amp; (isspace(*(ptr-1))))
+<a name="l00086"></a>00086           ptr--;
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088         <span class="keywordflow">if</span> (ptr == value)
+<a name="l00089"></a>00089           <span class="keywordflow">continue</span>;
+<a name="l00090"></a>00090         *ptr = 0;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092         <span class="keywordflow">if</span> (*value == <span class="charliteral">'\''</span> &amp;&amp; *(ptr-1) == <span class="charliteral">'\''</span>) {
+<a name="l00093"></a>00093           value++;
+<a name="l00094"></a>00094           *(ptr-1) = 0;
+<a name="l00095"></a>00095           <span class="keywordflow">if</span> (*value == 0)
+<a name="l00096"></a>00096             <span class="keywordflow">continue</span>;
+<a name="l00097"></a>00097         }
+<a name="l00098"></a>00098         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (*value == <span class="charliteral">'"'</span> &amp;&amp; *(ptr-1) == <span class="charliteral">'"'</span>) {
+<a name="l00099"></a>00099           value++;
+<a name="l00100"></a>00100           *(ptr-1) = 0;
+<a name="l00101"></a>00101           <span class="keywordflow">if</span> (*value == 0)
+<a name="l00102"></a>00102             <span class="keywordflow">continue</span>;
+<a name="l00103"></a>00103         }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105         valstr = value;
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107         m_map[name] = valstr;
+<a name="l00108"></a>00108       }
+<a name="l00109"></a>00109     }
+<a name="l00110"></a>00110   }
+<a name="l00111"></a>00111 }
+<a name="l00112"></a>00112 
+<a name="l00113"></a><a class="code" href="class_hypertable_1_1_properties.html#c0e58480b1fa6fdf29882ba084a0aefd">00113</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *Properties::get(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keyword">const</span> <span class="keywordtype">char</span> *defaultval) {
+<a name="l00114"></a>00114   PropertyMap::iterator iter =  <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(str);
+<a name="l00115"></a>00115   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
+<a name="l00116"></a>00116     <span class="keywordflow">return</span> defaultval;
+<a name="l00117"></a>00117   <span class="keywordflow">return</span> ((*iter).second.c_str());
+<a name="l00118"></a>00118 }
 <a name="l00119"></a>00119 
-<a name="l00123"></a><a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">00123</a> int64_t <a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">Properties::get_int64</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, int64_t defaultval) {
-<a name="l00124"></a>00124   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
+<a name="l00120"></a>00120 
+<a name="l00124"></a><a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">00124</a> int64_t <a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">Properties::get_int64</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, int64_t defaultval) {
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(str);
 <a name="l00127"></a>00127   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
 <a name="l00128"></a>00128     <span class="keywordflow">return</span> defaultval;
 <a name="l00129"></a>00129 
-<a name="l00130"></a>00130   <span class="keywordflow">for</span> (ptr = (*iter).second.c_str(); isdigit(*ptr); ptr++)
-<a name="l00131"></a>00131     ;
+<a name="l00130"></a>00130   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">parse_int_value</a>(str, (*iter).second);
+<a name="l00131"></a>00131 }
 <a name="l00132"></a>00132 
-<a name="l00133"></a>00133   uint64_t factor = 1LL;
-<a name="l00134"></a>00134   <span class="keywordflow">if</span> (*ptr != 0) {
-<a name="l00135"></a>00135     <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"k"</span>))
-<a name="l00136"></a>00136       factor = 1000LL;
-<a name="l00137"></a>00137     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"m"</span>))
-<a name="l00138"></a>00138       factor = 1000000LL;
-<a name="l00139"></a>00139     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"g"</span>))
-<a name="l00140"></a>00140       factor = 1000000000LL;
-<a name="l00141"></a>00141     <span class="keywordflow">else</span>
-<a name="l00142"></a>00142       <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Invalid value for integer property '"</span>) + str + <span class="stringliteral">"' (value="</span> + (*iter).second + <span class="stringliteral">")"</span>);
-<a name="l00143"></a>00143   }
-<a name="l00144"></a>00144 
-<a name="l00145"></a>00145   <span class="keywordtype">string</span> numstr = string((*iter).second.c_str(), ptr-(*iter).second.c_str());
+<a name="l00133"></a><a class="code" href="class_hypertable_1_1_properties.html#01f6e3362c96f7d4370a6f69277cb07d">00133</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_properties.html#01f6e3362c96f7d4370a6f69277cb07d">Properties::get_int</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keywordtype">int</span> defaultval) {
+<a name="l00134"></a>00134   int64_t llval = <a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">get_int64</a>(str, defaultval);
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136   <span class="keywordflow">if</span> (llval &gt; numeric_limits&lt;int&gt;::max())
+<a name="l00137"></a>00137     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Integer value too large for property '"</span>) + str + <span class="stringliteral">"'"</span>);
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139   <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)llval;
+<a name="l00140"></a>00140 }
+<a name="l00141"></a>00141 
+<a name="l00142"></a><a class="code" href="class_hypertable_1_1_properties.html#130b98020c2cdf770fc05feacb953654">00142</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#130b98020c2cdf770fc05feacb953654">Properties::get_bool</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keywordtype">bool</span> defaultval) {
+<a name="l00143"></a>00143   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(str);
+<a name="l00144"></a>00144   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
+<a name="l00145"></a>00145     <span class="keywordflow">return</span> defaultval;
 <a name="l00146"></a>00146 
-<a name="l00147"></a>00147   int64_t llval = strtoll(numstr.c_str(), 0, 0);
-<a name="l00148"></a>00148   <span class="keywordflow">if</span> (llval == 0 &amp;&amp; errno == EINVAL)
-<a name="l00149"></a>00149     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Could not convert property '"</span>) + str + <span class="stringliteral">"' (value="</span> + (*iter).second + <span class="stringliteral">") to an integer"</span>);
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151   <span class="keywordflow">return</span> llval * factor;
-<a name="l00152"></a>00152 }
+<a name="l00147"></a>00147   <span class="keywordflow">if</span> (!strcasecmp((*iter).second.c_str(), <span class="stringliteral">"true"</span>) || !strcmp((*iter).second.c_str(), <span class="stringliteral">"1"</span>))
+<a name="l00148"></a>00148     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00149"></a>00149   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp((*iter).second.c_str(), <span class="stringliteral">"false"</span>) || !strcmp((*iter).second.c_str(), <span class="stringliteral">"0"</span>))
+<a name="l00150"></a>00150     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00151"></a>00151 
+<a name="l00152"></a>00152   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Invalid value for property '%s' (%s), using defaultval value"</span>, str, (*iter).second.c_str());
 <a name="l00153"></a>00153 
-<a name="l00154"></a><a class="code" href="class_hypertable_1_1_properties.html#01f6e3362c96f7d4370a6f69277cb07d">00154</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_properties.html#01f6e3362c96f7d4370a6f69277cb07d">Properties::get_int</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keywordtype">int</span> defaultval) {
-<a name="l00155"></a>00155   int64_t llval = <a class="code" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">get_int64</a>(str, defaultval);
+<a name="l00154"></a>00154   <span class="keywordflow">return</span> defaultval;
+<a name="l00155"></a>00155 }
 <a name="l00156"></a>00156 
-<a name="l00157"></a>00157   <span class="keywordflow">if</span> (llval &gt; numeric_limits&lt;int&gt;::max())
-<a name="l00158"></a>00158     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Integer value too large for property '"</span>) + str + <span class="stringliteral">"'"</span>);
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160   <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)llval;
-<a name="l00161"></a>00161 }
-<a name="l00162"></a>00162 
-<a name="l00163"></a><a class="code" href="class_hypertable_1_1_properties.html#130b98020c2cdf770fc05feacb953654">00163</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#130b98020c2cdf770fc05feacb953654">Properties::get_bool</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str, <span class="keywordtype">bool</span> defaultval) {
-<a name="l00164"></a>00164   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(str);
-<a name="l00165"></a>00165   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
-<a name="l00166"></a>00166     <span class="keywordflow">return</span> defaultval;
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158 
+<a name="l00159"></a><a class="code" href="class_hypertable_1_1_properties.html#2b9de98e6f3fda902c15c0d3149469d7">00159</a> std::string <a class="code" href="class_hypertable_1_1_properties.html#2b9de98e6f3fda902c15c0d3149469d7">Properties::set</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
+<a name="l00160"></a>00160   std::string oldval;
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(key);
+<a name="l00163"></a>00163   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
+<a name="l00164"></a>00164     oldval = (*iter).second;
+<a name="l00165"></a>00165 
+<a name="l00166"></a>00166   <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>[key] = value;
 <a name="l00167"></a>00167 
-<a name="l00168"></a>00168   <span class="keywordflow">if</span> (!strcasecmp((*iter).second.c_str(), <span class="stringliteral">"true"</span>) || !strcmp((*iter).second.c_str(), <span class="stringliteral">"1"</span>))
-<a name="l00169"></a>00169     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00170"></a>00170   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp((*iter).second.c_str(), <span class="stringliteral">"false"</span>) || !strcmp((*iter).second.c_str(), <span class="stringliteral">"0"</span>))
-<a name="l00171"></a>00171     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173   <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Invalid value for property '%s' (%s), using defaultval value"</span>, str, (*iter).second.c_str());
+<a name="l00168"></a>00168   <span class="keywordflow">return</span> oldval;
+<a name="l00169"></a>00169 }
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171 
+<a name="l00172"></a><a class="code" href="class_hypertable_1_1_properties.html#de3401ea97b27c6bf7571406476af5a7">00172</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_properties.html#de3401ea97b27c6bf7571406476af5a7">Properties::set_int</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;key, <span class="keywordtype">int</span> value) {
+<a name="l00173"></a>00173   int64_t old_val = 0;
 <a name="l00174"></a>00174 
-<a name="l00175"></a>00175   <span class="keywordflow">return</span> defaultval;
-<a name="l00176"></a>00176 }
+<a name="l00175"></a>00175   <span class="keywordflow">if</span> (value &gt; numeric_limits&lt;int&gt;::max())
+<a name="l00176"></a>00176     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Integer value too large for property '"</span>) + key + <span class="stringliteral">"'"</span>);
 <a name="l00177"></a>00177 
-<a name="l00178"></a>00178 
-<a name="l00179"></a>00179 
-<a name="l00180"></a><a class="code" href="class_hypertable_1_1_properties.html#2b9de98e6f3fda902c15c0d3149469d7">00180</a> std::string <a class="code" href="class_hypertable_1_1_properties.html#2b9de98e6f3fda902c15c0d3149469d7">Properties::set</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *key, <span class="keyword">const</span> <span class="keywordtype">char</span> *value) {
-<a name="l00181"></a>00181   std::string oldval;
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(key);
-<a name="l00184"></a>00184   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
-<a name="l00185"></a>00185     oldval = (*iter).second;
+<a name="l00178"></a>00178   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(key);
+<a name="l00179"></a>00179   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end()) {
+<a name="l00180"></a>00180     old_val = <a class="code" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">parse_int_value</a>(key, (*iter).second);
+<a name="l00181"></a>00181     <span class="keywordflow">if</span> (old_val &gt; numeric_limits&lt;int&gt;::max())
+<a name="l00182"></a>00182       <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Integer value too large for property '"</span>) + key + <span class="stringliteral">"'"</span>);
+<a name="l00183"></a>00183   }
+<a name="l00184"></a>00184 
+<a name="l00185"></a>00185   <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>[key] = std::string(<span class="stringliteral">""</span>) + value;
 <a name="l00186"></a>00186 
-<a name="l00187"></a>00187   <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>[key] = value;
-<a name="l00188"></a>00188 
-<a name="l00189"></a>00189   <span class="keywordflow">return</span> oldval;
-<a name="l00190"></a>00190 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:08 2008 for hypertable by&nbsp;
+<a name="l00187"></a>00187   <span class="keywordflow">return</span> old_val;
+<a name="l00188"></a>00188 }
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190 
+<a name="l00191"></a><a class="code" href="class_hypertable_1_1_properties.html#cfd4f3edd373daaab3f9410e05d79f07">00191</a> int64_t <a class="code" href="class_hypertable_1_1_properties.html#cfd4f3edd373daaab3f9410e05d79f07">Properties::set_int64</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;key, int64_t value) {
+<a name="l00192"></a>00192   int64_t old_val = 0;
+<a name="l00193"></a>00193 
+<a name="l00194"></a>00194   PropertyMap::iterator iter = <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.find(key);
+<a name="l00195"></a>00195   <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>.end())
+<a name="l00196"></a>00196     old_val = <a class="code" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">parse_int_value</a>(key, (*iter).second);
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198   <a class="code" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a>[key] = std::string(<span class="stringliteral">""</span>) + (<span class="keywordtype">long</span> long)value;
+<a name="l00199"></a>00199 
+<a name="l00200"></a>00200   <span class="keywordflow">return</span> old_val;
+<a name="l00201"></a>00201 }
+<a name="l00202"></a>00202 
+<a name="l00203"></a>00203 
+<a name="l00204"></a><a class="code" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">00204</a> int64_t <a class="code" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">Properties::parse_int_value</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;key, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;value) {
+<a name="l00205"></a>00205   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
+<a name="l00206"></a>00206 
+<a name="l00207"></a>00207   <span class="keywordflow">for</span> (ptr = value.c_str(); isdigit(*ptr); ptr++)
+<a name="l00208"></a>00208     ;
+<a name="l00209"></a>00209 
+<a name="l00210"></a>00210   uint64_t factor = 1LL;
+<a name="l00211"></a>00211   <span class="keywordflow">if</span> (*ptr != 0) {
+<a name="l00212"></a>00212     <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"k"</span>))
+<a name="l00213"></a>00213       factor = 1000LL;
+<a name="l00214"></a>00214     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"m"</span>))
+<a name="l00215"></a>00215       factor = 1000000LL;
+<a name="l00216"></a>00216     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcasecmp(ptr, <span class="stringliteral">"g"</span>))
+<a name="l00217"></a>00217       factor = 1000000000LL;
+<a name="l00218"></a>00218     <span class="keywordflow">else</span>
+<a name="l00219"></a>00219       <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Invalid value for integer property '"</span>) + key + <span class="stringliteral">"' (value="</span> + value + <span class="stringliteral">")"</span>);
+<a name="l00220"></a>00220   }
+<a name="l00221"></a>00221 
+<a name="l00222"></a>00222   <span class="keywordtype">string</span> numstr = string(value.c_str(), ptr-value.c_str());
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224   int64_t llval = strtoll(numstr.c_str(), 0, 0);
+<a name="l00225"></a>00225   <span class="keywordflow">if</span> (llval == 0 &amp;&amp; errno == EINVAL)
+<a name="l00226"></a>00226     <span class="keywordflow">throw</span> std::invalid_argument(<span class="keywordtype">string</span>(<span class="stringliteral">"Could not convert property '"</span>) + key + <span class="stringliteral">"' (value="</span> + value + <span class="stringliteral">") to an integer"</span>);
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228   <span class="keywordflow">return</span> llval * factor;
+<a name="l00229"></a>00229 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

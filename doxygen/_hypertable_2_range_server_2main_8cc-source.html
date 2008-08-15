@@ -82,96 +82,100 @@
 <a name="l00087"></a>00087     <span class="keywordtype">int</span> worker_count;
 <a name="l00088"></a>00088     <a class="code" href="namespace_hyperspace.html#8b89b438bc51f9b99a2b42262a565b9e">TimerHandlerPtr</a> timer_handler_ptr;
 <a name="l00089"></a>00089 
-<a name="l00090"></a>00090     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(System::locate_install_dir(argv[0]));
-<a name="l00091"></a>00091     Global::verbose = <span class="keyword">false</span>;
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093     <span class="keywordflow">if</span> (argc &gt; 1) {
-<a name="l00094"></a>00094       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=1; i&lt;argc; i++) {
-<a name="l00095"></a>00095         <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--config="</span>, 9))
-<a name="l00096"></a>00096           cfgfile = &amp;argv[i][9];
-<a name="l00097"></a>00097         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--log-broker="</span>, 13))
-<a name="l00098"></a>00098           logbroker = &amp;argv[i][13];
-<a name="l00099"></a>00099         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--pidfile="</span>, 10))
-<a name="l00100"></a>00100           pidfile = &amp;argv[i][10];
-<a name="l00101"></a>00101         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--verbose"</span>) || !strcmp(argv[i], <span class="stringliteral">"-v"</span>))
-<a name="l00102"></a>00102           Global::verbose = <span class="keyword">true</span>;
-<a name="l00103"></a>00103         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--crash-test="</span>, 13)) {
-<a name="l00104"></a>00104           <span class="keywordflow">if</span> (Global::crash_test == 0)
-<a name="l00105"></a>00105             Global::crash_test = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_crash_test.html">CrashTest</a>();
-<a name="l00106"></a>00106           Global::crash_test-&gt;parse_option(&amp;argv[i][13]);
-<a name="l00107"></a>00107         }
-<a name="l00108"></a>00108         <span class="keywordflow">else</span>
-<a name="l00109"></a>00109           Usage::dump_and_exit(<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>);
-<a name="l00110"></a>00110       }
-<a name="l00111"></a>00111     }
-<a name="l00112"></a>00112 
-<a name="l00116"></a>00116     srand((<span class="keywordtype">unsigned</span>)getpid());
+<a name="l00090"></a>00090     <span class="keywordflow">try</span> {
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092       <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(System::locate_install_dir(argv[0]));
+<a name="l00093"></a>00093       Global::verbose = <span class="keyword">false</span>;
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095       <span class="keywordflow">if</span> (argc &gt; 1) {
+<a name="l00096"></a>00096         <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=1; i&lt;argc; i++) {
+<a name="l00097"></a>00097           <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--config="</span>, 9))
+<a name="l00098"></a>00098             cfgfile = &amp;argv[i][9];
+<a name="l00099"></a>00099           <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--log-broker="</span>, 13))
+<a name="l00100"></a>00100             logbroker = &amp;argv[i][13];
+<a name="l00101"></a>00101           <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--pidfile="</span>, 10))
+<a name="l00102"></a>00102             pidfile = &amp;argv[i][10];
+<a name="l00103"></a>00103           <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--verbose"</span>) || !strcmp(argv[i], <span class="stringliteral">"-v"</span>))
+<a name="l00104"></a>00104             Global::verbose = <span class="keyword">true</span>;
+<a name="l00105"></a>00105           <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--crash-test="</span>, 13)) {
+<a name="l00106"></a>00106             <span class="keywordflow">if</span> (Global::crash_test == 0)
+<a name="l00107"></a>00107               Global::crash_test = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_crash_test.html">CrashTest</a>();
+<a name="l00108"></a>00108             Global::crash_test-&gt;parse_option(&amp;argv[i][13]);
+<a name="l00109"></a>00109           }
+<a name="l00110"></a>00110           <span class="keywordflow">else</span>
+<a name="l00111"></a>00111             Usage::dump_and_exit(<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>);
+<a name="l00112"></a>00112         }
+<a name="l00113"></a>00113       }
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115       <span class="keywordflow">if</span> (cfgfile == <span class="stringliteral">""</span>)
+<a name="l00116"></a>00116         cfgfile = System::install_dir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
 <a name="l00117"></a>00117 
-<a name="l00118"></a>00118     <span class="keywordflow">if</span> (cfgfile == <span class="stringliteral">""</span>)
-<a name="l00119"></a>00119       cfgfile = System::install_dir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
-<a name="l00120"></a>00120 
-<a name="l00121"></a>00121     props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(cfgfile);
-<a name="l00122"></a>00122     <span class="keywordflow">if</span> (Global::verbose)
-<a name="l00123"></a>00123       props_ptr-&gt;set(<span class="stringliteral">"Hypertable.Verbose"</span>, <span class="stringliteral">"true"</span>);
-<a name="l00124"></a>00124 
-<a name="l00125"></a>00125     <span class="keywordflow">if</span> (logbroker != 0) {
-<a name="l00126"></a>00126       <span class="keywordtype">char</span> *portstr = strchr(logbroker, <span class="charliteral">':'</span>);
-<a name="l00127"></a>00127       <span class="keywordflow">if</span> (portstr == 0) {
-<a name="l00128"></a>00128         <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Invalid address format for --log-broker, must be &lt;host&gt;:&lt;port&gt;"</span>);
-<a name="l00129"></a>00129         exit(1);
-<a name="l00130"></a>00130       }
-<a name="l00131"></a>00131       *portstr++ = 0;
-<a name="l00132"></a>00132       props_ptr-&gt;set(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Host"</span>, logbroker);
-<a name="l00133"></a>00133       props_ptr-&gt;set(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Port"</span>, portstr);
-<a name="l00134"></a>00134     }
-<a name="l00135"></a>00135 
-<a name="l00136"></a>00136     reactor_count = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Reactors"</span>, System::get_processor_count());
-<a name="l00137"></a>00137     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>(reactor_count);
-<a name="l00138"></a>00138     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = Comm::instance();
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140     worker_count = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Workers"</span>, <a class="code" href="_dfs_broker_2kosmos_2main_8cc.html#06f203a70d4baf9e47c28039f448762c">DEFAULT_WORKERS</a>);
+<a name="l00118"></a>00118       props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(cfgfile);
+<a name="l00119"></a>00119       <span class="keywordflow">if</span> (Global::verbose)
+<a name="l00120"></a>00120         props_ptr-&gt;set(<span class="stringliteral">"Hypertable.Verbose"</span>, <span class="stringliteral">"true"</span>);
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122       <span class="keywordflow">if</span> (logbroker != 0) {
+<a name="l00123"></a>00123         <span class="keywordtype">char</span> *portstr = strchr(logbroker, <span class="charliteral">':'</span>);
+<a name="l00124"></a>00124         <span class="keywordflow">if</span> (portstr == 0) {
+<a name="l00125"></a>00125           <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Invalid address format for --log-broker, must be &lt;host&gt;:&lt;port&gt;"</span>);
+<a name="l00126"></a>00126           exit(1);
+<a name="l00127"></a>00127         }
+<a name="l00128"></a>00128         *portstr++ = 0;
+<a name="l00129"></a>00129         props_ptr-&gt;set(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Host"</span>, logbroker);
+<a name="l00130"></a>00130         props_ptr-&gt;set(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Port"</span>, portstr);
+<a name="l00131"></a>00131       }
+<a name="l00132"></a>00132 
+<a name="l00133"></a>00133       reactor_count = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Reactors"</span>, System::get_processor_count());
+<a name="l00134"></a>00134       <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>(reactor_count);
+<a name="l00135"></a>00135       <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = Comm::instance();
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137       worker_count = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.Workers"</span>, <a class="code" href="_dfs_broker_2kosmos_2main_8cc.html#06f203a70d4baf9e47c28039f448762c">DEFAULT_WORKERS</a>);
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139       conn_manager_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(comm);
+<a name="l00140"></a>00140       app_queue_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(worker_count);
 <a name="l00141"></a>00141 
-<a name="l00142"></a>00142     conn_manager_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(comm);
-<a name="l00143"></a>00143     app_queue_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(worker_count);
-<a name="l00144"></a>00144 
-<a name="l00148"></a>00148     Global::hyperspace_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(comm, props_ptr, <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_hyperspace_session_handler.html">HyperspaceSessionHandler</a>());
-<a name="l00149"></a>00149     <span class="keywordflow">if</span> (!Global::hyperspace_ptr-&gt;wait_for_connection(30)) {
-<a name="l00150"></a>00150       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to connect to hyperspace, exiting..."</span>);
-<a name="l00151"></a>00151       exit(1);
-<a name="l00152"></a>00152     }
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154     Global::range_metadata_max_bytes = props_ptr-&gt;get_int64(<span class="stringliteral">"Hypertable.RangeServer.Range.MetadataMaxBytes"</span>, 0LL);
-<a name="l00155"></a>00155 
-<a name="l00156"></a>00156     <span class="keywordflow">if</span> (Global::verbose) {
-<a name="l00157"></a>00157       cout &lt;&lt; <span class="stringliteral">"CPU count = "</span> &lt;&lt; System::get_processor_count() &lt;&lt; endl;
-<a name="l00158"></a>00158       cout &lt;&lt; <span class="stringliteral">"Hypertable.RangeServer.Reactors="</span> &lt;&lt; reactor_count &lt;&lt; endl;
-<a name="l00159"></a>00159       <span class="keywordflow">if</span> (Global::range_metadata_max_bytes != 0)
-<a name="l00160"></a>00160         cout &lt;&lt; <span class="stringliteral">"Hypertable.RangeServer.Range.MetadataMaxBytes="</span> &lt;&lt; Global::range_metadata_max_bytes &lt;&lt; endl;
-<a name="l00161"></a>00161     }
-<a name="l00162"></a>00162 
-<a name="l00163"></a>00163     <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> range_server_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a>(props_ptr, conn_manager_ptr, app_queue_ptr, Global::hyperspace_ptr);
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165     <span class="keywordflow">if</span> (pidfile != <span class="stringliteral">""</span>) {
-<a name="l00166"></a>00166       fstream filestr (pidfile.c_str(), fstream::out);
-<a name="l00167"></a>00167       filestr &lt;&lt; getpid() &lt;&lt; endl;
-<a name="l00168"></a>00168       filestr.close();
-<a name="l00169"></a>00169     }
+<a name="l00145"></a>00145       Global::hyperspace_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(comm, props_ptr, <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_hyperspace_session_handler.html">HyperspaceSessionHandler</a>());
+<a name="l00146"></a>00146       <span class="keywordflow">if</span> (!Global::hyperspace_ptr-&gt;wait_for_connection(30)) {
+<a name="l00147"></a>00147         <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to connect to hyperspace, exiting..."</span>);
+<a name="l00148"></a>00148         exit(1);
+<a name="l00149"></a>00149       }
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151       Global::range_metadata_max_bytes = props_ptr-&gt;get_int64(<span class="stringliteral">"Hypertable.RangeServer.Range.MetadataMaxBytes"</span>, 0LL);
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153       <span class="keywordflow">if</span> (Global::verbose) {
+<a name="l00154"></a>00154         cout &lt;&lt; <span class="stringliteral">"CPU count = "</span> &lt;&lt; System::get_processor_count() &lt;&lt; endl;
+<a name="l00155"></a>00155         cout &lt;&lt; <span class="stringliteral">"Hypertable.RangeServer.Reactors="</span> &lt;&lt; reactor_count &lt;&lt; endl;
+<a name="l00156"></a>00156         <span class="keywordflow">if</span> (Global::range_metadata_max_bytes != 0)
+<a name="l00157"></a>00157           cout &lt;&lt; <span class="stringliteral">"Hypertable.RangeServer.Range.MetadataMaxBytes="</span> &lt;&lt; Global::range_metadata_max_bytes &lt;&lt; endl;
+<a name="l00158"></a>00158       }
+<a name="l00159"></a>00159 
+<a name="l00160"></a>00160       <a class="code" href="namespace_hypertable.html#b0c576f8d33f41c44109740d48206878">RangeServerPtr</a> range_server_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_range_server.html">RangeServer</a>(props_ptr, conn_manager_ptr, app_queue_ptr, Global::hyperspace_ptr);
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162       <span class="keywordflow">if</span> (pidfile != <span class="stringliteral">""</span>) {
+<a name="l00163"></a>00163         fstream filestr (pidfile.c_str(), fstream::out);
+<a name="l00164"></a>00164         filestr &lt;&lt; getpid() &lt;&lt; endl;
+<a name="l00165"></a>00165         filestr.close();
+<a name="l00166"></a>00166       }
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168       <span class="comment">// install maintenance timer</span>
+<a name="l00169"></a>00169       timer_handler_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_timer_handler.html">TimerHandler</a>(comm, range_server_ptr.get());
 <a name="l00170"></a>00170 
-<a name="l00171"></a>00171     <span class="comment">// install maintenance timer</span>
-<a name="l00172"></a>00172     timer_handler_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_timer_handler.html">TimerHandler</a>(comm, range_server_ptr.get());
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174     app_queue_ptr-&gt;join();
-<a name="l00175"></a>00175 
-<a name="l00176"></a>00176     Global::metadata_table_ptr = 0;
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178     ReactorFactory::destroy();
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180     <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Exiting RangeServer."</span>);
-<a name="l00181"></a>00181 
-<a name="l00182"></a>00182   }
-<a name="l00183"></a>00183   exit(1);
-<a name="l00184"></a>00184 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:09 2008 for hypertable by&nbsp;
+<a name="l00171"></a>00171       app_queue_ptr-&gt;join();
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173       Global::metadata_table_ptr = 0;
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175       ReactorFactory::destroy();
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Exiting RangeServer."</span>);
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179     }
+<a name="l00180"></a>00180     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00181"></a>00181       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00182"></a>00182     }
+<a name="l00183"></a>00183   }
+<a name="l00184"></a>00184   exit(1);
+<a name="l00185"></a>00185 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

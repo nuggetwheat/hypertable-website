@@ -48,389 +48,506 @@
 <a name="l00050"></a>00050 <span class="preprocessor">#if defined(__linux__)</span>
 <a name="l00051"></a>00051 <span class="preprocessor"></span>
 <a name="l00052"></a>00052 <span class="keyword">namespace </span>{
-<a name="l00055"></a>00055   ssize_t socket_read(<span class="keywordtype">int</span> fd, <span class="keywordtype">void</span> *vptr, <span class="keywordtype">size_t</span> n) {
-<a name="l00056"></a>00056     <span class="keywordtype">size_t</span> nleft;
-<a name="l00057"></a>00057     ssize_t nread;
-<a name="l00058"></a>00058     <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060     ptr = (<span class="keywordtype">char</span> *)vptr;
-<a name="l00061"></a>00061     nleft = n;
-<a name="l00062"></a>00062     <span class="keywordflow">while</span> (nleft &gt; 0) {
-<a name="l00063"></a>00063       <span class="keywordflow">if</span> ((nread = ::read(fd, ptr, nleft)) &lt; 0) {
-<a name="l00064"></a>00064         <span class="keywordflow">if</span> (errno == EINTR) {
-<a name="l00065"></a>00065           nread = 0; <span class="comment">/* and call read() again */</span>
-<a name="l00066"></a>00066           <span class="keywordflow">continue</span>;
-<a name="l00067"></a>00067         }
-<a name="l00068"></a>00068         <span class="keywordflow">if</span> (nleft &lt; n)
-<a name="l00069"></a>00069           <span class="keywordflow">break</span>;
-<a name="l00070"></a>00070         <span class="keywordflow">return</span> -1;
-<a name="l00071"></a>00071       }
-<a name="l00072"></a>00072       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread == 0)
-<a name="l00073"></a>00073         <span class="keywordflow">break</span>; <span class="comment">/* EOF */</span>
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075       nleft -= nread;
-<a name="l00076"></a>00076       ptr   += nread;
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078     <span class="keywordflow">return</span> n - nleft;
-<a name="l00079"></a>00079   }
-<a name="l00080"></a>00080 }
+<a name="l00053"></a>00053 
+<a name="l00059"></a>00059   ssize_t et_socket_read(<span class="keywordtype">int</span> fd, <span class="keywordtype">void</span> *vptr, <span class="keywordtype">size_t</span> n, <span class="keywordtype">int</span> *errnop, <span class="keywordtype">bool</span> *eofp) {
+<a name="l00060"></a>00060     <span class="keywordtype">size_t</span> nleft;
+<a name="l00061"></a>00061     ssize_t nread;
+<a name="l00062"></a>00062     <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064     ptr = (<span class="keywordtype">char</span> *)vptr;
+<a name="l00065"></a>00065     nleft = n;
+<a name="l00066"></a>00066     <span class="keywordflow">while</span> (nleft &gt; 0) {
+<a name="l00067"></a>00067       <span class="keywordflow">if</span> ((nread = ::read(fd, ptr, nleft)) &lt; 0) {
+<a name="l00068"></a>00068         <span class="keywordflow">if</span> (errno == EINTR) {
+<a name="l00069"></a>00069           nread = 0; <span class="comment">/* and call read() again */</span>
+<a name="l00070"></a>00070           <span class="keywordflow">continue</span>;
+<a name="l00071"></a>00071         }
+<a name="l00072"></a>00072         *errnop = errno;
+<a name="l00073"></a>00073         <span class="keywordflow">if</span> (nleft &lt; n)
+<a name="l00074"></a>00074           <span class="keywordflow">break</span>;
+<a name="l00075"></a>00075         <span class="keywordflow">return</span> -1;
+<a name="l00076"></a>00076       }
+<a name="l00077"></a>00077       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread == 0) {
+<a name="l00078"></a>00078         *eofp = <span class="keyword">true</span>;
+<a name="l00079"></a>00079         <span class="keywordflow">break</span>;
+<a name="l00080"></a>00080       }
 <a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="keywordtype">bool</span> IOHandlerData::handle_event(<span class="keyword">struct</span> epoll_event *event) {
-<a name="l00083"></a>00083 
-<a name="l00084"></a>00084   errno = 0;
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086   <span class="comment">//DisplayEvent(event);</span>
+<a name="l00082"></a>00082       nleft -= nread;
+<a name="l00083"></a>00083       ptr   += nread;
+<a name="l00084"></a>00084     }
+<a name="l00085"></a>00085     <span class="keywordflow">return</span> n - nleft;
+<a name="l00086"></a>00086   }
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLOUT) {
-<a name="l00089"></a>00089     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>()) {
-<a name="l00090"></a>00090       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00091"></a>00091       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00092"></a>00092       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00093"></a>00093     }
-<a name="l00094"></a>00094   }
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLIN) {
-<a name="l00097"></a>00097     <span class="keywordtype">size_t</span> nread, total_read = 0;
-<a name="l00098"></a>00098     <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
-<a name="l00099"></a>00099       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
-<a name="l00100"></a>00100         uint8_t *ptr = ((uint8_t *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>) + (<span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>) - <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
-<a name="l00101"></a>00101         nread = socket_read(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
-<a name="l00102"></a>00102         <span class="keywordflow">if</span> (nread == (<span class="keywordtype">size_t</span>)-1) {
-<a name="l00103"></a>00103           <span class="keywordflow">if</span> (errno == EAGAIN)
-<a name="l00104"></a>00104             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00105"></a>00105           <span class="keywordflow">if</span> (errno != ECONNREFUSED) {
-<a name="l00106"></a>00106             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
-<a name="l00107"></a>00107           }
-<a name="l00108"></a>00108           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00109"></a>00109           <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = (errno == ECONNREFUSED) ? <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4fca06f2563be79f10a82b8d75ee4dc">Error::COMM_CONNECT_ERROR</a> : <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00110"></a>00110           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, error));
-<a name="l00111"></a>00111           <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00112"></a>00112         }
-<a name="l00113"></a>00113         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread == 0) {
-<a name="l00114"></a>00114           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00115"></a>00115           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00116"></a>00116           <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00117"></a>00117         }
-<a name="l00118"></a>00118         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread &lt; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>) {
-<a name="l00119"></a>00119           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> -= nread;
-<a name="l00120"></a>00120           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00121"></a>00121         }
-<a name="l00122"></a>00122         <span class="keywordflow">else</span> {
-<a name="l00123"></a>00123           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a> = <span class="keyword">true</span>;
-<a name="l00124"></a>00124           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> = 0;
-<a name="l00125"></a>00125           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a> = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>];
-<a name="l00126"></a>00126           memcpy(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>, <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>));
-<a name="l00127"></a>00127           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a> + <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
-<a name="l00128"></a>00128           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a> = (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>) - <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
-<a name="l00129"></a>00129           total_read += nread;
-<a name="l00130"></a>00130         }
-<a name="l00131"></a>00131       }
-<a name="l00132"></a>00132       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
-<a name="l00133"></a>00133         nread = socket_read(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a>);
-<a name="l00134"></a>00134         <span class="keywordflow">if</span> (nread &lt; 0) {
-<a name="l00135"></a>00135           <span class="keywordflow">if</span> (errno == EAGAIN)
-<a name="l00136"></a>00136             <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00137"></a>00137           <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
-<a name="l00138"></a>00138           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00139"></a>00139           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00140"></a>00140           <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00088"></a>00088   ssize_t et_socket_writev(<span class="keywordtype">int</span> fd, <span class="keyword">const</span> <span class="keyword">struct</span> iovec *vector, <span class="keywordtype">int</span> count, <span class="keywordtype">int</span> *errnop) {
+<a name="l00089"></a>00089     ssize_t nwritten;
+<a name="l00090"></a>00090     <span class="keywordflow">while</span> ((nwritten = ::writev(fd, vector, count)) &lt;= 0) {
+<a name="l00091"></a>00091       <span class="keywordflow">if</span> (errno == EINTR) {
+<a name="l00092"></a>00092         nwritten = 0; <span class="comment">/* and call write() again */</span>
+<a name="l00093"></a>00093         <span class="keywordflow">continue</span>;
+<a name="l00094"></a>00094       }
+<a name="l00095"></a>00095       *errnop = errno;
+<a name="l00096"></a>00096       <span class="keywordflow">return</span> -1;
+<a name="l00097"></a>00097     }
+<a name="l00098"></a>00098     <span class="keywordflow">return</span> nwritten;
+<a name="l00099"></a>00099   }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 <span class="keywordtype">bool</span> IOHandlerData::handle_event(<span class="keyword">struct</span> epoll_event *event) {
+<a name="l00105"></a>00105   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = 0;
+<a name="l00106"></a>00106   <span class="keywordtype">bool</span> eof = <span class="keyword">false</span>;
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108   <span class="comment">//DisplayEvent(event);</span>
+<a name="l00109"></a>00109 
+<a name="l00110"></a>00110   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLOUT) {
+<a name="l00111"></a>00111     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>()) {
+<a name="l00112"></a>00112       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00113"></a>00113       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00114"></a>00114       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00115"></a>00115     }
+<a name="l00116"></a>00116   }
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLIN) {
+<a name="l00119"></a>00119     <span class="keywordtype">size_t</span> nread;
+<a name="l00120"></a>00120     <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
+<a name="l00121"></a>00121       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
+<a name="l00122"></a>00122         uint8_t *ptr = ((uint8_t *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>) + (<span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>) - <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
+<a name="l00123"></a>00123         nread = et_socket_read(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, &amp;error, &amp;eof);
+<a name="l00124"></a>00124         <span class="keywordflow">if</span> (nread == (<span class="keywordtype">size_t</span>)-1) {
+<a name="l00125"></a>00125           <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00126"></a>00126             <span class="keywordflow">break</span>;
+<a name="l00127"></a>00127           <span class="keywordflow">if</span> (errno != ECONNREFUSED) {
+<a name="l00128"></a>00128             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
+<a name="l00129"></a>00129           }
+<a name="l00130"></a>00130           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00131"></a>00131           error = (errno == ECONNREFUSED) ? <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4fca06f2563be79f10a82b8d75ee4dc">Error::COMM_CONNECT_ERROR</a> : <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00132"></a>00132           <span class="comment">//HT_ERRORF("read returned -1 : %s", strerror(errno));</span>
+<a name="l00133"></a>00133           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, error));
+<a name="l00134"></a>00134           <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00135"></a>00135         }
+<a name="l00136"></a>00136         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread &lt; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>) {
+<a name="l00137"></a>00137           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> -= nread;
+<a name="l00138"></a>00138           <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00139"></a>00139             <span class="keywordflow">break</span>;
+<a name="l00140"></a>00140           error = 0;
 <a name="l00141"></a>00141         }
-<a name="l00142"></a>00142         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread == 0) {
-<a name="l00143"></a>00143           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00144"></a>00144           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00145"></a>00145           <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00146"></a>00146         }
-<a name="l00147"></a>00147         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread &lt; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a>) {
-<a name="l00148"></a>00148           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> += nread;
-<a name="l00149"></a>00149           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a> -= nread;
-<a name="l00150"></a>00150           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00151"></a>00151         }
-<a name="l00152"></a>00152         <span class="keywordflow">else</span> {
-<a name="l00153"></a>00153           <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh = 0;
-<a name="l00154"></a>00154           uint32_t <span class="keywordtype">id</span> = ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>)-&gt;id;
-<a name="l00155"></a>00155           <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) == 0 &amp;&amp;
-<a name="l00156"></a>00156               (<span class="keywordtype">id</span> == 0 || (dh = <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;remove_request(<span class="keywordtype">id</span>)) == 0)) {
-<a name="l00157"></a>00157             <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#1e86802b05a21b167e927cc4ab87b9a4">Header::FLAGS_BIT_IGNORE_RESPONSE</a>) == 0) {
-<a name="l00158"></a>00158               <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received response for non-pending event (id=%d,version=%d,total_len=%d)"</span>,
-<a name="l00159"></a>00159                           <span class="keywordtype">id</span>, ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;<a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>, ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;total_len);
-<a name="l00160"></a>00160             }
-<a name="l00161"></a>00161             <span class="keyword">delete</span> [] m_message;
-<a name="l00162"></a>00162           }
-<a name="l00163"></a>00163           <span class="keywordflow">else</span>
-<a name="l00164"></a>00164             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message), dh);
-<a name="l00165"></a>00165           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#19ae9db2f4f2f07ff732130d92499bb0">reset_incoming_message_state</a>();
-<a name="l00166"></a>00166         }
-<a name="l00167"></a>00167         total_read += nread;
-<a name="l00168"></a>00168       }
-<a name="l00169"></a>00169     }
-<a name="l00170"></a>00170   }
-<a name="l00171"></a>00171 
-<a name="l00172"></a>00172   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLERR) {
-<a name="l00173"></a>00173     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received EPOLLERR on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
-<a name="l00174"></a>00174     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00175"></a>00175     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00176"></a>00176     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00177"></a>00177   }
-<a name="l00178"></a>00178 
-<a name="l00179"></a>00179   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLHUP) {
-<a name="l00180"></a>00180     <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received EPOLLHUP on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
-<a name="l00181"></a>00181     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00182"></a>00182     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00183"></a>00183     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00184"></a>00184   }
-<a name="l00185"></a>00185 
-<a name="l00186"></a>00186   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00187"></a>00187 }
-<a name="l00188"></a>00188 
-<a name="l00189"></a>00189 <span class="preprocessor">#elif defined(__APPLE__)</span>
-<a name="l00190"></a>00190 <span class="preprocessor"></span>
-<a name="l00194"></a>00194 <span class="keywordtype">bool</span> IOHandlerData::handle_event(<span class="keyword">struct</span> kevent *event) {
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196   <span class="comment">//DisplayEvent(event);</span>
-<a name="l00197"></a>00197 
-<a name="l00198"></a>00198   assert(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a> == (<span class="keywordtype">int</span>)event-&gt;ident);
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200   <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_EOF) {
+<a name="l00142"></a>00142         <span class="keywordflow">else</span> {
+<a name="l00143"></a>00143           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a> = <span class="keyword">true</span>;
+<a name="l00144"></a>00144           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> = 0;
+<a name="l00145"></a>00145           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a> = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>];
+<a name="l00146"></a>00146           memcpy(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>, <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>));
+<a name="l00147"></a>00147           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a> + <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
+<a name="l00148"></a>00148           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a> = (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>) - <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
+<a name="l00149"></a>00149         }
+<a name="l00150"></a>00150         <span class="keywordflow">if</span> (eof)
+<a name="l00151"></a>00151           <span class="keywordflow">break</span>;
+<a name="l00152"></a>00152       }
+<a name="l00153"></a>00153       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
+<a name="l00154"></a>00154         nread = et_socket_read(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, m_message_remaining, &amp;error, &amp;eof);
+<a name="l00155"></a>00155         <span class="keywordflow">if</span> (nread &lt; 0) {
+<a name="l00156"></a>00156           <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00157"></a>00157             <span class="keywordflow">break</span>;
+<a name="l00158"></a>00158           <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
+<a name="l00159"></a>00159           <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00160"></a>00160           <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00161"></a>00161           <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00162"></a>00162         }
+<a name="l00163"></a>00163         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nread &lt; m_message_remaining) {
+<a name="l00164"></a>00164           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> += nread;
+<a name="l00165"></a>00165           m_message_remaining -= nread;
+<a name="l00166"></a>00166           <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00167"></a>00167             <span class="keywordflow">break</span>;
+<a name="l00168"></a>00168           error = 0;
+<a name="l00169"></a>00169         }
+<a name="l00170"></a>00170         <span class="keywordflow">else</span> {
+<a name="l00171"></a>00171           <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh = 0;
+<a name="l00172"></a>00172           uint32_t <span class="keywordtype">id</span> = ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>)-&gt;id;
+<a name="l00173"></a>00173           <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) == 0 &amp;&amp;
+<a name="l00174"></a>00174               (<span class="keywordtype">id</span> == 0 || (dh = <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;remove_request(<span class="keywordtype">id</span>)) == 0)) {
+<a name="l00175"></a>00175             <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#1e86802b05a21b167e927cc4ab87b9a4">Header::FLAGS_BIT_IGNORE_RESPONSE</a>) == 0) {
+<a name="l00176"></a>00176               <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received response for non-pending event (id=%d,version=%d,total_len=%d)"</span>,
+<a name="l00177"></a>00177                           <span class="keywordtype">id</span>, ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;<a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>, ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;total_len);
+<a name="l00178"></a>00178             }
+<a name="l00179"></a>00179             <span class="keyword">delete</span> [] m_message;
+<a name="l00180"></a>00180           }
+<a name="l00181"></a>00181           <span class="keywordflow">else</span>
+<a name="l00182"></a>00182             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message), dh);
+<a name="l00183"></a>00183           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#19ae9db2f4f2f07ff732130d92499bb0">reset_incoming_message_state</a>();
+<a name="l00184"></a>00184         }
+<a name="l00185"></a>00185         <span class="keywordflow">if</span> (eof)
+<a name="l00186"></a>00186           <span class="keywordflow">break</span>;
+<a name="l00187"></a>00187       }
+<a name="l00188"></a>00188     }
+<a name="l00189"></a>00189   }
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191 <span class="preprocessor">#if defined(HT_EPOLLET)</span>
+<a name="l00192"></a>00192 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (event-&gt;events &amp; POLLRDHUP) {
+<a name="l00193"></a>00193     <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"Received POLLRDHUP on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
+<a name="l00194"></a>00194     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00195"></a>00195     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00196"></a>00196     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00197"></a>00197   }
+<a name="l00198"></a>00198 <span class="preprocessor">#else</span>
+<a name="l00199"></a>00199 <span class="preprocessor"></span>  <span class="keywordflow">if</span> (eof) {
+<a name="l00200"></a>00200     <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"Received EOF on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
 <a name="l00201"></a>00201     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00202"></a>00202     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a>)
-<a name="l00203"></a>00203       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4fca06f2563be79f10a82b8d75ee4dc">Error::COMM_CONNECT_ERROR</a>));
-<a name="l00204"></a>00204     <span class="keywordflow">else</span>
-<a name="l00205"></a>00205       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00206"></a>00206     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00207"></a>00207   }
-<a name="l00208"></a>00208 
-<a name="l00209"></a>00209   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_WRITE) {
-<a name="l00210"></a>00210     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>()) {
-<a name="l00211"></a>00211       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00212"></a>00212       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00213"></a>00213       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00214"></a>00214     }
-<a name="l00215"></a>00215   }
-<a name="l00216"></a>00216 
-<a name="l00217"></a>00217   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_READ) {
-<a name="l00218"></a>00218     <span class="keywordtype">size_t</span> available = (size_t)event-&gt;data;
-<a name="l00219"></a>00219     <span class="keywordtype">size_t</span> nread;
-<a name="l00220"></a>00220     while (available &gt; 0) {
-<a name="l00221"></a>00221       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
-<a name="l00222"></a>00222         uint8_t *ptr = ((uint8_t *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>) + (<span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>) - <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
-<a name="l00223"></a>00223         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> &lt; available) {
-<a name="l00224"></a>00224           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
-<a name="l00225"></a>00225           <span class="keywordflow">if</span> (nread &lt; 0) {
-<a name="l00226"></a>00226             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
-<a name="l00227"></a>00227             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00228"></a>00228             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00229"></a>00229             <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00230"></a>00230           }
-<a name="l00231"></a>00231           assert(nread == <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
-<a name="l00232"></a>00232           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a> = <span class="keyword">true</span>;
-<a name="l00233"></a>00233           available -= nread;
-<a name="l00234"></a>00234           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> = 0;
-<a name="l00235"></a>00235           m_message = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>];
-<a name="l00236"></a>00236           memcpy(m_message, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>, <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>));
-<a name="l00237"></a>00237           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> = m_message + <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
-<a name="l00238"></a>00238           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a> = (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>) - <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
-<a name="l00239"></a>00239         }
-<a name="l00240"></a>00240         <span class="keywordflow">else</span> {
-<a name="l00241"></a>00241           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, available);
-<a name="l00242"></a>00242           <span class="keywordflow">if</span> (nread &lt; 0) {
-<a name="l00243"></a>00243             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, available, strerror(errno));
-<a name="l00244"></a>00244             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00245"></a>00245             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00246"></a>00246             <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00247"></a>00247           }
-<a name="l00248"></a>00248           assert(nread == available);
-<a name="l00249"></a>00249           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> -= nread;
-<a name="l00250"></a>00250           <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00251"></a>00251         }
-<a name="l00252"></a>00252       }
-<a name="l00253"></a>00253       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
-<a name="l00254"></a>00254         <span class="keywordflow">if</span> (m_message_remaining &lt;= available) {
-<a name="l00255"></a>00255           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, m_message_remaining);
-<a name="l00256"></a>00256           <span class="keywordflow">if</span> (nread &lt; 0) {
-<a name="l00257"></a>00257             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, m_message_remaining, strerror(errno));
-<a name="l00258"></a>00258             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00259"></a>00259             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00260"></a>00260             <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00261"></a>00261           }
-<a name="l00262"></a>00262           assert(nread == m_message_remaining);
-<a name="l00263"></a>00263           available -= nread;
-<a name="l00264"></a>00264 
-<a name="l00265"></a>00265           <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh = 0;
-<a name="l00266"></a>00266           uint32_t <span class="keywordtype">id</span> = ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;id;
-<a name="l00267"></a>00267           <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) == 0 &amp;&amp;
-<a name="l00268"></a>00268               (<span class="keywordtype">id</span> == 0 || (dh = <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;remove_request(<span class="keywordtype">id</span>)) == 0)) {
-<a name="l00269"></a>00269             <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; Header::FLAGS_BIT_IGNORE_RESPONSE) == 0) {
-<a name="l00270"></a>00270               <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received response for non-pending event (id=%d)"</span>, <span class="keywordtype">id</span>);
-<a name="l00271"></a>00271             }
-<a name="l00272"></a>00272             <span class="keyword">delete</span> [] m_message;
-<a name="l00273"></a>00273           }
-<a name="l00274"></a>00274           <span class="keywordflow">else</span>
-<a name="l00275"></a>00275             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message), dh);
-<a name="l00276"></a>00276           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#19ae9db2f4f2f07ff732130d92499bb0">reset_incoming_message_state</a>();
-<a name="l00277"></a>00277         }
-<a name="l00278"></a>00278         <span class="keywordflow">else</span> {
-<a name="l00279"></a>00279           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, available);
-<a name="l00280"></a>00280           <span class="keywordflow">if</span> (nread &lt; 0) {
-<a name="l00281"></a>00281             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, available, strerror(errno));
-<a name="l00282"></a>00282             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
-<a name="l00283"></a>00283             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00284"></a>00284             <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00285"></a>00285           }
-<a name="l00286"></a>00286           assert(nread == available);
-<a name="l00287"></a>00287           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> += nread;
-<a name="l00288"></a>00288           m_message_remaining -= nread;
-<a name="l00289"></a>00289           available = 0;
-<a name="l00290"></a>00290         }
-<a name="l00291"></a>00291       }
-<a name="l00292"></a>00292     }
-<a name="l00293"></a>00293   }
-<a name="l00294"></a>00294 
-<a name="l00295"></a>00295   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00296"></a>00296 }
-<a name="l00297"></a>00297 <span class="preprocessor">#else</span>
-<a name="l00298"></a><a class="code" href="_i_o_handler_data_8cc.html#b625750f606f98bcd0bc081f958de1da">00298</a> <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">ImplementMe</a>;
-<a name="l00299"></a>00299 <span class="preprocessor">#endif</span>
-<a name="l00300"></a>00300 <span class="preprocessor"></span>
-<a name="l00301"></a>00301 
-<a name="l00302"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">00302</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">IOHandlerData::handle_write_readiness</a>() {
-<a name="l00303"></a>00303 
-<a name="l00304"></a>00304   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a> == <span class="keyword">false</span>) {
-<a name="l00305"></a>00305     socklen_t name_len = <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>);
-<a name="l00306"></a>00306     <span class="keywordtype">int</span> sockerr = 0;
-<a name="l00307"></a>00307     socklen_t sockerr_len = <span class="keyword">sizeof</span>(sockerr);
-<a name="l00308"></a>00308 
-<a name="l00309"></a>00309     <span class="keywordflow">if</span> (getsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_ERROR, &amp;sockerr, &amp;sockerr_len) &lt; 0) {
-<a name="l00310"></a>00310       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"getsockopt(SO_ERROR) failed - %s"</span>, strerror(errno));
-<a name="l00311"></a>00311     }
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313     <span class="keywordflow">if</span> (sockerr) {
-<a name="l00314"></a>00314       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"connect() completion error - %s"</span>, strerror(sockerr));
-<a name="l00315"></a>00315       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00316"></a>00316     }
-<a name="l00317"></a>00317 
-<a name="l00318"></a>00318     <span class="keywordtype">int</span> bufsize = 4*32768;
-<a name="l00319"></a>00319     <span class="keywordflow">if</span> (setsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_SNDBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
-<a name="l00320"></a>00320       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"setsockopt(SO_SNDBUF) failed - %s"</span>, strerror(errno));
-<a name="l00321"></a>00321     }
-<a name="l00322"></a>00322     <span class="keywordflow">if</span> (setsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_RCVBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
-<a name="l00323"></a>00323       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"setsockopt(SO_RCVBUF) failed - %s"</span>, strerror(errno));
-<a name="l00324"></a>00324     }
-<a name="l00325"></a>00325 
-<a name="l00326"></a>00326     <span class="keywordflow">if</span> (getsockname(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, (<span class="keyword">struct</span> sockaddr *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, &amp;name_len) &lt; 0) {
-<a name="l00327"></a>00327       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"getsockname(%d) failed - %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
-<a name="l00328"></a>00328       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00329"></a>00329     }
-<a name="l00330"></a>00330     <span class="comment">//clog &lt;&lt; "Connection established." &lt;&lt; endl;</span>
-<a name="l00331"></a>00331     <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a> = <span class="keyword">true</span>;
-<a name="l00332"></a>00332     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860cccdc11418b986f151802fbd94a4a199563">Event::CONNECTION_ESTABLISHED</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
-<a name="l00333"></a>00333   }
-<a name="l00334"></a>00334   <span class="keywordflow">else</span> {
-<a name="l00335"></a>00335     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#7892960b0f497541af6da2a65a5a5123">m_mutex</a>);
-<a name="l00336"></a>00336     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2b2c428426bf999cbf85980b385df17b">flush_send_queue</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00337"></a>00337       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00338"></a>00338     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty())
-<a name="l00339"></a>00339       <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">remove_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
-<a name="l00340"></a>00340   }
-<a name="l00341"></a>00341   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00342"></a>00342 }
+<a name="l00202"></a>00202     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00203"></a>00203     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00204"></a>00204   }
+<a name="l00205"></a>00205 <span class="preprocessor">#endif</span>
+<a name="l00206"></a>00206 <span class="preprocessor"></span>
+<a name="l00207"></a>00207   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLERR) {
+<a name="l00208"></a>00208     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Received EPOLLERR on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
+<a name="l00209"></a>00209     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00210"></a>00210     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00211"></a>00211     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00212"></a>00212   }
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214   <span class="keywordflow">if</span> (event-&gt;events &amp; EPOLLHUP) {
+<a name="l00215"></a>00215     <a class="code" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(<span class="stringliteral">"Received EPOLLHUP on descriptor %d (%s:%d)"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, inet_ntoa(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_addr), ntohs(<a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>.sin_port));
+<a name="l00216"></a>00216     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00217"></a>00217     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00218"></a>00218     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00219"></a>00219   }
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00222"></a>00222 }
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00225"></a>00225 <span class="preprocessor"></span>
+<a name="l00229"></a>00229 <span class="keywordtype">bool</span> IOHandlerData::handle_event(<span class="keyword">struct</span> kevent *event) {
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231   <span class="comment">//DisplayEvent(event);</span>
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233   assert(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a> == (<span class="keywordtype">int</span>)event-&gt;ident);
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235   <span class="keywordflow">if</span> (event-&gt;flags &amp; EV_EOF) {
+<a name="l00236"></a>00236     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00237"></a>00237     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a>)
+<a name="l00238"></a>00238       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4fca06f2563be79f10a82b8d75ee4dc">Error::COMM_CONNECT_ERROR</a>));
+<a name="l00239"></a>00239     <span class="keywordflow">else</span>
+<a name="l00240"></a>00240       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00241"></a>00241     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00242"></a>00242   }
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_WRITE) {
+<a name="l00245"></a>00245     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>()) {
+<a name="l00246"></a>00246       <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00247"></a>00247       <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00248"></a>00248       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00249"></a>00249     }
+<a name="l00250"></a>00250   }
+<a name="l00251"></a>00251 
+<a name="l00252"></a>00252   <span class="keywordflow">if</span> (event-&gt;filter == EVFILT_READ) {
+<a name="l00253"></a>00253     <span class="keywordtype">size_t</span> available = (size_t)event-&gt;data;
+<a name="l00254"></a>00254     <span class="keywordtype">size_t</span> nread;
+<a name="l00255"></a>00255     while (available &gt; 0) {
+<a name="l00256"></a>00256       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
+<a name="l00257"></a>00257         uint8_t *ptr = ((uint8_t *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>) + (<span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>) - <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
+<a name="l00258"></a>00258         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> &lt; available) {
+<a name="l00259"></a>00259           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
+<a name="l00260"></a>00260           <span class="keywordflow">if</span> (nread &lt; 0) {
+<a name="l00261"></a>00261             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>, strerror(errno));
+<a name="l00262"></a>00262             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00263"></a>00263             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00264"></a>00264             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00265"></a>00265           }
+<a name="l00266"></a>00266           assert(nread == <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>);
+<a name="l00267"></a>00267           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a> = <span class="keyword">true</span>;
+<a name="l00268"></a>00268           available -= nread;
+<a name="l00269"></a>00269           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> = 0;
+<a name="l00270"></a>00270           m_message = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>];
+<a name="l00271"></a>00271           memcpy(m_message, &amp;<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>, <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>));
+<a name="l00272"></a>00272           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> = m_message + <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
+<a name="l00273"></a>00273           m_message_remaining = (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#4e3051dc45b195b76065129647b5ce5f">m_message_header</a>.<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#e6a78168f090f37a3e6bbefaed5b12bb">total_len</a>) - <span class="keyword">sizeof</span>(<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a>);
+<a name="l00274"></a>00274         }
+<a name="l00275"></a>00275         <span class="keywordflow">else</span> {
+<a name="l00276"></a>00276           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, ptr, available);
+<a name="l00277"></a>00277           <span class="keywordflow">if</span> (nread &lt; 0) {
+<a name="l00278"></a>00278             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, available, strerror(errno));
+<a name="l00279"></a>00279             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00280"></a>00280             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00281"></a>00281             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00282"></a>00282           }
+<a name="l00283"></a>00283           assert(nread == available);
+<a name="l00284"></a>00284           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a> -= nread;
+<a name="l00285"></a>00285           <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00286"></a>00286         }
+<a name="l00287"></a>00287       }
+<a name="l00288"></a>00288       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>) {
+<a name="l00289"></a>00289         <span class="keywordflow">if</span> (m_message_remaining &lt;= available) {
+<a name="l00290"></a>00290           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, m_message_remaining);
+<a name="l00291"></a>00291           <span class="keywordflow">if</span> (nread &lt; 0) {
+<a name="l00292"></a>00292             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, m_message_remaining, strerror(errno));
+<a name="l00293"></a>00293             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00294"></a>00294             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00295"></a>00295             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00296"></a>00296           }
+<a name="l00297"></a>00297           assert(nread == m_message_remaining);
+<a name="l00298"></a>00298           available -= nread;
+<a name="l00299"></a>00299 
+<a name="l00300"></a>00300           <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh = 0;
+<a name="l00301"></a>00301           uint32_t <span class="keywordtype">id</span> = ((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;id;
+<a name="l00302"></a>00302           <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) == 0 &amp;&amp;
+<a name="l00303"></a>00303               (<span class="keywordtype">id</span> == 0 || (dh = <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;remove_request(<span class="keywordtype">id</span>)) == 0)) {
+<a name="l00304"></a>00304             <span class="keywordflow">if</span> ((((<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message)-&gt;flags &amp; Header::FLAGS_BIT_IGNORE_RESPONSE) == 0) {
+<a name="l00305"></a>00305               <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"Received response for non-pending event (id=%d)"</span>, <span class="keywordtype">id</span>);
+<a name="l00306"></a>00306             }
+<a name="l00307"></a>00307             <span class="keyword">delete</span> [] m_message;
+<a name="l00308"></a>00308           }
+<a name="l00309"></a>00309           <span class="keywordflow">else</span>
+<a name="l00310"></a>00310             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)m_message), dh);
+<a name="l00311"></a>00311           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#19ae9db2f4f2f07ff732130d92499bb0">reset_incoming_message_state</a>();
+<a name="l00312"></a>00312         }
+<a name="l00313"></a>00313         <span class="keywordflow">else</span> {
+<a name="l00314"></a>00314           nread = <a class="code" href="class_hypertable_1_1_file_utils.html#7a06c6d81cb6e0677bbbd7fc83adfe8c">FileUtils::read</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>, available);
+<a name="l00315"></a>00315           <span class="keywordflow">if</span> (nread &lt; 0) {
+<a name="l00316"></a>00316             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"FileUtils::read(%d, len=%d) failure : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, available, strerror(errno));
+<a name="l00317"></a>00317             <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;cancel_requests(<span class="keyword">this</span>);
+<a name="l00318"></a>00318             <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8b863f7be0ee05751ba2e5432b04e50c">Event::DISCONNECT</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00319"></a>00319             <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00320"></a>00320           }
+<a name="l00321"></a>00321           assert(nread == available);
+<a name="l00322"></a>00322           <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a> += nread;
+<a name="l00323"></a>00323           m_message_remaining -= nread;
+<a name="l00324"></a>00324           available = 0;
+<a name="l00325"></a>00325         }
+<a name="l00326"></a>00326       }
+<a name="l00327"></a>00327     }
+<a name="l00328"></a>00328   }
+<a name="l00329"></a>00329 
+<a name="l00330"></a>00330   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00331"></a>00331 }
+<a name="l00332"></a>00332 <span class="preprocessor">#else</span>
+<a name="l00333"></a><a class="code" href="_i_o_handler_data_8cc.html#b625750f606f98bcd0bc081f958de1da">00333</a> <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">ImplementMe</a>;
+<a name="l00334"></a>00334 <span class="preprocessor">#endif</span>
+<a name="l00335"></a>00335 <span class="preprocessor"></span>
+<a name="l00336"></a>00336 
+<a name="l00337"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">00337</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">IOHandlerData::handle_write_readiness</a>() {
+<a name="l00338"></a>00338 
+<a name="l00339"></a>00339   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a> == <span class="keyword">false</span>) {
+<a name="l00340"></a>00340     socklen_t name_len = <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>);
+<a name="l00341"></a>00341     <span class="keywordtype">int</span> sockerr = 0;
+<a name="l00342"></a>00342     socklen_t sockerr_len = <span class="keyword">sizeof</span>(sockerr);
 <a name="l00343"></a>00343 
-<a name="l00344"></a>00344 
-<a name="l00345"></a>00345 
-<a name="l00346"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#db5507c9ca2cb6643e7d9c62e867243d">00346</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#db5507c9ca2cb6643e7d9c62e867243d">IOHandlerData::send_message</a>(<a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbp, time_t timeout, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *disp_handler) {
-<a name="l00347"></a>00347   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#7892960b0f497541af6da2a65a5a5123">m_mutex</a>);
-<a name="l00348"></a>00348   <span class="keywordtype">int</span> error;
-<a name="l00349"></a>00349   <span class="keywordtype">bool</span> initially_empty = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty() ? <span class="keyword">true</span> : <span class="keyword">false</span>;
-<a name="l00350"></a>00350   <a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *mheader = (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)cbp-&gt;data.base;
-<a name="l00351"></a>00351 
-<a name="l00352"></a>00352   <a class="code" href="_logger_8h.html#1d5bdf0d1c2c0656db726f302eb25f54">HT_LOG_ENTER</a>;
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354   <span class="comment">// If request, Add message ID to request cache</span>
-<a name="l00355"></a>00355   if (mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#3457d310bb63871c8b453e7c8e20337d">id</a> != 0 &amp;&amp; disp_handler != 0 &amp;&amp; mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#0fca519b5c0fd2942d6d81963cae0d57">flags</a> &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) {
-<a name="l00356"></a>00356     boost::xtime expire_time;
-<a name="l00357"></a>00357     boost::xtime_get(&amp;expire_time, boost::TIME_UTC);
-<a name="l00358"></a>00358     expire_time.sec += timeout;
-<a name="l00359"></a>00359     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;add_request(mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#3457d310bb63871c8b453e7c8e20337d">id</a>, <span class="keyword">this</span>, disp_handler, expire_time);
-<a name="l00360"></a>00360   }
-<a name="l00361"></a>00361 
-<a name="l00362"></a>00362   <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.push_back(cbp);
-<a name="l00363"></a>00363 
-<a name="l00364"></a>00364   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2b2c428426bf999cbf85980b385df17b">flush_send_queue</a>()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00365"></a>00365     <span class="keywordflow">return</span> error;
-<a name="l00366"></a>00366 
-<a name="l00367"></a>00367   <span class="keywordflow">if</span> (initially_empty &amp;&amp; !<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
-<a name="l00368"></a>00368     <a class="code" href="class_hypertable_1_1_i_o_handler.html#a16d1f29a7987edfc38ea3cac355168c">add_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
-<a name="l00369"></a>00369     <span class="comment">//HT_INFO("Adding Write interest");</span>
-<a name="l00370"></a>00370   }
-<a name="l00371"></a>00371   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!initially_empty &amp;&amp; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
-<a name="l00372"></a>00372     <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">remove_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
-<a name="l00373"></a>00373     <span class="comment">//HT_INFO("Removing Write interest");</span>
-<a name="l00374"></a>00374   }
-<a name="l00375"></a>00375 
-<a name="l00376"></a>00376   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00344"></a>00344     <span class="keywordflow">if</span> (getsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_ERROR, &amp;sockerr, &amp;sockerr_len) &lt; 0) {
+<a name="l00345"></a>00345       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"getsockopt(SO_ERROR) failed - %s"</span>, strerror(errno));
+<a name="l00346"></a>00346     }
+<a name="l00347"></a>00347 
+<a name="l00348"></a>00348     <span class="keywordflow">if</span> (sockerr) {
+<a name="l00349"></a>00349       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"connect() completion error - %s"</span>, strerror(sockerr));
+<a name="l00350"></a>00350       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00351"></a>00351     }
+<a name="l00352"></a>00352 
+<a name="l00353"></a>00353     <span class="keywordtype">int</span> bufsize = 4*32768;
+<a name="l00354"></a>00354     <span class="keywordflow">if</span> (setsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_SNDBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
+<a name="l00355"></a>00355       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"setsockopt(SO_SNDBUF) failed - %s"</span>, strerror(errno));
+<a name="l00356"></a>00356     }
+<a name="l00357"></a>00357     <span class="keywordflow">if</span> (setsockopt(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, SOL_SOCKET, SO_RCVBUF, (<span class="keywordtype">char</span> *)&amp;bufsize, <span class="keyword">sizeof</span>(bufsize)) &lt; 0) {
+<a name="l00358"></a>00358       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"setsockopt(SO_RCVBUF) failed - %s"</span>, strerror(errno));
+<a name="l00359"></a>00359     }
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361     <span class="keywordflow">if</span> (getsockname(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, (<span class="keyword">struct</span> sockaddr *)&amp;<a class="code" href="class_hypertable_1_1_i_o_handler.html#98f4add684d5a0a4a07323e661a075ba">m_local_addr</a>, &amp;name_len) &lt; 0) {
+<a name="l00362"></a>00362       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"getsockname(%d) failed - %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, strerror(errno));
+<a name="l00363"></a>00363       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00364"></a>00364     }
+<a name="l00365"></a>00365     <span class="comment">//clog &lt;&lt; "Connection established." &lt;&lt; endl;</span>
+<a name="l00366"></a>00366     <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a> = <span class="keyword">true</span>;
+<a name="l00367"></a>00367     <a class="code" href="class_hypertable_1_1_i_o_handler.html#f14e49564b19833fcb8514b1cc7fea5f">deliver_event</a>(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>(<a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860cccdc11418b986f151802fbd94a4a199563">Event::CONNECTION_ESTABLISHED</a>, <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#e39c95254013749c0a77351f45b1acae">m_id</a>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#b65e83b9b775401434e96ddb23849e8d">m_addr</a>, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>));
+<a name="l00368"></a>00368   }
+<a name="l00369"></a>00369   <span class="keywordflow">else</span> {
+<a name="l00370"></a>00370     boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#7892960b0f497541af6da2a65a5a5123">m_mutex</a>);
+<a name="l00371"></a>00371     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#201514829b69559631c8bc56fe0b5380">flush_send_queue</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00372"></a>00372       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00373"></a>00373     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty())
+<a name="l00374"></a>00374       <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">remove_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
+<a name="l00375"></a>00375   }
+<a name="l00376"></a>00376   <span class="keywordflow">return</span> <span class="keyword">false</span>;
 <a name="l00377"></a>00377 }
 <a name="l00378"></a>00378 
 <a name="l00379"></a>00379 
 <a name="l00380"></a>00380 
-<a name="l00381"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2b2c428426bf999cbf85980b385df17b">00381</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2b2c428426bf999cbf85980b385df17b">IOHandlerData::flush_send_queue</a>() {
-<a name="l00382"></a>00382   ssize_t nwritten, towrite, remaining;
-<a name="l00383"></a>00383   <span class="keyword">struct </span>iovec vec[2];
-<a name="l00384"></a>00384   <span class="keywordtype">int</span> count;
-<a name="l00385"></a>00385 
-<a name="l00386"></a>00386   <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
-<a name="l00387"></a>00387 
-<a name="l00388"></a>00388     <a class="code" href="namespace_hypertable.html#b8eaad4b43f9b57c9a894a5db2b94989">CommBufPtr</a> &amp;cbp = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.front();
-<a name="l00389"></a>00389 
-<a name="l00390"></a>00390     count = 0;
-<a name="l00391"></a>00391     towrite = 0;
-<a name="l00392"></a>00392     remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
-<a name="l00393"></a>00393     <span class="keywordflow">if</span> (remaining &gt; 0) {
-<a name="l00394"></a>00394       vec[0].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;data_ptr;
-<a name="l00395"></a>00395       vec[0].iov_len = remaining;
-<a name="l00396"></a>00396       towrite = remaining;
-<a name="l00397"></a>00397       ++count;
-<a name="l00398"></a>00398     }
-<a name="l00399"></a>00399     <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
-<a name="l00400"></a>00400       remaining = cbp-&gt;ext.size - (cbp-&gt;ext_ptr - cbp-&gt;ext.base);
-<a name="l00401"></a>00401       <span class="keywordflow">if</span> (remaining &gt; 0) {
-<a name="l00402"></a>00402         vec[count].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;ext_ptr;
-<a name="l00403"></a>00403         vec[count].iov_len = remaining;
-<a name="l00404"></a>00404         towrite += remaining;
-<a name="l00405"></a>00405         ++count;
-<a name="l00406"></a>00406       }
-<a name="l00407"></a>00407     }
-<a name="l00408"></a>00408 
-<a name="l00409"></a>00409     nwritten = <a class="code" href="class_hypertable_1_1_file_utils.html#caddf811916379247c7cc8c4c73e740c">FileUtils::writev</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, vec, count);
-<a name="l00410"></a>00410     <span class="keywordflow">if</span> (nwritten == (ssize_t)-1) {
-<a name="l00411"></a>00411       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"FileUtils::writev(%d, len=%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, towrite, strerror(errno));
-<a name="l00412"></a>00412       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Error::COMM_BROKEN_CONNECTION</a>;
-<a name="l00413"></a>00413     }
-<a name="l00414"></a>00414     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nwritten &lt; towrite) {
-<a name="l00415"></a>00415       <span class="keywordflow">if</span> (nwritten == 0)
-<a name="l00416"></a>00416         <span class="keywordflow">break</span>;
-<a name="l00417"></a>00417       remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
-<a name="l00418"></a>00418       <span class="keywordflow">if</span> (remaining &gt; 0) {
-<a name="l00419"></a>00419         <span class="keywordflow">if</span> (nwritten &lt; remaining) {
-<a name="l00420"></a>00420           cbp-&gt;data_ptr += nwritten;
-<a name="l00421"></a>00421           <span class="keywordflow">break</span>;
-<a name="l00422"></a>00422         }
-<a name="l00423"></a>00423         <span class="keywordflow">else</span> {
-<a name="l00424"></a>00424           nwritten -= remaining;
-<a name="l00425"></a>00425           cbp-&gt;data_ptr += remaining;
-<a name="l00426"></a>00426         }
-<a name="l00427"></a>00427       }
-<a name="l00428"></a>00428       <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
-<a name="l00429"></a>00429         cbp-&gt;ext_ptr += nwritten;
-<a name="l00430"></a>00430         <span class="keywordflow">break</span>;
-<a name="l00431"></a>00431       }
-<a name="l00432"></a>00432     }
-<a name="l00433"></a>00433 
-<a name="l00434"></a>00434     <span class="comment">// buffer written successfully, now remove from queue (which will destroy buffer)</span>
-<a name="l00435"></a>00435     <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.pop_front();
-<a name="l00436"></a>00436   }
-<a name="l00437"></a>00437 
-<a name="l00438"></a>00438   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00439"></a>00439 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:08 2008 for hypertable by&nbsp;
+<a name="l00381"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#db5507c9ca2cb6643e7d9c62e867243d">00381</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#db5507c9ca2cb6643e7d9c62e867243d">IOHandlerData::send_message</a>(<a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp, time_t timeout, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *disp_handler) {
+<a name="l00382"></a>00382   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#7892960b0f497541af6da2a65a5a5123">m_mutex</a>);
+<a name="l00383"></a>00383   <span class="keywordtype">int</span> error;
+<a name="l00384"></a>00384   <span class="keywordtype">bool</span> initially_empty = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty() ? <span class="keyword">true</span> : <span class="keyword">false</span>;
+<a name="l00385"></a>00385   <a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *mheader = (<a class="code" href="struct_hypertable_1_1_header_1_1_common.html" title="HeaderBuilder for field documentation">Header::Common</a> *)cbp-&gt;data.base;
+<a name="l00386"></a>00386 
+<a name="l00387"></a>00387   <a class="code" href="_logger_8h.html#1d5bdf0d1c2c0656db726f302eb25f54">HT_LOG_ENTER</a>;
+<a name="l00388"></a>00388 
+<a name="l00389"></a>00389   <span class="comment">// If request, Add message ID to request cache</span>
+<a name="l00390"></a>00390   if (mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#3457d310bb63871c8b453e7c8e20337d">id</a> != 0 &amp;&amp; disp_handler != 0 &amp;&amp; mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#0fca519b5c0fd2942d6d81963cae0d57">flags</a> &amp; <a class="code" href="class_hypertable_1_1_header.html#77f0f14ef8000c21ba4fc53f2b567691">Header::FLAGS_BIT_REQUEST</a>) {
+<a name="l00391"></a>00391     boost::xtime expire_time;
+<a name="l00392"></a>00392     boost::xtime_get(&amp;expire_time, boost::TIME_UTC);
+<a name="l00393"></a>00393     expire_time.sec += timeout;
+<a name="l00394"></a>00394     <a class="code" href="class_hypertable_1_1_i_o_handler.html#add1f924010daed0529c7696126b98c6">m_reactor_ptr</a>-&gt;add_request(mheader-&gt;<a class="code" href="struct_hypertable_1_1_header_1_1_common.html#3457d310bb63871c8b453e7c8e20337d">id</a>, <span class="keyword">this</span>, disp_handler, expire_time);
+<a name="l00395"></a>00395   }
+<a name="l00396"></a>00396 
+<a name="l00397"></a>00397   <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.push_back(cbp);
+<a name="l00398"></a>00398 
+<a name="l00399"></a>00399   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#201514829b69559631c8bc56fe0b5380">flush_send_queue</a>()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00400"></a>00400     <span class="keywordflow">return</span> error;
+<a name="l00401"></a>00401 
+<a name="l00402"></a>00402   <span class="keywordflow">if</span> (initially_empty &amp;&amp; !<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
+<a name="l00403"></a>00403     <a class="code" href="class_hypertable_1_1_i_o_handler.html#a16d1f29a7987edfc38ea3cac355168c">add_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
+<a name="l00404"></a>00404     <span class="comment">//HT_INFO("Adding Write interest");</span>
+<a name="l00405"></a>00405   }
+<a name="l00406"></a>00406   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!initially_empty &amp;&amp; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
+<a name="l00407"></a>00407     <a class="code" href="class_hypertable_1_1_i_o_handler.html#a9a819d6301bcfc3967ae162518d2400">remove_poll_interest</a>(<a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">Reactor::WRITE_READY</a>);
+<a name="l00408"></a>00408     <span class="comment">//HT_INFO("Removing Write interest");</span>
+<a name="l00409"></a>00409   }
+<a name="l00410"></a>00410 
+<a name="l00411"></a>00411   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00412"></a>00412 }
+<a name="l00413"></a>00413 
+<a name="l00414"></a>00414 
+<a name="l00415"></a>00415 
+<a name="l00416"></a>00416 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00417"></a>00417 <span class="preprocessor"></span>
+<a name="l00418"></a>00418 <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#201514829b69559631c8bc56fe0b5380">IOHandlerData::flush_send_queue</a>() {
+<a name="l00419"></a>00419   ssize_t nwritten, towrite, remaining;
+<a name="l00420"></a>00420   <span class="keyword">struct </span>iovec vec[2];
+<a name="l00421"></a>00421   <span class="keywordtype">int</span> count;
+<a name="l00422"></a>00422   <span class="keywordtype">int</span> error = 0;
+<a name="l00423"></a>00423 
+<a name="l00424"></a>00424   <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426     <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.front();
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428     count = 0;
+<a name="l00429"></a>00429     towrite = 0;
+<a name="l00430"></a>00430     remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
+<a name="l00431"></a>00431     <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00432"></a>00432       vec[0].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;data_ptr;
+<a name="l00433"></a>00433       vec[0].iov_len = remaining;
+<a name="l00434"></a>00434       towrite = remaining;
+<a name="l00435"></a>00435       ++count;
+<a name="l00436"></a>00436     }
+<a name="l00437"></a>00437     <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
+<a name="l00438"></a>00438       remaining = cbp-&gt;ext.size - (cbp-&gt;ext_ptr - cbp-&gt;ext.base);
+<a name="l00439"></a>00439       <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00440"></a>00440         vec[count].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;ext_ptr;
+<a name="l00441"></a>00441         vec[count].iov_len = remaining;
+<a name="l00442"></a>00442         towrite += remaining;
+<a name="l00443"></a>00443         ++count;
+<a name="l00444"></a>00444       }
+<a name="l00445"></a>00445     }
+<a name="l00446"></a>00446 
+<a name="l00447"></a>00447     nwritten = et_socket_writev(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, vec, count, &amp;error);
+<a name="l00448"></a>00448     <span class="keywordflow">if</span> (nwritten == (ssize_t)-1) {
+<a name="l00449"></a>00449       <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00450"></a>00450         <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00451"></a>00451       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"FileUtils::writev(%d, len=%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, towrite, strerror(errno));
+<a name="l00452"></a>00452       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Error::COMM_BROKEN_CONNECTION</a>;
+<a name="l00453"></a>00453     }
+<a name="l00454"></a>00454     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nwritten &lt; towrite) {
+<a name="l00455"></a>00455       <span class="keywordflow">if</span> (nwritten == 0) {
+<a name="l00456"></a>00456         <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00457"></a>00457           <span class="keywordflow">break</span>;
+<a name="l00458"></a>00458         <span class="keywordflow">if</span> (error) {
+<a name="l00459"></a>00459           <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"FileUtils::writev(%d, len=%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, towrite, strerror(error));
+<a name="l00460"></a>00460           <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Error::COMM_BROKEN_CONNECTION</a>;
+<a name="l00461"></a>00461         }
+<a name="l00462"></a>00462         <span class="keywordflow">continue</span>;
+<a name="l00463"></a>00463       }
+<a name="l00464"></a>00464       remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
+<a name="l00465"></a>00465       <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00466"></a>00466         <span class="keywordflow">if</span> (nwritten &lt; remaining) {
+<a name="l00467"></a>00467           cbp-&gt;data_ptr += nwritten;
+<a name="l00468"></a>00468           <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00469"></a>00469             <span class="keywordflow">break</span>;
+<a name="l00470"></a>00470           error = 0;
+<a name="l00471"></a>00471           <span class="keywordflow">continue</span>;
+<a name="l00472"></a>00472         }
+<a name="l00473"></a>00473         <span class="keywordflow">else</span> {
+<a name="l00474"></a>00474           nwritten -= remaining;
+<a name="l00475"></a>00475           cbp-&gt;data_ptr += remaining;
+<a name="l00476"></a>00476         }
+<a name="l00477"></a>00477       }
+<a name="l00478"></a>00478       <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
+<a name="l00479"></a>00479         cbp-&gt;ext_ptr += nwritten;
+<a name="l00480"></a>00480         <span class="keywordflow">if</span> (error == EAGAIN)
+<a name="l00481"></a>00481           <span class="keywordflow">break</span>;
+<a name="l00482"></a>00482         error = 0;
+<a name="l00483"></a>00483         <span class="keywordflow">continue</span>;
+<a name="l00484"></a>00484       }
+<a name="l00485"></a>00485     }
+<a name="l00486"></a>00486 
+<a name="l00487"></a>00487     <span class="comment">// buffer written successfully, now remove from queue (which will destroy buffer)</span>
+<a name="l00488"></a>00488     <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.pop_front();
+<a name="l00489"></a>00489   }
+<a name="l00490"></a>00490 
+<a name="l00491"></a>00491   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00492"></a>00492 }
+<a name="l00493"></a>00493 
+<a name="l00494"></a>00494 <span class="preprocessor">#elif defined(__APPLE__)</span>
+<a name="l00495"></a>00495 <span class="preprocessor"></span>
+<a name="l00496"></a>00496 <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#201514829b69559631c8bc56fe0b5380">IOHandlerData::flush_send_queue</a>() {
+<a name="l00497"></a>00497   ssize_t nwritten, towrite, remaining;
+<a name="l00498"></a>00498   <span class="keyword">struct </span>iovec vec[2];
+<a name="l00499"></a>00499   <span class="keywordtype">int</span> count;
+<a name="l00500"></a>00500 
+<a name="l00501"></a>00501   <span class="keywordflow">while</span> (!<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.empty()) {
+<a name="l00502"></a>00502 
+<a name="l00503"></a>00503     <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp = <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.front();
+<a name="l00504"></a>00504 
+<a name="l00505"></a>00505     count = 0;
+<a name="l00506"></a>00506     towrite = 0;
+<a name="l00507"></a>00507     remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
+<a name="l00508"></a>00508     <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00509"></a>00509       vec[0].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;data_ptr;
+<a name="l00510"></a>00510       vec[0].iov_len = remaining;
+<a name="l00511"></a>00511       towrite = remaining;
+<a name="l00512"></a>00512       ++count;
+<a name="l00513"></a>00513     }
+<a name="l00514"></a>00514     <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
+<a name="l00515"></a>00515       remaining = cbp-&gt;ext.size - (cbp-&gt;ext_ptr - cbp-&gt;ext.base);
+<a name="l00516"></a>00516       <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00517"></a>00517         vec[count].iov_base = (<span class="keywordtype">void</span> *)cbp-&gt;ext_ptr;
+<a name="l00518"></a>00518         vec[count].iov_len = remaining;
+<a name="l00519"></a>00519         towrite += remaining;
+<a name="l00520"></a>00520         ++count;
+<a name="l00521"></a>00521       }
+<a name="l00522"></a>00522     }
+<a name="l00523"></a>00523 
+<a name="l00524"></a>00524     nwritten = <a class="code" href="class_hypertable_1_1_file_utils.html#caddf811916379247c7cc8c4c73e740c">FileUtils::writev</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, vec, count);
+<a name="l00525"></a>00525     <span class="keywordflow">if</span> (nwritten == (ssize_t)-1) {
+<a name="l00526"></a>00526       <a class="code" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(<span class="stringliteral">"FileUtils::writev(%d, len=%d) failed : %s"</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html#bde522cc9ee2c6d9c1c1e848e79fe323">m_sd</a>, towrite, strerror(errno));
+<a name="l00527"></a>00527       <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Error::COMM_BROKEN_CONNECTION</a>;
+<a name="l00528"></a>00528     }
+<a name="l00529"></a>00529     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (nwritten &lt; towrite) {
+<a name="l00530"></a>00530       <span class="keywordflow">if</span> (nwritten == 0)
+<a name="l00531"></a>00531         <span class="keywordflow">break</span>;
+<a name="l00532"></a>00532       remaining = cbp-&gt;data.size - (cbp-&gt;data_ptr - cbp-&gt;data.base);
+<a name="l00533"></a>00533       <span class="keywordflow">if</span> (remaining &gt; 0) {
+<a name="l00534"></a>00534         <span class="keywordflow">if</span> (nwritten &lt; remaining) {
+<a name="l00535"></a>00535           cbp-&gt;data_ptr += nwritten;
+<a name="l00536"></a>00536           <span class="keywordflow">break</span>;
+<a name="l00537"></a>00537         }
+<a name="l00538"></a>00538         <span class="keywordflow">else</span> {
+<a name="l00539"></a>00539           nwritten -= remaining;
+<a name="l00540"></a>00540           cbp-&gt;data_ptr += remaining;
+<a name="l00541"></a>00541         }
+<a name="l00542"></a>00542       }
+<a name="l00543"></a>00543       <span class="keywordflow">if</span> (cbp-&gt;ext.base != 0) {
+<a name="l00544"></a>00544         cbp-&gt;ext_ptr += nwritten;
+<a name="l00545"></a>00545         <span class="keywordflow">break</span>;
+<a name="l00546"></a>00546       }
+<a name="l00547"></a>00547     }
+<a name="l00548"></a>00548 
+<a name="l00549"></a>00549     <span class="comment">// buffer written successfully, now remove from queue (which will destroy buffer)</span>
+<a name="l00550"></a>00550     <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>.pop_front();
+<a name="l00551"></a>00551   }
+<a name="l00552"></a>00552 
+<a name="l00553"></a>00553   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00554"></a>00554 }
+<a name="l00555"></a>00555 
+<a name="l00556"></a>00556 
+<a name="l00557"></a>00557 <span class="preprocessor">#else</span>
+<a name="l00558"></a><a class="code" href="_i_o_handler_data_8cc.html#b625750f606f98bcd0bc081f958de1da">00558</a> <span class="preprocessor"></span>  <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">ImplementMe</a>;
+<a name="l00559"></a>00559 <span class="preprocessor">#endif</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

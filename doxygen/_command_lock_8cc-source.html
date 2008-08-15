@@ -38,40 +38,32 @@
 <a name="l00040"></a>00040   (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
 <a name="l00041"></a>00041 };
 <a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="class_hyperspace_1_1_command_lock.html#cb71242dd86797ae22023a7a4309c2ba">00043</a> <span class="keywordtype">int</span> CommandLock::run() {
+<a name="l00043"></a><a class="code" href="class_hyperspace_1_1_command_lock.html#3adc5a84168d8bf5fadc6190fa62719d">00043</a> <span class="keywordtype">void</span> CommandLock::run() {
 <a name="l00044"></a>00044   uint64_t handle;
-<a name="l00045"></a>00045   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00046"></a>00046   uint32_t mode = 0;
-<a name="l00047"></a>00047   <span class="keyword">struct </span><a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> lockseq;
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() != 2) {
-<a name="l00050"></a>00050     cerr &lt;&lt; <span class="stringliteral">"Wrong number of arguments.  Type 'help' for usage."</span> &lt;&lt; endl;
-<a name="l00051"></a>00051     <span class="keywordflow">return</span> -1;
-<a name="l00052"></a>00052   }
+<a name="l00045"></a>00045   uint32_t mode = 0;
+<a name="l00046"></a>00046   <span class="keyword">struct </span><a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> lockseq;
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>.size() != 2)
+<a name="l00049"></a>00049     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6dab66564f876c3b482e19a19c59ff7">Error::PARSE_ERROR</a>, <span class="stringliteral">"Wrong number of arguments.  Type 'help' for usage."</span>);
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].second != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second != <span class="stringliteral">""</span>)
+<a name="l00052"></a>00052     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6dab66564f876c3b482e19a19c59ff7">Error::PARSE_ERROR</a>, <span class="stringliteral">"Invalid character '=' in argument."</span>);
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].second != <span class="stringliteral">""</span> || <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second != <span class="stringliteral">""</span>) {
-<a name="l00055"></a>00055     cerr &lt;&lt; <span class="stringliteral">"Invalid character '=' in argument."</span> &lt;&lt; endl;
-<a name="l00056"></a>00056     <span class="keywordflow">return</span> -1;
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first == <span class="stringliteral">"SHARED"</span>)
-<a name="l00060"></a>00060     mode = <a class="code" href="namespace_hyperspace.html#06f80df4c12ec847cc1e13c65e4fdb36a1f6396ff13d0c16f758594f7e7d0b8e" title="Lock in shared mode.">LOCK_MODE_SHARED</a>;
-<a name="l00061"></a>00061   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first == <span class="stringliteral">"EXCLUSIVE"</span>)
-<a name="l00062"></a>00062     mode = <a class="code" href="namespace_hyperspace.html#06f80df4c12ec847cc1e13c65e4fdb363b144e7ad5ae055a93f10ed5963d680b" title="Lock exclusive mode.">LOCK_MODE_EXCLUSIVE</a>;
-<a name="l00063"></a>00063   <span class="keywordflow">else</span> {
-<a name="l00064"></a>00064     cerr &lt;&lt; <span class="stringliteral">"Invalid mode value ("</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second &lt;&lt; <span class="stringliteral">")"</span> &lt;&lt; endl;
-<a name="l00065"></a>00065     <span class="keywordflow">return</span> -1;
-<a name="l00066"></a>00066   }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hyperspace_1_1_util.html#bdd0a167366ad39dee27238b4462c463">Util::get_handle</a>(<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].first, &amp;handle))
-<a name="l00069"></a>00069     <span class="keywordflow">return</span> -1;
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071   <span class="keywordflow">if</span> ((error = <a class="code" href="class_hyperspace_1_1_command_lock.html#bbd4bac57253c1a875281bc584502a48">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#8a428d73911641cf6d0d23af46765928" title="Locks a file.">lock</a>(handle, mode, &amp;lockseq)) == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00072"></a>00072     cout &lt;&lt; <span class="stringliteral">"SEQUENCER name="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#70e7bd4471d5ac4ce2be237f39584a61" title="Pathname of file that is locked.">name</a> &lt;&lt; <span class="stringliteral">" mode="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#a67c99578c4becfea5ff2bf14016d467" title="lock mode (LOCK_MODE_SHARED or LOCK_MODE_EXCLUSIVE)">mode</a> &lt;&lt; <span class="stringliteral">" generation="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#93258bd114c7e7f671f54c74cdf8aae1">generation</a> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074   <span class="keywordflow">return</span> error;
-<a name="l00075"></a>00075 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Sat Aug 2 00:20:11 2008 for hypertable by&nbsp;
+<a name="l00054"></a>00054   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first == <span class="stringliteral">"SHARED"</span>)
+<a name="l00055"></a>00055     mode = <a class="code" href="namespace_hyperspace.html#06f80df4c12ec847cc1e13c65e4fdb36a1f6396ff13d0c16f758594f7e7d0b8e" title="Lock in shared mode.">LOCK_MODE_SHARED</a>;
+<a name="l00056"></a>00056   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].first == <span class="stringliteral">"EXCLUSIVE"</span>)
+<a name="l00057"></a>00057     mode = <a class="code" href="namespace_hyperspace.html#06f80df4c12ec847cc1e13c65e4fdb363b144e7ad5ae055a93f10ed5963d680b" title="Lock exclusive mode.">LOCK_MODE_EXCLUSIVE</a>;
+<a name="l00058"></a>00058   <span class="keywordflow">else</span>
+<a name="l00059"></a>00059     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6dab66564f876c3b482e19a19c59ff7">Error::PARSE_ERROR</a>, <span class="stringliteral">"Invalid mode value (%s)"</span>, <a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[1].second.c_str());
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   handle = <a class="code" href="namespace_hyperspace_1_1_util.html#a386bc89daeb13cb931bf9d42ae4f9a9">Util::get_handle</a>(<a class="code" href="class_hypertable_1_1_interactive_command.html#1345499a8e5d9eecb6d0be5425a5e6c9">m_args</a>[0].first);
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <a class="code" href="class_hyperspace_1_1_command_lock.html#bbd4bac57253c1a875281bc584502a48">m_session</a>-&gt;<a class="code" href="class_hyperspace_1_1_session.html#9f32b0ae832e914e18ae2b9173f2ee4f" title="Locks a file.">lock</a>(handle, mode, &amp;lockseq);
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   cout &lt;&lt; <span class="stringliteral">"SEQUENCER name="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#70e7bd4471d5ac4ce2be237f39584a61" title="Pathname of file that is locked.">name</a> &lt;&lt; <span class="stringliteral">" mode="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#a67c99578c4becfea5ff2bf14016d467" title="lock mode (LOCK_MODE_SHARED or LOCK_MODE_EXCLUSIVE)">mode</a> &lt;&lt; <span class="stringliteral">" generation="</span> &lt;&lt; lockseq.<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html#93258bd114c7e7f671f54c74cdf8aae1">generation</a> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

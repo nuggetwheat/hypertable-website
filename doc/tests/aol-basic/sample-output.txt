@@ -1,0 +1,176 @@
+[doug@motherlode000 aol-basic]$ ./run.sh 
+rm: cannot remove `count.output': No such file or directory
+  * executing `dist'
+ ** transaction: start
+  * executing `copy_config'
+  * executing "cp /home/doug/conf/cluster1-standard.cfg /data1/doug/hypertable/0.9.0.11/conf"
+    servers: ["motherlode000"]
+    [motherlode000] executing command
+    command finished
+  * executing `rsync_installation'
+  * executing "rsync -av --exclude=log --exclude=demo --exclude=fs --exclude=hyperspace motherlode000:/data1/doug/hypertable/0.9.0.11 /data1/doug/hypertable"
+    servers: ["motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"]
+    [motherlode001] executing command
+    [motherlode002] executing command
+    [motherlode003] executing command
+    [motherlode004] executing command
+    [motherlode005] executing command
+    [motherlode006] executing command
+    [motherlode008] executing command
+    [motherlode007] executing command
+ ** [out :: motherlode002] receiving file list ...
+ ** [out :: motherlode002] done
+ ** [out :: motherlode002] 0.9.0.11/
+ ** [out :: motherlode002] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode003] receiving file list ...
+ ** [out :: motherlode003] done
+ ** [out :: motherlode004] receiving file list ...
+ ** [out :: motherlode003] 0.9.0.11/
+ ** [out :: motherlode003] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode004] done
+ ** [out :: motherlode004] 0.9.0.11/
+ ** [out :: motherlode004] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode002] 
+ ** [out :: motherlode002] sent 103 bytes  received 6341 bytes  4296.00 bytes/sec
+ ** [out :: motherlode002] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode003] 
+ ** [out :: motherlode003] sent 103 bytes  received 6341 bytes  4296.00 bytes/sec
+ ** [out :: motherlode003] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode004] 
+ ** [out :: motherlode004] sent 103 bytes  received 6341 bytes  4296.00 bytes/sec
+ ** [out :: motherlode004] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode006] receiving file list ...
+ ** [out :: motherlode006] done
+ ** [out :: motherlode006] 0.9.0.11/
+ ** [out :: motherlode006] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode001] receiving file list ...
+ ** [out :: motherlode001] done
+ ** [out :: motherlode001] 0.9.0.11/
+ ** [out :: motherlode001] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode006] 
+ ** [out :: motherlode006] sent 103 bytes  received 6341 bytes  2577.60 bytes/sec
+ ** [out :: motherlode006] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode005] receiving file list ...
+ ** [out :: motherlode008] receiving file list ...
+ ** [out :: motherlode005] done
+ ** [out :: motherlode007] receiving file list ...
+ ** [out :: motherlode005] 0.9.0.11/
+ ** [out :: motherlode005] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode007] done
+ ** [out :: motherlode007] 0.9.0.11/
+ ** [out :: motherlode008] done
+ ** [out :: motherlode007] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode001] 
+ ** [out :: motherlode001] sent 103 bytes  received 6341 bytes  2577.60 bytes/sec
+ ** [out :: motherlode001] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode008] 0.9.0.11/
+ ** [out :: motherlode008] 0.9.0.11/conf/cluster1-standard.cfg
+ ** [out :: motherlode005] 
+ ** [out :: motherlode005] sent 103 bytes  received 6341 bytes  2577.60 bytes/sec
+ ** [out :: motherlode005] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode007] 
+ ** [out :: motherlode007] sent 103 bytes  received 6341 bytes  2577.60 bytes/sec
+ ** [out :: motherlode007] total size is 33709831  speedup is 5231.20
+ ** [out :: motherlode008] 
+ ** [out :: motherlode008] sent 103 bytes  received 6341 bytes  2577.60 bytes/sec
+ ** [out :: motherlode008] total size is 33709831  speedup is 5231.20
+    command finished
+ ** transaction: commit
+  * executing `stop'
+ ** transaction: start
+  * executing `stop_slaves'
+  * executing "/data1/doug/hypertable/0.9.0.11/bin/stop-servers.sh"
+    servers: ["motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"]
+    [motherlode001] executing command
+    [motherlode002] executing command
+    [motherlode003] executing command
+    [motherlode005] executing command
+    [motherlode006] executing command
+    [motherlode008] executing command
+    [motherlode004] executing command
+    [motherlode007] executing command
+    command finished
+  * executing `stop_master'
+  * executing "/data1/doug/hypertable/0.9.0.11/bin/stop-servers.sh"
+    servers: ["motherlode001"]
+    [motherlode001] executing command
+    command finished
+ ** transaction: commit
+  * executing `start'
+ ** transaction: start
+  * executing `start_master'
+  * executing "/data1/doug/hypertable/0.9.0.11/bin/start-dfsbroker.sh hadoop --config=/data1/doug/hypertable/0.9.0.11/conf/cluster1-standard.cfg &&\n   /data1/doug/hypertable/0.9.0.11/bin/start-hyperspace.sh --config=/data1/doug/hypertable/0.9.0.11/conf/cluster1-standard.cfg &&\n   /data1/doug/hypertable/0.9.0.11/bin/start-master.sh --config=/data1/doug/hypertable/0.9.0.11/conf/cluster1-standard.cfg"
+    servers: ["motherlode001"]
+    [motherlode001] executing command
+ ** [out :: motherlode001] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode001] Successfully started Hyperspace
+ ** [out :: motherlode001] Successfully started Hypertable.Master
+    command finished
+  * executing `start_slaves'
+  * executing "`let l=$RANDOM%5 r=$RANDOM%1000; sleep $l.$r` &&\n   /data1/doug/hypertable/0.9.0.11/bin/start-dfsbroker.sh hadoop --config=/data1/doug/hypertable/0.9.0.11/conf/cluster1-standard.cfg &&\n   /data1/doug/hypertable/0.9.0.11/bin/start-rangeserver.sh --config=/data1/doug/hypertable/0.9.0.11/conf/cluster1-standard.cfg"
+    servers: ["motherlode001", "motherlode002", "motherlode003", "motherlode004", "motherlode005", "motherlode006", "motherlode007", "motherlode008"]
+    [motherlode001] executing command
+    [motherlode002] executing command
+    [motherlode003] executing command
+    [motherlode004] executing command
+    [motherlode006] executing command
+    [motherlode007] executing command
+    [motherlode005] executing command
+    [motherlode008] executing command
+ ** [out :: motherlode001] WARNING: DFSBroker already running.
+ ** [out :: motherlode005] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode003] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode007] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode004] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode002] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode006] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode001] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode008] Successfully started DFSBroker (hadoop)
+ ** [out :: motherlode005] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode003] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode007] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode004] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode002] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode006] Successfully started Hypertable.RangeServer
+ ** [out :: motherlode008] Successfully started Hypertable.RangeServer
+    command finished
+ ** transaction: commit
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+DROP TABLE IF EXISTS 'query-log';
+CREATE TABLE "query-log" (
+Query,
+ItemRank,
+ClickURL
+);
+
+
+Welcome to the hypertable command interpreter.
+For information about Hypertable, visit http://www.hypertable.org/
+
+Type 'help' for a list of commands, or 'help shell' for a
+list of shell meta commands.
+
+load data infile row_key_column=AnonID "all-no-timestamps.tsv" into table 'query-log';
+
+Loading   1,551,351,425 bytes of input data...
+
+0%   10   20   30   40   50   60   70   80   90   100%
+|----|----|----|----|----|----|----|----|----|----|
+***************************************************
+Load complete.
+
+  Elapsed time:  260.25 s
+Avg value size:  15.23 bytes
+  Avg key size:  7.09 bytes
+    Throughput:  5961107.22 bytes/s
+ Total inserts:  75274825
+    Throughput:  289245.43 inserts/s
+       Resends:  358092
+
+Test passed.

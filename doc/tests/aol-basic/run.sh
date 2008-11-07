@@ -1,7 +1,11 @@
 #!/bin/sh
 
 VERSION=`cat ~/.hypertable_version`
+
+HYPERTABLE_HOME=/home/doug/hypertable/$VERSION
+
 CONFIG=/home/doug/conf/cluster1-standard.cfg
+
 
 RUN_ONCE="true"
 
@@ -26,19 +30,19 @@ while true; do
 
   sleep 5
 
-  /data1/doug/hypertable/$VERSION/bin/hypertable --no-prompt --config=$CONFIG < query-log-create.hql
+  $HYPERTABLE_HOME/bin/hypertable --no-prompt --config=$CONFIG < query-log-create.hql
   if [ $? != 0 ] ; then
      echo "Unable to create table 'query-log', exiting ..."
      exit 1
   fi
 
-  /data1/doug/hypertable/$VERSION/bin/hypertable --no-prompt --config=$CONFIG < load.hql
+  $HYPERTABLE_HOME/bin/hypertable --no-prompt --config=$CONFIG < load.hql
   if [ $? != 0 ] ; then
      echo "Problem loading table 'query-log', exiting ..."
      exit 1
   fi
 
-  /data1/doug/hypertable/$VERSION/bin/hypertable --batch --config=$CONFIG < dump-query-log.hql > dbdump
+  $HYPERTABLE_HOME/bin/hypertable --batch --config=$CONFIG < dump-query-log.hql > dbdump
 
   wc -l dbdump > count.output
   diff count.output count.golden

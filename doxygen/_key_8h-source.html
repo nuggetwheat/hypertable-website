@@ -28,87 +28,121 @@
 <a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_byte_string_8h.html">Common/ByteString.h</a>"</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033 
-<a name="l00034"></a>00034 <span class="keyword">namespace </span>Hypertable {
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_key_spec_8h.html">KeySpec.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_serialized_key_8h.html">SerializedKey.h</a>"</span>
 <a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">00036</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">FLAG_DELETE_ROW</a>            = 0x00;
-<a name="l00037"></a><a class="code" href="namespace_hypertable.html#9f95c876007d32a3f9c8f7158dcec44b">00037</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#9f95c876007d32a3f9c8f7158dcec44b">FLAG_DELETE_COLUMN_FAMILY</a>  = 0x01;
-<a name="l00038"></a><a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">00038</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">FLAG_DELETE_CELL</a>           = 0x02;
-<a name="l00039"></a><a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">00039</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">FLAG_INSERT</a>                = 0xFF;
-<a name="l00040"></a>00040 
-<a name="l00043"></a><a class="code" href="class_hypertable_1_1_key.html">00043</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> {
-<a name="l00044"></a>00044   <span class="keyword">public</span>:
-<a name="l00045"></a>00045 
-<a name="l00046"></a><a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">00046</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">END_ROW_MARKER</a>;
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">00047</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">END_ROOT_ROW</a>;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">namespace </span>Hypertable {
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">00039</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#66c8570b5d34eb465d8aa1659911cd93">FLAG_DELETE_ROW</a>            = 0x00;
+<a name="l00040"></a><a class="code" href="namespace_hypertable.html#9f95c876007d32a3f9c8f7158dcec44b">00040</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#9f95c876007d32a3f9c8f7158dcec44b">FLAG_DELETE_COLUMN_FAMILY</a>  = 0x01;
+<a name="l00041"></a><a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">00041</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#f00fcc23cb99ceba90ada50735dc6734">FLAG_DELETE_CELL</a>           = 0x02;
+<a name="l00042"></a><a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">00042</a>   <span class="keyword">static</span> <span class="keyword">const</span> uint32_t <a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">FLAG_INSERT</a>                = 0xFF;
+<a name="l00043"></a>00043 
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_key.html">00046</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> {
+<a name="l00047"></a>00047   <span class="keyword">public</span>:
 <a name="l00048"></a>00048 
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_key.html#b31a15a4584a1fecd660d4b544157a75">00049</a>     <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_key.html#b31a15a4584a1fecd660d4b544157a75">encode_ts64</a>(uint8_t **bufp, uint64_t val) {
-<a name="l00050"></a>00050       val = ~val;
-<a name="l00051"></a>00051 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00052"></a>00052 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)(val &gt;&gt; 56);
-<a name="l00053"></a>00053       *(*bufp)++ = (uint8_t)(val &gt;&gt; 48);
-<a name="l00054"></a>00054       *(*bufp)++ = (uint8_t)(val &gt;&gt; 40);
-<a name="l00055"></a>00055       *(*bufp)++ = (uint8_t)(val &gt;&gt; 32);
-<a name="l00056"></a>00056       *(*bufp)++ = (uint8_t)(val &gt;&gt; 24);
-<a name="l00057"></a>00057       *(*bufp)++ = (uint8_t)(val &gt;&gt; 16);
-<a name="l00058"></a>00058       *(*bufp)++ = (uint8_t)(val &gt;&gt; 8);
-<a name="l00059"></a>00059       *(*bufp)++ = (uint8_t)val;
-<a name="l00060"></a>00060 <span class="preprocessor">#else</span>
-<a name="l00061"></a>00061 <span class="preprocessor"></span>      memcpy(*bufp, &amp;val, 8);
-<a name="l00062"></a>00062       *bufp += 8;
-<a name="l00063"></a>00063 <span class="preprocessor">#endif</span>
-<a name="l00064"></a>00064 <span class="preprocessor"></span>    }
-<a name="l00065"></a>00065 
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_key.html#11539de8c926fedf5262e1fb27b2c24f">00066</a>     <span class="keyword">static</span> <span class="keyword">inline</span> uint64_t <a class="code" href="class_hypertable_1_1_key.html#11539de8c926fedf5262e1fb27b2c24f">decode_ts64</a>(<span class="keyword">const</span> uint8_t **bufp) {
-<a name="l00067"></a>00067       uint64_t val;
-<a name="l00068"></a>00068 <span class="preprocessor">#ifdef BOOST_LITTLE_ENDIAN</span>
-<a name="l00069"></a>00069 <span class="preprocessor"></span>      val = ((uint64_t)*(*bufp)++ &lt;&lt; 56);
-<a name="l00070"></a>00070       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 48);
-<a name="l00071"></a>00071       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 40);
-<a name="l00072"></a>00072       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 32);
-<a name="l00073"></a>00073       val |= ((uint64_t)(*(*bufp)++) &lt;&lt; 24);
-<a name="l00074"></a>00074       val |= (*(*bufp)++ &lt;&lt; 16);
-<a name="l00075"></a>00075       val |= (*(*bufp)++ &lt;&lt; 8);
-<a name="l00076"></a>00076       val |= *(*bufp)++;
-<a name="l00077"></a>00077 <span class="preprocessor">#else</span>
-<a name="l00078"></a>00078 <span class="preprocessor"></span>      memcpy(&amp;val, *bufp, 8);
-<a name="l00079"></a>00079       *bufp += 8;
-<a name="l00080"></a>00080 <span class="preprocessor">#endif</span>
-<a name="l00081"></a>00081 <span class="preprocessor"></span>      <span class="keywordflow">return</span> ~val;
-<a name="l00082"></a>00082     }
-<a name="l00083"></a>00083 
-<a name="l00087"></a><a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd">00087</a>     <a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd" title="Constructor (for implicit construction).">Key</a>() : <a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a>(<a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">FLAG_INSERT</a>), <a class="code" href="class_hypertable_1_1_key.html#2b4b281b5ff869c216f9d223af8bde61">timestamp_ptr</a>(0) { <span class="keywordflow">return</span>; }
-<a name="l00088"></a>00088 
-<a name="l00095"></a>00095     <a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd" title="Constructor (for implicit construction).">Key</a>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key);
-<a name="l00096"></a>00096 
-<a name="l00103"></a>00103     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_key.html#e00557fe0379de2e6125b55b5d50750c" title="Parses the opaque key and loads the components into the member variables.">load</a>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key);
-<a name="l00104"></a>00104 
-<a name="l00111"></a>00111     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_key.html#7b5bd940c9d53e25a7597eba39671062" title="Updates the timestamp of a previously loaded key by writing the key back into the...">update_ts</a>(uint64_t <a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a>);
-<a name="l00112"></a>00112 
-<a name="l00113"></a><a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">00113</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>    *<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>;
-<a name="l00114"></a><a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">00114</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>    *<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>;
-<a name="l00115"></a><a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">00115</a>     int64_t        <a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a>;
-<a name="l00116"></a><a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">00116</a>     uint8_t        <a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a>;
-<a name="l00117"></a><a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">00117</a>     uint8_t        <a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a>;
-<a name="l00118"></a><a class="code" href="class_hypertable_1_1_key.html#2b4b281b5ff869c216f9d223af8bde61">00118</a>     uint8_t       *<a class="code" href="class_hypertable_1_1_key.html#2b4b281b5ff869c216f9d223af8bde61">timestamp_ptr</a>;
-<a name="l00119"></a><a class="code" href="class_hypertable_1_1_key.html#c1fdb9045fad8b5160c348c8cf05d4a5">00119</a>     <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_key.html#c1fdb9045fad8b5160c348c8cf05d4a5">end_ptr</a>;
-<a name="l00120"></a>00120   };
-<a name="l00121"></a>00121 
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_key.html#e9596e4615477d7bcbd5103d3ec8fdf3">00049</a>     <span class="keyword">static</span> <span class="keyword">const</span> uint8_t <a class="code" href="class_hypertable_1_1_key.html#e9596e4615477d7bcbd5103d3ec8fdf3">HAVE_REVISION</a>  = 0x80;
+<a name="l00050"></a><a class="code" href="class_hypertable_1_1_key.html#6966325ec5f0d94836b946a16a1ddd36">00050</a>     <span class="keyword">static</span> <span class="keyword">const</span> uint8_t <a class="code" href="class_hypertable_1_1_key.html#6966325ec5f0d94836b946a16a1ddd36">HAVE_TIMESTAMP</a> = 0x40;
+<a name="l00051"></a><a class="code" href="class_hypertable_1_1_key.html#c0b1593798461dc7db66ae562d3a2015">00051</a>     <span class="keyword">static</span> <span class="keyword">const</span> uint8_t <a class="code" href="class_hypertable_1_1_key.html#c0b1593798461dc7db66ae562d3a2015">AUTO_TIMESTAMP</a> = 0x20;
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_key.html#98be59a52e61ec8370d2a989522cff27">00052</a>     <span class="keyword">static</span> <span class="keyword">const</span> uint8_t <a class="code" href="class_hypertable_1_1_key.html#98be59a52e61ec8370d2a989522cff27">REV_IS_TS</a>      = 0x10;
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">00054</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">END_ROW_MARKER</a>;
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">00055</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">END_ROOT_ROW</a>;
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_key.html#4513330d716a9049b3677629282a4cd8">00057</a>     <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_key.html#4513330d716a9049b3677629282a4cd8">encode_ts64</a>(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, int64_t val) {
+<a name="l00058"></a>00058       val = ~val;
+<a name="l00059"></a>00059 <span class="preprocessor">#ifdef HT_LITTLE_ENDIAN</span>
+<a name="l00060"></a>00060 <span class="preprocessor"></span>      *(*bufp)++ = (uint8_t)(val &gt;&gt; 56);
+<a name="l00061"></a>00061       *(*bufp)++ = (uint8_t)(val &gt;&gt; 48);
+<a name="l00062"></a>00062       *(*bufp)++ = (uint8_t)(val &gt;&gt; 40);
+<a name="l00063"></a>00063       *(*bufp)++ = (uint8_t)(val &gt;&gt; 32);
+<a name="l00064"></a>00064       *(*bufp)++ = (uint8_t)(val &gt;&gt; 24);
+<a name="l00065"></a>00065       *(*bufp)++ = (uint8_t)(val &gt;&gt; 16);
+<a name="l00066"></a>00066       *(*bufp)++ = (uint8_t)(val &gt;&gt; 8);
+<a name="l00067"></a>00067       *(*bufp)++ = (uint8_t)val;
+<a name="l00068"></a>00068 <span class="preprocessor">#else</span>
+<a name="l00069"></a>00069 <span class="preprocessor"></span>      memcpy(*bufp, &amp;val, 8);
+<a name="l00070"></a>00070       *bufp += 8;
+<a name="l00071"></a>00071 <span class="preprocessor">#endif</span>
+<a name="l00072"></a>00072 <span class="preprocessor"></span>    }
+<a name="l00073"></a>00073 
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_key.html#07c7144dc8c81b4104d17b926e9cbca0">00074</a>     <span class="keyword">static</span> <span class="keyword">inline</span> int64_t <a class="code" href="class_hypertable_1_1_key.html#07c7144dc8c81b4104d17b926e9cbca0">decode_ts64</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>) {
+<a name="l00075"></a>00075       int64_t val;
+<a name="l00076"></a>00076 <span class="preprocessor">#ifdef HT_LITTLE_ENDIAN</span>
+<a name="l00077"></a>00077 <span class="preprocessor"></span>      val = ((int64_t)*(*bufp)++ &lt;&lt; 56);
+<a name="l00078"></a>00078       val |= ((int64_t)(*(*bufp)++) &lt;&lt; 48);
+<a name="l00079"></a>00079       val |= ((int64_t)(*(*bufp)++) &lt;&lt; 40);
+<a name="l00080"></a>00080       val |= ((int64_t)(*(*bufp)++) &lt;&lt; 32);
+<a name="l00081"></a>00081       val |= ((int64_t)(*(*bufp)++) &lt;&lt; 24);
+<a name="l00082"></a>00082       val |= (*(*bufp)++ &lt;&lt; 16);
+<a name="l00083"></a>00083       val |= (*(*bufp)++ &lt;&lt; 8);
+<a name="l00084"></a>00084       val |= *(*bufp)++;
+<a name="l00085"></a>00085 <span class="preprocessor">#else</span>
+<a name="l00086"></a>00086 <span class="preprocessor"></span>      memcpy(&amp;val, *bufp, 8);
+<a name="l00087"></a>00087       *bufp += 8;
+<a name="l00088"></a>00088 <span class="preprocessor">#endif</span>
+<a name="l00089"></a>00089 <span class="preprocessor"></span>      <span class="keywordflow">return</span> ~val;
+<a name="l00090"></a>00090     }
+<a name="l00091"></a>00091 
+<a name="l00095"></a><a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd">00095</a>     <a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd" title="Constructor (for implicit construction).">Key</a>() : <a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>(0), <a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>(0), <a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a>(0), <a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>(<a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>),
+<a name="l00096"></a>00096         <a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a>(0), <a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a>(<a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">FLAG_INSERT</a>) { }
+<a name="l00097"></a>00097 
+<a name="l00104"></a>00104     <a class="code" href="class_hypertable_1_1_key.html#271c5ad8e403cac59ee3e7056d6c00cd" title="Constructor (for implicit construction).">Key</a>(<a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>);
+<a name="l00105"></a>00105 
+<a name="l00112"></a>00112     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_key.html#0948f36e3a1d720cb93cbd593ff3b0ee" title="Parses the opaque key and loads the components into the member variables.">load</a>(<a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>);
+<a name="l00113"></a><a class="code" href="class_hypertable_1_1_key.html#7000760baee9de4db982fa212aa7d756">00113</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_key.html#7000760baee9de4db982fa212aa7d756">len_row</a>()<span class="keyword"> const </span>{
+<a name="l00114"></a>00114       <span class="keywordflow">return</span>(strlen(<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>) + 1);
+<a name="l00115"></a>00115     }
+<a name="l00116"></a><a class="code" href="class_hypertable_1_1_key.html#488f3e11ccbd9346dc7100ed6220b484">00116</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_key.html#488f3e11ccbd9346dc7100ed6220b484">len_column_family</a>()<span class="keyword"> const </span>{
+<a name="l00117"></a>00117       <span class="keywordflow">return</span>(<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a> - <a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>);
+<a name="l00118"></a>00118     }
+<a name="l00119"></a><a class="code" href="class_hypertable_1_1_key.html#90f22687e3b8c6f54180e61b1abf40a8">00119</a>     <span class="keyword">inline</span> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_key.html#90f22687e3b8c6f54180e61b1abf40a8">len_cell</a>()<span class="keyword"> const </span>{
+<a name="l00120"></a>00120       <span class="keywordflow">return</span>((<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a> - <a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>) + strlen(<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>) + 1);
+<a name="l00121"></a>00121     }
 <a name="l00122"></a>00122 
-<a name="l00130"></a>00130   std::ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;key);
-<a name="l00131"></a>00131 
-<a name="l00147"></a>00147   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="namespace_hypertable.html#66a7249c48e05eee6c0dd9e7a4bbd6e0" title="Builds an opaque key from a set of key components.">create_key</a>(uint8_t flag, <span class="keyword">const</span> <span class="keywordtype">char</span> *row,
-<a name="l00148"></a>00148                         uint8_t column_family_code,
-<a name="l00149"></a>00149                         <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier, int64_t <a class="code" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>);
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#e434e54e4aca94bf0f208f67678c9d07">create_key_and_append</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dst_buf, uint8_t flag,
-<a name="l00152"></a>00152                              <span class="keyword">const</span> <span class="keywordtype">char</span> *row, uint8_t column_family_code,
-<a name="l00153"></a>00153                              <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier, int64_t <a class="code" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>);
-<a name="l00154"></a>00154 }
+<a name="l00123"></a><a class="code" href="class_hypertable_1_1_key.html#3c0118439c72c16de3035f7fdc29dd6e">00123</a>     <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a>  <a class="code" href="class_hypertable_1_1_key.html#3c0118439c72c16de3035f7fdc29dd6e">serial</a>;
+<a name="l00124"></a><a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">00124</a>     uint32_t       <a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a>;
+<a name="l00125"></a>00125 
+<a name="l00126"></a><a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">00126</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>    *<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>;
+<a name="l00127"></a><a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">00127</a>     <span class="keyword">const</span> <span class="keywordtype">char</span>    *<a class="code" href="class_hypertable_1_1_key.html#93da903231d68b99a810022894e86205">column_qualifier</a>;
+<a name="l00128"></a><a class="code" href="class_hypertable_1_1_key.html#4ccc951395b62a213b9053a0cb851fe4">00128</a>     <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_key.html#4ccc951395b62a213b9053a0cb851fe4">flag_ptr</a>;
+<a name="l00129"></a><a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">00129</a>     int64_t        <a class="code" href="class_hypertable_1_1_key.html#d0d7b160f1c357a648550515cb80de33">timestamp</a>;
+<a name="l00130"></a><a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">00130</a>     int64_t        <a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>;
+<a name="l00131"></a><a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">00131</a>     uint8_t        <a class="code" href="class_hypertable_1_1_key.html#6100323b79aa108dc5c0d0290191ddfa">column_family_code</a>;
+<a name="l00132"></a><a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">00132</a>     uint8_t        <a class="code" href="class_hypertable_1_1_key.html#c6c060e17cca0ba9e81aea97def2dd7a">flag</a>;
+<a name="l00133"></a><a class="code" href="class_hypertable_1_1_key.html#3f0e9e612ddf71f90068b5ef8c792c09">00133</a>     uint8_t        <a class="code" href="class_hypertable_1_1_key.html#3f0e9e612ddf71f90068b5ef8c792c09">control</a>;
+<a name="l00134"></a>00134   };
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136 
+<a name="l00144"></a>00144   std::ostream &amp;<a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>);
+<a name="l00145"></a>00145 
+<a name="l00149"></a>00149   <span class="keyword">inline</span> std::ostream &amp;
+<a name="l00150"></a><a class="code" href="namespace_hypertable.html#698ad516ea631bc6d8b1efc1c1ae9f77">00150</a>   <a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">operator&lt;&lt;</a>(std::ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> &amp;serkey) {
+<a name="l00151"></a>00151     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>(serkey);
+<a name="l00152"></a>00152     os &lt;&lt; key;
+<a name="l00153"></a>00153     <span class="keywordflow">return</span> os;
+<a name="l00154"></a>00154   }
 <a name="l00155"></a>00155 
-<a name="l00156"></a>00156 <span class="preprocessor">#endif // HYPERTABLE_KEY_H</span>
-<a name="l00157"></a>00157 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00156"></a>00156 
+<a name="l00173"></a>00173   ByteString <a class="code" href="namespace_hypertable.html#b3d1cd964dcbd6d7ab86e16b9bb96cc9" title="Builds an opaque key from a set of key components.">create_key</a>(uint8_t flag, <span class="keyword">const</span> <span class="keywordtype">char</span> *row,
+<a name="l00174"></a>00174                         uint8_t column_family_code,
+<a name="l00175"></a>00175                         <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier,
+<a name="l00176"></a>00176                         int64_t timestamp = <a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>,
+<a name="l00177"></a>00177                         int64_t revision = <a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>);
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(DynamicBuffer &amp;dst_buf, <span class="keyword">const</span> <span class="keywordtype">char</span> *row);
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(DynamicBuffer &amp;dst_buf, uint8_t flag,
+<a name="l00182"></a>00182                              <span class="keyword">const</span> <span class="keywordtype">char</span> *row, uint8_t column_family_code,
+<a name="l00183"></a>00183                              <span class="keyword">const</span> <span class="keywordtype">char</span> *column_qualifier,
+<a name="l00184"></a>00184                              int64_t timestamp = <a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>,
+<a name="l00185"></a>00185                              int64_t revision = <a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>);
+<a name="l00186"></a>00186 
+<a name="l00187"></a>00187 } <span class="comment">// namespace Hypertable</span>
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189 <span class="preprocessor">#endif // HYPERTABLE_KEY_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -33,11 +33,11 @@
 <a name="l00035"></a>00035 
 <a name="l00039"></a><a class="code" href="class_hyperspace_1_1_request_handler_release.html#eb0ed8484e2851b34e5af16599ec5b62">00039</a> <span class="keywordtype">void</span> RequestHandlerRelease::run() {
 <a name="l00040"></a>00040   <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hyperspace_1_1_request_handler_release.html#75961d9a088b6113e2c1b91276e30d19">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
-<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00042"></a>00042   <span class="keyword">const</span> uint8_t *msg = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
+<a name="l00042"></a>00042   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044   <span class="keywordflow">try</span> {
-<a name="l00045"></a>00045     uint64_t handle = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;msg, &amp;remaining);
+<a name="l00045"></a>00045     uint64_t handle = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00046"></a>00046 
 <a name="l00047"></a>00047     <a class="code" href="class_hyperspace_1_1_request_handler_release.html#5b480af94183270d8ee2485a18557a03">m_master</a>-&gt;<a class="code" href="class_hyperspace_1_1_master.html#e4e1b58c6606e16819cc514d4e036967">release</a>(&amp;cb, <a class="code" href="class_hyperspace_1_1_request_handler_release.html#f2be2ddaf7273b9fe3cac21e34090d59">m_session_id</a>, handle);
 <a name="l00048"></a>00048   }
@@ -46,7 +46,7 @@
 <a name="l00051"></a>00051     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), <span class="stringliteral">"Error handling RELEASE message"</span>);
 <a name="l00052"></a>00052   }
 <a name="l00053"></a>00053 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

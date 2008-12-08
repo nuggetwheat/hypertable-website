@@ -90,7 +90,7 @@
 <a name="l00090"></a><a class="code" href="bmz-test_8c.html#b5f791e464d4c9744cd32697d81c1199">00090</a> <span class="keyword">static</span> <span class="keywordtype">size_t</span> <a class="code" href="bmz-test_8c.html#b5f791e464d4c9744cd32697d81c1199">s_m2</a> = (0xffff - 4);
 <a name="l00091"></a>00091 
 <a name="l00092"></a>00092 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00093"></a><a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">00093</a> <a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">dump_bm</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00093"></a><a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">00093</a> <a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">dump_bm</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *label, <span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00094"></a>00094   <span class="keywordtype">int</span> ret;
 <a name="l00095"></a>00095 
 <a name="l00096"></a>00096   <span class="keywordflow">if</span> (<a class="code" href="bmz-test_8c.html#47d76825dabd7c310f81492d1e6d65f6">s_verbosity</a> &gt; 1) {
@@ -108,14 +108,14 @@
 <a name="l00108"></a>00108 }
 <a name="l00109"></a>00109 
 <a name="l00110"></a>00110 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00111"></a><a class="code" href="bmz-test_8c.html#9901f49340af1503c656904dad0bd1dc">00111</a> <a class="code" href="bmz-test_8c.html#9901f49340af1503c656904dad0bd1dc">test_bm_mod</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
+<a name="l00111"></a><a class="code" href="bmz-test_8c.html#9901f49340af1503c656904dad0bd1dc">00111</a> <a class="code" href="bmz-test_8c.html#9901f49340af1503c656904dad0bd1dc">test_bm_mod</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
 <a name="l00112"></a>00112             <span class="keywordtype">void</span> *work_mem) {
 <a name="l00113"></a>00113   <a class="code" href="bmz-internal_8h.html#a45c7686fc2784cb8a6453f31c4b4809">bmz_bm_pack_mod</a>(in, len, out, len_p, <a class="code" href="bmz-test_8c.html#3513c88e3fbbdb76cc1c2ec5355da8b8">s_offset</a>, <a class="code" href="bmz-test_8c.html#c96e06a1900255158c1d786f7da512d0">s_fp_len</a>, work_mem, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>, <a class="code" href="bmz-test_8c.html#70929eace0cd335df19993a92feb0d95">s_m</a>);
 <a name="l00114"></a>00114   <a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">dump_bm</a>(<span class="stringliteral">"mod"</span>, out, *len_p);
 <a name="l00115"></a>00115 }
 <a name="l00116"></a>00116 
 <a name="l00117"></a>00117 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00118"></a><a class="code" href="bmz-test_8c.html#d4bd276a4a57e3487ffd73d86e483cfe">00118</a> <a class="code" href="bmz-test_8c.html#d4bd276a4a57e3487ffd73d86e483cfe">test_bm_mod16x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
+<a name="l00118"></a><a class="code" href="bmz-test_8c.html#d4bd276a4a57e3487ffd73d86e483cfe">00118</a> <a class="code" href="bmz-test_8c.html#d4bd276a4a57e3487ffd73d86e483cfe">test_bm_mod16x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
 <a name="l00119"></a>00119              <span class="keywordtype">void</span> *work_mem) {
 <a name="l00120"></a>00120   <a class="code" href="bmz-internal_8h.html#3289ef93ffadd66b6658f97855b8bb12">bmz_bm_pack_mod16x2</a>(in, len, out, len_p, <a class="code" href="bmz-test_8c.html#3513c88e3fbbdb76cc1c2ec5355da8b8">s_offset</a>, <a class="code" href="bmz-test_8c.html#c96e06a1900255158c1d786f7da512d0">s_fp_len</a>,
 <a name="l00121"></a>00121                       work_mem, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>, <a class="code" href="bmz-test_8c.html#ba620343c500831344161535cbabbaa2">s_b2</a>, <a class="code" href="bmz-test_8c.html#219abb3b66fbc6bf6cb568e5065d7e77">s_m1</a>, <a class="code" href="bmz-test_8c.html#b5f791e464d4c9744cd32697d81c1199">s_m2</a>);
@@ -123,7 +123,7 @@
 <a name="l00123"></a>00123 }
 <a name="l00124"></a>00124 
 <a name="l00125"></a>00125 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00126"></a><a class="code" href="bmz-test_8c.html#c0ddb56c1cc55fe218b8b4a80a9c022b">00126</a> <a class="code" href="bmz-test_8c.html#c0ddb56c1cc55fe218b8b4a80a9c022b">test_bm_mask16x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
+<a name="l00126"></a><a class="code" href="bmz-test_8c.html#c0ddb56c1cc55fe218b8b4a80a9c022b">00126</a> <a class="code" href="bmz-test_8c.html#c0ddb56c1cc55fe218b8b4a80a9c022b">test_bm_mask16x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
 <a name="l00127"></a>00127                  <span class="keywordtype">void</span> *work_mem) {
 <a name="l00128"></a>00128   <a class="code" href="bmz-internal_8h.html#84c863b6b17abac17fed590ca3c4d442">bmz_bm_pack_mask16x2</a>(in, len, out, len_p, <a class="code" href="bmz-test_8c.html#3513c88e3fbbdb76cc1c2ec5355da8b8">s_offset</a>, <a class="code" href="bmz-test_8c.html#c96e06a1900255158c1d786f7da512d0">s_fp_len</a>,
 <a name="l00129"></a>00129                        work_mem, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>, <a class="code" href="bmz-test_8c.html#ba620343c500831344161535cbabbaa2">s_b2</a>);
@@ -131,14 +131,14 @@
 <a name="l00131"></a>00131 }
 <a name="l00132"></a>00132 
 <a name="l00133"></a>00133 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00134"></a><a class="code" href="bmz-test_8c.html#b9eea0de6806d4abfd24eb54c01235a1">00134</a> <a class="code" href="bmz-test_8c.html#b9eea0de6806d4abfd24eb54c01235a1">test_bm_mask</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
+<a name="l00134"></a><a class="code" href="bmz-test_8c.html#b9eea0de6806d4abfd24eb54c01235a1">00134</a> <a class="code" href="bmz-test_8c.html#b9eea0de6806d4abfd24eb54c01235a1">test_bm_mask</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
 <a name="l00135"></a>00135              <span class="keywordtype">void</span> *work_mem) {
 <a name="l00136"></a>00136   <a class="code" href="bmz-internal_8h.html#c4e27a682bb63aabd805edf34a6b330f">bmz_bm_pack_mask</a>(in, len, out, len_p, <a class="code" href="bmz-test_8c.html#3513c88e3fbbdb76cc1c2ec5355da8b8">s_offset</a>, <a class="code" href="bmz-test_8c.html#c96e06a1900255158c1d786f7da512d0">s_fp_len</a>, work_mem, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>);
 <a name="l00137"></a>00137   <a class="code" href="bmz-test_8c.html#52d7062c2a800ae6847f591666b64fc0">dump_bm</a>(<span class="stringliteral">"mask"</span>, out, *len_p);
 <a name="l00138"></a>00138 }
 <a name="l00139"></a>00139 
 <a name="l00140"></a>00140 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00141"></a><a class="code" href="bmz-test_8c.html#143c81082cf0d81d7f5c3807021d3380">00141</a> <a class="code" href="bmz-test_8c.html#143c81082cf0d81d7f5c3807021d3380">test_bm_mask32x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
+<a name="l00141"></a><a class="code" href="bmz-test_8c.html#143c81082cf0d81d7f5c3807021d3380">00141</a> <a class="code" href="bmz-test_8c.html#143c81082cf0d81d7f5c3807021d3380">test_bm_mask32x2</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p,
 <a name="l00142"></a>00142                  <span class="keywordtype">void</span> *work_mem) {
 <a name="l00143"></a>00143   <a class="code" href="bmz-internal_8h.html#0b96bf37f10a93dd67b8f4ff0118f241">bmz_bm_pack_mask32x2</a>(in, len, out, len_p, <a class="code" href="bmz-test_8c.html#3513c88e3fbbdb76cc1c2ec5355da8b8">s_offset</a>, <a class="code" href="bmz-test_8c.html#c96e06a1900255158c1d786f7da512d0">s_fp_len</a>,
 <a name="l00144"></a>00144                        work_mem, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>, <a class="code" href="bmz-test_8c.html#ba620343c500831344161535cbabbaa2">s_b2</a>);
@@ -146,7 +146,7 @@
 <a name="l00146"></a>00146 }
 <a name="l00147"></a>00147 
 <a name="l00148"></a>00148 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00149"></a><a class="code" href="bmz-test_8c.html#3a6bf2ddae444ff8afc9f094b83cb492">00149</a> <a class="code" href="bmz-test_8c.html#3a6bf2ddae444ff8afc9f094b83cb492">test_bm_unpack</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p) {
+<a name="l00149"></a><a class="code" href="bmz-test_8c.html#3a6bf2ddae444ff8afc9f094b83cb492">00149</a> <a class="code" href="bmz-test_8c.html#3a6bf2ddae444ff8afc9f094b83cb492">test_bm_unpack</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">char</span> *out, <span class="keywordtype">size_t</span> *len_p) {
 <a name="l00150"></a>00150   <span class="keywordtype">int</span> ret = <a class="code" href="bmz-internal_8h.html#2597fab94d23d868c24c1d3878f01756">bmz_bm_unpack</a>(in, len, out, len_p);
 <a name="l00151"></a>00151   <a class="code" href="bmz-test_8c.html#75b66fc8fe89645e55a8a0c565bb7ecd">LOG</a>(1, <span class="stringliteral">"\nbm_unpack returned %d, size: %lu\n"</span>, ret, (<a class="code" href="bmz-test_8c.html#bd0e9dfdb207906e611de2be4cb7b135">Lu</a>)*len_p);
 <a name="l00152"></a>00152   <span class="keywordflow">if</span> (<a class="code" href="bmz-test_8c.html#47d76825dabd7c310f81492d1e6d65f6">s_verbosity</a> &lt; 2) <span class="keywordflow">return</span>;
@@ -159,7 +159,7 @@
 <a name="l00159"></a><a class="code" href="bmz-test_8c.html#61637dcf83e2e87dd48ef0cdcc7a7ee3">00159</a> <a class="code" href="bmz-test_8c.html#61637dcf83e2e87dd48ef0cdcc7a7ee3">read_from_fp</a>(FILE *fp, <span class="keywordtype">size_t</span> *len_p) {
 <a name="l00160"></a>00160   <span class="keywordtype">char</span> *data = NULL;
 <a name="l00161"></a>00161   <span class="keywordtype">char</span> buf[65536];
-<a name="l00162"></a>00162   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = 0, <a class="code" href="lzoconf_8h.html#ab9257c30c984af77be6bc46d052d45d">size</a> = 0, ret;
+<a name="l00162"></a>00162   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = 0, <a class="code" href="lzoconf_8h.html#ab9257c30c984af77be6bc46d052d45d">size</a> = 0, ret;
 <a name="l00163"></a>00163 
 <a name="l00164"></a>00164   <span class="keywordflow">while</span> ((ret = fread(buf, 1, <span class="keyword">sizeof</span>(buf), fp)) &gt; 0) {
 <a name="l00165"></a>00165     len += ret;
@@ -180,7 +180,7 @@
 <a name="l00180"></a>00180 }
 <a name="l00181"></a>00181 
 <a name="l00182"></a>00182 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00183"></a><a class="code" href="bmz-test_8c.html#8c9ce8b8f502f8996f15e677fc07ab2d">00183</a> <a class="code" href="bmz-test_8c.html#8c9ce8b8f502f8996f15e677fc07ab2d">show_hash</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00183"></a><a class="code" href="bmz-test_8c.html#8c9ce8b8f502f8996f15e677fc07ab2d">00183</a> <a class="code" href="bmz-test_8c.html#8c9ce8b8f502f8996f15e677fc07ab2d">show_hash</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00184"></a>00184 
 <a name="l00185"></a>00185   <span class="keywordflow">if</span> (<a class="code" href="bmz-test_8c.html#0423c1b0437b757b7acccddf01dfb35c">s_options</a> &amp; <a class="code" href="bmz-test_8c.html#635af8cf1841a116792325c737539502">O_HASH_MOD</a>)
 <a name="l00186"></a>00186     <a class="code" href="bmz-test_8c.html#05aad41e185e5cd3b203fa9a872303f8">print_hash</a>(<span class="stringliteral">"hash-mod"</span>, <a class="code" href="bmz-internal_8h.html#9e4a85d85f38e28f9cd256817a9f9ac7">bmz_hash_mod</a>(data, len, <a class="code" href="bmz-test_8c.html#0f7abd008f2ffe278cf4e7802e20b712">s_b1</a>, <a class="code" href="bmz-test_8c.html#70929eace0cd335df19993a92feb0d95">s_m</a>));
@@ -199,7 +199,7 @@
 <a name="l00199"></a>00199 }
 <a name="l00200"></a>00200 
 <a name="l00201"></a>00201 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00202"></a><a class="code" href="bmz-test_8c.html#fc1f37c9fe61d5d7f8988c2775baaeaf">00202</a> <a class="code" href="bmz-test_8c.html#fc1f37c9fe61d5d7f8988c2775baaeaf">test_from_string</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00202"></a><a class="code" href="bmz-test_8c.html#fc1f37c9fe61d5d7f8988c2775baaeaf">00202</a> <a class="code" href="bmz-test_8c.html#fc1f37c9fe61d5d7f8988c2775baaeaf">test_from_string</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00203"></a>00203   <span class="keywordtype">char</span> *buf, *mem;
 <a name="l00204"></a>00204   <span class="keywordtype">size_t</span> n = <a class="code" href="bmz-test_8c.html#27d66214ae0668de66b5824cb76738db">s_times</a>;
 <a name="l00205"></a>00205   <span class="keywordtype">int</span> opt = <a class="code" href="bmz-test_8c.html#0423c1b0437b757b7acccddf01dfb35c">s_options</a>;
@@ -338,7 +338,7 @@
 <a name="l00338"></a>00338 
 <a name="l00339"></a>00339 <span class="keyword">static</span> <span class="keywordtype">void</span>
 <a name="l00340"></a><a class="code" href="bmz-test_8c.html#5d133d59c1696a674901bac101a4ef9e">00340</a> <a class="code" href="bmz-test_8c.html#5d133d59c1696a674901bac101a4ef9e">test_from_stdin</a>() {
-<a name="l00341"></a>00341   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00341"></a>00341   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
 <a name="l00342"></a>00342   <span class="keywordtype">char</span> *data = <a class="code" href="bmz-test_8c.html#61637dcf83e2e87dd48ef0cdcc7a7ee3">read_from_fp</a>(stdin, &amp;len);
 <a name="l00343"></a>00343   <a class="code" href="bmz-test_8c.html#fc1f37c9fe61d5d7f8988c2775baaeaf">test_from_string</a>(data, len);
 <a name="l00344"></a>00344 }
@@ -348,7 +348,7 @@
 <a name="l00348"></a>00348   <span class="keywordtype">int</span> fd = open(fname, O_RDONLY, 0);
 <a name="l00349"></a>00349   <span class="keywordtype">char</span> *data = NULL;
 <a name="l00350"></a>00350   <span class="keyword">struct </span>stat st;
-<a name="l00351"></a>00351   <span class="keywordtype">long</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l00351"></a>00351   <span class="keywordtype">long</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
 <a name="l00352"></a>00352 
 <a name="l00353"></a>00353   <span class="keywordflow">if</span> (fd == -1) <a class="code" href="bmz-test_8c.html#57d9be48a2d2312a1e3303af874430ac">DIE</a>(<span class="stringliteral">"cannot open '%s'"</span>, fname);
 <a name="l00354"></a>00354 
@@ -468,7 +468,7 @@
 <a name="l00468"></a>00468 
 <a name="l00469"></a>00469 <span class="comment">/* vim: et sw=2</span>
 <a name="l00470"></a>00470 <span class="comment"> */</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

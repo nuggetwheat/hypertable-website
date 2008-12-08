@@ -21,27 +21,42 @@
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_LIB_CONFIG_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_common_2_config_8h.html">Common/Config.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#de04a62c3acca1ba4b21a384f5c9ab4f">init_comm_options</a>();
-<a name="l00030"></a>00030   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#4c7cc561684c525d30e054ac183999b1">init_comm</a>();
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_config_8h.html">AsyncComm/Config.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_hyperspace_2_config_8h.html">Hyperspace/Config.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_config_8h.html">DfsBroker/Lib/Config.h</a>"</span>
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
 <a name="l00031"></a>00031 
-<a name="l00032"></a><a class="code" href="namespace_hypertable_1_1_config.html#9fd29c639899867804354bea6f0c0bc4">00032</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9fd29c639899867804354bea6f0c0bc4">init_with_comm</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *desc = NULL,
-<a name="l00033"></a>00033       <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *hidden = NULL, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">PositionalDesc</a> *p = NULL) {
-<a name="l00034"></a>00034     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#fceb903d25fa18b1ba02700a2ff2900e">System::locate_install_dir</a>(argv[0]));
-<a name="l00035"></a>00035     <span class="keywordflow">if</span> (desc) <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(*desc);
-<a name="l00036"></a>00036     <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>();
-<a name="l00037"></a>00037     <a class="code" href="namespace_hypertable_1_1_config.html#de04a62c3acca1ba4b21a384f5c9ab4f">init_comm_options</a>();
-<a name="l00038"></a>00038     <a class="code" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">parse_args</a>(argc, argv, desc, hidden, p);
-<a name="l00039"></a>00039     <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>();
-<a name="l00040"></a>00040     <a class="code" href="namespace_hypertable_1_1_config.html#4c7cc561684c525d30e054ac183999b1">init_comm</a>();
-<a name="l00041"></a>00041   }
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 }} <span class="comment">// namespace Hypertable::Config</span>
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045 <span class="preprocessor">#endif // HYPERTABLE_LIB_CONFIG_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00032"></a>00032   <span class="comment">// init helpers</span>
+<a name="l00033"></a>00033   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#f8d5f1b44531192cbd23edb042f9acc3">init_master_client_options</a>();
+<a name="l00034"></a>00034   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#45e2ff641cb9a4cc6557ca0448deb6a6">init_master_client</a>();
+<a name="l00035"></a>00035   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#f618b3fe833eb6c8e63236693b062605">init_range_server_client_options</a>();
+<a name="l00036"></a>00036   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9d627437d66c0a1c7d08442e30aa8fe0">init_range_server_client</a>();
+<a name="l00037"></a>00037   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#7080273bf81bb45656b13e0f5785044e">init_command_shell_options</a>();
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html">00039</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html">MasterClientPolicy</a> : <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html" title="Interface and base of config policy.">Policy</a> {
+<a name="l00040"></a><a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html#39e8779f00236d365953fe605d1e25ef">00040</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html#39e8779f00236d365953fe605d1e25ef">init_options</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#f8d5f1b44531192cbd23edb042f9acc3">init_master_client_options</a>(); }
+<a name="l00041"></a><a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html#beb2f3544d8310888b1e1183d20b8d1e">00041</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html#beb2f3544d8310888b1e1183d20b8d1e">init</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#45e2ff641cb9a4cc6557ca0448deb6a6">init_master_client</a>(); }
+<a name="l00042"></a>00042   };
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html">00044</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html">RangeServerClientPolicy</a> : <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html" title="Interface and base of config policy.">Policy</a> {
+<a name="l00045"></a><a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html#0b0b0e309d9bdd9f7060868d6a121ba1">00045</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html#0b0b0e309d9bdd9f7060868d6a121ba1">init_options</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#f618b3fe833eb6c8e63236693b062605">init_range_server_client_options</a>(); }
+<a name="l00046"></a><a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html#42ba2a4d80cfe203b9794884f910c5ca">00046</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_range_server_client_policy.html#42ba2a4d80cfe203b9794884f910c5ca">init</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#9d627437d66c0a1c7d08442e30aa8fe0">init_range_server_client</a>(); }
+<a name="l00047"></a>00047   };
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="struct_hypertable_1_1_config_1_1_command_shell_policy.html">00049</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_command_shell_policy.html">CommandShellPolicy</a> : <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html" title="Interface and base of config policy.">Policy</a> {
+<a name="l00050"></a><a class="code" href="struct_hypertable_1_1_config_1_1_command_shell_policy.html#d0c216e817201a8c5a534c7fd4747aa0">00050</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_command_shell_policy.html#d0c216e817201a8c5a534c7fd4747aa0">init_options</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#7080273bf81bb45656b13e0f5785044e">init_command_shell_options</a>(); }
+<a name="l00051"></a>00051   };
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="keyword">typedef</span> Meta::list&lt;DfsClientPolicy, HyperspaceClientPolicy,
+<a name="l00054"></a><a class="code" href="namespace_hypertable_1_1_config.html#1717b9aa100ecf87ad8c02912e3d0ce8">00054</a>           <a class="code" href="struct_hypertable_1_1_config_1_1_master_client_policy.html">MasterClientPolicy</a>, <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html" title="Helpers to compose init policies.">DefaultCommPolicy</a>&gt; <a class="code" href="namespace_hypertable_1_1_config.html#1717b9aa100ecf87ad8c02912e3d0ce8">ClientPolicies</a>;
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="namespace_hypertable_1_1_config.html#d67cf461b46ebf65ba464bd04e104cc7">00056</a>   <span class="keyword">typedef</span> <a class="code" href="struct_hypertable_1_1_config_1_1_join.html">Join&lt;ClientPolicies&gt;::type</a> <a class="code" href="namespace_hypertable_1_1_config.html#d67cf461b46ebf65ba464bd04e104cc7">DefaultClientPolicy</a>;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058 }} <span class="comment">// namespace Hypertable::Config</span>
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060 <span class="preprocessor">#endif // HYPERTABLE_LIB_CONFIG_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -21,204 +21,182 @@
 <a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstdlib&gt;</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;netdb.h&gt;</span>
-<a name="l00028"></a>00028 }
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_usage_8h.html">Common/Usage.h</a>"</span>
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_connection_manager_8h.html">AsyncComm/ConnectionManager.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">AsyncComm/ReactorFactory.h</a>"</span>
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_client_8h.html">DfsBroker/Lib/Client.h</a>"</span>
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_commit_log_8h.html">Hypertable/Lib/CommitLog.h</a>"</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_commit_log_reader_8h.html">Hypertable/Lib/CommitLogReader.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_usage_8h.html">Common/Usage.h</a>"</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_connection_manager_8h.html">AsyncComm/ConnectionManager.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_reactor_factory_8h.html">AsyncComm/ReactorFactory.h</a>"</span>
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_config_8h.html">DfsBroker/Lib/Config.h</a>"</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_dfs_broker_2_lib_2_client_8h.html">DfsBroker/Lib/Client.h</a>"</span>
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_commit_log_8h.html">Hypertable/Lib/CommitLog.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_commit_log_reader_8h.html">Hypertable/Lib/CommitLogReader.h</a>"</span>
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00043"></a>00043 <span class="keyword">using namespace </span>Config;
+<a name="l00044"></a>00044 <span class="keyword">using namespace </span>std;
 <a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00047"></a>00047 <span class="keyword">using namespace </span>std;
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="keyword">namespace </span>{
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="dumplog_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">00051</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>[] = {
-<a name="l00052"></a>00052     <span class="stringliteral">"usage: dumplog [options] &lt;log-dir&gt;"</span>,
-<a name="l00053"></a>00053     <span class="stringliteral">""</span>,
-<a name="l00054"></a>00054     <span class="stringliteral">"  options:"</span>,
-<a name="l00055"></a>00055     <span class="stringliteral">"    --block-summary  Display commit log block information only"</span>,
-<a name="l00056"></a>00056     <span class="stringliteral">"    --config=&lt;file&gt;  Read configuration from &lt;file&gt;.  The default config file"</span>,
-<a name="l00057"></a>00057     <span class="stringliteral">"                     is \"conf/hypertable.cfg\" relative to the toplevel"</span>,
-<a name="l00058"></a>00058     <span class="stringliteral">"                     install directory"</span>,
-<a name="l00059"></a>00059     <span class="stringliteral">"    --display-values Display values (assumes they're printable)"</span>,
-<a name="l00060"></a>00060     <span class="stringliteral">"    --help           Display this help text and exit"</span>,
-<a name="l00061"></a>00061     <span class="stringliteral">"    --verbose,-v     Display 'true' if up, 'false' otherwise"</span>,
-<a name="l00062"></a>00062     <span class="stringliteral">""</span>,
-<a name="l00063"></a>00063     <span class="stringliteral">"  This program dumps the given log's metadata."</span>,
-<a name="l00064"></a>00064     <span class="stringliteral">""</span>,
-<a name="l00065"></a>00065     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00066"></a>00066   };
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#b4679ad3d318d8423bda41e649e16eef">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values);
-<a name="l00069"></a>00069   <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#6e3190d48612e5020f09ff06df70e744">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader);
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071 }
-<a name="l00072"></a>00072 
+<a name="l00046"></a>00046 <span class="keyword">namespace </span>{
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keyword">struct </span><a class="code" href="struct_app_policy.html">AppPolicy</a> : Config::Policy {
+<a name="l00049"></a>00049   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#aee1cb7d819af35004b7551218ce6c82">init_options</a>() {
+<a name="l00050"></a>00050     <a class="code" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9" title="Set the command line options description.">cmdline_desc</a>(<span class="stringliteral">"Usage: %s [options] &lt;log-dir&gt;\n\n"</span>
+<a name="l00051"></a>00051       <span class="stringliteral">"  This program dumps the given log's metadata.\n\nOptions"</span>)
+<a name="l00052"></a>00052       .add_options()
+<a name="l00053"></a>00053       (<span class="stringliteral">"block-summary"</span>, <span class="stringliteral">"Display commit log block information only"</span>)
+<a name="l00054"></a>00054       (<span class="stringliteral">"display-values"</span>, <span class="stringliteral">"Display values (assumes they're printable)"</span>)
+<a name="l00055"></a>00055       ;
+<a name="l00056"></a>00056     <a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6" title="Get the command line hidden options description (for positional options).">cmdline_hidden_desc</a>().add_options()(<span class="stringliteral">"log-dir"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"dfs log dir"</span>);
+<a name="l00057"></a>00057     <a class="code" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09" title="Get the command line positional options description.">cmdline_positional_desc</a>().add(<span class="stringliteral">"log-dir"</span>, -1);
+<a name="l00058"></a>00058   }
+<a name="l00059"></a>00059   <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_app_policy.html#eb2dc01df13b4542c7e9b3d7a4be5b87">init</a>() {
+<a name="l00060"></a>00060     <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"log-dir"</span>)) {
+<a name="l00061"></a>00061       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt;<span class="stringliteral">"log-dir required\n"</span>&lt;&lt; <a class="code" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9" title="Set the command line options description.">cmdline_desc</a>() &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00062"></a>00062       exit(1);
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064   }
+<a name="l00065"></a>00065 };
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="dumplog_8cc.html#6b168dafa3c0fbb2b3d7b9563073f865">00067</a> <span class="keyword">typedef</span> Meta::list&lt;AppPolicy, DfsClientPolicy, DefaultCommPolicy&gt; <a class="code" href="ht__write__test_8cc.html#dd683989a0cc69a7faf829f613ed92ac">Policies</a>;
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00070"></a>00070     <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values);
+<a name="l00071"></a>00071 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client,
+<a name="l00072"></a>00072     <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader);
 <a name="l00073"></a>00073 
+<a name="l00074"></a>00074 } <span class="comment">// local namespace</span>
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 
 <a name="l00077"></a><a class="code" href="dumplog_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00077</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
-<a name="l00078"></a>00078   <span class="keywordtype">string</span> <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a> = <span class="stringliteral">""</span>;
-<a name="l00079"></a>00079   <span class="keywordtype">string</span> log_dir;
-<a name="l00080"></a>00080   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props_ptr;
-<a name="l00081"></a>00081   <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>;
-<a name="l00082"></a>00082   <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_manager_ptr;
-<a name="l00083"></a>00083   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client;
-<a name="l00084"></a>00084   <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader;
-<a name="l00085"></a>00085   <span class="keywordtype">bool</span> block_summary = <span class="keyword">false</span>;
-<a name="l00086"></a>00086   <span class="keywordtype">bool</span> display_values = <span class="keyword">false</span>;
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(System::locate_install_dir(argv[0]));
-<a name="l00089"></a>00089   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>((uint16_t)System::get_processor_count());
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=1; i&lt;argc; i++) {
-<a name="l00092"></a>00092     <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--block-summary"</span>))
-<a name="l00093"></a>00093       block_summary = <span class="keyword">true</span>;
-<a name="l00094"></a>00094     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--config="</span>, 9))
-<a name="l00095"></a>00095       cfgfile = &amp;argv[i][9];
-<a name="l00096"></a>00096     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--display-values"</span>))
-<a name="l00097"></a>00097       display_values = <span class="keyword">true</span>;
-<a name="l00098"></a>00098     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--verbose"</span>) || !strcmp(argv[i], <span class="stringliteral">"-v"</span>))
-<a name="l00099"></a>00099       verbose = <span class="keyword">true</span>;
-<a name="l00100"></a>00100     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (log_dir == <span class="stringliteral">""</span>)
-<a name="l00101"></a>00101       log_dir = argv[i];
-<a name="l00102"></a>00102     <span class="keywordflow">else</span>
-<a name="l00103"></a>00103       Usage::dump_and_exit(usage);
-<a name="l00104"></a>00104   }
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106   <span class="keywordflow">if</span> (log_dir == <span class="stringliteral">""</span>)
-<a name="l00107"></a>00107       Usage::dump_and_exit(usage);
+<a name="l00078"></a>00078   <span class="keywordflow">try</span> {
+<a name="l00079"></a>00079     init_with_policies&lt;Policies&gt;(argc, argv);
+<a name="l00080"></a>00080 
+<a name="l00081"></a>00081     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_manager_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> log_dir = get_str(<span class="stringliteral">"log-dir"</span>);
+<a name="l00084"></a>00084     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> log_host = <span class="keyword">get</span>(<span class="stringliteral">"log-host"</span>, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>());
+<a name="l00085"></a>00085     <span class="keywordtype">int</span> timeout = get_i32(<span class="stringliteral">"dfs-timeout"</span>);
+<a name="l00086"></a>00086 
+<a name="l00090"></a>00090     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client;
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keywordflow">if</span> (log_host.length()) {
+<a name="l00093"></a>00093       <span class="keywordtype">int</span> log_port = get_i16(<span class="stringliteral">"log-port"</span>);
+<a name="l00094"></a>00094       <a class="code" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address.">InetAddr</a> addr(log_host, log_port);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096       dfs_client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_manager_ptr, addr, timeout);
+<a name="l00097"></a>00097     }
+<a name="l00098"></a>00098     <span class="keywordflow">else</span> {
+<a name="l00099"></a>00099       dfs_client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_manager_ptr, <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102     <span class="keywordflow">if</span> (!dfs_client-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#f60985ce9eee0cbe1988bc7fbc72d577" title="Waits up to max_wait_secs for a connection to be established with the DFS broker...">wait_for_connection</a>(timeout)) {
+<a name="l00103"></a>00103       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to connect to DFS Broker, exiting..."</span>);
+<a name="l00104"></a>00104       exit(1);
+<a name="l00105"></a>00105     }
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107     <a class="code" href="namespace_hypertable.html#a403476082b15bf1a679d6e624394056">CommitLogReaderPtr</a> log_reader = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a>(dfs_client, log_dir);
 <a name="l00108"></a>00108 
-<a name="l00109"></a>00109   <span class="keywordflow">if</span> (cfgfile == <span class="stringliteral">""</span>)
-<a name="l00110"></a>00110     cfgfile = System::install_dir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112   props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(cfgfile);
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114   conn_manager_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
-<a name="l00115"></a>00115 
-<a name="l00119"></a>00119   {
-<a name="l00120"></a>00120     <span class="keyword">const</span> <span class="keywordtype">char</span> *loghost = props_ptr-&gt;get(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Host"</span>, 0);
-<a name="l00121"></a>00121     uint16_t logport    = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Port"</span>, 0);
-<a name="l00122"></a>00122     <span class="keyword">struct </span>sockaddr_in addr;
-<a name="l00123"></a>00123     <span class="keywordflow">if</span> (loghost != 0) {
-<a name="l00124"></a>00124       <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">InetAddr::initialize</a>(&amp;addr, loghost, logport);
-<a name="l00125"></a>00125       dfs_client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_manager_ptr, addr, 600);
-<a name="l00126"></a>00126     }
-<a name="l00127"></a>00127     <span class="keywordflow">else</span> {
-<a name="l00128"></a>00128       dfs_client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_manager_ptr, props_ptr);
-<a name="l00129"></a>00129     }
-<a name="l00130"></a>00130 
-<a name="l00131"></a>00131     <span class="keywordflow">if</span> (!dfs_client-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#21631824b64307840929ac38e4def1ae" title="Waits up to max_wait_secs for a connection to be established with the DFS broker...">wait_for_connection</a>(30)) {
-<a name="l00132"></a>00132       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"Unable to connect to DFS Broker, exiting..."</span>);
-<a name="l00133"></a>00133       exit(1);
-<a name="l00134"></a>00134     }
-<a name="l00135"></a>00135   }
-<a name="l00136"></a>00136 
-<a name="l00137"></a>00137   log_reader = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a>(dfs_client, log_dir);
+<a name="l00109"></a>00109     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"block_summary"</span>)) {
+<a name="l00110"></a>00110       printf(<span class="stringliteral">"LOG %s\n"</span>, log_dir.c_str());
+<a name="l00111"></a>00111       <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get());
+<a name="l00112"></a>00112     }
+<a name="l00113"></a>00113     <span class="keywordflow">else</span>
+<a name="l00114"></a>00114       <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get(), <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"display_values"</span>));
+<a name="l00115"></a>00115   }
+<a name="l00116"></a>00116   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00117"></a>00117     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00118"></a>00118     <span class="keywordflow">return</span> 1;
+<a name="l00119"></a>00119   }
+<a name="l00120"></a>00120   <span class="keywordflow">return</span> 0;
+<a name="l00121"></a>00121 }
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123 
+<a name="l00124"></a>00124 <span class="keyword">namespace </span>{
+<a name="l00125"></a>00125 
+<a name="l00126"></a>00126   <span class="keywordtype">void</span>
+<a name="l00127"></a><a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">00127</a>   <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00128"></a>00128               <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values) {
+<a name="l00129"></a>00129     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
+<a name="l00130"></a>00130     <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>;
+<a name="l00131"></a>00131     <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
+<a name="l00132"></a>00132     <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *<a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>;
+<a name="l00133"></a>00133     <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> table_id;
+<a name="l00134"></a>00134     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs;
+<a name="l00135"></a>00135     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00136"></a>00136     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> value;
+<a name="l00137"></a>00137     uint32_t blockno=0;
 <a name="l00138"></a>00138 
-<a name="l00139"></a>00139   <span class="keywordflow">if</span> (block_summary) {
-<a name="l00140"></a>00140     printf(<span class="stringliteral">"LOG %s\n"</span>, log_dir.c_str());
-<a name="l00141"></a>00141     <a class="code" href="dumplog_8cc.html#6e3190d48612e5020f09ff06df70e744">display_log_block_summary</a>(dfs_client, <span class="stringliteral">""</span>, log_reader);
-<a name="l00142"></a>00142   }
-<a name="l00143"></a>00143   <span class="keywordflow">else</span>
-<a name="l00144"></a>00144     <a class="code" href="dumplog_8cc.html#b4679ad3d318d8423bda41e649e16eef">display_log</a>(dfs_client, <span class="stringliteral">""</span>, log_reader, display_values);
+<a name="l00139"></a>00139     <span class="keywordflow">while</span> (log_reader-&gt;<a class="code" href="class_hypertable_1_1_commit_log_reader.html#5b8008fd98a89585422d9590b9377fc1">next</a>(&amp;base, &amp;len, &amp;header)) {
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141       <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(CommitLog::MAGIC_DATA));
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143       ptr = base;
+<a name="l00144"></a>00144       end = base + len;
 <a name="l00145"></a>00145 
-<a name="l00146"></a>00146   <span class="keyword">delete</span> log_reader;
+<a name="l00146"></a>00146       table_id.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;ptr, &amp;len);
 <a name="l00147"></a>00147 
-<a name="l00148"></a>00148   <span class="keywordflow">return</span> 0;
-<a name="l00149"></a>00149 }
-<a name="l00150"></a>00150 
-<a name="l00151"></a>00151 <span class="keyword">namespace </span>{
-<a name="l00152"></a>00152 
-<a name="l00153"></a><a class="code" href="dumplog_8cc.html#b4679ad3d318d8423bda41e649e16eef">00153</a>   <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#b4679ad3d318d8423bda41e649e16eef">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values) {
-<a name="l00154"></a>00154     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
-<a name="l00155"></a>00155     <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>;
-<a name="l00156"></a>00156     <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
-<a name="l00157"></a>00157     <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *<a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>;
-<a name="l00158"></a>00158     <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> table_id;
-<a name="l00159"></a>00159     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs;
-<a name="l00160"></a>00160     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key;
-<a name="l00161"></a>00161     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> value;
-<a name="l00162"></a>00162     uint32_t blockno=0;
-<a name="l00163"></a>00163 
-<a name="l00164"></a>00164     <span class="keywordflow">while</span> (log_reader-&gt;<a class="code" href="class_hypertable_1_1_commit_log_reader.html#67391edbbec856273ce422803c84b141">next</a>(&amp;base, &amp;len, &amp;header)) {
-<a name="l00165"></a>00165 
-<a name="l00166"></a>00166       <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(CommitLog::MAGIC_DATA), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168       ptr = base;
-<a name="l00169"></a>00169       end = base + len;
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171       table_id.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;ptr, &amp;len);
-<a name="l00172"></a>00172 
-<a name="l00173"></a>00173       <span class="keywordflow">while</span> (ptr &lt; end) {
-<a name="l00174"></a>00174 
-<a name="l00175"></a>00175         <span class="comment">// extract the key</span>
-<a name="l00176"></a>00176         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = ptr;
-<a name="l00177"></a>00177         key.<a class="code" href="class_hypertable_1_1_key.html#e00557fe0379de2e6125b55b5d50750c" title="Parses the opaque key and loads the components into the member variables.">load</a>(bs);
-<a name="l00178"></a>00178         cout &lt;&lt; key;
-<a name="l00179"></a>00179         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181         <span class="keywordflow">if</span> (display_values) {
-<a name="l00182"></a>00182           <span class="keyword">const</span> uint8_t *vptr;
-<a name="l00183"></a>00183           <span class="keywordtype">size_t</span> slen = bs.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;vptr);
-<a name="l00184"></a>00184           cout &lt;&lt; <span class="stringliteral">" value='"</span> &lt;&lt; std::string((<span class="keywordtype">char</span> *)vptr, slen) &lt;&lt; <span class="stringliteral">"'"</span>;
-<a name="l00185"></a>00185         }
-<a name="l00186"></a>00186 
-<a name="l00187"></a>00187         <span class="comment">//cout &lt;&lt; " bno=" &lt;&lt; blockno &lt;&lt; endl;</span>
-<a name="l00188"></a>00188         cout &lt;&lt; endl;
-<a name="l00189"></a>00189 
-<a name="l00190"></a>00190         <span class="comment">// skip value</span>
-<a name="l00191"></a>00191         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193         ptr = bs.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
-<a name="l00194"></a>00194         <span class="keywordflow">if</span> (ptr &gt; end)
-<a name="l00195"></a>00195           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c132f23d622a1e494c012aac83fbf7b6">Error::REQUEST_TRUNCATED</a>, <span class="stringliteral">"Problem decoding value"</span>);
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197       }
-<a name="l00198"></a>00198       blockno++;
-<a name="l00199"></a>00199     }
-<a name="l00200"></a>00200   }
-<a name="l00201"></a>00201 
+<a name="l00148"></a>00148       <span class="keywordflow">while</span> (ptr &lt; end) {
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150         <span class="comment">// extract the key</span>
+<a name="l00151"></a>00151         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = ptr;
+<a name="l00152"></a>00152         key.<a class="code" href="class_hypertable_1_1_key.html#0948f36e3a1d720cb93cbd593ff3b0ee" title="Parses the opaque key and loads the components into the member variables.">load</a>(bs);
+<a name="l00153"></a>00153         cout &lt;&lt; key;
+<a name="l00154"></a>00154         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156         <span class="keywordflow">if</span> (display_values) {
+<a name="l00157"></a>00157           <span class="keyword">const</span> uint8_t *vptr;
+<a name="l00158"></a>00158           <span class="keywordtype">size_t</span> slen = bs.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;vptr);
+<a name="l00159"></a>00159           cout &lt;&lt; <span class="stringliteral">" value='"</span> &lt;&lt; std::string((<span class="keywordtype">char</span> *)vptr, slen) &lt;&lt; <span class="stringliteral">"'"</span>;
+<a name="l00160"></a>00160         }
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162         <span class="comment">//cout &lt;&lt; " bno=" &lt;&lt; blockno &lt;&lt; endl;</span>
+<a name="l00163"></a>00163         cout &lt;&lt; endl;
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165         <span class="comment">// skip value</span>
+<a name="l00166"></a>00166         bs.<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>();
+<a name="l00167"></a>00167         ptr = bs.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
+<a name="l00168"></a>00168 
+<a name="l00169"></a>00169         <span class="keywordflow">if</span> (ptr &gt; end)
+<a name="l00170"></a>00170           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c132f23d622a1e494c012aac83fbf7b6">Error::REQUEST_TRUNCATED</a>, <span class="stringliteral">"Problem decoding value"</span>);
+<a name="l00171"></a>00171       }
+<a name="l00172"></a>00172       blockno++;
+<a name="l00173"></a>00173     }
+<a name="l00174"></a>00174   }
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176 
+<a name="l00177"></a>00177 
+<a name="l00178"></a>00178   <span class="keywordtype">void</span>
+<a name="l00179"></a><a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">00179</a>   <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00180"></a>00180       <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader) {
+<a name="l00181"></a>00181     <a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> binfo;
+<a name="l00182"></a>00182     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
+<a name="l00183"></a>00183 
+<a name="l00184"></a>00184     <span class="keywordflow">while</span> (log_reader-&gt;<a class="code" href="class_hypertable_1_1_commit_log_reader.html#a1d5aca6f328689289b181f1219f4d24">next_raw_block</a>(&amp;binfo, &amp;header)) {
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186       <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(CommitLog::MAGIC_DATA));
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188       printf(<span class="stringliteral">"%sDATA frag=\"%s\" rev=%llu start=%09llu end=%09llu "</span>,
+<a name="l00189"></a>00189              prefix.c_str(), binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#2b7bbcd00a13520c64ef800d0d186763">file_fragment</a>, (<a class="code" href="bmz_8c.html#060a01232b5aabfce404ef5b2dafdba7">Llu</a>)header.<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#68ce703c74a4cbd3f3d0dcc7cfe67412">get_revision</a>(),
+<a name="l00190"></a>00190              (<a class="code" href="bmz_8c.html#060a01232b5aabfce404ef5b2dafdba7">Llu</a>)binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>, (<a class="code" href="bmz_8c.html#060a01232b5aabfce404ef5b2dafdba7">Llu</a>)binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a>);
+<a name="l00191"></a>00191 
+<a name="l00192"></a>00192       <span class="keywordflow">if</span> (binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a> == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
+<a name="l00193"></a>00193         printf(<span class="stringliteral">"ztype=\"%s\" zlen=%u len=%u\n"</span>, <a class="code" href="class_hypertable_1_1_block_compression_codec.html" title="Abstract base class for block compression codecs.">BlockCompressionCodec</a>::
+<a name="l00194"></a>00194                get_compressor_name(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>()),
+<a name="l00195"></a>00195                header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
+<a name="l00196"></a>00196       }
+<a name="l00197"></a>00197       <span class="keywordflow">else</span>
+<a name="l00198"></a>00198         printf(<span class="stringliteral">"%serror = \"%s\"\n"</span>, prefix.c_str(),
+<a name="l00199"></a>00199                <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a>));
+<a name="l00200"></a>00200     }
+<a name="l00201"></a>00201   }
 <a name="l00202"></a>00202 
-<a name="l00203"></a>00203 
-<a name="l00204"></a><a class="code" href="dumplog_8cc.html#6e3190d48612e5020f09ff06df70e744">00204</a>   <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#6e3190d48612e5020f09ff06df70e744">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader) {
-<a name="l00205"></a>00205     <a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> binfo;
-<a name="l00206"></a>00206     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
-<a name="l00207"></a>00207 
-<a name="l00208"></a>00208     <span class="keywordflow">while</span> (log_reader-&gt;<a class="code" href="class_hypertable_1_1_commit_log_reader.html#d279536ca4551effd8889587d102a806">next_raw_block</a>(&amp;binfo, &amp;header)) {
-<a name="l00209"></a>00209 
-<a name="l00210"></a>00210       <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(CommitLog::MAGIC_DATA), <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
-<a name="l00211"></a>00211 
-<a name="l00212"></a>00212       printf(<span class="stringliteral">"%sDATA frag=\"%s\" ts=%llu start=%09llu end=%09llu "</span>,
-<a name="l00213"></a>00213              prefix.c_str(), binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#2b7bbcd00a13520c64ef800d0d186763">file_fragment</a>, 
-<a name="l00214"></a>00214              (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">unsigned</span> <a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)header.<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#589e8d8ebd6697befb203f6a56176f05">get_timestamp</a>(),
-<a name="l00215"></a>00215              (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">unsigned</span> <a class="code" href="lzoconf_8h.html#b832c174e145540d491b0830fc05dbb1">int</a>)binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#92fcffc27c8a53ebbdee3ae3e7c318ca">start_offset</a>,
-<a name="l00216"></a>00216              (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#52cd949800eef0afae64af6bad0e76d0">end_offset</a>);
-<a name="l00217"></a>00217 
-<a name="l00218"></a>00218       <span class="keywordflow">if</span> (binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a> == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00219"></a>00219         printf(<span class="stringliteral">"ztype=\"%s\" zlen=%u len=%u\n"</span>,
-<a name="l00220"></a>00220                BlockCompressionCodec::get_compressor_name(header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#70be8e8fc61d146b8d8efd33c70a8b6e">get_compression_type</a>()),
-<a name="l00221"></a>00221                header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#66398fc8a057f203aebca67607220ea1">get_data_zlength</a>(), header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#7899ececdb74a5a26747d0b9463a907f">get_data_length</a>());
-<a name="l00222"></a>00222       }
-<a name="l00223"></a>00223       <span class="keywordflow">else</span>
-<a name="l00224"></a>00224         printf(<span class="stringliteral">"%serror = \"%s\"\n"</span>, prefix.c_str(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(binfo.<a class="code" href="class_hypertable_1_1_commit_log_block_info.html#eaeab3d599f1e694d71aaf4b7277166a">error</a>));
-<a name="l00225"></a>00225     }
-<a name="l00226"></a>00226   }
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00203"></a>00203 } <span class="comment">// local namespace</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:53 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

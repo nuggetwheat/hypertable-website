@@ -25,329 +25,65 @@
 <a name="l00027"></a>00027 <span class="preprocessor">#include &lt;boost/algorithm/string.hpp&gt;</span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/thread/exceptions.hpp&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;readline/history.h&gt;</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;readline/readline.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;sys/poll.h&gt;</span>
-<a name="l00034"></a>00034 }
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_comm_buf_8h.html">AsyncComm/CommBuf.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_header_builder_8h.html">AsyncComm/HeaderBuilder.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_interactive_command_8h.html">Common/InteractiveCommand.h</a>"</span>
-<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
-<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
-<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
-<a name="l00045"></a>00045 <span class="preprocessor">#include "<a class="code" href="_usage_8h.html">Common/Usage.h</a>"</span>
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="preprocessor">#include "<a class="code" href="_tools_2hyperspace_2_global_8h.html">Global.h</a>"</span>
-<a name="l00048"></a>00048 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050 <span class="preprocessor">#include "<a class="code" href="_command_mkdir_8h.html">CommandMkdir.h</a>"</span>
-<a name="l00051"></a>00051 <span class="preprocessor">#include "<a class="code" href="_command_delete_8h.html">CommandDelete.h</a>"</span>
-<a name="l00052"></a>00052 <span class="preprocessor">#include "<a class="code" href="_command_open_8h.html">CommandOpen.h</a>"</span>
-<a name="l00053"></a>00053 <span class="preprocessor">#include "<a class="code" href="_command_create_8h.html">CommandCreate.h</a>"</span>
-<a name="l00054"></a>00054 <span class="preprocessor">#include "<a class="code" href="_command_close_8h.html">CommandClose.h</a>"</span>
-<a name="l00055"></a>00055 <span class="preprocessor">#include "<a class="code" href="_command_attr_set_8h.html">CommandAttrSet.h</a>"</span>
-<a name="l00056"></a>00056 <span class="preprocessor">#include "<a class="code" href="_command_attr_get_8h.html">CommandAttrGet.h</a>"</span>
-<a name="l00057"></a>00057 <span class="preprocessor">#include "<a class="code" href="_command_attr_del_8h.html">CommandAttrDel.h</a>"</span>
-<a name="l00058"></a>00058 <span class="preprocessor">#include "<a class="code" href="hyperspace_2_command_exists_8h.html">CommandExists.h</a>"</span>
-<a name="l00059"></a>00059 <span class="preprocessor">#include "<a class="code" href="_command_readdir_8h.html">CommandReaddir.h</a>"</span>
-<a name="l00060"></a>00060 <span class="preprocessor">#include "<a class="code" href="_command_lock_8h.html">CommandLock.h</a>"</span>
-<a name="l00061"></a>00061 <span class="preprocessor">#include "<a class="code" href="_command_try_lock_8h.html">CommandTryLock.h</a>"</span>
-<a name="l00062"></a>00062 <span class="preprocessor">#include "<a class="code" href="_command_release_8h.html">CommandRelease.h</a>"</span>
-<a name="l00063"></a>00063 <span class="preprocessor">#include "<a class="code" href="_command_get_sequencer_8h.html">CommandGetSequencer.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_hyperspace_2_config_8h.html">Hyperspace/Config.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_hs_command_interpreter_8h.html">Hyperspace/HsCommandInterpreter.h</a>"</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_hs_client_state_8h.html">Hyperspace/HsClientState.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_command_shell_8h.html">Common/CommandShell.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00038"></a>00038 <span class="keyword">using namespace </span>Config;
+<a name="l00039"></a>00039 <span class="keyword">using namespace </span>Hyperspace;
+<a name="l00040"></a>00040 <span class="keyword">using namespace </span>std;
+<a name="l00041"></a>00041 <span class="keyword">using namespace </span>boost;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="class_session_handler.html">00044</a> <span class="keyword">class </span><a class="code" href="class_session_handler.html">SessionHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace...">SessionCallback</a> {
+<a name="l00045"></a>00045 <span class="keyword">public</span>:
+<a name="l00046"></a><a class="code" href="class_session_handler.html#c064bfdf39aebf77bbabc26acd7493ec">00046</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#c064bfdf39aebf77bbabc26acd7493ec">jeopardy</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Jeopardy"</span> &lt;&lt; endl; }
+<a name="l00047"></a><a class="code" href="class_session_handler.html#6ce92515238c83b56d0f1e98c6d71625">00047</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#6ce92515238c83b56d0f1e98c6d71625">safe</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Safe"</span> &lt;&lt; endl; }
+<a name="l00048"></a><a class="code" href="class_session_handler.html#c77fb3e9c9ed34509da709592723a3bd">00048</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#c77fb3e9c9ed34509da709592723a3bd">expired</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Expired"</span> &lt;&lt; endl; }
+<a name="l00049"></a>00049 };
+<a name="l00050"></a>00050 
+<a name="l00051"></a><a class="code" href="hyperspace_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00051</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
+<a name="l00052"></a>00052   <span class="keyword">typedef</span> Cons&lt;HyperspaceCommandShellPolicy, DefaultCommPolicy&gt; MyPolicy;
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054   <a class="code" href="namespace_hypertable.html#adbfb9fa54c2f7d0023cee80d962fe49">CommandShellPtr</a> shell;
+<a name="l00055"></a>00055   <a class="code" href="namespace_hypertable.html#e18ef7cd2044e792013853b032ec2ca8">CommandInterpreterPtr</a> interp;
+<a name="l00056"></a>00056   <a class="code" href="class_hyperspace_1_1_session.html">Session</a> *session;
+<a name="l00057"></a>00057   <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm;
+<a name="l00058"></a>00058   <a class="code" href="class_session_handler.html">SessionHandler</a> session_handler;
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keywordflow">try</span> {
+<a name="l00061"></a>00061     init_with_policy&lt;MyPolicy&gt;(argc, argv);
+<a name="l00062"></a>00062     <a class="code" href="namespace_hyperspace_1_1_hs_client_state.html#43f6088fa7ed4668680d560306d2eb56">HsClientState::exit_status</a> = 0;
+<a name="l00063"></a>00063     comm = Comm::instance();
 <a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00066"></a>00066 <span class="keyword">using namespace </span>Hyperspace;
-<a name="l00067"></a>00067 <span class="keyword">using namespace </span>std;
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 <span class="keyword">namespace </span>{
+<a name="l00065"></a>00065     session = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Hyperspace::Session</a>(comm, <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>, &amp;session_handler);
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067     interp = session-&gt;<a class="code" href="class_hyperspace_1_1_session.html#43e52aa4aed8f4f5467bfff0223969b7" title="Creates a new Hyperspace command interpreter.">create_hs_interpreter</a>();
+<a name="l00068"></a>00068     shell = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_command_shell.html">CommandShell</a>(<span class="stringliteral">"hyperspace"</span>, interp, <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00069"></a>00069     interp-&gt;set_silent(shell-&gt;silent());
+<a name="l00070"></a>00070     interp-&gt;set_test_mode(shell-&gt;test_mode());
 <a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="hyperspace_8cc.html#4deb21328aef40f0e915d5a8026676bf">00072</a>   <span class="keywordtype">char</span> *<a class="code" href="dfsclient_8cc.html#4deb21328aef40f0e915d5a8026676bf">line_read</a> = 0;
-<a name="l00073"></a>00073 
-<a name="l00074"></a><a class="code" href="hyperspace_8cc.html#b49b1ec90b7952d982a8d47085ceef4c">00074</a>   <span class="keywordtype">bool</span> <a class="code" href="hyperspace_8cc.html#b49b1ec90b7952d982a8d47085ceef4c">g_testmode</a> = <span class="keyword">false</span>;
-<a name="l00075"></a><a class="code" href="hyperspace_8cc.html#f552c7957ef47f3676906037a626dff2">00075</a>   std::string <a class="code" href="hyperspace_8cc.html#f552c7957ef47f3676906037a626dff2">g_input_str</a>;
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="hyperspace_8cc.html#bb5b126a7dfeb66d46a348b18ebd92c4">00077</a>   <span class="keywordtype">char</span> *<a class="code" href="dfsclient_8cc.html#e75a372ebf299de23cd383bb848b247c">rl_gets</a> () {
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073     <span class="keywordflow">if</span>(!session-&gt;<a class="code" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218" title="Waits for session state to change to STATE_SAFE.">wait_for_connection</a>(30000)) {
+<a name="l00074"></a>00074       cerr &lt;&lt; <span class="stringliteral">"Unable to establish connection with Hyperspace, exitting..."</span>
+<a name="l00075"></a>00075            &lt;&lt; endl;
+<a name="l00076"></a>00076       exit(1);
+<a name="l00077"></a>00077     }
 <a name="l00078"></a>00078 
-<a name="l00079"></a>00079     <span class="keywordflow">if</span> (g_testmode) {
-<a name="l00080"></a>00080       <span class="keywordflow">if</span> (!getline(cin, g_input_str))
-<a name="l00081"></a>00081         <span class="keywordflow">return</span> 0;
-<a name="l00082"></a>00082       boost::trim(g_input_str);
-<a name="l00083"></a>00083       <span class="keywordflow">if</span> (g_input_str.find(<span class="stringliteral">"echo"</span>, 0) != 0 &amp;&amp; g_input_str.find(<span class="stringliteral">"quit"</span>, 0) != 0)
-<a name="l00084"></a>00084         cout &lt;&lt; g_input_str &lt;&lt; endl;
-<a name="l00085"></a>00085       <span class="keywordflow">return</span> (<span class="keywordtype">char</span> *)g_input_str.c_str();
-<a name="l00086"></a>00086     }
-<a name="l00087"></a>00087     <span class="keywordflow">else</span> {
-<a name="l00088"></a>00088       <span class="keywordflow">if</span> (line_read) {
-<a name="l00089"></a>00089         free (line_read);
-<a name="l00090"></a>00090         line_read = (<span class="keywordtype">char</span> *)NULL;
-<a name="l00091"></a>00091       }
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093       <span class="comment">/* Get a line from the user. */</span>
-<a name="l00094"></a>00094       line_read = readline(<span class="stringliteral">"hyperspace&gt; "</span>);
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096       <span class="comment">/* If the line has any text in it, save it on the history. */</span>
-<a name="l00097"></a>00097       <span class="keywordflow">if</span> (line_read &amp;&amp; *line_read)
-<a name="l00098"></a>00098         add_history (line_read);
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100       <span class="keywordflow">return</span> line_read;
-<a name="l00101"></a>00101     }
-<a name="l00102"></a>00102   }
-<a name="l00103"></a>00103 
-<a name="l00104"></a><a class="code" href="hyperspace_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">00104</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>[] = {
-<a name="l00105"></a>00105     <span class="stringliteral">"usage: hyperspace [OPTIONS]"</span>,
-<a name="l00106"></a>00106     <span class="stringliteral">""</span>,
-<a name="l00107"></a>00107     <span class="stringliteral">"OPTIONS:"</span>,
-<a name="l00108"></a>00108     <span class="stringliteral">"  --config=&lt;file&gt;  Read configuration from &lt;file&gt;.  The default config file is"</span>,
-<a name="l00109"></a>00109     <span class="stringliteral">"                   \"conf/hypertable.cfg\" relative to the toplevel install"</span>,
-<a name="l00110"></a>00110     <span class="stringliteral">"                   directory"</span>,
-<a name="l00111"></a>00111     <span class="stringliteral">"  --debug          Turn on debugging output"</span>,
-<a name="l00112"></a>00112     <span class="stringliteral">"  --eval &lt;cmds&gt;    Evaluates the commands in the string &lt;cmds&gt;.  Several"</span>,
-<a name="l00113"></a>00113     <span class="stringliteral">"                   commands can be supplied in &lt;cmds&gt; by separating them with"</span>,
-<a name="l00114"></a>00114     <span class="stringliteral">"                   semicolons"</span>,
-<a name="l00115"></a>00115     <span class="stringliteral">"  --no-prompt      Don't display a command prompt"</span>,
-<a name="l00116"></a>00116     <span class="stringliteral">"  --notification-address=[&lt;host&gt;:]&lt;port&gt;  Send notification datagram to this"</span>,
-<a name="l00117"></a>00117     <span class="stringliteral">"                   address after each command."</span>,
-<a name="l00118"></a>00118     <span class="stringliteral">"  --help           Display this help text and exit"</span>,
-<a name="l00119"></a>00119     <span class="stringliteral">"  --test-mode      Suppress file line number information from error messages to"</span>,
-<a name="l00120"></a>00120     <span class="stringliteral">"                   simplify diff'ing test output."</span>,
-<a name="l00121"></a>00121     <span class="stringliteral">""</span>,
-<a name="l00122"></a>00122     <span class="stringliteral">"This is a command interpreter for Hyperspace, a global namespace and lock service"</span>,
-<a name="l00123"></a>00123     <span class="stringliteral">"for loosely-coupled distributed systems."</span>,
-<a name="l00124"></a>00124     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00125"></a>00125   };
-<a name="l00126"></a>00126 
-<a name="l00127"></a><a class="code" href="hyperspace_8cc.html#8236cde872fde371fe8d73c0b01ca1ab">00127</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="hyperspace_8cc.html#8236cde872fde371fe8d73c0b01ca1ab">help_trailer</a>[] = {
-<a name="l00128"></a>00128     <span class="stringliteral">"echo &lt;str&gt;"</span>,
-<a name="l00129"></a>00129     <span class="stringliteral">"  Display &lt;str&gt; to stdout."</span>,
-<a name="l00130"></a>00130     <span class="stringliteral">""</span>,
-<a name="l00131"></a>00131     <span class="stringliteral">"help"</span>,
-<a name="l00132"></a>00132     <span class="stringliteral">"  Display this help text."</span>,
-<a name="l00133"></a>00133     <span class="stringliteral">""</span>,
-<a name="l00134"></a>00134     <span class="stringliteral">"quit"</span>,
-<a name="l00135"></a>00135     <span class="stringliteral">"  Exit the program."</span>,
-<a name="l00136"></a>00136     <span class="stringliteral">""</span>,
-<a name="l00137"></a>00137     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00138"></a>00138   };
-<a name="l00139"></a>00139 }
-<a name="l00140"></a>00140 
-<a name="l00144"></a><a class="code" href="class_notifier.html">00144</a> <span class="keyword">class </span><a class="code" href="class_notifier.html">Notifier</a> {
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146 <span class="keyword">public</span>:
-<a name="l00147"></a>00147 
-<a name="l00148"></a><a class="code" href="class_notifier.html#9cdb0904e512aed70fb95497d8d071fe">00148</a>   <a class="code" href="class_notifier.html#90881a14a5fec5b491d58730205f0e9b">Notifier</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *addr_str) {
-<a name="l00149"></a>00149     <a class="code" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> null_handler(0);
-<a name="l00150"></a>00150     <a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a> = Comm::instance();
-<a name="l00151"></a>00151     <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">InetAddr::initialize</a>(&amp;<a class="code" href="class_notifier.html#556cb091f41398c90f179fc436b4a06d">m_addr</a>, addr_str)) {
-<a name="l00152"></a>00152       exit(1);
-<a name="l00153"></a>00153     }
-<a name="l00154"></a>00154     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">InetAddr::initialize</a>(&amp;<a class="code" href="class_notifier.html#9ae01a75003cc90b7373ba68f6175950">m_send_addr</a>, INADDR_ANY, 0);
-<a name="l00155"></a>00155     <a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#52bc6f0042ebfacf83f099ca26909602" title="Creates a local socket for receiving datagrams and assigns a default dispatch handler...">create_datagram_receive_socket</a>(&amp;<a class="code" href="class_notifier.html#9ae01a75003cc90b7373ba68f6175950">m_send_addr</a>, 0x10, null_handler);
-<a name="l00156"></a>00156   }
-<a name="l00157"></a>00157 
-<a name="l00158"></a><a class="code" href="class_notifier.html#90881a14a5fec5b491d58730205f0e9b">00158</a>   <a class="code" href="class_notifier.html#90881a14a5fec5b491d58730205f0e9b">Notifier</a>() : <a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a>(0) {
-<a name="l00159"></a>00159     <span class="keywordflow">return</span>;
-<a name="l00160"></a>00160   }
-<a name="l00161"></a>00161 
-<a name="l00162"></a><a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">00162</a>   <span class="keywordtype">void</span> <a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>() {
-<a name="l00163"></a>00163     <span class="keywordflow">if</span> (<a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a>) {
-<a name="l00164"></a>00164       <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00165"></a>00165       <a class="code" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> cbp(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>(<a class="code" href="class_notifier.html#edc03317a415c04d421a5a55d7b19307">m_builder</a>, 2));
-<a name="l00166"></a>00166       cbp-&gt;append_i16(0);
-<a name="l00167"></a>00167       <span class="keywordflow">if</span> ((error = <a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#93140a1cd19fa5d1385f210005bbf9b8" title="Sends a datagram to a remote address.">send_datagram</a>(<a class="code" href="class_notifier.html#556cb091f41398c90f179fc436b4a06d">m_addr</a>, <a class="code" href="class_notifier.html#9ae01a75003cc90b7373ba68f6175950">m_send_addr</a>, cbp)) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00168"></a>00168         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem sending datagram - %s"</span>, <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(error));
-<a name="l00169"></a>00169         exit(1);
-<a name="l00170"></a>00170       }
-<a name="l00171"></a>00171     }
-<a name="l00172"></a>00172   }
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174 <span class="keyword">private</span>:
-<a name="l00175"></a><a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">00175</a>   <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_notifier.html#59a0d6b09743deabf2aa75d13aa4da1e">m_comm</a>;
-<a name="l00176"></a><a class="code" href="class_notifier.html#556cb091f41398c90f179fc436b4a06d">00176</a>   <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_notifier.html#556cb091f41398c90f179fc436b4a06d">m_addr</a>;
-<a name="l00177"></a><a class="code" href="class_notifier.html#9ae01a75003cc90b7373ba68f6175950">00177</a>   <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_notifier.html#9ae01a75003cc90b7373ba68f6175950">m_send_addr</a>;
-<a name="l00178"></a><a class="code" href="class_notifier.html#edc03317a415c04d421a5a55d7b19307">00178</a>   <a class="code" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> <a class="code" href="class_notifier.html#edc03317a415c04d421a5a55d7b19307">m_builder</a>;
-<a name="l00179"></a>00179 };
-<a name="l00180"></a>00180 
-<a name="l00181"></a>00181 
-<a name="l00185"></a><a class="code" href="class_session_handler.html">00185</a> <span class="keyword">class </span><a class="code" href="class_session_handler.html">SessionHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace...">SessionCallback</a> {
-<a name="l00186"></a>00186 <span class="keyword">public</span>:
-<a name="l00187"></a><a class="code" href="class_session_handler.html#c064bfdf39aebf77bbabc26acd7493ec">00187</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#c064bfdf39aebf77bbabc26acd7493ec">jeopardy</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Jeopardy"</span> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>; }
-<a name="l00188"></a><a class="code" href="class_session_handler.html#6ce92515238c83b56d0f1e98c6d71625">00188</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#6ce92515238c83b56d0f1e98c6d71625">safe</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Safe"</span> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>; }
-<a name="l00189"></a><a class="code" href="class_session_handler.html#c77fb3e9c9ed34509da709592723a3bd">00189</a>   <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_session_handler.html#c77fb3e9c9ed34509da709592723a3bd">expired</a>() { cout &lt;&lt; <span class="stringliteral">"SESSION CALLBACK: Expired"</span> &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>; }
-<a name="l00190"></a>00190 };
-<a name="l00191"></a>00191 
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193 
-<a name="l00197"></a><a class="code" href="hyperspace_8cc.html#647f21a28344e1d9c643f4115516d7c9">00197</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv, <span class="keywordtype">char</span> **envp) {
-<a name="l00198"></a>00198   <span class="keyword">const</span> <span class="keywordtype">char</span> *line;
-<a name="l00199"></a>00199   <span class="keywordtype">char</span> *eval = 0;
-<a name="l00200"></a>00200   <span class="keywordtype">size_t</span> i;
-<a name="l00201"></a>00201   <span class="keywordtype">string</span> <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a> = <span class="stringliteral">""</span>;
-<a name="l00202"></a>00202   vector&lt;InteractiveCommand *&gt;  commands;
-<a name="l00203"></a>00203   <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm;
-<a name="l00204"></a>00204   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props_ptr;
-<a name="l00205"></a>00205   <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> session_ptr;
-<a name="l00206"></a>00206   <a class="code" href="class_session_handler.html">SessionHandler</a> session_handler;
-<a name="l00207"></a>00207   <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>;
-<a name="l00208"></a>00208   <a class="code" href="class_notifier.html">Notifier</a> *notifier = 0;
-<a name="l00209"></a>00209 
-<a name="l00210"></a>00210   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(System::locate_install_dir(argv[0]));
-<a name="l00211"></a>00211   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">ReactorFactory::initialize</a>((uint16_t)System::get_processor_count());
-<a name="l00212"></a>00212 
-<a name="l00213"></a>00213   cfgfile = System::install_dir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
-<a name="l00214"></a>00214 
-<a name="l00215"></a>00215   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=1; i&lt;argc; i++) {
-<a name="l00216"></a>00216     <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--config="</span>, 9))
-<a name="l00217"></a>00217       cfgfile = &amp;argv[i][9];
-<a name="l00218"></a>00218     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--debug"</span>))
-<a name="l00219"></a>00219       verbose = <span class="keyword">true</span>;
-<a name="l00220"></a>00220     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--eval"</span>)) {
-<a name="l00221"></a>00221       i++;
-<a name="l00222"></a>00222       <span class="keywordflow">if</span> (i == argc)
-<a name="l00223"></a>00223         Usage::dump_and_exit(usage);
-<a name="l00224"></a>00224       eval = argv[i];
-<a name="l00225"></a>00225     }
-<a name="l00226"></a>00226     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(argv[i], <span class="stringliteral">"--test-mode"</span>)) {
-<a name="l00227"></a>00227       <a class="code" href="namespace_hypertable_1_1_logger.html#f67fd41644335190ad249f85658d9833">Logger::set_test_mode</a>(<span class="stringliteral">"hyperspace"</span>);
-<a name="l00228"></a>00228       g_testmode = <span class="keyword">true</span>;
-<a name="l00229"></a>00229     }
-<a name="l00230"></a>00230     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(argv[i], <span class="stringliteral">"--notification-address="</span>, 23))
-<a name="l00231"></a>00231       notifier = <span class="keyword">new</span> <a class="code" href="class_notifier.html">Notifier</a>(&amp;argv[i][23]);
-<a name="l00232"></a>00232     <span class="keywordflow">else</span>
-<a name="l00233"></a>00233       Usage::dump_and_exit(usage);
-<a name="l00234"></a>00234   }
-<a name="l00235"></a>00235 
-<a name="l00236"></a>00236   <span class="keywordflow">if</span> (notifier == 0)
-<a name="l00237"></a>00237     notifier = <span class="keyword">new</span> <a class="code" href="class_notifier.html">Notifier</a>();
-<a name="l00238"></a>00238 
-<a name="l00239"></a>00239   props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(cfgfile);
-<a name="l00240"></a>00240 
-<a name="l00241"></a>00241   <span class="keywordflow">if</span> (verbose)
-<a name="l00242"></a>00242     props_ptr-&gt;set(<span class="stringliteral">"Hypertable.Verbose"</span>, <span class="stringliteral">"true"</span>);
-<a name="l00243"></a>00243 
-<a name="l00244"></a>00244   comm = Comm::instance();
-<a name="l00245"></a>00245 
-<a name="l00246"></a>00246   session_ptr = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_session.html">Session</a>(comm, props_ptr, &amp;session_handler);
-<a name="l00247"></a>00247 
-<a name="l00248"></a>00248   <span class="keywordflow">if</span> (!session_ptr-&gt;wait_for_connection(30)) {
-<a name="l00249"></a>00249     cerr &lt;&lt; <span class="stringliteral">"Unable to establish session with Hyerspace, exiting..."</span> &lt;&lt; endl;
-<a name="l00250"></a>00250     exit(1);
-<a name="l00251"></a>00251   }
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_mkdir.html">CommandMkdir</a>(session_ptr.get()));
-<a name="l00254"></a>00254   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_delete.html">CommandDelete</a>(session_ptr.get()));
-<a name="l00255"></a>00255   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_open.html">CommandOpen</a>(session_ptr.get()));
-<a name="l00256"></a>00256   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_create.html">CommandCreate</a>(session_ptr.get()));
-<a name="l00257"></a>00257   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_close.html">CommandClose</a>(session_ptr.get()));
-<a name="l00258"></a>00258   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_attr_set.html">CommandAttrSet</a>(session_ptr.get()));
-<a name="l00259"></a>00259   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_attr_get.html">CommandAttrGet</a>(session_ptr.get()));
-<a name="l00260"></a>00260   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_attr_del.html">CommandAttrDel</a>(session_ptr.get()));
-<a name="l00261"></a>00261   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_command_exists.html">CommandExists</a>(session_ptr.get()));
-<a name="l00262"></a>00262   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_readdir.html">CommandReaddir</a>(session_ptr.get()));
-<a name="l00263"></a>00263   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_lock.html">CommandLock</a>(session_ptr.get()));
-<a name="l00264"></a>00264   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_try_lock.html">CommandTryLock</a>(session_ptr.get()));
-<a name="l00265"></a>00265   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_release.html">CommandRelease</a>(session_ptr.get()));
-<a name="l00266"></a>00266   commands.push_back(<span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_command_get_sequencer.html">CommandGetSequencer</a>(session_ptr.get()));
-<a name="l00267"></a>00267 
-<a name="l00271"></a>00271   <span class="keywordflow">if</span> (eval != 0) {
-<a name="l00272"></a>00272     <span class="keywordflow">try</span> {
-<a name="l00273"></a>00273       <span class="keyword">const</span> <span class="keywordtype">char</span> *str;
-<a name="l00274"></a>00274       std::string cmd_str;
-<a name="l00275"></a>00275       str = strtok(eval, <span class="stringliteral">";"</span>);
-<a name="l00276"></a>00276       <span class="keywordflow">while</span> (str) {
-<a name="l00277"></a>00277         <a class="code" href="namespace_hyperspace_1_1_global.html#6440a0713a39c278daa9c91023cf4898">Global::exit_status</a> = 0;
-<a name="l00278"></a>00278         cmd_str = str;
-<a name="l00279"></a>00279         boost::trim(cmd_str);
-<a name="l00280"></a>00280         <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
-<a name="l00281"></a>00281           <span class="keywordflow">if</span> (commands[i]-&gt;matches(cmd_str.c_str())) {
-<a name="l00282"></a>00282             commands[i]-&gt;parse_command_line(cmd_str.c_str());
-<a name="l00283"></a>00283             commands[i]-&gt;run();
-<a name="l00284"></a>00284             <span class="keywordflow">break</span>;
-<a name="l00285"></a>00285           }
-<a name="l00286"></a>00286         }
-<a name="l00287"></a>00287         <span class="keywordflow">if</span> (i == commands.size()) {
-<a name="l00288"></a>00288           <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unrecognized command : %s"</span>, cmd_str.c_str());
-<a name="l00289"></a>00289           <span class="keywordflow">return</span> 1;
-<a name="l00290"></a>00290         }
-<a name="l00291"></a>00291         str = strtok(0, <span class="stringliteral">";"</span>);
-<a name="l00292"></a>00292       }
-<a name="l00293"></a>00293     }
-<a name="l00294"></a>00294     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00295"></a>00295       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e.what() &lt;&lt; <span class="stringliteral">" - "</span> &lt;&lt; <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()) &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00296"></a>00296       <span class="keywordflow">return</span> 1;
-<a name="l00297"></a>00297     }
-<a name="l00298"></a>00298     <span class="keywordflow">return</span> <a class="code" href="namespace_hyperspace_1_1_global.html#6440a0713a39c278daa9c91023cf4898">Global::exit_status</a>;
-<a name="l00299"></a>00299   }
-<a name="l00300"></a>00300 
-<a name="l00301"></a>00301   cout &lt;&lt; <span class="stringliteral">"Welcome to the Hyperspace command interpreter.  Hyperspace"</span> &lt;&lt; endl;
-<a name="l00302"></a>00302   cout &lt;&lt; <span class="stringliteral">"is a global namespace and lock service for loosely-coupled"</span> &lt;&lt; endl;
-<a name="l00303"></a>00303   cout &lt;&lt; <span class="stringliteral">"distributed systems.  Type 'help' for a description of commands."</span> &lt;&lt; endl;
-<a name="l00304"></a>00304   cout &lt;&lt; endl &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a>;
-<a name="l00305"></a>00305 
-<a name="l00306"></a>00306   using_history();
-<a name="l00307"></a>00307   <span class="keywordflow">while</span> ((line = <a class="code" href="dfsclient_8cc.html#e75a372ebf299de23cd383bb848b247c">rl_gets</a>()) != 0) {
-<a name="l00308"></a>00308 
-<a name="l00309"></a>00309     <span class="keywordflow">try</span> {
-<a name="l00310"></a>00310 
-<a name="l00311"></a>00311       <a class="code" href="namespace_hyperspace_1_1_global.html#6440a0713a39c278daa9c91023cf4898">Global::exit_status</a> = 0;
-<a name="l00312"></a>00312 
-<a name="l00313"></a>00313       <span class="keywordflow">if</span> (*line == 0)
-<a name="l00314"></a>00314         <span class="keywordflow">continue</span>;
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316       <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
-<a name="l00317"></a>00317         <span class="keywordflow">if</span> (commands[i]-&gt;matches(line)) {
-<a name="l00318"></a>00318           commands[i]-&gt;parse_command_line(line);
-<a name="l00319"></a>00319           commands[i]-&gt;run();
-<a name="l00320"></a>00320           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00321"></a>00321           <span class="keywordflow">break</span>;
-<a name="l00322"></a>00322         }
-<a name="l00323"></a>00323       }
-<a name="l00324"></a>00324 
-<a name="l00325"></a>00325       <span class="keywordflow">if</span> (i == commands.size()) {
-<a name="l00326"></a>00326         <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"quit"</span>) || !strcmp(line, <span class="stringliteral">"exit"</span>)) {
-<a name="l00327"></a>00327           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00328"></a>00328           exit(0);
-<a name="l00329"></a>00329         }
-<a name="l00330"></a>00330         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strncmp(line, <span class="stringliteral">"echo"</span>, 4)) {
-<a name="l00331"></a>00331           std::string echo_str = std::string(line);
-<a name="l00332"></a>00332           echo_str = echo_str.substr(4);
-<a name="l00333"></a>00333           boost::trim_if(echo_str, boost::is_any_of(<span class="stringliteral">"\" \t"</span>));
-<a name="l00334"></a>00334           cout &lt;&lt; echo_str &lt;&lt; endl;
-<a name="l00335"></a>00335           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00336"></a>00336         }
-<a name="l00337"></a>00337         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"pwd"</span>)) {
-<a name="l00338"></a>00338           cout &lt;&lt; <a class="code" href="namespace_hyperspace_1_1_global.html#ed8440eccd52045af068a66aa2488f2c">Global::cwd</a> &lt;&lt; endl;
-<a name="l00339"></a>00339           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00340"></a>00340         }
-<a name="l00341"></a>00341         <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(line, <span class="stringliteral">"help"</span>)) {
-<a name="l00342"></a>00342           cout &lt;&lt; endl;
-<a name="l00343"></a>00343           <span class="keywordflow">for</span> (i=0; i&lt;commands.size(); i++) {
-<a name="l00344"></a>00344             Usage::dump(commands[i]-&gt;<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>());
-<a name="l00345"></a>00345             cout &lt;&lt; endl;
-<a name="l00346"></a>00346           }
-<a name="l00347"></a>00347           Usage::dump(help_trailer);
-<a name="l00348"></a>00348           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00349"></a>00349         }
-<a name="l00350"></a>00350         <span class="keywordflow">else</span> {
-<a name="l00351"></a>00351           cout &lt;&lt; <span class="stringliteral">"Unrecognized command."</span> &lt;&lt; endl;
-<a name="l00352"></a>00352           notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00353"></a>00353         }
-<a name="l00354"></a>00354       }
-<a name="l00355"></a>00355     }
-<a name="l00356"></a>00356     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00357"></a>00357       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e.what() &lt;&lt; <span class="stringliteral">" - "</span> &lt;&lt; <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()) &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00358"></a>00358       notifier-&gt;<a class="code" href="class_notifier.html#d81f666291f171866b1d3d09f499ed99">notify</a>();
-<a name="l00359"></a>00359     }
-<a name="l00360"></a>00360   }
-<a name="l00361"></a>00361 
-<a name="l00362"></a>00362   <span class="keywordflow">return</span> <a class="code" href="namespace_hyperspace_1_1_global.html#6440a0713a39c278daa9c91023cf4898">Global::exit_status</a>;
-<a name="l00363"></a>00363 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00079"></a>00079     HsClientState::exit_status = shell-&gt;run();
+<a name="l00080"></a>00080     <span class="keywordflow">return</span> HsClientState::exit_status;
+<a name="l00081"></a>00081   }
+<a name="l00082"></a>00082   <span class="keywordflow">catch</span>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00083"></a>00083     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00084"></a>00084     <span class="keywordflow">return</span> 1;
+<a name="l00085"></a>00085   }
+<a name="l00086"></a>00086   <span class="keywordflow">return</span> 0;
+<a name="l00087"></a>00087 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:53 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

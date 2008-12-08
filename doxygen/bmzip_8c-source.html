@@ -238,7 +238,7 @@
 <a name="l00240"></a>00240   uint16_t <a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>;
 <a name="l00241"></a>00241   uint64_t orig_size;
 <a name="l00242"></a>00242   uint32_t checksum, cs, options;
-<a name="l00243"></a>00243   <span class="keywordtype">size_t</span> outlen, worklen, <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = in_len - <a class="code" href="bmzip_8c.html#218c2ae4bcec84f418db33f846718a45">BMZ_HEADER_SZ</a>;
+<a name="l00243"></a>00243   <span class="keywordtype">size_t</span> outlen, worklen, <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = in_len - <a class="code" href="bmzip_8c.html#218c2ae4bcec84f418db33f846718a45">BMZ_HEADER_SZ</a>;
 <a name="l00244"></a>00244   <a class="code" href="bmz_8c.html#7ae8f3766c8853286755f4ec0903c6f0">Byte</a> *out, *workmem;
 <a name="l00245"></a>00245   <span class="keywordtype">int</span> ret;
 <a name="l00246"></a>00246 
@@ -280,7 +280,7 @@
 <a name="l00282"></a>00282 }
 <a name="l00283"></a>00283 
 <a name="l00284"></a>00284 <span class="keyword">static</span> <span class="keywordtype">void</span>
-<a name="l00285"></a><a class="code" href="bmzip_8c.html#51431ed5a819683c7796b4ea635cbef7">00285</a> <a class="code" href="bmzip_8c.html#51431ed5a819683c7796b4ea635cbef7">do_block</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, <span class="keywordtype">size_t</span> buf_len, <span class="keywordtype">size_t</span> <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>,
+<a name="l00285"></a><a class="code" href="bmzip_8c.html#51431ed5a819683c7796b4ea635cbef7">00285</a> <a class="code" href="bmzip_8c.html#51431ed5a819683c7796b4ea635cbef7">do_block</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *in, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <span class="keywordtype">size_t</span> buf_len, <span class="keywordtype">size_t</span> <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>,
 <a name="l00286"></a>00286          <span class="keywordtype">size_t</span> fp_len, <span class="keywordtype">int</span> action, <span class="keywordtype">int</span> options) {
 <a name="l00287"></a>00287   <span class="keywordflow">switch</span> (action) {
 <a name="l00288"></a>00288   <span class="keywordflow">case</span> <a class="code" href="bmzip_8c.html#f075eb20e1928c94a890e00e7b7b4474">BMZ_A_PACK</a>:
@@ -298,7 +298,7 @@
 <a name="l00300"></a><a class="code" href="bmzip_8c.html#8f1a0c95867c49c84c70b33869041c65">00300</a> <a class="code" href="bmz-test_8c.html#61637dcf83e2e87dd48ef0cdcc7a7ee3">read_from_fp</a>(FILE *fp, <span class="keywordtype">size_t</span> *len_p, <span class="keywordtype">size_t</span> *size_p) {
 <a name="l00301"></a>00301   <span class="keywordtype">char</span> *data = NULL;
 <a name="l00302"></a>00302   <span class="keywordtype">char</span> buf[65536];
-<a name="l00303"></a>00303   int64_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = 0, <a class="code" href="lzoconf_8h.html#ab9257c30c984af77be6bc46d052d45d">size</a> = 0, ret;
+<a name="l00303"></a>00303   int64_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = 0, <a class="code" href="lzoconf_8h.html#ab9257c30c984af77be6bc46d052d45d">size</a> = 0, ret;
 <a name="l00304"></a>00304 
 <a name="l00305"></a>00305   <span class="keywordflow">while</span> ((ret = fread(buf, 1, <span class="keyword">sizeof</span>(buf), fp)) &gt; 0) {
 <a name="l00306"></a>00306     len += ret;
@@ -360,7 +360,7 @@
 <a name="l00362"></a>00362 
 <a name="l00363"></a>00363 <span class="keyword">static</span> <span class="keywordtype">void</span>
 <a name="l00364"></a><a class="code" href="bmzip_8c.html#924c59747250df044d83dfe68b5163e0">00364</a> <a class="code" href="bmzip_8c.html#924c59747250df044d83dfe68b5163e0">input_from_stdin</a>(<span class="keywordtype">size_t</span> <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>, <span class="keywordtype">size_t</span> fp_len, <span class="keywordtype">int</span> action, <span class="keywordtype">int</span> options) {
-<a name="l00365"></a>00365   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, buf_len;
+<a name="l00365"></a>00365   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, buf_len;
 <a name="l00366"></a>00366 
 <a name="l00367"></a>00367   <span class="keywordflow">if</span> (action == <a class="code" href="bmzip_8c.html#9e4cea0e9ab633418f0396723179fb8a">BMZ_A_LIST</a>) {
 <a name="l00368"></a>00368     <a class="code" href="bmzip_8c.html#f10f408420daca8903b0b7f9715a9e29">do_list</a>(0);
@@ -374,7 +374,7 @@
 <a name="l00376"></a>00376 <span class="keyword">static</span> <span class="keywordtype">void</span>
 <a name="l00377"></a><a class="code" href="bmzip_8c.html#197035a6f7497ffb3184b4bc459ca498">00377</a> <a class="code" href="bmzip_8c.html#197035a6f7497ffb3184b4bc459ca498">input_from_file</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keywordtype">size_t</span> <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>, <span class="keywordtype">size_t</span> fp_len, <span class="keywordtype">int</span> action,
 <a name="l00378"></a>00378                 <span class="keywordtype">int</span> options) {
-<a name="l00379"></a>00379   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>, buf_len;
+<a name="l00379"></a>00379   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, buf_len;
 <a name="l00380"></a>00380   <span class="keywordtype">int</span> fd = open(fname, O_RDONLY, 0);
 <a name="l00381"></a>00381 
 <a name="l00382"></a>00382   <span class="keywordflow">if</span> (fd == -1) <a class="code" href="bmz-test_8c.html#57d9be48a2d2312a1e3303af874430ac">DIE</a>(<span class="stringliteral">"cannot open '%s'"</span>, fname);
@@ -471,7 +471,7 @@
 <a name="l00473"></a>00473 
 <a name="l00474"></a>00474   <span class="keywordflow">return</span> 0;
 <a name="l00475"></a>00475 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

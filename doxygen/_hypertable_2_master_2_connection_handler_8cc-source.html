@@ -40,53 +40,53 @@
 <a name="l00042"></a>00042 <span class="keyword">using namespace </span>Error;
 <a name="l00043"></a>00043 
 <a name="l00047"></a><a class="code" href="class_hypertable_1_1_connection_handler.html#398ab75661a2da867854eab7a9f069c2">00047</a> <span class="keywordtype">void</span> ConnectionHandler::handle(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event) {
-<a name="l00048"></a>00048   <span class="keywordtype">short</span> command = -1;
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <span class="keywordflow">if</span> (event-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>) {
-<a name="l00051"></a>00051     <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> *hp = 0;
-<a name="l00052"></a>00052     <span class="keyword">const</span> uint8_t *msg = <span class="keyword">event</span>-&gt;message;
-<a name="l00053"></a>00053     <span class="keywordtype">size_t</span> remain = <span class="keyword">event</span>-&gt;message_len;
-<a name="l00054"></a>00054 
-<a name="l00055"></a>00055     <span class="comment">//event-&gt;display()</span>
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057     <span class="keywordflow">try</span> {
-<a name="l00058"></a>00058       command = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;msg, &amp;remain);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060       <span class="comment">// sanity check command code</span>
-<a name="l00061"></a>00061       <span class="keywordflow">if</span> (command &lt; 0 || command &gt;= <a class="code" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">MasterProtocol::COMMAND_MAX</a>)
-<a name="l00062"></a>00062         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">PROTOCOL_ERROR</a>, <span class="stringliteral">"Invalid command (%d)"</span>, command);
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064       <span class="keywordflow">switch</span> (command) {
-<a name="l00065"></a>00065       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#be4cdf2209539cdf1f6b6a3e407e9fac">MasterProtocol::COMMAND_CREATE_TABLE</a>:
-<a name="l00066"></a>00066         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_create_table.html">RequestHandlerCreateTable</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00067"></a>00067         <span class="keywordflow">break</span>;
-<a name="l00068"></a>00068       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#a7dbbf1dbf71a06173cd5a716ef6c498">MasterProtocol::COMMAND_DROP_TABLE</a>:
-<a name="l00069"></a>00069         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_drop_table.html">RequestHandlerDropTable</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00070"></a>00070         <span class="keywordflow">break</span>;
-<a name="l00071"></a>00071       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#fc83b62584cb4b55949ef49300f594fd">MasterProtocol::COMMAND_GET_SCHEMA</a>:
-<a name="l00072"></a>00072         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_get_schema.html">RequestHandlerGetSchema</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00073"></a>00073         <span class="keywordflow">break</span>;
-<a name="l00074"></a>00074       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#37cbdd801ab5df0fc1304ddf9f6687ce">MasterProtocol::COMMAND_STATUS</a>:
-<a name="l00075"></a>00075         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_status.html">RequestHandlerStatus</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00076"></a>00076         <span class="keywordflow">break</span>;
-<a name="l00077"></a>00077       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#c9dec65fc80e5cab70d90ded1b8646a0">MasterProtocol::COMMAND_REGISTER_SERVER</a>:
-<a name="l00078"></a>00078         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_register_server.html">RequestHandlerRegisterServer</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00079"></a>00079         <span class="keywordflow">break</span>;
-<a name="l00080"></a>00080       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#6237e58929d32a6ecc47fd3c10d689fa">MasterProtocol::COMMAND_REPORT_SPLIT</a>:
-<a name="l00081"></a>00081         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_report_split.html">RequestHandlerReportSplit</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00082"></a>00082         <span class="keywordflow">break</span>;
-<a name="l00083"></a>00083       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#27785e89d423d4014d465cd764bfc287">MasterProtocol::COMMAND_SHUTDOWN</a>:
-<a name="l00084"></a>00084         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_shutdown.html">RequestHandlerShutdown</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
-<a name="l00085"></a>00085         <span class="keywordflow">break</span>;
-<a name="l00086"></a>00086       <span class="keywordflow">default</span>:
-<a name="l00087"></a>00087         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">PROTOCOL_ERROR</a>, <span class="stringliteral">"Unimplemented command (%d)"</span>, command);
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <span class="keywordflow">if</span> (event-&gt;type == <a class="code" href="class_hypertable_1_1_event.html#c488f1c8123d0bb7fa5308cd27860ccc8128c8ca0105c56c15e7c2dc2f5ad5fe">Event::MESSAGE</a>) {
+<a name="l00050"></a>00050     <a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> *hp = 0;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052     <span class="comment">//event-&gt;display()</span>
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054     <span class="keywordflow">try</span> {
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056       <span class="comment">// sanity check command code</span>
+<a name="l00057"></a>00057       <span class="keywordflow">if</span> (event-&gt;header.command &lt; 0
+<a name="l00058"></a>00058           || event-&gt;header.command &gt;= <a class="code" href="class_hypertable_1_1_master_protocol.html#af45961892eec671833329cd287a6df8">MasterProtocol::COMMAND_MAX</a>)
+<a name="l00059"></a>00059         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">PROTOCOL_ERROR</a>, <span class="stringliteral">"Invalid command (%llu)"</span>,
+<a name="l00060"></a>00060                   (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)event-&gt;header.command);
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062       <span class="keywordflow">switch</span> (event-&gt;header.command) {
+<a name="l00063"></a>00063       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#dea716c0d1cd5c0a801c42f51ef60197">MasterProtocol::COMMAND_CREATE_TABLE</a>:
+<a name="l00064"></a>00064         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_create_table.html">RequestHandlerCreateTable</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00065"></a>00065         <span class="keywordflow">break</span>;
+<a name="l00066"></a>00066       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#d5f9c0d16030f6d1fc74055c9e1fa302">MasterProtocol::COMMAND_DROP_TABLE</a>:
+<a name="l00067"></a>00067         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_drop_table.html">RequestHandlerDropTable</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00068"></a>00068         <span class="keywordflow">break</span>;
+<a name="l00069"></a>00069       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#19ce60cc47c7c15d27f0776bfd4c5553">MasterProtocol::COMMAND_GET_SCHEMA</a>:
+<a name="l00070"></a>00070         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_get_schema.html">RequestHandlerGetSchema</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00071"></a>00071         <span class="keywordflow">break</span>;
+<a name="l00072"></a>00072       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#a450c08da068973ef963785e47a41ba6">MasterProtocol::COMMAND_STATUS</a>:
+<a name="l00073"></a>00073         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_status.html">RequestHandlerStatus</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00074"></a>00074         <span class="keywordflow">break</span>;
+<a name="l00075"></a>00075       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#dc40c25a60c0006a4e8b4f0bb53d58b3">MasterProtocol::COMMAND_REGISTER_SERVER</a>:
+<a name="l00076"></a>00076         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_register_server.html">RequestHandlerRegisterServer</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(),
+<a name="l00077"></a>00077                                               event);
+<a name="l00078"></a>00078         <span class="keywordflow">break</span>;
+<a name="l00079"></a>00079       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#65c67da97a88e25f6ff37f0e9453a77a">MasterProtocol::COMMAND_REPORT_SPLIT</a>:
+<a name="l00080"></a>00080         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_report_split.html">RequestHandlerReportSplit</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00081"></a>00081         <span class="keywordflow">break</span>;
+<a name="l00082"></a>00082       <span class="keywordflow">case</span> <a class="code" href="class_hypertable_1_1_master_protocol.html#cb1166d33a4310bc55664d069b34964f">MasterProtocol::COMMAND_SHUTDOWN</a>:
+<a name="l00083"></a>00083         hp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_request_handler_shutdown.html">RequestHandlerShutdown</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, <a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">m_master_ptr</a>.get(), event);
+<a name="l00084"></a>00084         <span class="keywordflow">break</span>;
+<a name="l00085"></a>00085       <span class="keywordflow">default</span>:
+<a name="l00086"></a>00086         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">PROTOCOL_ERROR</a>, <span class="stringliteral">"Unimplemented command (%llu)"</span>,
+<a name="l00087"></a>00087                   (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)event-&gt;header.command);
 <a name="l00088"></a>00088       }
 <a name="l00089"></a>00089       <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#b6543bade03e836c138b2335c67dd9d0">m_app_queue_ptr</a>-&gt;add(hp);
 <a name="l00090"></a>00090     }
 <a name="l00091"></a>00091     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
 <a name="l00092"></a>00092       <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html#2e3d0ca33e295aa0e26b33ba370b4674">m_comm</a>, event);
 <a name="l00093"></a>00093       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00094"></a>00094       std::string errmsg = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%s - %s"</span>, e.what(), <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00094"></a>00094       std::string errmsg = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%s - %s"</span>, e.what(), <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
 <a name="l00095"></a>00095       cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, errmsg);
 <a name="l00096"></a>00096     }
 <a name="l00097"></a>00097   }
@@ -95,7 +95,7 @@
 <a name="l00100"></a>00100   }
 <a name="l00101"></a>00101 
 <a name="l00102"></a>00102 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

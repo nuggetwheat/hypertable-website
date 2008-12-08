@@ -23,52 +23,56 @@
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="keyword">namespace </span>Hypertable {
 <a name="l00027"></a>00027 
-<a name="l00028"></a><a class="code" href="namespace_hypertable.html#d9f15697adab86c04e87d832a37d573f">00028</a>   <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#d9f15697adab86c04e87d832a37d573f">FillScanBlock</a>(<a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scanner, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dbuf) {
-<a name="l00029"></a>00029     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key;
-<a name="l00030"></a>00030     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00031"></a>00031     <span class="keywordtype">size_t</span> key_len, value_len;
-<a name="l00032"></a>00032     <span class="keywordtype">bool</span> more = <span class="keyword">true</span>;
-<a name="l00033"></a>00033     <span class="keywordtype">size_t</span> limit = <a class="code" href="namespace_hypertable.html#c190a2afdb3d13044e8155bc2a139fda">HYPERTABLE_DATA_TRANSFER_BLOCKSIZE</a>;
-<a name="l00034"></a>00034     <span class="keywordtype">size_t</span> remaining = <a class="code" href="namespace_hypertable.html#c190a2afdb3d13044e8155bc2a139fda">HYPERTABLE_DATA_TRANSFER_BLOCKSIZE</a>;
-<a name="l00035"></a>00035     uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037     assert(dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0);
+<a name="l00028"></a>00028   <span class="keywordtype">bool</span>
+<a name="l00029"></a><a class="code" href="namespace_hypertable.html#d8a0ae3a35f6c44996fe0770345bb296">00029</a>   <a class="code" href="namespace_hypertable.html#d8a0ae3a35f6c44996fe0770345bb296">FillScanBlock</a>(<a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> &amp;scanner, <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dbuf,
+<a name="l00030"></a>00030                 <span class="keywordtype">size_t</span> *countp) {
+<a name="l00031"></a>00031     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00032"></a>00032     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
+<a name="l00033"></a>00033     <span class="keywordtype">size_t</span> value_len;
+<a name="l00034"></a>00034     <span class="keywordtype">bool</span> more = <span class="keyword">true</span>;
+<a name="l00035"></a>00035     <span class="keywordtype">size_t</span> limit = <a class="code" href="namespace_hypertable.html#33bfa11ef3c44c8adc09cadd8e5e44cb" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">DATA_TRANSFER_BLOCKSIZE</a>;
+<a name="l00036"></a>00036     <span class="keywordtype">size_t</span> remaining = <a class="code" href="namespace_hypertable.html#33bfa11ef3c44c8adc09cadd8e5e44cb" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">DATA_TRANSFER_BLOCKSIZE</a>;
+<a name="l00037"></a>00037     uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>;
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039     <span class="keywordflow">while</span> ((more = scanner-&gt;get(key, value))) {
-<a name="l00040"></a>00040       key_len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00041"></a>00041       value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00042"></a>00042       <span class="keywordflow">if</span> (dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0) {
-<a name="l00043"></a>00043         <span class="keywordflow">if</span> (key_len + value_len &gt; limit) {
-<a name="l00044"></a>00044           limit = key_len + value_len;
-<a name="l00045"></a>00045           remaining = limit;
-<a name="l00046"></a>00046         }
-<a name="l00047"></a>00047         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(limit+4);
-<a name="l00048"></a>00048         <span class="comment">// skip encoded length</span>
-<a name="l00049"></a>00049         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + 4;
-<a name="l00050"></a>00050       }
-<a name="l00051"></a>00051       <span class="keywordflow">if</span> (key_len + value_len &lt;= remaining) {
-<a name="l00052"></a>00052         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key_len);
-<a name="l00053"></a>00053         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
-<a name="l00054"></a>00054         remaining -= (key_len + value_len);
-<a name="l00055"></a>00055         scanner-&gt;forward();
-<a name="l00056"></a>00056       }
-<a name="l00057"></a>00057       <span class="keywordflow">else</span>
-<a name="l00058"></a>00058         <span class="keywordflow">break</span>;
-<a name="l00059"></a>00059     }
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     <span class="keywordflow">if</span> (dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0) {
-<a name="l00062"></a>00062       dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(limit + 4);
-<a name="l00063"></a>00063       dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + 4;
-<a name="l00064"></a>00064     }
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066     ptr = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00067"></a>00067     <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">Serialization::encode_i32</a>(&amp;ptr, dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() - 4);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069     <span class="keywordflow">return</span> more;
-<a name="l00070"></a>00070   }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00039"></a>00039     assert(dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0);
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041     *countp = 0;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043     <span class="keywordflow">while</span> ((more = scanner-&gt;get(key, value))) {
+<a name="l00044"></a>00044       value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00045"></a>00045       <span class="keywordflow">if</span> (dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0) {
+<a name="l00046"></a>00046         <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len &gt; limit) {
+<a name="l00047"></a>00047           limit = key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len;
+<a name="l00048"></a>00048           remaining = limit;
+<a name="l00049"></a>00049         }
+<a name="l00050"></a>00050         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(limit+4);
+<a name="l00051"></a>00051         <span class="comment">// skip encoded length</span>
+<a name="l00052"></a>00052         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + 4;
+<a name="l00053"></a>00053       }
+<a name="l00054"></a>00054       <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len &lt;= remaining) {
+<a name="l00055"></a>00055         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_key.html#3c0118439c72c16de3035f7fdc29dd6e">serial</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a>);
+<a name="l00056"></a>00056         dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
+<a name="l00057"></a>00057         remaining -= (key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len);
+<a name="l00058"></a>00058         scanner-&gt;forward();
+<a name="l00059"></a>00059         (*countp)++;
+<a name="l00060"></a>00060       }
+<a name="l00061"></a>00061       <span class="keywordflow">else</span>
+<a name="l00062"></a>00062         <span class="keywordflow">break</span>;
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065     <span class="keywordflow">if</span> (dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> == 0) {
+<a name="l00066"></a>00066       dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(limit + 4);
+<a name="l00067"></a>00067       dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> + 4;
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     ptr = dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00071"></a>00071     <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">Serialization::encode_i32</a>(&amp;ptr, dbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() - 4);
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073     <span class="keywordflow">return</span> more;
+<a name="l00074"></a>00074   }
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

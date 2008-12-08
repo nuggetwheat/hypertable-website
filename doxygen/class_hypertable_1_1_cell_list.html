@@ -49,10 +49,10 @@ Collaboration diagram for Hypertable::CellList:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#a01fb1f0b9d11ae53268e6e40e61010b">~CellList</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#4eb760c37ce11ffc8840b0d6cdf5bcd0">add</a> (const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, int64_t real_timestamp)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#be66f748688ef5a59febafcaf877da7d">add</a> (const <a class="el" href="class_hypertable_1_1_key.html">Key</a> &amp;<a class="el" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> value)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Inserts a key/value pair into the cell list.  <a href="#4eb760c37ce11ffc8840b0d6cdf5bcd0"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual <a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">create_scanner</a> (<a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Inserts a key/value pair into the cell list.  <a href="#be66f748688ef5a59febafcaf877da7d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual <a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">create_scanner</a> (<a class="el" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this cell list.  <a href="#1b35cdbe298a0f24613b3e14fd779747"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#912843dc3f7f586cbec0c460e7cf236a">get_split_row</a> ()=0</td></tr>
@@ -64,6 +64,9 @@ Collaboration diagram for Hypertable::CellList:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#613c910f9cc2e12a76774b3cfa7b2d15">get_end_row</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the end row of this cell list.  <a href="#613c910f9cc2e12a76774b3cfa7b2d15"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#7e2c3b7605ec5c36202ba2698edcbb1e">get_total_entries</a> ()=0</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the number of key/value pairs in the list.  <a href="#7e2c3b7605ec5c36202ba2698edcbb1e"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a></td></tr>
 
@@ -74,7 +77,7 @@ Collaboration diagram for Hypertable::CellList:</div>
 Abstract base class for cell lists (sorted lists of key/value pairs). 
 <p>
 <a class="el" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> lists include cell stores and cell caches. 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00040">40</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00042">42</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="a01fb1f0b9d11ae53268e6e40e61010b"></a><!-- doxytag: member="Hypertable::CellList::~CellList" ref="a01fb1f0b9d11ae53268e6e40e61010b" args="()" -->
 <div class="memitem">
@@ -93,32 +96,26 @@ Abstract base class for cell lists (sorted lists of key/value pairs).
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00042">42</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00044">44</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="4eb760c37ce11ffc8840b0d6cdf5bcd0"></a><!-- doxytag: member="Hypertable::CellList::add" ref="4eb760c37ce11ffc8840b0d6cdf5bcd0" args="(const ByteString key, const ByteString value, int64_t real_timestamp)=0" -->
+<a class="anchor" name="be66f748688ef5a59febafcaf877da7d"></a><!-- doxytag: member="Hypertable::CellList::add" ref="be66f748688ef5a59febafcaf877da7d" args="(const Key &amp;key, const ByteString value)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">virtual int Hypertable::CellList::add           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_key.html">Key</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>key</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const <a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a>&nbsp;</td>
-          <td class="paramname"> <em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>real_timestamp</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -134,14 +131,13 @@ Inserts a key/value pair into the cell list.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td><a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> representing key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>key</em>&nbsp;</td><td>key object </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>value</em>&nbsp;</td><td><a class="el" href="class_hypertable_1_1_byte_string.html">ByteString</a> representing value </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>real_timestamp</em>&nbsp;</td><td>real commit log timestamp </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success, error code on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_access_group.html#880642d195b08a1a572065052ef8865c">Hypertable::AccessGroup</a>, <a class="el" href="class_hypertable_1_1_cell_cache.html#e29e3cc315f4bfc4c2e509564c4aa460">Hypertable::CellCache</a>, <a class="el" href="class_hypertable_1_1_cell_store.html#2eb01f69a65466fa595d58670cf3d25a">Hypertable::CellStore</a>, <a class="el" href="class_hypertable_1_1_cell_store_v0.html#4e85c7b7fac0efbe7562705a095badb4">Hypertable::CellStoreV0</a>, and <a class="el" href="class_hypertable_1_1_range.html#ed5931afe617e29999698ee3e07db552">Hypertable::Range</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_access_group.html#1a33512c5030b798579e8ef0179628dc">Hypertable::AccessGroup</a>, <a class="el" href="class_hypertable_1_1_cell_cache.html#da3875963441be0b45d7fd5cad42dde6">Hypertable::CellCache</a>, <a class="el" href="class_hypertable_1_1_cell_store.html#2b00621c485131deccce6403306ba91a">Hypertable::CellStore</a>, <a class="el" href="class_hypertable_1_1_cell_store_v0.html#26996620e55b2992298734aef107bf6b">Hypertable::CellStoreV0</a>, and <a class="el" href="class_hypertable_1_1_range.html#08b2cc90994572cb2fcef0412d1924c5">Hypertable::Range</a>.</p>
 
 </div>
 </div><p>
@@ -152,7 +148,7 @@ Inserts a key/value pair into the cell list.
         <tr>
           <td class="memname">virtual <a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a>* Hypertable::CellList::create_scanner           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>scan_ctx</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline, virtual]</code></td>
@@ -173,7 +169,7 @@ Creates a scanner on this cell list.
 
 <p>Reimplemented in <a class="el" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5">Hypertable::AccessGroup</a>, <a class="el" href="class_hypertable_1_1_cell_cache.html#4eaf6f798a16f56bd0577a2e3ff8c8be">Hypertable::CellCache</a>, <a class="el" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d">Hypertable::CellStore</a>, <a class="el" href="class_hypertable_1_1_cell_store_v0.html#2537fc114a27c9054f8c732835b2619e">Hypertable::CellStoreV0</a>, and <a class="el" href="class_hypertable_1_1_range.html#7a3428e90fb670fbba9670d31437efd5">Hypertable::Range</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00060">60</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00062">62</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 
 </div>
 </div><p>
@@ -223,7 +219,7 @@ Returns the start row of this cell list.
 This value is used to restrict the start range of the cell list to values that are greater than this row key. It is used in cell stores to allow them to be shared after a split.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the row key of the start row (not inclusive) </dd></dl>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00078">78</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00080">80</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 
 </div>
 </div><p>
@@ -248,7 +244,31 @@ Returns the end row of this cell list.
 This value is used to restrict the end range of the cell list to values that are less than or equal to this row key. It is used in cell stores to allow them to be shared after a split.<p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the row key of the end row (inclusive) </dd></dl>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00088">88</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00090">90</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7e2c3b7605ec5c36202ba2698edcbb1e"></a><!-- doxytag: member="Hypertable::CellList::get_total_entries" ref="7e2c3b7605ec5c36202ba2698edcbb1e" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual uint32_t Hypertable::CellList::get_total_entries           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Returns the number of key/value pairs in the list. 
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>the number of key/value pairs in list </dd></dl>
+
+<p>Implemented in <a class="el" href="class_hypertable_1_1_access_group.html#65fa9fc0e0ca48d96952adeab7634ac9">Hypertable::AccessGroup</a>, <a class="el" href="class_hypertable_1_1_cell_cache.html#3e4e70d3a368bbf1c58e3e6e2c47fee7">Hypertable::CellCache</a>, <a class="el" href="class_hypertable_1_1_cell_store.html#fa5695df6b7025a20ecdf5a88ac31c0a">Hypertable::CellStore</a>, <a class="el" href="class_hypertable_1_1_cell_store_v0.html#2f32829be6f5e69d6dd5cbd05b633d91">Hypertable::CellStoreV0</a>, and <a class="el" href="class_hypertable_1_1_range.html#67a6468cad3879264ec600cc70ad0135">Hypertable::Range</a>.</p>
 
 </div>
 </div><p>
@@ -268,7 +288,7 @@ This value is used to restrict the end range of the cell list to values that are
 
 <p>Reimplemented in <a class="el" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">Hypertable::AccessGroup</a>, and <a class="el" href="class_hypertable_1_1_range.html#b872a4df3894f5afb6b1a6700199147b">Hypertable::Range</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00091">91</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00100">100</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 
 </div>
 </div><p>
@@ -287,13 +307,13 @@ This value is used to restrict the end range of the cell list to values that are
 
 <p>Reimplemented in <a class="el" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">Hypertable::AccessGroup</a>, and <a class="el" href="class_hypertable_1_1_range.html#8328471321b23a1532353ef78d86668b">Hypertable::Range</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00092">92</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_list_8h-source.html#l00101">101</a> of file <a class="el" href="_cell_list_8h-source.html">CellList.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_list_8h-source.html">CellList.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:31 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:14 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

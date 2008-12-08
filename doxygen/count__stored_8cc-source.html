@@ -32,243 +32,246 @@
 <a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_key_spec_8h.html">Hypertable/Lib/KeySpec.h</a>"</span>
 <a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_scan_spec_8h.html">Hypertable/Lib/ScanSpec.h</a>"</span>
 <a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_cell_store_v0_8h.html">CellStoreV0.h</a>"</span>
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_cell_store_scanner_v0_8h.html">CellStoreScannerV0.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_range_server_2_global_8h.html">Global.h</a>"</span>
-<a name="l00041"></a>00041 
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_range_server_2_config_8h.html">Config.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_cell_store_v0_8h.html">CellStoreV0.h</a>"</span>
+<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_cell_store_scanner_v0_8h.html">CellStoreScannerV0.h</a>"</span>
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
+<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_global_8h.html">Global.h</a>"</span>
 <a name="l00042"></a>00042 
-<a name="l00043"></a>00043 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00044"></a>00044 <span class="keyword">using namespace </span>std;
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="keyword">namespace </span>{
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00045"></a>00045 <span class="keyword">using namespace </span>Config;
+<a name="l00046"></a>00046 <span class="keyword">using namespace </span>std;
 <a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="count__stored_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">00048</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>[] = {
-<a name="l00049"></a>00049     <span class="stringliteral">"usage: count_stored &lt;table&gt;"</span>,
-<a name="l00050"></a>00050     <span class="stringliteral">""</span>,
-<a name="l00051"></a>00051     <span class="stringliteral">"  This program counts the number of cells that exist in CellStores"</span>,
-<a name="l00052"></a>00052     <span class="stringliteral">"  for a table.  It does this by reading the Files columns for the"</span>,
-<a name="l00053"></a>00053     <span class="stringliteral">"  table in the METADATA table to learn of all the CellStores.  It"</span>,
-<a name="l00054"></a>00054     <span class="stringliteral">"  then does a linear scan of each CellStore file, counting the"</span>,
-<a name="l00055"></a>00055     <span class="stringliteral">"  number of cells..."</span>,
-<a name="l00056"></a>00056     <span class="stringliteral">""</span>,
-<a name="l00057"></a>00057     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-<a name="l00058"></a>00058   };
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060   <span class="keyword">struct </span>RangeCellStoreInfo {
-<a name="l00061"></a><a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">00061</a>     std::string <a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">start_row</a>;
-<a name="l00062"></a><a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">00062</a>     std::string <a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>;
-<a name="l00063"></a><a class="code" href="count__stored_8cc.html#11b142969333aa272904f32fac40814c">00063</a>     std::vector&lt;std::string&gt; <a class="code" href="count__stored_8cc.html#11b142969333aa272904f32fac40814c">cell_stores</a>;
-<a name="l00064"></a>00064   };
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <span class="keyword">struct </span>CellStoreInfo {
-<a name="l00067"></a><a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">00067</a>     std::string <a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">start_row</a>;
-<a name="l00068"></a><a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">00068</a>     std::string <a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>;
-<a name="l00069"></a><a class="code" href="count__stored_8cc.html#efc35c7944eed319c89bc1b399f0eb67">00069</a>     std::string <a class="code" href="count__stored_8cc.html#efc35c7944eed319c89bc1b399f0eb67">file</a>;
-<a name="l00070"></a>00070   };
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 }
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="keywordtype">void</span> <a class="code" href="count__stored_8cc.html#12072554f9cad1865a8ebe2bcfbd60a5">fill_cell_store_vector</a>(<a class="code" href="namespace_hypertable.html#7274226dc46034ccdf1dc8d6523c17f0">ClientPtr</a> &amp;hypertable_client_ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, std::vector&lt;CellStoreInfo&gt; &amp;file_vector);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="count__stored_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00077</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
-<a name="l00078"></a>00078   <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_manager_ptr;
-<a name="l00079"></a>00079   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client;
-<a name="l00080"></a>00080   <a class="code" href="namespace_hypertable.html#7274226dc46034ccdf1dc8d6523c17f0">ClientPtr</a> hypertable_client_ptr;
-<a name="l00081"></a>00081   std::vector&lt;CellStoreInfo&gt; file_vector;
-<a name="l00082"></a>00082   <span class="keyword">const</span> <span class="keywordtype">char</span> *table_name = 0;
-<a name="l00083"></a>00083   <span class="keywordtype">bool</span> hit_start = <span class="keyword">false</span>;
-<a name="l00084"></a>00084   <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> props_ptr;
-<a name="l00085"></a>00085   <span class="keywordtype">string</span> config_file = <span class="stringliteral">""</span>;
-<a name="l00086"></a>00086   <a class="code" href="namespace_hypertable.html#8a1144a096aa2cd7a6c8c6e9410bfd2d">CellStoreV0Ptr</a> cell_store_ptr;
-<a name="l00087"></a>00087   <a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> scan_context_ptr(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="namespace_hypertable.html#9f39d877fe759461b0a4d709c7dd87d8">END_OF_TIME</a>));
-<a name="l00088"></a>00088   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key;
-<a name="l00089"></a>00089   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00090"></a>00090   uint64_t total_count = 0;
-<a name="l00091"></a>00091   uint64_t store_count = 0;
-<a name="l00092"></a>00092   <span class="keyword">const</span> <span class="keywordtype">char</span> *row;
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094   <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=1; i&lt;argc; i++) {
-<a name="l00095"></a>00095     <span class="keywordflow">if</span> (argv[i][0] == <span class="charliteral">'-'</span>)
-<a name="l00096"></a>00096       Usage::dump_and_exit(<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>);
-<a name="l00097"></a>00097     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (table_name == 0)
-<a name="l00098"></a>00098       table_name = argv[i];
-<a name="l00099"></a>00099     <span class="keywordflow">else</span>
-<a name="l00100"></a>00100       Usage::dump_and_exit(<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>);
-<a name="l00101"></a>00101   }
+<a name="l00048"></a>00048 <span class="keyword">namespace </span>{
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 <span class="keyword">struct </span>MyPolicy : Config::Policy {
+<a name="l00051"></a>00051   <span class="keyword">static</span> <span class="keywordtype">void</span> init_options() {
+<a name="l00052"></a>00052     <a class="code" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9" title="Set the command line options description.">cmdline_desc</a>(<span class="stringliteral">"Usage: %s [options] &lt;table&gt;\n\n"</span>
+<a name="l00053"></a>00053       <span class="stringliteral">"  This program counts the number of cells that exist in CellStores\n"</span>
+<a name="l00054"></a>00054       <span class="stringliteral">"  for a table.  It does this by reading the Files columns for the\n"</span>
+<a name="l00055"></a>00055       <span class="stringliteral">"  table in the METADATA table to learn of all the CellStores.  It\n"</span>
+<a name="l00056"></a>00056       <span class="stringliteral">"  then does a linear scan of each CellStore file, counting the\n"</span>
+<a name="l00057"></a>00057       <span class="stringliteral">"  number of cells...\nOptions"</span>);
+<a name="l00058"></a>00058     <a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6" title="Get the command line hidden options description (for positional options).">cmdline_hidden_desc</a>().add_options()
+<a name="l00059"></a>00059       (<span class="stringliteral">"table"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"name of the table to scan"</span>)
+<a name="l00060"></a>00060       ;
+<a name="l00061"></a>00061     <a class="code" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09" title="Get the command line positional options description.">cmdline_positional_desc</a>().add(<span class="stringliteral">"table"</span>, -1);
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063 };
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="count__stored_8cc.html#63befcaa297beed081bd6e977e4d4aae">00065</a> <span class="keyword">typedef</span> Cons&lt;MyPolicy, DefaultClientPolicy&gt; <a class="code" href="struct_app_policy.html">AppPolicy</a>;
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067 <span class="keyword">struct </span>RangeCellStoreInfo {
+<a name="l00068"></a><a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">00068</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>;
+<a name="l00069"></a><a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">00069</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>;
+<a name="l00070"></a><a class="code" href="count__stored_8cc.html#b439119a11bb7d8f8b19adf1dc3407c1">00070</a>   std::vector&lt;String&gt; <a class="code" href="count__stored_8cc.html#b439119a11bb7d8f8b19adf1dc3407c1">cell_stores</a>;
+<a name="l00071"></a>00071 };
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 <span class="keyword">struct </span>CellStoreInfo {
+<a name="l00074"></a><a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">00074</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>;
+<a name="l00075"></a><a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">00075</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>;
+<a name="l00076"></a><a class="code" href="count__stored_8cc.html#238624645ad28e87a30b21a05331875c">00076</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="count__stored_8cc.html#238624645ad28e87a30b21a05331875c">file</a>;
+<a name="l00077"></a>00077 };
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079 <span class="keywordtype">void</span>
+<a name="l00080"></a>00080 <a class="code" href="count__stored_8cc.html#8960c57bd4114bed7fc07dc20d913e79">fill_cell_store_vector</a>(<a class="code" href="namespace_hypertable.html#6206fb0b9aaa59bc888fc656d71b7a68">ClientPtr</a> &amp;hypertable_client_ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *table_name,
+<a name="l00081"></a>00081                        std::vector&lt;CellStoreInfo&gt; &amp;file_vector);
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 } <span class="comment">// local namespace</span>
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="count__stored_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00086</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
+<a name="l00087"></a>00087   <span class="keywordflow">try</span> {
+<a name="l00088"></a>00088     init_with_policy&lt;AppPolicy&gt;(argc, argv);
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> table_name = <span class="keyword">get</span>(<span class="stringliteral">"table"</span>, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>());
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keywordflow">if</span> (table_name.empty()) {
+<a name="l00093"></a>00093       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt;<span class="stringliteral">"table name is required"</span>&lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00094"></a>00094       cout &lt;&lt; <a class="code" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9" title="Set the command line options description.">cmdline_desc</a>() &lt;&lt; endl;
+<a name="l00095"></a>00095       <span class="keywordflow">return</span> 1;
+<a name="l00096"></a>00096     }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098     <span class="keywordtype">bool</span> hit_start = <span class="keyword">false</span>;
+<a name="l00099"></a>00099     uint64_t total_count = 0;
+<a name="l00100"></a>00100     uint64_t store_count = 0;
+<a name="l00101"></a>00101     <span class="keywordtype">int</span> timeout = get_i32(<span class="stringliteral">"DfsBroker.Timeout"</span>);
 <a name="l00102"></a>00102 
-<a name="l00103"></a>00103   <span class="keywordflow">if</span> (table_name == 0)
-<a name="l00104"></a>00104     Usage::dump_and_exit(<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>);
-<a name="l00105"></a>00105 
-<a name="l00106"></a>00106   <span class="keywordflow">try</span> {
-<a name="l00107"></a>00107     <span class="comment">// Create Hypertable client object</span>
-<a name="l00108"></a>00108     hypertable_client_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">Client</a>(argv[0]);
-<a name="l00109"></a>00109   }
-<a name="l00110"></a>00110   <span class="keywordflow">catch</span> (std::exception &amp;e) {
-<a name="l00111"></a>00111     cerr &lt;&lt; <span class="stringliteral">"error: "</span> &lt;&lt; e.what() &lt;&lt; endl;
-<a name="l00112"></a>00112     <span class="keywordflow">return</span> 1;
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115   <span class="keywordflow">if</span> (config_file == <span class="stringliteral">""</span>)
-<a name="l00116"></a>00116     config_file = System::install_dir + <span class="stringliteral">"/conf/hypertable.cfg"</span>;
+<a name="l00103"></a>00103     <span class="comment">// Create Hypertable client object</span>
+<a name="l00104"></a>00104     <a class="code" href="namespace_hypertable.html#6206fb0b9aaa59bc888fc656d71b7a68">ClientPtr</a> hypertable_client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">Hypertable::Client</a>(argv[0]);
+<a name="l00105"></a>00105     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
+<a name="l00106"></a>00106     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_mgr, <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00107"></a>00107 
+<a name="l00108"></a>00108     <span class="keywordflow">if</span> (!dfs-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#f60985ce9eee0cbe1988bc7fbc72d577" title="Waits up to max_wait_secs for a connection to be established with the DFS broker...">wait_for_connection</a>(timeout)) {
+<a name="l00109"></a>00109       cerr &lt;&lt; <span class="stringliteral">"error: timed out waiting for DFS broker"</span> &lt;&lt; endl;
+<a name="l00110"></a>00110       exit(1);
+<a name="l00111"></a>00111     }
+<a name="l00112"></a>00112 
+<a name="l00113"></a>00113     Global::block_cache = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_file_block_cache.html">FileBlockCache</a>(200000000LL);
+<a name="l00114"></a>00114     std::vector&lt;CellStoreInfo&gt; file_vector;
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116     <a class="code" href="count__stored_8cc.html#8960c57bd4114bed7fc07dc20d913e79">fill_cell_store_vector</a>(hypertable_client, table_name.c_str(), file_vector);
 <a name="l00117"></a>00117 
-<a name="l00118"></a>00118   props_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>(config_file);
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120   conn_manager_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>();
+<a name="l00118"></a>00118     <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>());
+<a name="l00119"></a>00119     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00120"></a>00120     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
 <a name="l00121"></a>00121 
-<a name="l00122"></a>00122   client = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>(conn_manager_ptr, props_ptr);
-<a name="l00123"></a>00123   <span class="keywordflow">if</span> (!client-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#21631824b64307840929ac38e4def1ae" title="Waits up to max_wait_secs for a connection to be established with the DFS broker...">wait_for_connection</a>(15)) {
-<a name="l00124"></a>00124     cerr &lt;&lt; <span class="stringliteral">"error: timed out waiting for DFS broker"</span> &lt;&lt; endl;
-<a name="l00125"></a>00125     exit(1);
-<a name="l00126"></a>00126   }
-<a name="l00127"></a>00127 
-<a name="l00128"></a>00128   Global::block_cache = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_file_block_cache.html">FileBlockCache</a>(200000000LL);
-<a name="l00129"></a>00129 
-<a name="l00130"></a>00130   <a class="code" href="count__stored_8cc.html#12072554f9cad1865a8ebe2bcfbd60a5">fill_cell_store_vector</a>(hypertable_client_ptr, table_name, file_vector);
+<a name="l00122"></a>00122     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;file_vector.size(); i++) {
+<a name="l00126"></a>00126       <a class="code" href="namespace_hypertable.html#8a1144a096aa2cd7a6c8c6e9410bfd2d">CellStoreV0Ptr</a> cell_store_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(dfs);
+<a name="l00127"></a>00127       <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner = 0;
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129       <span class="keywordflow">if</span> (cell_store_ptr-&gt;open(file_vector[i].file.c_str(), 0, 0) != 0)
+<a name="l00130"></a>00130         <span class="keywordflow">return</span> 1;
 <a name="l00131"></a>00131 
-<a name="l00132"></a>00132   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;file_vector.size(); i++) {
-<a name="l00133"></a>00133 
-<a name="l00137"></a>00137     cell_store_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(client);
-<a name="l00138"></a>00138     <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner = 0;
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140     <span class="keywordflow">if</span> (cell_store_ptr-&gt;open(file_vector[i].file.c_str(), 0, 0) != 0)
-<a name="l00141"></a>00141       <span class="keywordflow">return</span> 1;
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143     <span class="keywordflow">if</span> (cell_store_ptr-&gt;load_index() != 0)
-<a name="l00144"></a>00144       <span class="keywordflow">return</span> 1;
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146     hit_start = (file_vector[i].start_row == <span class="stringliteral">""</span>) ? <span class="keyword">true</span> : <span class="keyword">false</span>;
-<a name="l00147"></a>00147 
-<a name="l00148"></a>00148     store_count = 0;
+<a name="l00132"></a>00132       <span class="keywordflow">if</span> (cell_store_ptr-&gt;load_index() != 0)
+<a name="l00133"></a>00133         <span class="keywordflow">return</span> 1;
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135       hit_start = (file_vector[i].start_row == <span class="stringliteral">""</span>) ? <span class="keyword">true</span> : <span class="keyword">false</span>;
+<a name="l00136"></a>00136       store_count = 0;
+<a name="l00137"></a>00137       scanner = cell_store_ptr-&gt;create_scanner(scan_context_ptr);
+<a name="l00138"></a>00138 
+<a name="l00139"></a>00139       <span class="keywordflow">while</span> (scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#b897362e3a1373bec433a0248485ae27">get</a>(key, value)) {
+<a name="l00140"></a>00140         <span class="keywordflow">if</span> (!hit_start) {
+<a name="l00141"></a>00141           <span class="keywordflow">if</span> (strcmp(key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, file_vector[i].start_row.c_str()) &lt;= 0) {
+<a name="l00142"></a>00142             scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
+<a name="l00143"></a>00143             <span class="keywordflow">continue</span>;
+<a name="l00144"></a>00144           }
+<a name="l00145"></a>00145           hit_start = <span class="keyword">true</span>;
+<a name="l00146"></a>00146         }
+<a name="l00147"></a>00147         <span class="keywordflow">if</span> (strcmp(key.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, file_vector[i].end_row.c_str()) &gt; 0)
+<a name="l00148"></a>00148           <span class="keywordflow">break</span>;
 <a name="l00149"></a>00149 
-<a name="l00150"></a>00150     scanner = cell_store_ptr-&gt;create_scanner(scan_context_ptr);
-<a name="l00151"></a>00151     <span class="keywordflow">while</span> (scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#c4c4ba59e631fc05068ba61005d4b35b">get</a>(key, value)) {
-<a name="l00152"></a>00152       row = key.<a class="code" href="class_hypertable_1_1_byte_string.html#2515b2c6ffe70a365f72ebe79fc430a5">str</a>();
-<a name="l00153"></a>00153       <span class="keywordflow">if</span> (!hit_start) {
-<a name="l00154"></a>00154         <span class="keywordflow">if</span> (strcmp(row, file_vector[i].<a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">start_row</a>.c_str()) &lt;= 0) {
-<a name="l00155"></a>00155           scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
-<a name="l00156"></a>00156           <span class="keywordflow">continue</span>;
-<a name="l00157"></a>00157         }
-<a name="l00158"></a>00158         hit_start = <span class="keyword">true</span>;
-<a name="l00159"></a>00159       }
-<a name="l00160"></a>00160       <span class="keywordflow">if</span> (strcmp(row, file_vector[i].<a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>.c_str()) &gt; 0)
-<a name="l00161"></a>00161         <span class="keywordflow">break</span>;
-<a name="l00162"></a>00162       store_count++;
-<a name="l00163"></a>00163       scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
-<a name="l00164"></a>00164     }
-<a name="l00165"></a>00165     <span class="keyword">delete</span> scanner;
-<a name="l00166"></a>00166 
-<a name="l00167"></a>00167     cout &lt;&lt; store_count &lt;&lt; <span class="stringliteral">"\t"</span> &lt;&lt; file_vector[i].file &lt;&lt; <span class="stringliteral">"["</span> &lt;&lt; file_vector[i].start_row &lt;&lt; <span class="stringliteral">".."</span> &lt;&lt; file_vector[i].end_row &lt;&lt; <span class="stringliteral">"]"</span> &lt;&lt; endl;
-<a name="l00168"></a>00168     total_count += store_count;
+<a name="l00150"></a>00150         store_count++;
+<a name="l00151"></a>00151         scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
+<a name="l00152"></a>00152       }
+<a name="l00153"></a>00153       <span class="keyword">delete</span> scanner;
+<a name="l00154"></a>00154 
+<a name="l00155"></a>00155       cout &lt;&lt; store_count &lt;&lt; <span class="stringliteral">"\t"</span> &lt;&lt; file_vector[i].file &lt;&lt; <span class="stringliteral">"["</span>
+<a name="l00156"></a>00156            &lt;&lt; file_vector[i].start_row &lt;&lt; <span class="stringliteral">".."</span> &lt;&lt; file_vector[i].end_row &lt;&lt; <span class="stringliteral">"]"</span>
+<a name="l00157"></a>00157            &lt;&lt; endl;
+<a name="l00158"></a>00158       total_count += store_count;
+<a name="l00159"></a>00159     }
+<a name="l00160"></a>00160     cout &lt;&lt; total_count &lt;&lt; <span class="stringliteral">"\tTOTAL"</span> &lt;&lt; endl;
+<a name="l00161"></a>00161   }
+<a name="l00162"></a>00162   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00163"></a>00163     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00164"></a>00164     <span class="keywordflow">return</span> 1;
+<a name="l00165"></a>00165   }
+<a name="l00166"></a>00166   <span class="keywordflow">return</span> 0;
+<a name="l00167"></a>00167 }
+<a name="l00168"></a>00168 
 <a name="l00169"></a>00169 
-<a name="l00170"></a>00170   }
+<a name="l00170"></a>00170 <span class="keyword">namespace </span>{
 <a name="l00171"></a>00171 
-<a name="l00172"></a>00172   cout &lt;&lt; total_count &lt;&lt; <span class="stringliteral">"\tTOTAL"</span> &lt;&lt; endl;
-<a name="l00173"></a>00173 
-<a name="l00174"></a>00174   <span class="keywordflow">return</span> 0;
-<a name="l00175"></a>00175 }
-<a name="l00176"></a>00176 
-<a name="l00177"></a>00177 
-<a name="l00178"></a>00178 
-<a name="l00182"></a><a class="code" href="count__stored_8cc.html#12072554f9cad1865a8ebe2bcfbd60a5">00182</a> <span class="keywordtype">void</span> <a class="code" href="count__stored_8cc.html#12072554f9cad1865a8ebe2bcfbd60a5">fill_cell_store_vector</a>(<a class="code" href="namespace_hypertable.html#7274226dc46034ccdf1dc8d6523c17f0">ClientPtr</a> &amp;hypertable_client_ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *table_name, std::vector&lt;CellStoreInfo&gt; &amp;file_vector) {
-<a name="l00183"></a>00183   <a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">TablePtr</a> table_ptr;
-<a name="l00184"></a>00184   <a class="code" href="namespace_hypertable.html#aff00f8ca3f0a2935429d953f3af8c9e">TableScannerPtr</a> scanner_ptr;
-<a name="l00185"></a>00185   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> scan_spec;
-<a name="l00186"></a>00186   <a class="code" href="class_hypertable_1_1_row_interval.html" title="Represents a row interval.">RowInterval</a> ri;
-<a name="l00187"></a>00187   <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> cell;
-<a name="l00188"></a>00188   uint32_t table_id;
-<a name="l00189"></a>00189   <span class="keywordtype">char</span> <a class="code" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">start_row</a>[16];
-<a name="l00190"></a>00190   <span class="keywordtype">char</span> <a class="code" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>[16];
-<a name="l00191"></a>00191   RangeCellStoreInfo range_cell_store_info;
-<a name="l00192"></a>00192   CellStoreInfo cell_store_info;
-<a name="l00193"></a>00193 
-<a name="l00194"></a>00194   <span class="keywordflow">try</span> {
-<a name="l00195"></a>00195 
-<a name="l00196"></a>00196     <span class="comment">// Open the 'METADATA' table</span>
-<a name="l00197"></a>00197     table_ptr = hypertable_client_ptr-&gt;open_table(<span class="stringliteral">"METADATA"</span>);
-<a name="l00198"></a>00198 
-<a name="l00199"></a>00199     table_id = hypertable_client_ptr-&gt;get_table_id(table_name);
-<a name="l00200"></a>00200 
-<a name="l00201"></a>00201     <span class="comment">// Set up the scan specification</span>
-<a name="l00202"></a>00202     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = 1;
-<a name="l00203"></a>00203     sprintf(start_row, <span class="stringliteral">"%d:"</span>, table_id);
-<a name="l00204"></a>00204     ri.<a class="code" href="class_hypertable_1_1_row_interval.html#05d415110f00f1273f449f7e4bf653d4">start</a> = start_row;
-<a name="l00205"></a>00205     sprintf(end_row, <span class="stringliteral">"%d:%s"</span>, table_id, Key::END_ROW_MARKER);
-<a name="l00206"></a>00206     ri.<a class="code" href="class_hypertable_1_1_row_interval.html#780ab1bf0f06ccf506544717be0f4ae1">end</a> = end_row;
-<a name="l00207"></a>00207     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(ri);
-<a name="l00208"></a>00208     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.clear();
-<a name="l00209"></a>00209     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"Files"</span>);
-<a name="l00210"></a>00210     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"StartRow"</span>);
-<a name="l00211"></a>00211 
-<a name="l00212"></a>00212     <span class="comment">// Create a scanner on the 'METADATA' table</span>
-<a name="l00213"></a>00213     scanner_ptr = table_ptr-&gt;create_scanner(scan_spec);
-<a name="l00214"></a>00214 
-<a name="l00215"></a>00215   }
-<a name="l00216"></a>00216   <span class="keywordflow">catch</span> (std::exception &amp;e) {
-<a name="l00217"></a>00217     cerr &lt;&lt; <span class="stringliteral">"error: "</span> &lt;&lt; e.what() &lt;&lt; endl;
-<a name="l00218"></a>00218     exit(1);
-<a name="l00219"></a>00219   }
-<a name="l00220"></a>00220 
-<a name="l00221"></a>00221   range_cell_store_info.start_row = <span class="stringliteral">""</span>;
-<a name="l00222"></a>00222   range_cell_store_info.end_row = <span class="stringliteral">""</span>;
-<a name="l00223"></a>00223   range_cell_store_info.cell_stores.clear();
-<a name="l00224"></a>00224 
-<a name="l00225"></a>00225   <span class="comment">// Iterate through the cells returned by the scanner</span>
-<a name="l00226"></a>00226   <span class="keywordflow">while</span> (scanner_ptr-&gt;next(cell)) {
-<a name="l00227"></a>00227     <span class="keywordflow">if</span> (strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>, range_cell_store_info.end_row.c_str())) {
-<a name="l00228"></a>00228       <span class="keywordflow">if</span> (range_cell_store_info.end_row != <span class="stringliteral">""</span>) {
-<a name="l00229"></a>00229         <span class="keyword">const</span> <span class="keywordtype">char</span> *end_row_cstr = strchr(range_cell_store_info.end_row.c_str(), <span class="charliteral">':'</span>);
-<a name="l00230"></a>00230         <span class="keywordflow">if</span> (end_row_cstr == 0) {
-<a name="l00231"></a>00231           cerr &lt;&lt; <span class="stringliteral">"error: mal-formed end row (missing colon) - "</span> &lt;&lt; range_cell_store_info.end_row &lt;&lt; endl;
-<a name="l00232"></a>00232           exit(1);
-<a name="l00233"></a>00233         }
-<a name="l00234"></a>00234         end_row_cstr++;
-<a name="l00235"></a>00235         cell_store_info.start_row = range_cell_store_info.start_row;
-<a name="l00236"></a>00236         cell_store_info.end_row = end_row_cstr;
-<a name="l00237"></a>00237         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;range_cell_store_info.cell_stores.size(); i++) {
-<a name="l00238"></a>00238           cell_store_info.file = range_cell_store_info.cell_stores[i];
-<a name="l00239"></a>00239           file_vector.push_back(cell_store_info);
-<a name="l00240"></a>00240         }
-<a name="l00241"></a>00241       }
-<a name="l00242"></a>00242       range_cell_store_info.start_row = <span class="stringliteral">""</span>;
-<a name="l00243"></a>00243       range_cell_store_info.end_row = cell.<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>;
-<a name="l00244"></a>00244       range_cell_store_info.cell_stores.clear();
-<a name="l00245"></a>00245     }
-<a name="l00246"></a>00246 
-<a name="l00247"></a>00247     <span class="keywordflow">if</span> (!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"StartRow"</span>))
-<a name="l00248"></a>00248       range_cell_store_info.start_row = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
-<a name="l00249"></a>00249     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"Files"</span>)) {
-<a name="l00250"></a>00250       std::string files = std::string((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
-<a name="l00251"></a>00251       <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *save_ptr;
-<a name="l00252"></a>00252       ptr = strtok_r((<span class="keywordtype">char</span> *)files.c_str(), <span class="stringliteral">"\n\r;"</span>, &amp;save_ptr);
-<a name="l00253"></a>00253       <span class="keywordflow">while</span> (ptr) {
-<a name="l00254"></a>00254         range_cell_store_info.cell_stores.push_back(ptr);
-<a name="l00255"></a>00255         ptr = strtok_r(0, <span class="stringliteral">"\n\r;"</span>, &amp;save_ptr);
-<a name="l00256"></a>00256       }
+<a name="l00172"></a>00172 <span class="keywordtype">void</span>
+<a name="l00173"></a><a class="code" href="count__stored_8cc.html#8960c57bd4114bed7fc07dc20d913e79">00173</a> <a class="code" href="count__stored_8cc.html#8960c57bd4114bed7fc07dc20d913e79">fill_cell_store_vector</a>(<a class="code" href="namespace_hypertable.html#6206fb0b9aaa59bc888fc656d71b7a68">ClientPtr</a> &amp;hypertable_client_ptr, <span class="keyword">const</span> <span class="keywordtype">char</span> *table_name,
+<a name="l00174"></a>00174                        std::vector&lt;CellStoreInfo&gt; &amp;file_vector) {
+<a name="l00175"></a>00175   <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a> table_ptr;
+<a name="l00176"></a>00176   <a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">TableScannerPtr</a> scanner_ptr;
+<a name="l00177"></a>00177   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> scan_spec;
+<a name="l00178"></a>00178   <a class="code" href="class_hypertable_1_1_row_interval.html" title="Represents a row interval.">RowInterval</a> ri;
+<a name="l00179"></a>00179   <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> cell;
+<a name="l00180"></a>00180   uint32_t table_id;
+<a name="l00181"></a>00181   <span class="keywordtype">char</span> <a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>[16];
+<a name="l00182"></a>00182   <span class="keywordtype">char</span> <a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>[16];
+<a name="l00183"></a>00183   RangeCellStoreInfo range_cell_store_info;
+<a name="l00184"></a>00184   CellStoreInfo cell_store_info;
+<a name="l00185"></a>00185 
+<a name="l00186"></a>00186   <span class="keywordflow">try</span> {
+<a name="l00187"></a>00187 
+<a name="l00188"></a>00188     <span class="comment">// Open the 'METADATA' table</span>
+<a name="l00189"></a>00189     table_ptr = hypertable_client_ptr-&gt;open_table(<span class="stringliteral">"METADATA"</span>);
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191     table_id = hypertable_client_ptr-&gt;get_table_id(table_name);
+<a name="l00192"></a>00192 
+<a name="l00193"></a>00193     <span class="comment">// Set up the scan specification</span>
+<a name="l00194"></a>00194     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#938132f074041fdfe25c33a05eb2ef9a">max_versions</a> = 1;
+<a name="l00195"></a>00195     sprintf(start_row, <span class="stringliteral">"%d:"</span>, table_id);
+<a name="l00196"></a>00196     ri.<a class="code" href="class_hypertable_1_1_row_interval.html#05d415110f00f1273f449f7e4bf653d4">start</a> = start_row;
+<a name="l00197"></a>00197     sprintf(end_row, <span class="stringliteral">"%d:%s"</span>, table_id, Key::END_ROW_MARKER);
+<a name="l00198"></a>00198     ri.<a class="code" href="class_hypertable_1_1_row_interval.html#780ab1bf0f06ccf506544717be0f4ae1">end</a> = end_row;
+<a name="l00199"></a>00199     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(ri);
+<a name="l00200"></a>00200     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.clear();
+<a name="l00201"></a>00201     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"Files"</span>);
+<a name="l00202"></a>00202     scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#ae5e799c094198e7b10f5844c722c408">columns</a>.push_back(<span class="stringliteral">"StartRow"</span>);
+<a name="l00203"></a>00203 
+<a name="l00204"></a>00204     <span class="comment">// Create a scanner on the 'METADATA' table</span>
+<a name="l00205"></a>00205     scanner_ptr = table_ptr-&gt;create_scanner(scan_spec);
+<a name="l00206"></a>00206 
+<a name="l00207"></a>00207   }
+<a name="l00208"></a>00208   <span class="keywordflow">catch</span> (std::exception &amp;e) {
+<a name="l00209"></a>00209     cerr &lt;&lt; <span class="stringliteral">"error: "</span> &lt;&lt; e.what() &lt;&lt; endl;
+<a name="l00210"></a>00210     exit(1);
+<a name="l00211"></a>00211   }
+<a name="l00212"></a>00212 
+<a name="l00213"></a>00213   range_cell_store_info.start_row = <span class="stringliteral">""</span>;
+<a name="l00214"></a>00214   range_cell_store_info.end_row = <span class="stringliteral">""</span>;
+<a name="l00215"></a>00215   range_cell_store_info.cell_stores.clear();
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217   <span class="comment">// Iterate through the cells returned by the scanner</span>
+<a name="l00218"></a>00218   <span class="keywordflow">while</span> (scanner_ptr-&gt;next(cell)) {
+<a name="l00219"></a>00219     <span class="keywordflow">if</span> (strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>, range_cell_store_info.end_row.c_str())) {
+<a name="l00220"></a>00220       <span class="keywordflow">if</span> (range_cell_store_info.end_row != <span class="stringliteral">""</span>) {
+<a name="l00221"></a>00221         <span class="keyword">const</span> <span class="keywordtype">char</span> *end_row_cstr =
+<a name="l00222"></a>00222             strchr(range_cell_store_info.end_row.c_str(), <span class="charliteral">':'</span>);
+<a name="l00223"></a>00223         <span class="keywordflow">if</span> (end_row_cstr == 0) {
+<a name="l00224"></a>00224           cerr &lt;&lt; <span class="stringliteral">"error: mal-formed end row (missing colon) - "</span>
+<a name="l00225"></a>00225                &lt;&lt; range_cell_store_info.end_row &lt;&lt; endl;
+<a name="l00226"></a>00226           exit(1);
+<a name="l00227"></a>00227         }
+<a name="l00228"></a>00228         end_row_cstr++;
+<a name="l00229"></a>00229         cell_store_info.start_row = range_cell_store_info.start_row;
+<a name="l00230"></a>00230         cell_store_info.end_row = end_row_cstr;
+<a name="l00231"></a>00231         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;range_cell_store_info.cell_stores.size(); i++) {
+<a name="l00232"></a>00232           cell_store_info.file = range_cell_store_info.cell_stores[i];
+<a name="l00233"></a>00233           file_vector.push_back(cell_store_info);
+<a name="l00234"></a>00234         }
+<a name="l00235"></a>00235       }
+<a name="l00236"></a>00236       range_cell_store_info.start_row = <span class="stringliteral">""</span>;
+<a name="l00237"></a>00237       range_cell_store_info.end_row = cell.<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>;
+<a name="l00238"></a>00238       range_cell_store_info.cell_stores.clear();
+<a name="l00239"></a>00239     }
+<a name="l00240"></a>00240 
+<a name="l00241"></a>00241     <span class="keywordflow">if</span> (!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"StartRow"</span>))
+<a name="l00242"></a>00242       range_cell_store_info.start_row =
+<a name="l00243"></a>00243           <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
+<a name="l00244"></a>00244     <span class="keywordflow">else</span> <span class="keywordflow">if</span> (!strcmp(cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>, <span class="stringliteral">"Files"</span>)) {
+<a name="l00245"></a>00245       <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> files = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>((<span class="keyword">const</span> <span class="keywordtype">char</span> *)cell.<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>);
+<a name="l00246"></a>00246       <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a>, *save_ptr;
+<a name="l00247"></a>00247       ptr = strtok_r((<span class="keywordtype">char</span> *)files.c_str(), <span class="stringliteral">"\n\r;"</span>, &amp;save_ptr);
+<a name="l00248"></a>00248       <span class="keywordflow">while</span> (ptr) {
+<a name="l00249"></a>00249         range_cell_store_info.cell_stores.push_back(ptr);
+<a name="l00250"></a>00250         ptr = strtok_r(0, <span class="stringliteral">"\n\r;"</span>, &amp;save_ptr);
+<a name="l00251"></a>00251       }
+<a name="l00252"></a>00252     }
+<a name="l00253"></a>00253     <span class="keywordflow">else</span> {
+<a name="l00254"></a>00254       cerr &lt;&lt; <span class="stringliteral">"Unexpected column family encountered: '"</span> &lt;&lt; cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>
+<a name="l00255"></a>00255            &lt;&lt; endl;
+<a name="l00256"></a>00256       exit(1);
 <a name="l00257"></a>00257     }
-<a name="l00258"></a>00258     <span class="keywordflow">else</span> {
-<a name="l00259"></a>00259       cerr &lt;&lt; <span class="stringliteral">"Unexpected column family encountered: '"</span> &lt;&lt; cell.<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a> &lt;&lt; endl;
-<a name="l00260"></a>00260       exit(1);
-<a name="l00261"></a>00261     }
-<a name="l00262"></a>00262   }
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264   <span class="keywordflow">if</span> (!range_cell_store_info.cell_stores.empty()) {
-<a name="l00265"></a>00265     <span class="keyword">const</span> <span class="keywordtype">char</span> *end_row_cstr = strchr(range_cell_store_info.end_row.c_str(), <span class="charliteral">':'</span>);
-<a name="l00266"></a>00266     <span class="keywordflow">if</span> (end_row_cstr == 0) {
-<a name="l00267"></a>00267       cerr &lt;&lt; <span class="stringliteral">"error: mal-formed end row (missing colon) - "</span> &lt;&lt; range_cell_store_info.end_row &lt;&lt; endl;
-<a name="l00268"></a>00268       exit(1);
-<a name="l00269"></a>00269     }
-<a name="l00270"></a>00270     end_row_cstr++;
-<a name="l00271"></a>00271     cell_store_info.start_row = range_cell_store_info.start_row;
-<a name="l00272"></a>00272     cell_store_info.end_row = end_row_cstr;
-<a name="l00273"></a>00273     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;range_cell_store_info.cell_stores.size(); i++) {
-<a name="l00274"></a>00274       cell_store_info.file = range_cell_store_info.cell_stores[i];
-<a name="l00275"></a>00275       file_vector.push_back(cell_store_info);
-<a name="l00276"></a>00276     }
-<a name="l00277"></a>00277   }
-<a name="l00278"></a>00278 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00258"></a>00258   }
+<a name="l00259"></a>00259 
+<a name="l00260"></a>00260   <span class="keywordflow">if</span> (!range_cell_store_info.cell_stores.empty()) {
+<a name="l00261"></a>00261     <span class="keyword">const</span> <span class="keywordtype">char</span> *end_row_cstr = strchr(range_cell_store_info.end_row.c_str(),
+<a name="l00262"></a>00262                                       <span class="charliteral">':'</span>);
+<a name="l00263"></a>00263     <span class="keywordflow">if</span> (end_row_cstr == 0) {
+<a name="l00264"></a>00264       cerr &lt;&lt; <span class="stringliteral">"error: mal-formed end row (missing colon) - "</span>
+<a name="l00265"></a>00265            &lt;&lt; range_cell_store_info.end_row &lt;&lt; endl;
+<a name="l00266"></a>00266       exit(1);
+<a name="l00267"></a>00267     }
+<a name="l00268"></a>00268     end_row_cstr++;
+<a name="l00269"></a>00269     cell_store_info.start_row = range_cell_store_info.start_row;
+<a name="l00270"></a>00270     cell_store_info.end_row = end_row_cstr;
+<a name="l00271"></a>00271     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;range_cell_store_info.cell_stores.size(); i++) {
+<a name="l00272"></a>00272       cell_store_info.file = range_cell_store_info.cell_stores[i];
+<a name="l00273"></a>00273       file_vector.push_back(cell_store_info);
+<a name="l00274"></a>00274     }
+<a name="l00275"></a>00275   }
+<a name="l00276"></a>00276 }
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 } <span class="comment">// local namespace</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

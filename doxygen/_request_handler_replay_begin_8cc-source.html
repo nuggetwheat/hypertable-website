@@ -28,11 +28,11 @@
 <a name="l00030"></a>00030 
 <a name="l00034"></a><a class="code" href="class_hypertable_1_1_request_handler_replay_begin.html#e20f84fd5ba5f2cec6448860ba322d78">00034</a> <span class="keywordtype">void</span> RequestHandlerReplayBegin::run() {
 <a name="l00035"></a>00035   <a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> cb(<a class="code" href="class_hypertable_1_1_request_handler_replay_begin.html#38de9210e780fa34993976a6958c5e6e">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
-<a name="l00036"></a>00036   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00037"></a>00037   <span class="keyword">const</span> uint8_t *p = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00036"></a>00036   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
+<a name="l00037"></a>00037   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
 <a name="l00038"></a>00038 
 <a name="l00039"></a>00039   <span class="keywordflow">try</span> {
-<a name="l00040"></a>00040     uint16_t group = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;p, &amp;remaining);
+<a name="l00040"></a>00040     uint16_t group = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_request_handler_replay_begin.html#f216cc8490749d59174c6380755fa3f6">m_range_server</a>-&gt;<a class="code" href="class_hypertable_1_1_range_server.html#ccaa5f9f41be96aff5863b022407bf52">replay_begin</a>(&amp;cb, group);
 <a name="l00042"></a>00042   }
 <a name="l00043"></a>00043   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
@@ -40,7 +40,7 @@
 <a name="l00045"></a>00045     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Error handling ReplayBegin message"</span>);
 <a name="l00046"></a>00046   }
 <a name="l00047"></a>00047 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

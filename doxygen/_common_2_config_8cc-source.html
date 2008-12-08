@@ -21,102 +21,347 @@
 <a name="l00023"></a>00023 <span class="preprocessor">#include "Common/Version.h"</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
 <a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_common_2_config_8h.html">Config.h</a>"</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a><a class="code" href="namespace_hypertable_1_1_config.html">00029</a> <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_common_2_filesystem_8h.html">Common/Filesystem.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">Common/FileUtils.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_common_2_config_8h.html">Common/Config.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_system_info_8h.html">Common/SystemInfo.h</a>"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="comment">// singletons</span>
-<a name="l00032"></a><a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474">00032</a> <a class="code" href="namespace_hypertable_1_1_config.html#f1d48da7ff662d70024d29d8bab079c3">VarMap</a> <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>;
-<a name="l00033"></a><a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca">00033</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a>;
+<a name="l00031"></a>00031 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;fstream&gt;</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;errno.h&gt;</span>
 <a name="l00034"></a>00034 
-<a name="l00035"></a><a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">00035</a> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *<a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a> = NULL;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037 <span class="comment">// functions</span>
-<a name="l00038"></a><a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">00038</a> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
-<a name="l00039"></a>00039   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a>)
-<a name="l00040"></a>00040     <a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a>(<a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"Usage: %s [options]\nOptions"</span>,
-<a name="l00041"></a>00041                             name ? name : <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">System::exe_name</a>.c_str()));
-<a name="l00042"></a>00042   <span class="keywordflow">return</span> *<a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a>;
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="namespace_hypertable_1_1_config.html#7450d14b44fd6e09c8fa510cc1844f53">00045</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> &amp;desc) {
-<a name="l00046"></a>00046   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a>)
-<a name="l00047"></a>00047     <span class="keyword">delete</span> <a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a>;
-<a name="l00048"></a>00048   <a class="code" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a>(desc);
-<a name="l00049"></a>00049 }
-<a name="l00050"></a>00050 
-<a name="l00051"></a><a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">00051</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>() {
-<a name="l00052"></a>00052   <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>().add_options()
-<a name="l00053"></a>00053     (<span class="stringliteral">"help,h"</span>, <span class="stringliteral">"Show this help message and exit"</span>)
-<a name="l00054"></a>00054     (<span class="stringliteral">"version"</span>, <span class="stringliteral">"Show version information and exit"</span>)
-<a name="l00055"></a>00055     (<span class="stringliteral">"verbose,v"</span>, <span class="stringliteral">"Show more verbose (debug) output"</span>)
-<a name="l00056"></a>00056     (<span class="stringliteral">"log-level,l"</span>, value&lt;String&gt;()-&gt;default_value(<span class="stringliteral">"info"</span>),
-<a name="l00057"></a>00057         <span class="stringliteral">"Logging level: debug, info, or error"</span>)
-<a name="l00058"></a>00058     (<span class="stringliteral">"config,c"</span>, value&lt;String&gt;(), <span class="stringliteral">"Configuration file.\n"</span>
-<a name="l00059"></a>00059         <span class="stringliteral">"default: &lt;install_dir&gt;/conf/hypertable.cfg"</span>)
-<a name="l00060"></a>00060     ;
-<a name="l00061"></a>00061 }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">00063</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *desc, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *hidden,
-<a name="l00064"></a>00064                 <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">PositionalDesc</a> *p) {
-<a name="l00065"></a>00065   <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> &amp;pub_desc = <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>();
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="comment">// singletons</span>
+<a name="l00039"></a><a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b">00039</a> <a class="code" href="class_hypertable_1_1_rec_mutex.html">RecMutex</a> <a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>;
+<a name="l00040"></a><a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44">00040</a> <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>;
+<a name="l00041"></a><a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca">00041</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>;
+<a name="l00042"></a><a class="code" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e">00042</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e" title="whether a config file was loaded after init">file_loaded</a> = <span class="keyword">false</span>;
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">00044</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *<a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a> = NULL;
+<a name="l00045"></a><a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">00045</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *<a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">cmdline_hidden_descp</a> = NULL;
+<a name="l00046"></a><a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">00046</a> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *<a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">cmdline_positional_descp</a> = NULL;
+<a name="l00047"></a><a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">00047</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *<a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a> = NULL;
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="namespace_hypertable_1_1_config.html#40761710e7431a6359bf3172f17a063d">00049</a> <span class="keywordtype">int</span> <a class="code" href="namespace_hypertable_1_1_config.html#40761710e7431a6359bf3172f17a063d">line_length</a>() {
+<a name="l00050"></a>00050   <span class="keywordtype">int</span> n = <a class="code" href="class_hypertable_1_1_system.html#87b0189aa5bd76e5a5739262aebf038e">System::term_info</a>().<a class="code" href="struct_hypertable_1_1_term_info.html#9c9924564f5a2b76c970ab808f6bb9cb">num_cols</a>;
+<a name="l00051"></a>00051   <span class="keywordflow">return</span> n &gt; 0 ? n : 80;
+<a name="l00052"></a>00052 }
+<a name="l00053"></a>00053 
+<a name="l00054"></a><a class="code" href="namespace_hypertable_1_1_config.html#a6b4530dfdd258cd4c9d10b353e43d8f">00054</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#a6b4530dfdd258cd4c9d10b353e43d8f">usage_str</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>) {
+<a name="l00055"></a>00055   <span class="keywordflow">if</span> (!usage)
+<a name="l00056"></a>00056     usage = <span class="stringliteral">"Usage: %s [options]\n\nOptions"</span>;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="keywordflow">if</span> (strstr(usage, <span class="stringliteral">"%s"</span>))
+<a name="l00059"></a>00059     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(usage, <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">System::exe_name</a>.c_str());
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="keywordflow">return</span> usage;
+<a name="l00062"></a>00062 }
+<a name="l00063"></a>00063 
+<a name="l00064"></a><a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f">00064</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>) {
+<a name="l00065"></a>00065   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
 <a name="l00066"></a>00066 
-<a name="l00067"></a>00067   <span class="keywordflow">try</span> {
-<a name="l00068"></a>00068     command_line_parser parser(argc, argv);
-<a name="l00069"></a>00069     <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> full(pub_desc);
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071     <span class="keywordflow">if</span> (hidden)
-<a name="l00072"></a>00072       full.add(*hidden);
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074     parser.options(full);
+<a name="l00067"></a>00067   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a>)
+<a name="l00068"></a>00068     <a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>(<a class="code" href="namespace_hypertable_1_1_config.html#a6b4530dfdd258cd4c9d10b353e43d8f">usage_str</a>(usage), <a class="code" href="namespace_hypertable_1_1_config.html#40761710e7431a6359bf3172f17a063d">line_length</a>());
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="keywordflow">return</span> *<a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a>;
+<a name="l00071"></a>00071 }
+<a name="l00072"></a>00072 
+<a name="l00073"></a><a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6">00073</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6" title="Get the command line hidden options description (for positional options).">cmdline_hidden_desc</a>() {
+<a name="l00074"></a>00074   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076     <span class="keywordflow">if</span> (p)
-<a name="l00077"></a>00077       parser.positional(*p);
+<a name="l00076"></a>00076   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">cmdline_hidden_descp</a>)
+<a name="l00077"></a>00077     <a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">cmdline_hidden_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>();
 <a name="l00078"></a>00078 
-<a name="l00079"></a>00079     store(parser.run(), <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>);
-<a name="l00080"></a>00080     notify(<a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>);
-<a name="l00081"></a>00081   }
-<a name="l00082"></a>00082   <span class="keywordflow">catch</span> (std::exception &amp;e) {
-<a name="l00083"></a>00083     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e.what() &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00084"></a>00084     std::cout &lt;&lt; pub_desc &lt;&lt; std::endl;
-<a name="l00085"></a>00085     exit(1);
-<a name="l00086"></a>00086   }
+<a name="l00079"></a>00079   <span class="keywordflow">return</span> *<a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">cmdline_hidden_descp</a>;
+<a name="l00080"></a>00080 }
+<a name="l00081"></a>00081 
+<a name="l00082"></a><a class="code" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09">00082</a> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09" title="Get the command line positional options description.">cmdline_positional_desc</a>() {
+<a name="l00083"></a>00083   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">cmdline_positional_descp</a>)
+<a name="l00086"></a>00086     <a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">cmdline_positional_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a>();
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088   <span class="comment">// some builtin behavior</span>
-<a name="l00089"></a>00089   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>.count(<span class="stringliteral">"help"</span>)) {
-<a name="l00090"></a>00090     std::cout &lt;&lt; pub_desc &lt;&lt; std::endl;
-<a name="l00091"></a>00091     std::exit(1);
-<a name="l00092"></a>00092   }
+<a name="l00088"></a>00088   <span class="keywordflow">return</span> *<a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">cmdline_positional_descp</a>;
+<a name="l00089"></a>00089 }
+<a name="l00090"></a>00090 
+<a name="l00091"></a><a class="code" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9">00091</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;desc) {
+<a name="l00092"></a>00092   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>.count(<span class="stringliteral">"version"</span>)) {
-<a name="l00095"></a>00095     std::cout &lt;&lt; <a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>() &lt;&lt; std::endl;
-<a name="l00096"></a>00096     std::exit(1);
-<a name="l00097"></a>00097   }
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> loglevel = <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>[<span class="stringliteral">"log-level"</span>].as&lt;<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>&gt;();
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"info"</span>)
-<a name="l00102"></a>00102     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::INFO);
-<a name="l00103"></a>00103   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"debug"</span>)
-<a name="l00104"></a>00104     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::DEBUG);
-<a name="l00105"></a>00105   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"error"</span>)
-<a name="l00106"></a>00106     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::ERROR);
-<a name="l00107"></a>00107   <span class="keywordflow">else</span> {
-<a name="l00108"></a>00108     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"unknown log level: "</span>&lt;&lt; loglevel &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00109"></a>00109     std::exit(1);
-<a name="l00110"></a>00110   }
+<a name="l00094"></a>00094   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a>)
+<a name="l00095"></a>00095     <span class="keyword">delete</span> <a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a>;
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097   <a class="code" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">cmdline_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>(desc);
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a><a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f">00100</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a>) {
+<a name="l00101"></a>00101   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103   <span class="keywordflow">if</span> (!<a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a>)
+<a name="l00104"></a>00104     <a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>(usage ? usage : <span class="stringliteral">"Config Properties"</span>, <a class="code" href="namespace_hypertable_1_1_config.html#40761710e7431a6359bf3172f17a063d">line_length</a>());
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106   <span class="keywordflow">return</span> *<a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a>;
+<a name="l00107"></a>00107 }
+<a name="l00108"></a>00108 
+<a name="l00109"></a><a class="code" href="namespace_hypertable_1_1_config.html#e143732c2e58cfaf172c1ffbeb43e88c">00109</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;desc) {
+<a name="l00110"></a>00110   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
 <a name="l00111"></a>00111 
-<a name="l00112"></a>00112   <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a> = <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>.count(<span class="stringliteral">"config"</span>) ? <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>[<span class="stringliteral">"config"</span>].as&lt;<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>&gt;() :
-<a name="l00113"></a>00113       <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%s/conf/hypertable.cfg"</span>, <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a>.c_str());
-<a name="l00114"></a>00114 }
-<a name="l00115"></a>00115 
-<a name="l00116"></a><a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">00116</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>() {
-<a name="l00117"></a>00117   <span class="comment">// TODO: load config file etc?</span>
-<a name="l00118"></a>00118 }
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 }} <span class="comment">// namespace Hypertable::Config</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00112"></a>00112   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a>)
+<a name="l00113"></a>00113     <span class="keyword">delete</span> <a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a>;
+<a name="l00114"></a>00114 
+<a name="l00115"></a>00115   <a class="code" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">file_descp</a> = <span class="keyword">new</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>(desc);
+<a name="l00116"></a>00116 }
+<a name="l00117"></a>00117 
+<a name="l00118"></a><a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">00118</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>() {
+<a name="l00119"></a>00119   <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a> config(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a>);
+<a name="l00120"></a>00120   config /= <span class="stringliteral">"conf/hypertable.cfg"</span>;
+<a name="l00121"></a>00121 
+<a name="l00122"></a>00122   <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>().add_options()
+<a name="l00123"></a>00123     (<span class="stringliteral">"help,h"</span>, <span class="stringliteral">"Show this help message and exit"</span>)
+<a name="l00124"></a>00124     (<span class="stringliteral">"help-file"</span>, <span class="stringliteral">"Show help message for config file"</span>)
+<a name="l00125"></a>00125     (<span class="stringliteral">"version"</span>, <span class="stringliteral">"Show version information and exit"</span>)
+<a name="l00126"></a>00126     (<span class="stringliteral">"verbose,v"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;zero_tokens()-&gt;default_value(<span class="keyword">false</span>),
+<a name="l00127"></a>00127         <span class="stringliteral">"Show more verbose output"</span>)
+<a name="l00128"></a>00128     (<span class="stringliteral">"debug"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;zero_tokens()-&gt;default_value(<span class="keyword">false</span>),
+<a name="l00129"></a>00129         <span class="stringliteral">"Show debug output (shortcut of --logging-level debug)"</span>)
+<a name="l00130"></a>00130     (<span class="stringliteral">"quiet"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;zero_tokens()-&gt;default_value(<span class="keyword">false</span>), <span class="stringliteral">"Negate verbose"</span>)
+<a name="l00131"></a>00131     (<span class="stringliteral">"silent"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;zero_tokens()-&gt;default_value(<span class="keyword">false</span>),
+<a name="l00132"></a>00132         <span class="stringliteral">"Show as little output as possible"</span>)
+<a name="l00133"></a>00133     (<span class="stringliteral">"logging-level,l"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>()-&gt;default_value(<span class="stringliteral">"info"</span>),
+<a name="l00134"></a>00134         <span class="stringliteral">"Logging level: debug, info, notice, warn, error, crit, alert, fatal"</span>)
+<a name="l00135"></a>00135     (<span class="stringliteral">"config"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>()-&gt;default_value(config.string()), <span class="stringliteral">"Configuration file.\n"</span>)
+<a name="l00136"></a>00136     ;
+<a name="l00137"></a>00137   <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"logging-level"</span>, <span class="stringliteral">"Hypertable.Logging.Level"</span>);
+<a name="l00138"></a>00138   <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"verbose"</span>, <span class="stringliteral">"Hypertable.Verbose"</span>);
+<a name="l00139"></a>00139   <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"silent"</span>, <span class="stringliteral">"Hypertable.Silent"</span>);
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141   <span class="comment">// pre boost 1.35 doesn't support allow_unregistered, so we have to have the</span>
+<a name="l00142"></a>00142   <span class="comment">// full cfg definition here, which might not be a bad thing.</span>
+<a name="l00143"></a>00143   <a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>().add_options()
+<a name="l00144"></a>00144     (<span class="stringliteral">"Comm.DispatchDelay"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(0), <span class="stringliteral">"[TESTING ONLY] "</span>
+<a name="l00145"></a>00145         <span class="stringliteral">"Delay dispatching of read requests by this number of milliseconds"</span>)
+<a name="l00146"></a>00146     (<span class="stringliteral">"Hypertable.Verbose"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;default_value(<span class="keyword">false</span>),
+<a name="l00147"></a>00147         <span class="stringliteral">"Enable verbose output (system wide)"</span>)
+<a name="l00148"></a>00148     (<span class="stringliteral">"Hypertable.Silent"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;default_value(<span class="keyword">false</span>),
+<a name="l00149"></a>00149         <span class="stringliteral">"Disable verbose output (system wide)"</span>)
+<a name="l00150"></a>00150     (<span class="stringliteral">"Hypertable.Logging.Level"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>()-&gt;default_value(<span class="stringliteral">"info"</span>),
+<a name="l00151"></a>00151         <span class="stringliteral">"Set system wide logging level (default: info)"</span>)
+<a name="l00152"></a>00152     (<span class="stringliteral">"Hypertable.Request.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(20000), <span class="stringliteral">"Length of "</span>
+<a name="l00153"></a>00153         <span class="stringliteral">"time, in milliseconds, before timing out requests (system wide)"</span>)
+<a name="l00154"></a>00154     (<span class="stringliteral">"HdfsBroker.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>(),
+<a name="l00155"></a>00155         <span class="stringliteral">"Port number on which to listen (read by HdfsBroker only)"</span>)
+<a name="l00156"></a>00156     (<span class="stringliteral">"HdfsBroker.fs.default.name"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"Hadoop Filesystem "</span>
+<a name="l00157"></a>00157         <span class="stringliteral">"default name, same as fs.default.name property in Hadoop config "</span>
+<a name="l00158"></a>00158         <span class="stringliteral">"(e.g. hdfs://localhost:9000)"</span>)
+<a name="l00159"></a>00159     (<span class="stringliteral">"HdfsBroker.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00160"></a>00160         <span class="stringliteral">"Number of HDFS broker worker threads created"</span>)
+<a name="l00161"></a>00161     (<span class="stringliteral">"HdfsBroker.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00162"></a>00162         <span class="stringliteral">"Number of HDFS broker communication reactor threads created"</span>)
+<a name="l00163"></a>00163     (<span class="stringliteral">"Kfs.Broker.Flush"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(<span class="keyword">false</span>), <span class="stringliteral">"Enable KFS sync/flush"</span>)
+<a name="l00164"></a>00164     (<span class="stringliteral">"Kfs.Broker.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(20), <span class="stringliteral">"Number of worker "</span>
+<a name="l00165"></a>00165         <span class="stringliteral">"threads for Kfs broker"</span>)
+<a name="l00166"></a>00166     (<span class="stringliteral">"Kfs.Broker.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(), <span class="stringliteral">"Number of Kfs broker reactor threads"</span>)
+<a name="l00167"></a>00167     (<span class="stringliteral">"Kfs.MetaServer.Name"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"Hostname of Kosmos meta server"</span>)
+<a name="l00168"></a>00168     (<span class="stringliteral">"Kfs.MetaServer.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>(), <span class="stringliteral">"Port number for Kosmos meta server"</span>)
+<a name="l00169"></a>00169     (<span class="stringliteral">"DfsBroker.Local.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38030),
+<a name="l00170"></a>00170         <span class="stringliteral">"Port number on which to listen (read by LocalBroker only)"</span>)
+<a name="l00171"></a>00171     (<span class="stringliteral">"DfsBroker.Local.Root"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"Root of file and directory "</span>
+<a name="l00172"></a>00172         <span class="stringliteral">"hierarchy for local broker (if relative path, then is relative to "</span>
+<a name="l00173"></a>00173         <span class="stringliteral">"the installation directory)"</span>)
+<a name="l00174"></a>00174     (<span class="stringliteral">"DfsBroker.Local.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(20),
+<a name="l00175"></a>00175         <span class="stringliteral">"Number of local broker worker threads created"</span>)
+<a name="l00176"></a>00176     (<span class="stringliteral">"DfsBroker.Local.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00177"></a>00177         <span class="stringliteral">"Number of local broker communication reactor threads created"</span>)
+<a name="l00178"></a>00178     (<span class="stringliteral">"DfsBroker.Host"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(),
+<a name="l00179"></a>00179         <span class="stringliteral">"Host on which the DFS broker is running (read by clients only)"</span>)
+<a name="l00180"></a>00180     (<span class="stringliteral">"DfsBroker.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38030),
+<a name="l00181"></a>00181         <span class="stringliteral">"Port number on which DFS broker is listening (read by clients only)"</span>)
+<a name="l00182"></a>00182     (<span class="stringliteral">"DfsBroker.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(60000), <span class="stringliteral">"Length of time, "</span>
+<a name="l00183"></a>00183         <span class="stringliteral">"in milliseconds, to wait before timing out DFS Broker requests. This "</span>
+<a name="l00184"></a>00184         <span class="stringliteral">"takes precedence over Hypertable.Request.Timeout"</span>)
+<a name="l00185"></a>00185     (<span class="stringliteral">"Hyperspace.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(30000), <span class="stringliteral">"Timeout (millisec) "</span>
+<a name="l00186"></a>00186         <span class="stringliteral">"for hyperspace requests (preferred to Hypertable.Request.Timeout"</span>)
+<a name="l00187"></a>00187     (<span class="stringliteral">"Hyperspace.Master.Host"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(),
+<a name="l00188"></a>00188         <span class="stringliteral">"Host on which Hyperspace Master is or should be running"</span>)
+<a name="l00189"></a>00189     (<span class="stringliteral">"Hyperspace.Master.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38040),
+<a name="l00190"></a>00190         <span class="stringliteral">"Port number on which Hyperspace Master is or should be listening"</span>)
+<a name="l00191"></a>00191     (<span class="stringliteral">"Hyperspace.Master.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00192"></a>00192         <span class="stringliteral">"Number of Hyperspace Master worker threads created"</span>)
+<a name="l00193"></a>00193     (<span class="stringliteral">"Hyperspace.Master.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00194"></a>00194         <span class="stringliteral">"Number of Hyperspace Master communication reactor threads created"</span>)
+<a name="l00195"></a>00195     (<span class="stringliteral">"Hyperspace.Master.Dir"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(), <span class="stringliteral">"Root of hyperspace file and directory "</span>
+<a name="l00196"></a>00196         <span class="stringliteral">"heirarchy in local filesystem (if relative path, then is relative to "</span>
+<a name="l00197"></a>00197         <span class="stringliteral">"the installation directory)"</span>)
+<a name="l00198"></a>00198     (<span class="stringliteral">"Hyperspace.KeepAlive.Interval"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(10000),
+<a name="l00199"></a>00199         <span class="stringliteral">"Hyperspace Keepalive interval (see Chubby paper)"</span>)
+<a name="l00200"></a>00200     (<span class="stringliteral">"Hyperspace.Lease.Interval"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(60000),
+<a name="l00201"></a>00201         <span class="stringliteral">"Hyperspace Lease interval (see Chubby paper)"</span>)
+<a name="l00202"></a>00202     (<span class="stringliteral">"Hyperspace.GracePeriod"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(60000),
+<a name="l00203"></a>00203         <span class="stringliteral">"Hyperspace Grace period (see Chubby paper)"</span>)
+<a name="l00204"></a>00204     (<span class="stringliteral">"Hypertable.Client.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(120000), <span class="stringliteral">"Timeout in "</span>
+<a name="l00205"></a>00205         <span class="stringliteral">"(millisec) for Hypertable client API"</span>)
+<a name="l00206"></a>00206     (<span class="stringliteral">"Hypertable.LocationCache.MaxEntries"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>()-&gt;default_value(1*<a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a>),
+<a name="l00207"></a>00207         <span class="stringliteral">"Size of range location cache in number of entries"</span>)
+<a name="l00208"></a>00208     (<span class="stringliteral">"Hypertable.Master.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(30000), <span class="stringliteral">"Timeout "</span>
+<a name="l00209"></a>00209         <span class="stringliteral">"(millisec) for master requests "</span>
+<a name="l00210"></a>00210         <span class="stringliteral">"(prefered to Hypertable.Request.Timeout"</span>)
+<a name="l00211"></a>00211     (<span class="stringliteral">"Hypertable.Master.Host"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(),
+<a name="l00212"></a>00212         <span class="stringliteral">"Host on which Hypertable Master is running"</span>)
+<a name="l00213"></a>00213     (<span class="stringliteral">"Hypertable.Master.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38050),
+<a name="l00214"></a>00214         <span class="stringliteral">"Port number on which Hypertable Master is or should be listening"</span>)
+<a name="l00215"></a>00215     (<span class="stringliteral">"Hypertable.Master.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00216"></a>00216         <span class="stringliteral">"Number of Hypertable Master worker threads created"</span>)
+<a name="l00217"></a>00217     (<span class="stringliteral">"Hypertable.Master.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00218"></a>00218         <span class="stringliteral">"Number of Hypertable Master communication reactor threads created"</span>)
+<a name="l00219"></a>00219     (<span class="stringliteral">"Hypertable.Master.Gc.Interval"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(300000),
+<a name="l00220"></a>00220         <span class="stringliteral">"Garbage collection interval in milliseconds by Master"</span>)
+<a name="l00221"></a>00221     (<span class="stringliteral">"Hypertable.RangeServer.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(30000), <span class="stringliteral">"Timeout "</span>
+<a name="l00222"></a>00222         <span class="stringliteral">"(millisec) for range server requests "</span>
+<a name="l00223"></a>00223         <span class="stringliteral">"(prefered to Hypertable.Request.Timeout"</span>)
+<a name="l00224"></a>00224     (<span class="stringliteral">"Hypertable.RangeServer.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38060),
+<a name="l00225"></a>00225         <span class="stringliteral">"Port number on which range servers are or should be listening"</span>)
+<a name="l00226"></a>00226     (<span class="stringliteral">"Hypertable.RangeServer.AccessGroup.MaxFiles"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(10),
+<a name="l00227"></a>00227         <span class="stringliteral">"Maximum number of cell store files to create before merging"</span>)
+<a name="l00228"></a>00228     (<span class="stringliteral">"Hypertable.RangeServer.AccessGroup.MaxMemory"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>()-&gt;default_value(50*<a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a>),
+<a name="l00229"></a>00229         <span class="stringliteral">"Maximum bytes consumed by an Access Group"</span>)
+<a name="l00230"></a>00230     (<span class="stringliteral">"Hypertable.RangeServer.AccessGroup.MergeFiles"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(4),
+<a name="l00231"></a>00231         <span class="stringliteral">"How many files to merge during a merging compaction"</span>)
+<a name="l00232"></a>00232     (<span class="stringliteral">"Hypertable.RangeServer.BlockCache.MaxMemory"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>()-&gt;default_value(200*<a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a>),
+<a name="l00233"></a>00233         <span class="stringliteral">"Bytes to dedicate to the block cache"</span>)
+<a name="l00234"></a>00234     (<span class="stringliteral">"Hypertable.RangeServer.Range.MaxBytes"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>()-&gt;default_value(200*<a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a>),
+<a name="l00235"></a>00235         <span class="stringliteral">"Maximum number of bytes per range before splitting"</span>)
+<a name="l00236"></a>00236     (<span class="stringliteral">"Hypertable.RangeServer.Range.MetadataMaxBytes"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>(), <span class="stringliteral">"Maximum number "</span>
+<a name="l00237"></a>00237         <span class="stringliteral">"of bytes per METADATA range before splitting (for testing)"</span>)
+<a name="l00238"></a>00238     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Host"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>(),
+<a name="l00239"></a>00239         <span class="stringliteral">"Host of DFS Broker to use for Commit Log"</span>)
+<a name="l00240"></a>00240     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.DfsBroker.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>(),
+<a name="l00241"></a>00241         <span class="stringliteral">"Port of DFS Broker to use for Commit Log"</span>)
+<a name="l00242"></a>00242     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.PruneThreshold.Min"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>(),
+<a name="l00243"></a>00243         <span class="stringliteral">"Lower threshold for amount of outstanding commit log before pruning"</span>)
+<a name="l00244"></a>00244     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.PruneThreshold.Max"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>(),
+<a name="l00245"></a>00245         <span class="stringliteral">"Upper threshold for amount of outstanding commit log before pruning"</span>)
+<a name="l00246"></a>00246     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.RollLimit"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>()-&gt;default_value(1*<a class="code" href="namespace_hypertable_1_1_property.html#870ab8abaaea4256b9f153095d6da53b">G</a>),
+<a name="l00247"></a>00247         <span class="stringliteral">"Roll commit log after this many bytes"</span>)
+<a name="l00248"></a>00248     (<span class="stringliteral">"Hypertable.RangeServer.CommitLog.Compressor"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>()-&gt;default_value(<span class="stringliteral">"lzo"</span>),
+<a name="l00249"></a>00249         <span class="stringliteral">"Commit log compressor to use (zlib, lzo, quicklz, bmz, none)"</span>)
+<a name="l00250"></a>00250     (<span class="stringliteral">"Hypertable.RangeServer.Scanner.Ttl"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(120000),
+<a name="l00251"></a>00251         <span class="stringliteral">"Number of milliseconds of inactivity before destroying scanners"</span>)
+<a name="l00252"></a>00252     (<span class="stringliteral">"Hypertable.RangeServer.Timer.Interval"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(60000),
+<a name="l00253"></a>00253         <span class="stringliteral">"Timer interval in milliseconds (reaping scanners, "</span>
+<a name="l00254"></a>00254         <span class="stringliteral">"purging commit logs, etc.)"</span>)
+<a name="l00255"></a>00255     (<span class="stringliteral">"Hypertable.RangeServer.Workers"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(20),
+<a name="l00256"></a>00256         <span class="stringliteral">"Number of Range Server worker threads created"</span>)
+<a name="l00257"></a>00257     (<span class="stringliteral">"Hypertable.RangeServer.Reactors"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>(),
+<a name="l00258"></a>00258         <span class="stringliteral">"Number of Range Server communication reactor threads created"</span>)
+<a name="l00259"></a>00259     (<span class="stringliteral">"Hypertable.RangeServer.MaintenanceThreads"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(1),
+<a name="l00260"></a>00260         <span class="stringliteral">"Number of maintenance threads"</span>)
+<a name="l00261"></a>00261     (<span class="stringliteral">"ThriftBroker.Timeout"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(20*<a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">K</a>), <span class="stringliteral">"Timeout (ms) "</span>
+<a name="l00262"></a>00262         <span class="stringliteral">"for thrift broker"</span>)
+<a name="l00263"></a>00263     (<span class="stringliteral">"ThriftBroker.Port"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>()-&gt;default_value(38080), <span class="stringliteral">"Port number for "</span>
+<a name="l00264"></a>00264         <span class="stringliteral">"thrift broker"</span>)
+<a name="l00265"></a>00265     (<span class="stringliteral">"ThriftBroker.NextLimit"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>()-&gt;default_value(100), <span class="stringliteral">"Iteration chunk "</span>
+<a name="l00266"></a>00266         <span class="stringliteral">"size (number of cells) for thrift broker"</span>)
+<a name="l00267"></a>00267     (<span class="stringliteral">"ThriftBroker.API.Logging"</span>, <a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>()-&gt;default_value(<span class="keyword">false</span>), <span class="stringliteral">"Enable or "</span>
+<a name="l00268"></a>00268         <span class="stringliteral">"disable Thrift API logging"</span>);
+<a name="l00269"></a>00269     ;
+<a name="l00270"></a>00270     <span class="comment">// add config file desc to cmdline hidden desc, so people can override</span>
+<a name="l00271"></a>00271     <span class="comment">// any config values on the command line</span>
+<a name="l00272"></a>00272     <a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6" title="Get the command line hidden options description (for positional options).">cmdline_hidden_desc</a>().add(<a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>());
+<a name="l00273"></a>00273 }
+<a name="l00274"></a>00274 
+<a name="l00275"></a><a class="code" href="namespace_hypertable_1_1_config.html#31dbb052b8a7e49aa37e5cb8d66c8674">00275</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#31dbb052b8a7e49aa37e5cb8d66c8674" title="Init helper, has side effects (setting singletons etc.">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]) {
+<a name="l00276"></a>00276   <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"parsing init arguments"</span>,
+<a name="l00279"></a>00279     <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;parse_args(argc, argv, <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(), <a class="code" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">cmdline_hidden_descp</a>,
+<a name="l00280"></a>00280                            <a class="code" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">cmdline_positional_descp</a>));
+<a name="l00281"></a>00281   <span class="comment">// some built-in behavior</span>
+<a name="l00282"></a>00282   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"help"</span>)) {
+<a name="l00283"></a>00283     std::cout &lt;&lt; <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>() &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">std::flush</a>;
+<a name="l00284"></a>00284     std::exit(0);
+<a name="l00285"></a>00285   }
+<a name="l00286"></a>00286 
+<a name="l00287"></a>00287   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"help-file"</span>)) {
+<a name="l00288"></a>00288     std::cout &lt;&lt; <a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>() &lt;&lt; <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">std::flush</a>;
+<a name="l00289"></a>00289     std::exit(0);
+<a name="l00290"></a>00290   }
+<a name="l00291"></a>00291 
+<a name="l00292"></a>00292   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"version"</span>)) {
+<a name="l00293"></a>00293     std::cout &lt;&lt; <a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>() &lt;&lt; std::endl;
+<a name="l00294"></a>00294     std::exit(0);
+<a name="l00295"></a>00295   }
+<a name="l00296"></a>00296 
+<a name="l00297"></a>00297   <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a> defaultcfg(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">System::install_dir</a>);
+<a name="l00298"></a>00298   defaultcfg /= <span class="stringliteral">"conf/hypertable.cfg"</span>;
+<a name="l00299"></a>00299   <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a> = <span class="keyword">get</span>(<span class="stringliteral">"config"</span>, defaultcfg.string());
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301   <span class="comment">// Only try to parse config file if it exists or not default</span>
+<a name="l00302"></a>00302   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_file_utils.html#48b1de9157dfbb028a55d8e9d17090ae">FileUtils::exists</a>(<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>)) {
+<a name="l00303"></a>00303     <a class="code" href="namespace_hypertable_1_1_config.html#31481090e7b3f12f7ec4e4acc12d6971" title="Parse config file.">parse_file</a>(<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>, <a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>(), <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00304"></a>00304     <a class="code" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e" title="whether a config file was loaded after init">file_loaded</a> = <span class="keyword">true</span>;
+<a name="l00305"></a>00305   }
+<a name="l00306"></a>00306   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a> != defaultcfg)
+<a name="l00307"></a>00307     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2aa17b0d355b25bc0b964c55babb49e44">Error::FILE_NOT_FOUND</a>, <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>);
+<a name="l00308"></a>00308 
+<a name="l00309"></a>00309   <a class="code" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c" title="Sync alias values.">sync_aliases</a>();       <span class="comment">// call before use</span>
+<a name="l00310"></a>00310 }
+<a name="l00311"></a>00311 
+<a name="l00312"></a>00312 <span class="keywordtype">void</span>
+<a name="l00313"></a><a class="code" href="namespace_hypertable_1_1_config.html#31481090e7b3f12f7ec4e4acc12d6971">00313</a> <a class="code" href="namespace_hypertable_1_1_config.html#31481090e7b3f12f7ec4e4acc12d6971" title="Parse config file.">parse_file</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;desc, <span class="keywordtype">bool</span> allow_unregistered) {
+<a name="l00314"></a>00314   <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;load(fname, desc, allow_unregistered);
+<a name="l00315"></a>00315 }
+<a name="l00316"></a>00316 
+<a name="l00317"></a><a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886">00317</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;cmdline_opt, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;file_opt, <span class="keywordtype">bool</span> overwrite) {
+<a name="l00318"></a>00318   <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;alias(cmdline_opt, file_opt, overwrite);
+<a name="l00319"></a>00319 }
+<a name="l00320"></a>00320 
+<a name="l00321"></a><a class="code" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c">00321</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c" title="Sync alias values.">sync_aliases</a>() {
+<a name="l00322"></a>00322   <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;sync_aliases();
+<a name="l00323"></a>00323 }
+<a name="l00324"></a>00324 
+<a name="l00325"></a><a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">00325</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>() {
+<a name="l00326"></a>00326   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> loglevel = get_str(<span class="stringliteral">"logging-level"</span>);
+<a name="l00327"></a>00327   <span class="keywordtype">bool</span> verbose = get_bool(<span class="stringliteral">"verbose"</span>);
+<a name="l00328"></a>00328 
+<a name="l00329"></a>00329   <span class="keywordflow">if</span> (verbose &amp;&amp; get_bool(<span class="stringliteral">"quiet"</span>)) {
+<a name="l00330"></a>00330     verbose = <span class="keyword">false</span>;
+<a name="l00331"></a>00331     <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;set(<span class="stringliteral">"verbose"</span>, <span class="keyword">false</span>);
+<a name="l00332"></a>00332   }
+<a name="l00333"></a>00333   <span class="keywordflow">if</span> (get_bool(<span class="stringliteral">"debug"</span>)) {
+<a name="l00334"></a>00334     loglevel = <span class="stringliteral">"debug"</span>;
+<a name="l00335"></a>00335     <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;set(<span class="stringliteral">"logging-level"</span>, loglevel);
+<a name="l00336"></a>00336   }
+<a name="l00337"></a>00337 
+<a name="l00338"></a>00338   <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"info"</span>)
+<a name="l00339"></a>00339     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::INFO);
+<a name="l00340"></a>00340   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"debug"</span>)
+<a name="l00341"></a>00341     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::DEBUG);
+<a name="l00342"></a>00342   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"notice"</span>)
+<a name="l00343"></a>00343     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::NOTICE);
+<a name="l00344"></a>00344   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"warn"</span>)
+<a name="l00345"></a>00345     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(<a class="code" href="bmzip_8c.html#f369d408fd5724ef306a7731a697af9d">Logger::Priority::WARN</a>);
+<a name="l00346"></a>00346   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"error"</span>)
+<a name="l00347"></a>00347     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::ERROR);
+<a name="l00348"></a>00348   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"crit"</span>)
+<a name="l00349"></a>00349     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::CRIT);
+<a name="l00350"></a>00350   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"alert"</span>)
+<a name="l00351"></a>00351     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::ALERT);
+<a name="l00352"></a>00352   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (loglevel == <span class="stringliteral">"fatal"</span>)
+<a name="l00353"></a>00353     <a class="code" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Logger::set_level</a>(Logger::Priority::FATAL);
+<a name="l00354"></a>00354   <span class="keywordflow">else</span> {
+<a name="l00355"></a>00355     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"unknown logging level: "</span>&lt;&lt; loglevel &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00356"></a>00356     std::exit(1);
+<a name="l00357"></a>00357   }
+<a name="l00358"></a>00358   <span class="keywordflow">if</span> (verbose) {
+<a name="l00359"></a>00359     <a class="code" href="_logger_8h.html#a8b7684ce06b52e5804ca9bf2e8485e4">HT_NOTICE_OUT</a> &lt;&lt;<span class="stringliteral">"Initializing "</span>&lt;&lt; <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">System::exe_name</a> &lt;&lt;<span class="stringliteral">" ("</span>&lt;&lt; <a class="code" href="namespace_hypertable.html#85aefb3a6fd2dae58e2349c41a0d5387">version</a>()
+<a name="l00360"></a>00360                   &lt;&lt;<span class="stringliteral">")..."</span> &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00361"></a>00361   }
+<a name="l00362"></a>00362 }
+<a name="l00363"></a>00363 
+<a name="l00364"></a>00364 
+<a name="l00365"></a>00365 }} <span class="comment">// namespace Hypertable::Config</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

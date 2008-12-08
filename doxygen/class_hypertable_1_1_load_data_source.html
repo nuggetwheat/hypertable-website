@@ -30,7 +30,7 @@ Collaboration diagram for Hypertable::LoadDataSource:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_load_data_source__coll__graph.png" border="0" usemap="#_hypertable_1_1_load_data_source__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_load_data_source__coll__map">
-<area shape="rect" href="class_hypertable_1_1_fixed_random_string_generator.html" title="Hypertable::FixedRandomStringGenerator" alt="" coords="5,5,283,32"><area shape="rect" href="class_hypertable_1_1_dynamic_buffer.html" title="Hypertable::DynamicBuffer" alt="" coords="307,5,491,32"></map>
+<area shape="rect" href="class_hypertable_1_1_fixed_random_string_generator.html" title="Hypertable::FixedRandomStringGenerator" alt="" coords="5,173,283,200"><area shape="rect" href="class_hypertable_1_1_dynamic_buffer.html" title="Hypertable::DynamicBuffer" alt="" coords="307,173,491,200"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="303,96,495,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="363,5,435,32"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -43,7 +43,7 @@ Collaboration diagram for Hypertable::LoadDataSource:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#3cf5096cd18f8a1ef1bf1447b3d025c6">has_timestamps</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#a12befe56020c06e0a3965ee17459fb7">next</a> (uint32_t *type_flagp, uint64_t *timestampp, <a class="el" href="class_hypertable_1_1_key_spec.html">KeySpec</a> *keyp, uint8_t **valuep, uint32_t *value_lenp, uint32_t *consumedp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#ad9b0c1210c6b75fe1b57546483fb56d">next</a> (uint32_t *type_flagp, <a class="el" href="class_hypertable_1_1_key_spec.html">KeySpec</a> *keyp, uint8_t **valuep, uint32_t *value_lenp, uint32_t *consumedp)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#b678d7a91c9609996156f1dc12075580">parse_date_format</a> (const char *str, struct tm *tm)</td></tr>
@@ -51,7 +51,7 @@ Collaboration diagram for Hypertable::LoadDataSource:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#9c10e19f1b201996bb8a275193f0f868">add_row_component</a> (int index)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#c50637e2b4d60bd6e127c8757c82ce98">m_column_names</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector&lt; <a class="el" href="struct_hypertable_1_1_load_data_source_1_1_column_info.html">ColumnInfo</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#46b7602b7b4c339fc2be3b51f4c21eca">m_column_info</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector&lt; const <br>
 char * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#ade1110d297b5c66d1b44ee7d1f6a725">m_values</a></td></tr>
@@ -94,6 +94,8 @@ char * &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" hre
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source.html#72499ec58fe770ad6ef663a188759c08">m_dupkeycols</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_load_data_source_1_1_column_info.html">ColumnInfo</a></td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_load_data_source_1_1_key_component_info.html">KeyComponentInfo</a></td></tr>
 
 </table>
@@ -201,7 +203,7 @@ Set up row key columns
 
 </div>
 </div><p>
-<a class="anchor" name="a12befe56020c06e0a3965ee17459fb7"></a><!-- doxytag: member="Hypertable::LoadDataSource::next" ref="a12befe56020c06e0a3965ee17459fb7" args="(uint32_t *type_flagp, uint64_t *timestampp, KeySpec *keyp, uint8_t **valuep, uint32_t *value_lenp, uint32_t *consumedp)" -->
+<a class="anchor" name="ad9b0c1210c6b75fe1b57546483fb56d"></a><!-- doxytag: member="Hypertable::LoadDataSource::next" ref="ad9b0c1210c6b75fe1b57546483fb56d" args="(uint32_t *type_flagp, KeySpec *keyp, uint8_t **valuep, uint32_t *value_lenp, uint32_t *consumedp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -210,12 +212,6 @@ Set up row key columns
           <td>(</td>
           <td class="paramtype">uint32_t *&nbsp;</td>
           <td class="paramname"> <em>type_flagp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">uint64_t *&nbsp;</td>
-          <td class="paramname"> <em>timestampp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -258,7 +254,7 @@ Get row key<p>
 Get column family and qualifier<p>
 Get value<p>
 setup row key 
-<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00217">217</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00241">241</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
 
 </div>
 </div><p>
@@ -296,7 +292,7 @@ day<p>
 hour<p>
 minute<p>
 second 
-<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00533">533</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00573">573</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
 
 </div>
 </div><p>
@@ -318,17 +314,17 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00500">500</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8cc-source.html#l00540">540</a> of file <a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="c50637e2b4d60bd6e127c8757c82ce98"></a><!-- doxytag: member="Hypertable::LoadDataSource::m_column_names" ref="c50637e2b4d60bd6e127c8757c82ce98" args="" -->
+<a class="anchor" name="46b7602b7b4c339fc2be3b51f4c21eca"></a><!-- doxytag: member="Hypertable::LoadDataSource::m_column_info" ref="46b7602b7b4c339fc2be3b51f4c21eca" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&gt; <a class="el" href="class_hypertable_1_1_load_data_source.html#c50637e2b4d60bd6e127c8757c82ce98">Hypertable::LoadDataSource::m_column_names</a><code> [private]</code>          </td>
+          <td class="memname">std::vector&lt;<a class="el" href="struct_hypertable_1_1_load_data_source_1_1_column_info.html">ColumnInfo</a>&gt; <a class="el" href="class_hypertable_1_1_load_data_source.html#46b7602b7b4c339fc2be3b51f4c21eca">Hypertable::LoadDataSource::m_column_info</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -336,7 +332,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00077">77</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00083">83</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -353,7 +349,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00078">78</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00084">84</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -370,7 +366,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00079">79</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00085">85</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -387,7 +383,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00080">80</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00086">86</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -404,7 +400,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00081">81</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00087">87</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -421,7 +417,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00082">82</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00088">88</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -438,7 +434,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00083">83</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00089">89</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -455,7 +451,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00084">84</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00090">90</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -472,7 +468,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00085">85</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00091">91</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -489,7 +485,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00086">86</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00092">92</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -506,7 +502,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00087">87</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00093">93</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -523,7 +519,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00088">88</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00094">94</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -540,7 +536,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00089">89</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00095">95</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -557,7 +553,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00090">90</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00096">96</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -574,7 +570,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00091">91</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00097">97</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -591,7 +587,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00092">92</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00098">98</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -608,7 +604,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00093">93</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00099">99</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -625,7 +621,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00094">94</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00100">100</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -642,7 +638,7 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00095">95</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00101">101</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
@@ -659,13 +655,13 @@ second
 
 <p>
 
-<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00096">96</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
+<p>Definition at line <a class="el" href="_load_data_source_8h-source.html#l00102">102</a> of file <a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_load_data_source_8h-source.html">LoadDataSource.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_load_data_source_8cc-source.html">LoadDataSource.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:13 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:58 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -20,36 +20,33 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef SOCKADDRMAP_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define SOCKADDRMAP_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;sys/socket.h&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;netinet/in.h&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;arpa/inet.h&gt;</span>
-<a name="l00029"></a>00029 }
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_hash_map_8h.html">Common/HashMap.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hypertable {
-<a name="l00034"></a>00034 
-<a name="l00035"></a><a class="code" href="class_hypertable_1_1_sock_addr_hash.html">00035</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sock_addr_hash.html">SockAddrHash</a> {
-<a name="l00036"></a>00036  <span class="keyword">public</span>:
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_sock_addr_hash.html#6b73c83d17f2396ecca81fda7b2d3d03">00037</a>   <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_sock_addr_hash.html#6b73c83d17f2396ecca81fda7b2d3d03">operator () </a>(<span class="keyword">struct</span> sockaddr_in addr)<span class="keyword"> const </span>{
-<a name="l00038"></a>00038     <span class="keywordflow">return</span> (<span class="keywordtype">size_t</span>)(addr.sin_addr.s_addr ^ addr.sin_port);
-<a name="l00039"></a>00039   }
-<a name="l00040"></a>00040 };
-<a name="l00041"></a><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html">00041</a> <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html">SockAddrEqual</a> {
-<a name="l00042"></a><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html#ffec30474678aa169022dd5eefb0ee86">00042</a>   <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_sock_addr_equal.html#ffec30474678aa169022dd5eefb0ee86">operator()</a>(<span class="keyword">struct</span> sockaddr_in addr1, <span class="keyword">struct</span> sockaddr_in addr2)<span class="keyword"> const </span>{
-<a name="l00043"></a>00043     <span class="keywordflow">return</span> (addr1.sin_addr.s_addr == addr2.sin_addr.s_addr) &amp;&amp; (addr1.sin_port == addr2.sin_port);
-<a name="l00044"></a>00044   }
-<a name="l00045"></a>00045 };
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TypeT, <span class="keyword">typename</span> addr=struct sockaddr_in&gt;
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_sock_addr_map.html">00048</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sock_addr_map.html">SockAddrMap</a> : <span class="keyword">public</span> hash_map&lt;addr, TypeT, SockAddrHash, SockAddrEqual&gt; {
-<a name="l00049"></a>00049 };
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051 } <span class="comment">// namespace Hypertable</span>
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="preprocessor">#endif // SOCKADDRMAP_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_inet_addr_8h.html">Common/InetAddr.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_hash_map_8h.html">Common/HashMap.h</a>"</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="keyword">namespace </span>Hypertable {
+<a name="l00029"></a>00029 
+<a name="l00030"></a><a class="code" href="class_hypertable_1_1_sock_addr_hash.html">00030</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sock_addr_hash.html">SockAddrHash</a> {
+<a name="l00031"></a>00031  <span class="keyword">public</span>:
+<a name="l00032"></a><a class="code" href="class_hypertable_1_1_sock_addr_hash.html#49368fc6a6de1025fdecf81d61cd2ae1">00032</a>   <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_sock_addr_hash.html#49368fc6a6de1025fdecf81d61cd2ae1">operator () </a>(<span class="keyword">const</span> sockaddr_in &amp;addr)<span class="keyword"> const </span>{
+<a name="l00033"></a>00033     <span class="keywordflow">return</span> (<span class="keywordtype">size_t</span>)(addr.sin_addr.s_addr ^ addr.sin_port);
+<a name="l00034"></a>00034   }
+<a name="l00035"></a>00035 };
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html">00037</a> <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html">SockAddrEqual</a> {
+<a name="l00038"></a><a class="code" href="struct_hypertable_1_1_sock_addr_equal.html#e63dcdebae36a4f9bb4ec1d6e25051c8">00038</a>   <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_sock_addr_equal.html#e63dcdebae36a4f9bb4ec1d6e25051c8">operator()</a>(<span class="keyword">const</span> sockaddr_in &amp;addr1, <span class="keyword">const</span> sockaddr_in &amp;addr2)<span class="keyword"> const </span>{
+<a name="l00039"></a>00039     <span class="keywordflow">return</span> (addr1.sin_addr.s_addr == addr2.sin_addr.s_addr)
+<a name="l00040"></a>00040            &amp;&amp; (addr1.sin_port == addr2.sin_port);
+<a name="l00041"></a>00041   }
+<a name="l00042"></a>00042 };
+<a name="l00043"></a>00043 
+<a name="l00044"></a>00044 <span class="keyword">template</span>&lt;<span class="keyword">typename</span> TypeT, <span class="keyword">typename</span> addr=struct sockaddr_in&gt;
+<a name="l00045"></a><a class="code" href="class_hypertable_1_1_sock_addr_map.html">00045</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sock_addr_map.html">SockAddrMap</a> : <span class="keyword">public</span> hash_map&lt;addr, TypeT, SockAddrHash, SockAddrEqual&gt; {
+<a name="l00046"></a>00046 };
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 } <span class="comment">// namespace Hypertable</span>
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050 <span class="preprocessor">#endif // SOCKADDRMAP_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

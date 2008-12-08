@@ -18,20 +18,54 @@
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>MetaLogVersion.cc</h1><a href="_meta_log_version_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_meta_log_version_8h.html">MetaLogVersion.h</a>"</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="keyword">namespace </span>Hypertable {
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_meta_log_version_8h.html">MetaLogVersion.h</a>"</span>
 <a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="comment">// range server constants</span>
-<a name="l00028"></a><a class="code" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">00028</a> <span class="keyword">const</span> uint16_t <a class="code" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">RSML_VERSION</a> = 0x0100;
-<a name="l00029"></a><a class="code" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">00029</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">RSML_PREFIX</a> = <span class="stringliteral">"HRSML"</span>;
+<a name="l00027"></a>00027 <span class="keyword">namespace </span>Hypertable {
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keyword">using namespace </span>Serialization;
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="comment">// master constants</span>
-<a name="l00032"></a><a class="code" href="namespace_hypertable.html#b9a687972912149a418e13207ec1e486">00032</a> <span class="keyword">const</span> uint16_t <a class="code" href="namespace_hypertable.html#b9a687972912149a418e13207ec1e486">MML_VERSION</a> = 0x0100;
-<a name="l00033"></a><a class="code" href="namespace_hypertable.html#c7e2dd3533fe290efb567aebeee5864f">00033</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable.html#c7e2dd3533fe290efb567aebeee5864f">MML_PREFIX</a> = <span class="stringliteral">"MML"</span>;
+<a name="l00031"></a>00031 <span class="comment">// range server constants</span>
+<a name="l00032"></a><a class="code" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">00032</a> <span class="keyword">const</span> uint16_t <a class="code" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">RSML_VERSION</a> = 0x0100;
+<a name="l00033"></a><a class="code" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">00033</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">RSML_PREFIX</a> = <span class="stringliteral">"RSML"</span>;
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035 } <span class="comment">// namespace Hypertable</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00035"></a>00035 <span class="comment">// master constants</span>
+<a name="l00036"></a><a class="code" href="namespace_hypertable.html#b9a687972912149a418e13207ec1e486">00036</a> <span class="keyword">const</span> uint16_t <a class="code" href="namespace_hypertable.html#b9a687972912149a418e13207ec1e486">MML_VERSION</a> = 0x0100;
+<a name="l00037"></a><a class="code" href="namespace_hypertable.html#c7e2dd3533fe290efb567aebeee5864f">00037</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable.html#c7e2dd3533fe290efb567aebeee5864f">MML_PREFIX</a> = <span class="stringliteral">"MML"</span>;
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="struct_hypertable_1_1_meta_log_header.html#bd12fe687488d32a3ccd958a51a9d40b">00039</a> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_meta_log_header.html#bd12fe687488d32a3ccd958a51a9d40b">MetaLogHeader::encode</a>(uint8_t *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
+<a name="l00040"></a>00040   uint8_t *p = buf;
+<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> prefixlen = strlen(<a class="code" href="struct_hypertable_1_1_meta_log_header.html#97fefcf6c2de76ebda7805720fb2136b">prefix</a>) + 1;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043   memcpy(buf, <a class="code" href="struct_hypertable_1_1_meta_log_header.html#97fefcf6c2de76ebda7805720fb2136b">prefix</a>, prefixlen);
+<a name="l00044"></a>00044   p += prefixlen;
+<a name="l00045"></a>00045   <a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18" title="Encode a 16-bit integer in little-endian order.">encode_i16</a>(&amp;p, <a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a>);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>((<span class="keywordtype">int</span>)len == p - buf, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
+<a name="l00048"></a>00048 }
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="struct_hypertable_1_1_meta_log_header.html#9e212ec6e318911ca7d6200da3bd0290">00050</a> <span class="keywordtype">void</span> MetaLogHeader::decode(<span class="keyword">const</span> uint8_t *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
+<a name="l00051"></a>00051   <a class="code" href="struct_hypertable_1_1_meta_log_header.html#97fefcf6c2de76ebda7805720fb2136b">prefix</a> = (<span class="keyword">const</span> <span class="keywordtype">char</span> *) buf;
+<a name="l00052"></a>00052   <span class="keywordtype">size_t</span> prefixlen = strlen(<a class="code" href="struct_hypertable_1_1_meta_log_header.html#97fefcf6c2de76ebda7805720fb2136b">prefix</a>) + 1;
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054   <span class="keyword">const</span> uint8_t *p = buf + prefixlen;
+<a name="l00055"></a>00055   <span class="keywordtype">size_t</span> remain = len - prefixlen;
+<a name="l00056"></a>00056 
+<a name="l00057"></a>00057   <a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;p, &amp;remain);
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <a class="code" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(remain == 0, <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>);
+<a name="l00060"></a>00060 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="namespace_hypertable.html#04ae437d67895d20b2a5a474eeea1624">00062</a> std::ostream &amp;<a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">operator&lt;&lt;</a>(std::ostream &amp;out, <span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_meta_log_header.html">MetaLogHeader</a> &amp;h) {
+<a name="l00063"></a>00063   out &lt;&lt; h.<a class="code" href="struct_hypertable_1_1_meta_log_header.html#97fefcf6c2de76ebda7805720fb2136b">prefix</a> &lt;&lt;<span class="charliteral">' '</span>&lt;&lt; ((h.<a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a> &gt;&gt; 12) &amp; 0xf) &lt;&lt;<span class="charliteral">'.'</span>
+<a name="l00064"></a>00064       &lt;&lt; ((h.<a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a> &gt;&gt; 8) &amp; 0xf) &lt;&lt;<span class="charliteral">'.'</span>&lt;&lt; ((h.<a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a> &gt;&gt; 4) &amp; 0xf)
+<a name="l00065"></a>00065       &lt;&lt;<span class="charliteral">'.'</span>&lt;&lt; (h.<a class="code" href="struct_hypertable_1_1_meta_log_header.html#6b753ab294d27ee4a76a4e0ea0bebe8e">version</a> &amp; 0xf);
+<a name="l00066"></a>00066   <span class="keywordflow">return</span> out;
+<a name="l00067"></a>00067 }
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 } <span class="comment">// namespace Hypertable</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

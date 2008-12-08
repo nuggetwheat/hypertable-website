@@ -47,93 +47,100 @@ Collaboration diagram for Hypertable::RangeServerClient:</div>
 <a href="class_hypertable_1_1_range_server_client-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#27cc0154a1a87158479911374f9bab37">RangeServerClient</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, time_t timeout)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#bd8e00037875cb541370e0c2b22ae528">RangeServerClient</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, uint32_t timeout_ms)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#62ff2f98474381a5fd7fe5c3da83fec3">~RangeServerClient</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#3a43dc95e65d30229b1edd929a9c5ec8">set_default_timeout</a> (time_t timeout)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#cda9853d4ccef8cfaffb3919c2cbc89e">set_default_timeout</a> (uint32_t timeout_ms)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the default client connection timeout.  <a href="#3a43dc95e65d30229b1edd929a9c5ec8"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#08f142abaf2a8e15b2f1b0218c73d76d">set_timeout</a> (time_t timeout)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the default client connection timeout.  <a href="#cda9853d4ccef8cfaffb3919c2cbc89e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#29a66416a5f381c1392146f9f16dd680">default_timeout</a> () const </td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the request timeout.  <a href="#08f142abaf2a8e15b2f1b0218c73d76d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#7ce4e0de850f02ddc52fc4dc91f91024">load_range</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#04c400fe49cc3d31200648965432ec68">set_timeout</a> (uint32_t timeout_ms)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request asynchronously.  <a href="#7ce4e0de850f02ddc52fc4dc91f91024"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#f361550e92523eae6f74f47827f9db28">load_range</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the request timeout.  <a href="#04c400fe49cc3d31200648965432ec68"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#b3237ed8b27519158493e03e5c5bf674">timeout</a> () const </td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request.  <a href="#f361550e92523eae6f74f47827f9db28"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#655926bbb021ecdddd260c5d124bfacd">update</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#03a9e212acdcb0e63f19ad1a4af7cdac">load_range</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues an "update" request asynchronously.  <a href="#655926bbb021ecdddd260c5d124bfacd"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#9d9c52d76cabeb37e1b75c1d2bbd079a">update</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request asynchronously.  <a href="#03a9e212acdcb0e63f19ad1a4af7cdac"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#1d4a92d93102ed90193a5b0313642792">load_range</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues an "update" request.  <a href="#9d9c52d76cabeb37e1b75c1d2bbd079a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#c4e3a137fa5672922441facf83ea4f3d">create_scanner</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request.  <a href="#1d4a92d93102ed90193a5b0313642792"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#53015362ce032d53b4c8fa84281279d0">update</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, uint32_t <a class="el" href="_range_server_8cc.html#86988a65e0d3ece7990c032c159786d6">count</a>, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "create scanner" request asynchronously.  <a href="#c4e3a137fa5672922441facf83ea4f3d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#bbc591c22b2d24d2e2d3f147bfb2ab00">create_scanner</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, <a class="el" href="class_hypertable_1_1_scan_block.html">ScanBlock</a> &amp;scan_block)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues an "update" request asynchronously.  <a href="#53015362ce032d53b4c8fa84281279d0"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#f9ce5e4009bca7e5f465dab99190624a">update</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, uint32_t <a class="el" href="_range_server_8cc.html#86988a65e0d3ece7990c032c159786d6">count</a>, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "create scanner" request.  <a href="#bbc591c22b2d24d2e2d3f147bfb2ab00"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#606f4ab33eee9ef879b640da5dedb016">destroy_scanner</a> (struct sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues an "update" request.  <a href="#f9ce5e4009bca7e5f465dab99190624a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#8246d9a63354942ae9713bed48a4313b">create_scanner</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "destroy scanner" request asynchronously.  <a href="#606f4ab33eee9ef879b640da5dedb016"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#645362c217eb9986dab133f80a0309ba">destroy_scanner</a> (struct sockaddr_in &amp;addr, int scanner_id)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "create scanner" request asynchronously.  <a href="#8246d9a63354942ae9713bed48a4313b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#afe602741bacdde94538970be63eda4b">create_scanner</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, <a class="el" href="class_hypertable_1_1_scan_block.html">ScanBlock</a> &amp;scan_block)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "destroy scanner" request.  <a href="#645362c217eb9986dab133f80a0309ba"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#1b6fff8d8dc8bf2f2819f0c956aa2fda">fetch_scanblock</a> (struct sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "create scanner" request.  <a href="#afe602741bacdde94538970be63eda4b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#58ee58507049573c1a5dd0e0a35d7590">destroy_scanner</a> (const sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "fetch scanblock" request asynchronously.  <a href="#1b6fff8d8dc8bf2f2819f0c956aa2fda"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#28bdc2ff484cc8c3cb7bc7700ccfdce7">fetch_scanblock</a> (struct sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_scan_block.html">ScanBlock</a> &amp;scan_block)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "destroy scanner" request asynchronously.  <a href="#58ee58507049573c1a5dd0e0a35d7590"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#54935c43fa004bcae51e0a4c922179f8">destroy_scanner</a> (const sockaddr_in &amp;addr, int scanner_id)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "fetch scanblock" request.  <a href="#28bdc2ff484cc8c3cb7bc7700ccfdce7"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#9ece5d9f406405edf1821cd3eff86dc9">drop_table</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "destroy scanner" request.  <a href="#54935c43fa004bcae51e0a4c922179f8"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#423bb06949c263d13262bdbba21b01ac">fetch_scanblock</a> (const sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "drop table" request asynchronously.  <a href="#9ece5d9f406405edf1821cd3eff86dc9"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#01a35a21b1cc282f21303b543cf807e6">drop_table</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "fetch scanblock" request asynchronously.  <a href="#423bb06949c263d13262bdbba21b01ac"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#f3040ddd6f21c931637f530ab9d29e1d">fetch_scanblock</a> (const sockaddr_in &amp;addr, int scanner_id, <a class="el" href="class_hypertable_1_1_scan_block.html">ScanBlock</a> &amp;scan_block)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "drop table" request.  <a href="#01a35a21b1cc282f21303b543cf807e6"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#0e0d6b4ced314e6fd9a61b22682810c6">status</a> (struct sockaddr_in &amp;addr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "fetch scanblock" request.  <a href="#f3040ddd6f21c931637f530ab9d29e1d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#a01720645b83d58c04dc0dd2ff45bcf0">drop_table</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "status" request.  <a href="#0e0d6b4ced314e6fd9a61b22682810c6"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#5dc208e147d2fdf8157b818f32997e8b">shutdown</a> (struct sockaddr_in &amp;addr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "drop table" request asynchronously.  <a href="#a01720645b83d58c04dc0dd2ff45bcf0"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#b635fa6ad9e704741a219b658e7c03d2">drop_table</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "shutdown" request.  <a href="#5dc208e147d2fdf8157b818f32997e8b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#8876ce2d5aff1232d3feffcc5eb92451">dump_stats</a> (struct sockaddr_in &amp;addr)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "drop table" request.  <a href="#b635fa6ad9e704741a219b658e7c03d2"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#fd7f99b73916b572970d894da87ceb48">status</a> (const sockaddr_in &amp;addr)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#aec97c648fdcdd7584685dbd49117d6e">replay_begin</a> (struct sockaddr_in &amp;addr, uint16_t group, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "status" request.  <a href="#fd7f99b73916b572970d894da87ceb48"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#987ccdb32cf5d1c617b16488a26be075">shutdown</a> (const sockaddr_in &amp;addr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay begin" request.  <a href="#aec97c648fdcdd7584685dbd49117d6e"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#483da3f6edd0d65f45c34a59c153ae91">replay_load_range</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;range_state, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "shutdown" request.  <a href="#987ccdb32cf5d1c617b16488a26be075"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#9d68d349b4930e1297f4a52682580c8c">dump_stats</a> (const sockaddr_in &amp;addr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay load range" request.  <a href="#483da3f6edd0d65f45c34a59c153ae91"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#1b33c19afa2b06089feaece373e40bc6">replay_update</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#476ade7788fe059691a84f54785879ee">get_statistics</a> (const sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_range_server_stat.html">RangeServerStat</a> &amp;stat)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay update" request.  <a href="#1b33c19afa2b06089feaece373e40bc6"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#2dd6a8cb70d2eab11fcaa209978556ad">replay_commit</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "get_statistics" request.  <a href="#476ade7788fe059691a84f54785879ee"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#1fa2eff3b4a9a6e76c0d81b42641fcc5">replay_begin</a> (const sockaddr_in &amp;addr, uint16_t group, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay commit" request.  <a href="#2dd6a8cb70d2eab11fcaa209978556ad"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#e51e6f7672ea3d8420d43a9f379a1b55">drop_range</a> (struct sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay begin" request.  <a href="#1fa2eff3b4a9a6e76c0d81b42641fcc5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#cda1750d67cb883dc693822037e3de13">replay_load_range</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;state, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request asynchronously.  <a href="#e51e6f7672ea3d8420d43a9f379a1b55"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay load range" request.  <a href="#cda1750d67cb883dc693822037e3de13"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#30fe415accc05f545a5ddb856b86cf42">replay_update</a> (const sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay update" request.  <a href="#30fe415accc05f545a5ddb856b86cf42"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#a064b3f5899e502c221f083233ab0267">replay_commit</a> (const sockaddr_in &amp;addr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "replay commit" request.  <a href="#a064b3f5899e502c221f083233ab0267"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#0a85b200361f13a3dc1ef7f084df7666">drop_range</a> (const sockaddr_in &amp;addr, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Issues a "load range" request asynchronously.  <a href="#0a85b200361f13a3dc1ef7f084df7666"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#b207b17dc6aeb0cb09d4db68398b6224">send_message</a> (struct sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#37c2241e3cc1b3861a96cab1a3ac9603">send_message</a> (const sockaddr_in &amp;addr, <a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;cbp, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#ce851783b0e85fd218d70f571bfd76d3">m_comm</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#07ac545c38454578850960939e5caadb">m_default_timeout</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#668efd5bbe084479f9058af3ae058ea1">m_default_timeout_ms</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#e9e594e910fbd2937145b8233a22312d">m_timeout</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_client.html#ebe48b3bdb429854f0e16439c039b37d">m_timeout_ms</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 <a class="el" href="class_hypertable_1_1_client.html">Client</a> proxy interface to <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a>. 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00045">45</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00046">46</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="27cc0154a1a87158479911374f9bab37"></a><!-- doxytag: member="Hypertable::RangeServerClient::RangeServerClient" ref="27cc0154a1a87158479911374f9bab37" args="(Comm *comm, time_t timeout)" -->
+<a class="anchor" name="bd8e00037875cb541370e0c2b22ae528"></a><!-- doxytag: member="Hypertable::RangeServerClient::RangeServerClient" ref="bd8e00037875cb541370e0c2b22ae528" args="(Comm *comm, uint32_t timeout_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -146,8 +153,8 @@ Collaboration diagram for Hypertable::RangeServerClient:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em></td><td>&nbsp;</td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -181,20 +188,20 @@ Collaboration diagram for Hypertable::RangeServerClient:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00037">37</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00038">38</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="3a43dc95e65d30229b1edd929a9c5ec8"></a><!-- doxytag: member="Hypertable::RangeServerClient::set_default_timeout" ref="3a43dc95e65d30229b1edd929a9c5ec8" args="(time_t timeout)" -->
+<a class="anchor" name="cda9853d4ccef8cfaffb3919c2cbc89e"></a><!-- doxytag: member="Hypertable::RangeServerClient::set_default_timeout" ref="cda9853d4ccef8cfaffb3919c2cbc89e" args="(uint32_t timeout_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::RangeServerClient::set_default_timeout           </td>
           <td>(</td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em>          </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -207,23 +214,44 @@ Sets the default client connection timeout.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>timeout value in seconds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timeout_ms</em>&nbsp;</td><td>timeout value in milliseconds </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00055">55</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00056">56</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="08f142abaf2a8e15b2f1b0218c73d76d"></a><!-- doxytag: member="Hypertable::RangeServerClient::set_timeout" ref="08f142abaf2a8e15b2f1b0218c73d76d" args="(time_t timeout)" -->
+<a class="anchor" name="29a66416a5f381c1392146f9f16dd680"></a><!-- doxytag: member="Hypertable::RangeServerClient::default_timeout" ref="29a66416a5f381c1392146f9f16dd680" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t Hypertable::RangeServerClient::default_timeout           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00059">59</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="04c400fe49cc3d31200648965432ec68"></a><!-- doxytag: member="Hypertable::RangeServerClient::set_timeout" ref="04c400fe49cc3d31200648965432ec68" args="(uint32_t timeout_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::RangeServerClient::set_timeout           </td>
           <td>(</td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em>          </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -236,34 +264,55 @@ Sets the request timeout.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>timeout value in seconds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timeout_ms</em>&nbsp;</td><td>timeout value in milliseconds </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00061">61</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00065">65</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="7ce4e0de850f02ddc52fc4dc91f91024"></a><!-- doxytag: member="Hypertable::RangeServerClient::load_range" ref="7ce4e0de850f02ddc52fc4dc91f91024" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, const char *transfer_log, RangeState &amp;range_state, DispatchHandler *handler)" -->
+<a class="anchor" name="b3237ed8b27519158493e03e5c5bf674"></a><!-- doxytag: member="Hypertable::RangeServerClient::timeout" ref="b3237ed8b27519158493e03e5c5bf674" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t Hypertable::RangeServerClient::timeout           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00066">66</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="03a9e212acdcb0e63f19ad1a4af7cdac"></a><!-- doxytag: member="Hypertable::RangeServerClient::load_range" ref="03a9e212acdcb0e63f19ad1a4af7cdac" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, const char *transfer_log, const RangeState &amp;range_state, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::load_range           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
@@ -275,7 +324,7 @@ Sets the request timeout.
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range_state</em>, </td>
         </tr>
         <tr>
@@ -307,30 +356,30 @@ Issues a "load range" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00041">41</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00042">42</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f361550e92523eae6f74f47827f9db28"></a><!-- doxytag: member="Hypertable::RangeServerClient::load_range" ref="f361550e92523eae6f74f47827f9db28" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, const char *transfer_log, RangeState &amp;range_state)" -->
+<a class="anchor" name="1d4a92d93102ed90193a5b0313642792"></a><!-- doxytag: member="Hypertable::RangeServerClient::load_range" ref="1d4a92d93102ed90193a5b0313642792" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, const char *transfer_log, const RangeState &amp;range_state)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::load_range           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
@@ -342,7 +391,7 @@ Issues a "load range" request asynchronously.
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range_state</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -367,25 +416,31 @@ Issues a "load range" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00046">46</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00052">52</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="655926bbb021ecdddd260c5d124bfacd"></a><!-- doxytag: member="Hypertable::RangeServerClient::update" ref="655926bbb021ecdddd260c5d124bfacd" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, StaticBuffer &amp;buffer, DispatchHandler *handler)" -->
+<a class="anchor" name="53015362ce032d53b4c8fa84281279d0"></a><!-- doxytag: member="Hypertable::RangeServerClient::update" ref="53015362ce032d53b4c8fa84281279d0" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, uint32_t count, StaticBuffer &amp;buffer, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::update           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -416,30 +471,37 @@ The data argument holds a sequence of key/value pairs. Each key/value pair is en
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>remote address of <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> connection </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>table</em>&nbsp;</td><td>table identifier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>count</em>&nbsp;</td><td>number of key/value pairs in buffer </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>buffer</em>&nbsp;</td><td>buffer holding key/value pairs </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>response handler </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00057">57</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00069">69</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="9d9c52d76cabeb37e1b75c1d2bbd079a"></a><!-- doxytag: member="Hypertable::RangeServerClient::update" ref="9d9c52d76cabeb37e1b75c1d2bbd079a" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, StaticBuffer &amp;buffer)" -->
+<a class="anchor" name="f9ce5e4009bca7e5f465dab99190624a"></a><!-- doxytag: member="Hypertable::RangeServerClient::update" ref="f9ce5e4009bca7e5f465dab99190624a" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, uint32_t count, StaticBuffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::update           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>count</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -464,40 +526,41 @@ The data argument holds a sequence of key/value pairs. Each key/value pair is en
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>remote address of <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> connection </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>table</em>&nbsp;</td><td>table identifier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>count</em>&nbsp;</td><td>number of key/value pairs in buffer </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>buffer</em>&nbsp;</td><td>buffer holding key/value pairs </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00063">63</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00078">78</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="c4e3a137fa5672922441facf83ea4f3d"></a><!-- doxytag: member="Hypertable::RangeServerClient::create_scanner" ref="c4e3a137fa5672922441facf83ea4f3d" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, ScanSpec &amp;scan_spec, DispatchHandler *handler)" -->
+<a class="anchor" name="8246d9a63354942ae9713bed48a4313b"></a><!-- doxytag: member="Hypertable::RangeServerClient::create_scanner" ref="8246d9a63354942ae9713bed48a4313b" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, const ScanSpec &amp;scan_spec, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::create_scanner           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>scan_spec</em>, </td>
         </tr>
         <tr>
@@ -528,36 +591,36 @@ Issues a "create scanner" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00075">75</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00095">95</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="bbc591c22b2d24d2e2d3f147bfb2ab00"></a><!-- doxytag: member="Hypertable::RangeServerClient::create_scanner" ref="bbc591c22b2d24d2e2d3f147bfb2ab00" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, ScanSpec &amp;scan_spec, ScanBlock &amp;scan_block)" -->
+<a class="anchor" name="afe602741bacdde94538970be63eda4b"></a><!-- doxytag: member="Hypertable::RangeServerClient::create_scanner" ref="afe602741bacdde94538970be63eda4b" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, const ScanSpec &amp;scan_spec, ScanBlock &amp;scan_block)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::create_scanner           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>scan_spec</em>, </td>
         </tr>
         <tr>
@@ -588,18 +651,18 @@ Issues a "create scanner" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00081">81</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00105">105</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="606f4ab33eee9ef879b640da5dedb016"></a><!-- doxytag: member="Hypertable::RangeServerClient::destroy_scanner" ref="606f4ab33eee9ef879b640da5dedb016" args="(struct sockaddr_in &amp;addr, int scanner_id, DispatchHandler *handler)" -->
+<a class="anchor" name="58ee58507049573c1a5dd0e0a35d7590"></a><!-- doxytag: member="Hypertable::RangeServerClient::destroy_scanner" ref="58ee58507049573c1a5dd0e0a35d7590" args="(const sockaddr_in &amp;addr, int scanner_id, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::destroy_scanner           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -634,18 +697,18 @@ Issues a "destroy scanner" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00095">95</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00125">125</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="645362c217eb9986dab133f80a0309ba"></a><!-- doxytag: member="Hypertable::RangeServerClient::destroy_scanner" ref="645362c217eb9986dab133f80a0309ba" args="(struct sockaddr_in &amp;addr, int scanner_id)" -->
+<a class="anchor" name="54935c43fa004bcae51e0a4c922179f8"></a><!-- doxytag: member="Hypertable::RangeServerClient::destroy_scanner" ref="54935c43fa004bcae51e0a4c922179f8" args="(const sockaddr_in &amp;addr, int scanner_id)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::destroy_scanner           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -673,18 +736,18 @@ Issues a "destroy scanner" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00101">101</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00134">134</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="1b6fff8d8dc8bf2f2819f0c956aa2fda"></a><!-- doxytag: member="Hypertable::RangeServerClient::fetch_scanblock" ref="1b6fff8d8dc8bf2f2819f0c956aa2fda" args="(struct sockaddr_in &amp;addr, int scanner_id, DispatchHandler *handler)" -->
+<a class="anchor" name="423bb06949c263d13262bdbba21b01ac"></a><!-- doxytag: member="Hypertable::RangeServerClient::fetch_scanblock" ref="423bb06949c263d13262bdbba21b01ac" args="(const sockaddr_in &amp;addr, int scanner_id, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::fetch_scanblock           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -719,18 +782,18 @@ Issues a "fetch scanblock" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00112">112</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00149">149</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="28bdc2ff484cc8c3cb7bc7700ccfdce7"></a><!-- doxytag: member="Hypertable::RangeServerClient::fetch_scanblock" ref="28bdc2ff484cc8c3cb7bc7700ccfdce7" args="(struct sockaddr_in &amp;addr, int scanner_id, ScanBlock &amp;scan_block)" -->
+<a class="anchor" name="f3040ddd6f21c931637f530ab9d29e1d"></a><!-- doxytag: member="Hypertable::RangeServerClient::fetch_scanblock" ref="f3040ddd6f21c931637f530ab9d29e1d" args="(const sockaddr_in &amp;addr, int scanner_id, ScanBlock &amp;scan_block)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::fetch_scanblock           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -765,24 +828,24 @@ Issues a "fetch scanblock" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00118">118</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00158">158</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="9ece5d9f406405edf1821cd3eff86dc9"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_table" ref="9ece5d9f406405edf1821cd3eff86dc9" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, DispatchHandler *handler)" -->
+<a class="anchor" name="a01720645b83d58c04dc0dd2ff45bcf0"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_table" ref="a01720645b83d58c04dc0dd2ff45bcf0" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::drop_table           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
@@ -811,24 +874,24 @@ Issues a "drop table" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00132">132</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00178">178</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="01a35a21b1cc282f21303b543cf807e6"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_table" ref="01a35a21b1cc282f21303b543cf807e6" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table)" -->
+<a class="anchor" name="b635fa6ad9e704741a219b658e7c03d2"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_table" ref="b635fa6ad9e704741a219b658e7c03d2" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::drop_table           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -850,18 +913,18 @@ Issues a "drop table" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00138">138</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00186">186</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="0e0d6b4ced314e6fd9a61b22682810c6"></a><!-- doxytag: member="Hypertable::RangeServerClient::status" ref="0e0d6b4ced314e6fd9a61b22682810c6" args="(struct sockaddr_in &amp;addr)" -->
+<a class="anchor" name="fd7f99b73916b572970d894da87ceb48"></a><!-- doxytag: member="Hypertable::RangeServerClient::status" ref="fd7f99b73916b572970d894da87ceb48" args="(const sockaddr_in &amp;addr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::status           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -880,18 +943,18 @@ This call blocks until it receives a response from the server.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00149">149</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00200">200</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5dc208e147d2fdf8157b818f32997e8b"></a><!-- doxytag: member="Hypertable::RangeServerClient::shutdown" ref="5dc208e147d2fdf8157b818f32997e8b" args="(struct sockaddr_in &amp;addr)" -->
+<a class="anchor" name="987ccdb32cf5d1c617b16488a26be075"></a><!-- doxytag: member="Hypertable::RangeServerClient::shutdown" ref="987ccdb32cf5d1c617b16488a26be075" args="(const sockaddr_in &amp;addr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::shutdown           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -910,18 +973,18 @@ This call blocks until it receives a response from the server or times out.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00159">159</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00212">212</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="8876ce2d5aff1232d3feffcc5eb92451"></a><!-- doxytag: member="Hypertable::RangeServerClient::dump_stats" ref="8876ce2d5aff1232d3feffcc5eb92451" args="(struct sockaddr_in &amp;addr)" -->
+<a class="anchor" name="9d68d349b4930e1297f4a52682580c8c"></a><!-- doxytag: member="Hypertable::RangeServerClient::dump_stats" ref="9d68d349b4930e1297f4a52682580c8c" args="(const sockaddr_in &amp;addr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::dump_stats           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -932,18 +995,58 @@ This call blocks until it receives a response from the server or times out.<p>
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00164">164</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00217">217</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="aec97c648fdcdd7584685dbd49117d6e"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_begin" ref="aec97c648fdcdd7584685dbd49117d6e" args="(struct sockaddr_in &amp;addr, uint16_t group, DispatchHandler *handler)" -->
+<a class="anchor" name="476ade7788fe059691a84f54785879ee"></a><!-- doxytag: member="Hypertable::RangeServerClient::get_statistics" ref="476ade7788fe059691a84f54785879ee" args="(const sockaddr_in &amp;addr, RangeServerStat &amp;stat)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RangeServerClient::get_statistics           </td>
+          <td>(</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_server_stat.html">RangeServerStat</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>stat</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Issues a "get_statistics" request. 
+<p>
+This call blocks until it receives a response from the server or times out.<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>remote address of <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>stat</em>&nbsp;</td><td>reference to statistics object result </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00230">230</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1fa2eff3b4a9a6e76c0d81b42641fcc5"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_begin" ref="1fa2eff3b4a9a6e76c0d81b42641fcc5" args="(const sockaddr_in &amp;addr, uint16_t group, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::replay_begin           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -978,37 +1081,37 @@ Issues a "replay begin" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00175">175</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00249">249</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="483da3f6edd0d65f45c34a59c153ae91"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_load_range" ref="483da3f6edd0d65f45c34a59c153ae91" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, RangeState &amp;range_state, DispatchHandler *handler)" -->
+<a class="anchor" name="cda1750d67cb883dc693822037e3de13"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_load_range" ref="cda1750d67cb883dc693822037e3de13" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, const RangeState &amp;state, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::replay_load_range           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>range_state</em>, </td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>state</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -1033,23 +1136,23 @@ Issues a "replay load range" request.
     <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>remote address of <a class="el" href="class_hypertable_1_1_range_server.html">RangeServer</a> connection </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>table</em>&nbsp;</td><td>table identifier </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>range specification </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>range_state</em>&nbsp;</td><td>range state object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>state</em>&nbsp;</td><td>range state object </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>handler</em>&nbsp;</td><td>response handler </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00180">180</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00256">256</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="1b33c19afa2b06089feaece373e40bc6"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_update" ref="1b33c19afa2b06089feaece373e40bc6" args="(struct sockaddr_in &amp;addr, StaticBuffer &amp;buffer, DispatchHandler *handler)" -->
+<a class="anchor" name="30fe415accc05f545a5ddb856b86cf42"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_update" ref="30fe415accc05f545a5ddb856b86cf42" args="(const sockaddr_in &amp;addr, StaticBuffer &amp;buffer, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::replay_update           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -1084,18 +1187,18 @@ Issues a "replay update" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00186">186</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00265">265</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2dd6a8cb70d2eab11fcaa209978556ad"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_commit" ref="2dd6a8cb70d2eab11fcaa209978556ad" args="(struct sockaddr_in &amp;addr, DispatchHandler *handler)" -->
+<a class="anchor" name="a064b3f5899e502c221f083233ab0267"></a><!-- doxytag: member="Hypertable::RangeServerClient::replay_commit" ref="a064b3f5899e502c221f083233ab0267" args="(const sockaddr_in &amp;addr, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::replay_commit           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
@@ -1123,30 +1226,30 @@ Issues a "replay commit" request.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00192">192</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00273">273</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e51e6f7672ea3d8420d43a9f379a1b55"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_range" ref="e51e6f7672ea3d8420d43a9f379a1b55" args="(struct sockaddr_in &amp;addr, TableIdentifier &amp;table, RangeSpec &amp;range, DispatchHandler *handler)" -->
+<a class="anchor" name="0a85b200361f13a3dc1ef7f084df7666"></a><!-- doxytag: member="Hypertable::RangeServerClient::drop_range" ref="0a85b200361f13a3dc1ef7f084df7666" args="(const sockaddr_in &amp;addr, const TableIdentifier &amp;table, const RangeSpec &amp;range, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::drop_range           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
@@ -1176,24 +1279,24 @@ Issues a "load range" request asynchronously.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00198">198</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00281">281</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b207b17dc6aeb0cb09d4db68398b6224"></a><!-- doxytag: member="Hypertable::RangeServerClient::send_message" ref="b207b17dc6aeb0cb09d4db68398b6224" args="(struct sockaddr_in &amp;addr, CommBufPtr &amp;cbp, DispatchHandler *handler)" -->
+<a class="anchor" name="37c2241e3cc1b3861a96cab1a3ac9603"></a><!-- doxytag: member="Hypertable::RangeServerClient::send_message" ref="37c2241e3cc1b3861a96cab1a3ac9603" args="(const sockaddr_in &amp;addr, CommBufPtr &amp;cbp, DispatchHandler *handler)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void RangeServerClient::send_message           </td>
           <td>(</td>
-          <td class="paramtype">struct sockaddr_in &amp;&nbsp;</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
           <td class="paramname"> <em>addr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>cbp</em>, </td>
         </tr>
         <tr>
@@ -1213,7 +1316,7 @@ Issues a "load range" request asynchronously.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00208">208</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8cc-source.html#l00290">290</a> of file <a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1231,16 +1334,16 @@ Issues a "load range" request asynchronously.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00233">233</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00271">271</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="07ac545c38454578850960939e5caadb"></a><!-- doxytag: member="Hypertable::RangeServerClient::m_default_timeout" ref="07ac545c38454578850960939e5caadb" args="" -->
+<a class="anchor" name="668efd5bbe084479f9058af3ae058ea1"></a><!-- doxytag: member="Hypertable::RangeServerClient::m_default_timeout_ms" ref="668efd5bbe084479f9058af3ae058ea1" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">time_t <a class="el" href="class_hypertable_1_1_range_server_client.html#07ac545c38454578850960939e5caadb">Hypertable::RangeServerClient::m_default_timeout</a><code> [private]</code>          </td>
+          <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_range_server_client.html#668efd5bbe084479f9058af3ae058ea1">Hypertable::RangeServerClient::m_default_timeout_ms</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1248,16 +1351,16 @@ Issues a "load range" request asynchronously.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00234">234</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00272">272</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e9e594e910fbd2937145b8233a22312d"></a><!-- doxytag: member="Hypertable::RangeServerClient::m_timeout" ref="e9e594e910fbd2937145b8233a22312d" args="" -->
+<a class="anchor" name="ebe48b3bdb429854f0e16439c039b37d"></a><!-- doxytag: member="Hypertable::RangeServerClient::m_timeout_ms" ref="ebe48b3bdb429854f0e16439c039b37d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">time_t <a class="el" href="class_hypertable_1_1_range_server_client.html#e9e594e910fbd2937145b8233a22312d">Hypertable::RangeServerClient::m_timeout</a><code> [private]</code>          </td>
+          <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_range_server_client.html#ebe48b3bdb429854f0e16439c039b37d">Hypertable::RangeServerClient::m_timeout_ms</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1265,13 +1368,13 @@ Issues a "load range" request asynchronously.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00235">235</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_client_8h-source.html#l00273">273</a> of file <a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_client_8h-source.html">RangeServerClient.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_client_8cc-source.html">RangeServerClient.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:18 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:02 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

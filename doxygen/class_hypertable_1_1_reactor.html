@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::Reactor:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_reactor__coll__graph.png" border="0" usemap="#_hypertable_1_1_reactor__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_reactor__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="69,96,261,123"><area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="68,174,263,200"><area shape="rect" href="class_hypertable_1_1_i_o_handler.html" title="Hypertable::IOHandler" alt="" coords="287,174,444,200"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="129,6,201,32"><area shape="rect" href="class_hypertable_1_1_request_cache.html" title="Hypertable::RequestCache" alt="" coords="77,376,261,403"><area shape="rect" href="struct_hypertable_1_1_request_cache_1_1_cache_node.html" title="Hypertable::RequestCache::CacheNode" alt="" coords="68,267,332,294"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="57,96,249,123"><area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="56,219,251,245"><area shape="rect" href="class_hypertable_1_1_i_o_handler.html" title="Hypertable::IOHandler" alt="" coords="275,219,432,245"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="117,5,189,32"><area shape="rect" href="class_hypertable_1_1_request_cache.html" title="Hypertable::RequestCache" alt="" coords="76,421,260,448"><area shape="rect" href="struct_hypertable_1_1_request_cache_1_1_cache_node.html" title="Hypertable::RequestCache::CacheNode" alt="" coords="56,312,320,339"><area shape="rect" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address." alt="" coords="280,96,427,123"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="284,421,415,448"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -73,16 +73,20 @@ Collaboration diagram for Hypertable::Reactor:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">WRITE_READY</a> = 0x02</td></tr>
 
-<tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a></td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_request_cache.html">RequestCache</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a></td></tr>
-
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::priority_queue<br>
+<tr><td colspan="2"><br><h2>Protected Types</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
+std::priority_queue<br>
 &lt; <a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>,<br>
  std::vector<br>
 &lt; <a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &gt;,<br>
- <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a></td></tr>
+ <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">TimerHeap</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_request_cache.html">RequestCache</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">TimerHeap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#8bdd3301522ad33944c481916ab7f4bb">m_timer_heap</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a></td></tr>
 
@@ -98,7 +102,25 @@ Collaboration diagram for Hypertable::Reactor:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00038">38</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00039">39</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<hr><h2>Member Typedef Documentation</h2>
+<a class="anchor" name="24788e17ef246477c002f21a0772137d"></a><!-- doxytag: member="Hypertable::Reactor::TimerHeap" ref="24788e17ef246477c002f21a0772137d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::priority_queue&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>, std::vector&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>&gt;, <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a>&gt; <a class="el" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">Hypertable::Reactor::TimerHeap</a><code> [protected]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00105">105</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="238368d4aa751762a4173839c689c858"></a><!-- doxytag: member="Hypertable::Reactor::Reactor" ref="238368d4aa751762a4173839c689c858" args="()" -->
 <div class="memitem">
@@ -140,7 +162,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00048">48</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00049">49</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -203,7 +225,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00054">54</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00055">55</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -225,7 +247,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00063">63</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00065">65</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -247,7 +269,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00068">68</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00070">70</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -269,7 +291,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00073">73</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00075">75</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -291,7 +313,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00079">79</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00081">81</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -313,7 +335,7 @@ The following logic creates a UDP socket that is used to interrupt epoll_wait so
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00084">84</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00086">86</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -358,7 +380,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00206">206</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00210">210</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -379,7 +401,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00264">264</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8cc-source.html#l00268">268</a> of file <a class="el" href="_reactor_8cc-source.html">Reactor.cc</a>.</p>
 
 </div>
 </div><p>
@@ -397,7 +419,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00040">40</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00041">41</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -415,7 +437,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00044">44</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00045">45</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -432,16 +454,16 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00045">45</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00046">46</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="0d29a00efe1fd868baf4218cce4aa072"></a><!-- doxytag: member="Hypertable::Reactor::m_mutex" ref="0d29a00efe1fd868baf4218cce4aa072" args="" -->
+<a class="anchor" name="f0aacffd3a434ebe3b8e8c9854371df2"></a><!-- doxytag: member="Hypertable::Reactor::m_mutex" ref="f0aacffd3a434ebe3b8e8c9854371df2" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boost::mutex <a class="el" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">Hypertable::Reactor::m_mutex</a><code> [protected]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> <a class="el" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">Hypertable::Reactor::m_mutex</a><code> [protected]</code>          </td>
         </tr>
       </table>
 </div>
@@ -449,7 +471,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00102">102</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00107">107</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -466,16 +488,16 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00103">103</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00108">108</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="190bc07c7b97a49f8bdfc7f000eafd27"></a><!-- doxytag: member="Hypertable::Reactor::m_timer_heap" ref="190bc07c7b97a49f8bdfc7f000eafd27" args="" -->
+<a class="anchor" name="8bdd3301522ad33944c481916ab7f4bb"></a><!-- doxytag: member="Hypertable::Reactor::m_timer_heap" ref="8bdd3301522ad33944c481916ab7f4bb" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::priority_queue&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>, std::vector&lt;<a class="el" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a>&gt;, <a class="el" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a>&gt; <a class="el" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">Hypertable::Reactor::m_timer_heap</a><code> [protected]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">TimerHeap</a> <a class="el" href="class_hypertable_1_1_reactor.html#8bdd3301522ad33944c481916ab7f4bb">Hypertable::Reactor::m_timer_heap</a><code> [protected]</code>          </td>
         </tr>
       </table>
 </div>
@@ -483,7 +505,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00104">104</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00109">109</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -500,7 +522,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00105">105</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00110">110</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -517,7 +539,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00106">106</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00111">111</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -534,7 +556,7 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00107">107</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00112">112</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
@@ -551,13 +573,13 @@ Deliver timer events
 
 <p>
 
-<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00108">108</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
+<p>Definition at line <a class="el" href="_reactor_8h-source.html#l00113">113</a> of file <a class="el" href="_reactor_8h-source.html">Reactor.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_8h-source.html">Reactor.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_reactor_8cc-source.html">Reactor.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:04 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:46 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

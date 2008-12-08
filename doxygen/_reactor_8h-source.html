@@ -25,93 +25,98 @@
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/thread/thread.hpp&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00031"></a>00031 
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_poll_timeout_8h.html">PollTimeout.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_request_cache_8h.html">RequestCache.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_expire_timer_8h.html">ExpireTimer.h</a>"</span>
-<a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hypertable {
-<a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="class_hypertable_1_1_reactor.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_reactor.html">Reactor</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_reactor.html#8d3498cce4737f60e7a9353ceddacd3c">00040</a>     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_reactor_factory.html" title="This class is a static class that is used to setup and manage I/O reactors.">ReactorFactory</a>;
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042   <span class="keyword">public</span>:
-<a name="l00043"></a>00043 
-<a name="l00044"></a><a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">00044</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">READ_READY</a>;
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">00045</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">WRITE_READY</a>;
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047     <a class="code" href="class_hypertable_1_1_reactor.html#238368d4aa751762a4173839c689c858">Reactor</a>();
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_reactor.html#e46b8cca501e80b8574ce2296a7b0a8d">00048</a>     <a class="code" href="class_hypertable_1_1_reactor.html#e46b8cca501e80b8574ce2296a7b0a8d">~Reactor</a>() {
-<a name="l00049"></a>00049       <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
-<a name="l00050"></a>00050     }
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#ff5df733af840b154b70d4e84a44e7a9">operator()</a>();
-<a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_reactor.html#4c97bbaaaf3547150731a90958c4dbf5">00054</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#4c97bbaaaf3547150731a90958c4dbf5">add_request</a>(uint32_t <span class="keywordtype">id</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh, boost::xtime &amp;expire) {
-<a name="l00055"></a>00055       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00056"></a>00056       boost::xtime now;
-<a name="l00057"></a>00057       <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#b12e0bac5aaee130481890ce0cf5ac00">insert</a>(<span class="keywordtype">id</span>, handler, dh, expire);
-<a name="l00058"></a>00058       boost::xtime_get(&amp;now, boost::TIME_UTC);
-<a name="l00059"></a>00059       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>.sec == 0 || xtime_cmp(expire, <a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>) &lt; 0)
-<a name="l00060"></a>00060         <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
-<a name="l00061"></a>00061     }
-<a name="l00062"></a>00062 
-<a name="l00063"></a><a class="code" href="class_hypertable_1_1_reactor.html#f6a9388202122d7805a850a6fa2b8ea0">00063</a>     <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *<a class="code" href="class_hypertable_1_1_reactor.html#f6a9388202122d7805a850a6fa2b8ea0">remove_request</a>(uint32_t <span class="keywordtype">id</span>) {
-<a name="l00064"></a>00064       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00065"></a>00065       <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#2a279f351ddbe342ef8df572b263626c">remove</a>(<span class="keywordtype">id</span>);
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067 
-<a name="l00068"></a><a class="code" href="class_hypertable_1_1_reactor.html#45426b231e3e1f1aed2618cf35fbb50e">00068</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#45426b231e3e1f1aed2618cf35fbb50e">cancel_requests</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler) {
-<a name="l00069"></a>00069       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00070"></a>00070       <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#e91d7094a286801c4694372072f600af">purge_requests</a>(handler);
-<a name="l00071"></a>00071     }
-<a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="class_hypertable_1_1_reactor.html#0136dd00c4325e8b986c1a5d91cd9775">00073</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#0136dd00c4325e8b986c1a5d91cd9775">add_timer</a>(<a class="code" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &amp;timer) {
-<a name="l00074"></a>00074       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00075"></a>00075       <a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>.push(timer);
-<a name="l00076"></a>00076       <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
-<a name="l00077"></a>00077     }
-<a name="l00078"></a>00078 
-<a name="l00079"></a><a class="code" href="class_hypertable_1_1_reactor.html#f4f4bd49dafce3a0cb5f494368f68a88">00079</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#f4f4bd49dafce3a0cb5f494368f68a88">schedule_removal</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler) {
-<a name="l00080"></a>00080       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00081"></a>00081       <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>.insert(handler);
-<a name="l00082"></a>00082     }
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="class_hypertable_1_1_reactor.html#c0ff73f3326ba8dbd6c6e48bbacd2f13">00084</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#c0ff73f3326ba8dbd6c6e48bbacd2f13">get_removed_handlers</a>(std::set&lt;IOHandler *&gt; &amp;<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>) {
-<a name="l00085"></a>00085       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>);
-<a name="l00086"></a>00086       dst = <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>;
-<a name="l00087"></a>00087       <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>.clear();
-<a name="l00088"></a>00088     }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#d05df16fbcad0de291af683834efed1f">handle_timeouts</a>(<a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;next_timeout);
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Common/Mutex.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_poll_timeout_8h.html">PollTimeout.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_request_cache_8h.html">RequestCache.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_expire_timer_8h.html">ExpireTimer.h</a>"</span>
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">namespace </span>Hypertable {
+<a name="l00038"></a>00038 
+<a name="l00039"></a><a class="code" href="class_hypertable_1_1_reactor.html">00039</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_reactor.html">Reactor</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="class_hypertable_1_1_reactor.html#8d3498cce4737f60e7a9353ceddacd3c">00041</a>     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_reactor_factory.html" title="This class is a static class that is used to setup and manage I/O reactors.">ReactorFactory</a>;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043   <span class="keyword">public</span>:
+<a name="l00044"></a>00044 
+<a name="l00045"></a><a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">00045</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_reactor.html#683a0539dfc4e366e9345e4864a1ac26">READ_READY</a>;
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">00046</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_reactor.html#ad4c8317dacebb6bd458deb33f07e47c">WRITE_READY</a>;
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048     <a class="code" href="class_hypertable_1_1_reactor.html#238368d4aa751762a4173839c689c858">Reactor</a>();
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_reactor.html#e46b8cca501e80b8574ce2296a7b0a8d">00049</a>     <a class="code" href="class_hypertable_1_1_reactor.html#e46b8cca501e80b8574ce2296a7b0a8d">~Reactor</a>() {
+<a name="l00050"></a>00050       <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
+<a name="l00051"></a>00051     }
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#ff5df733af840b154b70d4e84a44e7a9">operator()</a>();
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_reactor.html#4c97bbaaaf3547150731a90958c4dbf5">00055</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#4c97bbaaaf3547150731a90958c4dbf5">add_request</a>(uint32_t <span class="keywordtype">id</span>, <a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *dh,
+<a name="l00056"></a>00056                      boost::xtime &amp;expire) {
+<a name="l00057"></a>00057       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00058"></a>00058       boost::xtime now;
+<a name="l00059"></a>00059       <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#b12e0bac5aaee130481890ce0cf5ac00">insert</a>(<span class="keywordtype">id</span>, handler, dh, expire);
+<a name="l00060"></a>00060       boost::xtime_get(&amp;now, boost::TIME_UTC);
+<a name="l00061"></a>00061       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>.sec == 0 || xtime_cmp(expire, <a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>) &lt; 0)
+<a name="l00062"></a>00062         <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
+<a name="l00063"></a>00063     }
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="class_hypertable_1_1_reactor.html#f6a9388202122d7805a850a6fa2b8ea0">00065</a>     <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *<a class="code" href="class_hypertable_1_1_reactor.html#f6a9388202122d7805a850a6fa2b8ea0">remove_request</a>(uint32_t <span class="keywordtype">id</span>) {
+<a name="l00066"></a>00066       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00067"></a>00067       <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#2a279f351ddbe342ef8df572b263626c">remove</a>(<span class="keywordtype">id</span>);
+<a name="l00068"></a>00068     }
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="class_hypertable_1_1_reactor.html#45426b231e3e1f1aed2618cf35fbb50e">00070</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#45426b231e3e1f1aed2618cf35fbb50e">cancel_requests</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler) {
+<a name="l00071"></a>00071       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00072"></a>00072       <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>.<a class="code" href="class_hypertable_1_1_request_cache.html#e91d7094a286801c4694372072f600af">purge_requests</a>(handler);
+<a name="l00073"></a>00073     }
+<a name="l00074"></a>00074 
+<a name="l00075"></a><a class="code" href="class_hypertable_1_1_reactor.html#0136dd00c4325e8b986c1a5d91cd9775">00075</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#0136dd00c4325e8b986c1a5d91cd9775">add_timer</a>(<a class="code" href="struct_hypertable_1_1_expire_timer.html">ExpireTimer</a> &amp;timer) {
+<a name="l00076"></a>00076       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00077"></a>00077       <a class="code" href="class_hypertable_1_1_reactor.html#8bdd3301522ad33944c481916ab7f4bb">m_timer_heap</a>.push(timer);
+<a name="l00078"></a>00078       <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
+<a name="l00079"></a>00079     }
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_reactor.html#f4f4bd49dafce3a0cb5f494368f68a88">00081</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#f4f4bd49dafce3a0cb5f494368f68a88">schedule_removal</a>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler) {
+<a name="l00082"></a>00082       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00083"></a>00083       <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>.insert(handler);
+<a name="l00084"></a>00084     }
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="class_hypertable_1_1_reactor.html#c0ff73f3326ba8dbd6c6e48bbacd2f13">00086</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#c0ff73f3326ba8dbd6c6e48bbacd2f13">get_removed_handlers</a>(std::set&lt;IOHandler *&gt; &amp;<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>) {
+<a name="l00087"></a>00087       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>);
+<a name="l00088"></a>00088       dst = <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>;
+<a name="l00089"></a>00089       <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>.clear();
+<a name="l00090"></a>00090     }
 <a name="l00091"></a>00091 
-<a name="l00092"></a>00092 <span class="preprocessor">#if defined(__linux__)</span>
-<a name="l00093"></a>00093 <span class="preprocessor"></span>    <span class="keywordtype">int</span> poll_fd;
-<a name="l00094"></a>00094 <span class="preprocessor">#elif defined (__APPLE__)</span>
-<a name="l00095"></a>00095 <span class="preprocessor"></span>    <span class="keywordtype">int</span> kqd;
-<a name="l00096"></a>00096 <span class="preprocessor">#endif</span>
-<a name="l00097"></a>00097 <span class="preprocessor"></span>
-<a name="l00098"></a>00098     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
-<a name="l00099"></a>00099     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">poll_loop_continue</a>();
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <span class="keyword">protected</span>:
-<a name="l00102"></a><a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">00102</a>     boost::mutex    <a class="code" href="class_hypertable_1_1_reactor.html#0d29a00efe1fd868baf4218cce4aa072">m_mutex</a>;
-<a name="l00103"></a><a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">00103</a>     <a class="code" href="class_hypertable_1_1_request_cache.html">RequestCache</a>    <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>;
-<a name="l00104"></a><a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">00104</a>     std::priority_queue&lt;ExpireTimer, std::vector&lt;ExpireTimer&gt;, <a class="code" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a>&gt; <a class="code" href="class_hypertable_1_1_reactor.html#190bc07c7b97a49f8bdfc7f000eafd27">m_timer_heap</a>;
-<a name="l00105"></a><a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">00105</a>     <span class="keywordtype">int</span>             <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>;
-<a name="l00106"></a><a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">00106</a>     <span class="keywordtype">bool</span>            <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a>;
-<a name="l00107"></a><a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">00107</a>     boost::xtime    <a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>;
-<a name="l00108"></a><a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">00108</a>     std::set&lt;IOHandler *&gt; <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>;
-<a name="l00109"></a>00109   };
-<a name="l00110"></a><a class="code" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">00110</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;Reactor&gt; <a class="code" href="namespace_hypertable.html#1c1bcf7a96ef03089e5c127efdbedc0d">ReactorPtr</a>;
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif // HYPERTABLE_REACTOR_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00092"></a>00092     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#d05df16fbcad0de291af683834efed1f">handle_timeouts</a>(<a class="code" href="class_hypertable_1_1_poll_timeout.html">PollTimeout</a> &amp;next_timeout);
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094 <span class="preprocessor">#if defined(__linux__)</span>
+<a name="l00095"></a>00095 <span class="preprocessor"></span>    <span class="keywordtype">int</span> poll_fd;
+<a name="l00096"></a>00096 <span class="preprocessor">#elif defined (__APPLE__)</span>
+<a name="l00097"></a>00097 <span class="preprocessor"></span>    <span class="keywordtype">int</span> kqd;
+<a name="l00098"></a>00098 <span class="preprocessor">#endif</span>
+<a name="l00099"></a>00099 <span class="preprocessor"></span>
+<a name="l00100"></a>00100     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#863ec1e1bc7e48458fea7fec21fa4dac">poll_loop_interrupt</a>();
+<a name="l00101"></a>00101     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_reactor.html#3ccef7f4f83c1f7c5c0545313b500b48">poll_loop_continue</a>();
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103   <span class="keyword">protected</span>:
+<a name="l00104"></a>00104     <span class="keyword">typedef</span> std::priority_queue&lt;ExpireTimer, std::vector&lt;ExpireTimer&gt;, <a class="code" href="struct_hypertable_1_1_lt_timer.html">LtTimer</a>&gt;
+<a name="l00105"></a><a class="code" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">00105</a>             <a class="code" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">TimerHeap</a>;
+<a name="l00106"></a>00106 
+<a name="l00107"></a><a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">00107</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>           <a class="code" href="class_hypertable_1_1_reactor.html#f0aacffd3a434ebe3b8e8c9854371df2">m_mutex</a>;
+<a name="l00108"></a><a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">00108</a>     <a class="code" href="class_hypertable_1_1_request_cache.html">RequestCache</a>    <a class="code" href="class_hypertable_1_1_reactor.html#fb5833b35dd27294b4db2c6bb5b90257">m_request_cache</a>;
+<a name="l00109"></a><a class="code" href="class_hypertable_1_1_reactor.html#8bdd3301522ad33944c481916ab7f4bb">00109</a>     <a class="code" href="class_hypertable_1_1_reactor.html#24788e17ef246477c002f21a0772137d">TimerHeap</a>       <a class="code" href="class_hypertable_1_1_reactor.html#8bdd3301522ad33944c481916ab7f4bb">m_timer_heap</a>;
+<a name="l00110"></a><a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">00110</a>     <span class="keywordtype">int</span>             <a class="code" href="class_hypertable_1_1_reactor.html#62d2d119f79e91a9649e1ce1c55ba916">m_interrupt_sd</a>;
+<a name="l00111"></a><a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">00111</a>     <span class="keywordtype">bool</span>            <a class="code" href="class_hypertable_1_1_reactor.html#e08a52c9fe3091d67bbe0a558952faa0">m_interrupt_in_progress</a>;
+<a name="l00112"></a><a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">00112</a>     boost::xtime    <a class="code" href="class_hypertable_1_1_reactor.html#91216237f1cc81d6295a9533f60f8fd1">m_next_wakeup</a>;
+<a name="l00113"></a><a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">00113</a>     std::set&lt;IOHandler *&gt; <a class="code" href="class_hypertable_1_1_reactor.html#fb25579f1ed518c2f672f82eb53cb349">m_removed_handlers</a>;
+<a name="l00114"></a>00114   };
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="namespace_hypertable.html#80c238d30384e96d59799dde4b231cd2">00116</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;Reactor&gt; <a class="code" href="namespace_hypertable.html#80c238d30384e96d59799dde4b231cd2">ReactorPtr</a>;
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118 } <span class="comment">// namespace Hypertable</span>
+<a name="l00119"></a>00119 
+<a name="l00120"></a>00120 <span class="preprocessor">#endif // HYPERTABLE_REACTOR_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

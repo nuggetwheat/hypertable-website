@@ -28,7 +28,9 @@
 <code>#include &lt;sys/stat.h&gt;</code><br>
 <code>#include &lt;sys/xattr.h&gt;</code><br>
 <code>#include &lt;unistd.h&gt;</code><br>
+<code>#include &quot;<a class="el" href="_mutex_8h-source.html">Common/Mutex.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_error_8h-source.html">Common/Error.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_common_2_filesystem_8h-source.html">Common/Filesystem.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_file_utils_8h-source.html">Common/FileUtils.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_string_ext_8h-source.html">Common/StringExt.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_system_8h-source.html">Common/System.h</a>&quot;</code><br>
@@ -46,7 +48,7 @@ Include dependency graph for Master.cc:</div>
 <div class="dynsection">
 <p><center><img src="_hyperspace_2_master_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Hyperspace/Master.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Hyperspace/Master.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="320,80,459,107"><area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="421,229,544,256"><area shape="rect" href="_file_utils_8h.html" title="Common/FileUtils.h" alt="" coords="2291,80,2432,107"><area shape="rect" href="_string_ext_8h.html" title="Common/StringExt.h" alt="" coords="1747,229,1893,256"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="149,229,285,256"><area shape="rect" href="_dfs_broker_2_lib_2_client_8h.html" title="DfsBroker/Lib/Client.h" alt="" coords="997,80,1152,107"><area shape="rect" href="_schema_8h.html" title="Hypertable/Lib/Schema.h" alt="" coords="2093,80,2267,107"><area shape="rect" href="_hyperspace_2_event_8h.html" title="Event.h" alt="" coords="1292,304,1359,331"><area shape="rect" href="_notification_8h.html" title="Notification.h" alt="" coords="1917,229,2019,256"><area shape="rect" href="_hyperspace_2_master_8h.html" title="Master.h" alt="" coords="1944,80,2019,107"><area shape="rect" href="_session_data_8h.html" title="SessionData.h" alt="" coords="2224,155,2333,181"><area shape="rect" href="_session_8h.html" title="Session.h" alt="" coords="1567,80,1649,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="309,229,397,256"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="255,155,353,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="524,304,591,331"><area shape="rect" href="_hash_map_8h.html" title="HashMap.h" alt="" coords="1585,304,1676,331"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="1433,304,1561,331"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="1995,155,2149,181"><area shape="rect" href="_comm_8h.html" title="AsyncComm/Comm.h" alt="" coords="1467,229,1621,256"><area shape="rect" href="_dispatch_handler_synchronizer_8h.html" title="AsyncComm/DispatchHandlerSynchronizer.h" alt="" coords="921,304,1217,331"><area shape="rect" href="_connection_manager_8h.html" title="AsyncComm/ConnectionManager.h" alt="" coords="1232,155,1469,181"><area shape="rect" href="_filesystem_8h.html" title="Hypertable/Lib/Filesystem.h" alt="" coords="584,155,773,181"><area shape="rect" href="_client_buffered_reader_handler_8h.html" title="ClientBufferedReaderHandler.h" alt="" coords="669,229,880,256"><area shape="rect" href="_dfs_broker_2_lib_2_protocol_8h.html" title="Protocol.h" alt="" coords="797,155,880,181"><area shape="rect" href="_reference_count_8h.html" title="ReferenceCount.h" alt="" coords="1989,379,2120,405"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="757,121,896,148"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="1828,420,1956,447"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="2777,569,2841,596"><area shape="rect" href="_common_2_filesystem_8h.html" title="Common/Filesystem.h" alt="" coords="1275,121,1432,148"><area shape="rect" href="_file_utils_8h.html" title="Common/FileUtils.h" alt="" coords="592,121,733,148"><area shape="rect" href="_string_ext_8h.html" title="Common/StringExt.h" alt="" coords="2681,196,2828,223"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="859,345,995,372"><area shape="rect" href="_dfs_broker_2_lib_2_client_8h.html" title="DfsBroker/Lib/Client.h" alt="" coords="1507,196,1661,223"><area shape="rect" href="_schema_8h.html" title="Hypertable/Lib/Schema.h" alt="" coords="2484,196,2657,223"><area shape="rect" href="_hyperspace_2_event_8h.html" title="Event.h" alt="" coords="1877,345,1944,372"><area shape="rect" href="_notification_8h.html" title="Notification.h" alt="" coords="1815,271,1916,297"><area shape="rect" href="_hyperspace_2_master_8h.html" title="Master.h" alt="" coords="2101,121,2176,148"><area shape="rect" href="_session_data_8h.html" title="SessionData.h" alt="" coords="2351,196,2460,223"><area shape="rect" href="_session_8h.html" title="Session.h" alt="" coords="2053,196,2136,223"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="636,569,724,596"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="777,196,876,223"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="1196,644,1263,671"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="1980,495,2113,521"><area shape="rect" href="_hash_map_8h.html" title="HashMap.h" alt="" coords="2617,271,2708,297"><area shape="rect" href="_inet_addr_8h.html" title="Common/InetAddr.h" alt="" coords="1267,569,1411,596"><area shape="rect" href="_comm_8h.html" title="AsyncComm/Comm.h" alt="" coords="2019,345,2173,372"><area shape="rect" href="_dispatch_handler_synchronizer_8h.html" title="AsyncComm/DispatchHandlerSynchronizer.h" alt="" coords="1507,345,1803,372"><area shape="rect" href="_connection_manager_8h.html" title="AsyncComm/ConnectionManager.h" alt="" coords="2143,271,2380,297"><area shape="rect" href="_hypertable_2_lib_2_filesystem_8h.html" title="Hypertable/Lib/Filesystem.h" alt="" coords="1171,420,1360,447"><area shape="rect" href="_dfs_broker_2_lib_2_config_8h.html" title="Config.h" alt="" coords="1567,271,1639,297"><area shape="rect" href="_client_buffered_reader_handler_8h.html" title="ClientBufferedReaderHandler.h" alt="" coords="1221,345,1432,372"><area shape="rect" href="_dfs_broker_2_lib_2_protocol_8h.html" title="Protocol.h" alt="" coords="1013,569,1096,596"></map>
 </div>
 
 <p>
@@ -77,7 +79,7 @@ Include dependency graph for Master.cc:</div>
     DbTxn *txn = m_bdb_fs-&gt;start_transaction(); \
     <span class="keywordflow">try</span>
 </pre></div>
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00060">60</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00058">58</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -114,7 +116,7 @@ Include dependency graph for Master.cc:</div>
     <span class="keywordflow">break</span>; \
   } <span class="keywordflow">while</span> (<span class="keyword">true</span>)
 </pre></div>
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00083">83</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00081">81</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -152,11 +154,11 @@ Include dependency graph for Master.cc:</div>
     <span class="keywordflow">break</span>; \
   } <span class="keywordflow">while</span> (<span class="keyword">true</span>)
 </pre></div>
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00065">65</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00063">63</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:03:14 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:33:04 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

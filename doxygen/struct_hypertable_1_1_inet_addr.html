@@ -41,7 +41,13 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#d5709c5ae25106b03f26d5140c3f9158">InetAddr</a> (uint32_t ip32, uint16_t port)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#6e3ed9d85c9c6059bef9a5bd6c16584a">InetAddr</a> (const sockaddr_in &amp;addr)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#02f48dc1c55b4e4ed9039150efabf8cd">operator=</a> (const sockaddr_in &amp;addr)</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#2fb8f62a3e54cf558d93b9914f1a6dc4">format</a> (int sep= ':')</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#6def9faf374f074b40e2a9cf9618f80c">hex</a> (int sep= ':')</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#7fae9a2579f1820a5691b5bf91e75bab">initialize</a> (sockaddr_in *addr, const char *host, uint16_t port)</td></tr>
@@ -55,6 +61,9 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">parse an endpoint string in (host:port) format  <a href="#2444037cf229bb634fae58bde31f993e"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="struct_hypertable_1_1_endpoint.html">Endpoint</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#436a49e18fa57bca83d8cef58a1b18f2">parse_endpoint</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;endpoint, int defport=0)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#6b1fba6ffcfc5b77e1ae3501c4933bf1">parse_ipv4</a> (const char *ip, uint16_t port, sockaddr_in &amp;addr, int <a class="el" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>=0)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Parse an ipv4 address string in n.n.n.n or n format.  <a href="#6b1fba6ffcfc5b77e1ae3501c4933bf1"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#a8b9137946bb4917372657966a7590d4">initialize</a> (sockaddr_in *addr, uint32_t haddr, uint16_t port)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initialize addr from an integer ip address and port.  <a href="#a8b9137946bb4917372657966a7590d4"></a><br></td></tr>
@@ -63,15 +72,14 @@
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Format a socket address.  <a href="#d8f44211e7b89743d7ed4282c6d7f307"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#cadf95bbc83d93a22726f76a94aafd6f">format</a> (const sockaddr_in &amp;addr, int sep= ':')</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#d1cd5bc7bd9213db64115c9943850835">get_hostname</a> (<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;hostname)</td></tr>
-
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the hostname of the current host.  <a href="#d1cd5bc7bd9213db64115c9943850835"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#8e832ec6cc38e2b49942ede2bf068196">get_hostname</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_inet_addr.html#7e00a884dff40e02a8d26867e58df766">hex</a> (const sockaddr_in &amp;addr, int sep= ':')</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Encapsulate an internet address. 
-<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00047">47</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+<p>
+Note, deriving from sockaddr_in is just a path of least resistance and should be changed to aggregation, if we decide to support ipv6 
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00050">50</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="61eca1f37da997aa623174e253d14abe"></a><!-- doxytag: member="Hypertable::InetAddr::InetAddr" ref="61eca1f37da997aa623174e253d14abe" args="()" -->
 <div class="memitem">
@@ -90,7 +98,7 @@ Encapsulate an internet address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00042">42</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00041">41</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -121,7 +129,7 @@ Encapsulate an internet address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00047">47</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00046">46</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -143,7 +151,7 @@ Encapsulate an internet address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00052">52</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00051">51</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -174,11 +182,55 @@ Encapsulate an internet address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00057">57</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00056">56</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6e3ed9d85c9c6059bef9a5bd6c16584a"></a><!-- doxytag: member="Hypertable::InetAddr::InetAddr" ref="6e3ed9d85c9c6059bef9a5bd6c16584a" args="(const sockaddr_in &amp;addr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::InetAddr::InetAddr           </td>
+          <td>(</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00055">55</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="02f48dc1c55b4e4ed9039150efabf8cd"></a><!-- doxytag: member="Hypertable::InetAddr::operator=" ref="02f48dc1c55b4e4ed9039150efabf8cd" args="(const sockaddr_in &amp;addr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a>&amp; Hypertable::InetAddr::operator=           </td>
+          <td>(</td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00057">57</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="2fb8f62a3e54cf558d93b9914f1a6dc4"></a><!-- doxytag: member="Hypertable::InetAddr::format" ref="2fb8f62a3e54cf558d93b9914f1a6dc4" args="(int sep= ':')" -->
 <div class="memitem">
 <div class="memproto">
@@ -197,7 +249,29 @@ Encapsulate an internet address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00053">53</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00064">64</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6def9faf374f074b40e2a9cf9618f80c"></a><!-- doxytag: member="Hypertable::InetAddr::hex" ref="6def9faf374f074b40e2a9cf9618f80c" args="(int sep= ':')" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Hypertable::InetAddr::hex           </td>
+          <td>(</td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>sep</em> = <code>':'</code>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00065">65</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
 
 </div>
 </div><p>
@@ -236,7 +310,7 @@ Encapsulate an internet address.
 Initialize addr from host port. 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00062">62</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00061">61</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -269,7 +343,7 @@ Initialize addr from host port.
 Initialize addr from an endpoint string (host:port). 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00088">88</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00151">151</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -309,7 +383,7 @@ parse an endpoint string in (host:port) format
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="struct_hypertable_1_1_endpoint.html" title="High-level entry point to a service.">Endpoint</a> tuple </dd></dl>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00078">78</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00141">141</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -340,7 +414,61 @@ parse an endpoint string in (host:port) format
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00070">70</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8h-source.html#l00082">82</a> of file <a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6b1fba6ffcfc5b77e1ae3501c4933bf1"></a><!-- doxytag: member="Hypertable::InetAddr::parse_ipv4" ref="6b1fba6ffcfc5b77e1ae3501c4933bf1" args="(const char *ip, uint16_t port, sockaddr_in &amp;addr, int base=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::InetAddr::parse_ipv4           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>ip</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&nbsp;</td>
+          <td class="paramname"> <em>port</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">sockaddr_in &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>base</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Parse an ipv4 address string in n.n.n.n or n format. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>ip</em>&nbsp;</td><td>- ipv4 string </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>port</em>&nbsp;</td><td>- port of the address </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>addr</em>&nbsp;</td><td>- result address </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>base</em>&nbsp;</td><td>- base of the integer representation (default: 0, handle 0x) </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true on success </dd></dl>
+
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00101">101</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -379,7 +507,7 @@ parse an endpoint string in (host:port) format
 Initialize addr from an integer ip address and port. 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00097">97</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00160">160</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -412,7 +540,7 @@ Initialize addr from an integer ip address and port.
 Format a socket address. 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00112">112</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00180">180</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
@@ -443,44 +571,30 @@ Format a socket address.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00105">105</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00168">168</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d1cd5bc7bd9213db64115c9943850835"></a><!-- doxytag: member="Hypertable::InetAddr::get_hostname" ref="d1cd5bc7bd9213db64115c9943850835" args="(String &amp;hostname)" -->
+<a class="anchor" name="7e00a884dff40e02a8d26867e58df766"></a><!-- doxytag: member="Hypertable::InetAddr::hex" ref="7e00a884dff40e02a8d26867e58df766" args="(const sockaddr_in &amp;addr, int sep= ':')" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp; Hypertable::InetAddr::get_hostname           </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Hypertable::InetAddr::hex           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hostname</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [static]</code></td>
+          <td class="paramtype">const sockaddr_in &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
         </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Get the hostname of the current host. 
-<p>
-
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00123">123</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="8e832ec6cc38e2b49942ede2bf068196"></a><!-- doxytag: member="Hypertable::InetAddr::get_hostname" ref="8e832ec6cc38e2b49942ede2bf068196" args="()" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Hypertable::InetAddr::get_hostname           </td>
-          <td>(</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [static]</code></td>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>sep</em> = <code>':'</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
         </tr>
       </table>
 </div>
@@ -488,13 +602,13 @@ Get the hostname of the current host.
 
 <p>
 
-<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00117">117</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
+<p>Definition at line <a class="el" href="_inet_addr_8cc-source.html#l00175">175</a> of file <a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this struct was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_inet_addr_8h-source.html">InetAddr.h</a><li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_inet_addr_8cc-source.html">InetAddr.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:06 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

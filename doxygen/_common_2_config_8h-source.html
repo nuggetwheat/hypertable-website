@@ -20,42 +20,168 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_CONFIG_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_CONFIG_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;boost/program_options.hpp&gt;</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
-<a name="l00029"></a>00029   <span class="keyword">using namespace </span>boost::program_options;
-<a name="l00030"></a><a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">00030</a>   <span class="keyword">typedef</span> options_description <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a>;
-<a name="l00031"></a><a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">00031</a>   <span class="keyword">typedef</span> positional_options_description <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">PositionalDesc</a>;
-<a name="l00032"></a><a class="code" href="namespace_hypertable_1_1_config.html#f1d48da7ff662d70024d29d8bab079c3">00032</a>   <span class="keyword">typedef</span> variables_map <a class="code" href="namespace_hypertable_1_1_config.html#f1d48da7ff662d70024d29d8bab079c3">VarMap</a>;
-<a name="l00033"></a>00033 
-<a name="l00035"></a>00035   <span class="keyword">extern</span> <a class="code" href="namespace_hypertable_1_1_config.html#f1d48da7ff662d70024d29d8bab079c3">VarMap</a> <a class="code" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474" title="stored option variables map singleton">varmap</a>;
-<a name="l00036"></a>00036 
-<a name="l00038"></a>00038   <span class="keyword">extern</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca" title="cfg filename">cfgfile</a>;
-<a name="l00039"></a>00039 
-<a name="l00040"></a>00040   <span class="comment">// Options description accessors</span>
-<a name="l00041"></a>00041   <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name = NULL);
-<a name="l00042"></a>00042   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> &amp;);
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Common/Mutex.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">Common/System.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_meta_8h.html">Common/Meta.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hypertable { <span class="keyword">namespace </span>Config {
+<a name="l00032"></a>00032   <span class="keyword">using namespace </span>Property;
+<a name="l00033"></a><a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">00033</a>   <span class="keyword">typedef</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a>;
+<a name="l00034"></a>00034 
+<a name="l00036"></a>00036   <span class="keyword">extern</span> <a class="code" href="class_hypertable_1_1_rec_mutex.html">RecMutex</a> <a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>;
+<a name="l00037"></a>00037 
+<a name="l00039"></a>00039   <span class="keyword">extern</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>;
+<a name="l00040"></a>00040 
+<a name="l00042"></a>00042   <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e" title="whether a config file was loaded after init">file_loaded</a>;
 <a name="l00043"></a>00043 
-<a name="l00044"></a>00044   <span class="comment">// init helpers - don't call directly unless...</span>
-<a name="l00045"></a>00045   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>();
-<a name="l00046"></a>00046   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *desc = NULL,
-<a name="l00047"></a>00047                   <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *hidden = NULL, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">PositionalDesc</a> *p = NULL);
-<a name="l00048"></a>00048   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>();
-<a name="l00049"></a>00049 
-<a name="l00060"></a><a class="code" href="namespace_hypertable_1_1_config.html#1782c83f6b09dd1217fade7f8fad7fc7">00060</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#1782c83f6b09dd1217fade7f8fad7fc7" title="Init with options must be inlined to do proper version check.">init</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *desc = NULL,
-<a name="l00061"></a>00061                    <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#e803975da4787370a480d853b512c2ff">Desc</a> *hidden = NULL, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#7157d6cd281aeeca91c4986027dee748">PositionalDesc</a> *p = NULL) {
-<a name="l00062"></a>00062     <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#fceb903d25fa18b1ba02700a2ff2900e">System::locate_install_dir</a>(argv[0]));
-<a name="l00063"></a>00063     <span class="keywordflow">if</span> (desc) <a class="code" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">description</a>(*desc);
-<a name="l00064"></a>00064     <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>();
-<a name="l00065"></a>00065     <a class="code" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">parse_args</a>(argc, argv, desc, hidden, p);
-<a name="l00066"></a>00066     <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>();
-<a name="l00067"></a>00067   }
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 }} <span class="comment">// namespace Hypertable::Config</span>
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071 <span class="preprocessor">#endif // HYPERTABLE_CONFIG_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00045"></a>00045   <span class="keyword">extern</span> <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>;
+<a name="l00046"></a>00046 
+<a name="l00050"></a><a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e">00050</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00051"></a>00051     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00052"></a>00052     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;has(name);
+<a name="l00053"></a>00053   }
+<a name="l00054"></a>00054 
+<a name="l00058"></a><a class="code" href="namespace_hypertable_1_1_config.html#0101c40d742c7653da66e4670dc58ab2">00058</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_config.html#0101c40d742c7653da66e4670dc58ab2" title="Check if a config value is defaulted.">defaulted</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00059"></a>00059     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00060"></a>00060     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;defaulted(name);
+<a name="l00061"></a>00061   }
+<a name="l00062"></a>00062 
+<a name="l00066"></a>00066   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00067"></a><a class="code" href="namespace_hypertable_1_1_config.html#93660d0486a4cb41e9dfa813c3034f47">00067</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) {
+<a name="l00068"></a>00068     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00069"></a>00069     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;get&lt;T&gt;(name);
+<a name="l00070"></a>00070   }
+<a name="l00071"></a>00071 
+<a name="l00075"></a>00075   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00076"></a><a class="code" href="namespace_hypertable_1_1_config.html#d5ecf3a48d2233a2c10f7647f2f0922e">00076</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> T &amp;default_value) {
+<a name="l00077"></a>00077     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>);
+<a name="l00078"></a>00078     <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;get&lt;T&gt;(name, default_value);
+<a name="l00079"></a>00079   }
+<a name="l00080"></a>00080 
+<a name="l00082"></a>00082   <a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">HT_PROPERTIES_ABBR_ACCESSORS</a>
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="comment">// Options description accessors</span>
+<a name="l00090"></a>00090 <span class="comment"></span>  <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a> = NULL);
+<a name="l00091"></a>00091 
+<a name="l00095"></a>00095   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;);
+<a name="l00096"></a>00096 
+<a name="l00100"></a>00100   <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6" title="Get the command line hidden options description (for positional options).">cmdline_hidden_desc</a>();
+<a name="l00101"></a>00101 
+<a name="l00105"></a>00105   <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09" title="Get the command line positional options description.">cmdline_positional_desc</a>();
+<a name="l00106"></a>00106 
+<a name="l00110"></a>00110   <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a> = NULL);
+<a name="l00111"></a>00111 
+<a name="l00115"></a>00115   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f" title="Get the config file options description.">file_desc</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;);
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117   <span class="comment">// init helpers - don't call directly unless...</span>
+<a name="l00118"></a>00118   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>();
+<a name="l00119"></a>00119   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>();
+<a name="l00120"></a>00120 
+<a name="l00124"></a><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html">00124</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html" title="Interface and base of config policy.">Policy</a> {
+<a name="l00125"></a><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#aee1cb7d819af35004b7551218ce6c82">00125</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#aee1cb7d819af35004b7551218ce6c82">init_options</a>() { }
+<a name="l00126"></a><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#04989d532dfa052b95c6a6cf8d7cb01c">00126</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#04989d532dfa052b95c6a6cf8d7cb01c">init</a>() { }
+<a name="l00127"></a><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#7c2625c3be40b5f1a499f436333dc357">00127</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#7c2625c3be40b5f1a499f436333dc357">on_init_error</a>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00128"></a>00128       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00129"></a>00129       std::exit(1);
+<a name="l00130"></a>00130     }
+<a name="l00131"></a><a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#6bcdfefcf6ac2312517ef5becc874f76">00131</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html#6bcdfefcf6ac2312517ef5becc874f76">cleanup</a>() { }
+<a name="l00132"></a>00132   };
+<a name="l00133"></a>00133 
+<a name="l00137"></a><a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html">00137</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html" title="Default init policy.">DefaultPolicy</a> : <a class="code" href="struct_hypertable_1_1_config_1_1_policy.html" title="Interface and base of config policy.">Policy</a> {
+<a name="l00138"></a><a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html#292cf5343a7f914ec2b7305ae8c051f1">00138</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html#292cf5343a7f914ec2b7305ae8c051f1">init_options</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">init_default_options</a>(); }
+<a name="l00139"></a><a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html#bab9d268be7a8491bc3277172304c949">00139</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_default_policy.html#bab9d268be7a8491bc3277172304c949">init</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">init_default_actions</a>(); }
+<a name="l00140"></a>00140   };
+<a name="l00141"></a>00141 
+<a name="l00145"></a>00145   <span class="keyword">template</span> &lt;<span class="keyword">class</span> CarT, <span class="keyword">class</span> CdrT&gt;
+<a name="l00146"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html">00146</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html" title="Helpers to compose init policies.">Cons</a> {
+<a name="l00147"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#e712a5135172ca67c955b9b11eecf472">00147</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#e712a5135172ca67c955b9b11eecf472">init_options</a>() {
+<a name="l00148"></a>00148       CarT::init_options();
+<a name="l00149"></a>00149       CdrT::init_options();
+<a name="l00150"></a>00150     }
+<a name="l00151"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#7fecc3613ff9f4d47ad113b857da515f">00151</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#7fecc3613ff9f4d47ad113b857da515f">init</a>() {
+<a name="l00152"></a>00152       <a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40" title="Init with default policy.">CarT::init</a>();
+<a name="l00153"></a>00153       <a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40" title="Init with default policy.">CdrT::init</a>();
+<a name="l00154"></a>00154     }
+<a name="l00155"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#b2efeb3dfba41cfbf2bdf4a99b48000b">00155</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#b2efeb3dfba41cfbf2bdf4a99b48000b">on_init_error</a>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00156"></a>00156       CarT::on_init_error(e);
+<a name="l00157"></a>00157       CdrT::on_init_error(e);
+<a name="l00158"></a>00158     }
+<a name="l00159"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#416eda08b48fc280b1aefa16d913b479">00159</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#416eda08b48fc280b1aefa16d913b479">cleanup</a>() {
+<a name="l00160"></a>00160       CdrT::cleanup();  <span class="comment">// in reverse order</span>
+<a name="l00161"></a>00161       CarT::cleanup();
+<a name="l00162"></a>00162     }
+<a name="l00163"></a>00163   };
+<a name="l00164"></a>00164 
+<a name="l00165"></a><a class="code" href="struct_hypertable_1_1_config_1_1_null_policy.html">00165</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_null_policy.html">NullPolicy</a> { };
+<a name="l00166"></a>00166 
+<a name="l00167"></a>00167   <span class="comment">// specialization for type list algorithms</span>
+<a name="l00168"></a>00168   <span class="keyword">template</span> &lt;<span class="keyword">class</span> PolicyT&gt;
+<a name="l00169"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons_3_01_null_policy_00_01_policy_t_01_4.html">00169</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_cons.html" title="Helpers to compose init policies.">Cons</a>&lt;<a class="code" href="struct_hypertable_1_1_config_1_1_null_policy.html">NullPolicy</a>, PolicyT&gt; {
+<a name="l00170"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons_3_01_null_policy_00_01_policy_t_01_4.html#56418d6851c7b7ef2ec28dc4d7ccedd9">00170</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#e712a5135172ca67c955b9b11eecf472">init_options</a>() { PolicyT::init_options(); }
+<a name="l00171"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons_3_01_null_policy_00_01_policy_t_01_4.html#ee4b429257260cbb70b3c265a6ec4497">00171</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#7fecc3613ff9f4d47ad113b857da515f">init</a>() { <a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40" title="Init with default policy.">PolicyT::init</a>(); }
+<a name="l00172"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons_3_01_null_policy_00_01_policy_t_01_4.html#ed74f14452cc16330d55b7a41f2cfa92">00172</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#b2efeb3dfba41cfbf2bdf4a99b48000b">on_init_error</a>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) { PolicyT::on_init_error(e); }
+<a name="l00173"></a><a class="code" href="struct_hypertable_1_1_config_1_1_cons_3_01_null_policy_00_01_policy_t_01_4.html#267ac69ab2bae44b1ce355183b405b54">00173</a>     <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html#416eda08b48fc280b1aefa16d913b479">cleanup</a>() { PolicyT::cleanup(); }
+<a name="l00174"></a>00174   };
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176   <span class="comment">// conversion from policy list to combined policy</span>
+<a name="l00177"></a>00177   <span class="keyword">template</span> &lt;<span class="keyword">class</span> PolicyListT&gt;
+<a name="l00178"></a><a class="code" href="struct_hypertable_1_1_config_1_1_join.html">00178</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_config_1_1_join.html">Join</a> {
+<a name="l00179"></a>00179     <span class="keyword">typedef</span> <span class="keyword">typename</span> Meta::fold&lt;PolicyListT, <a class="code" href="struct_hypertable_1_1_config_1_1_null_policy.html">NullPolicy</a>,
+<a name="l00180"></a><a class="code" href="struct_hypertable_1_1_config_1_1_join.html#a5a6c3805963b6b76113206e833ec808">00180</a>             <a class="code" href="struct_hypertable_1_1_config_1_1_cons.html" title="Helpers to compose init policies.">Cons&lt;Meta::_1, Meta::_2&gt;</a> &gt;<a class="code" href="struct_hypertable_1_1_config_1_1_join.html#a5a6c3805963b6b76113206e833ec808">::type</a> <a class="code" href="struct_hypertable_1_1_config_1_1_join.html#a5a6c3805963b6b76113206e833ec808">type</a>;
+<a name="l00181"></a>00181   };
+<a name="l00182"></a>00182 
+<a name="l00183"></a>00183 
+<a name="l00187"></a>00187   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#31dbb052b8a7e49aa37e5cb8d66c8674" title="Init helper, has side effects (setting singletons etc.">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[]);
+<a name="l00188"></a>00188 
+<a name="l00196"></a>00196   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#31481090e7b3f12f7ec4e4acc12d6971" title="Parse config file.">parse_file</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;fname, <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> &amp;desc,
+<a name="l00197"></a>00197                   <span class="keywordtype">bool</span> allow_unregistered = <span class="keyword">false</span>);
+<a name="l00198"></a>00198 
+<a name="l00208"></a>00208   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;cmdline_opt, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;file_opt,
+<a name="l00209"></a>00209              <span class="keywordtype">bool</span> overwrite = <span class="keyword">false</span>);
+<a name="l00210"></a>00210 
+<a name="l00215"></a>00215   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c" title="Sync alias values.">sync_aliases</a>();
+<a name="l00216"></a>00216 
+<a name="l00223"></a>00223   <span class="keyword">template</span> &lt;<span class="keyword">class</span> PolicyT&gt;
+<a name="l00224"></a><a class="code" href="namespace_hypertable_1_1_config.html#01b1bde1e73c0c57288fbfe4377d092c">00224</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#01b1bde1e73c0c57288fbfe4377d092c" title="Init with policy (with init_options (called before parse_args) and init (called after...">init_with_policy</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *desc = 0) {
+<a name="l00225"></a>00225     <span class="keywordflow">try</span> {
+<a name="l00226"></a>00226       <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">System::initialize</a>();
+<a name="l00227"></a>00227 
+<a name="l00228"></a>00228       <a class="code" href="namespace_hypertable.html#48f230e6908886d74d31d8f766b8bc89">ScopedRecLock</a> lock(<a class="code" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b" title="global config mutex">rec_mutex</a>);
+<a name="l00229"></a>00229       <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_properties.html">Properties</a>();
+<a name="l00230"></a>00230 
+<a name="l00231"></a>00231       <span class="keywordflow">if</span> (desc)
+<a name="l00232"></a>00232         <a class="code" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f" title="Properties">cmdline_desc</a>(*desc);
+<a name="l00233"></a>00233 
+<a name="l00234"></a>00234       <a class="code" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e" title="whether a config file was loaded after init">file_loaded</a> = <span class="keyword">false</span>;
+<a name="l00235"></a>00235       PolicyT::init_options();
+<a name="l00236"></a>00236       <a class="code" href="namespace_hypertable_1_1_config.html#31dbb052b8a7e49aa37e5cb8d66c8674" title="Init helper, has side effects (setting singletons etc.">parse_args</a>(argc, argv);
+<a name="l00237"></a>00237       <a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40" title="Init with default policy.">PolicyT::init</a>();
+<a name="l00238"></a>00238       <a class="code" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c" title="Sync alias values.">sync_aliases</a>(); <span class="comment">// init can generate more aliases</span>
+<a name="l00239"></a>00239 
+<a name="l00240"></a>00240       <span class="keywordflow">if</span> (get_bool(<span class="stringliteral">"verbose"</span>))
+<a name="l00241"></a>00241         <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>-&gt;print(std::cout);
+<a name="l00242"></a>00242     }
+<a name="l00243"></a>00243     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00244"></a>00244       PolicyT::on_init_error(e);
+<a name="l00245"></a>00245     }
+<a name="l00246"></a>00246   }
+<a name="l00247"></a>00247 
+<a name="l00252"></a>00252   <span class="keyword">template</span> &lt;<span class="keyword">class</span> PolicyListT&gt;
+<a name="l00253"></a><a class="code" href="namespace_hypertable_1_1_config.html#d06b52efd7741f9195f5c936f146562e">00253</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#d06b52efd7741f9195f5c936f146562e" title="Convenience function (more of a demo) to init with a list of polices.">init_with_policies</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *desc = 0) {
+<a name="l00254"></a>00254     <span class="keyword">typedef</span> <span class="keyword">typename</span> <a class="code" href="struct_hypertable_1_1_config_1_1_join.html">Join&lt;PolicyListT&gt;::type</a> Combined;
+<a name="l00255"></a>00255     init_with_policy&lt;Combined&gt;(argc, argv, desc);
+<a name="l00256"></a>00256   }
+<a name="l00257"></a>00257 
+<a name="l00261"></a><a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40">00261</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable_1_1_config.html#c5c720f7ab467af41d243d0d17cf4c40" title="Init with default policy.">init</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable_1_1_config.html#6ac757f03a241bba84f1c99740381ecf">Desc</a> *desc = NULL) {
+<a name="l00262"></a>00262     init_with_policy&lt;DefaultPolicy&gt;(argc, argv, desc);
+<a name="l00263"></a>00263   }
+<a name="l00264"></a>00264 
+<a name="l00265"></a>00265 }} <span class="comment">// namespace Hypertable::Config</span>
+<a name="l00266"></a>00266 
+<a name="l00267"></a>00267 <span class="preprocessor">#endif // HYPERTABLE_CONFIG_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

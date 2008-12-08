@@ -26,35 +26,40 @@
 <a name="l00028"></a>00028 
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_scan_context_8h.html">ScanContext.h</a>"</span>
 <a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hypertable {
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_key_8h.html">Hypertable/Lib/Key.h</a>"</span>
 <a name="l00032"></a>00032 
-<a name="l00033"></a>00033   <span class="keyword">class </span>CellList;
-<a name="l00034"></a>00034   <span class="keyword">class </span>CellListScanner;
-<a name="l00035"></a>00035 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_cell_list.html">00040</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs).">CellList</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00041"></a>00041   <span class="keyword">public</span>:
-<a name="l00042"></a><a class="code" href="class_hypertable_1_1_cell_list.html#a01fb1f0b9d11ae53268e6e40e61010b">00042</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list.html#a01fb1f0b9d11ae53268e6e40e61010b">~CellList</a>() { <span class="keywordflow">return</span>; }
-<a name="l00043"></a>00043 
-<a name="l00052"></a>00052     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> key, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value, int64_t real_timestamp) = 0;
-<a name="l00053"></a>00053 
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">00060</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *<a class="code" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747" title="Creates a scanner on this cell list.">create_scanner</a>(<a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx) { <span class="keywordflow">return</span> 0; }
-<a name="l00061"></a>00061 
-<a name="l00068"></a>00068     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#912843dc3f7f586cbec0c460e7cf236a" title="Returns a split row for this cell list.">get_split_row</a>() = 0;
-<a name="l00069"></a>00069 
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_cell_list.html#6b13159c7d169009ae5af6f64ec399f2">00078</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#6b13159c7d169009ae5af6f64ec399f2" title="Returns the start row of this cell list.">get_start_row</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.c_str(); }
-<a name="l00079"></a>00079 
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_cell_list.html#613c910f9cc2e12a76774b3cfa7b2d15">00088</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#613c910f9cc2e12a76774b3cfa7b2d15" title="Returns the end row of this cell list.">get_end_row</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.c_str(); }
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090   <span class="keyword">protected</span>:
-<a name="l00091"></a><a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">00091</a>     std::string <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>;
-<a name="l00092"></a><a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">00092</a>     std::string <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>;
-<a name="l00093"></a>00093   };
-<a name="l00094"></a><a class="code" href="namespace_hypertable.html#167eb095f96e7362f1995085fa5870b3">00094</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;CellList&gt; <a class="code" href="namespace_hypertable.html#167eb095f96e7362f1995085fa5870b3">CellListPtr</a>;
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 }
-<a name="l00097"></a>00097 
-<a name="l00098"></a>00098 <span class="preprocessor">#endif // HYPERTABLE_CELLLIST_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hypertable {
+<a name="l00034"></a>00034 
+<a name="l00035"></a>00035   <span class="keyword">class </span>CellList;
+<a name="l00036"></a>00036   <span class="keyword">class </span>CellListScanner;
+<a name="l00037"></a>00037 
+<a name="l00042"></a><a class="code" href="class_hypertable_1_1_cell_list.html">00042</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs).">CellList</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00043"></a>00043   <span class="keyword">public</span>:
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_cell_list.html#a01fb1f0b9d11ae53268e6e40e61010b">00044</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list.html#a01fb1f0b9d11ae53268e6e40e61010b">~CellList</a>() { <span class="keywordflow">return</span>; }
+<a name="l00045"></a>00045 
+<a name="l00053"></a>00053     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) = 0;
+<a name="l00054"></a>00054 
+<a name="l00061"></a>00061     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *
+<a name="l00062"></a><a class="code" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">00062</a>     <a class="code" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747" title="Creates a scanner on this cell list.">create_scanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx) { <span class="keywordflow">return</span> 0; }
+<a name="l00063"></a>00063 
+<a name="l00070"></a>00070     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#912843dc3f7f586cbec0c460e7cf236a" title="Returns a split row for this cell list.">get_split_row</a>() = 0;
+<a name="l00071"></a>00071 
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_cell_list.html#6b13159c7d169009ae5af6f64ec399f2">00080</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#6b13159c7d169009ae5af6f64ec399f2" title="Returns the start row of this cell list.">get_start_row</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.c_str(); }
+<a name="l00081"></a>00081 
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_cell_list.html#613c910f9cc2e12a76774b3cfa7b2d15">00090</a>     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_list.html#613c910f9cc2e12a76774b3cfa7b2d15" title="Returns the end row of this cell list.">get_end_row</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.c_str(); }
+<a name="l00091"></a>00091 
+<a name="l00097"></a>00097     <span class="keyword">virtual</span> uint32_t <a class="code" href="class_hypertable_1_1_cell_list.html#7e2c3b7605ec5c36202ba2698edcbb1e" title="Returns the number of key/value pairs in the list.">get_total_entries</a>() = 0;
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099   <span class="keyword">protected</span>:
+<a name="l00100"></a><a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">00100</a>     std::string <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>;
+<a name="l00101"></a><a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">00101</a>     std::string <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>;
+<a name="l00102"></a>00102   };
+<a name="l00103"></a><a class="code" href="namespace_hypertable.html#167eb095f96e7362f1995085fa5870b3">00103</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;CellList&gt; <a class="code" href="namespace_hypertable.html#167eb095f96e7362f1995085fa5870b3">CellListPtr</a>;
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105 }
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107 <span class="preprocessor">#endif // HYPERTABLE_CELLLIST_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

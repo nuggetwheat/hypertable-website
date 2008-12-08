@@ -44,12 +44,15 @@ Collaboration diagram for Hypertable::Client:</div>
 <a href="class_hypertable_1_1_client-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#93a87af812cd48f663abed450c6e734b">Client</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_dir, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;config_file, time_t timeout=-1)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#4f33febb6bc5cf1c8e89367574c942e0">Client</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_dir, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;config_file, uint32_t default_timeout_ms=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructs the object using the specified config file.  <a href="#93a87af812cd48f663abed450c6e734b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#74ef75c28a249b965ff588e37a5220cd">Client</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_dir, time_t timeout=-1)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructs the object using the specified config file.  <a href="#4f33febb6bc5cf1c8e89367574c942e0"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#1e38b62216e7185cb7e31fec9fcad0d2">Client</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;install_dir=<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>(), uint32_t default_timeout_ms=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructs the object using the default config file.  <a href="#74ef75c28a249b965ff588e37a5220cd"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructs the object using the default config file.  <a href="#1e38b62216e7185cb7e31fec9fcad0d2"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#840e519ca781888cbd54181572ebe3a7">~Client</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Destructs the <a class="el" href="class_hypertable_1_1_client.html">Client</a> object.  <a href="#840e519ca781888cbd54181572ebe3a7"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#4494a122d417a7fee3620bbe4a9ab032">create_table</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;schema)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a table.  <a href="#4494a122d417a7fee3620bbe4a9ab032"></a><br></td></tr>
@@ -71,33 +74,61 @@ Collaboration diagram for Hypertable::Client:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#3c1f75dd30ecd5a2817f3b47c2afc458">shutdown</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Shuts down servers.  <a href="#3c1f75dd30ecd5a2817f3b47c2afc458"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#fd5523760f67ab8df1d822791eece99f">create_hql_interpreter</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_hql_interpreter.html">HqlInterpreter</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#97073e4f0d3b7b4818a0e1c57f880036">create_hql_interpreter</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an HQL command interpreter.  <a href="#fd5523760f67ab8df1d822791eece99f"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates an HQL interpreter.  <a href="#97073e4f0d3b7b4818a0e1c57f880036"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
+&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#8c6fe4798e04cb2bd3024a02ea623ca7">TableCache</a></td></tr>
+
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#111cab9d55c885b3238f1de3dec0da1e">initialize</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;config_file)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#2e1eca143f1b5b4b5490de0ca5d691fa">initialize</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#85c09e078bd8811685be7b7bd6391128">m_props_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#6230821fd975ef98eb1bb0c8c9c735f1">m_props</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#466a9d3229e5134d89dff9068954cee3">m_comm</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#ec9c7382d8a2e24a84a001d8c906ebeb">m_conn_manager_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#88d05aba5313bf1efe63c78dc0153987">m_conn_manager</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#cae264265a385c5f3211c278bdd3651c">m_app_queue_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#c2b962740246859a797dd995b164e55c">m_app_queue</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#1ae12ccbe2151d18b186ce4f96043c86">m_hyperspace_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#9fccb52aecd49c543fed8bdbbc8b0b65">m_hyperspace</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#95d26b25054b5a0400a6c8036e846d38">m_master_client_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#22fddcf5499a02a3779b26187e11dbde">MasterClientPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#8801a5d3ebd62bec93400564c33670c0">m_master_client</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#83442185f9f9e2a1d725ac6780ed3842">m_timeout</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#19a0ee00137e74ed871f08d1bbd5a44b">m_range_locator</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#3aa9cf9714e7b76d6102c645c62a170e">m_timeout_ms</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#aec2f164d8f175960e6e8f3a61ec416d">m_install_dir</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_client.html#8c6fe4798e04cb2bd3024a02ea623ca7">TableCache</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_client.html#ef726ac06d9e55cb4aafa290b95b1448">m_table_cache</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00048">48</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00043">43</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<hr><h2>Member Typedef Documentation</h2>
+<a class="anchor" name="8c6fe4798e04cb2bd3024a02ea623ca7"></a><!-- doxytag: member="Hypertable::Client::TableCache" ref="8c6fe4798e04cb2bd3024a02ea623ca7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a>&gt; <a class="el" href="class_hypertable_1_1_client.html#8c6fe4798e04cb2bd3024a02ea623ca7">Hypertable::Client::TableCache</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00131">131</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="93a87af812cd48f663abed450c6e734b"></a><!-- doxytag: member="Hypertable::Client::Client" ref="93a87af812cd48f663abed450c6e734b" args="(const String &amp;install_dir, const String &amp;config_file, time_t timeout=-1)" -->
+<a class="anchor" name="4f33febb6bc5cf1c8e89367574c942e0"></a><!-- doxytag: member="Hypertable::Client::Client" ref="4f33febb6bc5cf1c8e89367574c942e0" args="(const String &amp;install_dir, const String &amp;config_file, uint32_t default_timeout_ms=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -116,8 +147,8 @@ Collaboration diagram for Hypertable::Client:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em> = <code>-1</code></td><td>&nbsp;</td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>default_timeout_ms</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -135,15 +166,15 @@ Constructs the object using the specified config file.
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>install_dir</em>&nbsp;</td><td>path to <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> installation directory </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>config_file</em>&nbsp;</td><td>name of configuration file </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>maximum method call time in seconds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>default_timeout_ms</em>&nbsp;</td><td>default method call timeout in milliseconds </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00049">49</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00051">51</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="74ef75c28a249b965ff588e37a5220cd"></a><!-- doxytag: member="Hypertable::Client::Client" ref="74ef75c28a249b965ff588e37a5220cd" args="(const String &amp;install_dir, time_t timeout=-1)" -->
+<a class="anchor" name="1e38b62216e7185cb7e31fec9fcad0d2"></a><!-- doxytag: member="Hypertable::Client::Client" ref="1e38b62216e7185cb7e31fec9fcad0d2" args="(const String &amp;install_dir=String(), uint32_t default_timeout_ms=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -151,13 +182,13 @@ Constructs the object using the specified config file.
           <td class="memname">Client::Client           </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>install_dir</em>, </td>
+          <td class="paramname"> <em>install_dir</em> = <code><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>()</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em> = <code>-1</code></td><td>&nbsp;</td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>default_timeout_ms</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -174,11 +205,34 @@ Constructs the object using the default config file.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>install_dir</em>&nbsp;</td><td>path to <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a> installation directory </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>maximum method call time in seconds </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>default_timeout_ms</em>&nbsp;</td><td>default method call timeout in milliseconds </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00058">58</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00065">65</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="840e519ca781888cbd54181572ebe3a7"></a><!-- doxytag: member="Hypertable::Client::~Client" ref="840e519ca781888cbd54181572ebe3a7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Client::~Client           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Destructs the <a class="el" href="class_hypertable_1_1_client.html">Client</a> object. 
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00081">81</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -218,7 +272,7 @@ Creates a table.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00067">67</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00091">91</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -248,7 +302,7 @@ Opens a table.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to newly created <a class="el" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> object </dd></dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00077">77</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00100">100</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -278,11 +332,7 @@ Returns the table identifier for a table.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>numeric identifier for the table </dd></dl>
 
-<p>
-Open table file in <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a><p>
-Get the 'table_id' attribute<p>
-Close the hyperspace file 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00085">85</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00116">116</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -312,7 +362,7 @@ Returns the schema for a table.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>XML schema of table </dd></dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00119">119</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00137">137</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -341,7 +391,7 @@ Returns a list of existing table names.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00131">131</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00148">148</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -381,7 +431,7 @@ This command instructs the <a class="el" href="class_hypertable_1_1_master.html"
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00150">150</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00167">167</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
@@ -404,16 +454,16 @@ This command instructs the <a class="el" href="class_hypertable_1_1_master.html"
 Shuts down servers. 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00156">156</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00182">182</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="fd5523760f67ab8df1d822791eece99f"></a><!-- doxytag: member="Hypertable::Client::create_hql_interpreter" ref="fd5523760f67ab8df1d822791eece99f" args="()" -->
+<a class="anchor" name="97073e4f0d3b7b4818a0e1c57f880036"></a><!-- doxytag: member="Hypertable::Client::create_hql_interpreter" ref="97073e4f0d3b7b4818a0e1c57f880036" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_hql_command_interpreter.html">HqlCommandInterpreter</a> * Client::create_hql_interpreter           </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_hql_interpreter.html">HqlInterpreter</a> * Client::create_hql_interpreter           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -424,23 +474,22 @@ Shuts down servers.
 <div class="memdoc">
 
 <p>
-Creates an HQL command interpreter. 
+Creates an HQL interpreter. 
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>a newly created interpreter object </dd></dl>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00163">163</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00190">190</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="111cab9d55c885b3238f1de3dec0da1e"></a><!-- doxytag: member="Hypertable::Client::initialize" ref="111cab9d55c885b3238f1de3dec0da1e" args="(const String &amp;config_file)" -->
+<a class="anchor" name="2e1eca143f1b5b4b5490de0ca5d691fa"></a><!-- doxytag: member="Hypertable::Client::initialize" ref="2e1eca143f1b5b4b5490de0ca5d691fa" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Client::initialize           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>config_file</em>          </td>
+          <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [private]</code></td>
         </tr>
@@ -450,17 +499,17 @@ Creates an HQL command interpreter.
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00173">173</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html#l00197">197</a> of file <a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="85c09e078bd8811685be7b7bd6391128"></a><!-- doxytag: member="Hypertable::Client::m_props_ptr" ref="85c09e078bd8811685be7b7bd6391128" args="" -->
+<a class="anchor" name="6230821fd975ef98eb1bb0c8c9c735f1"></a><!-- doxytag: member="Hypertable::Client::m_props" ref="6230821fd975ef98eb1bb0c8c9c735f1" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> Hypertable::Client::m_props_ptr<code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> Hypertable::Client::m_props<code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -468,7 +517,7 @@ Creates an HQL command interpreter.
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00134">134</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00135">135</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -485,33 +534,16 @@ Creates an HQL command interpreter.
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00135">135</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="ec9c7382d8a2e24a84a001d8c906ebeb"></a><!-- doxytag: member="Hypertable::Client::m_conn_manager_ptr" ref="ec9c7382d8a2e24a84a001d8c906ebeb" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> Hypertable::Client::m_conn_manager_ptr<code> [private]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
 <p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00136">136</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cae264265a385c5f3211c278bdd3651c"></a><!-- doxytag: member="Hypertable::Client::m_app_queue_ptr" ref="cae264265a385c5f3211c278bdd3651c" args="" -->
+<a class="anchor" name="88d05aba5313bf1efe63c78dc0153987"></a><!-- doxytag: member="Hypertable::Client::m_conn_manager" ref="88d05aba5313bf1efe63c78dc0153987" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> <a class="el" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">Hypertable::Client::m_app_queue_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> Hypertable::Client::m_conn_manager<code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -523,12 +555,12 @@ Creates an HQL command interpreter.
 
 </div>
 </div><p>
-<a class="anchor" name="1ae12ccbe2151d18b186ce4f96043c86"></a><!-- doxytag: member="Hypertable::Client::m_hyperspace_ptr" ref="1ae12ccbe2151d18b186ce4f96043c86" args="" -->
+<a class="anchor" name="c2b962740246859a797dd995b164e55c"></a><!-- doxytag: member="Hypertable::Client::m_app_queue" ref="c2b962740246859a797dd995b164e55c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> Hypertable::Client::m_hyperspace_ptr<code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> <a class="el" href="test_server_8cc.html#b0b0aca6ca5b70bc6153a69c1e62fe92">Hypertable::Client::m_app_queue</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -540,12 +572,12 @@ Creates an HQL command interpreter.
 
 </div>
 </div><p>
-<a class="anchor" name="95d26b25054b5a0400a6c8036e846d38"></a><!-- doxytag: member="Hypertable::Client::m_master_client_ptr" ref="95d26b25054b5a0400a6c8036e846d38" args="" -->
+<a class="anchor" name="9fccb52aecd49c543fed8bdbbc8b0b65"></a><!-- doxytag: member="Hypertable::Client::m_hyperspace" ref="9fccb52aecd49c543fed8bdbbc8b0b65" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#b2f4dc82cb4e60fd789b3c4dc386a9ef">MasterClientPtr</a> Hypertable::Client::m_master_client_ptr<code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> Hypertable::Client::m_hyperspace<code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -557,12 +589,12 @@ Creates an HQL command interpreter.
 
 </div>
 </div><p>
-<a class="anchor" name="83442185f9f9e2a1d725ac6780ed3842"></a><!-- doxytag: member="Hypertable::Client::m_timeout" ref="83442185f9f9e2a1d725ac6780ed3842" args="" -->
+<a class="anchor" name="8801a5d3ebd62bec93400564c33670c0"></a><!-- doxytag: member="Hypertable::Client::m_master_client" ref="8801a5d3ebd62bec93400564c33670c0" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">time_t <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#c4ce65d1a68b7138a694f3e2df4296e8">Hypertable::Client::m_timeout</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#22fddcf5499a02a3779b26187e11dbde">MasterClientPtr</a> Hypertable::Client::m_master_client<code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -574,9 +606,77 @@ Creates an HQL command interpreter.
 
 </div>
 </div><p>
+<a class="anchor" name="19a0ee00137e74ed871f08d1bbd5a44b"></a><!-- doxytag: member="Hypertable::Client::m_range_locator" ref="19a0ee00137e74ed871f08d1bbd5a44b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> Hypertable::Client::m_range_locator<code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00141">141</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="3aa9cf9714e7b76d6102c645c62a170e"></a><!-- doxytag: member="Hypertable::Client::m_timeout_ms" ref="3aa9cf9714e7b76d6102c645c62a170e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e4ab0092e00b8a88d17fbfae1ecc133a">Hypertable::Client::m_timeout_ms</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00142">142</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="aec2f164d8f175960e6e8f3a61ec416d"></a><!-- doxytag: member="Hypertable::Client::m_install_dir" ref="aec2f164d8f175960e6e8f3a61ec416d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Hypertable::Client::m_install_dir<code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00143">143</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ef726ac06d9e55cb4aafa290b95b1448"></a><!-- doxytag: member="Hypertable::Client::m_table_cache" ref="ef726ac06d9e55cb4aafa290b95b1448" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_client.html#8c6fe4798e04cb2bd3024a02ea623ca7">TableCache</a> Hypertable::Client::m_table_cache<code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_lib_2_client_8h-source.html#l00144">144</a> of file <a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_hypertable_2_lib_2_client_8h-source.html">Client.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_hypertable_2_lib_2_client_8cc-source.html">Client.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:10 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:55 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

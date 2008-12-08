@@ -44,7 +44,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 <a href="class_hypertable_1_1_master_protocol-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#5a39b8c86418fe402a985133c2fcb0e8">command_text</a> (short command)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#068a6110d3f83316408002bca1f08fd5">command_text</a> (uint64_t <a class="el" href="_hql_command_interpreter_8cc.html#d732c0c7a8bcc3ecf8c7c360b382740d">command</a>)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#4b97d530ca187b4316d28af37c0d9403">create_create_table_request</a> (const char *tablename, const char *schemastr)</td></tr>
@@ -55,28 +55,28 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#c1d2c67d1298f19259a239ddabda4bab">create_register_server_request</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;location)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#faa0f30228e7ba5ba0f19be30f412258">create_report_split_request</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *transfer_log_dir, uint64_t soft_limit)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#8583345e4e0a5d4d9f24d1b6b9b389e5">create_report_split_request</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;, const char *transfer_log_dir, uint64_t soft_limit)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#eeac802620d15f47c18f0ab9483df3be">create_drop_table_request</a> (const char *table_name, bool if_exists)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#a729ff7109424239375e3ba8d6799730">create_shutdown_request</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#be4cdf2209539cdf1f6b6a3e407e9fac">COMMAND_CREATE_TABLE</a> = 0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#dea716c0d1cd5c0a801c42f51ef60197">COMMAND_CREATE_TABLE</a> = 0</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#fc83b62584cb4b55949ef49300f594fd">COMMAND_GET_SCHEMA</a> = 1</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#19ce60cc47c7c15d27f0776bfd4c5553">COMMAND_GET_SCHEMA</a> = 1</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#37cbdd801ab5df0fc1304ddf9f6687ce">COMMAND_STATUS</a> = 2</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#a450c08da068973ef963785e47a41ba6">COMMAND_STATUS</a> = 2</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#c9dec65fc80e5cab70d90ded1b8646a0">COMMAND_REGISTER_SERVER</a> = 3</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#dc40c25a60c0006a4e8b4f0bb53d58b3">COMMAND_REGISTER_SERVER</a> = 3</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#6237e58929d32a6ecc47fd3c10d689fa">COMMAND_REPORT_SPLIT</a> = 4</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#65c67da97a88e25f6ff37f0e9453a77a">COMMAND_REPORT_SPLIT</a> = 4</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#a7dbbf1dbf71a06173cd5a716ef6c498">COMMAND_DROP_TABLE</a> = 5</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#d5f9c0d16030f6d1fc74055c9e1fa302">COMMAND_DROP_TABLE</a> = 5</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#27785e89d423d4014d465cd764bfc287">COMMAND_SHUTDOWN</a> = 6</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#cb1166d33a4310bc55664d069b34964f">COMMAND_SHUTDOWN</a> = 6</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static const short&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">COMMAND_MAX</a> = 7</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#af45961892eec671833329cd287a6df8">COMMAND_MAX</a> = 7</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_protocol.html#8f1d89f9b61be51bf89d5a00d717aa16">m_command_strings</a> []</td></tr>
 
@@ -112,7 +112,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00031">31</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00033">33</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -134,7 +134,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00040">40</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00043">43</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -155,7 +155,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00048">48</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00050">50</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -177,24 +177,24 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00055">55</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00057">57</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="faa0f30228e7ba5ba0f19be30f412258"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_report_split_request" ref="faa0f30228e7ba5ba0f19be30f412258" args="(TableIdentifier *table, RangeSpec &amp;range, const char *transfer_log_dir, uint64_t soft_limit)" -->
+<a class="anchor" name="8583345e4e0a5d4d9f24d1b6b9b389e5"></a><!-- doxytag: member="Hypertable::MasterProtocol::create_report_split_request" ref="8583345e4e0a5d4d9f24d1b6b9b389e5" args="(const TableIdentifier *, const RangeSpec &amp;, const char *transfer_log_dir, uint64_t soft_limit)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Hypertable::MasterProtocol::create_report_split_request           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *&nbsp;</td>
           <td class="paramname"> <em>table</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
@@ -220,7 +220,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00063">63</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00065">65</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -251,7 +251,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00074">74</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00079">79</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
@@ -272,18 +272,18 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00083">83</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00088">88</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5a39b8c86418fe402a985133c2fcb0e8"></a><!-- doxytag: member="Hypertable::MasterProtocol::command_text" ref="5a39b8c86418fe402a985133c2fcb0e8" args="(short command)" -->
+<a class="anchor" name="068a6110d3f83316408002bca1f08fd5"></a><!-- doxytag: member="Hypertable::MasterProtocol::command_text" ref="068a6110d3f83316408002bca1f08fd5" args="(uint64_t command)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">const char * Hypertable::MasterProtocol::command_text           </td>
           <td>(</td>
-          <td class="paramtype">short&nbsp;</td>
+          <td class="paramtype">uint64_t&nbsp;</td>
           <td class="paramname"> <em>command</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [virtual]</code></td>
@@ -294,19 +294,19 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 <p>
 
-<p>Implements <a class="el" href="class_hypertable_1_1_protocol.html#7a1396871f0d0db47ad436530017bd0a">Hypertable::Protocol</a>.</p>
+<p>Implements <a class="el" href="class_hypertable_1_1_protocol.html#8d93919c7cc0a85f6a616614e836bcf8">Hypertable::Protocol</a>.</p>
 
-<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00100">100</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_protocol_8cc-source.html#l00104">104</a> of file <a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="be4cdf2209539cdf1f6b6a3e407e9fac"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_CREATE_TABLE" ref="be4cdf2209539cdf1f6b6a3e407e9fac" args="" -->
+<a class="anchor" name="dea716c0d1cd5c0a801c42f51ef60197"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_CREATE_TABLE" ref="dea716c0d1cd5c0a801c42f51ef60197" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#be4cdf2209539cdf1f6b6a3e407e9fac">Hypertable::MasterProtocol::COMMAND_CREATE_TABLE</a> = 0<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#dea716c0d1cd5c0a801c42f51ef60197">Hypertable::MasterProtocol::COMMAND_CREATE_TABLE</a> = 0<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -318,12 +318,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="fc83b62584cb4b55949ef49300f594fd"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_GET_SCHEMA" ref="fc83b62584cb4b55949ef49300f594fd" args="" -->
+<a class="anchor" name="19ce60cc47c7c15d27f0776bfd4c5553"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_GET_SCHEMA" ref="19ce60cc47c7c15d27f0776bfd4c5553" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#fc83b62584cb4b55949ef49300f594fd">Hypertable::MasterProtocol::COMMAND_GET_SCHEMA</a> = 1<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#19ce60cc47c7c15d27f0776bfd4c5553">Hypertable::MasterProtocol::COMMAND_GET_SCHEMA</a> = 1<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -335,12 +335,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="37cbdd801ab5df0fc1304ddf9f6687ce"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_STATUS" ref="37cbdd801ab5df0fc1304ddf9f6687ce" args="" -->
+<a class="anchor" name="a450c08da068973ef963785e47a41ba6"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_STATUS" ref="a450c08da068973ef963785e47a41ba6" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#37cbdd801ab5df0fc1304ddf9f6687ce">Hypertable::MasterProtocol::COMMAND_STATUS</a> = 2<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#a450c08da068973ef963785e47a41ba6">Hypertable::MasterProtocol::COMMAND_STATUS</a> = 2<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -352,12 +352,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="c9dec65fc80e5cab70d90ded1b8646a0"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_REGISTER_SERVER" ref="c9dec65fc80e5cab70d90ded1b8646a0" args="" -->
+<a class="anchor" name="dc40c25a60c0006a4e8b4f0bb53d58b3"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_REGISTER_SERVER" ref="dc40c25a60c0006a4e8b4f0bb53d58b3" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#c9dec65fc80e5cab70d90ded1b8646a0">Hypertable::MasterProtocol::COMMAND_REGISTER_SERVER</a> = 3<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#dc40c25a60c0006a4e8b4f0bb53d58b3">Hypertable::MasterProtocol::COMMAND_REGISTER_SERVER</a> = 3<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -369,12 +369,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="6237e58929d32a6ecc47fd3c10d689fa"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_REPORT_SPLIT" ref="6237e58929d32a6ecc47fd3c10d689fa" args="" -->
+<a class="anchor" name="65c67da97a88e25f6ff37f0e9453a77a"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_REPORT_SPLIT" ref="65c67da97a88e25f6ff37f0e9453a77a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#6237e58929d32a6ecc47fd3c10d689fa">Hypertable::MasterProtocol::COMMAND_REPORT_SPLIT</a> = 4<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#65c67da97a88e25f6ff37f0e9453a77a">Hypertable::MasterProtocol::COMMAND_REPORT_SPLIT</a> = 4<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -386,12 +386,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="a7dbbf1dbf71a06173cd5a716ef6c498"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_DROP_TABLE" ref="a7dbbf1dbf71a06173cd5a716ef6c498" args="" -->
+<a class="anchor" name="d5f9c0d16030f6d1fc74055c9e1fa302"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_DROP_TABLE" ref="d5f9c0d16030f6d1fc74055c9e1fa302" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#a7dbbf1dbf71a06173cd5a716ef6c498">Hypertable::MasterProtocol::COMMAND_DROP_TABLE</a> = 5<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#d5f9c0d16030f6d1fc74055c9e1fa302">Hypertable::MasterProtocol::COMMAND_DROP_TABLE</a> = 5<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -403,12 +403,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="27785e89d423d4014d465cd764bfc287"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_SHUTDOWN" ref="27785e89d423d4014d465cd764bfc287" args="" -->
+<a class="anchor" name="cb1166d33a4310bc55664d069b34964f"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_SHUTDOWN" ref="cb1166d33a4310bc55664d069b34964f" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#27785e89d423d4014d465cd764bfc287">Hypertable::MasterProtocol::COMMAND_SHUTDOWN</a> = 6<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#cb1166d33a4310bc55664d069b34964f">Hypertable::MasterProtocol::COMMAND_SHUTDOWN</a> = 6<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -420,12 +420,12 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="e50d65021f0562a8a991bcb37aae351d"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_MAX" ref="e50d65021f0562a8a991bcb37aae351d" args="" -->
+<a class="anchor" name="af45961892eec671833329cd287a6df8"></a><!-- doxytag: member="Hypertable::MasterProtocol::COMMAND_MAX" ref="af45961892eec671833329cd287a6df8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const short <a class="el" href="class_hypertable_1_1_master_protocol.html#e50d65021f0562a8a991bcb37aae351d">Hypertable::MasterProtocol::COMMAND_MAX</a> = 7<code> [static]</code>          </td>
+          <td class="memname">const uint64_t <a class="el" href="class_hypertable_1_1_master_protocol.html#af45961892eec671833329cd287a6df8">Hypertable::MasterProtocol::COMMAND_MAX</a> = 7<code> [static]</code>          </td>
         </tr>
       </table>
 </div>
@@ -465,7 +465,7 @@ Collaboration diagram for Hypertable::MasterProtocol:</div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_protocol_8h-source.html">MasterProtocol.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_protocol_8cc-source.html">MasterProtocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:15 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:00 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

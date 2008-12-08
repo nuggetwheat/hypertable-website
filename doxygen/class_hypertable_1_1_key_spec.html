@@ -32,9 +32,13 @@
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#acf53e498f5f3accdab00419bcfdb36a">KeySpec</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#ac9e0f6c96b425b1347a89b6fb4788d5">KeySpec</a> (const char *r, const char *cf, const char *cq=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#3798ac8947d81c51b27cce2b556e5f33">KeySpec</a> (const char *r, const char *cf, const char *cq, int64_t ts=<a class="el" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#c8357369c6837143d40e80f17b0b6cd6">KeySpec</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;r, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;cf=<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>(), const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;cq=<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#ff7beac9daa21e32e15c0a0445b3b3d7">KeySpec</a> (const char *r, const char *cf, int64_t ts=<a class="el" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#54bb61c673c694b2d2ad768efb469473">clear</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#367046185ad8f80d787f8faf8569c2b4">sanity_check</a> () const </td></tr>
 
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#40369f5a201a674f92d5b20d1d154396">row</a></td></tr>
@@ -43,14 +47,18 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#62878b08e5b98e9e78ec6317fd0f9b40">column_family</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#742ecb8bbe5b1bc6974cc1b6b1df2aa0">column_qualifier</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#67418ffbae9c2eb8fa8525bb496e55f2">column_qualifier</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#4fab3b4e8b573592e4fe3a6d1bf08776">column_qualifier_len</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#ebf4cf119c1e78acc654b135642d753e">timestamp</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_key_spec.html#2fb3f5278fcb248ed6d6a920f0d8f65d">revision</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00029">29</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00040">40</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="acf53e498f5f3accdab00419bcfdb36a"></a><!-- doxytag: member="Hypertable::KeySpec::KeySpec" ref="acf53e498f5f3accdab00419bcfdb36a" args="()" -->
 <div class="memitem">
@@ -69,11 +77,11 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00031">31</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00043">43</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ac9e0f6c96b425b1347a89b6fb4788d5"></a><!-- doxytag: member="Hypertable::KeySpec::KeySpec" ref="ac9e0f6c96b425b1347a89b6fb4788d5" args="(const char *r, const char *cf, const char *cq=0)" -->
+<a class="anchor" name="3798ac8947d81c51b27cce2b556e5f33"></a><!-- doxytag: member="Hypertable::KeySpec::KeySpec" ref="3798ac8947d81c51b27cce2b556e5f33" args="(const char *r, const char *cf, const char *cq, int64_t ts=AUTO_ASSIGN)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -93,7 +101,13 @@
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>cq</em> = <code>0</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>ts</em> = <code><a class="el" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a></code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -106,31 +120,31 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00034">34</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00047">47</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="c8357369c6837143d40e80f17b0b6cd6"></a><!-- doxytag: member="Hypertable::KeySpec::KeySpec" ref="c8357369c6837143d40e80f17b0b6cd6" args="(const String &amp;r, const String &amp;cf=String(), const String &amp;cq=String())" -->
+<a class="anchor" name="ff7beac9daa21e32e15c0a0445b3b3d7"></a><!-- doxytag: member="Hypertable::KeySpec::KeySpec" ref="ff7beac9daa21e32e15c0a0445b3b3d7" args="(const char *r, const char *cf, int64_t ts=AUTO_ASSIGN)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Hypertable::KeySpec::KeySpec           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>r</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>cf</em> = <code><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>()</code>, </td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>cf</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>cq</em> = <code><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>()</code></td><td>&nbsp;</td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>ts</em> = <code><a class="el" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a></code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -143,7 +157,50 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00038">38</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00053">53</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="54bb61c673c694b2d2ad768efb469473"></a><!-- doxytag: member="Hypertable::KeySpec::clear" ref="54bb61c673c694b2d2ad768efb469473" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::KeySpec::clear           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00059">59</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="367046185ad8f80d787f8faf8569c2b4"></a><!-- doxytag: member="Hypertable::KeySpec::sanity_check" ref="367046185ad8f80d787f8faf8569c2b4" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::KeySpec::sanity_check           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00069">69</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -161,7 +218,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00045">45</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00100">100</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -178,7 +235,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00046">46</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00101">101</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -195,16 +252,16 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00047">47</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00102">102</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="742ecb8bbe5b1bc6974cc1b6b1df2aa0"></a><!-- doxytag: member="Hypertable::KeySpec::column_qualifier" ref="742ecb8bbe5b1bc6974cc1b6b1df2aa0" args="" -->
+<a class="anchor" name="67418ffbae9c2eb8fa8525bb496e55f2"></a><!-- doxytag: member="Hypertable::KeySpec::column_qualifier" ref="67418ffbae9c2eb8fa8525bb496e55f2" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const void* <a class="el" href="class_hypertable_1_1_key_spec.html#742ecb8bbe5b1bc6974cc1b6b1df2aa0">Hypertable::KeySpec::column_qualifier</a>          </td>
+          <td class="memname">const char* <a class="el" href="class_hypertable_1_1_key_spec.html#67418ffbae9c2eb8fa8525bb496e55f2">Hypertable::KeySpec::column_qualifier</a>          </td>
         </tr>
       </table>
 </div>
@@ -212,7 +269,7 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00048">48</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00103">103</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -229,13 +286,47 @@
 
 <p>
 
-<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00049">49</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00104">104</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ebf4cf119c1e78acc654b135642d753e"></a><!-- doxytag: member="Hypertable::KeySpec::timestamp" ref="ebf4cf119c1e78acc654b135642d753e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t <a class="el" href="class_hypertable_1_1_key_spec.html#ebf4cf119c1e78acc654b135642d753e">Hypertable::KeySpec::timestamp</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00105">105</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2fb3f5278fcb248ed6d6a920f0d8f65d"></a><!-- doxytag: member="Hypertable::KeySpec::revision" ref="2fb3f5278fcb248ed6d6a920f0d8f65d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t <a class="el" href="class_hypertable_1_1_key_spec.html#2fb3f5278fcb248ed6d6a920f0d8f65d">Hypertable::KeySpec::revision</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_key_spec_8h-source.html#l00106">106</a> of file <a class="el" href="_key_spec_8h-source.html">KeySpec.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_key_spec_8h-source.html">KeySpec.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:13 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:58 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

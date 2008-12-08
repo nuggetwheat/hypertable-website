@@ -20,23 +20,48 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_CELL_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_CELL_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="keyword">namespace </span>Hypertable {
-<a name="l00026"></a>00026 
-<a name="l00028"></a><a class="code" href="class_hypertable_1_1_cell.html">00028</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> {
-<a name="l00029"></a>00029   <span class="keyword">public</span>:
-<a name="l00030"></a><a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">00030</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>;
-<a name="l00031"></a><a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">00031</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>;
-<a name="l00032"></a><a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">00032</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>;
-<a name="l00033"></a><a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">00033</a>     uint64_t <a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a>;
-<a name="l00034"></a><a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">00034</a>     <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>;
-<a name="l00035"></a><a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">00035</a>     uint32_t <a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>;
-<a name="l00036"></a><a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">00036</a>     uint8_t <a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>;
-<a name="l00037"></a>00037   };
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 }
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#endif // HYPERTABLE_CELL_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;iosfwd&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_key_8h.html">Key.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="keyword">namespace </span>Hypertable {
+<a name="l00030"></a>00030 
+<a name="l00032"></a><a class="code" href="class_hypertable_1_1_cell.html">00032</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> {
+<a name="l00033"></a>00033   <span class="keyword">public</span>:
+<a name="l00034"></a><a class="code" href="class_hypertable_1_1_cell.html#4b3872165fb0c2bd619f72810d64dd80">00034</a>     <a class="code" href="class_hypertable_1_1_cell.html#4b3872165fb0c2bd619f72810d64dd80">Cell</a>() : <a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>(0), <a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>(0), <a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>(0),
+<a name="l00035"></a>00035         <a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a>(<a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>), <a class="code" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">revision</a>(<a class="code" href="namespace_hypertable.html#55e02ea2ff23dcecee12bef2acc81b25">AUTO_ASSIGN</a>), <a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>(0), <a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>(0),
+<a name="l00036"></a>00036         <a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>(<a class="code" href="namespace_hypertable.html#587f053202ab94821346946269211a72">FLAG_INSERT</a>) { }
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_cell.html#0188f11ead2de119b81a3f1adb70b822">00038</a>     <a class="code" href="class_hypertable_1_1_cell.html#4b3872165fb0c2bd619f72810d64dd80">Cell</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *rk, <span class="keyword">const</span> <span class="keywordtype">char</span> *cf, <span class="keyword">const</span> <span class="keywordtype">char</span> *cq, uint64_t ts,
+<a name="l00039"></a>00039          uint64_t rev, uint8_t *val, uint32_t vlen, uint8_t <a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>)
+<a name="l00040"></a>00040       : <a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>(rk), <a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>(cf), <a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>(cq), <a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a>(ts),
+<a name="l00041"></a>00041         <a class="code" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">revision</a>(rev), <a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>(val), <a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>(vlen), flag(flag) { }
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_cell.html#371748fcc5a8a64a651cbb6e2c188b4a">00043</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell.html#371748fcc5a8a64a651cbb6e2c188b4a">sanity_check</a>()<span class="keyword"> const </span>{
+<a name="l00044"></a>00044       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a> || !*<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>)
+<a name="l00045"></a>00045         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21d7d085edea1bdb20215b29ec3ef63d5">Error::BAD_KEY</a>, <span class="stringliteral">"Invalid row key - cannot be zero length"</span>);
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>[0] == (<span class="keywordtype">char</span>)0xff &amp;&amp; <a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>[1] == (<span class="keywordtype">char</span>)0xff)
+<a name="l00048"></a>00048         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21d7d085edea1bdb20215b29ec3ef63d5">Error::BAD_KEY</a>, <span class="stringliteral">"Invalid row key - cannot start with "</span>
+<a name="l00049"></a>00049                  <span class="stringliteral">"character sequence 0xff 0xff"</span>);
+<a name="l00050"></a>00050     }
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">00052</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a>;
+<a name="l00053"></a><a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">00053</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#6b36ceb93f265c0e08924cdc39416f67">column_family</a>;
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">00054</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a>;
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">00055</a>     uint64_t <a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a>;
+<a name="l00056"></a><a class="code" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">00056</a>     uint64_t <a class="code" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">revision</a>;
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">00057</a>     <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a>;
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">00058</a>     uint32_t <a class="code" href="class_hypertable_1_1_cell.html#07d677cc27bf399589eae814c6fa1489">value_len</a>;
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">00059</a>     uint8_t <a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>;
+<a name="l00060"></a>00060   };
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062   std::ostream &amp;<a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">operator&lt;&lt;</a>(std::ostream &amp;, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> &amp;);
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 } <span class="comment">// namespace Hypertable</span>
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 <span class="preprocessor">#endif // HYPERTABLE_CELL_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -18,75 +18,65 @@
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>Types.cc</h1><a href="_types_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &lt;cstring&gt;</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_comm_buf_8h.html">AsyncComm/CommBuf.h</a>"</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>std;
-<a name="l00032"></a>00032 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Serialization;
-<a name="l00034"></a>00034 
-<a name="l00035"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#067d39338ef81a14bfff6957a6ece4f1">00035</a> <span class="keywordtype">size_t</span> TableIdentifier::encoded_length()<span class="keyword"> const </span>{
-<a name="l00036"></a>00036   <span class="keywordflow">return</span> 8 + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>);
-<a name="l00037"></a>00037 }
-<a name="l00038"></a>00038 
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#64566d666c41364b54934bbae2c681dd">00039</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#64566d666c41364b54934bbae2c681dd">TableIdentifier::encode</a>(uint8_t **bufp)<span class="keyword"> const </span>{
-<a name="l00040"></a>00040   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>);
-<a name="l00041"></a>00041   <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(bufp, <span class="keywordtype">id</span>);
-<a name="l00042"></a>00042   <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(bufp, <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>);
-<a name="l00043"></a>00043 }
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">00045</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">TableIdentifier::decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00046"></a>00046   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding table identitier"</span>,
-<a name="l00047"></a>00047     <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
-<a name="l00048"></a>00048     <span class="keywordtype">id</span> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
-<a name="l00049"></a>00049     <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp));
-<a name="l00050"></a>00050 }
-<a name="l00051"></a>00051 
-<a name="l00052"></a><a class="code" href="class_hypertable_1_1_range_spec.html#3f1a000850aa27eb4cae11a3c64acf4e">00052</a> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_range_spec.html#3f1a000850aa27eb4cae11a3c64acf4e">RangeSpec::encoded_length</a>()<span class="keyword"> const </span>{
-<a name="l00053"></a>00053   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>) + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>);
-<a name="l00054"></a>00054 }
-<a name="l00055"></a>00055 
-<a name="l00056"></a><a class="code" href="class_hypertable_1_1_range_spec.html#56fe338143544ff555690ce611b7b369">00056</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#56fe338143544ff555690ce611b7b369">RangeSpec::encode</a>(uint8_t **bufp)<span class="keyword"> const </span>{
-<a name="l00057"></a>00057   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>);
-<a name="l00058"></a>00058   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>);
-<a name="l00059"></a>00059 }
-<a name="l00060"></a>00060 
-<a name="l00061"></a><a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">00061</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">RangeSpec::decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00062"></a>00062   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding range spec"</span>,
-<a name="l00063"></a>00063     <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
-<a name="l00064"></a>00064     <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp));
-<a name="l00065"></a>00065 }
-<a name="l00066"></a>00066 
-<a name="l00067"></a>00067 
-<a name="l00068"></a><a class="code" href="namespace_hypertable.html#880012aa2fa3eafde08552a7de9d7aeb">00068</a> ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">Hypertable::operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;tid) {
-<a name="l00069"></a>00069   os &lt;&lt;<span class="stringliteral">"{TableIdentifier: name='"</span>&lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> &lt;&lt;<span class="stringliteral">"' id='"</span> &lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>
-<a name="l00070"></a>00070      &lt;&lt;<span class="stringliteral">"' generation='"</span>&lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> &lt;&lt;<span class="stringliteral">"'}"</span>;
-<a name="l00071"></a>00071   <span class="keywordflow">return</span> os;
-<a name="l00072"></a>00072 }
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="keyword">using namespace </span>std;
+<a name="l00029"></a>00029 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00030"></a>00030 <span class="keyword">using namespace </span>Serialization;
+<a name="l00031"></a>00031 
+<a name="l00032"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#067d39338ef81a14bfff6957a6ece4f1">00032</a> <span class="keywordtype">size_t</span> TableIdentifier::encoded_length()<span class="keyword"> const </span>{
+<a name="l00033"></a>00033   <span class="keywordflow">return</span> 8 + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>);
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#64566d666c41364b54934bbae2c681dd">00036</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#64566d666c41364b54934bbae2c681dd">TableIdentifier::encode</a>(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>)<span class="keyword"> const </span>{
+<a name="l00037"></a>00037   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>);
+<a name="l00038"></a>00038   <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(bufp, <span class="keywordtype">id</span>);
+<a name="l00039"></a>00039   <a class="code" href="namespace_hypertable_1_1_serialization.html#aed56233ded46bd28e8d25fb2bd0a86b" title="Encode a 32-bit integer in little-endian order.">encode_i32</a>(bufp, <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>);
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">00042</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">TableIdentifier::decode</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00043"></a>00043   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding table identitier"</span>,
+<a name="l00044"></a>00044     <a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
+<a name="l00045"></a>00045     <span class="keywordtype">id</span> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
+<a name="l00046"></a>00046     <a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp));
+<a name="l00047"></a>00047 }
+<a name="l00048"></a>00048 
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_range_spec.html#3f1a000850aa27eb4cae11a3c64acf4e">00049</a> <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_range_spec.html#3f1a000850aa27eb4cae11a3c64acf4e">RangeSpec::encoded_length</a>()<span class="keyword"> const </span>{
+<a name="l00050"></a>00050   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>) + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>);
+<a name="l00051"></a>00051 }
+<a name="l00052"></a>00052 
+<a name="l00053"></a><a class="code" href="class_hypertable_1_1_range_spec.html#56fe338143544ff555690ce611b7b369">00053</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#56fe338143544ff555690ce611b7b369">RangeSpec::encode</a>(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>)<span class="keyword"> const </span>{
+<a name="l00054"></a>00054   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>);
+<a name="l00055"></a>00055   <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>);
+<a name="l00056"></a>00056 }
+<a name="l00057"></a>00057 
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">00058</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">RangeSpec::decode</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00059"></a>00059   <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding range spec"</span>,
+<a name="l00060"></a>00060     <a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp);
+<a name="l00061"></a>00061     <a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp));
+<a name="l00062"></a>00062 }
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064 
+<a name="l00065"></a><a class="code" href="namespace_hypertable.html#880012aa2fa3eafde08552a7de9d7aeb">00065</a> ostream &amp;<a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">Hypertable::operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;tid) {
+<a name="l00066"></a>00066   os &lt;&lt;<span class="stringliteral">"{TableIdentifier: name='"</span>&lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a> &lt;&lt;<span class="stringliteral">"' id='"</span> &lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>
+<a name="l00067"></a>00067      &lt;&lt;<span class="stringliteral">"' generation='"</span>&lt;&lt; tid.<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a> &lt;&lt;<span class="stringliteral">"'}"</span>;
+<a name="l00068"></a>00068   <span class="keywordflow">return</span> os;
+<a name="l00069"></a>00069 }
+<a name="l00070"></a>00070 
+<a name="l00071"></a><a class="code" href="namespace_hypertable.html#75632265e9cbd5559efc02bc7a67d598">00071</a> ostream &amp;<a class="code" href="namespace_hypertable.html#a164fe8c84c1c7040bf0ced5480908d6">Hypertable::operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range) {
+<a name="l00072"></a>00072   os &lt;&lt;<span class="stringliteral">"{RangeSpec:"</span>;
 <a name="l00073"></a>00073 
-<a name="l00074"></a><a class="code" href="namespace_hypertable.html#75632265e9cbd5559efc02bc7a67d598">00074</a> ostream &amp;<a class="code" href="namespace_hypertable.html#5bee7c78c1101a978d64b58adf2b8cd0">Hypertable::operator&lt;&lt;</a>(ostream &amp;os, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> &amp;range) {
-<a name="l00075"></a>00075   os &lt;&lt;<span class="stringliteral">"{RangeSpec:"</span>; 
+<a name="l00074"></a>00074   <a class="code" href="_logger_8h.html#8affb25ccd4a0df03dbcbdcdd6f8a5a2">HT_DUMP_CSTR</a>(os, <a class="code" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>);
+<a name="l00075"></a>00075   <a class="code" href="_logger_8h.html#8affb25ccd4a0df03dbcbdcdd6f8a5a2">HT_DUMP_CSTR</a>(os, <a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>, range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>);
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077   <span class="keywordflow">if</span> (range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> == 0)
-<a name="l00078"></a>00078     os &lt;&lt;<span class="stringliteral">" start=[NULL]"</span>;
-<a name="l00079"></a>00079   <span class="keywordflow">else</span>
-<a name="l00080"></a>00080     os &lt;&lt;<span class="stringliteral">" start='"</span>&lt;&lt; range.<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> &lt;&lt;<span class="stringliteral">"'"</span>;
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082   <span class="keywordflow">if</span> (range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> == 0)
-<a name="l00083"></a>00083     os &lt;&lt;<span class="stringliteral">" end=[NULL]"</span>;
-<a name="l00084"></a>00084   <span class="keywordflow">else</span>
-<a name="l00085"></a>00085     os &lt;&lt;<span class="stringliteral">" end='"</span>&lt;&lt; range.<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a> &lt;&lt;<span class="stringliteral">"'"</span>;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   os &lt;&lt;<span class="charliteral">'}'</span>;
-<a name="l00088"></a>00088   <span class="keywordflow">return</span> os;
-<a name="l00089"></a>00089 }
-<a name="l00090"></a>00090 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00077"></a>00077   os &lt;&lt;<span class="charliteral">'}'</span>;
+<a name="l00078"></a>00078   <span class="keywordflow">return</span> os;
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

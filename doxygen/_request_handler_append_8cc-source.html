@@ -33,25 +33,25 @@
 <a name="l00035"></a>00035 
 <a name="l00039"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#5f74e38bad38dd5400b6e16d9bcbf3ab">00039</a> <span class="keywordtype">void</span> RequestHandlerAppend::run() {
 <a name="l00040"></a>00040   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_append.html">ResponseCallbackAppend</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#b22ec893a6db48046c0461f48ba147c8">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
-<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00042"></a>00042   <span class="keyword">const</span> uint8_t *msg = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00041"></a>00041   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
+<a name="l00042"></a>00042   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044   <span class="keywordflow">try</span> {
-<a name="l00045"></a>00045     uint32_t fd = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00046"></a>00046     uint32_t amount = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00047"></a>00047     <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(&amp;msg, &amp;remaining);
+<a name="l00045"></a>00045     uint32_t fd = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00046"></a>00046     uint32_t amount = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00047"></a>00047     <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#2c3eba91176547027114524d91a37a50">flush</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00048"></a>00048 
-<a name="l00049"></a>00049     <span class="keywordflow">if</span> (remaining &lt; amount)
-<a name="l00050"></a>00050       <a class="code" href="serialization-c_8h.html#065ff2517b3895a4b099ae2947e40434" title="Copyright (C) 2008 Luke Lu (Zvents, Inc.">HT_THROW_INPUT_OVERRUN</a>(remaining, amount);
+<a name="l00049"></a>00049     <span class="keywordflow">if</span> (decode_remain &lt; amount)
+<a name="l00050"></a>00050       <a class="code" href="serialization-c_8h.html#065ff2517b3895a4b099ae2947e40434" title="Copyright (C) 2008 Luke Lu (Zvents, Inc.">HT_THROW_INPUT_OVERRUN</a>(decode_remain, amount);
 <a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#41ac80b8a4c9a08a5c9670bfa40cbe87">m_broker</a>-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0831f9f4b22d5ad4709d1d3c24732c0">append</a>(&amp;cb, fd, amount, msg, flush);
+<a name="l00052"></a>00052     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_append.html#41ac80b8a4c9a08a5c9670bfa40cbe87">m_broker</a>-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0831f9f4b22d5ad4709d1d3c24732c0">append</a>(&amp;cb, fd, amount, decode_ptr, flush);
 <a name="l00053"></a>00053   }
 <a name="l00054"></a>00054   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
 <a name="l00055"></a>00055     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
 <a name="l00056"></a>00056     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), <span class="stringliteral">"Error handling APPEND message"</span>);
 <a name="l00057"></a>00057   }
 <a name="l00058"></a>00058 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

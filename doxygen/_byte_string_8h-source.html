@@ -39,13 +39,13 @@
 <a name="l00041"></a>00041       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> == 0)
 <a name="l00042"></a>00042         <span class="keywordflow">return</span> 1;
 <a name="l00043"></a>00043       <span class="keyword">const</span> uint8_t *tmp_ptr = <a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
-<a name="l00044"></a>00044       uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78" title="Decode a variable length encoded integer up to 32-bit.">Serialization::decode_vi32</a>(&amp;tmp_ptr);
+<a name="l00044"></a>00044       uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78" title="Decode a variable length encoded integer up to 32-bit.">Serialization::decode_vi32</a>(&amp;tmp_ptr);
 <a name="l00045"></a>00045       <span class="keywordflow">return</span> (tmp_ptr - <a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>) + len;
 <a name="l00046"></a>00046     }
 <a name="l00047"></a>00047 
 <a name="l00048"></a><a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">00048</a>     uint8_t *<a class="code" href="class_hypertable_1_1_byte_string.html#837721eefba6cf8cd76a89361c949a11">next</a>() {
 <a name="l00049"></a>00049       uint8_t *rptr = (uint8_t *)<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
-<a name="l00050"></a>00050       uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78" title="Decode a variable length encoded integer up to 32-bit.">Serialization::decode_vi32</a>(&amp;<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>);
+<a name="l00050"></a>00050       uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#b86f8446db63272ddb0994d1badd2d78" title="Decode a variable length encoded integer up to 32-bit.">Serialization::decode_vi32</a>(&amp;<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>);
 <a name="l00051"></a>00051       <a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> += len;
 <a name="l00052"></a>00052       <span class="keywordflow">return</span> rptr;
 <a name="l00053"></a>00053     }
@@ -56,7 +56,7 @@
 <a name="l00058"></a>00058     }
 <a name="l00059"></a>00059 
 <a name="l00060"></a><a class="code" href="class_hypertable_1_1_byte_string.html#80404272cd189f1a8d0b4297938074bd">00060</a>     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_byte_string.html#80404272cd189f1a8d0b4297938074bd">write</a>(uint8_t *<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)<span class="keyword"> const </span>{
-<a name="l00061"></a>00061       <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00061"></a>00061       <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = <a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
 <a name="l00062"></a>00062       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> == 0)
 <a name="l00063"></a>00063         <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;dst, 0);
 <a name="l00064"></a>00064       <span class="keywordflow">else</span>
@@ -77,7 +77,7 @@
 <a name="l00079"></a><a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">00079</a>     <span class="keyword">const</span> uint8_t *<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>;
 <a name="l00080"></a>00080   };
 <a name="l00081"></a>00081 
-<a name="l00082"></a><a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">00082</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">append_as_byte_string</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dst_buf, <span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
+<a name="l00082"></a><a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">00082</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">append_as_byte_string</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dst_buf, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>) {
 <a name="l00083"></a>00083     <span class="keywordtype">size_t</span> value_len = strlen(str);
 <a name="l00084"></a>00084     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(7 + value_len);
 <a name="l00085"></a>00085     <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, value_len);
@@ -88,50 +88,23 @@
 <a name="l00090"></a>00090     }
 <a name="l00091"></a>00091   }
 <a name="l00092"></a>00092 
-<a name="l00093"></a><a class="code" href="namespace_hypertable.html#316cada51977f26bb040adbe7a4856f7">00093</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">append_as_byte_string</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dst_buf, <span class="keyword">const</span> <span class="keywordtype">void</span> *value, uint32_t value_len) {
-<a name="l00094"></a>00094     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(7 + value_len);
-<a name="l00095"></a>00095     <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, value_len);
-<a name="l00096"></a>00096     <span class="keywordflow">if</span> (value_len &gt; 0) {
-<a name="l00097"></a>00097       memcpy(dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, value, value_len);
-<a name="l00098"></a>00098       dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += value_len;
-<a name="l00099"></a>00099       *dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = 0;
-<a name="l00100"></a>00100     }
-<a name="l00101"></a>00101   }
-<a name="l00102"></a>00102 
-<a name="l00106"></a><a class="code" href="namespace_hypertable.html#111d7deaeac2e4004e4658a26b8a5a8f">00106</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#111d7deaeac2e4004e4658a26b8a5a8f" title="Less than operator for ByteString.">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs2) {
-<a name="l00107"></a>00107     <span class="keyword">const</span> uint8_t *ptr1, *ptr2;
-<a name="l00108"></a>00108     <span class="keywordtype">size_t</span> len1 = bs1.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;ptr1);
-<a name="l00109"></a>00109     <span class="keywordtype">size_t</span> len2 = bs2.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;ptr2);
-<a name="l00110"></a>00110     <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = (len1 &lt; len2) ? len1 : len2;
-<a name="l00111"></a>00111     <span class="keywordtype">int</span> cmp = memcmp(ptr1, ptr2, len);
-<a name="l00112"></a>00112     <span class="keywordflow">return</span> (cmp==0) ? len1 &lt; len2 : cmp &lt; 0;
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114 
-<a name="l00118"></a><a class="code" href="namespace_hypertable.html#a473164f189e208572e3bff7089ed8f2">00118</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#a473164f189e208572e3bff7089ed8f2" title="Equality operator for ByteString.">operator==</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs2) {
-<a name="l00119"></a>00119     <span class="keyword">const</span> uint8_t *ptr1, *ptr2;
-<a name="l00120"></a>00120     <span class="keywordtype">size_t</span> len1 = bs1.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;ptr1);
-<a name="l00121"></a>00121     <span class="keywordtype">size_t</span> len2 = bs2.<a class="code" href="class_hypertable_1_1_byte_string.html#7024f8172399458767093dbb26d86b48">decode_length</a>(&amp;ptr2);
-<a name="l00122"></a>00122     <span class="keywordflow">if</span> (len1 != len2)
-<a name="l00123"></a>00123       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00124"></a>00124     <span class="keywordflow">return</span> memcmp(ptr1, ptr2, len1) == 0;
-<a name="l00125"></a>00125   }
-<a name="l00126"></a>00126 
-<a name="l00130"></a><a class="code" href="namespace_hypertable.html#6cfec2180c5572c97051d441c8613cab">00130</a>   <span class="keyword">inline</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#6cfec2180c5572c97051d441c8613cab" title="Inequality operator for ByteString.">operator!=</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs2) {
-<a name="l00131"></a>00131     <span class="keywordflow">return</span> !(bs1 == bs2);
-<a name="l00132"></a>00132   }
-<a name="l00133"></a>00133 
-<a name="l00134"></a><a class="code" href="struct_hypertable_1_1_lt_byte_string.html">00134</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_lt_byte_string.html">LtByteString</a> {
-<a name="l00135"></a><a class="code" href="struct_hypertable_1_1_lt_byte_string.html#f6584ff699c5e925a73758c1b857845d">00135</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_lt_byte_string.html#f6584ff699c5e925a73758c1b857845d">operator()</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bs2)<span class="keyword"> const </span>{
-<a name="l00136"></a>00136       <span class="keywordflow">return</span> bs1 &lt; bs2;
-<a name="l00137"></a>00137     }
-<a name="l00138"></a>00138   };
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140 }
-<a name="l00141"></a>00141 
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 <span class="preprocessor">#endif // HYPERTABLE_BYTESTRING_H</span>
-<a name="l00144"></a>00144 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00093"></a>00093   <span class="keyword">inline</span> <span class="keywordtype">void</span>
+<a name="l00094"></a><a class="code" href="namespace_hypertable.html#316cada51977f26bb040adbe7a4856f7">00094</a>   <a class="code" href="namespace_hypertable.html#5f5a22c5b149dea668e5be8e647868c2">append_as_byte_string</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;dst_buf, <span class="keyword">const</span> <span class="keywordtype">void</span> *value,
+<a name="l00095"></a>00095                         uint32_t value_len) {
+<a name="l00096"></a>00096     dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(7 + value_len);
+<a name="l00097"></a>00097     <a class="code" href="namespace_hypertable_1_1_serialization.html#76485e00d47270563670c2c108eaeac2" title="Encode a integer (up to 32-bit) in variable length encoding.">Serialization::encode_vi32</a>(&amp;dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, value_len);
+<a name="l00098"></a>00098     <span class="keywordflow">if</span> (value_len &gt; 0) {
+<a name="l00099"></a>00099       memcpy(dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, value, value_len);
+<a name="l00100"></a>00100       dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += value_len;
+<a name="l00101"></a>00101       *dst_buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = 0;
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103   }
+<a name="l00104"></a>00104 }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107 <span class="preprocessor">#endif // HYPERTABLE_BYTESTRING_H</span>
+<a name="l00108"></a>00108 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -20,8 +20,13 @@
 <code>#include &quot;Common/Version.h&quot;</code><br>
 <code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_string_8h-source.html">Common/String.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_common_2_filesystem_8h-source.html">Common/Filesystem.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_file_utils_8h-source.html">Common/FileUtils.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_common_2_config_8h-source.html">Common/Config.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_system_info_8h-source.html">Common/SystemInfo.h</a>&quot;</code><br>
 <code>#include &lt;iostream&gt;</code><br>
-<code>#include &quot;<a class="el" href="_common_2_config_8h-source.html">Config.h</a>&quot;</code><br>
+<code>#include &lt;fstream&gt;</code><br>
+<code>#include &lt;errno.h&gt;</code><br>
 
 <p>
 <div class="dynheader">
@@ -29,7 +34,7 @@ Include dependency graph for Config.cc:</div>
 <div class="dynsection">
 <p><center><img src="_common_2_config_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Common/Config.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Common/Config.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="360,80,499,107"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="531,229,597,256"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="745,80,879,107"><area shape="rect" href="_common_2_config_8h.html" title="Config.h" alt="" coords="1172,80,1244,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="227,155,315,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="385,155,484,181"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="624,155,688,181"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="712,155,821,181"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="1325,155,1461,181"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="423,80,561,107"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="1761,453,1828,480"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="1573,304,1707,331"><area shape="rect" href="_common_2_filesystem_8h.html" title="Common/Filesystem.h" alt="" coords="1660,80,1817,107"><area shape="rect" href="_file_utils_8h.html" title="Common/FileUtils.h" alt="" coords="2400,80,2541,107"><area shape="rect" href="_common_2_config_8h.html" title="Common/Config.h" alt="" coords="1401,80,1532,107"><area shape="rect" href="_system_info_8h.html" title="Common/SystemInfo.h" alt="" coords="2096,80,2256,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="229,155,317,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="443,155,541,181"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="816,379,880,405"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="904,379,1013,405"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="1365,229,1493,256"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="1835,155,1971,181"><area shape="rect" href="_meta_8h.html" title="Common/Meta.h" alt="" coords="1216,155,1339,181"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="756,155,911,181"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="632,229,821,256"><area shape="rect" href="atomic_8h.html" title="atomic.h" alt="" coords="883,304,957,331"><area shape="rect" href="_inet_addr_8h.html" title="Common/InetAddr.h" alt="" coords="2181,155,2325,181"></map>
 </div>
 
 <p>
@@ -41,27 +46,68 @@ Include dependency graph for Config.cc:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html">Hypertable::Config</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#985adcad31cc79422ade96c3a996a541">Hypertable::Config::description</a> (const char *name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#40761710e7431a6359bf3172f17a063d">Hypertable::Config::line_length</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#7450d14b44fd6e09c8fa510cc1844f53">Hypertable::Config::description</a> (const Desc &amp;desc)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">String&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#a6b4530dfdd258cd4c9d10b353e43d8f">Hypertable::Config::usage_str</a> (const char *<a class="el" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a>)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#db0490569f3cc109c47fed5a6d02460f">Hypertable::Config::cmdline_desc</a> (const char *<a class="el" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a>=NULL)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight"><dl class="see" compact><dt><b>See also:</b></dt><dd><a class="el" href="class_hypertable_1_1_properties.html">Properties</a> </dd></dl>
+ <a href="#db0490569f3cc109c47fed5a6d02460f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#da5da4c1368620d28270e3b435c7ddd6">Hypertable::Config::cmdline_hidden_desc</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the command line hidden options description (for positional options).  <a href="#da5da4c1368620d28270e3b435c7ddd6"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">PositionalDesc &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#35812cd947c58bd75c3769df50342a09">Hypertable::Config::cmdline_positional_desc</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the command line positional options description.  <a href="#35812cd947c58bd75c3769df50342a09"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#2766a9afc4afc8072aaebb01885971c9">Hypertable::Config::cmdline_desc</a> (const Desc &amp;)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set the command line options description.  <a href="#2766a9afc4afc8072aaebb01885971c9"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#1a02c1475cafa7e521c3b18cb8c9cf3f">Hypertable::Config::file_desc</a> (const char *<a class="el" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a>=NULL)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the config file options description.  <a href="#1a02c1475cafa7e521c3b18cb8c9cf3f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#e143732c2e58cfaf172c1ffbeb43e88c">Hypertable::Config::file_desc</a> (const Desc &amp;)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set the config file options description.  <a href="#e143732c2e58cfaf172c1ffbeb43e88c"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#48beefcdce607ebecbd7dafa2d35d109">Hypertable::Config::init_default_options</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#9377a4c2da362f6891e5b14b23e5b230">Hypertable::Config::parse_args</a> (int argc, char *argv[], const Desc *desc, const Desc *hidden, const PositionalDesc *p)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#31dbb052b8a7e49aa37e5cb8d66c8674">Hypertable::Config::parse_args</a> (int argc, char *argv[])</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Init helper, has side effects (setting singletons etc.  <a href="#31dbb052b8a7e49aa37e5cb8d66c8674"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#31481090e7b3f12f7ec4e4acc12d6971">Hypertable::Config::parse_file</a> (const String &amp;fname, const Desc &amp;desc, bool allow_unregistered=false)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Parse config file.  <a href="#31481090e7b3f12f7ec4e4acc12d6971"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886">Hypertable::Config::alias</a> (const String &amp;cmdline_opt, const String &amp;file_opt, bool overwrite=false)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Setup command line option alias for config file option.  <a href="#f1b97a89b0c8f92359cc4ddf4da76886"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#a118ba7ef8b099952713623a288b044c">Hypertable::Config::sync_aliases</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sync alias values.  <a href="#a118ba7ef8b099952713623a288b044c"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#9d322fd961e18f03cb9b92d4f48b0b7c">Hypertable::Config::init_default_actions</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Variables</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">VarMap&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#0303e92548eeb6055350adcd0e9f4474">Hypertable::Config::varmap</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">RecMutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#1e525b1b14407d344365bc7fb7b5bb0b">Hypertable::Config::rec_mutex</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">stored option variables map singleton  <a href="#0303e92548eeb6055350adcd0e9f4474"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">String&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#e2437aeb57fafb278e36ee4fdd3d40ca">Hypertable::Config::cfgfile</a></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">global config mutex  <a href="#1e525b1b14407d344365bc7fb7b5bb0b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">PropertiesPtr&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44">Hypertable::Config::properties</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">cfg filename  <a href="#e2437aeb57fafb278e36ee4fdd3d40ca"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#3d99915ff16a692b23829e87731e51d0">Hypertable::Config::descp</a> = NULL</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">stored option variables map singleton  <a href="#9e3d35daa165758659d83583f7a53c44"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">String&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca">Hypertable::Config::filename</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">config filename  <a href="#7baecce376f227f99664f0b4ee8609ca"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#61a9fe96e0e2771b5ff929509399b60e">Hypertable::Config::file_loaded</a> = false</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">whether a config file was loaded after init  <a href="#61a9fe96e0e2771b5ff929509399b60e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#02b4ee8694a5f8a2b1ca1cb578a880cb">Hypertable::Config::cmdline_descp</a> = NULL</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#bd01d99e7bb0de11bb24609c0ffa0bad">Hypertable::Config::cmdline_hidden_descp</a> = NULL</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">PositionalDesc *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#c848db80280e97cc5001025e011b16ba">Hypertable::Config::cmdline_positional_descp</a> = NULL</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">Desc *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_config.html#1042361fbc088640d22fb3c7330dcb40">Hypertable::Config::file_descp</a> = NULL</td></tr>
 
 </table>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:01:23 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:30:02 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

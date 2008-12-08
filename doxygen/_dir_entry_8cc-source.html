@@ -19,33 +19,34 @@
 <h1>DirEntry.cc</h1><a href="_dir_entry_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
 <a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
-<a name="l00024"></a>00024 
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_dir_entry_8h.html">DirEntry.h</a>"</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00028"></a>00028 <span class="keyword">using namespace </span>Serialization;
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">namespace </span>Hyperspace {
-<a name="l00031"></a>00031 
-<a name="l00032"></a><a class="code" href="namespace_hyperspace.html#b9ebc90157f7fb8bf992246c6ad59dee">00032</a>   <span class="keywordtype">size_t</span> <a class="code" href="namespace_hyperspace.html#b9ebc90157f7fb8bf992246c6ad59dee" title="Returns the number of bytes required to encode (serialize) the given directory entry...">encoded_length_dir_entry</a>(<span class="keyword">const</span> <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
-<a name="l00033"></a>00033     <span class="keywordflow">return</span> 1 + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a>);
-<a name="l00034"></a>00034   }
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="namespace_hyperspace.html#79aae381e66863ef1e3728240b86e72f">00036</a>   <span class="keywordtype">void</span> <a class="code" href="namespace_hyperspace.html#79aae381e66863ef1e3728240b86e72f" title="Encodes (serializes) the given directory entry to a buffer.">encode_dir_entry</a>(uint8_t **bufp, <span class="keyword">const</span> <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
-<a name="l00037"></a>00037     <a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b" title="Encodes a boolean into the given buffer.">encode_bool</a>(bufp, dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#d51d99d92a6d6c8589a60df08c843ca1" title="Boolean value indicating whether or not this entry is a directory.">is_dir</a>);
-<a name="l00038"></a>00038     <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a>);
-<a name="l00039"></a>00039   }
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;
-<a name="l00042"></a><a class="code" href="namespace_hyperspace.html#fa966c19328c4030309bcb61e50deb56">00042</a>   <a class="code" href="namespace_hyperspace.html#fa966c19328c4030309bcb61e50deb56" title="Decodes (unserializes) a directory entry from a buffer.">decode_dir_entry</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp,
-<a name="l00043"></a>00043                          <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
-<a name="l00044"></a>00044     <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding dir entry"</span>,
-<a name="l00045"></a>00045       dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#d51d99d92a6d6c8589a60df08c843ca1" title="Boolean value indicating whether or not this entry is a directory.">is_dir</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(bufp, remainp);
-<a name="l00046"></a>00046       dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp));
-<a name="l00047"></a>00047     <span class="keywordflow">return</span> dir_entry;
-<a name="l00048"></a>00048   }
-<a name="l00049"></a>00049 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00025"></a>00025 
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_dir_entry_8h.html">DirEntry.h</a>"</span>
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00029"></a>00029 <span class="keyword">using namespace </span>Serialization;
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hyperspace {
+<a name="l00032"></a>00032 
+<a name="l00033"></a><a class="code" href="namespace_hyperspace.html#b9ebc90157f7fb8bf992246c6ad59dee">00033</a>   <span class="keywordtype">size_t</span> <a class="code" href="namespace_hyperspace.html#b9ebc90157f7fb8bf992246c6ad59dee" title="Returns the number of bytes required to encode (serialize) the given directory entry...">encoded_length_dir_entry</a>(<span class="keyword">const</span> <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
+<a name="l00034"></a>00034     <span class="keywordflow">return</span> 1 + <a class="code" href="namespace_hypertable_1_1_serialization.html#4ca82afa281360df02b9711740567e27" title="Computes the encoded length of vstr Assuming string length can be encoded in 32-bit...">encoded_length_vstr</a>(dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a>);
+<a name="l00035"></a>00035   }
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="namespace_hyperspace.html#79aae381e66863ef1e3728240b86e72f">00037</a>   <span class="keywordtype">void</span> <a class="code" href="namespace_hyperspace.html#79aae381e66863ef1e3728240b86e72f" title="Encodes (serializes) the given directory entry to a buffer.">encode_dir_entry</a>(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, <span class="keyword">const</span> <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
+<a name="l00038"></a>00038     <a class="code" href="namespace_hypertable_1_1_serialization.html#5cf71fe45c648fab615820bc2bf50a4b" title="Encodes a boolean into the given buffer.">encode_bool</a>(bufp, dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#d51d99d92a6d6c8589a60df08c843ca1" title="Boolean value indicating whether or not this entry is a directory.">is_dir</a>);
+<a name="l00039"></a>00039     <a class="code" href="namespace_hypertable_1_1_serialization.html#40ce52e8ba556769374a00f7149b167e" title="Encode a String as vstr.">encode_vstr</a>(bufp, dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a>);
+<a name="l00040"></a>00040   }
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;
+<a name="l00043"></a><a class="code" href="namespace_hyperspace.html#fa966c19328c4030309bcb61e50deb56">00043</a>   <a class="code" href="namespace_hyperspace.html#fa966c19328c4030309bcb61e50deb56" title="Decodes (unserializes) a directory entry from a buffer.">decode_dir_entry</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, <span class="keywordtype">size_t</span> *remainp,
+<a name="l00044"></a>00044                          <a class="code" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> &amp;dir_entry) {
+<a name="l00045"></a>00045     <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding dir entry"</span>,
+<a name="l00046"></a>00046       dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#d51d99d92a6d6c8589a60df08c843ca1" title="Boolean value indicating whether or not this entry is a directory.">is_dir</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(bufp, remainp);
+<a name="l00047"></a>00047       dir_entry.<a class="code" href="struct_hyperspace_1_1_dir_entry.html#220baa567765fadcf664230749f3ed39" title="Directory entry name.">name</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#fd9186925807e60268fa7a2ae2c128a8" title="Decode a vstr (vint64, data, null).">decode_vstr</a>(bufp, remainp));
+<a name="l00048"></a>00048     <span class="keywordflow">return</span> dir_entry;
+<a name="l00049"></a>00049   }
+<a name="l00050"></a>00050 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

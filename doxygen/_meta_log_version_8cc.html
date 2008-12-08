@@ -17,6 +17,8 @@
 <div class="nav">
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_3be4c2a439d9f674975a3d94c602c8e3.html">Hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_ad5135801673f2e4c4e1be66fcd2e528.html">Lib</a></div>
 <h1>MetaLogVersion.cc File Reference</h1><code>#include &quot;<a class="el" href="_compat_8h-source.html">Common/Compat.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_serialization_8h-source.html">Common/Serialization.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_meta_log_version_8h-source.html">MetaLogVersion.h</a>&quot;</code><br>
 
 <p>
@@ -25,7 +27,7 @@ Include dependency graph for MetaLogVersion.cc:</div>
 <div class="dynsection">
 <p><center><img src="_meta_log_version_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Hypertable/Lib/MetaLogVersion.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Hypertable/Lib/MetaLogVersion.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="307,80,445,107"><area shape="rect" href="_meta_log_version_8h.html" title="MetaLogVersion.h" alt="" coords="469,80,600,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="225,155,313,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="433,155,532,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="189,229,256,256"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="312,80,451,107"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="704,80,838,107"><area shape="rect" href="_serialization_8h.html" title="Common/Serialization.h" alt="" coords="1074,80,1242,107"><area shape="rect" href="_meta_log_version_8h.html" title="MetaLogVersion.h" alt="" coords="900,80,1031,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="338,155,426,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="119,155,218,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="531,229,598,256"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="619,155,683,181"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="707,155,816,181"><area shape="rect" href="serialization&#45;c_8h.html" title="serialization&#45;c.h" alt="" coords="1110,155,1227,181"><area shape="rect" href="endian&#45;c_8h.html" title="endian&#45;c.h" alt="" coords="1078,229,1163,256"></map>
 </div>
 
 <p>
@@ -34,17 +36,20 @@ Include dependency graph for MetaLogVersion.cc:</div>
 <tr><td colspan="2"><br><h2>Namespaces</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html">Hypertable</a></td></tr>
 
+<tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#04ae437d67895d20b2a5a474eeea1624">Hypertable::operator&lt;&lt;</a> (std::ostream &amp;out, const MetaLogHeader &amp;h)</td></tr>
+
 <tr><td colspan="2"><br><h2>Variables</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#70f9d63b0a2948b16344edd43d677f97">Hypertable::RSML_VERSION</a> = 0x0100</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">Hypertable::RSML_PREFIX</a> = &quot;HRSML&quot;</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#4906abcbab51ee23dd0fa7e432bc6f8f">Hypertable::RSML_PREFIX</a> = &quot;RSML&quot;</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const uint16_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#b9a687972912149a418e13207ec1e486">Hypertable::MML_VERSION</a> = 0x0100</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#c7e2dd3533fe290efb567aebeee5864f">Hypertable::MML_PREFIX</a> = &quot;MML&quot;</td></tr>
 
 </table>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:04:32 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:34:19 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

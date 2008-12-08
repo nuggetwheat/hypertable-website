@@ -40,50 +40,63 @@ Collaboration diagram for Hypertable::ScanContext:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_scan_context__coll__graph.png" border="0" usemap="#_hypertable_1_1_scan_context__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_scan_context__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,8,372,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="struct_hypertable_1_1_cell_filter_info.html" title="Hypertable::CellFilterInfo" alt="" coords="191,59,362,86"><area shape="rect" href="class_hypertable_1_1_range_spec.html" title="Identifies a range." alt="" coords="194,110,359,136"><area shape="rect" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate." alt="" coords="199,160,354,187"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,23,372,50"><area shape="rect" href="class_hypertable_1_1_dynamic_buffer.html" title="Hypertable::DynamicBuffer" alt="" coords="424,56,608,83"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,23,79,50"><area shape="rect" href="struct_hypertable_1_1_cell_filter_info.html" title="Hypertable::CellFilterInfo" alt="" coords="431,107,601,134"><area shape="rect" href="class_hypertable_1_1_range_spec.html" title="Identifies a range." alt="" coords="433,158,599,184"><area shape="rect" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate." alt="" coords="439,208,593,235"><area shape="rect" href="class_hypertable_1_1_serialized_key.html" title="Hypertable::SerializedKey" alt="" coords="427,268,605,295"><area shape="rect" href="class_hypertable_1_1_byte_string.html" title="Hypertable::ByteString" alt="" coords="197,268,355,295"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_scan_context-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#9a590609b7d131853904c95d5d8ead48">ScanContext</a> (int64_t ts, <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *ss, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range_, <a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067">ScanContext</a> (int64_t rev, const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *ss, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *<a class="el" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a>, <a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#9a590609b7d131853904c95d5d8ead48"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#d314c65fcf9dd373b06d99916ed22fe9">ScanContext</a> (int64_t ts, <a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#bbefe5b9ad9926aaecf5c37386576067"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#94394184e65d0458d50fc09031ba0c7e">ScanContext</a> (int64_t rev, <a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#d314c65fcf9dd373b06d99916ed22fe9"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#e6957a6527496324b4ac406eb0c16543">ScanContext</a> (int64_t ts)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#94394184e65d0458d50fc09031ba0c7e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#02dda53a45a945b8b5e1d0ef140099df">ScanContext</a> (int64_t rev=<a class="el" href="namespace_hypertable.html#9a641818a91ae682ee43e3f97ef89537">TIMESTAMP_MAX</a>)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#e6957a6527496324b4ac406eb0c16543"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#02dda53a45a945b8b5e1d0ef140099df"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#a8ea9425dc79779913cf8bffdc243363">ScanContext</a> (<a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#a8ea9425dc79779913cf8bffdc243363"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#56999458f7da9a38071842e78df1c3d9">spec</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#7dc9a27fa2aeeb3ea2e53f44f7f7bbed">spec</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#58620e3f70f47d9b62f29bab1f4c7de8">range</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#a840a0f4895a5a04c830deb6f28e2afc">start_row</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#13df251f2bd2cd7317a61481c546aef8">dbuf</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#92b80cd2ee22947f06d1072774e05c3e">end_row</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#23afd1152d4942934c59fab60ed41488">start_key</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#7b99a7f780686ccdba0c5f3b85aabde9">end_key</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#cbdbaa39374b92a2254e5e32d7865a1a">start_row</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#d0c7a1246845433568073ccb8883a8a0">end_row</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#489fe9dbca50a62a35e9f884034c08c0">single_row</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#ec4d6bcee47ec60623a85915346751a7">revision</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::pair&lt; int64_t,<br>
- int64_t &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#b34427857e7c05dd94f6e2d21b851e4c">interval</a></td></tr>
+ int64_t &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#e23150c0d041aa02e99db4d74911f271">time_interval</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#039c80b199c4532bad37b8e55d503277">family_mask</a> [256]</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_cell_filter_info.html">CellFilterInfo</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#962c1cfc28fd79211a58394af32e1f8f">family_info</a> [256]</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc">initialize</a> (int64_t ts, <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *ss, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range_, <a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4">initialize</a> (int64_t rev, const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *ss, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *<a class="el" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a>, <a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initializes the scan context.  <a href="#fdc64411b4bf7e6b7fc47bd5aa7cffcc"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Initializes the scan context.  <a href="#864acc31edd65453cd751c2efd5db8c4"></a><br></td></tr>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Scan context information. 
 <p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00047">47</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="9a590609b7d131853904c95d5d8ead48"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="9a590609b7d131853904c95d5d8ead48" args="(int64_t ts, ScanSpec *ss, RangeSpec *range_, SchemaPtr &amp;sp)" -->
+<a class="anchor" name="bbefe5b9ad9926aaecf5c37386576067"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="bbefe5b9ad9926aaecf5c37386576067" args="(int64_t rev, const ScanSpec *ss, const RangeSpec *range, SchemaPtr &amp;sp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -91,24 +104,24 @@ Scan context information.
           <td class="memname">Hypertable::ScanContext::ScanContext           </td>
           <td>(</td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>ts</em>, </td>
+          <td class="paramname"> <em>rev</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td>
           <td class="paramname"> <em>ss</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
-          <td class="paramname"> <em>range_</em>, </td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
+          <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>sp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -125,18 +138,18 @@ Constructor.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ts</em>&nbsp;</td><td>scan timestamp (point in time when scan began) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rev</em>&nbsp;</td><td>scan revision </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>ss</em>&nbsp;</td><td>scan specification </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>range_</em>&nbsp;</td><td>range specifier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>range specifier </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sp</em>&nbsp;</td><td>shared pointer to schema object </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00067">67</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00070">70</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d314c65fcf9dd373b06d99916ed22fe9"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="d314c65fcf9dd373b06d99916ed22fe9" args="(int64_t ts, SchemaPtr &amp;sp)" -->
+<a class="anchor" name="94394184e65d0458d50fc09031ba0c7e"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="94394184e65d0458d50fc09031ba0c7e" args="(int64_t rev, SchemaPtr &amp;sp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -144,12 +157,12 @@ Constructor.
           <td class="memname">Hypertable::ScanContext::ScanContext           </td>
           <td>(</td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>ts</em>, </td>
+          <td class="paramname"> <em>rev</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>sp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -166,16 +179,16 @@ Constructor.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ts</em>&nbsp;</td><td>scan timestamp (point in time when scan began) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rev</em>&nbsp;</td><td>scan revision </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sp</em>&nbsp;</td><td>shared pointer to schema object </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00077">77</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00081">81</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e6957a6527496324b4ac406eb0c16543"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="e6957a6527496324b4ac406eb0c16543" args="(int64_t ts)" -->
+<a class="anchor" name="02dda53a45a945b8b5e1d0ef140099df"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="02dda53a45a945b8b5e1d0ef140099df" args="(int64_t rev=TIMESTAMP_MAX)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -183,7 +196,7 @@ Constructor.
           <td class="memname">Hypertable::ScanContext::ScanContext           </td>
           <td>(</td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>ts</em>          </td>
+          <td class="paramname"> <em>rev</em> = <code><a class="el" href="namespace_hypertable.html#9a641818a91ae682ee43e3f97ef89537">TIMESTAMP_MAX</a></code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -194,19 +207,48 @@ Constructor.
 <p>
 Constructor. 
 <p>
-Calls <a class="el" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc" title="Initializes the scan context.">initialize()</a> with an empty schema pointer.<p>
+Calls <a class="el" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize()</a> with an empty schema pointer.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ts</em>&nbsp;</td><td>scan timestamp (point in time when scan began) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rev</em>&nbsp;</td><td>scan revision </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00086">86</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00090">90</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a8ea9425dc79779913cf8bffdc243363"></a><!-- doxytag: member="Hypertable::ScanContext::ScanContext" ref="a8ea9425dc79779913cf8bffdc243363" args="(SchemaPtr &amp;sp)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::ScanContext::ScanContext           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>sp</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Constructor. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>sp</em>&nbsp;</td><td>shared pointer to schema object </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00100">100</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="fdc64411b4bf7e6b7fc47bd5aa7cffcc"></a><!-- doxytag: member="Hypertable::ScanContext::initialize" ref="fdc64411b4bf7e6b7fc47bd5aa7cffcc" args="(int64_t ts, ScanSpec *ss, RangeSpec *range_, SchemaPtr &amp;sp)" -->
+<a class="anchor" name="864acc31edd65453cd751c2efd5db8c4"></a><!-- doxytag: member="Hypertable::ScanContext::initialize" ref="864acc31edd65453cd751c2efd5db8c4" args="(int64_t rev, const ScanSpec *ss, const RangeSpec *range, SchemaPtr &amp;sp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -214,24 +256,24 @@ Calls <a class="el" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6
           <td class="memname">void ScanContext::initialize           </td>
           <td>(</td>
           <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>ts</em>, </td>
+          <td class="paramname"> <em>rev</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> *&nbsp;</td>
           <td class="paramname"> <em>ss</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
-          <td class="paramname"> <em>range_</em>, </td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *&nbsp;</td>
+          <td class="paramname"> <em>range</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>sp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -249,9 +291,9 @@ Initializes the scan context.
 Sets up the family_mask filter that allows for quick lookups to see if a family is included in the scan. Also sets up family_info entries for the column families that are included in the scan which contains cell garbage collection info for each family (e.g. cutoff timestamp and number of copies to keep). Also sets up end_row to be the last possible key in spec-&gt;end_row.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>ts</em>&nbsp;</td><td>scan timestamp (point in time when scan began) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>rev</em>&nbsp;</td><td>scan revision </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>ss</em>&nbsp;</td><td>scan specification </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>range_</em>&nbsp;</td><td>range specifier </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>range</em>&nbsp;</td><td>range specifier </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sp</em>&nbsp;</td><td>shared pointer to schema object </td></tr>
   </table>
 </dl>
@@ -268,7 +310,7 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> <a class="el" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">Hypertable::ScanContext::schema_ptr</a>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> <a class="el" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">Hypertable::ScanContext::schema_ptr</a>          </td>
         </tr>
       </table>
 </div>
@@ -280,12 +322,12 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 </div>
 </div><p>
-<a class="anchor" name="56999458f7da9a38071842e78df1c3d9"></a><!-- doxytag: member="Hypertable::ScanContext::spec" ref="56999458f7da9a38071842e78df1c3d9" args="" -->
+<a class="anchor" name="7dc9a27fa2aeeb3ea2e53f44f7f7bbed"></a><!-- doxytag: member="Hypertable::ScanContext::spec" ref="7dc9a27fa2aeeb3ea2e53f44f7f7bbed" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a>* <a class="el" href="class_hypertable_1_1_scan_context.html#56999458f7da9a38071842e78df1c3d9">Hypertable::ScanContext::spec</a>          </td>
+          <td class="memname">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a>* <a class="el" href="class_hypertable_1_1_scan_context.html#7dc9a27fa2aeeb3ea2e53f44f7f7bbed">Hypertable::ScanContext::spec</a>          </td>
         </tr>
       </table>
 </div>
@@ -297,12 +339,12 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 </div>
 </div><p>
-<a class="anchor" name="58620e3f70f47d9b62f29bab1f4c7de8"></a><!-- doxytag: member="Hypertable::ScanContext::range" ref="58620e3f70f47d9b62f29bab1f4c7de8" args="" -->
+<a class="anchor" name="680cbad27955bba8aa4a1caadcc31961"></a><!-- doxytag: member="Hypertable::ScanContext::range" ref="680cbad27955bba8aa4a1caadcc31961" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a>* <a class="el" href="class_hypertable_1_1_scan_context.html#58620e3f70f47d9b62f29bab1f4c7de8">Hypertable::ScanContext::range</a>          </td>
+          <td class="memname">const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a>* <a class="el" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">Hypertable::ScanContext::range</a>          </td>
         </tr>
       </table>
 </div>
@@ -314,12 +356,12 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 </div>
 </div><p>
-<a class="anchor" name="a840a0f4895a5a04c830deb6f28e2afc"></a><!-- doxytag: member="Hypertable::ScanContext::start_row" ref="a840a0f4895a5a04c830deb6f28e2afc" args="" -->
+<a class="anchor" name="13df251f2bd2cd7317a61481c546aef8"></a><!-- doxytag: member="Hypertable::ScanContext::dbuf" ref="13df251f2bd2cd7317a61481c546aef8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="class_hypertable_1_1_scan_context.html#a840a0f4895a5a04c830deb6f28e2afc">Hypertable::ScanContext::start_row</a>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="el" href="class_hypertable_1_1_scan_context.html#13df251f2bd2cd7317a61481c546aef8">Hypertable::ScanContext::dbuf</a>          </td>
         </tr>
       </table>
 </div>
@@ -331,12 +373,12 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 </div>
 </div><p>
-<a class="anchor" name="92b80cd2ee22947f06d1072774e05c3e"></a><!-- doxytag: member="Hypertable::ScanContext::end_row" ref="92b80cd2ee22947f06d1072774e05c3e" args="" -->
+<a class="anchor" name="23afd1152d4942934c59fab60ed41488"></a><!-- doxytag: member="Hypertable::ScanContext::start_key" ref="23afd1152d4942934c59fab60ed41488" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="class_hypertable_1_1_scan_context.html#92b80cd2ee22947f06d1072774e05c3e">Hypertable::ScanContext::end_row</a>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="el" href="class_hypertable_1_1_scan_context.html#23afd1152d4942934c59fab60ed41488">Hypertable::ScanContext::start_key</a>          </td>
         </tr>
       </table>
 </div>
@@ -348,12 +390,29 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 </div>
 </div><p>
-<a class="anchor" name="b34427857e7c05dd94f6e2d21b851e4c"></a><!-- doxytag: member="Hypertable::ScanContext::interval" ref="b34427857e7c05dd94f6e2d21b851e4c" args="" -->
+<a class="anchor" name="7b99a7f780686ccdba0c5f3b85aabde9"></a><!-- doxytag: member="Hypertable::ScanContext::end_key" ref="7b99a7f780686ccdba0c5f3b85aabde9" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::pair&lt;int64_t, int64_t&gt; <a class="el" href="class_hypertable_1_1_scan_context.html#b34427857e7c05dd94f6e2d21b851e4c">Hypertable::ScanContext::interval</a>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="el" href="class_hypertable_1_1_scan_context.html#7b99a7f780686ccdba0c5f3b85aabde9">Hypertable::ScanContext::end_key</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00054">54</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="cbdbaa39374b92a2254e5e32d7865a1a"></a><!-- doxytag: member="Hypertable::ScanContext::start_row" ref="cbdbaa39374b92a2254e5e32d7865a1a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> <a class="el" href="class_hypertable_1_1_scan_context.html#cbdbaa39374b92a2254e5e32d7865a1a">Hypertable::ScanContext::start_row</a>          </td>
         </tr>
       </table>
 </div>
@@ -362,6 +421,74 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 <p>
 
 <p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00055">55</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d0c7a1246845433568073ccb8883a8a0"></a><!-- doxytag: member="Hypertable::ScanContext::end_row" ref="d0c7a1246845433568073ccb8883a8a0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> <a class="el" href="class_hypertable_1_1_scan_context.html#d0c7a1246845433568073ccb8883a8a0">Hypertable::ScanContext::end_row</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00055">55</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="489fe9dbca50a62a35e9f884034c08c0"></a><!-- doxytag: member="Hypertable::ScanContext::single_row" ref="489fe9dbca50a62a35e9f884034c08c0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_scan_context.html#489fe9dbca50a62a35e9f884034c08c0">Hypertable::ScanContext::single_row</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00056">56</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ec4d6bcee47ec60623a85915346751a7"></a><!-- doxytag: member="Hypertable::ScanContext::revision" ref="ec4d6bcee47ec60623a85915346751a7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int64_t <a class="el" href="class_hypertable_1_1_scan_context.html#ec4d6bcee47ec60623a85915346751a7">Hypertable::ScanContext::revision</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00057">57</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e23150c0d041aa02e99db4d74911f271"></a><!-- doxytag: member="Hypertable::ScanContext::time_interval" ref="e23150c0d041aa02e99db4d74911f271" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::pair&lt;int64_t, int64_t&gt; <a class="el" href="class_hypertable_1_1_scan_context.html#e23150c0d041aa02e99db4d74911f271">Hypertable::ScanContext::time_interval</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00058">58</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
@@ -378,7 +505,7 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00056">56</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00059">59</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
@@ -395,13 +522,13 @@ Create Start <a class="el" href="class_hypertable_1_1_key.html" title="Provides 
 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00057">57</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_context_8h-source.html#l00060">60</a> of file <a class="el" href="_scan_context_8h-source.html">ScanContext.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_scan_context_8h-source.html">ScanContext.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_scan_context_8cc-source.html">ScanContext.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:45 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:25 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

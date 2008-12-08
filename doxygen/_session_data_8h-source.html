@@ -27,110 +27,112 @@
 <a name="l00029"></a>00029 <span class="preprocessor">#include &lt;boost/thread/xtime.hpp&gt;</span>
 <a name="l00030"></a>00030 
 <a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_notification_8h.html">Notification.h</a>"</span>
-<a name="l00034"></a>00034 
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_time_8h.html">Common/Time.h</a>"</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_notification_8h.html">Notification.h</a>"</span>
 <a name="l00035"></a>00035 
-<a name="l00036"></a>00036 <span class="keyword">namespace </span>Hyperspace {
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038   <span class="keyword">using namespace </span>Hypertable;
-<a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="class_hyperspace_1_1_session_data.html">00040</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_session_data.html">SessionData</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00041"></a>00041   <span class="keyword">public</span>:
-<a name="l00042"></a><a class="code" href="class_hyperspace_1_1_session_data.html#833c3b045b53d065748d708a47934769">00042</a>     <a class="code" href="class_hyperspace_1_1_session_data.html#833c3b045b53d065748d708a47934769">SessionData</a>(<span class="keyword">struct</span> sockaddr_in &amp;_addr, uint32_t lease_interval, uint64_t _id) : <a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">addr</a>(_addr), <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>(lease_interval), <a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">id</a>(_id), <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>(false) {
-<a name="l00043"></a>00043       boost::xtime_get(&amp;<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, boost::TIME_UTC);
-<a name="l00044"></a>00044       <a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>.sec += lease_interval;
-<a name="l00045"></a>00045       <span class="keywordflow">return</span>;
-<a name="l00046"></a>00046     }
-<a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="class_hyperspace_1_1_session_data.html#4a92b1db62c5a09988f6052249b0798e">00048</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#4a92b1db62c5a09988f6052249b0798e">add_notification</a>(<a class="code" href="class_hyperspace_1_1_notification.html">Notification</a> *notification) {
-<a name="l00049"></a>00049       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00050"></a>00050       <span class="keywordflow">if</span> (<a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>) {
-<a name="l00051"></a>00051         notification-&gt;<a class="code" href="class_hyperspace_1_1_notification.html#a96f259cf46c6061293da8660d8d2f9c">event_ptr</a>-&gt;decrement_notification_count();
-<a name="l00052"></a>00052         <span class="keyword">delete</span> notification;
-<a name="l00053"></a>00053       }
-<a name="l00054"></a>00054       <span class="keywordflow">else</span>
-<a name="l00055"></a>00055         <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.push_back(notification);
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="class_hyperspace_1_1_session_data.html#b777ba42e25424ed43978b0a46e727bb">00058</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#b777ba42e25424ed43978b0a46e727bb">purge_notifications</a>(uint64_t event_id) {
-<a name="l00059"></a>00059       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00060"></a>00060       std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
-<a name="l00061"></a>00061       <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
-<a name="l00062"></a>00062         <span class="keywordflow">if</span> ((*iter)-&gt;event_ptr-&gt;get_id() &lt;= event_id) {
-<a name="l00063"></a>00063           (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
-<a name="l00064"></a>00064           <span class="keyword">delete</span> *iter;
-<a name="l00065"></a>00065           iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
-<a name="l00066"></a>00066         }
-<a name="l00067"></a>00067         <span class="keywordflow">else</span>
-<a name="l00068"></a>00068           iter++;
-<a name="l00069"></a>00069       }
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071 
-<a name="l00072"></a><a class="code" href="class_hyperspace_1_1_session_data.html#871c308061db443d19fca6edfe267b79">00072</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#871c308061db443d19fca6edfe267b79">renew_lease</a>() {
-<a name="l00073"></a>00073       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00074"></a>00074       boost::xtime now;
-<a name="l00075"></a>00075       boost::xtime_get(&amp;now, boost::TIME_UTC);
-<a name="l00076"></a>00076       <span class="keywordflow">if</span> (xtime_cmp(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, now) &lt; 0) {
-<a name="l00077"></a>00077         <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a> = <span class="keyword">true</span>;
-<a name="l00078"></a>00078         std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
-<a name="l00079"></a>00079         <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
-<a name="l00080"></a>00080           (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
-<a name="l00081"></a>00081           <span class="keyword">delete</span> *iter;
-<a name="l00082"></a>00082           iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
-<a name="l00083"></a>00083         }
-<a name="l00084"></a>00084         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00085"></a>00085       }
-<a name="l00086"></a>00086       memcpy(&amp;<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, &amp;now, <span class="keyword">sizeof</span>(boost::xtime));
-<a name="l00087"></a>00087       <a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>.sec += <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>;
-<a name="l00088"></a>00088       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00089"></a>00089     }
-<a name="l00090"></a>00090 
-<a name="l00091"></a><a class="code" href="class_hyperspace_1_1_session_data.html#e0eb532c53dd7a78c501a897f56d3124">00091</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#e0eb532c53dd7a78c501a897f56d3124">is_expired</a>(boost::xtime &amp;now) {
-<a name="l00092"></a>00092       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00093"></a>00093       <span class="keywordflow">return</span> (xtime_cmp(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, now) &lt; 0) ? <span class="keyword">true</span> : <span class="keyword">false</span>;
-<a name="l00094"></a>00094     }
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="class_hyperspace_1_1_session_data.html#f5dd9587e7ac70284166f2eb10cd4c63">00096</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#f5dd9587e7ac70284166f2eb10cd4c63">expire</a>() {
-<a name="l00097"></a>00097       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00098"></a>00098       <span class="keywordflow">if</span> (<a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>)
-<a name="l00099"></a>00099         <span class="keywordflow">return</span>;
-<a name="l00100"></a>00100       <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a> = <span class="keyword">true</span>;
-<a name="l00101"></a>00101       std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
-<a name="l00102"></a>00102       <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
-<a name="l00103"></a>00103         (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
-<a name="l00104"></a>00104         <span class="keyword">delete</span> *iter;
-<a name="l00105"></a>00105         iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
-<a name="l00106"></a>00106       }
-<a name="l00107"></a>00107     }
-<a name="l00108"></a>00108 
-<a name="l00109"></a><a class="code" href="class_hyperspace_1_1_session_data.html#63a22f6cbbcb79dca68ddc116323ac66">00109</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#63a22f6cbbcb79dca68ddc116323ac66">add_handle</a>(uint64_t handle) {
-<a name="l00110"></a>00110       boost::mutex::scoped_lock lock(<a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>);
-<a name="l00111"></a>00111       <a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">handles</a>.insert(handle);
-<a name="l00112"></a>00112     }
-<a name="l00113"></a>00113 
-<a name="l00114"></a><a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">00114</a>     boost::mutex <a class="code" href="class_hyperspace_1_1_session_data.html#8cf20a0abec604e98feaa05602fec1f8">mutex</a>;
-<a name="l00115"></a><a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">00115</a>     <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">addr</a>;
-<a name="l00116"></a><a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">00116</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>;
-<a name="l00117"></a><a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">00117</a>     uint64_t <a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">id</a>;
-<a name="l00118"></a><a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">00118</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>;
-<a name="l00119"></a><a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">00119</a>     boost::xtime <a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>;
-<a name="l00120"></a><a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">00120</a>     std::set&lt;uint64_t&gt; <a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">handles</a>;
-<a name="l00121"></a><a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">00121</a>     std::list&lt;Notification *&gt; <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>;
-<a name="l00122"></a>00122   };
-<a name="l00123"></a>00123 
-<a name="l00124"></a><a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">00124</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;SessionData&gt; <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">namespace </span>Hyperspace {
+<a name="l00038"></a>00038 
+<a name="l00039"></a>00039   <span class="keyword">using namespace </span>Hypertable;
+<a name="l00040"></a>00040 
+<a name="l00041"></a><a class="code" href="class_hyperspace_1_1_session_data.html">00041</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_session_data.html">SessionData</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00042"></a>00042   <span class="keyword">public</span>:
+<a name="l00043"></a><a class="code" href="class_hyperspace_1_1_session_data.html#ac23c49f887221d2a1c7c6d139c341ab">00043</a>     <a class="code" href="class_hyperspace_1_1_session_data.html#ac23c49f887221d2a1c7c6d139c341ab">SessionData</a>(<span class="keyword">const</span> sockaddr_in &amp;_addr, uint32_t lease_interval, uint64_t _id)
+<a name="l00044"></a>00044       : <a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">addr</a>(_addr), <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>(lease_interval), <a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">id</a>(_id), <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>(false) {
+<a name="l00045"></a>00045       boost::xtime_get(&amp;<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, boost::TIME_UTC);
+<a name="l00046"></a>00046       <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">xtime_add_millis</a>(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, lease_interval);
+<a name="l00047"></a>00047       <span class="keywordflow">return</span>;
+<a name="l00048"></a>00048     }
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="class_hyperspace_1_1_session_data.html#4a92b1db62c5a09988f6052249b0798e">00050</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#4a92b1db62c5a09988f6052249b0798e">add_notification</a>(<a class="code" href="class_hyperspace_1_1_notification.html">Notification</a> *notification) {
+<a name="l00051"></a>00051       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00052"></a>00052       <span class="keywordflow">if</span> (<a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>) {
+<a name="l00053"></a>00053         notification-&gt;<a class="code" href="class_hyperspace_1_1_notification.html#a96f259cf46c6061293da8660d8d2f9c">event_ptr</a>-&gt;decrement_notification_count();
+<a name="l00054"></a>00054         <span class="keyword">delete</span> notification;
+<a name="l00055"></a>00055       }
+<a name="l00056"></a>00056       <span class="keywordflow">else</span>
+<a name="l00057"></a>00057         <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.push_back(notification);
+<a name="l00058"></a>00058     }
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="class_hyperspace_1_1_session_data.html#b777ba42e25424ed43978b0a46e727bb">00060</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#b777ba42e25424ed43978b0a46e727bb">purge_notifications</a>(uint64_t event_id) {
+<a name="l00061"></a>00061       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00062"></a>00062       std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
+<a name="l00063"></a>00063       <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
+<a name="l00064"></a>00064         <span class="keywordflow">if</span> ((*iter)-&gt;event_ptr-&gt;get_id() &lt;= event_id) {
+<a name="l00065"></a>00065           (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
+<a name="l00066"></a>00066           <span class="keyword">delete</span> *iter;
+<a name="l00067"></a>00067           iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
+<a name="l00068"></a>00068         }
+<a name="l00069"></a>00069         <span class="keywordflow">else</span>
+<a name="l00070"></a>00070           ++iter;
+<a name="l00071"></a>00071       }
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073 
+<a name="l00074"></a><a class="code" href="class_hyperspace_1_1_session_data.html#871c308061db443d19fca6edfe267b79">00074</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#871c308061db443d19fca6edfe267b79">renew_lease</a>() {
+<a name="l00075"></a>00075       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00076"></a>00076       boost::xtime now;
+<a name="l00077"></a>00077       boost::xtime_get(&amp;now, boost::TIME_UTC);
+<a name="l00078"></a>00078       <span class="keywordflow">if</span> (xtime_cmp(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, now) &lt; 0) {
+<a name="l00079"></a>00079         <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a> = <span class="keyword">true</span>;
+<a name="l00080"></a>00080         std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
+<a name="l00081"></a>00081         <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
+<a name="l00082"></a>00082           (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
+<a name="l00083"></a>00083           <span class="keyword">delete</span> *iter;
+<a name="l00084"></a>00084           iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
+<a name="l00085"></a>00085         }
+<a name="l00086"></a>00086         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00087"></a>00087       }
+<a name="l00088"></a>00088       memcpy(&amp;<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, &amp;now, <span class="keyword">sizeof</span>(boost::xtime));
+<a name="l00089"></a>00089       <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">xtime_add_millis</a>(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>);
+<a name="l00090"></a>00090       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00091"></a>00091     }
+<a name="l00092"></a>00092 
+<a name="l00093"></a><a class="code" href="class_hyperspace_1_1_session_data.html#e0eb532c53dd7a78c501a897f56d3124">00093</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#e0eb532c53dd7a78c501a897f56d3124">is_expired</a>(boost::xtime &amp;now) {
+<a name="l00094"></a>00094       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00095"></a>00095       <span class="keywordflow">return</span> (xtime_cmp(<a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>, now) &lt; 0) ? <span class="keyword">true</span> : <span class="keyword">false</span>;
+<a name="l00096"></a>00096     }
+<a name="l00097"></a>00097 
+<a name="l00098"></a><a class="code" href="class_hyperspace_1_1_session_data.html#f5dd9587e7ac70284166f2eb10cd4c63">00098</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#f5dd9587e7ac70284166f2eb10cd4c63">expire</a>() {
+<a name="l00099"></a>00099       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00100"></a>00100       <span class="keywordflow">if</span> (<a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>)
+<a name="l00101"></a>00101         <span class="keywordflow">return</span>;
+<a name="l00102"></a>00102       <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a> = <span class="keyword">true</span>;
+<a name="l00103"></a>00103       std::list&lt;Notification *&gt;::iterator iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.begin();
+<a name="l00104"></a>00104       <span class="keywordflow">while</span> (iter != <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.end()) {
+<a name="l00105"></a>00105         (*iter)-&gt;event_ptr-&gt;decrement_notification_count();
+<a name="l00106"></a>00106         <span class="keyword">delete</span> *iter;
+<a name="l00107"></a>00107         iter = <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>.erase(iter);
+<a name="l00108"></a>00108       }
+<a name="l00109"></a>00109     }
+<a name="l00110"></a>00110 
+<a name="l00111"></a><a class="code" href="class_hyperspace_1_1_session_data.html#63a22f6cbbcb79dca68ddc116323ac66">00111</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session_data.html#63a22f6cbbcb79dca68ddc116323ac66">add_handle</a>(uint64_t handle) {
+<a name="l00112"></a>00112       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>);
+<a name="l00113"></a>00113       <a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">handles</a>.insert(handle);
+<a name="l00114"></a>00114     }
+<a name="l00115"></a>00115 
+<a name="l00116"></a><a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">00116</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hyperspace_1_1_session_data.html#f6ff198a0bbc77b5b8c7c08e09bc3c3d">mutex</a>;
+<a name="l00117"></a><a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">00117</a>     <span class="keyword">struct </span>sockaddr_in <a class="code" href="class_hyperspace_1_1_session_data.html#996c2662da9c38885e3c8c4c1a876371">addr</a>;
+<a name="l00118"></a><a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">00118</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session_data.html#01389eb0cf69d170d2dae29ccf400f27">m_lease_interval</a>;
+<a name="l00119"></a><a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">00119</a>     uint64_t <a class="code" href="class_hyperspace_1_1_session_data.html#3d3b0f56d56ea37a1e3a04e237b1bd80">id</a>;
+<a name="l00120"></a><a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">00120</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session_data.html#77a1a8f419a5ac8adfd33584e425fa87">expired</a>;
+<a name="l00121"></a><a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">00121</a>     boost::xtime <a class="code" href="class_hyperspace_1_1_session_data.html#4bb605abfe64db2c417ef0a26bb053b2">expire_time</a>;
+<a name="l00122"></a><a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">00122</a>     std::set&lt;uint64_t&gt; <a class="code" href="class_hyperspace_1_1_session_data.html#bd346be6b943cb26cfd883458a313d93">handles</a>;
+<a name="l00123"></a><a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">00123</a>     std::list&lt;Notification *&gt; <a class="code" href="class_hyperspace_1_1_session_data.html#8ca02bdb7d1f04e60073193269ffce14">notifications</a>;
+<a name="l00124"></a>00124   };
 <a name="l00125"></a>00125 
-<a name="l00126"></a><a class="code" href="struct_hyperspace_1_1_lt_session_data.html">00126</a>   <span class="keyword">struct </span><a class="code" href="struct_hyperspace_1_1_lt_session_data.html">LtSessionData</a> {
-<a name="l00127"></a><a class="code" href="struct_hyperspace_1_1_lt_session_data.html#781641bea5c0cf3ab7fe5b18c5af25c5">00127</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hyperspace_1_1_lt_session_data.html#781641bea5c0cf3ab7fe5b18c5af25c5">operator()</a>(<span class="keyword">const</span> <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;sd1, <span class="keyword">const</span> <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;sd2)<span class="keyword"> const </span>{
-<a name="l00128"></a>00128       <span class="keywordflow">return</span> xtime_cmp(sd1-&gt;expire_time, sd2-&gt;expire_time) &gt;= 0;
-<a name="l00129"></a>00129     }
-<a name="l00130"></a>00130   };
-<a name="l00131"></a>00131 
-<a name="l00132"></a>00132 }
+<a name="l00126"></a><a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">00126</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;SessionData&gt; <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a>;
+<a name="l00127"></a>00127 
+<a name="l00128"></a><a class="code" href="struct_hyperspace_1_1_lt_session_data.html">00128</a>   <span class="keyword">struct </span><a class="code" href="struct_hyperspace_1_1_lt_session_data.html">LtSessionData</a> {
+<a name="l00129"></a><a class="code" href="struct_hyperspace_1_1_lt_session_data.html#5418e1050fa2e8d70f87b6e02b99b45b">00129</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hyperspace_1_1_lt_session_data.html#5418e1050fa2e8d70f87b6e02b99b45b">operator()</a>(<span class="keyword">const</span> <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;x, <span class="keyword">const</span> <a class="code" href="namespace_hyperspace.html#bf8a2306f11c783cfc4c53778e399a95">SessionDataPtr</a> &amp;y)<span class="keyword"> const </span>{
+<a name="l00130"></a>00130       <span class="keywordflow">return</span> xtime_cmp(x-&gt;expire_time, y-&gt;expire_time) &gt;= 0;
+<a name="l00131"></a>00131     }
+<a name="l00132"></a>00132   };
 <a name="l00133"></a>00133 
-<a name="l00134"></a>00134 <span class="preprocessor">#endif // HYPERSPACE_SESSIONDATA_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00134"></a>00134 }
+<a name="l00135"></a>00135 
+<a name="l00136"></a>00136 <span class="preprocessor">#endif // HYPERSPACE_SESSIONDATA_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -37,7 +37,7 @@ Collaboration diagram for Hyperspace::Session:</div>
 <div class="dynsection">
 <p><center><img src="class_hyperspace_1_1_session__coll__graph.png" border="0" usemap="#_hyperspace_1_1_session__coll__map" alt="Collaboration graph"></center>
 <map name="_hyperspace_1_1_session__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="5,96,197,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="160,187,293,213"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="156,5,228,32"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="392,96,523,123"><area shape="rect" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace..." alt="" coords="419,187,621,213"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,19,372,46"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="520,98,653,124"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,48,79,75"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,143,341,170"><area shape="rect" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address." alt="" coords="513,214,660,240"><area shape="rect" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace..." alt="" coords="485,264,688,291"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -51,62 +51,65 @@ Collaboration diagram for Hyperspace::Session:</div>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Session state values  <a href="class_hyperspace_1_1_session.html#40efa6a756eeccc823f72f22491e382a">More...</a><br></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#bce4fd9d7d96f6a57b56eed3be23f590">Session</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, PropertiesPtr &amp;props_ptr, <a class="el" href="class_hyperspace_1_1_session_callback.html">SessionCallback</a> *callback=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#28ddd9dfbf0b23871318b8c458ecf48d">Session</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, <a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;props, <a class="el" href="class_hyperspace_1_1_session_callback.html">SessionCallback</a> *callback=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#bce4fd9d7d96f6a57b56eed3be23f590"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Constructor.  <a href="#28ddd9dfbf0b23871318b8c458ecf48d"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#8753bb9dee966b7d39abc9b7237cd665">~Session</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#aef664d800b071252a731ecfdcbcd51c">open</a> (const std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;callback)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#3adb14ffa9eaf008decb68b051ab4941">open</a> (const std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;callback, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Opens a file.  <a href="#aef664d800b071252a731ecfdcbcd51c"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#f4589513b90f20b1d6d311aadd22e91a">create</a> (const std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;callback, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;init_attrs)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Opens a file.  <a href="#3adb14ffa9eaf008decb68b051ab4941"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#6da8f7a0ea7a35774bfb484fbc75556a">create</a> (const std::string &amp;name, uint32_t flags, <a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;callback, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;init_attrs, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file.  <a href="#f4589513b90f20b1d6d311aadd22e91a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#984b2a50e0aa95050ab0ae3e0e9f3041">close</a> (uint64_t handle)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a file.  <a href="#6da8f7a0ea7a35774bfb484fbc75556a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#eb2eacdaf3dc2d6aeb8bf2efa9ae9f54">close</a> (uint64_t handle, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Closes a file handle.  <a href="#984b2a50e0aa95050ab0ae3e0e9f3041"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#21fd19d95fba4e13548150a91ae6f3e4">mkdir</a> (const std::string &amp;name)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Closes a file handle.  <a href="#eb2eacdaf3dc2d6aeb8bf2efa9ae9f54"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#1a7ebaa266c3934e733a12728e3dfdc6">mkdir</a> (const std::string &amp;name, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a directory.  <a href="#21fd19d95fba4e13548150a91ae6f3e4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#e5532b0450fb6a816a8c73f8ec092292">attr_set</a> (uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a directory.  <a href="#1a7ebaa266c3934e733a12728e3dfdc6"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#5df0d0e6dec1b6643870c94b4b2aec0a">attr_set</a> (uint64_t handle, const std::string &amp;name, const void *value, size_t value_len, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets an extended attribute of a file.  <a href="#e5532b0450fb6a816a8c73f8ec092292"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#63a518cdab912e0094a31af7efbe7771">attr_get</a> (uint64_t handle, const std::string &amp;name, <a class="el" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;value)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets an extended attribute of a file.  <a href="#5df0d0e6dec1b6643870c94b4b2aec0a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#19e610cbdfedbbbb8481bc7f7874246d">attr_get</a> (uint64_t handle, const std::string &amp;name, <a class="el" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;value, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets an extended attribute of a file.  <a href="#63a518cdab912e0094a31af7efbe7771"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#0b9f080e74eb1d4a4d422c3c38c714bc">attr_del</a> (uint64_t handle, const std::string &amp;name)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets an extended attribute of a file.  <a href="#19e610cbdfedbbbb8481bc7f7874246d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#b6171fe4fa10fae1b1bc88ee6ee41ea9">attr_del</a> (uint64_t handle, const std::string &amp;name, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Deletes an extended attribute of a file.  <a href="#0b9f080e74eb1d4a4d422c3c38c714bc"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#6c41fae1b5c6d81cce734ede8522833f">exists</a> (const std::string &amp;name)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Deletes an extended attribute of a file.  <a href="#b6171fe4fa10fae1b1bc88ee6ee41ea9"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#34cd6cdff5fbb86dd8383b64b7ea7a10">exists</a> (const std::string &amp;name, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks for the existence of a file.  <a href="#6c41fae1b5c6d81cce734ede8522833f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#e412ced10788472ba3cd43a1be1110a1">unlink</a> (const std::string &amp;name)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks for the existence of a file.  <a href="#34cd6cdff5fbb86dd8383b64b7ea7a10"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#e2b711b6377c6c20e7cd5ea4cef4fa25">unlink</a> (const std::string &amp;name, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a file or directory.  <a href="#e412ced10788472ba3cd43a1be1110a1"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#a11398961ae49c4c322918251666a660">readdir</a> (uint64_t handle, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_dir_entry.html">DirEntry</a> &gt; &amp;listing)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Removes a file or directory.  <a href="#e2b711b6377c6c20e7cd5ea4cef4fa25"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#1ce52ac0bfd5bfe6ae01a6e5615ab6b5">readdir</a> (uint64_t handle, std::vector&lt; <a class="el" href="struct_hyperspace_1_1_dir_entry.html">DirEntry</a> &gt; &amp;listing, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets a directory listing.  <a href="#a11398961ae49c4c322918251666a660"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#9f32b0ae832e914e18ae2b9173f2ee4f">lock</a> (uint64_t handle, uint32_t mode, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets a directory listing.  <a href="#1ce52ac0bfd5bfe6ae01a6e5615ab6b5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#aec997db0d622e92e0d0bf6d36f88c6d">lock</a> (uint64_t handle, uint32_t mode, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Locks a file.  <a href="#9f32b0ae832e914e18ae2b9173f2ee4f"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#5b7c11048ab7c10c2b85d80f429c0eb2">try_lock</a> (uint64_t handle, uint32_t mode, uint32_t *statusp, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Locks a file.  <a href="#aec997db0d622e92e0d0bf6d36f88c6d"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#f4c7bb3b3e55dc29ed2df5fbc7124817">try_lock</a> (uint64_t handle, uint32_t mode, uint32_t *statusp, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to lock a file.  <a href="#5b7c11048ab7c10c2b85d80f429c0eb2"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#25cf6470416f8ddf4f7acdb1f4af0164">release</a> (uint64_t handle)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to lock a file.  <a href="#f4c7bb3b3e55dc29ed2df5fbc7124817"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#1651aa009d116eb544ba5838564352ad">release</a> (uint64_t handle, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Releases any file handle locks.  <a href="#25cf6470416f8ddf4f7acdb1f4af0164"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#cdab8e79b0f3bccb6dcf924ff041a3e6">get_sequencer</a> (uint64_t handle, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Releases any file handle locks.  <a href="#1651aa009d116eb544ba5838564352ad"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#b136da442df74b32980f9e17ea850761">get_sequencer</a> (uint64_t handle, <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *sequencerp, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets the lock sequencer of a locked file or directory handle.  <a href="#cdab8e79b0f3bccb6dcf924ff041a3e6"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#70bcb7989e3b678de72ec18b22562a61">check_sequencer</a> (<a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> &amp;sequencer)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Gets the lock sequencer of a locked file or directory handle.  <a href="#b136da442df74b32980f9e17ea850761"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#30871a72eb7651e0e9fba50f0f1d97d1">check_sequencer</a> (<a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> &amp;sequencer, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks to see if a lock sequencer is valid.  <a href="#70bcb7989e3b678de72ec18b22562a61"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#29fa4bd01ad35180d25b835a8db74edf">status</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks to see if a lock sequencer is valid.  <a href="#30871a72eb7651e0e9fba50f0f1d97d1"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#b822effa2812a8e2f810937503c7b793">status</a> (<a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check the status of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> master server.  <a href="#29fa4bd01ad35180d25b835a8db74edf"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#e992c1704b38c05a4bfe788cc4601459">wait_for_connection</a> (long max_wait_secs)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check the status of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> master server.  <a href="#b822effa2812a8e2f810937503c7b793"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218">wait_for_connection</a> (uint32_t max_wait_ms)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Waits for session state to change to STATE_SAFE.  <a href="#e992c1704b38c05a4bfe788cc4601459"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Waits for session state to change to STATE_SAFE.  <a href="#fe7b8b5453dcadfab8fc8f61c62e3218"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#e03a1f1fea11f870811014accb71f736">wait_for_connection</a> (<a class="el" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Waits for session state to change to STATE_SAFE.  <a href="#e03a1f1fea11f870811014accb71f736"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#6397ca528fe4061a597daa3bceeaf37a">set_verbose_flag</a> (bool verbose)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets verbose flag.  <a href="#6397ca528fe4061a597daa3bceeaf37a"></a><br></td></tr>
@@ -119,17 +122,20 @@ Collaboration diagram for Hyperspace::Session:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#98c83473c415a35f8fca492500359e86">expired</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Checks for session expiration (internal method).  <a href="#98c83473c415a35f8fca492500359e86"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_hs_command_interpreter.html">HsCommandInterpreter</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#43e52aa4aed8f4f5467bfff0223969b7">create_hs_interpreter</a> ()</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> command interpreter.  <a href="#43e52aa4aed8f4f5467bfff0223969b7"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#aee3344ea6f8d94222197cacadfed0a3">wait_for_safe</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#936f1720db690e6fb10e66322ae155bf">send_message</a> (CommBufPtr &amp;, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#130965215d1ab969ddb876fa7ef6a42b">send_message</a> (<a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#4d50f43110180a7bd9e528af0088d43a">normalize_name</a> (const std::string &amp;name, std::string &amp;normal)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#5c3d190c20b9990ab7eb5aeaa8d7db04">open</a> (<a class="el" href="namespace_hyperspace.html#f51254291e9d2ec71ff55ffe7793c646">ClientHandleStatePtr</a> &amp;, CommBufPtr &amp;)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#498e7015c539656e6f29b570ec340ca4">open</a> (<a class="el" href="namespace_hyperspace.html#f51254291e9d2ec71ff55ffe7793c646">ClientHandleStatePtr</a> &amp;, <a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#1ce258be08059cf30e6bb776d930b999">m_mutex</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">m_mutex</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::condition&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#b10938a4971781ee06e153cbececb362">m_cond</a></td></tr>
 
@@ -145,20 +151,20 @@ Collaboration diagram for Hyperspace::Session:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#0a54d3699859a7c6de7dda3b601621ac">m_lease_interval</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#66d3c954aca74d75feb033e99b93a5b2">m_timeout</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">m_timeout_ms</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::xtime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#3bf8b015648f0b873b1a8920099b31df">m_expire_time</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct sockaddr_in&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#6589a433f99bb8ca6a56614b4d99ffcb">m_master_addr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">m_master_addr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#b2ac613a80c325af849d2d9391c5ccca">ClientKeepaliveHandlerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">m_keepalive_handler_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#fd838844485ef3d5e97f42f312981a78">ClientKeepaliveHandlerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">m_keepalive_handler_ptr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hyperspace_1_1_session_callback.html">SessionCallback</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_session.html#ef79c4101bb76b6c48e4e3537657e75a">m_session_callback</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00124">124</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00127">127</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 <hr><h2>Member Enumeration Documentation</h2>
 <a class="anchor" name="40efa6a756eeccc823f72f22491e382a"></a><!-- doxytag: member="Hyperspace::Session::State" ref="40efa6a756eeccc823f72f22491e382a" args="" -->
 <div class="memitem">
@@ -185,12 +191,12 @@ session is OK </td></tr>
 </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00131">131</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00134">134</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="bce4fd9d7d96f6a57b56eed3be23f590"></a><!-- doxytag: member="Hyperspace::Session::Session" ref="bce4fd9d7d96f6a57b56eed3be23f590" args="(Comm *comm, PropertiesPtr &amp;props_ptr, SessionCallback *callback=0)" -->
+<a class="anchor" name="28ddd9dfbf0b23871318b8c458ecf48d"></a><!-- doxytag: member="Hyperspace::Session::Session" ref="28ddd9dfbf0b23871318b8c458ecf48d" args="(Comm *comm, PropertiesPtr &amp;props, SessionCallback *callback=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -203,8 +209,8 @@ session is OK </td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">PropertiesPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>props_ptr</em>, </td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>props</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -231,12 +237,12 @@ Establishes a connection to Hyperspace master and initiates keepalive pings. The
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>comm</em>&nbsp;</td><td>pointer to the Comm object </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>props_ptr</em>&nbsp;</td><td>smart pointer to properties object </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>props</em>&nbsp;</td><td>reference to config properties </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>callback</em>&nbsp;</td><td>session state callback </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00056">56</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00047">47</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -257,12 +263,12 @@ Establishes a connection to Hyperspace master and initiates keepalive pings. The
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00084">84</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00072">72</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="aef664d800b071252a731ecfdcbcd51c"></a><!-- doxytag: member="Hyperspace::Session::open" ref="aef664d800b071252a731ecfdcbcd51c" args="(const std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callback)" -->
+<a class="anchor" name="3adb14ffa9eaf008decb68b051ab4941"></a><!-- doxytag: member="Hyperspace::Session::open" ref="3adb14ffa9eaf008decb68b051ab4941" args="(const std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callback, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -281,8 +287,14 @@ Establishes a connection to Hyperspace master and initiates keepalive pings. The
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>callback</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>callback</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -302,15 +314,16 @@ The open mode is determined by the bits in the flags argument and the callback a
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>pathname of file to open </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>flags</em>&nbsp;</td><td>OR'ed together set of open flags (see <a class="el" href="namespace_hyperspace.html#OpenFlags">OpenFlags</a>) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>callback</em>&nbsp;</td><td>smart pointer to handle callback </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>opened file handle </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00138">138</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00126">126</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f4589513b90f20b1d6d311aadd22e91a"></a><!-- doxytag: member="Hyperspace::Session::create" ref="f4589513b90f20b1d6d311aadd22e91a" args="(const std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callback, std::vector&lt; Attribute &gt; &amp;init_attrs)" -->
+<a class="anchor" name="6da8f7a0ea7a35774bfb484fbc75556a"></a><!-- doxytag: member="Hyperspace::Session::create" ref="6da8f7a0ea7a35774bfb484fbc75556a" args="(const std::string &amp;name, uint32_t flags, HandleCallbackPtr &amp;callback, std::vector&lt; Attribute &gt; &amp;init_attrs, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -329,14 +342,20 @@ The open mode is determined by the bits in the flags argument and the callback a
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">HandleCallbackPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>callback</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_attribute.html">Attribute</a> &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>init_attrs</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>init_attrs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -350,23 +369,23 @@ The open mode is determined by the bits in the flags argument and the callback a
 <p>
 Creates a file. 
 <p>
-This method is basically the same as the <a class="el" href="class_hyperspace_1_1_session.html#aef664d800b071252a731ecfdcbcd51c" title="Opens a file.">open</a> method except that it implicitly sets the OPEN_FLAG_CREATE and OPEN_FLAG_EXCL open flags and supplies a set of initial attributes to be set when the file is created. The flags argument controls other open modes and the callback argument is registered as the callback for this handle. The events that should be reported on this handle are determined by the event mask inside callback (see <a class="el" href="class_hyperspace_1_1_handle_callback.html#4b1e421adfc26380e9dece1139b56586" title="Returns the event mask of this callback object.">HandleCallback::get_event_mask</a>).<p>
+This method is basically the same as the <a class="el" href="class_hyperspace_1_1_session.html#3adb14ffa9eaf008decb68b051ab4941" title="Opens a file.">open</a> method except that it implicitly sets the OPEN_FLAG_CREATE and OPEN_FLAG_EXCL open flags and supplies a set of initial attributes to be set when the file is created. The flags argument controls other open modes and the callback argument is registered as the callback for this handle. The events that should be reported on this handle are determined by the event mask inside callback (see <a class="el" href="class_hyperspace_1_1_handle_callback.html#4b1e421adfc26380e9dece1139b56586" title="Returns the event mask of this callback object.">HandleCallback::get_event_mask</a>).<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>pathname of file to create </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>flags</em>&nbsp;</td><td>OR'ed together set of open flags (see <a class="el" href="namespace_hyperspace.html#OpenFlags">OpenFlags</a>) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>callback</em>&nbsp;</td><td>smart pointer to handle callback </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>init_attrs</em>&nbsp;</td><td>vector of attributes to be atomically set when the file is created </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>handlep</em>&nbsp;</td><td>address of variable to hold returned handle </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>Error::OK on success or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00157">157</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00144">144</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="984b2a50e0aa95050ab0ae3e0e9f3041"></a><!-- doxytag: member="Hyperspace::Session::close" ref="984b2a50e0aa95050ab0ae3e0e9f3041" args="(uint64_t handle)" -->
+<a class="anchor" name="eb2eacdaf3dc2d6aeb8bf2efa9ae9f54"></a><!-- doxytag: member="Hyperspace::Session::close" ref="eb2eacdaf3dc2d6aeb8bf2efa9ae9f54" args="(uint64_t handle, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -374,9 +393,18 @@ This method is basically the same as the <a class="el" href="class_hyperspace_1_
           <td class="memname">void Session::close           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>handle</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -388,14 +416,15 @@ Closes a file handle.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>file handle to close </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00175">175</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00164">164</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="21fd19d95fba4e13548150a91ae6f3e4"></a><!-- doxytag: member="Hyperspace::Session::mkdir" ref="21fd19d95fba4e13548150a91ae6f3e4" args="(const std::string &amp;name)" -->
+<a class="anchor" name="1a7ebaa266c3934e733a12728e3dfdc6"></a><!-- doxytag: member="Hyperspace::Session::mkdir" ref="1a7ebaa266c3934e733a12728e3dfdc6" args="(const std::string &amp;name, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -403,9 +432,18 @@ Closes a file handle.
           <td class="memname">void Session::mkdir           </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>name</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -418,14 +456,15 @@ The name argument should be the absolute path to the file. All of the directorie
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>absolute pathname of directory to create </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00201">201</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00189">189</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e5532b0450fb6a816a8c73f8ec092292"></a><!-- doxytag: member="Hyperspace::Session::attr_set" ref="e5532b0450fb6a816a8c73f8ec092292" args="(uint64_t handle, const std::string &amp;name, const void *value, size_t value_len)" -->
+<a class="anchor" name="5df0d0e6dec1b6643870c94b4b2aec0a"></a><!-- doxytag: member="Hyperspace::Session::attr_set" ref="5df0d0e6dec1b6643870c94b4b2aec0a" args="(uint64_t handle, const std::string &amp;name, const void *value, size_t value_len, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -451,7 +490,13 @@ The name argument should be the absolute path to the file. All of the directorie
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">size_t&nbsp;</td>
-          <td class="paramname"> <em>value_len</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value_len</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -471,14 +516,15 @@ Sets an extended attribute of a file.
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>name of extended attribute </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>value</em>&nbsp;</td><td>pointer to new value </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>value_len</em>&nbsp;</td><td>length of new value </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00290">290</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00277">277</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="63a518cdab912e0094a31af7efbe7771"></a><!-- doxytag: member="Hyperspace::Session::attr_get" ref="63a518cdab912e0094a31af7efbe7771" args="(uint64_t handle, const std::string &amp;name, DynamicBuffer &amp;value)" -->
+<a class="anchor" name="19e610cbdfedbbbb8481bc7f7874246d"></a><!-- doxytag: member="Hyperspace::Session::attr_get" ref="19e610cbdfedbbbb8481bc7f7874246d" args="(uint64_t handle, const std::string &amp;name, DynamicBuffer &amp;value, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -498,7 +544,13 @@ Sets an extended attribute of a file.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>value</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -517,14 +569,15 @@ Gets an extended attribute of a file.
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>file handle </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>name of extended attribute </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>value</em>&nbsp;</td><td>reference to DynamicBuffer to hold returned value </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00321">321</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00308">308</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="0b9f080e74eb1d4a4d422c3c38c714bc"></a><!-- doxytag: member="Hyperspace::Session::attr_del" ref="0b9f080e74eb1d4a4d422c3c38c714bc" args="(uint64_t handle, const std::string &amp;name)" -->
+<a class="anchor" name="b6171fe4fa10fae1b1bc88ee6ee41ea9"></a><!-- doxytag: member="Hyperspace::Session::attr_del" ref="b6171fe4fa10fae1b1bc88ee6ee41ea9" args="(uint64_t handle, const std::string &amp;name, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -538,7 +591,13 @@ Gets an extended attribute of a file.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -556,14 +615,15 @@ Deletes an extended attribute of a file.
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>file handle </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>name of extended attribute </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00363">363</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00352">352</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="6c41fae1b5c6d81cce734ede8522833f"></a><!-- doxytag: member="Hyperspace::Session::exists" ref="6c41fae1b5c6d81cce734ede8522833f" args="(const std::string &amp;name)" -->
+<a class="anchor" name="34cd6cdff5fbb86dd8383b64b7ea7a10"></a><!-- doxytag: member="Hyperspace::Session::exists" ref="34cd6cdff5fbb86dd8383b64b7ea7a10" args="(const std::string &amp;name, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -571,9 +631,18 @@ Deletes an extended attribute of a file.
           <td class="memname">bool Session::exists           </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>name</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -585,15 +654,16 @@ Checks for the existence of a file.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>absolute name of file or directory to check for </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if exists, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00255">255</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00243">243</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e412ced10788472ba3cd43a1be1110a1"></a><!-- doxytag: member="Hyperspace::Session::unlink" ref="e412ced10788472ba3cd43a1be1110a1" args="(const std::string &amp;name)" -->
+<a class="anchor" name="e2b711b6377c6c20e7cd5ea4cef4fa25"></a><!-- doxytag: member="Hyperspace::Session::unlink" ref="e2b711b6377c6c20e7cd5ea4cef4fa25" args="(const std::string &amp;name, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -601,9 +671,18 @@ Checks for the existence of a file.
           <td class="memname">void Session::unlink           </td>
           <td>(</td>
           <td class="paramtype">const std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>name</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -616,14 +695,15 @@ Directory must be empty, otherwise Error::HYPERSPACE_IO_ERROR will be returned.<
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>absolute path name of file or directory to delete </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00228">228</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00216">216</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a11398961ae49c4c322918251666a660"></a><!-- doxytag: member="Hyperspace::Session::readdir" ref="a11398961ae49c4c322918251666a660" args="(uint64_t handle, std::vector&lt; DirEntry &gt; &amp;listing)" -->
+<a class="anchor" name="1ce52ac0bfd5bfe6ae01a6e5615ab6b5"></a><!-- doxytag: member="Hyperspace::Session::readdir" ref="1ce52ac0bfd5bfe6ae01a6e5615ab6b5" args="(uint64_t handle, std::vector&lt; DirEntry &gt; &amp;listing, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -637,7 +717,13 @@ Directory must be empty, otherwise Error::HYPERSPACE_IO_ERROR will be returned.<
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">std::vector&lt; <a class="el" href="struct_hyperspace_1_1_dir_entry.html">DirEntry</a> &gt; &amp;&nbsp;</td>
-          <td class="paramname"> <em>listing</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>listing</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -656,14 +742,15 @@ The listing comes back as a vector of DireEntry which contains a name and boolea
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>handle of directory to scan </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>listing</em>&nbsp;</td><td>reference to vector of <a class="el" href="struct_hyperspace_1_1_dir_entry.html" title="Listing information for each node within a directory.">DirEntry</a> structures to hold result </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00392">392</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00382">382</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="9f32b0ae832e914e18ae2b9173f2ee4f"></a><!-- doxytag: member="Hyperspace::Session::lock" ref="9f32b0ae832e914e18ae2b9173f2ee4f" args="(uint64_t handle, uint32_t mode, LockSequencer *sequencerp)" -->
+<a class="anchor" name="aec997db0d622e92e0d0bf6d36f88c6d"></a><!-- doxytag: member="Hyperspace::Session::lock" ref="aec997db0d622e92e0d0bf6d36f88c6d" args="(uint64_t handle, uint32_t mode, LockSequencer *sequencerp, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -683,7 +770,13 @@ The listing comes back as a vector of DireEntry which contains a name and boolea
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *&nbsp;</td>
-          <td class="paramname"> <em>sequencerp</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>sequencerp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -703,14 +796,15 @@ The mode argument indicates the type of lock to be acquired and takes a value of
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>handle of file or directory to lock </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>mode</em>&nbsp;</td><td>lock mode (see <a class="el" href="namespace_hyperspace.html#LockMode">LockMode</a>) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sequencerp</em>&nbsp;</td><td>address of <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> return structure </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00439">439</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00431">431</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5b7c11048ab7c10c2b85d80f429c0eb2"></a><!-- doxytag: member="Hyperspace::Session::try_lock" ref="5b7c11048ab7c10c2b85d80f429c0eb2" args="(uint64_t handle, uint32_t mode, uint32_t *statusp, LockSequencer *sequencerp)" -->
+<a class="anchor" name="f4c7bb3b3e55dc29ed2df5fbc7124817"></a><!-- doxytag: member="Hyperspace::Session::try_lock" ref="f4c7bb3b3e55dc29ed2df5fbc7124817" args="(uint64_t handle, uint32_t mode, uint32_t *statusp, LockSequencer *sequencerp, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -736,7 +830,13 @@ The mode argument indicates the type of lock to be acquired and takes a value of
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *&nbsp;</td>
-          <td class="paramname"> <em>sequencerp</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>sequencerp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -757,14 +857,15 @@ The mode argument indicates the type of lock to be acquired and takes a value of
     <tr><td valign="top"></td><td valign="top"><em>mode</em>&nbsp;</td><td>lock mode (see <a class="el" href="namespace_hyperspace.html#LockMode">LockMode</a>) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>statusp</em>&nbsp;</td><td>address of variable to hold the status of the attempt (see <a class="el" href="namespace_hyperspace.html#LockStatus">LockStatus</a>) </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sequencerp</em>&nbsp;</td><td>address of <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> return structure </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00505">505</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00499">499</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="25cf6470416f8ddf4f7acdb1f4af0164"></a><!-- doxytag: member="Hyperspace::Session::release" ref="25cf6470416f8ddf4f7acdb1f4af0164" args="(uint64_t handle)" -->
+<a class="anchor" name="1651aa009d116eb544ba5838564352ad"></a><!-- doxytag: member="Hyperspace::Session::release" ref="1651aa009d116eb544ba5838564352ad" args="(uint64_t handle, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -772,9 +873,18 @@ The mode argument indicates the type of lock to be acquired and takes a value of
           <td class="memname">void Session::release           </td>
           <td>(</td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>handle</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>handle</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -786,14 +896,15 @@ Releases any file handle locks.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>locked file or directory handle </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00556">556</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00552">552</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cdab8e79b0f3bccb6dcf924ff041a3e6"></a><!-- doxytag: member="Hyperspace::Session::get_sequencer" ref="cdab8e79b0f3bccb6dcf924ff041a3e6" args="(uint64_t handle, LockSequencer *sequencerp)" -->
+<a class="anchor" name="b136da442df74b32980f9e17ea850761"></a><!-- doxytag: member="Hyperspace::Session::get_sequencer" ref="b136da442df74b32980f9e17ea850761" args="(uint64_t handle, LockSequencer *sequencerp, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -807,7 +918,13 @@ Releases any file handle locks.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> *&nbsp;</td>
-          <td class="paramname"> <em>sequencerp</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>sequencerp</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -825,14 +942,15 @@ Gets the lock sequencer of a locked file or directory handle.
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>handle</em>&nbsp;</td><td>locked file or directory handle </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>sequencerp</em>&nbsp;</td><td>address of <a class="el" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> return structure </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00587">587</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00584">584</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="70bcb7989e3b678de72ec18b22562a61"></a><!-- doxytag: member="Hyperspace::Session::check_sequencer" ref="70bcb7989e3b678de72ec18b22562a61" args="(LockSequencer &amp;sequencer)" -->
+<a class="anchor" name="30871a72eb7651e0e9fba50f0f1d97d1"></a><!-- doxytag: member="Hyperspace::Session::check_sequencer" ref="30871a72eb7651e0e9fba50f0f1d97d1" args="(LockSequencer &amp;sequencer, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -840,9 +958,18 @@ Gets the lock sequencer of a locked file or directory handle.
           <td class="memname">void Session::check_sequencer           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>sequencer</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>sequencer</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -855,21 +982,23 @@ Checks to see if a lock sequencer is valid.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>sequencer</em>&nbsp;</td><td>lock sequencer to validate </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00605">605</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00603">603</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="29fa4bd01ad35180d25b835a8db74edf"></a><!-- doxytag: member="Hyperspace::Session::status" ref="29fa4bd01ad35180d25b835a8db74edf" args="()" -->
+<a class="anchor" name="b822effa2812a8e2f810937503c7b793"></a><!-- doxytag: member="Hyperspace::Session::status" ref="b822effa2812a8e2f810937503c7b793" args="(Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int Session::status           </td>
           <td>(</td>
-          <td class="paramname">          </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -880,21 +1009,26 @@ Checks to see if a lock sequencer is valid.
 <p>
 Check the status of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> master server. 
 <p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
+  </table>
+</dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>Error::OK on if server is up and ok or error code on failure </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00613">613</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00610">610</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="e992c1704b38c05a4bfe788cc4601459"></a><!-- doxytag: member="Hyperspace::Session::wait_for_connection" ref="e992c1704b38c05a4bfe788cc4601459" args="(long max_wait_secs)" -->
+<a class="anchor" name="fe7b8b5453dcadfab8fc8f61c62e3218"></a><!-- doxytag: member="Hyperspace::Session::wait_for_connection" ref="fe7b8b5453dcadfab8fc8f61c62e3218" args="(uint32_t max_wait_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool Session::wait_for_connection           </td>
           <td>(</td>
-          <td class="paramtype">long&nbsp;</td>
-          <td class="paramname"> <em>max_wait_secs</em>          </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>max_wait_ms</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -907,12 +1041,42 @@ Waits for session state to change to STATE_SAFE.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>max_wait_secs</em>&nbsp;</td><td>maximum seconds to wait for connection </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>max_wait_ms</em>&nbsp;</td><td>maximum milliseconds to wait for connection </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if connected, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00679">679</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00664">664</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e03a1f1fea11f870811014accb71f736"></a><!-- doxytag: member="Hyperspace::Session::wait_for_connection" ref="e03a1f1fea11f870811014accb71f736" args="(Timer &amp;timer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Session::wait_for_connection           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>timer</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Waits for session state to change to STATE_SAFE. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>timer</em>&nbsp;</td><td>maximum wait timer </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true if connected, false otherwise </dd></dl>
+
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00683">683</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -942,7 +1106,7 @@ Turns on or off (default) verbose logging<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00341">341</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00369">369</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -972,7 +1136,7 @@ Transions state (internal method).
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>old state (see <a class="el" href="class_hyperspace_1_1_session.html#SessionState">SessionState</a>) </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00631">631</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00623">623</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -996,7 +1160,7 @@ Returns current state (internal method).
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>current state (see <a class="el" href="class_hyperspace_1_1_session.html#SessionState">SessionState</a>) </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00659">659</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00648">648</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1020,7 +1184,31 @@ Checks for session expiration (internal method).
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if expired, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00667">667</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00654">654</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="43e52aa4aed8f4f5467bfff0223969b7"></a><!-- doxytag: member="Hyperspace::Session::create_hs_interpreter" ref="43e52aa4aed8f4f5467bfff0223969b7" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hyperspace_1_1_hs_command_interpreter.html">HsCommandInterpreter</a> * Session::create_hs_interpreter           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Creates a new <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> command interpreter. 
+<p>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>HsCommandInterpreter* ptr to created Hperspace interpreter object </dd></dl>
+
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00744">744</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1045,21 +1233,27 @@ Checks for session expiration (internal method).
 
 </div>
 </div><p>
-<a class="anchor" name="936f1720db690e6fb10e66322ae155bf"></a><!-- doxytag: member="Hyperspace::Session::send_message" ref="936f1720db690e6fb10e66322ae155bf" args="(CommBufPtr &amp;, DispatchHandler *)" -->
+<a class="anchor" name="130965215d1ab969ddb876fa7ef6a42b"></a><!-- doxytag: member="Hyperspace::Session::send_message" ref="130965215d1ab969ddb876fa7ef6a42b" args="(CommBufPtr &amp;, DispatchHandler *, Timer *timer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int Session::send_message           </td>
           <td>(</td>
-          <td class="paramtype">CommBufPtr &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>cbuf_ptr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1072,7 +1266,7 @@ Checks for session expiration (internal method).
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00707">707</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00708">708</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1103,11 +1297,11 @@ Checks for session expiration (internal method).
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00723">723</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00724">724</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="5c3d190c20b9990ab7eb5aeaa8d7db04"></a><!-- doxytag: member="Hyperspace::Session::open" ref="5c3d190c20b9990ab7eb5aeaa8d7db04" args="(ClientHandleStatePtr &amp;, CommBufPtr &amp;)" -->
+<a class="anchor" name="498e7015c539656e6f29b570ec340ca4"></a><!-- doxytag: member="Hyperspace::Session::open" ref="498e7015c539656e6f29b570ec340ca4" args="(ClientHandleStatePtr &amp;, CommBufPtr &amp;, Timer *timer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -1120,8 +1314,14 @@ Checks for session expiration (internal method).
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">CommBufPtr &amp;&nbsp;</td>
-          <td class="paramname"> <em>cbuf_ptr</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>cbuf_ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -1136,17 +1336,17 @@ Checks for session expiration (internal method).
 
 <p>
 if (createdp) *createdp = cbyte ? true : false; 
-<p>Definition at line <a class="el" href="_session_8cc-source.html#l00089">89</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
+<p>Definition at line <a class="el" href="_session_8cc-source.html#l00078">78</a> of file <a class="el" href="_session_8cc-source.html">Session.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="1ce258be08059cf30e6bb776d930b999"></a><!-- doxytag: member="Hyperspace::Session::m_mutex" ref="1ce258be08059cf30e6bb776d930b999" args="" -->
+<a class="anchor" name="0ccb59ffdf5166f45fa5e61456ec2583"></a><!-- doxytag: member="Hyperspace::Session::m_mutex" ref="0ccb59ffdf5166f45fa5e61456ec2583" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boost::mutex <a class="el" href="class_hyperspace_1_1_session.html#1ce258be08059cf30e6bb776d930b999">Hyperspace::Session::m_mutex</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> <a class="el" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">Hyperspace::Session::m_mutex</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1154,7 +1354,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00370">370</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00406">406</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1171,7 +1371,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00371">371</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00407">407</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1188,7 +1388,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00372">372</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00408">408</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1205,7 +1405,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00373">373</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00409">409</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1222,7 +1422,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00374">374</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00410">410</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1239,7 +1439,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00375">375</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00411">411</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1256,7 +1456,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00376">376</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00412">412</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1273,16 +1473,16 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00377">377</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00413">413</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="66d3c954aca74d75feb033e99b93a5b2"></a><!-- doxytag: member="Hyperspace::Session::m_timeout" ref="66d3c954aca74d75feb033e99b93a5b2" args="" -->
+<a class="anchor" name="a438667eb8a053ecb87cb36913bfa7b3"></a><!-- doxytag: member="Hyperspace::Session::m_timeout_ms" ref="a438667eb8a053ecb87cb36913bfa7b3" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint32_t <a class="el" href="class_hyperspace_1_1_session.html#66d3c954aca74d75feb033e99b93a5b2">Hyperspace::Session::m_timeout</a><code> [private]</code>          </td>
+          <td class="memname">uint32_t <a class="el" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">Hyperspace::Session::m_timeout_ms</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1290,7 +1490,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00378">378</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00414">414</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1307,16 +1507,16 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00379">379</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00415">415</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="6589a433f99bb8ca6a56614b4d99ffcb"></a><!-- doxytag: member="Hyperspace::Session::m_master_addr" ref="6589a433f99bb8ca6a56614b4d99ffcb" args="" -->
+<a class="anchor" name="5aa145f0b5c4318ae55d2313925ac1c6"></a><!-- doxytag: member="Hyperspace::Session::m_master_addr" ref="5aa145f0b5c4318ae55d2313925ac1c6" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sockaddr_in <a class="el" href="class_hyperspace_1_1_session.html#6589a433f99bb8ca6a56614b4d99ffcb">Hyperspace::Session::m_master_addr</a><code> [read, private]</code>          </td>
+          <td class="memname"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a> <a class="el" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">Hyperspace::Session::m_master_addr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1324,7 +1524,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00380">380</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00416">416</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1333,7 +1533,7 @@ if (createdp) *createdp = cbyte ? true : false;
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hyperspace.html#b2ac613a80c325af849d2d9391c5ccca">ClientKeepaliveHandlerPtr</a> <a class="el" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">Hyperspace::Session::m_keepalive_handler_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hyperspace.html#fd838844485ef3d5e97f42f312981a78">ClientKeepaliveHandlerPtr</a> <a class="el" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">Hyperspace::Session::m_keepalive_handler_ptr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1341,7 +1541,7 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00381">381</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00417">417</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
@@ -1358,13 +1558,13 @@ if (createdp) *createdp = cbyte ? true : false;
 
 <p>
 
-<p>Definition at line <a class="el" href="_session_8h-source.html#l00382">382</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
+<p>Definition at line <a class="el" href="_session_8h-source.html#l00418">418</a> of file <a class="el" href="_session_8h-source.html">Session.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_session_8h-source.html">Session.h</a><li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_session_8cc-source.html">Session.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:07:55 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:39 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

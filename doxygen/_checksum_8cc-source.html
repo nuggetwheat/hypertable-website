@@ -40,7 +40,7 @@
 <a name="l00040"></a>00040 <span class="comment">   */</span>
 <a name="l00041"></a>00041   <span class="keyword">const</span> uint8_t *data = (<span class="keyword">const</span> uint8_t *)data8;
 <a name="l00042"></a>00042   uint32_t sum1 = 0xffff, sum2 = 0xffff;
-<a name="l00043"></a>00043   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = len8 / 2; <span class="comment">/* loop works on 16-bit words */</span>
+<a name="l00043"></a>00043   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = len8 / 2; <span class="comment">/* loop works on 16-bit words */</span>
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045   <span class="keywordflow">while</span> (len) {
 <a name="l00046"></a>00046     <span class="comment">/* 360 is the largest number of sums that can be</span>
@@ -85,7 +85,7 @@
 <a name="l00085"></a><a class="code" href="_checksum_8cc.html#c0adae0836a3e59e9591659d40655f43">00085</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_F32A_DO16(buf,i) HT_F32A_DO8(buf,i); HT_F32A_DO8(buf,i+8);</span>
 <a name="l00086"></a>00086 <span class="preprocessor"></span>
 <a name="l00087"></a>00087 uint32_t
-<a name="l00088"></a><a class="code" href="namespace_hypertable.html#e53b06d464f103fb303e7c361047ff74">00088</a> <a class="code" href="namespace_hypertable.html#e53b06d464f103fb303e7c361047ff74" title="Compute fletcher32 checksum for 16-bit aligned and padded data slightly faster than...">fletcher32a</a>(<span class="keyword">const</span> uint16_t *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00088"></a><a class="code" href="namespace_hypertable.html#e53b06d464f103fb303e7c361047ff74">00088</a> <a class="code" href="namespace_hypertable.html#e53b06d464f103fb303e7c361047ff74" title="Compute fletcher32 checksum for 16-bit aligned and padded data slightly faster than...">fletcher32a</a>(<span class="keyword">const</span> uint16_t *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00089"></a>00089   uint32_t sum1 = 0xffff, sum2 = 0xffff;
 <a name="l00090"></a>00090 
 <a name="l00091"></a>00091   <span class="keywordflow">while</span> (len) {
@@ -122,7 +122,7 @@
 <a name="l00122"></a><a class="code" href="_checksum_8cc.html#0dff171c2773de00b3f678d3cee156f6">00122</a> <span class="preprocessor">#define MOD_ADLER 65521</span>
 <a name="l00123"></a>00123 <span class="preprocessor"></span>
 <a name="l00124"></a>00124 <span class="keyword">inline</span> uint32_t
-<a name="l00125"></a><a class="code" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">00125</a> <a class="code" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">adler32_update_wp</a>(uint32_t adler, <span class="keyword">const</span> <span class="keywordtype">void</span> *data8, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00125"></a><a class="code" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">00125</a> <a class="code" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">adler32_update_wp</a>(uint32_t adler, <span class="keyword">const</span> <span class="keywordtype">void</span> *data8, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00126"></a>00126   <span class="keyword">const</span> uint8_t *data = (<span class="keyword">const</span> uint8_t *)data8;
 <a name="l00127"></a>00127   uint32_t a = adler &amp; 0xffff, b = (adler &gt;&gt; 16) &amp; 0xffff;
 <a name="l00128"></a>00128 
@@ -155,7 +155,7 @@
 <a name="l00155"></a>00155 }
 <a name="l00156"></a>00156 
 <a name="l00157"></a>00157 uint32_t
-<a name="l00158"></a><a class="code" href="namespace_hypertable.html#4daafcfceec2cdfdf7c2855f3ea862a1">00158</a> <a class="code" href="namespace_hypertable.html#4daafcfceec2cdfdf7c2855f3ea862a1">adler32_wp</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00158"></a><a class="code" href="namespace_hypertable.html#4daafcfceec2cdfdf7c2855f3ea862a1">00158</a> <a class="code" href="namespace_hypertable.html#4daafcfceec2cdfdf7c2855f3ea862a1">adler32_wp</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00159"></a>00159   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable.html#5630cd0530b0a08a49027d4c13753613">adler32_update_wp</a>(1, data, len);
 <a name="l00160"></a>00160 }
 <a name="l00161"></a>00161 
@@ -166,7 +166,7 @@
 <a name="l00166"></a><a class="code" href="_checksum_8cc.html#e574223950a0547f078953b19cb70d4d">00166</a> <span class="preprocessor"></span><span class="preprocessor">#define HT_A32_DO16(buf,i) HT_A32_DO8(buf,i); HT_A32_DO8(buf,i+8);</span>
 <a name="l00167"></a>00167 <span class="preprocessor"></span>
 <a name="l00168"></a>00168 <span class="keyword">inline</span> uint32_t
-<a name="l00169"></a><a class="code" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb">00169</a> <a class="code" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb" title="Update adler32 checksum incrementally.">adler32_update</a>(uint32_t adler, <span class="keyword">const</span> <span class="keywordtype">void</span> *data8, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00169"></a><a class="code" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb">00169</a> <a class="code" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb" title="Update adler32 checksum incrementally.">adler32_update</a>(uint32_t adler, <span class="keyword">const</span> <span class="keywordtype">void</span> *data8, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00170"></a>00170   <span class="keyword">const</span> uint8_t *data = (<span class="keyword">const</span> uint8_t *)data8;
 <a name="l00171"></a>00171   uint32_t a = adler &amp; 0xffff, b = (adler &gt;&gt; 16) &amp; 0xffff;
 <a name="l00172"></a>00172 
@@ -192,18 +192,18 @@
 <a name="l00192"></a>00192 }
 <a name="l00193"></a>00193 
 <a name="l00194"></a>00194 uint32_t
-<a name="l00195"></a><a class="code" href="namespace_hypertable.html#b7b7d2e70fa05101e8f53e0994f2b932">00195</a> <a class="code" href="namespace_hypertable.html#b7b7d2e70fa05101e8f53e0994f2b932" title="Compute adler32 checksum.">adler32</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00195"></a><a class="code" href="namespace_hypertable.html#b7b7d2e70fa05101e8f53e0994f2b932">00195</a> <a class="code" href="namespace_hypertable.html#b7b7d2e70fa05101e8f53e0994f2b932" title="Compute adler32 checksum.">adler32</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00196"></a>00196   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable.html#3864b2b02d7f421c0af1f575ef350abb" title="Update adler32 checksum incrementally.">adler32_update</a>(1, data, len);
 <a name="l00197"></a>00197 }
 <a name="l00198"></a>00198 
 <a name="l00199"></a>00199 uint32_t
-<a name="l00200"></a><a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685">00200</a> <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">crc32</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00200"></a><a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685">00200</a> <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">crc32</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00201"></a>00201   uint32_t crc =<a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum."> ::crc32</a>(0LL, Z_NULL, 0);
 <a name="l00202"></a>00202   <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">return ::crc32</a>(crc, (Bytef *)data, len);
 <a name="l00203"></a>00203 }
 <a name="l00204"></a>00204 
 <a name="l00205"></a>00205 uint32_t
-<a name="l00206"></a><a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a">00206</a> <a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a" title="Update crc32 checksum incrementally.">crc32_update</a>(uint32_t crc, <span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
+<a name="l00206"></a><a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a">00206</a> <a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a" title="Update crc32 checksum incrementally.">crc32_update</a>(uint32_t crc, <span class="keyword">const</span> <span class="keywordtype">void</span> *data, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
 <a name="l00207"></a>00207   <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">return ::crc32</a>(crc, (Bytef *)data, len);
 <a name="l00208"></a>00208 }
 <a name="l00209"></a>00209 
@@ -211,7 +211,7 @@
 <a name="l00211"></a>00211 
 <a name="l00212"></a>00212 <span class="comment">/* vim: et sw=2</span>
 <a name="l00213"></a>00213 <span class="comment"> */</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

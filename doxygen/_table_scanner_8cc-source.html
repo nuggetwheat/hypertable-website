@@ -24,83 +24,96 @@
 <a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_defaults_8h.html">Defaults.h</a>"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_table_scanner_8h.html">TableScanner.h</a>"</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;poll.h&gt;</span>
-<a name="l00033"></a>00033 }
-<a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00036"></a>00036 
-<a name="l00043"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#2382711c53c37ad859b2b51e36984b69">00043</a> TableScanner::TableScanner(<a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm,
-<a name="l00044"></a>00044                            <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table_identifier,
-<a name="l00045"></a>00045                            <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;schema_ptr,
-<a name="l00046"></a>00046                            <a class="code" href="namespace_hypertable.html#05c08609ae0d86a26a0b8d1f9c239e07">RangeLocatorPtr</a> &amp;range_locator_ptr,
-<a name="l00047"></a>00047                            <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec, <span class="keywordtype">int</span> timeout)
-<a name="l00048"></a>00048   : m_eos(false), m_scanneri(0), m_rows_seen(0) {
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050   <a class="code" href="namespace_hypertable.html#ef173465a5b9882abad6254f01771fac">IntervalScannerPtr</a> ri_scanner_ptr;
-<a name="l00051"></a>00051   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> interval_scan_spec;
-<a name="l00052"></a>00052   
-<a name="l00053"></a>00053   <span class="keywordflow">if</span> (timeout == 0 ||
-<a name="l00054"></a>00054       (timeout = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.Client.Timeout"</span>, 0)) == 0 ||
-<a name="l00055"></a>00055       (timeout = props_ptr-&gt;get_int(<span class="stringliteral">"Hypertable.Request.Timeout"</span>, 0)) == 0)
-<a name="l00056"></a>00056     timeout = <a class="code" href="namespace_hypertable.html#faa9a81e9dd1b06a34dbe30d3af61c6a" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">HYPERTABLE_CLIENT_TIMEOUT</a>;
-<a name="l00057"></a>00057   
-<a name="l00058"></a>00058   <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> timer(timeout);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060   <span class="keywordflow">if</span> (scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.empty()) {
-<a name="l00061"></a>00061     <span class="keywordflow">if</span> (scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.empty()) {
-<a name="l00062"></a>00062       ri_scanner_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(props_ptr, comm, table_identifier, schema_ptr, range_locator_ptr, scan_spec, timeout);
-<a name="l00063"></a>00063       <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner_ptr);
-<a name="l00064"></a>00064     }
-<a name="l00065"></a>00065     <span class="keywordflow">else</span> {
-<a name="l00066"></a>00066       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.size(); i++) {
-<a name="l00067"></a>00067         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#449e55fe69ee89ae16b31e438f2edce2">base_copy</a>(interval_scan_spec);
-<a name="l00068"></a>00068         interval_scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.push_back(scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>[i]);
-<a name="l00069"></a>00069         ri_scanner_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(props_ptr, comm, table_identifier, schema_ptr, range_locator_ptr, interval_scan_spec, timeout);
-<a name="l00070"></a>00070         <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner_ptr);
-<a name="l00071"></a>00071         ri_scanner_ptr-&gt;find_range_and_start_scan(scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>[i].start_row, timer);
-<a name="l00072"></a>00072       }
-<a name="l00073"></a>00073     }
-<a name="l00074"></a>00074   }
-<a name="l00075"></a>00075   <span class="keywordflow">else</span> {
-<a name="l00076"></a>00076     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.size(); i++) {
-<a name="l00077"></a>00077       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#449e55fe69ee89ae16b31e438f2edce2">base_copy</a>(interval_scan_spec);
-<a name="l00078"></a>00078       interval_scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>[i]);
-<a name="l00079"></a>00079       ri_scanner_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(props_ptr, comm, table_identifier, schema_ptr, range_locator_ptr, interval_scan_spec, timeout);
-<a name="l00080"></a>00080       <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner_ptr);
-<a name="l00081"></a>00081       ri_scanner_ptr-&gt;find_range_and_start_scan(scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>[i].start, timer);
-<a name="l00082"></a>00082     }
-<a name="l00083"></a>00083   }
-<a name="l00084"></a>00084 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_table_8h.html">Table.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_table_scanner_8h.html">TableScanner.h</a>"</span>
+<a name="l00031"></a>00031 
+<a name="l00032"></a>00032 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
+<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;poll.h&gt;</span>
+<a name="l00034"></a>00034 }
+<a name="l00035"></a>00035 
+<a name="l00036"></a>00036 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00037"></a>00037 
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#0a97b5f7829186077e58b7dbb6096b29">00044</a> TableScanner::TableScanner(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> *table, <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;schema,
+<a name="l00045"></a>00045     <a class="code" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;range_locator, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec,
+<a name="l00046"></a>00046     uint32_t timeout_ms)
+<a name="l00047"></a>00047   : m_eos(false), m_scanneri(0), m_rows_seen(0), m_table(table) {
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(timeout_ms);
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <a class="code" href="namespace_hypertable.html#def749116f1e00c2a13e68d2f0ee4214">IntervalScannerPtr</a> ri_scanner;
+<a name="l00052"></a>00052   <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> interval_scan_spec;
+<a name="l00053"></a>00053   <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> timer(timeout_ms, <span class="stringliteral">"foo"</span>);
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   <span class="keywordflow">if</span> (scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.empty()) {
+<a name="l00056"></a>00056     <span class="keywordflow">if</span> (scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.empty()) {
+<a name="l00057"></a>00057       ri_scanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(comm, &amp;table-&gt;<a class="code" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">identifier</a>(), schema,
+<a name="l00058"></a>00058                                        range_locator, scan_spec, timeout_ms);
+<a name="l00059"></a>00059       <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner);
+<a name="l00060"></a>00060     }
+<a name="l00061"></a>00061     <span class="keywordflow">else</span> {
+<a name="l00062"></a>00062       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.size(); i++) {
+<a name="l00063"></a>00063         scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#c75ed13fe6d4b4ea6d7ec33639fc82fb" title="Initialize &amp;#39;other&amp;#39; ScanSpec with this copy sans the intervals.">base_copy</a>(interval_scan_spec);
+<a name="l00064"></a>00064         interval_scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>.push_back(
+<a name="l00065"></a>00065             scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>[i]);
+<a name="l00066"></a>00066         ri_scanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(comm, &amp;table-&gt;<a class="code" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">identifier</a>(), schema,
+<a name="l00067"></a>00067             range_locator, interval_scan_spec, timeout_ms);
+<a name="l00068"></a>00068         <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner);
+<a name="l00069"></a>00069         ri_scanner-&gt;find_range_and_start_scan(
+<a name="l00070"></a>00070             scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#e605cfc3c6f99107ce9de1e0258dfcfb">cell_intervals</a>[i].start_row, timer);
+<a name="l00071"></a>00071       }
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073   }
+<a name="l00074"></a>00074   <span class="keywordflow">else</span> {
+<a name="l00075"></a>00075     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.size(); i++) {
+<a name="l00076"></a>00076       scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#c75ed13fe6d4b4ea6d7ec33639fc82fb" title="Initialize &amp;#39;other&amp;#39; ScanSpec with this copy sans the intervals.">base_copy</a>(interval_scan_spec);
+<a name="l00077"></a>00077       interval_scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>.push_back(scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>[i]);
+<a name="l00078"></a>00078       ri_scanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_interval_scanner.html">IntervalScanner</a>(comm, &amp;table-&gt;<a class="code" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">identifier</a>(), schema,
+<a name="l00079"></a>00079           range_locator, interval_scan_spec, timeout_ms);
+<a name="l00080"></a>00080       <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.push_back(ri_scanner);
+<a name="l00081"></a>00081       ri_scanner-&gt;find_range_and_start_scan(
+<a name="l00082"></a>00082           scan_spec.<a class="code" href="class_hypertable_1_1_scan_spec.html#cbbace1748a5cc940534978c7bf18eb3">row_intervals</a>[i].start, timer);
+<a name="l00083"></a>00083     }
+<a name="l00084"></a>00084   }
 <a name="l00085"></a>00085 }
 <a name="l00086"></a>00086 
 <a name="l00087"></a>00087 
-<a name="l00088"></a>00088 
-<a name="l00089"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">00089</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">TableScanner::next</a>(<a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> &amp;cell) {
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a>)
-<a name="l00092"></a>00092     <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094  try_again:
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;<a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">next</a>(cell))
-<a name="l00097"></a>00097     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <a class="code" href="class_hypertable_1_1_table_scanner.html#ce7d5fa3c40cda9fb6f49d446adae7c7">m_rows_seen</a> += <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;get_rows_seen();
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101   <a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>++;
-<a name="l00102"></a>00102 
-<a name="l00103"></a>00103   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a> &lt; <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.size()) {
-<a name="l00104"></a>00104     <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;set_rows_seen(<a class="code" href="class_hypertable_1_1_table_scanner.html#ce7d5fa3c40cda9fb6f49d446adae7c7">m_rows_seen</a>);
-<a name="l00105"></a>00105     <span class="keywordflow">goto</span> try_again;
-<a name="l00106"></a>00106   }
-<a name="l00107"></a>00107   
-<a name="l00108"></a>00108   <a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a> = <span class="keyword">true</span>;
-<a name="l00109"></a>00109   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00110"></a>00110 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00088"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">00088</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">TableScanner::next</a>(<a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> &amp;cell) {
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a>)
+<a name="l00091"></a>00091     <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093  try_again:
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095   <span class="keywordflow">try</span> {
+<a name="l00096"></a>00096     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;<a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">next</a>(cell))
+<a name="l00097"></a>00097       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00098"></a>00098   }
+<a name="l00099"></a>00099   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00100"></a>00100     <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2379b70f6c973915db96485b8887712d1">Error::TABLE_NOT_FOUND</a>
+<a name="l00101"></a>00101         || e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21c57efdaf5b515117220a7022e3e4a61">Error::RANGESERVER_TABLE_NOT_FOUND</a>)
+<a name="l00102"></a>00102       <a class="code" href="class_hypertable_1_1_table_scanner.html#4b4bb19ff20ac87a2dd1073e4e1098a5">m_table</a>-&gt;m_not_found = <span class="keyword">true</span>;
+<a name="l00103"></a>00103   }
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   <a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">m_rows_seen</a> += <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;get_rows_seen();
+<a name="l00106"></a>00106 
+<a name="l00107"></a>00107   <a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>++;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a> &lt; <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>.size()) {
+<a name="l00110"></a>00110     <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>[<a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>]-&gt;set_rows_seen(<a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">m_rows_seen</a>);
+<a name="l00111"></a>00111     <span class="keywordflow">goto</span> try_again;
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114   <a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a> = <span class="keyword">true</span>;
+<a name="l00115"></a>00115   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00116"></a>00116 }
+<a name="l00117"></a>00117 
+<a name="l00118"></a><a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">00118</a> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">Hypertable::copy</a>(<a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> &amp;scanner, <a class="code" href="class_hypertable_1_1_cells_builder.html">CellsBuilder</a> &amp;b) {
+<a name="l00119"></a>00119   <a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> cell;
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121   <span class="keywordflow">while</span> (scanner.<a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">next</a>(cell))
+<a name="l00122"></a>00122     b.<a class="code" href="class_hypertable_1_1_cells_builder.html#8aa40c9def4f01db62457328011d4d6d">add</a>(cell);
+<a name="l00123"></a>00123 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -36,7 +36,7 @@
 <a name="l00037"></a>00037 
 <a name="l00038"></a>00038 <span class="keyword">namespace </span>{
 <a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">00040</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a> = 
+<a name="l00040"></a><a class="code" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">00040</a>   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="sample_client_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a> =
 <a name="l00041"></a>00041     <span class="stringliteral">"\n"</span>
 <a name="l00042"></a>00042     <span class="stringliteral">"  usage: freebase_load &lt;file&gt;\n"</span>
 <a name="l00043"></a>00043     <span class="stringliteral">"\n"</span>
@@ -65,13 +65,13 @@
 <a name="l00069"></a><a class="code" href="freebase__load_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00069</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
 <a name="l00070"></a>00070   <a class="code" href="classfreebase__parser.html">freebase_parser</a> parser;
 <a name="l00071"></a>00071   <a class="code" href="namespace_hypertable_1_1_dfs_broker.html#96d666546a596365c805e6be6b08e810">ClientPtr</a> client_ptr;
-<a name="l00072"></a>00072   <a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">TablePtr</a> table_ptr;
-<a name="l00073"></a>00073   <a class="code" href="namespace_hypertable.html#54eba9b142d3941a0b4acda0990c4c7a">TableMutatorPtr</a> mutator_ptr;
-<a name="l00074"></a>00074   <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> key;
+<a name="l00072"></a>00072   <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a> table_ptr;
+<a name="l00073"></a>00073   <a class="code" href="namespace_hypertable.html#a11c0e04e8944428cc219a8357a8d6f4">TableMutatorPtr</a> mutator_ptr;
+<a name="l00074"></a>00074   <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
 <a name="l00075"></a>00075   <span class="keyword">const</span> <span class="keywordtype">char</span> *inputfile;
 <a name="l00076"></a>00076   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> row;
 <a name="l00077"></a>00077   <a class="code" href="struct_insert_rec.html" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">InsertRec</a> *recs;
-<a name="l00078"></a>00078   <span class="keywordtype">int</span> count;
+<a name="l00078"></a>00078   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#86988a65e0d3ece7990c032c159786d6">count</a>;
 <a name="l00079"></a>00079 
 <a name="l00080"></a>00080   <span class="keywordflow">if</span> (argc == 2)
 <a name="l00081"></a>00081     inputfile = argv[1];
@@ -96,7 +96,7 @@
 <a name="l00100"></a>00100 
 <a name="l00101"></a>00101   }
 <a name="l00102"></a>00102   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00103"></a>00103     cerr &lt;&lt; <span class="stringliteral">"Exception caught: "</span> &lt;&lt; <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()) &lt;&lt; <span class="stringliteral">" - "</span> &lt;&lt; e.what() &lt;&lt; endl;
+<a name="l00103"></a>00103     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
 <a name="l00104"></a>00104     <span class="keywordflow">return</span> 1;
 <a name="l00105"></a>00105   }
 <a name="l00106"></a>00106 
@@ -106,7 +106,7 @@
 <a name="l00110"></a>00110         mutator_ptr-&gt;set(recs[i].key, recs[i].value, recs[i].value_len);
 <a name="l00111"></a>00111       }
 <a name="l00112"></a>00112       <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00113"></a>00113         cerr &lt;&lt; <span class="stringliteral">"Exception caught: "</span> &lt;&lt; <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()) &lt;&lt; <span class="stringliteral">" - "</span> &lt;&lt; e.what() &lt;&lt; endl;
+<a name="l00113"></a>00113         <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
 <a name="l00114"></a>00114         _exit(1);
 <a name="l00115"></a>00115       }
 <a name="l00116"></a>00116     }
@@ -123,7 +123,7 @@
 <a name="l00127"></a>00127 
 <a name="l00128"></a>00128   <span class="keywordflow">return</span> 0;
 <a name="l00129"></a>00129 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:24 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

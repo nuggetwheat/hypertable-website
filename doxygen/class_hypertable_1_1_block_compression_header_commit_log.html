@@ -49,23 +49,23 @@ Collaboration diagram for Hypertable::BlockCompressionHeaderCommitLog:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#25f821df939c2abb74bf935146031b54">BlockCompressionHeaderCommitLog</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#969e3e00447dc00855f3b5776cbb375e">BlockCompressionHeaderCommitLog</a> (const char *magic, uint64_t <a class="el" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#1c6ccf0723333071bbd08f58395e6d20">BlockCompressionHeaderCommitLog</a> (const char *magic, int64_t revision)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#a1e95f8376d704f86701399ebb3c7da7">set_timestamp</a> (uint64_t <a class="el" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#08690c7527470659329c650fe482c27a">set_revision</a> (int64_t revision)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#589e8d8ebd6697befb203f6a56176f05">get_timestamp</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#68ce703c74a4cbd3f3d0dcc7cfe67412">get_revision</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">encode</a> (uint8_t **bufp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">encode</a> (uint8_t **<a class="el" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">decode</a> (const uint8_t **bufp, size_t *remainp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">decode</a> (const uint8_t **<a class="el" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, size_t *remainp)</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static const size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#cb61fa38e5253f01cd6ac5c0e922e329">LENGTH</a> = <a class="el" href="class_hypertable_1_1_block_compression_header.html#80ec9bd0734a866e42f878fe2302de28">BlockCompressionHeader::LENGTH</a> + 8</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#17b12acf82c2092ea17b283f0647020a">m_timestamp</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#585dcf00c8bf71eb7f82c2e6bd46d11a">m_revision</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -93,7 +93,7 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 </div>
 </div><p>
-<a class="anchor" name="969e3e00447dc00855f3b5776cbb375e"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog" ref="969e3e00447dc00855f3b5776cbb375e" args="(const char *magic, uint64_t timestamp)" -->
+<a class="anchor" name="1c6ccf0723333071bbd08f58395e6d20"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog" ref="1c6ccf0723333071bbd08f58395e6d20" args="(const char *magic, int64_t revision)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -106,8 +106,8 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>timestamp</em></td><td>&nbsp;</td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>revision</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -120,20 +120,20 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 <p>
 
-<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00037">37</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
+<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00038">38</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="a1e95f8376d704f86701399ebb3c7da7"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::set_timestamp" ref="a1e95f8376d704f86701399ebb3c7da7" args="(uint64_t timestamp)" -->
+<a class="anchor" name="08690c7527470659329c650fe482c27a"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::set_revision" ref="08690c7527470659329c650fe482c27a" args="(int64_t revision)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Hypertable::BlockCompressionHeaderCommitLog::set_timestamp           </td>
+          <td class="memname">void Hypertable::BlockCompressionHeaderCommitLog::set_revision           </td>
           <td>(</td>
-          <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>timestamp</em>          </td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>revision</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -147,12 +147,12 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 </div>
 </div><p>
-<a class="anchor" name="589e8d8ebd6697befb203f6a56176f05"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::get_timestamp" ref="589e8d8ebd6697befb203f6a56176f05" args="()" -->
+<a class="anchor" name="68ce703c74a4cbd3f3d0dcc7cfe67412"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::get_revision" ref="68ce703c74a4cbd3f3d0dcc7cfe67412" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t Hypertable::BlockCompressionHeaderCommitLog::get_timestamp           </td>
+          <td class="memname">int64_t Hypertable::BlockCompressionHeaderCommitLog::get_revision           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -211,7 +211,7 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 <p>Reimplemented from <a class="el" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">Hypertable::BlockCompressionHeader</a>.</p>
 
-<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00040">40</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
+<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00043">43</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
 
 </div>
 </div><p>
@@ -244,7 +244,7 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 <p>Reimplemented from <a class="el" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">Hypertable::BlockCompressionHeader</a>.</p>
 
-<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00049">49</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
+<p>Definition at line <a class="el" href="_block_compression_header_commit_log_8cc-source.html#l00052">52</a> of file <a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a>.</p>
 
 </div>
 </div><p>
@@ -268,12 +268,12 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 
 </div>
 </div><p>
-<a class="anchor" name="17b12acf82c2092ea17b283f0647020a"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::m_timestamp" ref="17b12acf82c2092ea17b283f0647020a" args="" -->
+<a class="anchor" name="585dcf00c8bf71eb7f82c2e6bd46d11a"></a><!-- doxytag: member="Hypertable::BlockCompressionHeaderCommitLog::m_revision" ref="585dcf00c8bf71eb7f82c2e6bd46d11a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">uint64_t <a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#17b12acf82c2092ea17b283f0647020a">Hypertable::BlockCompressionHeaderCommitLog::m_timestamp</a><code> [private]</code>          </td>
+          <td class="memname">int64_t <a class="el" href="class_hypertable_1_1_block_compression_header_commit_log.html#585dcf00c8bf71eb7f82c2e6bd46d11a">Hypertable::BlockCompressionHeaderCommitLog::m_revision</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -287,7 +287,7 @@ Base class for compressed block header for <a class="el" href="class_hypertable_
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_block_compression_header_commit_log_8h-source.html">BlockCompressionHeaderCommitLog.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_block_compression_header_commit_log_8cc-source.html">BlockCompressionHeaderCommitLog.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:10 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:54 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

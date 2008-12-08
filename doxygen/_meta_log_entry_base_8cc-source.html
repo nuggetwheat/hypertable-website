@@ -50,8 +50,8 @@
 <a name="l00052"></a>00052 <span class="keywordtype">void</span>
 <a name="l00053"></a><a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#73ba6e149f8b4ac6a694267f398b2dfe">00053</a> <a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#73ba6e149f8b4ac6a694267f398b2dfe" title="Serialize to buffer.">MetaLogEntryRangeCommon::write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;buf) {
 <a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_meta_log_entry_range_base.html#942e3badd125a630130b065ec7c34995" title="Serialize to buffer.">Parent::write</a>(buf);
-<a name="l00055"></a>00055   buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>.<a class="code" href="class_hypertable_1_1_range_state.html#2ed6dc2ab911ddff2790df2017b1571a">encoded_length</a>());
-<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>.<a class="code" href="class_hypertable_1_1_range_state.html#d8c921d8ec1441c44646f376b803b6fe">encode</a>(&amp;buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
+<a name="l00055"></a>00055   buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(<a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>.<a class="code" href="class_hypertable_1_1_range_state.html#540044538b9df8e728f133c548d655e7">encoded_length</a>());
+<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>.<a class="code" href="class_hypertable_1_1_range_state.html#971e4d69920e9ec00ff47f798ca12ff3">encode</a>(&amp;buf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
 <a name="l00057"></a>00057 }
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059 <span class="keyword">const</span> uint8_t *
@@ -62,7 +62,7 @@
 <a name="l00064"></a>00064     <a class="code" href="class_hypertable_1_1_meta_log_entry_range_common.html#115dc3ffadc054742c47dd61c3912de9">range_state</a>.<a class="code" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">decode</a>(&amp;p, &amp;remain);
 <a name="l00065"></a>00065     <span class="keywordflow">return</span> p);
 <a name="l00066"></a>00066 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

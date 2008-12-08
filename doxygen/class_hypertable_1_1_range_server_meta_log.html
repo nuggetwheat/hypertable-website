@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_range_server_meta_log__coll__graph.png" border="0" usemap="#_hypertable_1_1_range_server_meta_log__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_range_server_meta_log__coll__map">
-<area shape="rect" href="class_hypertable_1_1_meta_log_dfs_base.html" title="Hypertable::MetaLogDfsBase" alt="" coords="714,84,911,111"><area shape="rect" href="class_hypertable_1_1_meta_log.html" title="Hypertable::MetaLog" alt="" coords="443,8,590,35"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,8,372,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="436,59,596,86"><area shape="rect" href="class_hypertable_1_1_dynamic_buffer.html" title="Hypertable::DynamicBuffer" alt="" coords="424,110,608,136"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="451,160,582,187"></map>
+<area shape="rect" href="class_hypertable_1_1_meta_log_dfs_base.html" title="Hypertable::MetaLogDfsBase" alt="" coords="714,83,911,109"><area shape="rect" href="class_hypertable_1_1_meta_log.html" title="Hypertable::MetaLog" alt="" coords="443,5,590,32"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,29,372,56"><area shape="rect" href="class_hypertable_1_1_dynamic_buffer.html" title="Hypertable::DynamicBuffer" alt="" coords="424,56,608,83"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,29,79,56"><area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="436,107,596,133"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="451,157,582,184"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -49,9 +49,12 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#572b1e20c94d56462dc7078519896c93">RangeServerMetaLog</a> (<a class="el" href="class_hypertable_1_1_filesystem.html">Filesystem</a> *fs, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;path)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#8e9c75d3ad1b28e0dd7b513151be12f0">purge</a> (const <a class="el" href="namespace_hypertable.html#c457d328aed1420df0e4042a629149d4">RangeStates</a> &amp;)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#2b14486261a93b0852e9110556936986">purge</a> (const <a class="el" href="namespace_hypertable.html#c457d328aed1420df0e4042a629149d4">RangeStates</a> &amp;range_states)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">purge metalog of old/redundant entries  <a href="#8e9c75d3ad1b28e0dd7b513151be12f0"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Purge metalog of old/redundant entries.  <a href="#2b14486261a93b0852e9110556936986"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#ce78c7bb47b61cbb8206c6a78f1a97eb">recover</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;path)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Recover from existing metalog.  <a href="#ce78c7bb47b61cbb8206c6a78f1a97eb"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#b29baa8e0328dc5e660d69c8103a75b0">log_split_start</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;split_off, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;state)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#1f0c172f71722a16b2f315ead59f84a8">log_split_shrunk</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> &amp;state)</td></tr>
@@ -67,6 +70,9 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#c878d9aaf0abb08a5018811ea165e390">log_move_done</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#0bb7836f231948a91262886dbb219509">log_drop_table</a> (const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;table)</td></tr>
+
+<tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server_meta_log.html#474b31f4655cf1a87bf4475c243b832d">write_header</a> ()</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -123,7 +129,7 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="8e9c75d3ad1b28e0dd7b513151be12f0"></a><!-- doxytag: member="Hypertable::RangeServerMetaLog::purge" ref="8e9c75d3ad1b28e0dd7b513151be12f0" args="(const RangeStates &amp;)" -->
+<a class="anchor" name="2b14486261a93b0852e9110556936986"></a><!-- doxytag: member="Hypertable::RangeServerMetaLog::purge" ref="2b14486261a93b0852e9110556936986" args="(const RangeStates &amp;range_states)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -131,7 +137,7 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
           <td class="memname">void RangeServerMetaLog::purge           </td>
           <td>(</td>
           <td class="paramtype">const <a class="el" href="namespace_hypertable.html#c457d328aed1420df0e4042a629149d4">RangeStates</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>rs</em>          </td>
+          <td class="paramname"> <em>range_states</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -140,7 +146,7 @@ Collaboration diagram for Hypertable::RangeServerMetaLog:</div>
 <div class="memdoc">
 
 <p>
-purge metalog of old/redundant entries 
+Purge metalog of old/redundant entries. 
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
@@ -148,7 +154,31 @@ purge metalog of old/redundant entries
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8cc-source.html#l00062">62</a> of file <a class="el" href="_range_server_meta_log_8cc-source.html">RangeServerMetaLog.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8cc-source.html#l00094">94</a> of file <a class="el" href="_range_server_meta_log_8cc-source.html">RangeServerMetaLog.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ce78c7bb47b61cbb8206c6a78f1a97eb"></a><!-- doxytag: member="Hypertable::RangeServerMetaLog::recover" ref="ce78c7bb47b61cbb8206c6a78f1a97eb" args="(const String &amp;path)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RangeServerMetaLog::recover           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>path</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Recover from existing metalog. 
+<p>
+Skipping the last bad entry if necessary 
+<p>Definition at line <a class="el" href="_range_server_meta_log_8cc-source.html#l00069">69</a> of file <a class="el" href="_range_server_meta_log_8cc-source.html">RangeServerMetaLog.cc</a>.</p>
 
 </div>
 </div><p>
@@ -191,7 +221,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00046">46</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00051">51</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -228,7 +258,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00054">54</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00059">59</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -259,7 +289,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00062">62</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00067">67</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -296,7 +326,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00069">69</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00074">74</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -333,7 +363,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00077">77</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00082">82</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -364,7 +394,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00085">85</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00090">90</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -395,7 +425,7 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00092">92</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00097">97</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
 
 </div>
 </div><p>
@@ -417,13 +447,34 @@ purge metalog of old/redundant entries
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00098">98</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_meta_log_8h-source.html#l00103">103</a> of file <a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="474b31f4655cf1a87bf4475c243b832d"></a><!-- doxytag: member="Hypertable::RangeServerMetaLog::write_header" ref="474b31f4655cf1a87bf4475c243b832d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void RangeServerMetaLog::write_header           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_meta_log_8cc-source.html#l00056">56</a> of file <a class="el" href="_range_server_meta_log_8cc-source.html">RangeServerMetaLog.cc</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_meta_log_8h-source.html">RangeServerMetaLog.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_range_server_meta_log_8cc-source.html">RangeServerMetaLog.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:18 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:03 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

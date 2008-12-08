@@ -34,24 +34,26 @@
 <a name="l00039"></a><a class="code" href="class_hypertable_1_1_request_handler_update.html#1afe1e92e105f88e7d590ff440d1cc7a">00039</a> <span class="keywordtype">void</span> RequestHandlerUpdate::run() {
 <a name="l00040"></a>00040   <a class="code" href="class_hypertable_1_1_response_callback_update.html">ResponseCallbackUpdate</a> cb(<a class="code" href="class_hypertable_1_1_request_handler_update.html#51b6ec70602db07f6111497c217f6d41">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
 <a name="l00041"></a>00041   <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> table;
-<a name="l00042"></a>00042   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00043"></a>00043   <span class="keyword">const</span> uint8_t *p = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00042"></a>00042   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
+<a name="l00043"></a>00043   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
 <a name="l00044"></a>00044   <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> mods;
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046   <span class="keywordflow">try</span> {
-<a name="l00047"></a>00047     table.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;p, &amp;remaining);
-<a name="l00048"></a>00048     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#4556ecd07eda8b67d638f84c313ae2ec">base</a> = (uint8_t *)p;
-<a name="l00049"></a>00049     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#6548d44a4d3539650d3b90f423cc62b8">size</a> = remaining;
-<a name="l00050"></a>00050     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#58751127dc2664f341e8ca65eaadc919">own</a> = <span class="keyword">false</span>;
-<a name="l00051"></a>00051 
-<a name="l00052"></a>00052     <a class="code" href="class_hypertable_1_1_request_handler_update.html#97d3e9a8c680dd19cec77da3b8eb7d1b">m_range_server</a>-&gt;<a class="code" href="class_hypertable_1_1_range_server.html#b1157ff3d748170e60c77f227405e111" title="Update.">update</a>(&amp;cb, &amp;table, mods);
-<a name="l00053"></a>00053   }
-<a name="l00054"></a>00054   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00055"></a>00055     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00056"></a>00056     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Error handling Update message"</span>);
-<a name="l00057"></a>00057   }
-<a name="l00058"></a>00058 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00047"></a>00047     table.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00048"></a>00048     uint32_t <a class="code" href="_range_server_8cc.html#86988a65e0d3ece7990c032c159786d6">count</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">Serialization::decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00049"></a>00049 
+<a name="l00050"></a>00050     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#4556ecd07eda8b67d638f84c313ae2ec">base</a> = (uint8_t *)decode_ptr;
+<a name="l00051"></a>00051     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#6548d44a4d3539650d3b90f423cc62b8">size</a> = decode_remain;
+<a name="l00052"></a>00052     mods.<a class="code" href="class_hypertable_1_1_static_buffer.html#58751127dc2664f341e8ca65eaadc919">own</a> = <span class="keyword">false</span>;
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054     <a class="code" href="class_hypertable_1_1_request_handler_update.html#97d3e9a8c680dd19cec77da3b8eb7d1b">m_range_server</a>-&gt;<a class="code" href="class_hypertable_1_1_range_server.html#29722ecc918bf5f09d9d9e3c4c88c6d8">update</a>(&amp;cb, &amp;table, count, mods);
+<a name="l00055"></a>00055   }
+<a name="l00056"></a>00056   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00057"></a>00057     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00058"></a>00058     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Error handling Update message"</span>);
+<a name="l00059"></a>00059   }
+<a name="l00060"></a>00060 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -30,7 +30,7 @@
 <a href="class_hyperspace_1_1_berkeley_db_filesystem-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#6d2849ed7477069e4625efc70cfb88bb">BerkeleyDbFilesystem</a> (const std::string &amp;basedir, bool force_recover=false)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#c89f8c644f41d3e715b90af59b41a291">BerkeleyDbFilesystem</a> (const String &amp;basedir, bool force_recover=false)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#79c0c657560ed3f5863b7bd1150f9b11">~BerkeleyDbFilesystem</a> ()</td></tr>
 
@@ -62,8 +62,11 @@
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#47843a9fe06554b48c249ae30c82d3ae">get_all_names</a> (DbTxn *txn, std::vector&lt; String &gt; &amp;names)</td></tr>
 
+<tr><td colspan="2"><br><h2>Static Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static const char&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#620ebf0f63f823cf7dc6a95049eee4c3">NODE_ATTR_DELIM</a> = 0x01</td></tr>
+
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#a54d919a37c71f0de6d66d62f3554c6a">build_attr_key</a> (DbTxn *, String &amp;keystr, const String &amp;aname, Dbt &amp;key)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#a54d919a37c71f0de6d66d62f3554c6a">build_attr_key</a> (DbTxn *, String &amp;keystr, const String &amp;aname, Dbt &amp;<a class="el" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">String&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#1af094493af103a3ebce93994eda29ff">m_base_dir</a></td></tr>
@@ -77,14 +80,14 @@
 
 <p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00037">37</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="6d2849ed7477069e4625efc70cfb88bb"></a><!-- doxytag: member="Hyperspace::BerkeleyDbFilesystem::BerkeleyDbFilesystem" ref="6d2849ed7477069e4625efc70cfb88bb" args="(const std::string &amp;basedir, bool force_recover=false)" -->
+<a class="anchor" name="c89f8c644f41d3e715b90af59b41a291"></a><!-- doxytag: member="Hyperspace::BerkeleyDbFilesystem::BerkeleyDbFilesystem" ref="c89f8c644f41d3e715b90af59b41a291" args="(const String &amp;basedir, bool force_recover=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">BerkeleyDbFilesystem::BerkeleyDbFilesystem           </td>
           <td>(</td>
-          <td class="paramtype">const std::string &amp;&nbsp;</td>
+          <td class="paramtype">const String &amp;&nbsp;</td>
           <td class="paramname"> <em>basedir</em>, </td>
         </tr>
         <tr>
@@ -106,7 +109,7 @@
 
 <p>
 Open Berkeley DB environment and namespace database 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00053">53</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00055">55</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -129,7 +132,7 @@ Open Berkeley DB environment and namespace database
 
 <p>
 Close Berkeley DB "namespace" database and environment 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00119">119</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00121">121</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -151,7 +154,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00136">136</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00138">138</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -194,7 +197,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00155">155</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00157">157</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -280,7 +283,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00223">223</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00222">222</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -323,7 +326,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00257">257</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00254">254</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -372,7 +375,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00291">291</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00287">287</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -415,7 +418,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00320">320</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00316">316</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -452,7 +455,7 @@ Close Berkeley DB "namespace" database and environment
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00351">351</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00347">347</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -487,7 +490,7 @@ Close Berkeley DB "namespace" database and environment
 Make sure parent directory exists<p>
 Make sure directory does not already exists<p>
 Create directory entry 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00376">376</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00372">372</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -518,7 +521,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00430">430</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00426">426</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -555,7 +558,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00499">499</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00496">496</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -592,7 +595,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00540">540</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00537">537</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -629,7 +632,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00586">586</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00583">583</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -660,7 +663,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00671">671</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00668">668</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
@@ -703,11 +706,28 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00698">698</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8cc-source.html#l00695">695</a> of file <a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="620ebf0f63f823cf7dc6a95049eee4c3"></a><!-- doxytag: member="Hyperspace::BerkeleyDbFilesystem::NODE_ATTR_DELIM" ref="620ebf0f63f823cf7dc6a95049eee4c3" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char <a class="el" href="class_hyperspace_1_1_berkeley_db_filesystem.html#620ebf0f63f823cf7dc6a95049eee4c3">Hyperspace::BerkeleyDbFilesystem::NODE_ATTR_DELIM</a> = 0x01<code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00065">65</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="1af094493af103a3ebce93994eda29ff"></a><!-- doxytag: member="Hyperspace::BerkeleyDbFilesystem::m_base_dir" ref="1af094493af103a3ebce93994eda29ff" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -721,7 +741,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00069">69</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00071">71</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
 
 </div>
 </div><p>
@@ -738,7 +758,7 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00070">70</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00072">72</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
 
 </div>
 </div><p>
@@ -755,13 +775,13 @@ Create directory entry
 
 <p>
 
-<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00071">71</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
+<p>Definition at line <a class="el" href="_berkeley_db_filesystem_8h-source.html#l00073">73</a> of file <a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_berkeley_db_filesystem_8h-source.html">BerkeleyDbFilesystem.h</a><li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_berkeley_db_filesystem_8cc-source.html">BerkeleyDbFilesystem.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:07:46 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:30 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

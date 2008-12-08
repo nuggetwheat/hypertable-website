@@ -37,57 +37,56 @@ Collaboration diagram for Hypertable::MasterClient:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_master_client__coll__graph.png" border="0" usemap="#_hypertable_1_1_master_client__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_master_client__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="5,96,197,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="168,187,301,213"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="156,5,228,32"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="392,96,523,123"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="5,96,197,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="175,187,308,213"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="156,5,228,32"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="392,96,523,123"><area shape="rect" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address." alt="" coords="537,187,684,213"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_master_client-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f0b63147e838a17a38ce3b291fdfefcc">MasterClient</a> (<a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;conn_mgr, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace, time_t timeout, <a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#4faaf0d799ce2d3faec94e2317faa302">MasterClient</a> (<a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;, uint32_t timeout_ms, <a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#325b715df839f08b2f1ab0328cbd3677">~MasterClient</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#a4e24a90222d1ef54a7812ede0fdea82">set_timeout</a> (time_t timeout)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f7d029b729cf717542848fb2f42d811f">initiate_connection</a> (<a class="el" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> dhp)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the client connection timeout.  <a href="#a4e24a90222d1ef54a7812ede0fdea82"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f7d029b729cf717542848fb2f42d811f">initiate_connection</a> (<a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> dhp)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#c19f7c011553eb755f1cf9c96f5543a4">wait_for_connection</a> (uint32_t max_wait_ms)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#4d7b9b4a10391ccfc9011a47fe3eef55">wait_for_connection</a> (long max_wait_secs)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#855649777160a653ab6c0e226cabdbd6">wait_for_connection</a> (<a class="el" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#763b7337e40b8358eaae948164f5e8ea">create_table</a> (const char *tablename, const char *schemastr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#363242c795292bd64535fb37df165299">create_table</a> (const char *tablename, const char *schemastr, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#869f5a622d612da32cb2d3b3c63c1722">create_table</a> (const char *tablename, const char *schemastr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#0ed5a2f9f385bad987db1c08c1f00840">create_table</a> (const char *tablename, const char *schemastr, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#13eed61d388518e1a6042e1e6c551a3f">get_schema</a> (const char *tablename, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#d9af006d2f84c40ca5d4e0df9698c8c7">get_schema</a> (const char *tablename, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#3c7cc6367bb479fc76f1e2e176e2640c">get_schema</a> (const char *tablename, std::string &amp;schema)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#a44e33744a6518e5908f8e42bf938127">get_schema</a> (const char *tablename, std::string &amp;schema, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#61c42f2ad135253142c02ae37f12e068">status</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#47e43b8e9912ffe42c7d718cbbf19164">status</a> (<a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#920e56c7314a423574ef3019dd446817">register_server</a> (std::string &amp;location, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#b1de856c2bd4725e644a775cea401435">register_server</a> (std::string &amp;location, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#34803a33fdb0a60071ca3c5c770f20a3">register_server</a> (std::string &amp;location)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#c039f2c25975332fef2ed62d05605b7a">register_server</a> (std::string &amp;location, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#55105514710f9cba69c6e38840477657">report_split</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *log_dir, uint64_t soft_limit, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#ed0b8322139ca5b8f71e3f7806dfb0c5">report_split</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *log_dir, uint64_t soft_limit, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f83d5d3ebed83ad8cad455d97fbb5dde">report_split</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *log_dir, uint64_t soft_limit)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#96e7fb343d309e27b8012d37401935e5">report_split</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table, <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> &amp;range, const char *log_dir, uint64_t soft_limit, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#36a1d7d441c3c25cd7654056437464e0">drop_table</a> (const char *table_name, bool if_exists, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#69639fad51594328a8a40f25609542cf">drop_table</a> (const char *table_name, bool if_exists, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#4c2266e45f8124f134565810616bdc7c">drop_table</a> (const char *table_name, bool if_exists)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#3a115fb05d11917c0a973f44080d569c">drop_table</a> (const char *table_name, bool if_exists, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#334f74bda61b02cc9a26755e617ff0cb">shutdown</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#7231d4577da1ae134e437c5824ef21b2">shutdown</a> (<a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#e82cb739c2a9511c0308f6487bf62014">reload_master</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#ae33a2e7025919cd0b00c4d0f663db03">set_verbose_flag</a> (bool verbose)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#b37407115c701be02c8a027a287b939f">send_message</a> (<a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;cbp, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f9f8d4d9e843f18a77edf80c67a0de5a">send_message</a> (<a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;cbp, <a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *handler, <a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *timer)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::mutex&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">m_mutex</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#38c48d724ca534d23f9e5d87cf6e70e6">m_mutex</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#46b49df71060a55d779fe7a176975c3d">m_verbose</a></td></tr>
 
@@ -99,26 +98,26 @@ Collaboration diagram for Hypertable::MasterClient:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#262c1697cbf0bcfb2c52f9b99680a3ea">m_app_queue_ptr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#d724aaa776accd4ff73b80bb863e8edd">m_timeout</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#22cb74ade8ef366bcf836b60ac388bad">m_timeout_ms</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#182b79c459834e583059f750f0d9bde5">m_initiated</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#bb8facd7146537c87c56b928f8c93467">m_master_file_handle</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">Hyperspace::HandleCallbackPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">Hyperspace::HandleCallbackPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">m_master_file_callback_ptr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct sockaddr_in&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">m_master_addr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f85a02b40a7cff4cd204bf9060b413f7">m_master_addr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">m_master_addr_string</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#f33214045201b9c16724a528cf964755">m_master_addr_string</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">m_dispatcher_handler_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">m_dispatcher_handler_ptr</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00044">44</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00045">45</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="f0b63147e838a17a38ce3b291fdfefcc"></a><!-- doxytag: member="Hypertable::MasterClient::MasterClient" ref="f0b63147e838a17a38ce3b291fdfefcc" args="(ConnectionManagerPtr &amp;conn_mgr, Hyperspace::SessionPtr &amp;hyperspace, time_t timeout, ApplicationQueuePtr &amp;app_queue)" -->
+<a class="anchor" name="4faaf0d799ce2d3faec94e2317faa302"></a><!-- doxytag: member="Hypertable::MasterClient::MasterClient" ref="4faaf0d799ce2d3faec94e2317faa302" args="(ConnectionManagerPtr &amp;, Hyperspace::SessionPtr &amp;, uint32_t timeout_ms, ApplicationQueuePtr &amp;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -137,8 +136,8 @@ Collaboration diagram for Hypertable::MasterClient:</div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em>, </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -159,7 +158,7 @@ Collaboration diagram for Hypertable::MasterClient:</div>
 
 <p>
 Open /hypertable/master <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> file to discover the master. 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00042">42</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00040">40</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -180,40 +179,11 @@ Open /hypertable/master <a class="el" href="namespace_hyperspace.html" title="-*
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00063">63</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00067">67</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="a4e24a90222d1ef54a7812ede0fdea82"></a><!-- doxytag: member="Hypertable::MasterClient::set_timeout" ref="a4e24a90222d1ef54a7812ede0fdea82" args="(time_t timeout)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Hypertable::MasterClient::set_timeout           </td>
-          <td>(</td>
-          <td class="paramtype">time_t&nbsp;</td>
-          <td class="paramname"> <em>timeout</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-Sets the client connection timeout. 
-<p>
-<dl compact><dt><b>Parameters:</b></dt><dd>
-  <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>timeout value in seconds </td></tr>
-  </table>
-</dl>
-
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00054">54</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
-
-</div>
-</div><p>
 <a class="anchor" name="f7d029b729cf717542848fb2f42d811f"></a><!-- doxytag: member="Hypertable::MasterClient::initiate_connection" ref="f7d029b729cf717542848fb2f42d811f" args="(DispatchHandlerPtr dhp)" -->
 <div class="memitem">
 <div class="memproto">
@@ -221,7 +191,7 @@ Sets the client connection timeout.
         <tr>
           <td class="memname">int MasterClient::initiate_connection           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a>&nbsp;</td>
           <td class="paramname"> <em>dhp</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
@@ -236,15 +206,15 @@ Sets the client connection timeout.
 
 </div>
 </div><p>
-<a class="anchor" name="4d7b9b4a10391ccfc9011a47fe3eef55"></a><!-- doxytag: member="Hypertable::MasterClient::wait_for_connection" ref="4d7b9b4a10391ccfc9011a47fe3eef55" args="(long max_wait_secs)" -->
+<a class="anchor" name="c19f7c011553eb755f1cf9c96f5543a4"></a><!-- doxytag: member="Hypertable::MasterClient::wait_for_connection" ref="c19f7c011553eb755f1cf9c96f5543a4" args="(uint32_t max_wait_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool MasterClient::wait_for_connection           </td>
           <td>(</td>
-          <td class="paramtype">long&nbsp;</td>
-          <td class="paramname"> <em>max_wait_secs</em>          </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>max_wait_ms</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -254,11 +224,33 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00287">287</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00316">316</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="763b7337e40b8358eaae948164f5e8ea"></a><!-- doxytag: member="Hypertable::MasterClient::create_table" ref="763b7337e40b8358eaae948164f5e8ea" args="(const char *tablename, const char *schemastr, DispatchHandler *handler)" -->
+<a class="anchor" name="855649777160a653ab6c0e226cabdbd6"></a><!-- doxytag: member="Hypertable::MasterClient::wait_for_connection" ref="855649777160a653ab6c0e226cabdbd6" args="(Timer &amp;timer)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool MasterClient::wait_for_connection           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>timer</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00320">320</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="363242c795292bd64535fb37df165299"></a><!-- doxytag: member="Hypertable::MasterClient::create_table" ref="363242c795292bd64535fb37df165299" args="(const char *tablename, const char *schemastr, DispatchHandler *handler, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -278,7 +270,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -295,7 +293,7 @@ Sets the client connection timeout.
 
 </div>
 </div><p>
-<a class="anchor" name="869f5a622d612da32cb2d3b3c63c1722"></a><!-- doxytag: member="Hypertable::MasterClient::create_table" ref="869f5a622d612da32cb2d3b3c63c1722" args="(const char *tablename, const char *schemastr)" -->
+<a class="anchor" name="0ed5a2f9f385bad987db1c08c1f00840"></a><!-- doxytag: member="Hypertable::MasterClient::create_table" ref="0ed5a2f9f385bad987db1c08c1f00840" args="(const char *tablename, const char *schemastr, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -309,7 +307,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>schemastr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>schemastr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -322,11 +326,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00094">94</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00096">96</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="13eed61d388518e1a6042e1e6c551a3f"></a><!-- doxytag: member="Hypertable::MasterClient::get_schema" ref="13eed61d388518e1a6042e1e6c551a3f" args="(const char *tablename, DispatchHandler *handler)" -->
+<a class="anchor" name="d9af006d2f84c40ca5d4e0df9698c8c7"></a><!-- doxytag: member="Hypertable::MasterClient::get_schema" ref="d9af006d2f84c40ca5d4e0df9698c8c7" args="(const char *tablename, DispatchHandler *handler, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -340,38 +344,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00110">110</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="3c7cc6367bb479fc76f1e2e176e2640c"></a><!-- doxytag: member="Hypertable::MasterClient::get_schema" ref="3c7cc6367bb479fc76f1e2e176e2640c" args="(const char *tablename, std::string &amp;schema)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int MasterClient::get_schema           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>tablename</em>, </td>
+          <td class="paramname"> <em>handler</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>schema</em></td><td>&nbsp;</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -388,14 +367,52 @@ Sets the client connection timeout.
 
 </div>
 </div><p>
-<a class="anchor" name="61c42f2ad135253142c02ae37f12e068"></a><!-- doxytag: member="Hypertable::MasterClient::status" ref="61c42f2ad135253142c02ae37f12e068" args="()" -->
+<a class="anchor" name="a44e33744a6518e5908f8e42bf938127"></a><!-- doxytag: member="Hypertable::MasterClient::get_schema" ref="a44e33744a6518e5908f8e42bf938127" args="(const char *tablename, std::string &amp;schema, Timer *timer=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int MasterClient::get_schema           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>tablename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::string &amp;&nbsp;</td>
+          <td class="paramname"> <em>schema</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00124">124</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="47e43b8e9912ffe42c7d718cbbf19164"></a><!-- doxytag: member="Hypertable::MasterClient::status" ref="47e43b8e9912ffe42c7d718cbbf19164" args="(Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int MasterClient::status           </td>
           <td>(</td>
-          <td class="paramname">          </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -405,11 +422,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00138">138</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00147">147</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="920e56c7314a423574ef3019dd446817"></a><!-- doxytag: member="Hypertable::MasterClient::register_server" ref="920e56c7314a423574ef3019dd446817" args="(std::string &amp;location, DispatchHandler *handler)" -->
+<a class="anchor" name="b1de856c2bd4725e644a775cea401435"></a><!-- doxytag: member="Hypertable::MasterClient::register_server" ref="b1de856c2bd4725e644a775cea401435" args="(std::string &amp;location, DispatchHandler *handler, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -423,7 +440,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -436,11 +459,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00154">154</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00165">165</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="34803a33fdb0a60071ca3c5c770f20a3"></a><!-- doxytag: member="Hypertable::MasterClient::register_server" ref="34803a33fdb0a60071ca3c5c770f20a3" args="(std::string &amp;location)" -->
+<a class="anchor" name="c039f2c25975332fef2ed62d05605b7a"></a><!-- doxytag: member="Hypertable::MasterClient::register_server" ref="c039f2c25975332fef2ed62d05605b7a" args="(std::string &amp;location, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -448,9 +471,18 @@ Sets the client connection timeout.
           <td class="memname">int MasterClient::register_server           </td>
           <td>(</td>
           <td class="paramtype">std::string &amp;&nbsp;</td>
-          <td class="paramname"> <em>location</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"></td>
+          <td class="paramname"> <em>location</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
         </tr>
       </table>
 </div>
@@ -458,11 +490,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00160">160</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00172">172</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="55105514710f9cba69c6e38840477657"></a><!-- doxytag: member="Hypertable::MasterClient::report_split" ref="55105514710f9cba69c6e38840477657" args="(TableIdentifier *table, RangeSpec &amp;range, const char *log_dir, uint64_t soft_limit, DispatchHandler *handler)" -->
+<a class="anchor" name="ed0b8322139ca5b8f71e3f7806dfb0c5"></a><!-- doxytag: member="Hypertable::MasterClient::report_split" ref="ed0b8322139ca5b8f71e3f7806dfb0c5" args="(TableIdentifier *table, RangeSpec &amp;range, const char *log_dir, uint64_t soft_limit, DispatchHandler *handler, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -494,7 +526,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -507,11 +545,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00176">176</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00190">190</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f83d5d3ebed83ad8cad455d97fbb5dde"></a><!-- doxytag: member="Hypertable::MasterClient::report_split" ref="f83d5d3ebed83ad8cad455d97fbb5dde" args="(TableIdentifier *table, RangeSpec &amp;range, const char *log_dir, uint64_t soft_limit)" -->
+<a class="anchor" name="96e7fb343d309e27b8012d37401935e5"></a><!-- doxytag: member="Hypertable::MasterClient::report_split" ref="96e7fb343d309e27b8012d37401935e5" args="(TableIdentifier *table, RangeSpec &amp;range, const char *log_dir, uint64_t soft_limit, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -537,7 +575,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint64_t&nbsp;</td>
-          <td class="paramname"> <em>soft_limit</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>soft_limit</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -550,11 +594,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00182">182</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00200">200</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="36a1d7d441c3c25cd7654056437464e0"></a><!-- doxytag: member="Hypertable::MasterClient::drop_table" ref="36a1d7d441c3c25cd7654056437464e0" args="(const char *table_name, bool if_exists, DispatchHandler *handler)" -->
+<a class="anchor" name="69639fad51594328a8a40f25609542cf"></a><!-- doxytag: member="Hypertable::MasterClient::drop_table" ref="69639fad51594328a8a40f25609542cf" args="(const char *table_name, bool if_exists, DispatchHandler *handler, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -574,7 +618,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -587,11 +637,11 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00199">199</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00220">220</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="4c2266e45f8124f134565810616bdc7c"></a><!-- doxytag: member="Hypertable::MasterClient::drop_table" ref="4c2266e45f8124f134565810616bdc7c" args="(const char *table_name, bool if_exists)" -->
+<a class="anchor" name="3a115fb05d11917c0a973f44080d569c"></a><!-- doxytag: member="Hypertable::MasterClient::drop_table" ref="3a115fb05d11917c0a973f44080d569c" args="(const char *table_name, bool if_exists, Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -605,7 +655,13 @@ Sets the client connection timeout.
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>if_exists</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>if_exists</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -618,18 +674,19 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00206">206</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00229">229</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="334f74bda61b02cc9a26755e617ff0cb"></a><!-- doxytag: member="Hypertable::MasterClient::shutdown" ref="334f74bda61b02cc9a26755e617ff0cb" args="()" -->
+<a class="anchor" name="7231d4577da1ae134e437c5824ef21b2"></a><!-- doxytag: member="Hypertable::MasterClient::shutdown" ref="7231d4577da1ae134e437c5824ef21b2" args="(Timer *timer=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int MasterClient::shutdown           </td>
           <td>(</td>
-          <td class="paramname">          </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em> = <code>0</code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -639,7 +696,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00221">221</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00246">246</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -660,7 +717,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00256">256</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00282">282</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
@@ -682,25 +739,31 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00081">81</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00086">86</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b37407115c701be02c8a027a287b939f"></a><!-- doxytag: member="Hypertable::MasterClient::send_message" ref="b37407115c701be02c8a027a287b939f" args="(CommBufPtr &amp;cbp, DispatchHandler *handler)" -->
+<a class="anchor" name="f9f8d4d9e843f18a77edf80c67a0de5a"></a><!-- doxytag: member="Hypertable::MasterClient::send_message" ref="f9f8d4d9e843f18a77edf80c67a0de5a" args="(CommBufPtr &amp;cbp, DispatchHandler *handler, Timer *timer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int MasterClient::send_message           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#f0d346ab99aa69d3d04df7fa6899f78c">CommBufPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>cbp</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="class_hypertable_1_1_dispatch_handler.html">DispatchHandler</a> *&nbsp;</td>
-          <td class="paramname"> <em>handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_timer.html">Timer</a> *&nbsp;</td>
+          <td class="paramname"> <em>timer</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -713,17 +776,17 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00239">239</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8cc-source.html#l00264">264</a> of file <a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="8b8d009559d46575b9054fb709c0a312"></a><!-- doxytag: member="Hypertable::MasterClient::m_mutex" ref="8b8d009559d46575b9054fb709c0a312" args="" -->
+<a class="anchor" name="38c48d724ca534d23f9e5d87cf6e70e6"></a><!-- doxytag: member="Hypertable::MasterClient::m_mutex" ref="38c48d724ca534d23f9e5d87cf6e70e6" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">boost::mutex <a class="el" href="class_hypertable_1_1_master_client.html#8b8d009559d46575b9054fb709c0a312">Hypertable::MasterClient::m_mutex</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> <a class="el" href="class_hypertable_1_1_master_client.html#38c48d724ca534d23f9e5d87cf6e70e6">Hypertable::MasterClient::m_mutex</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -731,7 +794,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00087">87</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00092">92</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -748,7 +811,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00088">88</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00093">93</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -765,7 +828,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00089">89</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00094">94</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -782,7 +845,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00090">90</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00095">95</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -799,7 +862,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00091">91</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00096">96</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -816,16 +879,16 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00092">92</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00097">97</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d724aaa776accd4ff73b80bb863e8edd"></a><!-- doxytag: member="Hypertable::MasterClient::m_timeout" ref="d724aaa776accd4ff73b80bb863e8edd" args="" -->
+<a class="anchor" name="22cb74ade8ef366bcf836b60ac388bad"></a><!-- doxytag: member="Hypertable::MasterClient::m_timeout_ms" ref="22cb74ade8ef366bcf836b60ac388bad" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">time_t <a class="el" href="class_hypertable_1_1_master_client.html#d724aaa776accd4ff73b80bb863e8edd">Hypertable::MasterClient::m_timeout</a><code> [private]</code>          </td>
+          <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_master_client.html#22cb74ade8ef366bcf836b60ac388bad">Hypertable::MasterClient::m_timeout_ms</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -833,7 +896,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00093">93</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00098">98</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -850,7 +913,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00094">94</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00099">99</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -867,7 +930,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00095">95</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00100">100</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -876,7 +939,7 @@ Sets the client connection timeout.
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hyperspace.html#5ed7a420963717f9dfa75fff680bf719">Hyperspace::HandleCallbackPtr</a> <a class="el" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">Hypertable::MasterClient::m_master_file_callback_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">Hyperspace::HandleCallbackPtr</a> <a class="el" href="class_hypertable_1_1_master_client.html#7c0b19529dd7c3d7dd78452596efbf95">Hypertable::MasterClient::m_master_file_callback_ptr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -884,16 +947,16 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00096">96</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00101">101</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="78c0532f1322cd12a129ab2b94ddeb53"></a><!-- doxytag: member="Hypertable::MasterClient::m_master_addr" ref="78c0532f1322cd12a129ab2b94ddeb53" args="" -->
+<a class="anchor" name="f85a02b40a7cff4cd204bf9060b413f7"></a><!-- doxytag: member="Hypertable::MasterClient::m_master_addr" ref="f85a02b40a7cff4cd204bf9060b413f7" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">struct sockaddr_in <a class="el" href="class_hypertable_1_1_master_client.html#78c0532f1322cd12a129ab2b94ddeb53">Hypertable::MasterClient::m_master_addr</a><code> [read, private]</code>          </td>
+          <td class="memname"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a> <a class="el" href="class_hypertable_1_1_master_client.html#f85a02b40a7cff4cd204bf9060b413f7">Hypertable::MasterClient::m_master_addr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -901,16 +964,16 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00097">97</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00102">102</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="f5a528de83bf7e4b1d39347fe709e4af"></a><!-- doxytag: member="Hypertable::MasterClient::m_master_addr_string" ref="f5a528de83bf7e4b1d39347fe709e4af" args="" -->
+<a class="anchor" name="f33214045201b9c16724a528cf964755"></a><!-- doxytag: member="Hypertable::MasterClient::m_master_addr_string" ref="f33214045201b9c16724a528cf964755" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string <a class="el" href="class_hypertable_1_1_master_client.html#f5a528de83bf7e4b1d39347fe709e4af">Hypertable::MasterClient::m_master_addr_string</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> <a class="el" href="class_hypertable_1_1_master_client.html#f33214045201b9c16724a528cf964755">Hypertable::MasterClient::m_master_addr_string</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -918,7 +981,7 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00098">98</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00103">103</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
@@ -927,7 +990,7 @@ Sets the client connection timeout.
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#94ece282e3390f07e2d4460761a609c4">DispatchHandlerPtr</a> <a class="el" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">Hypertable::MasterClient::m_dispatcher_handler_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> <a class="el" href="class_hypertable_1_1_master_client.html#746014cabbc5332ac78d64b1b7a5887f">Hypertable::MasterClient::m_dispatcher_handler_ptr</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -935,13 +998,13 @@ Sets the client connection timeout.
 
 <p>
 
-<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00099">99</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
+<p>Definition at line <a class="el" href="_master_client_8h-source.html#l00104">104</a> of file <a class="el" href="_master_client_8h-source.html">MasterClient.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_client_8h-source.html">MasterClient.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_master_client_8cc-source.html">MasterClient.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:14 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:59 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

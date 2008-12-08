@@ -20,57 +20,68 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_TABLE_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_TABLE_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_defaults_8h.html">Defaults.h</a>"</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_table_mutator_8h.html">TableMutator.h</a>"</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_schema_8h.html">Schema.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_range_locator_8h.html">RangeLocator.h</a>"</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_table_scanner_8h.html">TableScanner.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_schema_8h.html">Schema.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_range_locator_8h.html">RangeLocator.h</a>"</span>
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">namespace </span>Hyperspace {
+<a name="l00032"></a>00032   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_session.html">Session</a>;
+<a name="l00033"></a>00033 }
 <a name="l00034"></a>00034 
-<a name="l00035"></a>00035 <span class="keyword">namespace </span>Hyperspace {
-<a name="l00036"></a>00036   <span class="keyword">class </span>Session;
-<a name="l00037"></a>00037 }
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="keyword">namespace </span>Hypertable {
+<a name="l00035"></a>00035 <span class="keyword">namespace </span>Hypertable {
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>;
+<a name="l00038"></a>00038   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a>;
+<a name="l00039"></a>00039   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_mutator.html" title="Provides the ability to mutate a table in the form of adding and deleting rows and...">TableMutator</a>;
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <span class="keyword">class </span>ConnectionManager;
-<a name="l00042"></a>00042 
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_table.html">00045</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047   <span class="keyword">public</span>:
-<a name="l00048"></a>00048     <a class="code" href="class_hypertable_1_1_table.html#be0cde99a0416b6e0f40ff41fe1506cf">Table</a>(<a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;conn_manager_ptr, <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace_ptr, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> name);
-<a name="l00049"></a>00049     <a class="code" href="class_hypertable_1_1_table.html#be0cde99a0416b6e0f40ff41fe1506cf">Table</a>(<a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace_ptr, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> name);
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_table.html">00043</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045   <span class="keyword">public</span>:
+<a name="l00046"></a>00046     <a class="code" href="class_hypertable_1_1_table.html#95c186a318fcb4782ee3bf524fc86462">Table</a>(<a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;,
+<a name="l00047"></a>00047           <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name);
+<a name="l00048"></a>00048     <a class="code" href="class_hypertable_1_1_table.html#95c186a318fcb4782ee3bf524fc86462">Table</a>(<a class="code" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;,
+<a name="l00049"></a>00049           <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, uint32_t default_timeout_ms);
 <a name="l00050"></a>00050     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_table.html#9a559f2e7beb37b511ee9f88873164f8">~Table</a>();
 <a name="l00051"></a>00051 
-<a name="l00058"></a>00058     <a class="code" href="class_hypertable_1_1_table_mutator.html" title="Provides the ability to mutate a table in the form of adding and deleting rows and...">TableMutator</a> *<a class="code" href="class_hypertable_1_1_table.html#421bd70b094280cd7b92ed508ee7537b" title="Creates a mutator on this table.">create_mutator</a>(<span class="keywordtype">int</span> timeout=0);
-<a name="l00059"></a>00059 
-<a name="l00067"></a>00067     <a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> *<a class="code" href="class_hypertable_1_1_table.html#ca040f269322e7bdd1817174aa63e24b" title="Creates a scanner on this table.">create_scanner</a>(<a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec, <span class="keywordtype">int</span> timeout=0);
-<a name="l00068"></a>00068 
-<a name="l00069"></a><a class="code" href="class_hypertable_1_1_table.html#02b59098d97f140a53453a3570282919">00069</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table.html#02b59098d97f140a53453a3570282919">get_identifier</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table_id_p) {
-<a name="l00070"></a>00070       memcpy(table_id_p, &amp;<a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a>));
-<a name="l00071"></a>00071     }
-<a name="l00072"></a>00072 
-<a name="l00073"></a>00073   <span class="keyword">private</span>:
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table.html#ff2a43dff7c4365dcc95fbe30b12bb7c">initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name);
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="class_hypertable_1_1_table.html#e9c74d46ad42764c8bf354ebcaa05a40">00077</a>     <a class="code" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a>          <a class="code" href="class_hypertable_1_1_table.html#e9c74d46ad42764c8bf354ebcaa05a40">m_props_ptr</a>;
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_table.html#92430928c59a87da0a790c74fb11f620">00078</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                  *<a class="code" href="class_hypertable_1_1_table.html#92430928c59a87da0a790c74fb11f620">m_comm</a>;
-<a name="l00079"></a><a class="code" href="class_hypertable_1_1_table.html#84ca825a715ce0c56649026633e751ac">00079</a>     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>   <a class="code" href="class_hypertable_1_1_table.html#84ca825a715ce0c56649026633e751ac">m_conn_manager_ptr</a>;
-<a name="l00080"></a><a class="code" href="class_hypertable_1_1_table.html#d6d3f722f63366da5a91e3ecfde854d3">00080</a>     <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="code" href="class_hypertable_1_1_table.html#d6d3f722f63366da5a91e3ecfde854d3">m_hyperspace_ptr</a>;
-<a name="l00081"></a><a class="code" href="class_hypertable_1_1_table.html#72491e33218f75ef4aa2fb6768ef5372">00081</a>     <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a>              <a class="code" href="class_hypertable_1_1_table.html#72491e33218f75ef4aa2fb6768ef5372">m_schema_ptr</a>;
-<a name="l00082"></a><a class="code" href="class_hypertable_1_1_table.html#885fd72e5b6ad1d688d442777586096f">00082</a>     <a class="code" href="namespace_hypertable.html#05c08609ae0d86a26a0b8d1f9c239e07">RangeLocatorPtr</a>        <a class="code" href="class_hypertable_1_1_table.html#885fd72e5b6ad1d688d442777586096f">m_range_locator_ptr</a>;
-<a name="l00083"></a><a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">00083</a>     <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a>        <a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a>;
-<a name="l00084"></a>00084   };
-<a name="l00085"></a><a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">00085</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;Table&gt; <a class="code" href="namespace_hypertable.html#62c4f640364eff829348a9e44351c747">TablePtr</a>;
+<a name="l00059"></a>00059     <a class="code" href="class_hypertable_1_1_table_mutator.html" title="Provides the ability to mutate a table in the form of adding and deleting rows and...">TableMutator</a> *<a class="code" href="class_hypertable_1_1_table.html#ddfb66409b175c54c44643165264dc6f" title="Creates a mutator on this table.">create_mutator</a>(uint32_t timeout_ms = 0);
+<a name="l00060"></a>00060 
+<a name="l00069"></a>00069     <a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> *<a class="code" href="class_hypertable_1_1_table.html#6a52d97f5230ac5dccfa81e885f7a75b" title="Creates a scanner on this table.">create_scanner</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec,
+<a name="l00070"></a>00070                                  uint32_t timeout_ms = 0);
+<a name="l00071"></a>00071 
+<a name="l00072"></a><a class="code" href="class_hypertable_1_1_table.html#02b59098d97f140a53453a3570282919">00072</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table.html#02b59098d97f140a53453a3570282919">get_identifier</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table_id_p) {
+<a name="l00073"></a>00073       memcpy(table_id_p, &amp;<a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a>, <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a>));
+<a name="l00074"></a>00074     }
+<a name="l00075"></a>00075 
+<a name="l00076"></a><a class="code" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">00076</a>     <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> &amp;<a class="code" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">identifier</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a>; }
+<a name="l00077"></a>00077 
+<a name="l00078"></a><a class="code" href="class_hypertable_1_1_table.html#8684ed476147fc79db9e434aa09726db">00078</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table.html#8684ed476147fc79db9e434aa09726db">not_found</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_table.html#6b2a79f2fde0077477565e6f81578ee5">m_not_found</a>; }
+<a name="l00079"></a>00079 
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_table.html#e31a320a6aa2d57c63fa4503cde0b942">00080</a>     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_mutator.html" title="Provides the ability to mutate a table in the form of adding and deleting rows and...">TableMutator</a>;
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_table.html#2d126ec14d1ea056ea770955bd980a9c">00081</a>     <span class="keyword">friend</span> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a>;
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083   <span class="keyword">private</span>:
+<a name="l00084"></a>00084 
+<a name="l00085"></a>00085     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table.html#ff2a43dff7c4365dcc95fbe30b12bb7c">initialize</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name);
 <a name="l00086"></a>00086 
-<a name="l00087"></a>00087 }
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089 <span class="preprocessor">#endif // HYPERTABLE_TABLE_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_table.html#43c5654d9056ec1a0de8132e1bfc478e">00087</a>     <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a>          <a class="code" href="class_hypertable_1_1_table.html#43c5654d9056ec1a0de8132e1bfc478e">m_props</a>;
+<a name="l00088"></a><a class="code" href="class_hypertable_1_1_table.html#92430928c59a87da0a790c74fb11f620">00088</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                  *<a class="code" href="class_hypertable_1_1_table.html#92430928c59a87da0a790c74fb11f620">m_comm</a>;
+<a name="l00089"></a><a class="code" href="class_hypertable_1_1_table.html#3a5f30bee9378157c1469ade31ed4bc4">00089</a>     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>   <a class="code" href="class_hypertable_1_1_table.html#3a5f30bee9378157c1469ade31ed4bc4">m_conn_manager</a>;
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_table.html#f227c1502927a59b39ad662292ee33ba">00090</a>     <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="code" href="class_hypertable_1_1_table.html#f227c1502927a59b39ad662292ee33ba">m_hyperspace</a>;
+<a name="l00091"></a><a class="code" href="class_hypertable_1_1_table.html#1b03f7f1526338cb306ef50b47f8f32c">00091</a>     <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a>              <a class="code" href="class_hypertable_1_1_table.html#1b03f7f1526338cb306ef50b47f8f32c">m_schema</a>;
+<a name="l00092"></a><a class="code" href="class_hypertable_1_1_table.html#a8c36203d840bf69e0c9a90276fd31e8">00092</a>     <a class="code" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a>        <a class="code" href="class_hypertable_1_1_table.html#a8c36203d840bf69e0c9a90276fd31e8">m_range_locator</a>;
+<a name="l00093"></a><a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">00093</a>     <a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a>        <a class="code" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a>;
+<a name="l00094"></a><a class="code" href="class_hypertable_1_1_table.html#aa0df18cbb986a8095b55f825ce19704">00094</a>     <span class="keywordtype">int</span>                    <a class="code" href="class_hypertable_1_1_table.html#aa0df18cbb986a8095b55f825ce19704">m_timeout_ms</a>;
+<a name="l00095"></a><a class="code" href="class_hypertable_1_1_table.html#6b2a79f2fde0077477565e6f81578ee5">00095</a>     <span class="keywordtype">bool</span>                   <a class="code" href="class_hypertable_1_1_table.html#6b2a79f2fde0077477565e6f81578ee5">m_not_found</a>;
+<a name="l00096"></a>00096   };
+<a name="l00097"></a>00097 
+<a name="l00098"></a><a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">00098</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;Table&gt; <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a>;
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 } <span class="comment">// namesapce Hypertable</span>
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102 <span class="preprocessor">#endif // HYPERTABLE_TABLE_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

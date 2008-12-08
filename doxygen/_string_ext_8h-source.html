@@ -26,60 +26,46 @@
 <a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
 <a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_hash_map_8h.html">HashMap.h</a>"</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="namespace_b_o_o_s_t___s_t_d___e_x_t_e_n_s_i_o_n___n_a_m_e_s_p_a_c_e.html">00030</a> <span class="keyword">namespace </span>BOOST_STD_EXTENSION_NAMESPACE {
-<a name="l00031"></a><a class="code" href="struct_b_o_o_s_t___s_t_d___e_x_t_e_n_s_i_o_n___n_a_m_e_s_p_a_c_e_1_1hash_3_01std_1_1string_01_4.html">00031</a>   <span class="keyword">template</span>&lt;&gt; <span class="keyword">struct </span>hash&lt; std::string &gt;  {
-<a name="l00032"></a><a class="code" href="struct_b_o_o_s_t___s_t_d___e_x_t_e_n_s_i_o_n___n_a_m_e_s_p_a_c_e_1_1hash_3_01std_1_1string_01_4.html#ed7674e7616ed75c362d8334044af6db">00032</a>     <span class="keywordtype">size_t</span> operator()(<span class="keyword">const</span> std::string&amp; x)<span class="keyword"> const </span>{
-<a name="l00033"></a>00033       <span class="keywordflow">return</span> hash&lt; const char* &gt;()(x.c_str());
-<a name="l00034"></a>00034     }
-<a name="l00035"></a>00035   };
-<a name="l00036"></a>00036 <span class="preprocessor">#if defined(__APPLE__) || defined(__i386__)</span>
-<a name="l00037"></a>00037 <span class="preprocessor"></span>  <span class="keyword">template</span>&lt;&gt; <span class="keyword">struct </span>hash&lt; uint64_t &gt; {
-<a name="l00038"></a>00038     <span class="keywordtype">size_t</span> operator()(<span class="keyword">const</span> uint64_t val)<span class="keyword"> const </span>{
-<a name="l00039"></a>00039       <span class="keywordflow">return</span> size_t(val);
-<a name="l00040"></a>00040     }
-<a name="l00041"></a>00041   };
-<a name="l00042"></a>00042 <span class="preprocessor">#endif</span>
-<a name="l00043"></a>00043 <span class="preprocessor"></span>}
-<a name="l00044"></a>00044 
-<a name="l00046"></a><a class="code" href="struct_lt_cstr.html">00046</a> <span class="keyword">struct </span><a class="code" href="struct_lt_cstr.html" title="STL Strict Weak Ordering for comparing c-style strings.">LtCstr</a> {
-<a name="l00047"></a><a class="code" href="struct_lt_cstr.html#e77fe37b51b52fe6713fd29553af6778">00047</a>   <span class="keywordtype">bool</span> <a class="code" href="struct_lt_cstr.html#e77fe37b51b52fe6713fd29553af6778">operator()</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s1, <span class="keyword">const</span> <span class="keywordtype">char</span>* s2)<span class="keyword"> const </span>{
-<a name="l00048"></a>00048     <span class="keywordflow">return</span> strcmp(s1, s2) &lt; 0;
-<a name="l00049"></a>00049   }
-<a name="l00050"></a>00050 };
-<a name="l00051"></a>00051 
-<a name="l00052"></a><a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">00052</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">short</span> sval) {
-<a name="l00053"></a>00053   <span class="keywordtype">char</span> cbuf[8];
-<a name="l00054"></a>00054   sprintf(cbuf, <span class="stringliteral">"%d"</span>, sval);
-<a name="l00055"></a>00055   <span class="keywordflow">return</span> s1 + cbuf;
-<a name="l00056"></a>00056 }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="_string_ext_8h.html#b64bd586c25a0f9a3289dfdcf28c2984">00058</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">int</span> ival) {
-<a name="l00059"></a>00059   <span class="keywordtype">char</span> cbuf[16];
-<a name="l00060"></a>00060   sprintf(cbuf, <span class="stringliteral">"%d"</span>, ival);
-<a name="l00061"></a>00061   <span class="keywordflow">return</span> s1 + cbuf;
-<a name="l00062"></a>00062 }
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="_string_ext_8h.html#82707b6ec855524399cb5b09b3838263">00064</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, uint32_t ival) {
-<a name="l00065"></a>00065   <span class="keywordtype">char</span> cbuf[16];
-<a name="l00066"></a>00066   sprintf(cbuf, <span class="stringliteral">"%d"</span>, ival);
-<a name="l00067"></a>00067   <span class="keywordflow">return</span> s1 + cbuf;
-<a name="l00068"></a>00068 }
-<a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="_string_ext_8h.html#e2e6aefadbed14c72ee8d2cf6c774dc9">00070</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">long</span> <span class="keywordtype">long</span> llval) {
-<a name="l00071"></a>00071   <span class="keywordtype">char</span> cbuf[32];
-<a name="l00072"></a>00072   sprintf(cbuf, <span class="stringliteral">"%lld"</span>, llval);
-<a name="l00073"></a>00073   <span class="keywordflow">return</span> s1 + cbuf;
-<a name="l00074"></a>00074 }
-<a name="l00075"></a>00075 
-<a name="l00076"></a><a class="code" href="_string_ext_8h.html#8eba848f6a303660027e97af9a933e19">00076</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, uint64_t llval) {
-<a name="l00077"></a>00077   <span class="keywordtype">char</span> cbuf[32];
-<a name="l00078"></a>00078   sprintf(cbuf, <span class="stringliteral">"%llu"</span>, (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)llval);
-<a name="l00079"></a>00079   <span class="keywordflow">return</span> s1 + cbuf;
-<a name="l00080"></a>00080 }
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083 <span class="preprocessor">#endif // HYPERTABLE_STRINGEXT_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00030"></a>00030 
+<a name="l00032"></a><a class="code" href="struct_lt_cstr.html">00032</a> <span class="keyword">struct </span><a class="code" href="struct_lt_cstr.html" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">LtCstr</a> {
+<a name="l00033"></a><a class="code" href="struct_lt_cstr.html#e77fe37b51b52fe6713fd29553af6778">00033</a>   <span class="keywordtype">bool</span> <a class="code" href="struct_lt_cstr.html#e77fe37b51b52fe6713fd29553af6778">operator()</a>(<span class="keyword">const</span> <span class="keywordtype">char</span>* s1, <span class="keyword">const</span> <span class="keywordtype">char</span>* s2)<span class="keyword"> const </span>{
+<a name="l00034"></a>00034     <span class="keywordflow">return</span> strcmp(s1, s2) &lt; 0;
+<a name="l00035"></a>00035   }
+<a name="l00036"></a>00036 };
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">00038</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">short</span> sval) {
+<a name="l00039"></a>00039   <span class="keywordtype">char</span> cbuf[8];
+<a name="l00040"></a>00040   sprintf(cbuf, <span class="stringliteral">"%d"</span>, sval);
+<a name="l00041"></a>00041   <span class="keywordflow">return</span> s1 + cbuf;
+<a name="l00042"></a>00042 }
+<a name="l00043"></a>00043 
+<a name="l00044"></a><a class="code" href="_string_ext_8h.html#b64bd586c25a0f9a3289dfdcf28c2984">00044</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">int</span> ival) {
+<a name="l00045"></a>00045   <span class="keywordtype">char</span> cbuf[16];
+<a name="l00046"></a>00046   sprintf(cbuf, <span class="stringliteral">"%d"</span>, ival);
+<a name="l00047"></a>00047   <span class="keywordflow">return</span> s1 + cbuf;
+<a name="l00048"></a>00048 }
+<a name="l00049"></a>00049 
+<a name="l00050"></a><a class="code" href="_string_ext_8h.html#82707b6ec855524399cb5b09b3838263">00050</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, uint32_t ival) {
+<a name="l00051"></a>00051   <span class="keywordtype">char</span> cbuf[16];
+<a name="l00052"></a>00052   sprintf(cbuf, <span class="stringliteral">"%d"</span>, ival);
+<a name="l00053"></a>00053   <span class="keywordflow">return</span> s1 + cbuf;
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="_string_ext_8h.html#e2e6aefadbed14c72ee8d2cf6c774dc9">00056</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, <span class="keywordtype">long</span> <span class="keywordtype">long</span> llval) {
+<a name="l00057"></a>00057   <span class="keywordtype">char</span> cbuf[32];
+<a name="l00058"></a>00058   sprintf(cbuf, <span class="stringliteral">"%lld"</span>, llval);
+<a name="l00059"></a>00059   <span class="keywordflow">return</span> s1 + cbuf;
+<a name="l00060"></a>00060 }
+<a name="l00061"></a>00061 
+<a name="l00062"></a><a class="code" href="_string_ext_8h.html#8eba848f6a303660027e97af9a933e19">00062</a> <span class="keyword">inline</span> std::string <a class="code" href="_string_ext_8h.html#37a36fcf466ebe11c1d39201ca40215b">operator+</a>(<span class="keyword">const</span> std::string&amp; s1, uint64_t llval) {
+<a name="l00063"></a>00063   <span class="keywordtype">char</span> cbuf[32];
+<a name="l00064"></a>00064   sprintf(cbuf, <span class="stringliteral">"%llu"</span>, (<span class="keywordtype">long</span> <span class="keywordtype">long</span> <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span>)llval);
+<a name="l00065"></a>00065   <span class="keywordflow">return</span> s1 + cbuf;
+<a name="l00066"></a>00066 }
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069 <span class="preprocessor">#endif // HYPERTABLE_STRINGEXT_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

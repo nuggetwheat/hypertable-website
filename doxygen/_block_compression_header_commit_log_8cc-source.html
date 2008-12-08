@@ -29,34 +29,37 @@
 <a name="l00031"></a>00031 
 <a name="l00032"></a>00032 <span class="keyword">const</span> <span class="keywordtype">size_t</span> BlockCompressionHeaderCommitLog::LENGTH;
 <a name="l00033"></a>00033 
-<a name="l00034"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#25f821df939c2abb74bf935146031b54">00034</a> BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog() : <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a>(), m_timestamp(0) {
-<a name="l00035"></a>00035 }
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#969e3e00447dc00855f3b5776cbb375e">00037</a> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#25f821df939c2abb74bf935146031b54">BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *magic, uint64_t <a class="code" href="_range_server_8cc.html#4d7e85ea15e60300894d5610b83ab380">timestamp</a>) : <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a>(magic), <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#17b12acf82c2092ea17b283f0647020a">m_timestamp</a>(timestamp) {
-<a name="l00038"></a>00038 }
-<a name="l00039"></a>00039 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">00040</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">BlockCompressionHeaderCommitLog::encode</a>(uint8_t **bufp) {
-<a name="l00041"></a>00041   uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
-<a name="l00042"></a>00042   <a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">BlockCompressionHeader::encode</a>(bufp);
-<a name="l00043"></a>00043   <a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae" title="Encode a 64-bit integer in little-endian order.">encode_i64</a>(bufp, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#17b12acf82c2092ea17b283f0647020a">m_timestamp</a>);
-<a name="l00044"></a>00044   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) + 2 == <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a>())
-<a name="l00045"></a>00045     <a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">write_header_checksum</a>(base, bufp);
-<a name="l00046"></a>00046 }
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 
-<a name="l00049"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">00049</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">BlockCompressionHeaderCommitLog::decode</a>(<span class="keyword">const</span> uint8_t **bufp,
-<a name="l00050"></a>00050                                              <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00051"></a>00051   <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053   <a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">BlockCompressionHeader::decode</a>(bufp, remainp);
-<a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#17b12acf82c2092ea17b283f0647020a">m_timestamp</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(bufp, remainp);
+<a name="l00034"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#25f821df939c2abb74bf935146031b54">00034</a> BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog()
+<a name="l00035"></a>00035   : <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a>(), m_revision(0) {
+<a name="l00036"></a>00036 }
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#1c6ccf0723333071bbd08f58395e6d20">00038</a> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#25f821df939c2abb74bf935146031b54">BlockCompressionHeaderCommitLog::BlockCompressionHeaderCommitLog</a>(
+<a name="l00039"></a>00039     <span class="keyword">const</span> <span class="keywordtype">char</span> *magic, int64_t revision)
+<a name="l00040"></a>00040   : <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a>(magic), <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#585dcf00c8bf71eb7f82c2e6bd46d11a">m_revision</a>(revision) {
+<a name="l00041"></a>00041 }
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">00043</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#ecb39cf9e53c99a04af9b58e2a777a76">BlockCompressionHeaderCommitLog::encode</a>(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>) {
+<a name="l00044"></a>00044   uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
+<a name="l00045"></a>00045   <a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">BlockCompressionHeader::encode</a>(bufp);
+<a name="l00046"></a>00046   <a class="code" href="namespace_hypertable_1_1_serialization.html#855985be3bf7999195644c10e29a69ae" title="Encode a 64-bit integer in little-endian order.">encode_i64</a>(bufp, <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#585dcf00c8bf71eb7f82c2e6bd46d11a">m_revision</a>);
+<a name="l00047"></a>00047   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) + 2 == <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a>())
+<a name="l00048"></a>00048     <a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">write_header_checksum</a>(base, bufp);
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">00052</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#751813d53065b927577fa8c5381890f7">BlockCompressionHeaderCommitLog::decode</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>,
+<a name="l00053"></a>00053                                              <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00054"></a>00054   <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
 <a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) == <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a>() - 2) {
-<a name="l00057"></a>00057     *bufp += 2;
-<a name="l00058"></a>00058     *remainp -= 2;
-<a name="l00059"></a>00059   }
-<a name="l00060"></a>00060 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">BlockCompressionHeader::decode</a>(bufp, remainp);
+<a name="l00057"></a>00057   <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#585dcf00c8bf71eb7f82c2e6bd46d11a">m_revision</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(bufp, remainp);
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) == <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html#57e28ecb338bf8e8f351dcf15c38b04d">length</a>() - 2) {
+<a name="l00060"></a>00060     *bufp += 2;
+<a name="l00061"></a>00061     *remainp -= 2;
+<a name="l00062"></a>00062   }
+<a name="l00063"></a>00063 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -33,37 +33,46 @@ Collaboration diagram for Hypertable::ScanSpecBuilder:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_scan_spec_builder__coll__graph.png" border="0" usemap="#_hypertable_1_1_scan_spec_builder__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_scan_spec_builder__coll__map">
-<area shape="rect" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate." alt="" coords="28,5,183,32"></map>
+<area shape="rect" href="class_hypertable_1_1_page_arena.html" title="A simple/fast allocator to avoid individual deletes/frees Good for usage patterns..." alt="" coords="5,103,307,129"><area shape="rect" href="struct_hypertable_1_1_page_arena_1_1_page.html" title="Hypertable::PageArena\&lt; CharT, PageAllocT \&gt;::Page" alt="" coords="175,12,516,39"><area shape="rect" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate." alt="" coords="331,103,485,129"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_scan_spec_builder-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#ada81196d450db07323576ab7e423bcf">ScanSpecBuilder</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#6cd08c35729dc3af34472ac1fbda996e">ScanSpecBuilder</a> (const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Copy construct from a <a class="el" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a>.  <a href="#6cd08c35729dc3af34472ac1fbda996e"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#d591c7f9d66cb12b026b4a68b59d7300">set_row_limit</a> (int32_t n)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the maximum number of rows to return in the scan.  <a href="#d591c7f9d66cb12b026b4a68b59d7300"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#e24c2db80705b16a234944acc9fa9c68">set_max_versions</a> (uint32_t n)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the maximum number of revisions of each cell to return in the scan.  <a href="#e24c2db80705b16a234944acc9fa9c68"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#b08342c6a3f7141f477e79386b682e1c">add_column</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;str)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#c42c99c9b290e36ba49a6deac111a40c">add_column</a> (const char *str)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a column family to be returned by the scan.  <a href="#b08342c6a3f7141f477e79386b682e1c"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#ebe1cc3919c540edff28937b57e91d0d">add_row</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;str)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a column family to be returned by the scan.  <a href="#c42c99c9b290e36ba49a6deac111a40c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#5979bdf27d0be631e8a30d69e5d4d0d3">add_row</a> (const char *str)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a row to be returned in the scan.  <a href="#ebe1cc3919c540edff28937b57e91d0d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#1933cea25de41d47d7377dd05464a571">add_row_interval</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;<a class="el" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, bool start_inclusive, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;<a class="el" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>, bool end_inclusive)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a row to be returned in the scan.  <a href="#5979bdf27d0be631e8a30d69e5d4d0d3"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#b919dd6ed0dd431cd43042e06631fb46">add_row_interval</a> (const char *<a class="el" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, bool start_inclusive, const char *<a class="el" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>, bool end_inclusive)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a row interval to be returned in the scan.  <a href="#1933cea25de41d47d7377dd05464a571"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#88a8f5dfaaa793038cb2247463d92b94">add_cell</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;row, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;column)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a row interval to be returned in the scan.  <a href="#b919dd6ed0dd431cd43042e06631fb46"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#20653e594d040fb7aa7d7c35ea776edc">add_cell</a> (const char *row, const char *column)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a cell to be returned in the scan.  <a href="#88a8f5dfaaa793038cb2247463d92b94"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#fc4d475ace1343c6b2fbc132c3b88920">add_cell_interval</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;<a class="el" href="count__stored_8cc.html#d1424b8dff6b34a261523c1000a63caf">start_row</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;start_column, bool start_inclusive, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;<a class="el" href="count__stored_8cc.html#4ffb6217a79b7b3797d5196ce2bf9c3f">end_row</a>, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;end_column, bool end_inclusive)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a cell to be returned in the scan.  <a href="#20653e594d040fb7aa7d7c35ea776edc"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#412d1e86113db287b228a696e72920fd">add_cell_interval</a> (const char *<a class="el" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>, const char *start_column, bool start_inclusive, const char *<a class="el" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>, const char *end_column, bool end_inclusive)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a cell interval to be returned in the scan.  <a href="#fc4d475ace1343c6b2fbc132c3b88920"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Adds a cell interval to be returned in the scan.  <a href="#412d1e86113db287b228a696e72920fd"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#dc06edf63b250d99057bfa0196d7983e">set_time_interval</a> (int64_t <a class="el" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, int64_t <a class="el" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets the time interval of the scan.  <a href="#dc06edf63b250d99057bfa0196d7983e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#7af549186c69841c87fa2d8e6fcbc024">set_start_time</a> (int64_t <a class="el" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#2b381cd6df8cef082e9dae3a13cc200b">set_end_time</a> (int64_t <a class="el" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>)</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#3cba11039f2db7827e76a885600d6f6e">set_return_deletes</a> (bool val)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Internal use only.  <a href="#3cba11039f2db7827e76a885600d6f6e"></a><br></td></tr>
@@ -73,8 +82,11 @@ Collaboration diagram for Hypertable::ScanSpecBuilder:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#800441f2a2df4c7459ce886273d8000f">get</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the built <a class="el" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> object.  <a href="#800441f2a2df4c7459ce886273d8000f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#8e529719fdb38ebdd749e5ecce04f8b1">swap</a> (<a class="el" href="class_hypertable_1_1_scan_spec_builder.html">ScanSpecBuilder</a> &amp;ssb)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">An O(1) swap operation.  <a href="#8e529719fdb38ebdd749e5ecce04f8b1"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#44fa479937cfeb8d53fd639a21ae58b3">m_strings</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_page_arena.html">CharArena</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#30c4fe521f7a77a040b05634aeb47bd4">m_alloc</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html#538ef44cafaa62582634c39811939b89">m_scan_spec</a></td></tr>
 
@@ -83,7 +95,53 @@ Collaboration diagram for Hypertable::ScanSpecBuilder:</div>
 Helper class for building a <a class="el" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a>. 
 <p>
 This class manages the allocation of all string members. 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00118">118</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00149">149</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<hr><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" name="ada81196d450db07323576ab7e423bcf"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::ScanSpecBuilder" ref="ada81196d450db07323576ab7e423bcf" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::ScanSpecBuilder::ScanSpecBuilder           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00151">151</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6cd08c35729dc3af34472ac1fbda996e"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::ScanSpecBuilder" ref="6cd08c35729dc3af34472ac1fbda996e" args="(const ScanSpec &amp;)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ScanSpecBuilder::ScanSpecBuilder           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>ss</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Copy construct from a <a class="el" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a>. 
+<p>
+
+<p>Definition at line <a class="el" href="_scan_spec_8cc-source.html#l00202">202</a> of file <a class="el" href="_scan_spec_8cc-source.html">ScanSpec.cc</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Member Function Documentation</h2>
 <a class="anchor" name="d591c7f9d66cb12b026b4a68b59d7300"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::set_row_limit" ref="d591c7f9d66cb12b026b4a68b59d7300" args="(int32_t n)" -->
 <div class="memitem">
@@ -110,7 +168,7 @@ Sets the maximum number of rows to return in the scan.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00125">125</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00160">160</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -139,18 +197,18 @@ Sets the maximum number of revisions of each cell to return in the scan.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00132">132</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00167">167</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="b08342c6a3f7141f477e79386b682e1c"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_column" ref="b08342c6a3f7141f477e79386b682e1c" args="(const String &amp;str)" -->
+<a class="anchor" name="c42c99c9b290e36ba49a6deac111a40c"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_column" ref="c42c99c9b290e36ba49a6deac111a40c" args="(const char *str)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::ScanSpecBuilder::add_column           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>str</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
@@ -168,18 +226,18 @@ Adds a column family to be returned by the scan.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00139">139</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00174">174</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ebe1cc3919c540edff28937b57e91d0d"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_row" ref="ebe1cc3919c540edff28937b57e91d0d" args="(const String &amp;str)" -->
+<a class="anchor" name="5979bdf27d0be631e8a30d69e5d4d0d3"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_row" ref="5979bdf27d0be631e8a30d69e5d4d0d3" args="(const char *str)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::ScanSpecBuilder::add_row           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>str</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
@@ -197,18 +255,18 @@ Adds a row to be returned in the scan.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00149">149</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00183">183</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="1933cea25de41d47d7377dd05464a571"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_row_interval" ref="1933cea25de41d47d7377dd05464a571" args="(const String &amp;start, bool start_inclusive, const String &amp;end, bool end_inclusive)" -->
+<a class="anchor" name="b919dd6ed0dd431cd43042e06631fb46"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_row_interval" ref="b919dd6ed0dd431cd43042e06631fb46" args="(const char *start, bool start_inclusive, const char *end, bool end_inclusive)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::ScanSpecBuilder::add_row_interval           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>start</em>, </td>
         </tr>
         <tr>
@@ -220,7 +278,7 @@ Adds a row to be returned in the scan.
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>end</em>, </td>
         </tr>
         <tr>
@@ -250,24 +308,24 @@ Adds a row interval to be returned in the scan.
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00165">165</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00200">200</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="88a8f5dfaaa793038cb2247463d92b94"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_cell" ref="88a8f5dfaaa793038cb2247463d92b94" args="(const String &amp;row, const String &amp;column)" -->
+<a class="anchor" name="20653e594d040fb7aa7d7c35ea776edc"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_cell" ref="20653e594d040fb7aa7d7c35ea776edc" args="(const char *row, const char *column)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::ScanSpecBuilder::add_cell           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>row</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>column</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -284,28 +342,29 @@ Adds a cell to be returned in the scan.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>str</em>&nbsp;</td><td>row key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>row</em>&nbsp;</td><td>row key </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>column</em>&nbsp;</td><td>column spec of the form &lt;family&gt;[:&lt;qualifier&gt;] </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00182">182</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00218">218</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="fc4d475ace1343c6b2fbc132c3b88920"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_cell_interval" ref="fc4d475ace1343c6b2fbc132c3b88920" args="(const String &amp;start_row, const String &amp;start_column, bool start_inclusive, const String &amp;end_row, const String &amp;end_column, bool end_inclusive)" -->
+<a class="anchor" name="412d1e86113db287b228a696e72920fd"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::add_cell_interval" ref="412d1e86113db287b228a696e72920fd" args="(const char *start_row, const char *start_column, bool start_inclusive, const char *end_row, const char *end_column, bool end_inclusive)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::ScanSpecBuilder::add_cell_interval           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>start_row</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>start_column</em>, </td>
         </tr>
         <tr>
@@ -317,13 +376,13 @@ Adds a cell to be returned in the scan.
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>end_row</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>end_column</em>, </td>
         </tr>
         <tr>
@@ -347,15 +406,15 @@ Adds a cell interval to be returned in the scan.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>start_row</em>&nbsp;</td><td>start row </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>start_column</em>&nbsp;</td><td>start column </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>start_column</em>&nbsp;</td><td>start column spec of the form &lt;family&gt;[:&lt;qualifier&gt;] </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>start_inclusive</em>&nbsp;</td><td>true if interval should include start row </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>end_row</em>&nbsp;</td><td>end row </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>end_column</em>&nbsp;</td><td>end column </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>end_column</em>&nbsp;</td><td>end column spec of the form &lt;family&gt;[:&lt;qualifier&gt;] </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>end_inclusive</em>&nbsp;</td><td>true if interval should include end row </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00202">202</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00240">240</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -395,7 +454,51 @@ Time values represent number of nanoseconds from 1970-01-00 00:00:00.000000000.<
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00225">225</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00262">262</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7af549186c69841c87fa2d8e6fcbc024"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::set_start_time" ref="7af549186c69841c87fa2d8e6fcbc024" args="(int64_t start)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::ScanSpecBuilder::set_start_time           </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>start</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00267">267</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2b381cd6df8cef082e9dae3a13cc200b"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::set_end_time" ref="2b381cd6df8cef082e9dae3a13cc200b" args="(int64_t end)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::ScanSpecBuilder::set_end_time           </td>
+          <td>(</td>
+          <td class="paramtype">int64_t&nbsp;</td>
+          <td class="paramname"> <em>end</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00271">271</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -419,7 +522,7 @@ Time values represent number of nanoseconds from 1970-01-00 00:00:00.000000000.<
 Internal use only. 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00233">233</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00278">278</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -442,7 +545,7 @@ Internal use only.
 Clears the state. 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00240">240</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00285">285</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -466,17 +569,41 @@ Returns the built <a class="el" href="class_hypertable_1_1_scan_spec.html" title
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>reference to built <a class="el" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> object </dd></dl>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00250">250</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00295">295</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="44fa479937cfeb8d53fd639a21ae58b3"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::m_strings" ref="44fa479937cfeb8d53fd639a21ae58b3" args="" -->
+<a class="anchor" name="8e529719fdb38ebdd749e5ecce04f8b1"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::swap" ref="8e529719fdb38ebdd749e5ecce04f8b1" args="(ScanSpecBuilder &amp;ssb)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::vector&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&gt; <a class="el" href="class_hypertable_1_1_scan_spec_builder.html#44fa479937cfeb8d53fd639a21ae58b3">Hypertable::ScanSpecBuilder::m_strings</a><code> [private]</code>          </td>
+          <td class="memname">void Hypertable::ScanSpecBuilder::swap           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec_builder.html">ScanSpecBuilder</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>ssb</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+An O(1) swap operation. 
+<p>
+
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00300">300</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="30c4fe521f7a77a040b05634aeb47bd4"></a><!-- doxytag: member="Hypertable::ScanSpecBuilder::m_alloc" ref="30c4fe521f7a77a040b05634aeb47bd4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_page_arena.html">CharArena</a> <a class="el" href="class_hypertable_1_1_scan_spec_builder.html#30c4fe521f7a77a040b05634aeb47bd4">Hypertable::ScanSpecBuilder::m_alloc</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -484,7 +611,7 @@ Returns the built <a class="el" href="class_hypertable_1_1_scan_spec.html" title
 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00253">253</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00306">306</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
@@ -501,13 +628,13 @@ Returns the built <a class="el" href="class_hypertable_1_1_scan_spec.html" title
 
 <p>
 
-<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00254">254</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
+<p>Definition at line <a class="el" href="_scan_spec_8h-source.html#l00307">307</a> of file <a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a>.</p>
 
 </div>
 </div><p>
-<hr>The documentation for this class was generated from the following file:<ul>
-<li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:20 2008 for hypertable by&nbsp;
+<hr>The documentation for this class was generated from the following files:<ul>
+<li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_scan_spec_8h-source.html">ScanSpec.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_scan_spec_8cc-source.html">ScanSpec.cc</a></ul>
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:04 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

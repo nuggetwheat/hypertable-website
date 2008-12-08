@@ -32,11 +32,11 @@
 <a name="l00034"></a>00034 
 <a name="l00038"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_length.html#d73f389ee82edd622ea2eefa44bf7d12">00038</a> <span class="keywordtype">void</span> RequestHandlerLength::run() {
 <a name="l00039"></a>00039   <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_response_callback_length.html">ResponseCallbackLength</a> cb(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_length.html#713ce363f30791376455c166215e527b">m_comm</a>, <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>);
-<a name="l00040"></a>00040   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00041"></a>00041   <span class="keyword">const</span> uint8_t *msg = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00040"></a>00040   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
+<a name="l00041"></a>00041   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
 <a name="l00042"></a>00042 
 <a name="l00043"></a>00043   <span class="keywordflow">try</span> {
-<a name="l00044"></a>00044     <span class="keyword">const</span> <span class="keywordtype">char</span> *fname = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;msg, &amp;remaining);
+<a name="l00044"></a>00044     <span class="keyword">const</span> <span class="keywordtype">char</span> *fname = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00045"></a>00045 
 <a name="l00046"></a>00046     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_request_handler_length.html#e6b95e67409cd654d152d857f80b7733">m_broker</a>-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#c2f8ec8336b5c65042e4fcf2242bbdf0">length</a>(&amp;cb, fname);
 <a name="l00047"></a>00047   }
@@ -45,7 +45,7 @@
 <a name="l00050"></a>00050     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), <span class="stringliteral">"Error handling LENGTH message"</span>);
 <a name="l00051"></a>00051   }
 <a name="l00052"></a>00052 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -29,27 +29,30 @@
 <a name="l00031"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html">00031</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_flyweight_string.html">FlyweightString</a> {
 <a name="l00032"></a>00032   <span class="keyword">public</span>:
 <a name="l00033"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#d7a8479dc3b7748b2fb13943d8572745">00033</a>     <a class="code" href="class_hypertable_1_1_flyweight_string.html#d7a8479dc3b7748b2fb13943d8572745">~FlyweightString</a>() {
-<a name="l00034"></a>00034       <span class="keywordflow">for</span> (std::set&lt;const char *, LtCstr&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>.end(); iter++)
-<a name="l00035"></a>00035         <span class="keyword">delete</span> [] *iter;
-<a name="l00036"></a>00036     }
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#4e653ec57b7ca32932a5f320381304b1">00037</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">get</span>(<span class="keyword">const</span> <span class="keywordtype">char</span> *str) {
-<a name="l00038"></a>00038       std::set&lt;const char *, LtCstr&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>.find(str);
-<a name="l00039"></a>00039       <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>.end())
-<a name="l00040"></a>00040         <span class="keywordflow">return</span> *iter;
-<a name="l00041"></a>00041       <span class="keywordtype">char</span> *constant_str = <span class="keyword">new</span> <span class="keywordtype">char</span> [strlen(str) + 1];
-<a name="l00042"></a>00042       strcpy(constant_str, str);
-<a name="l00043"></a>00043       <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>.insert(constant_str);
-<a name="l00044"></a>00044       <span class="keywordflow">return</span> constant_str;
-<a name="l00045"></a>00045     }
-<a name="l00046"></a>00046 
-<a name="l00047"></a>00047   <span class="keyword">private</span>:
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">00048</a>     std::set&lt;const char *, LtCstr&gt;  <a class="code" href="class_hypertable_1_1_flyweight_string.html#4e6ee44837129e47eb8ee16c306b4aff">m_strings</a>;
-<a name="l00049"></a>00049   };
+<a name="l00034"></a>00034       <span class="keywordflow">for</span> (Strings::iterator iter = <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>.begin(); iter != <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>.end();
+<a name="l00035"></a>00035            ++iter)
+<a name="l00036"></a>00036         <span class="keyword">delete</span> [] *iter;
+<a name="l00037"></a>00037     }
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#4e653ec57b7ca32932a5f320381304b1">00038</a>     <span class="keyword">const</span> <span class="keywordtype">char</span> *<span class="keyword">get</span>(<span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>) {
+<a name="l00039"></a>00039       Strings::iterator iter = <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>.find(<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>);
+<a name="l00040"></a>00040       <span class="keywordflow">if</span> (iter != <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>.end())
+<a name="l00041"></a>00041         <span class="keywordflow">return</span> *iter;
+<a name="l00042"></a>00042       <span class="keywordtype">char</span> *constant_str = <span class="keyword">new</span> <span class="keywordtype">char</span> [strlen(<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>) + 1];
+<a name="l00043"></a>00043       strcpy(constant_str, <a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>);
+<a name="l00044"></a>00044       <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>.insert(constant_str);
+<a name="l00045"></a>00045       <span class="keywordflow">return</span> constant_str;
+<a name="l00046"></a>00046     }
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048   <span class="keyword">private</span>:
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#9aaaf7abc1d3e1512b2e141013ceebdc">00049</a>     <span class="keyword">typedef</span> std::set&lt;const char *, LtCstr&gt;  <a class="code" href="class_hypertable_1_1_flyweight_string.html#9aaaf7abc1d3e1512b2e141013ceebdc">Strings</a>;
 <a name="l00050"></a>00050 
-<a name="l00051"></a>00051 }
-<a name="l00052"></a>00052 
-<a name="l00053"></a>00053 <span class="preprocessor">#endif // HYPERTABLE_FLYWEIGHTSTRING_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00051"></a><a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">00051</a>     <a class="code" href="class_hypertable_1_1_flyweight_string.html#9aaaf7abc1d3e1512b2e141013ceebdc">Strings</a> <a class="code" href="class_hypertable_1_1_flyweight_string.html#61191f2a232f9d8930595c7032f1c4c0">m_strings</a>;
+<a name="l00052"></a>00052   };
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056 <span class="preprocessor">#endif // HYPERTABLE_FLYWEIGHTSTRING_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

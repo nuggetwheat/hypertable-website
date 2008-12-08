@@ -21,158 +21,159 @@
 <a name="l00023"></a>00023 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
 <a name="l00024"></a>00024 <span class="preprocessor">#include "<a class="code" href="_serialization_8h.html">Common/Serialization.h</a>"</span>
 <a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_filesystem_8h.html">Filesystem.h</a>"</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_filesystem_8h.html">Filesystem.h</a>"</span>
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="keyword">using namespace </span>Hypertable;
 <a name="l00029"></a>00029 <span class="keyword">using namespace </span>Serialization;
 <a name="l00030"></a>00030 
 <a name="l00031"></a><a class="code" href="class_hypertable_1_1_filesystem.html#b6d0488b8f63726709ac9cc7b721547e">00031</a> <span class="keywordtype">int</span> Filesystem::decode_response_open(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
-<a name="l00032"></a>00032   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00033"></a>00033   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00034"></a>00034   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00032"></a>00032   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00033"></a>00033   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00034"></a>00034   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00037"></a>00037     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00037"></a>00037     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00038"></a>00038 
-<a name="l00039"></a>00039   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00039"></a>00039   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00040"></a>00040 }
 <a name="l00041"></a>00041 
 <a name="l00042"></a>00042 
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_filesystem.html#d0f3cdd22e482e514c1b492ec5ac8854">00045</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_filesystem.html#d0f3cdd22e482e514c1b492ec5ac8854" title="Decodes the response from a create request.">Filesystem::decode_response_create</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
-<a name="l00046"></a>00046   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_filesystem.html#b6d0488b8f63726709ac9cc7b721547e" title="Decodes the response from an open request.">decode_response_open</a>(event_ptr);
-<a name="l00047"></a>00047 }
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 
-<a name="l00052"></a>00052 <span class="keywordtype">size_t</span>
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd">00053</a> <a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd" title="Decodes the response from a read request.">Filesystem::decode_response_read</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, <span class="keywordtype">void</span> *<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
-<a name="l00054"></a>00054   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00055"></a>00055   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00060"></a>00060     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_filesystem.html#d0f3cdd22e482e514c1b492ec5ac8854">00043</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_filesystem.html#d0f3cdd22e482e514c1b492ec5ac8854" title="Decodes the response from a create request.">Filesystem::decode_response_create</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00044"></a>00044   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_filesystem.html#b6d0488b8f63726709ac9cc7b721547e" title="Decodes the response from an open request.">decode_response_open</a>(event_ptr);
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 
+<a name="l00048"></a>00048 <span class="keywordtype">size_t</span>
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd">00049</a> <a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd" title="Decodes the response from a read request.">Filesystem::decode_response_read</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, <span class="keywordtype">void</span> *<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
+<a name="l00050"></a>00050   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00051"></a>00051   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00056"></a>00056     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058   <span class="comment">// uint64_t offset =</span>
+<a name="l00059"></a>00059   <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00060"></a>00060   uint32_t nread = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="comment">// uint64_t offset =</span>
-<a name="l00063"></a>00063   <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;msg, &amp;remaining);
-<a name="l00064"></a>00064   uint32_t nread = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <span class="keywordflow">if</span> (nread == (uint32_t)-1)
-<a name="l00067"></a>00067     <span class="keywordflow">return</span> 0;
+<a name="l00062"></a>00062   <span class="keywordflow">if</span> (nread == (uint32_t)-1)
+<a name="l00063"></a>00063     <span class="keywordflow">return</span> 0;
+<a name="l00064"></a>00064 
+<a name="l00065"></a>00065   <span class="keywordflow">if</span> (decode_remain &lt; nread)
+<a name="l00066"></a>00066     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2922252f8285eb78c2cf3c9f443b19416">Error::RESPONSE_TRUNCATED</a>, <span class="stringliteral">"%lu &lt; %lu"</span>,
+<a name="l00067"></a>00067               (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)decode_remain, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)nread);
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069   <span class="keywordflow">if</span> (remaining &lt; nread)
-<a name="l00070"></a>00070     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2922252f8285eb78c2cf3c9f443b19416">Error::RESPONSE_TRUNCATED</a>, <span class="stringliteral">""</span>);
+<a name="l00069"></a>00069   <span class="comment">// PERF: We could just send back a pointer to msg here</span>
+<a name="l00070"></a>00070   memcpy(dst, decode_ptr, nread);
 <a name="l00071"></a>00071 
-<a name="l00072"></a>00072   <span class="comment">// PERF: We could just send back a pointer to msg here</span>
-<a name="l00073"></a>00073   memcpy(dst, msg, nread);
+<a name="l00072"></a>00072   <span class="keywordflow">return</span> nread;
+<a name="l00073"></a>00073 }
 <a name="l00074"></a>00074 
-<a name="l00075"></a>00075   <span class="keywordflow">return</span> nread;
-<a name="l00076"></a>00076 }
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 
-<a name="l00081"></a>00081 <span class="keywordtype">size_t</span>
-<a name="l00082"></a><a class="code" href="class_hypertable_1_1_filesystem.html#ebf1f64fe29854658d36672039194090">00082</a> <a class="code" href="class_hypertable_1_1_filesystem.html#ebf1f64fe29854658d36672039194090" title="Decodes the header from the response from a read request.">Filesystem::decode_response_read_header</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, uint64_t *offsetp,
-<a name="l00083"></a>00083                                         uint8_t **dstp) {
-<a name="l00084"></a>00084   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00085"></a>00085   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00075"></a>00075 
+<a name="l00078"></a>00078 <span class="keywordtype">size_t</span>
+<a name="l00079"></a><a class="code" href="class_hypertable_1_1_filesystem.html#ebf1f64fe29854658d36672039194090">00079</a> <a class="code" href="class_hypertable_1_1_filesystem.html#ebf1f64fe29854658d36672039194090" title="Decodes the header from the response from a read request.">Filesystem::decode_response_read_header</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, uint64_t *offsetp,
+<a name="l00080"></a>00080                                         uint8_t **dstp) {
+<a name="l00081"></a>00081   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00082"></a>00082   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00087"></a>00087     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00090"></a>00090     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00089"></a>00089   *offsetp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00090"></a>00090   uint32_t amount = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00091"></a>00091 
-<a name="l00092"></a>00092   *offsetp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;msg, &amp;remaining);
-<a name="l00093"></a>00093   uint32_t amount = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00092"></a>00092   <span class="keywordflow">if</span> (dstp)
+<a name="l00093"></a>00093     *dstp = (uint8_t *)decode_ptr;
 <a name="l00094"></a>00094 
-<a name="l00095"></a>00095   <span class="keywordflow">if</span> (dstp)
-<a name="l00096"></a>00096     *dstp = (uint8_t *)msg;
+<a name="l00095"></a>00095   <span class="keywordflow">return</span> amount;
+<a name="l00096"></a>00096 }
 <a name="l00097"></a>00097 
-<a name="l00098"></a>00098   <span class="keywordflow">return</span> amount;
-<a name="l00099"></a>00099 }
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101 
-<a name="l00104"></a>00104 <span class="keywordtype">size_t</span>
-<a name="l00105"></a><a class="code" href="class_hypertable_1_1_filesystem.html#80c047e605f8e232672febd2d2873a15">00105</a> <a class="code" href="class_hypertable_1_1_filesystem.html#80c047e605f8e232672febd2d2873a15" title="Decodes the response from a pread request.">Filesystem::decode_response_pread</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, <span class="keywordtype">void</span> *<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>) {
-<a name="l00106"></a>00106   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd" title="Decodes the response from a read request.">decode_response_read</a>(event_ptr, dst, len);
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 
-<a name="l00109"></a>00109 
-<a name="l00112"></a>00112 <span class="keywordtype">size_t</span>
-<a name="l00113"></a><a class="code" href="class_hypertable_1_1_filesystem.html#104c68475b5e696e285cfbc813d5ac2a">00113</a> <a class="code" href="class_hypertable_1_1_filesystem.html#104c68475b5e696e285cfbc813d5ac2a" title="Decodes the response from an append request.">Filesystem::decode_response_append</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, uint64_t *offsetp) {
-<a name="l00114"></a>00114   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00115"></a>00115   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00098"></a>00098 
+<a name="l00101"></a>00101 <span class="keywordtype">size_t</span>
+<a name="l00102"></a><a class="code" href="class_hypertable_1_1_filesystem.html#80c047e605f8e232672febd2d2873a15">00102</a> <a class="code" href="class_hypertable_1_1_filesystem.html#80c047e605f8e232672febd2d2873a15" title="Decodes the response from a pread request.">Filesystem::decode_response_pread</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, <span class="keywordtype">void</span> *<a class="code" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>) {
+<a name="l00103"></a>00103   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_filesystem.html#c812023a8c96b9a8c9386e28c4e787fd" title="Decodes the response from a read request.">decode_response_read</a>(event_ptr, dst, len);
+<a name="l00104"></a>00104 }
+<a name="l00105"></a>00105 
+<a name="l00106"></a>00106 
+<a name="l00109"></a>00109 <span class="keywordtype">size_t</span>
+<a name="l00110"></a><a class="code" href="class_hypertable_1_1_filesystem.html#104c68475b5e696e285cfbc813d5ac2a">00110</a> <a class="code" href="class_hypertable_1_1_filesystem.html#104c68475b5e696e285cfbc813d5ac2a" title="Decodes the response from an append request.">Filesystem::decode_response_append</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr, uint64_t *offsetp) {
+<a name="l00111"></a>00111   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00112"></a>00112   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00115"></a>00115 
+<a name="l00116"></a>00116   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00117"></a>00117     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00118"></a>00118 
-<a name="l00119"></a>00119   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00120"></a>00120     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00121"></a>00121 
-<a name="l00122"></a>00122   *offsetp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;msg, &amp;remaining);
+<a name="l00119"></a>00119   *offsetp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00122"></a>00122 }
 <a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00125"></a>00125 }
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127 
-<a name="l00130"></a>00130 int64_t
-<a name="l00131"></a><a class="code" href="class_hypertable_1_1_filesystem.html#0763bc2633a3069b44a684a4242c3790">00131</a> <a class="code" href="class_hypertable_1_1_filesystem.html#0763bc2633a3069b44a684a4242c3790" title="Decodes the response from a length request.">Filesystem::decode_response_length</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
-<a name="l00132"></a>00132   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00133"></a>00133   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00124"></a>00124 
+<a name="l00127"></a>00127 int64_t
+<a name="l00128"></a><a class="code" href="class_hypertable_1_1_filesystem.html#0763bc2633a3069b44a684a4242c3790">00128</a> <a class="code" href="class_hypertable_1_1_filesystem.html#0763bc2633a3069b44a684a4242c3790" title="Decodes the response from a length request.">Filesystem::decode_response_length</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00129"></a>00129   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00130"></a>00130   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00131"></a>00131 
+<a name="l00132"></a>00132   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00133"></a>00133 
+<a name="l00134"></a>00134   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00135"></a>00135     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00136"></a>00136 
-<a name="l00137"></a>00137   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00138"></a>00138     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00137"></a>00137   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00138"></a>00138 }
 <a name="l00139"></a>00139 
-<a name="l00140"></a>00140   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;msg, &amp;remaining);
-<a name="l00141"></a>00141 }
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143 
-<a name="l00146"></a>00146 <span class="keywordtype">void</span>
-<a name="l00147"></a><a class="code" href="class_hypertable_1_1_filesystem.html#cc7ee5b030c9bcc40c2590d438058da3">00147</a> <a class="code" href="class_hypertable_1_1_filesystem.html#cc7ee5b030c9bcc40c2590d438058da3" title="Decodes the response from a readdir request.">Filesystem::decode_response_readdir</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr,
-<a name="l00148"></a>00148                                     std::vector&lt;String&gt; &amp;listing) {
-<a name="l00149"></a>00149   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00150"></a>00150   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00151"></a>00151 
-<a name="l00152"></a>00152   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00140"></a>00140 
+<a name="l00143"></a>00143 <span class="keywordtype">void</span>
+<a name="l00144"></a><a class="code" href="class_hypertable_1_1_filesystem.html#cc7ee5b030c9bcc40c2590d438058da3">00144</a> <a class="code" href="class_hypertable_1_1_filesystem.html#cc7ee5b030c9bcc40c2590d438058da3" title="Decodes the response from a readdir request.">Filesystem::decode_response_readdir</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr,
+<a name="l00145"></a>00145                                     std::vector&lt;String&gt; &amp;listing) {
+<a name="l00146"></a>00146   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00147"></a>00147   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00148"></a>00148 
+<a name="l00149"></a>00149   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00150"></a>00150 
+<a name="l00151"></a>00151   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00152"></a>00152     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00153"></a>00153 
-<a name="l00154"></a>00154   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00155"></a>00155     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157   listing.clear();
+<a name="l00154"></a>00154   listing.clear();
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156   uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00157"></a>00157   uint16_t slen;
 <a name="l00158"></a>00158 
-<a name="l00159"></a>00159   uint32_t <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00160"></a>00160   uint16_t slen;
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162   <span class="keywordflow">for</span> (uint32_t i=0; i&lt;len; i++) {
-<a name="l00163"></a>00163     <span class="keyword">const</span> <span class="keywordtype">char</span> *str = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;msg, &amp;remaining, &amp;slen);
-<a name="l00164"></a>00164     listing.push_back(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(str, slen));
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166 }
-<a name="l00167"></a>00167 
-<a name="l00168"></a>00168 
-<a name="l00171"></a>00171 <span class="keywordtype">bool</span>
-<a name="l00172"></a><a class="code" href="class_hypertable_1_1_filesystem.html#8fe8de0c97b927031e7f86e969bd5e3e">00172</a> <a class="code" href="class_hypertable_1_1_filesystem.html#8fe8de0c97b927031e7f86e969bd5e3e" title="Decodes the response from an exists request.">Filesystem::decode_response_exists</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
-<a name="l00173"></a>00173   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00174"></a>00174   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00175"></a>00175 
-<a name="l00176"></a>00176   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
+<a name="l00159"></a>00159   <span class="keywordflow">for</span> (uint32_t i=0; i&lt;len; i++) {
+<a name="l00160"></a>00160     <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;decode_ptr, &amp;decode_remain, &amp;slen);
+<a name="l00161"></a>00161     listing.push_back(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(str, slen));
+<a name="l00162"></a>00162   }
+<a name="l00163"></a>00163 }
+<a name="l00164"></a>00164 
+<a name="l00165"></a>00165 
+<a name="l00168"></a>00168 <span class="keywordtype">bool</span>
+<a name="l00169"></a><a class="code" href="class_hypertable_1_1_filesystem.html#8fe8de0c97b927031e7f86e969bd5e3e">00169</a> <a class="code" href="class_hypertable_1_1_filesystem.html#8fe8de0c97b927031e7f86e969bd5e3e" title="Decodes the response from an exists request.">Filesystem::decode_response_exists</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00170"></a>00170   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00171"></a>00171   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00172"></a>00172 
+<a name="l00173"></a>00173   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00174"></a>00174 
+<a name="l00175"></a>00175   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00176"></a>00176     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(error, <span class="stringliteral">""</span>);
 <a name="l00177"></a>00177 
-<a name="l00178"></a>00178   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00179"></a>00179     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(error, <span class="stringliteral">""</span>);
+<a name="l00178"></a>00178   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00179"></a>00179 }
 <a name="l00180"></a>00180 
-<a name="l00181"></a>00181   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#a8b47fcd45ea75658635dc880c3c8557" title="Decodes a boolean value from the given buffer.">decode_bool</a>(&amp;msg, &amp;remaining);
-<a name="l00182"></a>00182 }
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184 
-<a name="l00185"></a>00185 
-<a name="l00188"></a>00188 <span class="keywordtype">int</span>
-<a name="l00189"></a><a class="code" href="class_hypertable_1_1_filesystem.html#0b0ee755c94adefc621803059283711a">00189</a> <a class="code" href="class_hypertable_1_1_filesystem.html#0b0ee755c94adefc621803059283711a" title="Decodes the response from an request that only returns an error code.">Filesystem::decode_response</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
-<a name="l00190"></a>00190   <span class="keyword">const</span> uint8_t *msg = event_ptr-&gt;message;
-<a name="l00191"></a>00191   <span class="keywordtype">size_t</span> remaining = event_ptr-&gt;message_len;
-<a name="l00192"></a>00192 
-<a name="l00193"></a>00193   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;msg, &amp;remaining);
-<a name="l00194"></a>00194 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00181"></a>00181 
+<a name="l00182"></a>00182 
+<a name="l00185"></a>00185 <span class="keywordtype">int</span>
+<a name="l00186"></a><a class="code" href="class_hypertable_1_1_filesystem.html#0b0ee755c94adefc621803059283711a">00186</a> <a class="code" href="class_hypertable_1_1_filesystem.html#0b0ee755c94adefc621803059283711a" title="Decodes the response from an request that only returns an error code.">Filesystem::decode_response</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) {
+<a name="l00187"></a>00187   <span class="keyword">const</span> uint8_t *decode_ptr = event_ptr-&gt;payload;
+<a name="l00188"></a>00188   <span class="keywordtype">size_t</span> decode_remain = event_ptr-&gt;payload_len;
+<a name="l00189"></a>00189 
+<a name="l00190"></a>00190   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00191"></a>00191 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

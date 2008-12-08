@@ -47,69 +47,82 @@ Collaboration diagram for Hypertable::Table:</div>
 <a href="class_hypertable_1_1_table-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#be0cde99a0416b6e0f40ff41fe1506cf">Table</a> (<a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, <a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;conn_manager_ptr, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace_ptr, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#95c186a318fcb4782ee3bf524fc86462">Table</a> (<a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#a9d996f895dc78d0dcc773d91e547eae">Table</a> (<a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;props_ptr, <a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;hyperspace_ptr, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#6a83a76639fcc451422fab4601e99db4">Table</a> (<a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;, <a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, uint32_t default_timeout_ms)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#9a559f2e7beb37b511ee9f88873164f8">~Table</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_mutator.html">TableMutator</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#421bd70b094280cd7b92ed508ee7537b">create_mutator</a> (int timeout=0)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_mutator.html">TableMutator</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#ddfb66409b175c54c44643165264dc6f">create_mutator</a> (uint32_t timeout_ms=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a mutator on this table.  <a href="#421bd70b094280cd7b92ed508ee7537b"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#ca040f269322e7bdd1817174aa63e24b">create_scanner</a> (<a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, int timeout=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a mutator on this table.  <a href="#ddfb66409b175c54c44643165264dc6f"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#6a52d97f5230ac5dccfa81e885f7a75b">create_scanner</a> (const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;scan_spec, uint32_t timeout_ms=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this table.  <a href="#ca040f269322e7bdd1817174aa63e24b"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this table.  <a href="#6a52d97f5230ac5dccfa81e885f7a75b"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#02b59098d97f140a53453a3570282919">get_identifier</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table_id_p)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#5e97a80bd43c0eafaf71a5b677d26c02">identifier</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#8684ed476147fc79db9e434aa09726db">not_found</a> ()</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#ff2a43dff7c4365dcc95fbe30b12bb7c">initialize</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name)</td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#e9c74d46ad42764c8bf354ebcaa05a40">m_props_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#43c5654d9056ec1a0de8132e1bfc478e">m_props</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#92430928c59a87da0a790c74fb11f620">m_comm</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#84ca825a715ce0c56649026633e751ac">m_conn_manager_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#3a5f30bee9378157c1469ade31ed4bc4">m_conn_manager</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#d6d3f722f63366da5a91e3ecfde854d3">m_hyperspace_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#f227c1502927a59b39ad662292ee33ba">m_hyperspace</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#72491e33218f75ef4aa2fb6768ef5372">m_schema_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#1b03f7f1526338cb306ef50b47f8f32c">m_schema</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#05c08609ae0d86a26a0b8d1f9c239e07">RangeLocatorPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#885fd72e5b6ad1d688d442777586096f">m_range_locator_ptr</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#a8c36203d840bf69e0c9a90276fd31e8">m_range_locator</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#e01ecb58c4efe1d814b2113d8bf06ed8">m_table</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#aa0df18cbb986a8095b55f825ce19704">m_timeout_ms</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#6b2a79f2fde0077477565e6f81578ee5">m_not_found</a></td></tr>
+
+<tr><td colspan="2"><br><h2>Friends</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">class&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#e31a320a6aa2d57c63fa4503cde0b942">TableMutator</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">class&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_table.html#2d126ec14d1ea056ea770955bd980a9c">TableScanner</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Represents an open table. 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00045">45</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00043">43</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="be0cde99a0416b6e0f40ff41fe1506cf"></a><!-- doxytag: member="Hypertable::Table::Table" ref="be0cde99a0416b6e0f40ff41fe1506cf" args="(PropertiesPtr &amp;props_ptr, ConnectionManagerPtr &amp;conn_manager_ptr, Hyperspace::SessionPtr &amp;hyperspace_ptr, String name)" -->
+<a class="anchor" name="95c186a318fcb4782ee3bf524fc86462"></a><!-- doxytag: member="Hypertable::Table::Table" ref="95c186a318fcb4782ee3bf524fc86462" args="(PropertiesPtr &amp;, ConnectionManagerPtr &amp;, Hyperspace::SessionPtr &amp;, const String &amp;name)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Table::Table           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>props_ptr</em>, </td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>props</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>conn_manager_ptr</em>, </td>
+          <td class="paramname"> <em>conn_manager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hyperspace_ptr</em>, </td>
+          <td class="paramname"> <em>hyperspace</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
         </tr>
         <tr>
@@ -123,37 +136,43 @@ Represents an open table.
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00044">44</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00043">43</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="a9d996f895dc78d0dcc773d91e547eae"></a><!-- doxytag: member="Hypertable::Table::Table" ref="a9d996f895dc78d0dcc773d91e547eae" args="(PropertiesPtr &amp;props_ptr, Comm *comm, Hyperspace::SessionPtr &amp;hyperspace_ptr, String name)" -->
+<a class="anchor" name="6a83a76639fcc451422fab4601e99db4"></a><!-- doxytag: member="Hypertable::Table::Table" ref="6a83a76639fcc451422fab4601e99db4" args="(RangeLocatorPtr &amp;, ConnectionManagerPtr &amp;, Hyperspace::SessionPtr &amp;, const String &amp;name, uint32_t default_timeout_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Table::Table           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>props_ptr</em>, </td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>range_locator</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *&nbsp;</td>
-          <td class="paramname"> <em>comm</em>, </td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_manager</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hyperspace_ptr</em>, </td>
+          <td class="paramname"> <em>hyperspace</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td>
-          <td class="paramname"> <em>name</em></td><td>&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>default_timeout_ms</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -166,7 +185,7 @@ Represents an open table.
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00056">56</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00058">58</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
@@ -187,20 +206,20 @@ Represents an open table.
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00120">120</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00119">119</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="421bd70b094280cd7b92ed508ee7537b"></a><!-- doxytag: member="Hypertable::Table::create_mutator" ref="421bd70b094280cd7b92ed508ee7537b" args="(int timeout=0)" -->
+<a class="anchor" name="ddfb66409b175c54c44643165264dc6f"></a><!-- doxytag: member="Hypertable::Table::create_mutator" ref="ddfb66409b175c54c44643165264dc6f" args="(uint32_t timeout_ms=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_table_mutator.html">TableMutator</a> * Table::create_mutator           </td>
           <td>(</td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>timeout</em> = <code>0</code>          </td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em> = <code>0</code>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"></td>
         </tr>
@@ -213,30 +232,30 @@ Creates a mutator on this table.
 <p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>maximum time in seconds to allow mutator methods to execute before throwing an exception </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timeout_ms</em>&nbsp;</td><td>maximum time in milliseconds to allow mutator methods to execute before throwing an exception </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>newly constructed mutator object </dd></dl>
 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00126">126</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00124">124</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="ca040f269322e7bdd1817174aa63e24b"></a><!-- doxytag: member="Hypertable::Table::create_scanner" ref="ca040f269322e7bdd1817174aa63e24b" args="(ScanSpec &amp;scan_spec, int timeout=0)" -->
+<a class="anchor" name="6a52d97f5230ac5dccfa81e885f7a75b"></a><!-- doxytag: member="Hypertable::Table::create_scanner" ref="6a52d97f5230ac5dccfa81e885f7a75b" args="(const ScanSpec &amp;scan_spec, uint32_t timeout_ms=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> * Table::create_scanner           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
+          <td class="paramtype">const <a class="el" href="class_hypertable_1_1_scan_spec.html">ScanSpec</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>scan_spec</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>timeout</em> = <code>0</code></td><td>&nbsp;</td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -253,12 +272,12 @@ Creates a scanner on this table.
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
     <tr><td valign="top"></td><td valign="top"><em>scan_spec</em>&nbsp;</td><td>scan specification </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>timeout</em>&nbsp;</td><td>maximum time in seconds to allow scanner methods to execute before throwing an exception </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>timeout_ms</em>&nbsp;</td><td>maximum time in milliseconds to allow scanner methods to execute before throwing an exception </td></tr>
   </table>
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>pointer to scanner object </dd></dl>
 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00132">132</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00131">131</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
@@ -280,7 +299,49 @@ Creates a scanner on this table.
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00069">69</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00072">72</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="5e97a80bd43c0eafaf71a5b677d26c02"></a><!-- doxytag: member="Hypertable::Table::identifier" ref="5e97a80bd43c0eafaf71a5b677d26c02" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a>&amp; Hypertable::Table::identifier           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00076">76</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8684ed476147fc79db9e434aa09726db"></a><!-- doxytag: member="Hypertable::Table::not_found" ref="8684ed476147fc79db9e434aa09726db" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::Table::not_found           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00078">78</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
@@ -306,17 +367,17 @@ Creates a scanner on this table.
 Open table file<p>
 Get table_id attribute<p>
 Get schema attribute 
-<p>Definition at line <a class="el" href="_table_8cc-source.html#l00063">63</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
+<p>Definition at line <a class="el" href="_table_8cc-source.html#l00068">68</a> of file <a class="el" href="_table_8cc-source.html">Table.cc</a>.</p>
 
 </div>
 </div><p>
-<hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="e9c74d46ad42764c8bf354ebcaa05a40"></a><!-- doxytag: member="Hypertable::Table::m_props_ptr" ref="e9c74d46ad42764c8bf354ebcaa05a40" args="" -->
+<hr><h2>Friends And Related Function Documentation</h2>
+<a class="anchor" name="e31a320a6aa2d57c63fa4503cde0b942"></a><!-- doxytag: member="Hypertable::Table::TableMutator" ref="e31a320a6aa2d57c63fa4503cde0b942" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#8c3eeb0c64dcf09ba41222b111894c12">PropertiesPtr</a> <a class="el" href="class_hypertable_1_1_table.html#e9c74d46ad42764c8bf354ebcaa05a40">Hypertable::Table::m_props_ptr</a><code> [private]</code>          </td>
+          <td class="memname">friend class <a class="el" href="class_hypertable_1_1_table_mutator.html">TableMutator</a><code> [friend]</code>          </td>
         </tr>
       </table>
 </div>
@@ -324,7 +385,42 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00077">77</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00080">80</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2d126ec14d1ea056ea770955bd980a9c"></a><!-- doxytag: member="Hypertable::Table::TableScanner" ref="2d126ec14d1ea056ea770955bd980a9c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">friend class <a class="el" href="class_hypertable_1_1_table_scanner.html">TableScanner</a><code> [friend]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00081">81</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="43c5654d9056ec1a0de8132e1bfc478e"></a><!-- doxytag: member="Hypertable::Table::m_props" ref="43c5654d9056ec1a0de8132e1bfc478e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="el" href="class_hypertable_1_1_table.html#43c5654d9056ec1a0de8132e1bfc478e">Hypertable::Table::m_props</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00087">87</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
@@ -341,16 +437,16 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00078">78</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00088">88</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="84ca825a715ce0c56649026633e751ac"></a><!-- doxytag: member="Hypertable::Table::m_conn_manager_ptr" ref="84ca825a715ce0c56649026633e751ac" args="" -->
+<a class="anchor" name="3a5f30bee9378157c1469ade31ed4bc4"></a><!-- doxytag: member="Hypertable::Table::m_conn_manager" ref="3a5f30bee9378157c1469ade31ed4bc4" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="el" href="class_hypertable_1_1_table.html#84ca825a715ce0c56649026633e751ac">Hypertable::Table::m_conn_manager_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="el" href="class_hypertable_1_1_table.html#3a5f30bee9378157c1469ade31ed4bc4">Hypertable::Table::m_conn_manager</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -358,16 +454,16 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00079">79</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00089">89</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="d6d3f722f63366da5a91e3ecfde854d3"></a><!-- doxytag: member="Hypertable::Table::m_hyperspace_ptr" ref="d6d3f722f63366da5a91e3ecfde854d3" args="" -->
+<a class="anchor" name="f227c1502927a59b39ad662292ee33ba"></a><!-- doxytag: member="Hypertable::Table::m_hyperspace" ref="f227c1502927a59b39ad662292ee33ba" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="el" href="class_hypertable_1_1_table.html#d6d3f722f63366da5a91e3ecfde854d3">Hypertable::Table::m_hyperspace_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="el" href="class_hypertable_1_1_table.html#f227c1502927a59b39ad662292ee33ba">Hypertable::Table::m_hyperspace</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -375,16 +471,16 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00080">80</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00090">90</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="72491e33218f75ef4aa2fb6768ef5372"></a><!-- doxytag: member="Hypertable::Table::m_schema_ptr" ref="72491e33218f75ef4aa2fb6768ef5372" args="" -->
+<a class="anchor" name="1b03f7f1526338cb306ef50b47f8f32c"></a><!-- doxytag: member="Hypertable::Table::m_schema" ref="1b03f7f1526338cb306ef50b47f8f32c" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> <a class="el" href="class_hypertable_1_1_table.html#72491e33218f75ef4aa2fb6768ef5372">Hypertable::Table::m_schema_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> <a class="el" href="class_hypertable_1_1_table.html#1b03f7f1526338cb306ef50b47f8f32c">Hypertable::Table::m_schema</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -392,16 +488,16 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00081">81</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00091">91</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="885fd72e5b6ad1d688d442777586096f"></a><!-- doxytag: member="Hypertable::Table::m_range_locator_ptr" ref="885fd72e5b6ad1d688d442777586096f" args="" -->
+<a class="anchor" name="a8c36203d840bf69e0c9a90276fd31e8"></a><!-- doxytag: member="Hypertable::Table::m_range_locator" ref="a8c36203d840bf69e0c9a90276fd31e8" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="namespace_hypertable.html#05c08609ae0d86a26a0b8d1f9c239e07">RangeLocatorPtr</a> <a class="el" href="class_hypertable_1_1_table.html#885fd72e5b6ad1d688d442777586096f">Hypertable::Table::m_range_locator_ptr</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> <a class="el" href="class_hypertable_1_1_table.html#a8c36203d840bf69e0c9a90276fd31e8">Hypertable::Table::m_range_locator</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -409,7 +505,7 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00082">82</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00092">92</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
@@ -426,13 +522,47 @@ Get schema attribute
 
 <p>
 
-<p>Definition at line <a class="el" href="_table_8h-source.html#l00083">83</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00093">93</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="aa0df18cbb986a8095b55f825ce19704"></a><!-- doxytag: member="Hypertable::Table::m_timeout_ms" ref="aa0df18cbb986a8095b55f825ce19704" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="class_hypertable_1_1_table.html#aa0df18cbb986a8095b55f825ce19704">Hypertable::Table::m_timeout_ms</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00094">94</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="6b2a79f2fde0077477565e6f81578ee5"></a><!-- doxytag: member="Hypertable::Table::m_not_found" ref="6b2a79f2fde0077477565e6f81578ee5" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_table.html#6b2a79f2fde0077477565e6f81578ee5">Hypertable::Table::m_not_found</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_table_8h-source.html#l00095">95</a> of file <a class="el" href="_table_8h-source.html">Table.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_8h-source.html">Table.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_table_8cc-source.html">Table.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:20 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:05 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

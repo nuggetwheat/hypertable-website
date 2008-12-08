@@ -23,10 +23,10 @@
 <a name="l00025"></a>00025 <span class="preprocessor">#include &lt;cassert&gt;</span>
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;queue&gt;</span>
 <a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/thread.hpp&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;boost/thread/mutex.hpp&gt;</span>
-<a name="l00030"></a>00030 <span class="preprocessor">#include &lt;boost/thread/condition.hpp&gt;</span>
-<a name="l00031"></a>00031 
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/thread/condition.hpp&gt;</span>
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Common/Mutex.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_thread_8h.html">Common/Thread.h</a>"</span>
 <a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
 <a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
@@ -41,128 +41,131 @@
 <a name="l00045"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">00045</a>     <span class="keyword">static</span> boost::condition <a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">ms_cond</a>;
 <a name="l00046"></a>00046 
 <a name="l00047"></a><a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html">00047</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html">LtMaintenanceTask</a> {
-<a name="l00048"></a><a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html#ea4799ba9e2b94ecd4cc5bba2aa03909">00048</a>       <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html#ea4799ba9e2b94ecd4cc5bba2aa03909">operator()</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *sm1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *sm2)<span class="keyword"> const </span>{
-<a name="l00049"></a>00049         <span class="keywordflow">return</span> xtime_cmp(sm1-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#69c4131f01f2dee0d57611facd91ee6f">start_time</a>, sm2-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#69c4131f01f2dee0d57611facd91ee6f">start_time</a>) &gt;= 0;
-<a name="l00050"></a>00050       }
-<a name="l00051"></a>00051     };
-<a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">00053</a>     <span class="keyword">typedef</span> std::priority_queue&lt;MaintenanceTask *, std::vector&lt;MaintenanceTask *&gt;, <a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html">LtMaintenanceTask</a>&gt; <a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">TaskQueue</a>;
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">00055</a>     <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> {
-<a name="l00056"></a>00056     <span class="keyword">public</span>:
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#2ab2781e233d572382c451613ce01e8d">00057</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#2ab2781e233d572382c451613ce01e8d">MaintenanceQueueState</a>() : <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>(false) { <span class="keywordflow">return</span>; }
-<a name="l00058"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">00058</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">TaskQueue</a>          <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>;
-<a name="l00059"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#df2dcd527755e3eeacc10c3cf84cffb6">00059</a>       boost::mutex       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#df2dcd527755e3eeacc10c3cf84cffb6">mutex</a>;
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">00060</a>       boost::condition   <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>;
-<a name="l00061"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">00061</a>       <span class="keywordtype">bool</span>               <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>;
-<a name="l00062"></a>00062     };
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">00064</a>     <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a> {
+<a name="l00048"></a>00048       <span class="keywordtype">bool</span>
+<a name="l00049"></a><a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html#ea4799ba9e2b94ecd4cc5bba2aa03909">00049</a>       <a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html#ea4799ba9e2b94ecd4cc5bba2aa03909">operator()</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *sm1, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *sm2)<span class="keyword"> const </span>{
+<a name="l00050"></a>00050         <span class="keywordflow">return</span> xtime_cmp(sm1-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#69c4131f01f2dee0d57611facd91ee6f">start_time</a>, sm2-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#69c4131f01f2dee0d57611facd91ee6f">start_time</a>) &gt;= 0;
+<a name="l00051"></a>00051       }
+<a name="l00052"></a>00052     };
+<a name="l00053"></a>00053 
+<a name="l00054"></a>00054     <span class="keyword">typedef</span> std::priority_queue&lt;<a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *,
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">00055</a>             std::vector&lt;MaintenanceTask *&gt;, <a class="code" href="struct_hypertable_1_1_maintenance_queue_1_1_lt_maintenance_task.html">LtMaintenanceTask</a>&gt; <a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">TaskQueue</a>;
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">00057</a>     <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> {
+<a name="l00058"></a>00058     <span class="keyword">public</span>:
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#2ab2781e233d572382c451613ce01e8d">00059</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#2ab2781e233d572382c451613ce01e8d">MaintenanceQueueState</a>() : <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>(false) { <span class="keywordflow">return</span>; }
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">00060</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#3d20232725d9d94a02104ec96640aa27">TaskQueue</a>          <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>;
+<a name="l00061"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#c76d3091e54622fe2763237732c10f1d">00061</a>       <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>              <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#c76d3091e54622fe2763237732c10f1d">mutex</a>;
+<a name="l00062"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">00062</a>       boost::condition   <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>;
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">00063</a>       <span class="keywordtype">bool</span>               <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>;
+<a name="l00064"></a>00064     };
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066     <span class="keyword">public</span>:
+<a name="l00066"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">00066</a>     <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a> {
 <a name="l00067"></a>00067 
-<a name="l00068"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#aa2fc742d3285e2d0f4ed19322c7a6d3">00068</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#aa2fc742d3285e2d0f4ed19322c7a6d3">Worker</a>(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> &amp;state) : <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>(state) { <span class="keywordflow">return</span>; }
+<a name="l00068"></a>00068     <span class="keyword">public</span>:
 <a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#a2c4c9b69b35fb4827aeea3821b9c89b">00070</a>       <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#a2c4c9b69b35fb4827aeea3821b9c89b">operator()</a>() {
-<a name="l00071"></a>00071         boost::xtime now, next_work;
-<a name="l00072"></a>00072         <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *task = 0;
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074         <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
+<a name="l00070"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#aa2fc742d3285e2d0f4ed19322c7a6d3">00070</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#aa2fc742d3285e2d0f4ed19322c7a6d3">Worker</a>(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> &amp;state) : <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>(state) { <span class="keywordflow">return</span>; }
+<a name="l00071"></a>00071 
+<a name="l00072"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#a2c4c9b69b35fb4827aeea3821b9c89b">00072</a>       <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#a2c4c9b69b35fb4827aeea3821b9c89b">operator()</a>() {
+<a name="l00073"></a>00073         boost::xtime now, next_work;
+<a name="l00074"></a>00074         <a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *task = 0;
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076           {
-<a name="l00077"></a>00077             boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#df2dcd527755e3eeacc10c3cf84cffb6">mutex</a>);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079             boost::xtime_get(&amp;now, boost::TIME_UTC);
+<a name="l00076"></a>00076         <span class="keywordflow">while</span> (<span class="keyword">true</span>) {
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078           {
+<a name="l00079"></a>00079             <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#c76d3091e54622fe2763237732c10f1d">mutex</a>);
 <a name="l00080"></a>00080 
-<a name="l00081"></a>00081             <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.empty() || xtime_cmp((<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top())-&gt;start_time, now) &gt; 0) {
+<a name="l00081"></a>00081             boost::xtime_get(&amp;now, boost::TIME_UTC);
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083               <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>)
-<a name="l00084"></a>00084                 <span class="keywordflow">return</span>;
+<a name="l00083"></a>00083             <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.empty() ||
+<a name="l00084"></a>00084                    xtime_cmp((<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top())-&gt;start_time, now) &gt; 0) {
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086               <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.empty())
-<a name="l00087"></a>00087                 <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.wait(lock);
-<a name="l00088"></a>00088               <span class="keywordflow">else</span> {
-<a name="l00089"></a>00089                 next_work = (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top())-&gt;start_time;
-<a name="l00090"></a>00090                 <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.timed_wait(lock, next_work);
-<a name="l00091"></a>00091               }
-<a name="l00092"></a>00092               boost::xtime_get(&amp;now, boost::TIME_UTC);
-<a name="l00093"></a>00093             }
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095             task = <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top();
-<a name="l00096"></a>00096             <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.pop();
-<a name="l00097"></a>00097           }
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099           <span class="keywordflow">try</span> {
-<a name="l00100"></a>00100 
-<a name="l00101"></a>00101             <span class="comment">// maybe pause</span>
-<a name="l00102"></a>00102             {
-<a name="l00103"></a>00103               boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#df2dcd527755e3eeacc10c3cf84cffb6">mutex</a>);
-<a name="l00104"></a>00104               <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a>)
-<a name="l00105"></a>00105                 <a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">ms_cond</a>.wait(lock);
-<a name="l00106"></a>00106             }
-<a name="l00107"></a>00107             
-<a name="l00108"></a>00108             task-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#e2d5661dae44a8ea260e664ac70968c7">execute</a>();
-<a name="l00109"></a>00109           }
-<a name="l00110"></a>00110           <span class="keywordflow">catch</span>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
-<a name="l00111"></a>00111             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"%s (%s)"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()), e.what());
+<a name="l00086"></a>00086               <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a>)
+<a name="l00087"></a>00087                 <span class="keywordflow">return</span>;
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089               <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.empty())
+<a name="l00090"></a>00090                 <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.wait(lock);
+<a name="l00091"></a>00091               <span class="keywordflow">else</span> {
+<a name="l00092"></a>00092                 next_work = (<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top())-&gt;start_time;
+<a name="l00093"></a>00093                 <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.timed_wait(lock, next_work);
+<a name="l00094"></a>00094               }
+<a name="l00095"></a>00095               boost::xtime_get(&amp;now, boost::TIME_UTC);
+<a name="l00096"></a>00096             }
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098             task = <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.top();
+<a name="l00099"></a>00099             <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.pop();
+<a name="l00100"></a>00100           }
+<a name="l00101"></a>00101 
+<a name="l00102"></a>00102           <span class="keywordflow">try</span> {
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104             <span class="comment">// maybe pause</span>
+<a name="l00105"></a>00105             {
+<a name="l00106"></a>00106               <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#c76d3091e54622fe2763237732c10f1d">mutex</a>);
+<a name="l00107"></a>00107               <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a>)
+<a name="l00108"></a>00108                 <a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">ms_cond</a>.wait(lock);
+<a name="l00109"></a>00109             }
+<a name="l00110"></a>00110 
+<a name="l00111"></a>00111             task-&gt;<a class="code" href="class_hypertable_1_1_maintenance_task.html#e2d5661dae44a8ea260e664ac70968c7">execute</a>();
 <a name="l00112"></a>00112           }
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114           <span class="keyword">delete</span> task;
-<a name="l00115"></a>00115         }
-<a name="l00116"></a>00116       }
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118     <span class="keyword">private</span>:
-<a name="l00119"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">00119</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> &amp;<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>;
-<a name="l00120"></a>00120     };
-<a name="l00121"></a>00121 
-<a name="l00122"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">00122</a>     <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a>  <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>;
-<a name="l00123"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#51e53b4c911b9e093d5e4c3335fa6781">00123</a>     boost::thread_group    <a class="code" href="class_hypertable_1_1_maintenance_queue.html#51e53b4c911b9e093d5e4c3335fa6781">m_threads</a>;
-<a name="l00124"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">00124</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>;
-<a name="l00125"></a>00125 
-<a name="l00126"></a>00126   <span class="keyword">public</span>:
-<a name="l00127"></a>00127 
-<a name="l00134"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#60e5ef6c6c743a866029904db757a52b">00134</a>     <a class="code" href="class_hypertable_1_1_maintenance_queue.html#60e5ef6c6c743a866029904db757a52b" title="Constructor to set up the application queue.">MaintenanceQueue</a>(<span class="keywordtype">int</span> worker_count) : <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>(false) {
-<a name="l00135"></a>00135       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a> <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a>(<a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>);
-<a name="l00136"></a>00136       assert (worker_count &gt; 0);
-<a name="l00137"></a>00137       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;worker_count; ++i)
-<a name="l00138"></a>00138         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#51e53b4c911b9e093d5e4c3335fa6781">m_threads</a>.create_thread(Worker);
-<a name="l00139"></a>00139       <span class="comment">//threads</span>
-<a name="l00140"></a>00140     }
-<a name="l00141"></a>00141 
-<a name="l00147"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#eacad5ed797237c5930d2ca3b0450c00">00147</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#eacad5ed797237c5930d2ca3b0450c00" title="Shuts down the application queue.">shutdown</a>() {
-<a name="l00148"></a>00148       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a> = <span class="keyword">true</span>;
-<a name="l00149"></a>00149       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.notify_all();
-<a name="l00150"></a>00150     }
-<a name="l00151"></a>00151 
-<a name="l00156"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#460dc585f613793106b1b6078bb90855">00156</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#460dc585f613793106b1b6078bb90855" title="Waits for a shutdown to complete.">join</a>() {
-<a name="l00157"></a>00157       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>) {
-<a name="l00158"></a>00158         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#51e53b4c911b9e093d5e4c3335fa6781">m_threads</a>.join_all();
-<a name="l00159"></a>00159         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a> = <span class="keyword">true</span>;
-<a name="l00160"></a>00160       }
-<a name="l00161"></a>00161     }
-<a name="l00162"></a>00162 
-<a name="l00166"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#13ab3cdc590c1d52f0de0385b0bf6a92">00166</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#13ab3cdc590c1d52f0de0385b0bf6a92" title="Stops queue processing.">stop</a>() {
-<a name="l00167"></a>00167       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a> = <span class="keyword">true</span>;
-<a name="l00168"></a>00168     }
-<a name="l00169"></a>00169 
-<a name="l00173"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#574e46368146128e062a3ad056eaf7a2">00173</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#574e46368146128e062a3ad056eaf7a2" title="Starts queue processing.">start</a>() {
-<a name="l00174"></a>00174       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a> = <span class="keyword">false</span>;
-<a name="l00175"></a>00175       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">ms_cond</a>.notify_all();
-<a name="l00176"></a>00176     }
-<a name="l00177"></a>00177 
-<a name="l00184"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#f5875dcd8d850515508ff03121967a8a">00184</a>     <span class="keywordtype">void</span> <span class="keyword">add</span>(<a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *task) {
-<a name="l00185"></a>00185       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#df2dcd527755e3eeacc10c3cf84cffb6">mutex</a>);
-<a name="l00186"></a>00186       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.push(task);
-<a name="l00187"></a>00187       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.notify_one();
-<a name="l00188"></a>00188     }
-<a name="l00189"></a>00189   };
-<a name="l00190"></a><a class="code" href="namespace_hypertable.html#9f16121aea78f70cfd599005bec65813">00190</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;MaintenanceQueue&gt; <a class="code" href="namespace_hypertable.html#9f16121aea78f70cfd599005bec65813">MaintenanceQueuePtr</a>;
-<a name="l00191"></a>00191 
-<a name="l00192"></a>00192 }
-<a name="l00193"></a>00193 
+<a name="l00113"></a>00113           <span class="keywordflow">catch</span>(<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
+<a name="l00114"></a>00114             <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"%s (%s)"</span>, <a class="code" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()), e.what());
+<a name="l00115"></a>00115           }
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117           <span class="keyword">delete</span> task;
+<a name="l00118"></a>00118         }
+<a name="l00119"></a>00119       }
+<a name="l00120"></a>00120 
+<a name="l00121"></a>00121     <span class="keyword">private</span>:
+<a name="l00122"></a><a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">00122</a>       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a> &amp;<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html#449fe4b5a4f98f2151500f70ce6cc72a">m_state</a>;
+<a name="l00123"></a>00123     };
+<a name="l00124"></a>00124 
+<a name="l00125"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">00125</a>     <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html">MaintenanceQueueState</a>  <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>;
+<a name="l00126"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#8d74a4c2eb1d0a24753d36e602bea5d2">00126</a>     <a class="code" href="namespace_hypertable.html#cb6323b468d9e6e6ffd213d0e36c3f1e">ThreadGroup</a>            <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8d74a4c2eb1d0a24753d36e602bea5d2">m_threads</a>;
+<a name="l00127"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">00127</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>;
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129   <span class="keyword">public</span>:
+<a name="l00130"></a>00130 
+<a name="l00137"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#60e5ef6c6c743a866029904db757a52b">00137</a>     <a class="code" href="class_hypertable_1_1_maintenance_queue.html#60e5ef6c6c743a866029904db757a52b" title="Constructor to set up the application queue.">MaintenanceQueue</a>(<span class="keywordtype">int</span> worker_count) : <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>(false) {
+<a name="l00138"></a>00138       <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a> <a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_worker.html">Worker</a>(<a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>);
+<a name="l00139"></a>00139       assert (worker_count &gt; 0);
+<a name="l00140"></a>00140       <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i=0; i&lt;worker_count; ++i)
+<a name="l00141"></a>00141         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8d74a4c2eb1d0a24753d36e602bea5d2">m_threads</a>.create_thread(Worker);
+<a name="l00142"></a>00142       <span class="comment">//threads</span>
+<a name="l00143"></a>00143     }
+<a name="l00144"></a>00144 
+<a name="l00150"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#eacad5ed797237c5930d2ca3b0450c00">00150</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#eacad5ed797237c5930d2ca3b0450c00" title="Shuts down the application queue.">shutdown</a>() {
+<a name="l00151"></a>00151       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#0b29ac20ed7b5bc6027d9844b98d5b87">shutdown</a> = <span class="keyword">true</span>;
+<a name="l00152"></a>00152       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.notify_all();
+<a name="l00153"></a>00153     }
+<a name="l00154"></a>00154 
+<a name="l00159"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#460dc585f613793106b1b6078bb90855">00159</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#460dc585f613793106b1b6078bb90855" title="Waits for a shutdown to complete.">join</a>() {
+<a name="l00160"></a>00160       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a>) {
+<a name="l00161"></a>00161         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8d74a4c2eb1d0a24753d36e602bea5d2">m_threads</a>.join_all();
+<a name="l00162"></a>00162         <a class="code" href="class_hypertable_1_1_maintenance_queue.html#8ec80ff3e4b600eb457cd8e3aebcc41a">joined</a> = <span class="keyword">true</span>;
+<a name="l00163"></a>00163       }
+<a name="l00164"></a>00164     }
+<a name="l00165"></a>00165 
+<a name="l00169"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#13ab3cdc590c1d52f0de0385b0bf6a92">00169</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#13ab3cdc590c1d52f0de0385b0bf6a92" title="Stops queue processing.">stop</a>() {
+<a name="l00170"></a>00170       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a> = <span class="keyword">true</span>;
+<a name="l00171"></a>00171     }
+<a name="l00172"></a>00172 
+<a name="l00176"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#574e46368146128e062a3ad056eaf7a2">00176</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_maintenance_queue.html#574e46368146128e062a3ad056eaf7a2" title="Starts queue processing.">start</a>() {
+<a name="l00177"></a>00177       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#d0a4ba51bc5d0500157e4691ff217efa" title="Copyright (C) 2008 Doug Judd (Zvents, Inc.">ms_pause</a> = <span class="keyword">false</span>;
+<a name="l00178"></a>00178       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#c07db7bb57d52354c1308ccc53cf2e79">ms_cond</a>.notify_all();
+<a name="l00179"></a>00179     }
+<a name="l00180"></a>00180 
+<a name="l00188"></a><a class="code" href="class_hypertable_1_1_maintenance_queue.html#f5875dcd8d850515508ff03121967a8a">00188</a>     <span class="keywordtype">void</span> <span class="keyword">add</span>(<a class="code" href="class_hypertable_1_1_maintenance_task.html">MaintenanceTask</a> *task) {
+<a name="l00189"></a>00189       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#c76d3091e54622fe2763237732c10f1d">mutex</a>);
+<a name="l00190"></a>00190       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#ab6aa4686aed123a2dd04e4fbfd36c0c">queue</a>.push(task);
+<a name="l00191"></a>00191       <a class="code" href="class_hypertable_1_1_maintenance_queue.html#fed9c5ef98d6ec38fefb6e201f3d2996">m_state</a>.<a class="code" href="class_hypertable_1_1_maintenance_queue_1_1_maintenance_queue_state.html#64e366515f191ba7f878b1d5b785904e">cond</a>.notify_one();
+<a name="l00192"></a>00192     }
+<a name="l00193"></a>00193   };
 <a name="l00194"></a>00194 
-<a name="l00195"></a>00195 <span class="preprocessor">#endif // HYPERTABLE_MAINTENANCEQUEUE_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00195"></a><a class="code" href="namespace_hypertable.html#9f16121aea78f70cfd599005bec65813">00195</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;MaintenanceQueue&gt; <a class="code" href="namespace_hypertable.html#9f16121aea78f70cfd599005bec65813">MaintenanceQueuePtr</a>;
+<a name="l00196"></a>00196 
+<a name="l00197"></a>00197 } <span class="comment">// namespace Hypertable</span>
+<a name="l00198"></a>00198 
+<a name="l00199"></a>00199 <span class="preprocessor">#endif // HYPERTABLE_MAINTENANCEQUEUE_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

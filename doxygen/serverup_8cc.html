@@ -20,10 +20,10 @@
 <code>#include &lt;cstdlib&gt;</code><br>
 <code>#include &lt;iostream&gt;</code><br>
 <code>#include &lt;netdb.h&gt;</code><br>
+<code>#include &quot;<a class="el" href="_common_2_config_8h-source.html">Common/Config.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_error_8h-source.html">Common/Error.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_inet_addr_8h-source.html">Common/InetAddr.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
-<code>#include &quot;<a class="el" href="_properties_8h-source.html">Common/Properties.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_system_8h-source.html">Common/System.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_usage_8h-source.html">Common/Usage.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_application_queue_8h-source.html">AsyncComm/ApplicationQueue.h</a>&quot;</code><br>
@@ -32,8 +32,11 @@
 <code>#include &quot;<a class="el" href="_reactor_factory_8h-source.html">AsyncComm/ReactorFactory.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_dfs_broker_2_lib_2_client_8h-source.html">DfsBroker/Lib/Client.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_session_8h-source.html">Hyperspace/Session.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_hypertable_2_lib_2_config_8h-source.html">Hypertable/Lib/Config.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_master_client_8h-source.html">Hypertable/Lib/MasterClient.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_range_server_client_8h-source.html">Hypertable/Lib/RangeServerClient.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_thrift_broker_2_config_8h-source.html">ThriftBroker/Config.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_thrift_broker_2_client_8h-source.html">ThriftBroker/Client.h</a>&quot;</code><br>
 
 <p>
 <div class="dynheader">
@@ -41,20 +44,254 @@ Include dependency graph for serverup.cc:</div>
 <div class="dynsection">
 <p><center><img src="serverup_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Tools/serverup/serverup.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Tools/serverup/serverup.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="277,80,416,107"><area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="1984,528,2107,555"><area shape="rect" href="_inet_addr_8h.html" title="Common/InetAddr.h" alt="" coords="1093,453,1237,480"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="1765,453,1899,480"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="3280,304,3435,331"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="492,379,628,405"><area shape="rect" href="_usage_8h.html" title="Common/Usage.h" alt="" coords="1407,80,1537,107"><area shape="rect" href="_application_queue_8h.html" title="AsyncComm/ApplicationQueue.h" alt="" coords="1211,379,1432,405"><area shape="rect" href="_comm_8h.html" title="AsyncComm/Comm.h" alt="" coords="2464,304,2619,331"><area shape="rect" href="_connection_manager_8h.html" title="AsyncComm/ConnectionManager.h" alt="" coords="1849,229,2087,256"><area shape="rect" href="_reactor_factory_8h.html" title="ReactorFactory.h" alt="" coords="1061,379,1187,405"><area shape="rect" href="_dfs_broker_2_lib_2_client_8h.html" title="DfsBroker/Lib/Client.h" alt="" coords="1788,155,1943,181"><area shape="rect" href="_session_8h.html" title="Hyperspace/Session.h" alt="" coords="2285,155,2443,181"><area shape="rect" href="_master_client_8h.html" title="Hypertable/Lib/MasterClient.h" alt="" coords="1608,80,1808,107"><area shape="rect" href="_range_server_client_8h.html" title="Hypertable/Lib/RangeServerClient.h" alt="" coords="3032,229,3269,256"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="281,229,369,256"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="211,155,309,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="1559,603,1625,629"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="1851,528,1960,555"><area shape="rect" href="_reference_count_8h.html" title="ReferenceCount.h" alt="" coords="2672,528,2803,555"><area shape="rect" href="_string_ext_8h.html" title="StringExt.h" alt="" coords="1973,453,2061,480"><area shape="rect" href="_hash_map_8h.html" title="HashMap.h" alt="" coords="949,528,1040,555"><area shape="rect" href="_application_handler_8h.html" title="ApplicationHandler.h" alt="" coords="1352,453,1501,480"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="1608,379,1736,405"><area shape="rect" href="_dispatch_handler_8h.html" title="DispatchHandler.h" alt="" coords="2872,453,3005,480"><area shape="rect" href="_comm_buf_8h.html" title="CommBuf.h" alt="" coords="2336,379,2429,405"><area shape="rect" href="_async_comm_2_connection_handler_factory_8h.html" title="ConnectionHandlerFactory.h" alt="" coords="2656,379,2851,405"><area shape="rect" href="_handler_map_8h.html" title="HandlerMap.h" alt="" coords="2045,379,2152,405"><area shape="rect" href="_time_8h.html" title="time.h" alt="" coords="1861,304,1920,331"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="404,80,543,107"><area shape="rect" href="_common_2_config_8h.html" title="Common/Config.h" alt="" coords="672,304,803,331"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="735,528,868,555"><area shape="rect" href="_error_8h.html" title="Error.h" alt="" coords="1051,603,1115,629"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="419,379,555,405"><area shape="rect" href="_inet_addr_8h.html" title="Common/InetAddr.h" alt="" coords="190,453,334,480"><area shape="rect" href="_usage_8h.html" title="Common/Usage.h" alt="" coords="878,80,1008,107"><area shape="rect" href="_application_queue_8h.html" title="AsyncComm/ApplicationQueue.h" alt="" coords="1794,379,2015,405"><area shape="rect" href="_comm_8h.html" title="AsyncComm/Comm.h" alt="" coords="2180,304,2335,331"><area shape="rect" href="_connection_manager_8h.html" title="AsyncComm/ConnectionManager.h" alt="" coords="2804,229,3042,256"><area shape="rect" href="_reactor_factory_8h.html" title="ReactorFactory.h" alt="" coords="1098,155,1223,181"><area shape="rect" href="_dfs_broker_2_lib_2_client_8h.html" title="DfsBroker/Lib/Client.h" alt="" coords="1434,155,1588,181"><area shape="rect" href="_session_8h.html" title="Hyperspace/Session.h" alt="" coords="2522,155,2679,181"><area shape="rect" href="_hypertable_2_lib_2_config_8h.html" title="Hypertable/Lib/Config.h" alt="" coords="590,155,752,181"><area shape="rect" href="_master_client_8h.html" title="Hypertable/Lib/MasterClient.h" alt="" coords="2616,80,2816,107"><area shape="rect" href="_range_server_client_8h.html" title="Hypertable/Lib/RangeServerClient.h" alt="" coords="1996,229,2234,256"><area shape="rect" href="_thrift_broker_2_config_8h.html" title="ThriftBroker/Config.h" alt="" coords="2960,80,3110,107"><area shape="rect" href="_thrift_broker_2_client_8h.html" title="ThriftBroker/Client.h" alt="" coords="3134,80,3278,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="151,229,239,256"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="416,155,515,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="723,677,790,704"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="878,453,1006,480"><area shape="rect" href="_meta_8h.html" title="Common/Meta.h" alt="" coords="579,379,702,405"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="1483,453,1638,480"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="747,603,856,629"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="2498,528,2687,555"><area shape="rect" href="_thread_8h.html" title="Common/Thread.h" alt="" coords="1272,453,1408,480"><area shape="rect" href="_hash_map_8h.html" title="Common/HashMap.h" alt="" coords="1771,528,1920,555"><area shape="rect" href="_string_ext_8h.html" title="Common/StringExt.h" alt="" coords="1662,453,1808,480"><area shape="rect" href="_application_handler_8h.html" title="ApplicationHandler.h" alt="" coords="2406,453,2555,480"><area shape="rect" href="_dispatch_handler_8h.html" title="DispatchHandler.h" alt="" coords="2630,453,2763,480"><area shape="rect" href="_comm_buf_8h.html" title="CommBuf.h" alt="" coords="2906,379,2999,405"><area shape="rect" href="_async_comm_2_connection_handler_factory_8h.html" title="ConnectionHandlerFactory.h" alt="" coords="2332,379,2527,405"><area shape="rect" href="_handler_map_8h.html" title="HandlerMap.h" alt="" coords="1035,379,1142,405"></map>
 </div>
 
 <p>
 <a href="serverup_8cc-source.html">Go to the source code of this file.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Defines</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#f69f3b1aa71907cd3789f4a92bc01d9e">CHECK_SERVER</a>(_server_)</td></tr>
+
+<tr><td colspan="2"><br><h2>Typedefs</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef Meta::list<br>
+&lt; <a class="el" href="struct_app_policy.html">AppPolicy</a>,<br>
+ DfsClientPolicy,<br>
+ HyperspaceClientPolicy,<br>
+ MasterClientPolicy,<br>
+ RangeServerClientPolicy,<br>
+ ThriftClientPolicy,<br>
+ DefaultCommPolicy &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#126d7a88690567472d9161bcb6daa3b6">Policies</a></td></tr>
+
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#6adda1c282858b5e5330849e1ebac31a">wait_for_connection</a> (const char *server, ConnectionManagerPtr &amp;conn_mgr, <a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a> &amp;addr, int timeout_ms, int wait_ms)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#1429d9c5b1dc5d9e6eb8c41ed6fcfd87">check_dfsbroker</a> (ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#451b4cfb54d9497c7768bb0aeff0dfbb">check_hyperspace</a> (ConnectionManagerPtr &amp;conn_mgr, uint32_t max_wait_ms)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#d471ff724eca95ab1edf422c735521a0">check_master</a> (ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#b564ef5a4abf2d0a47db63e060a84a35">check_rangeserver</a> (ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#4eb35d5b1a0557325950321505ef77df">check_thriftbroker</a> (ConnectionManagerPtr &amp;conn_mgr, int wait_ms)</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">main</a> (int argc, char **argv)</td></tr>
 
 <tr><td colspan="2"><br><h2>Variables</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#a5c8f97e8ec8186088035c2c2c7f3699">usage</a> []</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="serverup_8cc.html#b7a532a3d57b3238109d2cf31cc69edf">hyperspace</a></td></tr>
 
 </table>
+<hr><h2>Define Documentation</h2>
+<a class="anchor" name="f69f3b1aa71907cd3789f4a92bc01d9e"></a><!-- doxytag: member="serverup.cc::CHECK_SERVER" ref="f69f3b1aa71907cd3789f4a92bc01d9e" args="(_server_)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define CHECK_SERVER          </td>
+          <td>(</td>
+          <td class="paramtype">_server_&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+<b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
+  <span class="keywordflow">try</span> { check_##_server_(conn_mgr, wait_ms); } <span class="keywordflow">catch</span> (Exception &amp;e) { \
+    <span class="keywordflow">if</span> (verbose) { \
+      <a class="code" href="_logger_8h.html#75176db3f3b090dc47d4fb088f4fda24">HT_DEBUG_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>; \
+      cout &lt;&lt; #_server_ &lt;&lt;<span class="stringliteral">" - down"</span> &lt;&lt; endl; \
+    } \
+    ++down; \
+    <span class="keywordflow">break</span>; \
+  } \
+  <span class="keywordflow">if</span> (verbose) cout &lt;&lt; #_server_ &lt;&lt;<span class="stringliteral">" - up"</span> &lt;&lt; endl; \
+} <span class="keywordflow">while</span> (0)
+</pre></div>
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00178">178</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Typedef Documentation</h2>
+<a class="anchor" name="126d7a88690567472d9161bcb6daa3b6"></a><!-- doxytag: member="serverup.cc::Policies" ref="126d7a88690567472d9161bcb6daa3b6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef Meta::list&lt;<a class="el" href="struct_app_policy.html">AppPolicy</a>, DfsClientPolicy, HyperspaceClientPolicy, MasterClientPolicy, RangeServerClientPolicy, ThriftClientPolicy, DefaultCommPolicy&gt; <a class="el" href="serverup_8cc.html#126d7a88690567472d9161bcb6daa3b6">Policies</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00083">83</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Function Documentation</h2>
+<a class="anchor" name="1429d9c5b1dc5d9e6eb8c41ed6fcfd87"></a><!-- doxytag: member="serverup.cc::check_dfsbroker" ref="1429d9c5b1dc5d9e6eb8c41ed6fcfd87" args="(ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @595::check_dfsbroker           </td>
+          <td>(</td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00096">96</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="451b4cfb54d9497c7768bb0aeff0dfbb"></a><!-- doxytag: member="serverup.cc::check_hyperspace" ref="451b4cfb54d9497c7768bb0aeff0dfbb" args="(ConnectionManagerPtr &amp;conn_mgr, uint32_t max_wait_ms)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @595::check_hyperspace           </td>
+          <td>(</td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>max_wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00109">109</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d471ff724eca95ab1edf422c735521a0"></a><!-- doxytag: member="serverup.cc::check_master" ref="d471ff724eca95ab1edf422c735521a0" args="(ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @595::check_master           </td>
+          <td>(</td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00122">122</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b564ef5a4abf2d0a47db63e060a84a35"></a><!-- doxytag: member="serverup.cc::check_rangeserver" ref="b564ef5a4abf2d0a47db63e060a84a35" args="(ConnectionManagerPtr &amp;conn_mgr, uint32_t wait_ms)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @595::check_rangeserver           </td>
+          <td>(</td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00148">148</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="4eb35d5b1a0557325950321505ef77df"></a><!-- doxytag: member="serverup.cc::check_thriftbroker" ref="4eb35d5b1a0557325950321505ef77df" args="(ConnectionManagerPtr &amp;conn_mgr, int wait_ms)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void @595::check_thriftbroker           </td>
+          <td>(</td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00159">159</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="3c04138a5bfe5d72780bb7e82a18e627"></a><!-- doxytag: member="serverup.cc::main" ref="3c04138a5bfe5d72780bb7e82a18e627" args="(int argc, char **argv)" -->
 <div class="memitem">
 <div class="memproto">
@@ -82,58 +319,102 @@ Include dependency graph for serverup.cc:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00089">89</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00191">191</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
 
 </div>
 </div><p>
-<hr><h2>Variable Documentation</h2>
-<a class="anchor" name="a5c8f97e8ec8186088035c2c2c7f3699"></a><!-- doxytag: member="serverup.cc::usage" ref="a5c8f97e8ec8186088035c2c2c7f3699" args="[]" -->
+<a class="anchor" name="6adda1c282858b5e5330849e1ebac31a"></a><!-- doxytag: member="serverup.cc::wait_for_connection" ref="6adda1c282858b5e5330849e1ebac31a" args="(const char *server, ConnectionManagerPtr &amp;conn_mgr, InetAddr &amp;addr, int timeout_ms, int wait_ms)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">const char* <a class="el" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a>[]<code> [static]</code>          </td>
+          <td class="memname">void @595::wait_for_connection           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>server</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ConnectionManagerPtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>conn_mgr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="struct_hypertable_1_1_inet_addr.html">InetAddr</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>timeout_ms</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>wait_ms</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>
-<b>Initial value:</b><div class="fragment"><pre class="fragment"> {
-    <span class="stringliteral">"usage: serverup [options] &lt;servername&gt;"</span>,
-    <span class="stringliteral">""</span>,
-    <span class="stringliteral">"  options:"</span>,
-    <span class="stringliteral">"    --config=&lt;file&gt;  Read configuration from &lt;file&gt;.  The default config file"</span>,
-    <span class="stringliteral">"                     is \"conf/hypertable.cfg\" relative to the toplevel"</span>,
-    <span class="stringliteral">"                     install directory"</span>,
-    <span class="stringliteral">"    --host=&lt;name&gt;    Connect to the server running on host &lt;name&gt;"</span>,
-    <span class="stringliteral">"    --port=&lt;n&gt;       Connect to the server running on port &lt;n&gt;"</span>,
-    <span class="stringliteral">"    --help           Display this help text and exit"</span>,
-    <span class="stringliteral">"    --verbose,-v     Display 'true' if up, 'false' otherwise"</span>,
-    <span class="stringliteral">""</span>,
-    <span class="stringliteral">"  This program check checks to see if the server, specified by &lt;servername&gt;,"</span>,
-    <span class="stringliteral">"  is up.  It does this by determining the host and port that the server is"</span>,
-    <span class="stringliteral">"  listening on from the command line options, or if not supplied, from the"</span>,
-    <span class="stringliteral">"  the config file.  It then establishes a connection with the server and,"</span>,
-    <span class="stringliteral">"  sends a STATUS request.  If the response from the STATUS request is OK,"</span>,
-    <span class="stringliteral">"  then the program terminates with an exit status of 0.  If a failure occurs,"</span>,
-    <span class="stringliteral">"  or a non-OK error code is returned from the STATUS request, the program"</span>,
-    <span class="stringliteral">"  terminates with an exit status of 1.  &lt;servername&gt; may be one of the"</span>,
-    <span class="stringliteral">"  following values:"</span>,
-    <span class="stringliteral">""</span>,
-    <span class="stringliteral">"  dfsbroker"</span>,
-    <span class="stringliteral">"  hyperspace"</span>,
-    <span class="stringliteral">"  master"</span>,
-    <span class="stringliteral">"  rangeserver"</span>,
-    <span class="stringliteral">""</span>,
-    (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
-  }
-</pre></div>
-<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00053">53</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00086">86</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:07:29 2008 for hypertable by&nbsp;
+<hr><h2>Variable Documentation</h2>
+<a class="anchor" name="b7a532a3d57b3238109d2cf31cc69edf"></a><!-- doxytag: member="serverup.cc::hyperspace" ref="b7a532a3d57b3238109d2cf31cc69edf" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="el" href="serverup_8cc.html#b7a532a3d57b3238109d2cf31cc69edf">hyperspace</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00107">107</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ef1bd6ad890a110b466cb0e8088507a2"></a><!-- doxytag: member="serverup.cc::usage" ref="ef1bd6ad890a110b466cb0e8088507a2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">const char* <a class="el" href="freebase__load_8cc.html#ef1bd6ad890a110b466cb0e8088507a2">usage</a><code> [static]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+<b>Initial value:</b><div class="fragment"><pre class="fragment">
+    <span class="stringliteral">"Usage: serverup [options] &lt;server-name&gt;\n\n"</span>
+    <span class="stringliteral">"Description:\n"</span>
+    <span class="stringliteral">"  This program checks to see if the server, specified by &lt;server-name&gt;\n"</span>
+    <span class="stringliteral">"  is up. return 0 if true, 1 otherwise. &lt;server-name&gt; may be one of the\n"</span>
+    <span class="stringliteral">"  following values: dfsbroker, hyperspace, master rangeserver\n\n"</span>
+    <span class="stringliteral">"Options"</span>
+</pre></div>
+<p>Definition at line <a class="el" href="serverup_8cc-source.html#l00058">58</a> of file <a class="el" href="serverup_8cc-source.html">serverup.cc</a>.</p>
+
+</div>
+</div><p>
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:06 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

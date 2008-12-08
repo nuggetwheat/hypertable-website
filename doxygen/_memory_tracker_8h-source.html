@@ -26,48 +26,32 @@
 <a name="l00028"></a>00028 
 <a name="l00029"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html">00029</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_memory_tracker.html">MemoryTracker</a> {
 <a name="l00030"></a>00030   <span class="keyword">public</span>:
-<a name="l00031"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#f958819b43ecd8c0d9263266b4ff9f1c">00031</a>     <a class="code" href="class_hypertable_1_1_memory_tracker.html#f958819b43ecd8c0d9263266b4ff9f1c">MemoryTracker</a>() : <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a>(0), <a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">m_item_count</a>(0) { <span class="keywordflow">return</span>; }
+<a name="l00031"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#f958819b43ecd8c0d9263266b4ff9f1c">00031</a>     <a class="code" href="class_hypertable_1_1_memory_tracker.html#f958819b43ecd8c0d9263266b4ff9f1c">MemoryTracker</a>() : <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a>(0) { <span class="keywordflow">return</span>; }
 <a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#2ca345d3b7155db4221a7fbab0bdd7df">00033</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#2ca345d3b7155db4221a7fbab0bdd7df">add_memory</a>(uint64_t amount) {
-<a name="l00034"></a>00034       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
+<a name="l00033"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#6295eb6bf97459f29b2a406df44f9a7f">00033</a>     <span class="keywordtype">void</span> <span class="keyword">add</span>(uint64_t amount) {
+<a name="l00034"></a>00034       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#93e3a5035619d66ab801d896a35d6828">m_mutex</a>);
 <a name="l00035"></a>00035       <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a> += amount;
 <a name="l00036"></a>00036     }
 <a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#104698cd2c9899b65b4e4aa1f524f322">00038</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#104698cd2c9899b65b4e4aa1f524f322">remove_memory</a>(uint64_t amount) {
-<a name="l00039"></a>00039       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#87ebc02fbe462647c931d6f4f87bb563">00038</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#87ebc02fbe462647c931d6f4f87bb563">subtract</a>(uint64_t amount) {
+<a name="l00039"></a>00039       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#93e3a5035619d66ab801d896a35d6828">m_mutex</a>);
 <a name="l00040"></a>00040       <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a> -= amount;
 <a name="l00041"></a>00041     }
 <a name="l00042"></a>00042 
-<a name="l00043"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#b83c1a590037a967af3f48274c32f66b">00043</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#b83c1a590037a967af3f48274c32f66b">get_memory</a>() {
-<a name="l00044"></a>00044       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#10bc37436c8006e46a0012fd3715afbc">00043</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#10bc37436c8006e46a0012fd3715afbc">balance</a>() {
+<a name="l00044"></a>00044       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#93e3a5035619d66ab801d896a35d6828">m_mutex</a>);
 <a name="l00045"></a>00045       <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a>;
 <a name="l00046"></a>00046     }
 <a name="l00047"></a>00047 
-<a name="l00048"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#c3546214f55a770f5edc6679fd736e66">00048</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#c3546214f55a770f5edc6679fd736e66">add_items</a>(uint64_t count) {
-<a name="l00049"></a>00049       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
-<a name="l00050"></a>00050       <a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">m_item_count</a> += count;
-<a name="l00051"></a>00051     }
+<a name="l00048"></a>00048   <span class="keyword">private</span>:
+<a name="l00049"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#93e3a5035619d66ab801d896a35d6828">00049</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hypertable_1_1_memory_tracker.html#93e3a5035619d66ab801d896a35d6828">m_mutex</a>;
+<a name="l00050"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">00050</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a>;
+<a name="l00051"></a>00051   };
 <a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#0b6255090d0a6bd1a1c263e336dade08">00053</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#0b6255090d0a6bd1a1c263e336dade08">remove_items</a>(uint64_t count) {
-<a name="l00054"></a>00054       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
-<a name="l00055"></a>00055       <a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">m_item_count</a> -= count;
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#45b774af139b083300b69d28b6a5a4b4">00058</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#45b774af139b083300b69d28b6a5a4b4">get_items</a>() {
-<a name="l00059"></a>00059       boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>);
-<a name="l00060"></a>00060       <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">m_item_count</a>;
-<a name="l00061"></a>00061     }
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063   <span class="keyword">private</span>:
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">00064</a>     boost::mutex <a class="code" href="class_hypertable_1_1_memory_tracker.html#5639ec0291d6bd178be615aac4e7c0c5">m_mutex</a>;
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">00065</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#f74654a09884e9050c1673d82c7e261b">m_memory_used</a>;
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">00066</a>     uint64_t <a class="code" href="class_hypertable_1_1_memory_tracker.html#78f9be35315fca723eb477bd41fccd26">m_item_count</a>;
-<a name="l00067"></a>00067   };
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069 }
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071 <span class="preprocessor">#endif // HYPERTABLE_MEMORYTRACKER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00053"></a>00053 }
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055 <span class="preprocessor">#endif // HYPERTABLE_MEMORYTRACKER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

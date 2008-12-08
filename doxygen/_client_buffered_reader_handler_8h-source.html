@@ -23,8 +23,8 @@
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;queue&gt;</span>
 <a name="l00025"></a>00025 
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;boost/thread/condition.hpp&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;boost/thread/mutex.hpp&gt;</span>
-<a name="l00028"></a>00028 
+<a name="l00027"></a>00027 
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Common/Mutex.h</a>"</span>
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_8h.html">AsyncComm/DispatchHandler.h</a>"</span>
 <a name="l00031"></a>00031 
@@ -37,40 +37,42 @@
 <a name="l00038"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html">00038</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html">ClientBufferedReaderHandler</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> {
 <a name="l00039"></a>00039 
 <a name="l00040"></a>00040   <span class="keyword">public</span>:
-<a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#530566c87b5a2ab57570ae9897276703">ClientBufferedReaderHandler</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, uint32_t fd, uint32_t buf_size, uint32_t outstanding, uint64_t start_offset, uint64_t end_offset);
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#89bf7ba32023f28527be2ec6183c5201">~ClientBufferedReaderHandler</a>();
+<a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#530566c87b5a2ab57570ae9897276703">ClientBufferedReaderHandler</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, uint32_t fd,
+<a name="l00042"></a>00042         uint32_t buf_size, uint32_t outstanding, uint64_t start_offset,
+<a name="l00043"></a>00043         uint64_t end_offset);
 <a name="l00044"></a>00044 
-<a name="l00045"></a>00045     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#53ab6c3508da48b20e6bb3ecd8a8aa1a" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr);
+<a name="l00045"></a>00045     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#89bf7ba32023f28527be2ec6183c5201">~ClientBufferedReaderHandler</a>();
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#95199d2b0a0749925cd38f5a5259dcec">read</a>(<span class="keywordtype">void</span> *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>);
+<a name="l00047"></a>00047     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#53ab6c3508da48b20e6bb3ecd8a8aa1a" title="Callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr);
 <a name="l00048"></a>00048 
-<a name="l00049"></a>00049   <span class="keyword">private</span>:
+<a name="l00049"></a>00049     <span class="keywordtype">size_t</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#95199d2b0a0749925cd38f5a5259dcec">read</a>(<span class="keywordtype">void</span> *buf, <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>);
 <a name="l00050"></a>00050 
-<a name="l00051"></a>00051     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#63b7225a1d9553124bdfdfbba12a57cf">read_ahead</a>();
+<a name="l00051"></a>00051   <span class="keyword">private</span>:
 <a name="l00052"></a>00052 
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#f37dc5c165b6dd0ed9a1295170055e9d">00053</a>     boost::mutex         <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#f37dc5c165b6dd0ed9a1295170055e9d">m_mutex</a>;
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#eff47962d8362ee38a3bdf491ab0e212">00054</a>     boost::condition     <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#eff47962d8362ee38a3bdf491ab0e212">m_cond</a>;
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#7b6209bf8a3d38f8843943e07e968ea4">00055</a>     std::queue&lt;EventPtr&gt; <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#7b6209bf8a3d38f8843943e07e968ea4">m_queue</a>;
-<a name="l00056"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#c51ddfcc848bcff2631533ecf7f1b1c7">00056</a>     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>   *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#c51ddfcc848bcff2631533ecf7f1b1c7">m_client</a>;
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#753422480d085cbe7a3e68e26b8097a4">00057</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#753422480d085cbe7a3e68e26b8097a4">m_fd</a>;
-<a name="l00058"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58f845eb19b132151d9ffcd8b7921735">00058</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58f845eb19b132151d9ffcd8b7921735">m_max_outstanding</a>;
-<a name="l00059"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#b3aaa05fcfc21c359ea95bdc9c08254d">00059</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#b3aaa05fcfc21c359ea95bdc9c08254d">m_read_size</a>;
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#1340179d28de6104072625f415812c34">00060</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#1340179d28de6104072625f415812c34">m_outstanding</a>;
-<a name="l00061"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#fb51b08471540406d175d27d78ea9916">00061</a>     <span class="keywordtype">bool</span>                 <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#fb51b08471540406d175d27d78ea9916">m_eof</a>;
-<a name="l00062"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#0899970d25bfafb561773e47cdd8a44e">00062</a>     <span class="keywordtype">int</span>                  <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#0899970d25bfafb561773e47cdd8a44e">m_error</a>;
-<a name="l00063"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#9cbafa51ec0fa7cd08cb62cd0cc46921">00063</a>     uint8_t             *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#9cbafa51ec0fa7cd08cb62cd0cc46921">m_ptr</a>;
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#34d2b6aa5db52d143ef8948bb4add14f">00064</a>     uint8_t             *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#34d2b6aa5db52d143ef8948bb4add14f">m_end_ptr</a>;
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#69a78f72c403a03268520343548b3e4a">00065</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#69a78f72c403a03268520343548b3e4a">m_end_offset</a>;
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#cfe3169d9b57237ef90b86545ccb8e4a">00066</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#cfe3169d9b57237ef90b86545ccb8e4a">m_outstanding_offset</a>;
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58edc877635541a382fd6c5b6fea28f9">00067</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58edc877635541a382fd6c5b6fea28f9">m_actual_offset</a>;
-<a name="l00068"></a>00068   };
-<a name="l00069"></a>00069 
-<a name="l00070"></a>00070 }
+<a name="l00053"></a>00053     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#63b7225a1d9553124bdfdfbba12a57cf">read_ahead</a>();
+<a name="l00054"></a>00054 
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#2cf25b20a6a77f90bfa67f316f5531be">00055</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>                <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#2cf25b20a6a77f90bfa67f316f5531be">m_mutex</a>;
+<a name="l00056"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#eff47962d8362ee38a3bdf491ab0e212">00056</a>     boost::condition     <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#eff47962d8362ee38a3bdf491ab0e212">m_cond</a>;
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#7b6209bf8a3d38f8843943e07e968ea4">00057</a>     std::queue&lt;EventPtr&gt; <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#7b6209bf8a3d38f8843943e07e968ea4">m_queue</a>;
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#c51ddfcc848bcff2631533ecf7f1b1c7">00058</a>     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a>   *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#c51ddfcc848bcff2631533ecf7f1b1c7">m_client</a>;
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#753422480d085cbe7a3e68e26b8097a4">00059</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#753422480d085cbe7a3e68e26b8097a4">m_fd</a>;
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58f845eb19b132151d9ffcd8b7921735">00060</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58f845eb19b132151d9ffcd8b7921735">m_max_outstanding</a>;
+<a name="l00061"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#b3aaa05fcfc21c359ea95bdc9c08254d">00061</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#b3aaa05fcfc21c359ea95bdc9c08254d">m_read_size</a>;
+<a name="l00062"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#1340179d28de6104072625f415812c34">00062</a>     uint32_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#1340179d28de6104072625f415812c34">m_outstanding</a>;
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#fb51b08471540406d175d27d78ea9916">00063</a>     <span class="keywordtype">bool</span>                 <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#fb51b08471540406d175d27d78ea9916">m_eof</a>;
+<a name="l00064"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#0899970d25bfafb561773e47cdd8a44e">00064</a>     <span class="keywordtype">int</span>                  <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#0899970d25bfafb561773e47cdd8a44e">m_error</a>;
+<a name="l00065"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#9cbafa51ec0fa7cd08cb62cd0cc46921">00065</a>     uint8_t             *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#9cbafa51ec0fa7cd08cb62cd0cc46921">m_ptr</a>;
+<a name="l00066"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#34d2b6aa5db52d143ef8948bb4add14f">00066</a>     uint8_t             *<a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#34d2b6aa5db52d143ef8948bb4add14f">m_end_ptr</a>;
+<a name="l00067"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#69a78f72c403a03268520343548b3e4a">00067</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#69a78f72c403a03268520343548b3e4a">m_end_offset</a>;
+<a name="l00068"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#cfe3169d9b57237ef90b86545ccb8e4a">00068</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#cfe3169d9b57237ef90b86545ccb8e4a">m_outstanding_offset</a>;
+<a name="l00069"></a><a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58edc877635541a382fd6c5b6fea28f9">00069</a>     uint64_t             <a class="code" href="class_hypertable_1_1_client_buffered_reader_handler.html#58edc877635541a382fd6c5b6fea28f9">m_actual_offset</a>;
+<a name="l00070"></a>00070   };
 <a name="l00071"></a>00071 
-<a name="l00072"></a>00072 <span class="preprocessor">#endif // HYPERTABLE_CLIENTBUFFEREDREADERHANDLER_H</span>
-<a name="l00073"></a>00073 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00072"></a>00072 }
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074 <span class="preprocessor">#endif // HYPERTABLE_CLIENTBUFFEREDREADERHANDLER_H</span>
+<a name="l00075"></a>00075 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

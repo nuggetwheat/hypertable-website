@@ -38,16 +38,16 @@
 <a name="l00043"></a>00043   <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> range;
 <a name="l00044"></a>00044   <a class="code" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range.">RangeState</a> range_state;
 <a name="l00045"></a>00045   <span class="keyword">const</span> <span class="keywordtype">char</span> *transfer_log_dir;
-<a name="l00046"></a>00046   <span class="keywordtype">size_t</span> remaining = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message_len - 2;
-<a name="l00047"></a>00047   <span class="keyword">const</span> uint8_t *p = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;message + 2;
+<a name="l00046"></a>00046   <span class="keyword">const</span> uint8_t *decode_ptr = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload;
+<a name="l00047"></a>00047   <span class="keywordtype">size_t</span> decode_remain = <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;payload_len;
 <a name="l00048"></a>00048 
 <a name="l00049"></a>00049   <span class="keywordflow">try</span> {
-<a name="l00050"></a>00050     table.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;p, &amp;remaining);
-<a name="l00051"></a>00051     range.<a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">decode</a>(&amp;p, &amp;remaining);
-<a name="l00052"></a>00052     transfer_log_dir = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;p, &amp;remaining);
-<a name="l00053"></a>00053     range_state.<a class="code" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">decode</a>(&amp;p, &amp;remaining);
+<a name="l00050"></a>00050     table.<a class="code" href="class_hypertable_1_1_table_identifier.html#e6ca97281bf7405729785a930e37a1ec">decode</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00051"></a>00051     range.<a class="code" href="class_hypertable_1_1_range_spec.html#1b6cd9ec47a32f6238da93ba7bdc617b">decode</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00052"></a>00052     transfer_log_dir = <a class="code" href="namespace_hypertable_1_1_serialization.html#f34adb869c349af75a12b633b883bca0" title="Decodes a c-style string from the given buffer.">decode_str16</a>(&amp;decode_ptr, &amp;decode_remain);
+<a name="l00053"></a>00053     range_state.<a class="code" href="class_hypertable_1_1_range_state.html#094ba1894c857dc6ab2e7273f30c4eec">decode</a>(&amp;decode_ptr, &amp;decode_remain);
 <a name="l00054"></a>00054 
-<a name="l00055"></a>00055     <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>-&gt;<a class="code" href="class_hypertable_1_1_range_server.html#b3646d1415276e5e1edcadd3701529f6" title="LoadRange.">load_range</a>(&amp;cb, &amp;table, &amp;range, transfer_log_dir,
+<a name="l00055"></a>00055     <a class="code" href="class_hypertable_1_1_request_handler_load_range.html#f4fef2524cdc6d965f1495b21c4961cb">m_range_server</a>-&gt;<a class="code" href="class_hypertable_1_1_range_server.html#b3646d1415276e5e1edcadd3701529f6">load_range</a>(&amp;cb, &amp;table, &amp;range, transfer_log_dir,
 <a name="l00056"></a>00056                                &amp;range_state);
 <a name="l00057"></a>00057   }
 <a name="l00058"></a>00058   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
@@ -55,7 +55,7 @@
 <a name="l00060"></a>00060     cb.<a class="code" href="class_hypertable_1_1_response_callback.html#23ae6f4608ce15b4c4909a859ff12f1d" title="Sends an error response back to the client.">error</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20d68327d72ad9c9771bf8c4cbe9bc2d2">Error::PROTOCOL_ERROR</a>, <span class="stringliteral">"Error handling LoadRange message"</span>);
 <a name="l00061"></a>00061   }
 <a name="l00062"></a>00062 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

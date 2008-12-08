@@ -46,49 +46,77 @@ Collaboration diagram for Hypertable::Properties:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">Properties</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#b06d4abd14b584e326768e4fd3bbf531">Properties</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#ad5d5482e096b7cde40ede788cc22b14">load</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;filename, const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc, bool allow_unregistered=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#9776373315b3c02f36c479a8ad975bd4">load</a> (const char *fname)  throw (std::invalid_argument)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">load a property config file  <a href="#ad5d5482e096b7cde40ede788cc22b14"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#ecc842535ce878c244e90804564dd50e">parse_args</a> (int argc, char *argv[], const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc, const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden=0, const <a class="el" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#0e1a98fa683943883dea3e9bc853cebe">load</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;fname)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Parse arguments.  <a href="#ecc842535ce878c244e90804564dd50e"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#cdef1eb7ee961420deb91d1adeb9b68f">parse_args</a> (const std::vector&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt; &amp;args, const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc, const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden=0, const <a class="el" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p=0)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#c0e58480b1fa6fdf29882ba084a0aefd">get</a> (const char *str, const char *defaultval=NULL)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Same as above, except taking vector of strings as arguments.  <a href="#cdef1eb7ee961420deb91d1adeb9b68f"></a><br></td></tr>
+<tr><td class="memTemplParams" nowrap colspan="2">template&lt;typename T&gt; </td></tr>
+<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">T&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#d072be099f1311b186b9a0efa7987a1e">get</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#01f6e3362c96f7d4370a6f69277cb07d">get_int</a> (const char *str, int defaultval=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the value of option of type T.  <a href="#d072be099f1311b186b9a0efa7987a1e"></a><br></td></tr>
+<tr><td class="memTemplParams" nowrap colspan="2">template&lt;typename T&gt; </td></tr>
+<tr><td class="memTemplItemLeft" nowrap align="right" valign="top">T&nbsp;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#e1f94f80d45743fd461e0284f062f1a5">get</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, const T &amp;default_value) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#98364b6f5dc4786d8ac88f7e8a5d2f37">get_int64</a> (const char *str, int64_t defaultval=0)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Get the value of option of type T.  <a href="#e1f94f80d45743fd461e0284f062f1a5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00">defaulted</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#130b98020c2cdf770fc05feacb953654">get_bool</a> (const char *str, bool defaultval=false)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Check whether a property have default value.  <a href="#737e889d5d6be4fec90a9ab6c7b1ab00"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#a1e685b910c846108ddd858523c19c57">has</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name) const </td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#023b7515f8850c28ecb8eb3a76608288">has_key</a> (const char *str)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">HT_PROPERTIES_ABBR_ACCESSORS <br>
+std::pair<br>
+&lt; Map::iterator,<br>
+ bool &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#ec044270001df58122691e93d0a3912b">add</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, const boost::any &amp;v, bool defaulted=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#2b9de98e6f3fda902c15c0d3149469d7">set</a> (const char *key, const char *value)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Add property to the map.  <a href="#ec044270001df58122691e93d0a3912b"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#c434d274194953e8e2e6bda0689adf76">set</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;name, const boost::any &amp;v, bool defaulted=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#de3401ea97b27c6bf7571406476af5a7">set_int</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;key, int value)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Set a property in the map, create if not found.  <a href="#c434d274194953e8e2e6bda0689adf76"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#a50cb77f3fa27d5621c6461f97ebf83a">alias</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;primary, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;secondary, bool overwrite=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#cfd4f3edd373daaab3f9410e05d79f07">set_int64</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;key, int64_t value)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Setup an property alias.  <a href="#a50cb77f3fa27d5621c6461f97ebf83a"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#5af13ff84fb25196bf68487f8e4956e3">sync_aliases</a> ()</td></tr>
 
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sync alias values.  <a href="#5af13ff84fb25196bf68487f8e4956e3"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#5fa712d3f1a38ccd95def59e5166e9f1">print</a> (std::ostream &amp;out, bool include_default=false)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Print config key-value map.  <a href="#5fa712d3f1a38ccd95def59e5166e9f1"></a><br></td></tr>
+<tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#60cec1a50f42deac183b212769ccd3b8">to_str</a> (const boost::any &amp;)</td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Helper to print boost::any used by property values.  <a href="#60cec1a50f42deac183b212769ccd3b8"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Types</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef hash_map<br>
-&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#bf52a6781ac41b7ed83bc6fc6cdfc95d">PropertyMap</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
+Po::variable_value&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a></td></tr>
 
-<tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">int64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#c8a76d5bd296425bc7169708f41f15bf">parse_int_value</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;key, const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;value)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef Po::variables_map&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::map<br>
+&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_properties.html#bf52a6781ac41b7ed83bc6fc6cdfc95d">PropertyMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">m_map</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">m_alias_map</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00032">32</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00077">77</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
-<a class="anchor" name="bf52a6781ac41b7ed83bc6fc6cdfc95d"></a><!-- doxytag: member="Hypertable::Properties::PropertyMap" ref="bf52a6781ac41b7ed83bc6fc6cdfc95d" args="" -->
+<a class="anchor" name="f100d52bb6b245dd1486089bfecc71a7"></a><!-- doxytag: member="Hypertable::Properties::Value" ref="f100d52bb6b245dd1486089bfecc71a7" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">typedef hash_map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&gt; <a class="el" href="class_hypertable_1_1_properties.html#bf52a6781ac41b7ed83bc6fc6cdfc95d">Hypertable::Properties::PropertyMap</a><code> [private]</code>          </td>
+          <td class="memname">typedef Po::variable_value <a class="el" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Hypertable::Properties::Value</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -96,7 +124,41 @@ Collaboration diagram for Hypertable::Properties:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00068">68</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00078">78</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="446c4e99f34437d159c7dbb29dff5ffa"></a><!-- doxytag: member="Hypertable::Properties::Map" ref="446c4e99f34437d159c7dbb29dff5ffa" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef Po::variables_map <a class="el" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Hypertable::Properties::Map</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00079">79</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="b6c2d6657fe1c828ef92ce617a5e0d9e"></a><!-- doxytag: member="Hypertable::Properties::AliasMap" ref="b6c2d6657fe1c828ef92ce617a5e0d9e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef std::map&lt;<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>, <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&gt; <a class="el" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">Hypertable::Properties::AliasMap</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00080">80</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
 
 </div>
 </div><p>
@@ -118,185 +180,32 @@ Collaboration diagram for Hypertable::Properties:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00036">36</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="b06d4abd14b584e326768e4fd3bbf531"></a><!-- doxytag: member="Hypertable::Properties::Properties" ref="b06d4abd14b584e326768e4fd3bbf531" args="(const String &amp;fname)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">Hypertable::Properties::Properties           </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>fname</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00038">38</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00083">83</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="9776373315b3c02f36c479a8ad975bd4"></a><!-- doxytag: member="Hypertable::Properties::load" ref="9776373315b3c02f36c479a8ad975bd4" args="(const char *fname)" -->
+<a class="anchor" name="ad5d5482e096b7cde40ede788cc22b14"></a><!-- doxytag: member="Hypertable::Properties::load" ref="ad5d5482e096b7cde40ede788cc22b14" args="(const String &amp;filename, const PropertiesDesc &amp;desc, bool allow_unregistered=false)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Properties::load           </td>
           <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>fname</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%">  throw (std::invalid_argument)</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00048">48</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="0e1a98fa683943883dea3e9bc853cebe"></a><!-- doxytag: member="Hypertable::Properties::load" ref="0e1a98fa683943883dea3e9bc853cebe" args="(const String &amp;fname)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">void Hypertable::Properties::load           </td>
-          <td>(</td>
           <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>fname</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00044">44</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c0e58480b1fa6fdf29882ba084a0aefd"></a><!-- doxytag: member="Hypertable::Properties::get" ref="c0e58480b1fa6fdf29882ba084a0aefd" args="(const char *str, const char *defaultval=NULL)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">const char * Properties::get           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>str</em>, </td>
+          <td class="paramname"> <em>filename</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>defaultval</em> = <code>NULL</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00113">113</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="01f6e3362c96f7d4370a6f69277cb07d"></a><!-- doxytag: member="Hypertable::Properties::get_int" ref="01f6e3362c96f7d4370a6f69277cb07d" args="(const char *str, int defaultval=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int Properties::get_int           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>defaultval</em> = <code>0</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00133">133</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="98364b6f5dc4786d8ac88f7e8a5d2f37"></a><!-- doxytag: member="Hypertable::Properties::get_int64" ref="98364b6f5dc4786d8ac88f7e8a5d2f37" args="(const char *str, int64_t defaultval=0)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int64_t Properties::get_int64           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>str</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>defaultval</em> = <code>0</code></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00124">124</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="130b98020c2cdf770fc05feacb953654"></a><!-- doxytag: member="Hypertable::Properties::get_bool" ref="130b98020c2cdf770fc05feacb953654" args="(const char *str, bool defaultval=false)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Properties::get_bool           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>str</em>, </td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>desc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">bool&nbsp;</td>
-          <td class="paramname"> <em>defaultval</em> = <code>false</code></td><td>&nbsp;</td>
+          <td class="paramname"> <em>allow_unregistered</em> = <code>false</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -308,48 +217,53 @@ Collaboration diagram for Hypertable::Properties:</div>
 <div class="memdoc">
 
 <p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00142">142</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="023b7515f8850c28ecb8eb3a76608288"></a><!-- doxytag: member="Hypertable::Properties::has_key" ref="023b7515f8850c28ecb8eb3a76608288" args="(const char *str)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">bool Hypertable::Properties::has_key           </td>
-          <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>str</em>          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%"><code> [inline]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
+load a property config file 
 <p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>filename</em>&nbsp;</td><td>- name of the config file </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>desc</em>&nbsp;</td><td>- properties description </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>allow_unregistered</em>&nbsp;</td><td>- allow unregistered properties </td></tr>
+  </table>
+</dl>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00054">54</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00114">114</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="2b9de98e6f3fda902c15c0d3149469d7"></a><!-- doxytag: member="Hypertable::Properties::set" ref="2b9de98e6f3fda902c15c0d3149469d7" args="(const char *key, const char *value)" -->
+<a class="anchor" name="ecc842535ce878c244e90804564dd50e"></a><!-- doxytag: member="Hypertable::Properties::parse_args" ref="ecc842535ce878c244e90804564dd50e" args="(int argc, char *argv[], const PropertiesDesc &amp;desc, const PropertiesDesc *hidden=0, const PositionalDesc *p=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">std::string Properties::set           </td>
+          <td class="memname">void Properties::parse_args           </td>
           <td>(</td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>key</em>, </td>
+          <td class="paramtype">int&nbsp;</td>
+          <td class="paramname"> <em>argc</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const char *&nbsp;</td>
-          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
+          <td class="paramtype">char *&nbsp;</td>
+          <td class="paramname"> <em>argv</em>[], </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *&nbsp;</td>
+          <td class="paramname"> <em>hidden</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *&nbsp;</td>
+          <td class="paramname"> <em>p</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -361,26 +275,371 @@ Collaboration diagram for Hypertable::Properties:</div>
 <div class="memdoc">
 
 <p>
+Parse arguments. 
+<p>
+Throws CONFIG_INVALID_ARGUMENT on error<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>argc</em>&nbsp;</td><td>- argument count (from main) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>argv</em>&nbsp;</td><td>- argument array (from main) </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>desc</em>&nbsp;</td><td>- options description </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>hidden</em>&nbsp;</td><td>- hidden options description </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>p</em>&nbsp;</td><td>- positional options description </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00136">136</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="cdef1eb7ee961420deb91d1adeb9b68f"></a><!-- doxytag: member="Hypertable::Properties::parse_args" ref="cdef1eb7ee961420deb91d1adeb9b68f" args="(const std::vector&lt; String &gt; &amp;args, const PropertiesDesc &amp;desc, const PropertiesDesc *hidden=0, const PositionalDesc *p=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Properties::parse_args           </td>
+          <td>(</td>
+          <td class="paramtype">const std::vector&lt; <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &gt; &amp;&nbsp;</td>
+          <td class="paramname"> <em>args</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>desc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *&nbsp;</td>
+          <td class="paramname"> <em>hidden</em> = <code>0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *&nbsp;</td>
+          <td class="paramname"> <em>p</em> = <code>0</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Same as above, except taking vector of strings as arguments. 
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00151">151</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d072be099f1311b186b9a0efa7987a1e"></a><!-- doxytag: member="Hypertable::Properties::get" ref="d072be099f1311b186b9a0efa7987a1e" args="(const String &amp;name) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T Hypertable::Properties::get           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the value of option of type T. 
+<p>
+Throws if option is not defined.<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>- name of the option </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00121">121</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="e1f94f80d45743fd461e0284f062f1a5"></a><!-- doxytag: member="Hypertable::Properties::get" ref="e1f94f80d45743fd461e0284f062f1a5" args="(const String &amp;name, const T &amp;default_value) const " -->
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">T Hypertable::Properties::get           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&nbsp;</td>
+          <td class="paramname"> <em>default_value</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Get the value of option of type T. 
+<p>
+Returns supplied default value if not found. Try use the first form in usual cases and supply default values in the config descriptions, as it validates the name and is less error prone.<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>- name of the option </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>default_value</em>&nbsp;</td><td>- default value to return if not found </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00139">139</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="737e889d5d6be4fec90a9ab6c7b1ab00"></a><!-- doxytag: member="Hypertable::Properties::defaulted" ref="737e889d5d6be4fec90a9ab6c7b1ab00" args="(const String &amp;name) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::Properties::defaulted           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Check whether a property have default value. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>- name of the property </td></tr>
+  </table>
+</dl>
+<dl class="return" compact><dt><b>Returns:</b></dt><dd>true if the value is default </dd></dl>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00160">160</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a1e685b910c846108ddd858523c19c57"></a><!-- doxytag: member="Hypertable::Properties::has" ref="a1e685b910c846108ddd858523c19c57" args="(const String &amp;name) const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::Properties::has           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00164">164</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ec044270001df58122691e93d0a3912b"></a><!-- doxytag: member="Hypertable::Properties::add" ref="ec044270001df58122691e93d0a3912b" args="(const String &amp;name, const boost::any &amp;v, bool defaulted=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">HT_PROPERTIES_ABBR_ACCESSORS std::pair&lt;Map::iterator, bool&gt; Hypertable::Properties::add           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const boost::any &amp;&nbsp;</td>
+          <td class="paramname"> <em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>defaulted</em> = <code>false</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Add property to the map. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>- name/key of the property </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>v</em>&nbsp;</td><td>- value of the property </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>defaulted</em>&nbsp;</td><td>- whether the value is default </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00176">176</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="c434d274194953e8e2e6bda0689adf76"></a><!-- doxytag: member="Hypertable::Properties::set" ref="c434d274194953e8e2e6bda0689adf76" args="(const String &amp;name, const boost::any &amp;v, bool defaulted=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::Properties::set           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>name</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const boost::any &amp;&nbsp;</td>
+          <td class="paramname"> <em>v</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>defaulted</em> = <code>false</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Set a property in the map, create if not found. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>name</em>&nbsp;</td><td>- name/key of the property </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>v</em>&nbsp;</td><td>- value of the property </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>defaulted</em>&nbsp;</td><td>- whether the value is default </td></tr>
+  </table>
+</dl>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00188">188</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="a50cb77f3fa27d5621c6461f97ebf83a"></a><!-- doxytag: member="Hypertable::Properties::alias" ref="a50cb77f3fa27d5621c6461f97ebf83a" args="(const String &amp;primary, const String &amp;secondary, bool overwrite=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Properties::alias           </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>primary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>secondary</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>overwrite</em> = <code>false</code></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Setup an property alias. 
+<p>
+Primary has higher priority, meaning when aliases are sync'ed primary value can override secondary value<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>primary</em>&nbsp;</td><td>- primary property name </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>secondary</em>&nbsp;</td><td>- secondary property name </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>overwrite</em>&nbsp;</td><td>- whether to overwrite existing alias </td></tr>
+  </table>
+</dl>
 
 <p>Definition at line <a class="el" href="_properties_8cc-source.html#l00159">159</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="de3401ea97b27c6bf7571406476af5a7"></a><!-- doxytag: member="Hypertable::Properties::set_int" ref="de3401ea97b27c6bf7571406476af5a7" args="(const String &amp;key, int value)" -->
+<a class="anchor" name="5af13ff84fb25196bf68487f8e4956e3"></a><!-- doxytag: member="Hypertable::Properties::sync_aliases" ref="5af13ff84fb25196bf68487f8e4956e3" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int Properties::set_int           </td>
+          <td class="memname">void Properties::sync_aliases           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>key</em>, </td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+Sync alias values. 
+<p>
+So properties that are aliases to each other have the same value. Value priority: primary non-default &gt; secondary non-default &gt; primary default &gt; secondary default 
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00169">169</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="5fa712d3f1a38ccd95def59e5166e9f1"></a><!-- doxytag: member="Hypertable::Properties::print" ref="5fa712d3f1a38ccd95def59e5166e9f1" args="(std::ostream &amp;out, bool include_default=false)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Properties::print           </td>
+          <td>(</td>
+          <td class="paramtype">std::ostream &amp;&nbsp;</td>
+          <td class="paramname"> <em>out</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>include_default</em> = <code>false</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -392,80 +651,50 @@ Collaboration diagram for Hypertable::Properties:</div>
 <div class="memdoc">
 
 <p>
+Print config key-value map. 
+<p>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>out</em>&nbsp;</td><td>- output stream </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>include_default</em>&nbsp;</td><td>- including default values or not </td></tr>
+  </table>
+</dl>
 
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00172">172</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00214">214</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="cfd4f3edd373daaab3f9410e05d79f07"></a><!-- doxytag: member="Hypertable::Properties::set_int64" ref="cfd4f3edd373daaab3f9410e05d79f07" args="(const String &amp;key, int64_t value)" -->
+<a class="anchor" name="60cec1a50f42deac183b212769ccd3b8"></a><!-- doxytag: member="Hypertable::Properties::to_str" ref="60cec1a50f42deac183b212769ccd3b8" args="(const boost::any &amp;)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int64_t Properties::set_int64           </td>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Properties::to_str           </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int64_t&nbsp;</td>
-          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"></td>
+          <td class="paramtype">const boost::any &amp;&nbsp;</td>
+          <td class="paramname"> <em>v</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [static]</code></td>
         </tr>
       </table>
 </div>
 <div class="memdoc">
 
 <p>
-
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00191">191</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="c8a76d5bd296425bc7169708f41f15bf"></a><!-- doxytag: member="Hypertable::Properties::parse_int_value" ref="c8a76d5bd296425bc7169708f41f15bf" args="(const String &amp;key, const String &amp;value)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int64_t Properties::parse_int_value           </td>
-          <td>(</td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>key</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>value</em></td><td>&nbsp;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td><td width="100%"><code> [private]</code></td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
+Helper to print boost::any used by property values. 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00204">204</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00193">193</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="9497681698f1a3b1b87ecdf3954c8b82"></a><!-- doxytag: member="Hypertable::Properties::m_map" ref="9497681698f1a3b1b87ecdf3954c8b82" args="" -->
+<a class="anchor" name="666d2d6141e9dacbb53aaee77215252d"></a><!-- doxytag: member="Hypertable::Properties::m_need_alias_sync" ref="666d2d6141e9dacbb53aaee77215252d" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_properties.html#bf52a6781ac41b7ed83bc6fc6cdfc95d">PropertyMap</a> <a class="el" href="class_hypertable_1_1_properties.html#9497681698f1a3b1b87ecdf3954c8b82">Hypertable::Properties::m_map</a><code> [private]</code>          </td>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">Hypertable::Properties::m_need_alias_sync</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -473,13 +702,47 @@ Collaboration diagram for Hypertable::Properties:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8h-source.html#l00070">70</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00227">227</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8ab2be77aa1c68b2668826f3dfba645f"></a><!-- doxytag: member="Hypertable::Properties::m_map" ref="8ab2be77aa1c68b2668826f3dfba645f" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a> <a class="el" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">Hypertable::Properties::m_map</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00228">228</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="7c06f762c899a742c94ebbbc2132a914"></a><!-- doxytag: member="Hypertable::Properties::m_alias_map" ref="7c06f762c899a742c94ebbbc2132a914" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a> <a class="el" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">Hypertable::Properties::m_alias_map</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_properties_8h-source.html#l00229">229</a> of file <a class="el" href="_properties_8h-source.html">Properties.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_properties_8h-source.html">Properties.h</a><li>/Users/doug/src/hypertable/src/cc/Common/<a class="el" href="_properties_8cc-source.html">Properties.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:07 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -20,139 +20,73 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Common/Compat.h</a>"</span>
 <a name="l00023"></a>00023 
 <a name="l00024"></a>00024 <span class="preprocessor">#include &lt;boost/algorithm/string.hpp&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;cstdlib&gt;</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;cstring&gt;</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;iostream&gt;</span>
-<a name="l00029"></a>00029 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">extern</span> <span class="stringliteral">"C"</span> {
-<a name="l00032"></a>00032 <span class="preprocessor">#include &lt;stdlib.h&gt;</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include &lt;sys/sysctl.h&gt;</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include &lt;unistd.h&gt;</span>
-<a name="l00036"></a>00036 }
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_file_utils_8h.html">FileUtils.h</a>"</span>
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Logger.h</a>"</span>
-<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_system_8h.html">System.h</a>"</span>
-<a name="l00041"></a>00041 
-<a name="l00042"></a>00042 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00043"></a>00043 <span class="keyword">using namespace </span>std;
-<a name="l00044"></a>00044 
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;boost/filesystem.hpp&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;iostream&gt;</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_logger_8h.html">Common/Logger.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_common_2_filesystem_8h.html">Common/Filesystem.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_system_info_8h.html">Common/SystemInfo.h</a>"</span>
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00034"></a>00034 <span class="keyword">using namespace </span>std;
+<a name="l00035"></a>00035 <span class="keyword">using namespace </span>boost::filesystem;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keywordtype">string</span> System::install_dir;
+<a name="l00038"></a>00038 <span class="keywordtype">string</span> System::exe_name;
+<a name="l00039"></a>00039 <span class="keywordtype">bool</span>   System::ms_initialized = <span class="keyword">false</span>;
+<a name="l00040"></a>00040 <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        System::ms_mutex;
+<a name="l00041"></a>00041 boost::mt19937 System::ms_rng;
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_system.html#fceb903d25fa18b1ba02700a2ff2900e">00043</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> System::locate_install_dir(<span class="keyword">const</span> <span class="keywordtype">char</span> *argv0) {
+<a name="l00044"></a>00044   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_system.html#1843b4126750284ac89bd9d66393f7c8">ms_mutex</a>);
 <a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <span class="keywordtype">string</span> System::install_dir;
-<a name="l00047"></a>00047 <span class="keywordtype">string</span> System::exe_name;
-<a name="l00048"></a>00048 <span class="keywordtype">bool</span>   System::ms_initialized = <span class="keyword">false</span>;
-<a name="l00049"></a>00049 boost::mutex System::ms_mutex;
-<a name="l00050"></a>00050 boost::mt19937 System::ms_rng;
-<a name="l00051"></a>00051 
-<a name="l00052"></a><a class="code" href="class_hypertable_1_1_system.html#fceb903d25fa18b1ba02700a2ff2900e">00052</a> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> System::locate_install_dir(<span class="keyword">const</span> <span class="keywordtype">char</span> *argv0) {
-<a name="l00053"></a>00053   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_system.html#9e14658920188fbf6c5bd213af3ff77c">ms_mutex</a>);
-<a name="l00054"></a>00054   <span class="keyword">const</span> <span class="keywordtype">char</span> *exepath = getenv(<span class="stringliteral">"_"</span>);
-<a name="l00055"></a>00055   <span class="keywordtype">char</span> <a class="code" href="namespace_hyperspace_1_1_global.html#ed8440eccd52045af068a66aa2488f2c">cwd</a>[1024];
-<a name="l00056"></a>00056   <span class="keywordtype">int</span> <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> != <span class="stringliteral">""</span>)
-<a name="l00059"></a>00059     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>;
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   getcwd(cwd, 1024);
-<a name="l00062"></a>00062   strcat(cwd, <span class="stringliteral">"/"</span>);
+<a name="l00046"></a>00046   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.empty())
+<a name="l00047"></a>00047     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049   <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> = <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a>(argv0).filename();
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051   <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a> exepath(<a class="code" href="class_hypertable_1_1_system.html#6e382aa6cd8fb98bba5d7e003e7d184e">proc_info</a>().exe);
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="comment">// assuming install_dir/bin/exe_name</span>
+<a name="l00054"></a>00054   <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = exepath.<a class="code" href="class_hypertable_1_1_path.html#4a5096fda342e857630e7c7dbb527b11">parent_path</a>().<a class="code" href="class_hypertable_1_1_path.html#4a5096fda342e857630e7c7dbb527b11">parent_path</a>().directory_string();
+<a name="l00055"></a>00055 
+<a name="l00056"></a>00056   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>;
+<a name="l00057"></a>00057 }
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_system.html#8e48919f3c35dcabe9b3702f615e73e1">00060</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_system.html#8e48919f3c35dcabe9b3702f615e73e1">System::_init</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_directory) {
+<a name="l00061"></a>00061   <span class="comment">// seed the random number generator</span>
+<a name="l00062"></a>00062   <a class="code" href="class_hypertable_1_1_system.html#8e79234651cc208b3bcf6a9594468a85">ms_rng</a>.seed((uint32_t)getpid());
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064   <span class="keywordtype">char</span> *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = strrchr(argv0, <span class="charliteral">'/'</span>);
-<a name="l00065"></a>00065   <span class="keywordflow">if</span> (ptr == 0) {
-<a name="l00066"></a>00066     <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> = argv0;
-<a name="l00067"></a>00067 <span class="preprocessor">#if 0</span>
-<a name="l00068"></a>00068 <span class="preprocessor"></span>    std::string fname;
-<a name="l00069"></a>00069     <span class="keywordtype">char</span> *path = getenv(<span class="stringliteral">"PATH"</span>);
-<a name="l00070"></a>00070     <span class="keywordtype">char</span> *last;
-<a name="l00071"></a>00071     exepath = 0;
-<a name="l00072"></a>00072     ptr = strtok_r(path, <span class="stringliteral">":"</span>, &amp;last);
-<a name="l00073"></a>00073     <span class="keywordflow">while</span> (ptr) {
-<a name="l00074"></a>00074       fname = (std::string)ptr + <span class="stringliteral">"/"</span> + <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a>;
-<a name="l00075"></a>00075       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_file_utils.html#48b1de9157dfbb028a55d8e9d17090ae">FileUtils::exists</a>(fname.c_str())) {
-<a name="l00076"></a>00076         exepath = fname.c_str();
-<a name="l00077"></a>00077         <span class="keywordflow">break</span>;
-<a name="l00078"></a>00078       }
-<a name="l00079"></a>00079       ptr = strtok_r(0, <span class="stringliteral">":"</span>, &amp;last);
-<a name="l00080"></a>00080     }
-<a name="l00081"></a>00081 <span class="preprocessor">#endif</span>
-<a name="l00082"></a>00082 <span class="preprocessor"></span>  }
-<a name="l00083"></a>00083   <span class="keywordflow">else</span>
-<a name="l00084"></a>00084     <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> = ptr+1;
-<a name="l00085"></a>00085 
-<a name="l00086"></a>00086   offset = (exepath) ? strlen(exepath) - strlen(argv0) : -1;
-<a name="l00087"></a>00087   <span class="keywordflow">if</span> (exepath &amp;&amp; offset &gt;= 0) {
-<a name="l00088"></a>00088     <span class="keywordflow">if</span> (exepath[0] != <span class="charliteral">'/'</span>) {
-<a name="l00089"></a>00089       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = cwd;
-<a name="l00090"></a>00090       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> += exepath;
-<a name="l00091"></a>00091     }
-<a name="l00092"></a>00092     <span class="keywordflow">else</span>
-<a name="l00093"></a>00093       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = exepath;
-<a name="l00094"></a>00094   }
-<a name="l00095"></a>00095   <span class="keywordflow">else</span> {
-<a name="l00096"></a>00096     <span class="keywordflow">if</span> (argv0[0] != <span class="charliteral">'/'</span>) {
-<a name="l00097"></a>00097       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = cwd;
-<a name="l00098"></a>00098       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> += argv0;
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100     <span class="keywordflow">else</span>
-<a name="l00101"></a>00101       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = argv0;
-<a name="l00102"></a>00102   }
-<a name="l00103"></a>00103 
-<a name="l00104"></a>00104   string::size_type pos = <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.rfind(<span class="stringliteral">"/bin/"</span>);
-<a name="l00105"></a>00105   <span class="keywordflow">if</span> (pos == string::npos) {
-<a name="l00106"></a>00106     string::size_type pos = <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.rfind(<span class="stringliteral">"/"</span>);
-<a name="l00107"></a>00107     <span class="keywordflow">if</span> (pos == string::npos)
-<a name="l00108"></a>00108       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = <span class="stringliteral">"."</span>;
-<a name="l00109"></a>00109     <span class="keywordflow">else</span>
-<a name="l00110"></a>00110       <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.erase(pos);
-<a name="l00111"></a>00111     <span class="comment">//cerr &lt;&lt; "WARNING: " &lt;&lt; exe_name &lt;&lt; " does not appear to have been run from an installation." &lt;&lt; endl;</span>
-<a name="l00112"></a>00112     <span class="comment">//cerr &lt;&lt; "WARNING: Using '" &lt;&lt; install_dir &lt;&lt; "' as the installation directory" &lt;&lt; endl;</span>
-<a name="l00113"></a>00113   }
-<a name="l00114"></a>00114   <span class="keywordflow">else</span>
-<a name="l00115"></a>00115     <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.erase(pos);
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>;
-<a name="l00118"></a>00118 }
-<a name="l00119"></a>00119 
-<a name="l00120"></a>00120 
-<a name="l00121"></a><a class="code" href="class_hypertable_1_1_system.html#8e48919f3c35dcabe9b3702f615e73e1">00121</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_system.html#8e48919f3c35dcabe9b3702f615e73e1">System::_init</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;install_directory) {
-<a name="l00122"></a>00122   boost::mutex::scoped_lock lock(<a class="code" href="class_hypertable_1_1_system.html#9e14658920188fbf6c5bd213af3ff77c">ms_mutex</a>);
-<a name="l00123"></a>00123 
-<a name="l00124"></a>00124   <span class="comment">// seed the random number generator</span>
-<a name="l00125"></a>00125   <a class="code" href="class_hypertable_1_1_system.html#8e79234651cc208b3bcf6a9594468a85">ms_rng</a>.seed((uint32_t)getpid());
-<a name="l00126"></a>00126 
-<a name="l00127"></a>00127   <span class="comment">// set installation directory</span>
-<a name="l00128"></a>00128   <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = install_directory;
-<a name="l00129"></a>00129   <span class="keywordflow">while</span> (boost::ends_with(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>, <span class="stringliteral">"/"</span>))
-<a name="l00130"></a>00130     <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.substr(0, <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.length()-1);
-<a name="l00131"></a>00131          
-<a name="l00132"></a>00132   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> == <span class="stringliteral">""</span>)
-<a name="l00133"></a>00133     <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> = <span class="stringliteral">"unknown"</span>;
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135   <span class="comment">// initialize logging system</span>
-<a name="l00136"></a>00136   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Logger::initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a>);
-<a name="l00137"></a>00137 
-<a name="l00138"></a>00138 }
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140 
-<a name="l00141"></a><a class="code" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">00141</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_system.html#237396c2a3ba32663ddc10faec0eaf8e">System::get_processor_count</a>() {
-<a name="l00142"></a>00142 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00143"></a>00143 <span class="preprocessor"></span>  <span class="keywordtype">int</span> mib[2], ncpus;
-<a name="l00144"></a>00144   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146   mib[0] = CTL_HW;
-<a name="l00147"></a>00147   mib[1] = HW_NCPU;
-<a name="l00148"></a>00148   len = <span class="keyword">sizeof</span>(ncpus);
-<a name="l00149"></a>00149   sysctl(mib, 2, &amp;ncpus, &amp;len, NULL, 0);
-<a name="l00150"></a>00150   <span class="keywordflow">return</span> ncpus;
-<a name="l00151"></a>00151 <span class="preprocessor">#elif defined(__linux__)</span>
-<a name="l00152"></a>00152 <span class="preprocessor"></span>  <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)sysconf(_SC_NPROCESSORS_ONLN);
-<a name="l00153"></a>00153 <span class="preprocessor">#else</span>
-<a name="l00154"></a>00154 <span class="preprocessor"></span>  <a class="code" href="_i_o_handler_accept_8cc.html#b625750f606f98bcd0bc081f958de1da">ImplementMe</a>;
-<a name="l00155"></a>00155 <span class="preprocessor">#endif</span>
-<a name="l00156"></a>00156 <span class="preprocessor"></span>}
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:25 2008 for hypertable by&nbsp;
+<a name="l00064"></a>00064   <span class="keywordflow">if</span> (install_directory.empty()) {
+<a name="l00065"></a>00065     <span class="comment">// assuming install_dir/bin/exe_name</span>
+<a name="l00066"></a>00066     <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a>(<a class="code" href="class_hypertable_1_1_system.html#6e382aa6cd8fb98bba5d7e003e7d184e">proc_info</a>().exe).parent_path().parent_path()
+<a name="l00067"></a>00067         .directory_string();
+<a name="l00068"></a>00068   }
+<a name="l00069"></a>00069   <span class="keywordflow">else</span> {
+<a name="l00070"></a>00070     <span class="comment">// set installation directory</span>
+<a name="l00071"></a>00071     <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = install_directory;
+<a name="l00072"></a>00072     <span class="keywordflow">while</span> (boost::ends_with(<a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>, <span class="stringliteral">"/"</span>))
+<a name="l00073"></a>00073     <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a> = <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.substr(0, <a class="code" href="class_hypertable_1_1_system.html#901bdacd28ac1348d5a460a3480baa14">install_dir</a>.length()-1);
+<a name="l00074"></a>00074   }
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a>.empty())
+<a name="l00077"></a>00077     <a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a> = <a class="code" href="class_hypertable_1_1_path.html" title="Yet another compatibility class, since boost 1.36+ replaced branch_path and leaf...">Path</a>(<a class="code" href="class_hypertable_1_1_system.html#6e382aa6cd8fb98bba5d7e003e7d184e">proc_info</a>().<a class="code" href="struct_hypertable_1_1_proc_info.html#f7f1c4076010fb9e4214935f3f94c252">args</a>[0]).<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>();
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="comment">// initialize logging system</span>
+<a name="l00080"></a>00080   <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Logger::initialize</a>(<a class="code" href="class_hypertable_1_1_system.html#f7c2d3c7baaac23d26d1e326d326c674">exe_name</a>);
+<a name="l00081"></a>00081 }
+<a name="l00082"></a>00082 
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="class_hypertable_1_1_system.html#e380ace32b692cbcc3369085db82d90b">00084</a> int32_t <a class="code" href="class_hypertable_1_1_system.html#e380ace32b692cbcc3369085db82d90b">System::get_processor_count</a>() {
+<a name="l00085"></a>00085   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#b3200338b308a18a560065c74bae648a">cpu_info</a>().<a class="code" href="struct_hypertable_1_1_cpu_info.html#cfa1d6e261cd47484ef3bae4b21e28a7">total_cores</a>;
+<a name="l00086"></a>00086 }
+<a name="l00087"></a>00087 
+<a name="l00088"></a><a class="code" href="class_hypertable_1_1_system.html#b70e8e08c180c06e11071b083431a275">00088</a> int32_t <a class="code" href="class_hypertable_1_1_system.html#b70e8e08c180c06e11071b083431a275">System::get_pid</a>() {
+<a name="l00089"></a>00089   <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_system.html#6e382aa6cd8fb98bba5d7e003e7d184e">proc_info</a>().<a class="code" href="struct_hypertable_1_1_proc_info.html#398d3836e4bde372281c4e0189dcb76a">pid</a>;
+<a name="l00090"></a>00090 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

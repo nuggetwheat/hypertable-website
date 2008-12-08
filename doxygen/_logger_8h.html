@@ -40,11 +40,15 @@ Include dependency graph for Logger.h:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html">Hypertable::Logger</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Defines</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#2ab5ccf5505b0909e523844e84e90ba6">HT_LOG_BUFSZ</a>&nbsp;&nbsp;&nbsp;1024</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>&nbsp;&nbsp;&nbsp;*((int *)0) = 1</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#05cd33fae6b8947c95d079c9dd581462">HT_LOG</a>(_enabled_, _cat_, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#db2ca54e0e863f472da58bc118d96fb8">HT_LOGF</a>(_enabled_, _cat_, msg,...)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#a581420ac92f37b8c852157f586abf43">HT_LOGF</a>(_enabled_, _cat_, fmt,...)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#aec75f17238de14a30e8167a15d98b1d">HT_LOG_BUF_SIZE</a>&nbsp;&nbsp;&nbsp;4096</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#5150c146eb8e7bef3e63b4923d317d1e">HT_OUT</a>(_enabled_, _l_)</td></tr>
 
@@ -54,59 +58,59 @@ Include dependency graph for Logger.h:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#81a291380d73e79c986b8fb07481eb04">HT_OUT_DISABLED</a>&nbsp;&nbsp;&nbsp;do { if (0) {</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#9fac9c56249e7a0cf5b8c0cfad265e0b">HT_HEAD_</a>(_x_, _l_, _n_)&nbsp;&nbsp;&nbsp;String((char *)(_x_), 0, (_n_) &lt; (_l_) ? (_n_) : (_l_))</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#8affb25ccd4a0df03dbcbdcdd6f8a5a2">HT_DUMP_CSTR</a>(_os_, _label_, _str_)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#b868d59332aeb36227ddcc0aececd8c8">HT_HEAD</a>(_x_, _n_)&nbsp;&nbsp;&nbsp;String(_x_, 0, (_n_) &lt; (_x_).length() ? (_n_) : (_x_).length())</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#37ac112a517b72ea9f6dc20486d0bc9d">HT_DUMP_CSTR_FIELD</a>(_os_, _obj_, _field_)&nbsp;&nbsp;&nbsp;HT_DUMP_CSTR(_os_, _field_, _obj_._field_)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#1d5bdf0d1c2c0656db726f302eb25f54">HT_LOG_ENTER</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#60fb4d869db4d194cc1fed53e5018697">HT_LOG_EXIT</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#da519b780d0c3598663706cc3da0bc50">HT_DEBUG</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isDebugEnabled, debug, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#da519b780d0c3598663706cc3da0bc50">HT_DEBUG</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isDebugEnabled, DEBUG, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isDebugEnabled, debug, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#42da343b7cd5f8d14c17e594611cdefd">HT_DEBUGF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isDebugEnabled, DEBUG, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#75176db3f3b090dc47d4fb088f4fda24">HT_DEBUG_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isDebugEnabled, DEBUG)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#48f83639f21ec6e588ce69306cd25b28">HT_INFO</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isInfoEnabled, info, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#48f83639f21ec6e588ce69306cd25b28">HT_INFO</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isInfoEnabled, INFO, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isInfoEnabled, info, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isInfoEnabled, INFO, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#95aca07db923e7bc3ff075b6e96ace4f">HT_INFO_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT(isInfoEnabled, INFO)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#2d93f92d156cf8e3cfd76732556d7008">HT_NOTICE</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isNoticeEnabled, notice, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#2d93f92d156cf8e3cfd76732556d7008">HT_NOTICE</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isNoticeEnabled, NOTICE, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#4e489296c7d868434e8239ebac5a6ca2">HT_NOTICEF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isNoticeEnabled, notice, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#4e489296c7d868434e8239ebac5a6ca2">HT_NOTICEF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isNoticeEnabled, NOTICE, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#a8b7684ce06b52e5804ca9bf2e8485e4">HT_NOTICE_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT(isNoticeEnabled, NOTICE)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#0219182531c3a80b0aa8708170d58487">HT_WARN</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isWarnEnabled, warn, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#0219182531c3a80b0aa8708170d58487">HT_WARN</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isWarnEnabled, WARN, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isWarnEnabled, warn, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#709eda39b0584732f8c822dfdada36f7">HT_WARNF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isWarnEnabled, WARN, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#3a235992e72ce7509127fe740f32b8d1">HT_WARN_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isWarnEnabled, WARN)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isErrorEnabled, <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isErrorEnabled, ERROR, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isErrorEnabled, <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isErrorEnabled, ERROR, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isErrorEnabled, ERROR)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#7fbadf62374262ea23d0573beb7211b0">HT_CRIT</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isCritEnabled, crit, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#7fbadf62374262ea23d0573beb7211b0">HT_CRIT</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isCritEnabled, CRIT, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#c7f8cd4682f951798fa8088f3b4a0426">HT_CRITF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isCritEnabled, crit, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#c7f8cd4682f951798fa8088f3b4a0426">HT_CRITF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isCritEnabled, CRIT, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#41b42a4ad6eda3a4ceed277798fddee7">HT_CRIT_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isCritEnabled, CRIT)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#1a2ea990a171cc6014dac329b1cf7466">HT_ALERT</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isAlertEnabled, alert, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#1a2ea990a171cc6014dac329b1cf7466">HT_ALERT</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isAlertEnabled, ALERT, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#60fc5586683de718bb35079f2050ba1d">HT_ALERTF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isAlertEnabled, alert, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#60fc5586683de718bb35079f2050ba1d">HT_ALERTF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isAlertEnabled, ALERT, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#d0f3217d7bf3f64bd21cd2ce1e3d5a87">HT_ALERT_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isAlertEnabled, ALERT)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#31fd4632265e07c51ec47d4e82e6aabe">HT_EMERG</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isEmergEnabled, emerg, msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#31fd4632265e07c51ec47d4e82e6aabe">HT_EMERG</a>(msg)&nbsp;&nbsp;&nbsp;HT_LOG(isEmergEnabled, EMERG, msg)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#c633a3e88209b8eef1a6a8c78fc668b3">HT_EMERGF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isEmergEnabled, emerg, msg, __VA_ARGS__)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#c633a3e88209b8eef1a6a8c78fc668b3">HT_EMERGF</a>(msg,...)&nbsp;&nbsp;&nbsp;HT_LOGF(isEmergEnabled, EMERG, msg, __VA_ARGS__)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#bebf81bee5d805b36a190187efc27213">HT_EMERG_OUT</a>&nbsp;&nbsp;&nbsp;HT_OUT2(isEmergEnabled, EMERG)</td></tr>
 
@@ -118,12 +122,14 @@ Include dependency graph for Logger.h:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#0a4d029a49b4d41128585cd2988b47df">HT_EXPECT</a>(_e_, _code_)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">#define&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(_e_)&nbsp;&nbsp;&nbsp;HT_EXPECT(_e_, Error::FAILED_EXPECTATION)</td></tr>
+
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">Hypertable::Logger::initialize</a> (const String &amp;name, int level=Priority::DEBUG, bool flush_per_log=true, std::ostream &amp;out=std::cout)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html#1017b0a582da0d9732de68f72f5b57a3">Hypertable::Logger::set_level</a> (int level)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html#f67fd41644335190ad249f85658d9833">Hypertable::Logger::set_test_mode</a> (const String &amp;name)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html#822a851e47aa222af8fed1ca7f97084e">Hypertable::Logger::set_test_mode</a> (const String &amp;name, int fd=1)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_logger.html#0eb47d4ebd2c10495c23581897538043">Hypertable::Logger::suppress_line_numbers</a> ()</td></tr>
 
@@ -151,7 +157,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00051">51</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00053">53</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -165,7 +171,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isAlertEnabled, alert, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isAlertEnabled, ALERT, msg)</td>
         </tr>
       </table>
 </div>
@@ -173,7 +179,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00190">190</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00199">199</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -190,7 +196,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00192">192</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00201">201</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -207,7 +213,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isAlertEnabled, alert, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isAlertEnabled, ALERT, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -215,7 +221,29 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00191">191</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00200">200</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="cf985e8f1a1bebe7d622115e4b3e08a6"></a><!-- doxytag: member="Logger.h::HT_ASSERT" ref="cf985e8f1a1bebe7d622115e4b3e08a6" args="(_e_)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HT_ASSERT          </td>
+          <td>(</td>
+          <td class="paramtype">_e_&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_EXPECT(_e_, Error::FAILED_EXPECTATION)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00277">277</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -229,7 +257,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isCritEnabled, crit, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isCritEnabled, CRIT, msg)</td>
         </tr>
       </table>
 </div>
@@ -237,7 +265,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00180">180</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00189">189</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -254,7 +282,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00182">182</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00191">191</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -271,7 +299,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isCritEnabled, crit, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isCritEnabled, CRIT, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -279,7 +307,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00181">181</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00190">190</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -293,7 +321,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isDebugEnabled, debug, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isDebugEnabled, DEBUG, msg)</td>
         </tr>
       </table>
 </div>
@@ -301,7 +329,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00128">128</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00137">137</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -318,7 +346,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00130">130</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00139">139</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -335,7 +363,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isDebugEnabled, debug, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isDebugEnabled, DEBUG, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -343,7 +371,67 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00129">129</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00138">138</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="8affb25ccd4a0df03dbcbdcdd6f8a5a2"></a><!-- doxytag: member="Logger.h::HT_DUMP_CSTR" ref="8affb25ccd4a0df03dbcbdcdd6f8a5a2" args="(_os_, _label_, _str_)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HT_DUMP_CSTR          </td>
+          <td>(</td>
+          <td class="paramtype">_os_,         <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_label_,         <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_str_&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+<b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
+  <span class="keywordflow">if</span> (!_str_) _os_ &lt;&lt;<span class="stringliteral">" "</span> #_label_ <span class="stringliteral">"=[NULL]"</span>; \
+  <span class="keywordflow">else</span> _os_ &lt;&lt;<span class="stringliteral">" "</span> #_label_ <span class="stringliteral">"='"</span>&lt;&lt; (_str_) &lt;&lt; <span class="stringliteral">"'"</span>; \
+} <span class="keywordflow">while</span> (0)
+</pre></div>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00105">105</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="37ac112a517b72ea9f6dc20486d0bc9d"></a><!-- doxytag: member="Logger.h::HT_DUMP_CSTR_FIELD" ref="37ac112a517b72ea9f6dc20486d0bc9d" args="(_os_, _obj_, _field_)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HT_DUMP_CSTR_FIELD          </td>
+          <td>(</td>
+          <td class="paramtype">_os_,         <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_obj_,         <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">_field_&nbsp;</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_DUMP_CSTR(_os_, _field_, _obj_._field_)</td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00110">110</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -357,7 +445,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isEmergEnabled, emerg, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isEmergEnabled, EMERG, msg)</td>
         </tr>
       </table>
 </div>
@@ -365,7 +453,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00200">200</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00209">209</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -382,7 +470,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00202">202</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00211">211</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -399,7 +487,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isEmergEnabled, emerg, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isEmergEnabled, EMERG, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -407,7 +495,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00201">201</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00210">210</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -427,7 +515,7 @@ Include dependency graph for Logger.h:</div>
   <span class="keywordflow">if</span> (_level_ == log4cpp::Priority::FATAL) <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>; \
 } <span class="comment">/* if enabled */</span> } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00091">91</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00098">98</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -441,7 +529,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isErrorEnabled, <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isErrorEnabled, ERROR, msg)</td>
         </tr>
       </table>
 </div>
@@ -449,7 +537,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00170">170</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00179">179</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -466,7 +554,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00172">172</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00181">181</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -483,7 +571,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isErrorEnabled, <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isErrorEnabled, ERROR, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -491,7 +579,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00171">171</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00180">180</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -518,10 +606,10 @@ Include dependency graph for Logger.h:</div>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { <span class="keywordflow">if</span> (_e_); <span class="keywordflow">else</span> { \
     <span class="keywordflow">if</span> (_code_ == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b288ca960fb06b35ea24e7f86ed0619a04">Error::FAILED_EXPECTATION</a>) \
       <a class="code" href="_logger_8h.html#ebc5a83fddd222109e3ba3d1df730647">HT_FATAL</a>(<span class="stringliteral">"failed expectation: "</span> #_e_); \
-    <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(_code_, <span class="stringliteral">"failed expectation: "</span> #_e_); } \
+    <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(_code_, <span class="stringliteral">"failed expectation: "</span> #_e_); } \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00229">229</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00269">269</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -543,16 +631,11 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
-  <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;isFatalEnabled()) { \
-    <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;fatal(<span class="stringliteral">"(%s:%d) %s"</span>, __FILE__, __LINE__, msg); \
-    <span class="keywordflow">else</span> \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;fatal(<span class="stringliteral">"%s"</span>, msg); \
-    <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>; \
-  } \
+  <a class="code" href="_logger_8h.html#05cd33fae6b8947c95d079c9dd581462">HT_LOG</a>(isFatalEnabled, FATAL, msg); \
+  <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>; \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00210">210</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00219">219</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -569,7 +652,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00228">228</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00227">227</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -594,69 +677,11 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
-  <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;isFatalEnabled()) { \
-    <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;fatal(<span class="stringliteral">"(%s:%d) "</span> msg, __FILE__, __LINE__, __VA_ARGS__); \
-    <span class="keywordflow">else</span> \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;fatal(msg, __VA_ARGS__);  \
-    <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>; \
-  } \
+  <a class="code" href="_logger_8h.html#a581420ac92f37b8c852157f586abf43">HT_LOGF</a>(isFatalEnabled, FATAL, msg, __VA_ARGS__); \
+  <a class="code" href="_logger_8h.html#f0cc4993dc7f22a9ffd0918c8d69af3c">HT_ABORT</a>; \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00219">219</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="b868d59332aeb36227ddcc0aececd8c8"></a><!-- doxytag: member="Logger.h::HT_HEAD" ref="b868d59332aeb36227ddcc0aececd8c8" args="(_x_, _n_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_HEAD          </td>
-          <td>(</td>
-          <td class="paramtype">_x_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;String(_x_, 0, (_n_) &lt; (_x_).length() ? (_n_) : (_x_).length())</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00101">101</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
-
-</div>
-</div><p>
-<a class="anchor" name="9fac9c56249e7a0cf5b8c0cfad265e0b"></a><!-- doxytag: member="Logger.h::HT_HEAD_" ref="9fac9c56249e7a0cf5b8c0cfad265e0b" args="(_x_, _l_, _n_)" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define HT_HEAD_          </td>
-          <td>(</td>
-          <td class="paramtype">_x_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_l_,         <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">_n_&nbsp;</td>
-          <td class="paramname">          </td>
-          <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;String((char *)(_x_), 0, (_n_) &lt; (_l_) ? (_n_) : (_l_))</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00098">98</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00223">223</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -670,7 +695,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isInfoEnabled, info, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isInfoEnabled, INFO, msg)</td>
         </tr>
       </table>
 </div>
@@ -678,7 +703,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00140">140</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00149">149</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -695,7 +720,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00142">142</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00151">151</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -712,7 +737,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isInfoEnabled, info, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isInfoEnabled, INFO, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -720,7 +745,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00141">141</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00150">150</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -750,13 +775,48 @@ Include dependency graph for Logger.h:</div>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_enabled_()) { \
     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_cat_(<span class="stringliteral">"(%s:%d) %s"</span>, __FILE__, __LINE__, msg); \
+      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;log(log4cpp::Priority::_cat_, <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">Hypertable::format</a>( \
+          <span class="stringliteral">"(%s:%d) %s"</span>, __FILE__, __LINE__, msg)); \
     <span class="keywordflow">else</span> \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_cat_(<span class="stringliteral">"%s"</span>, msg); \
+      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;log(log4cpp::Priority::_cat_, msg); \
   } \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00055">55</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00057">57</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="aec75f17238de14a30e8167a15d98b1d"></a><!-- doxytag: member="Logger.h::HT_LOG_BUF_SIZE" ref="aec75f17238de14a30e8167a15d98b1d" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HT_LOG_BUF_SIZE&nbsp;&nbsp;&nbsp;4096          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00079">79</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="2ab5ccf5505b0909e523844e84e90ba6"></a><!-- doxytag: member="Logger.h::HT_LOG_BUFSZ" ref="2ab5ccf5505b0909e523844e84e90ba6" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">#define HT_LOG_BUFSZ&nbsp;&nbsp;&nbsp;1024          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00047">47</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -775,13 +835,13 @@ Include dependency graph for Logger.h:</div>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;isDebugEnabled()) {\
     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;debug(<span class="stringliteral">"(%s:%d) %s() ENTER"</span>, __FILE__, __LINE__, <a class="code" href="compat-c_8h.html#94e994450e615ac7e57fb73830034b61">HT_FUNC</a>); \
+      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;debug(<span class="stringliteral">"(%s:%d) %s() ENTER"</span>, __FILE__, __LINE__, <a class="code" href="compat-c_8h.html#94e994450e615ac7e57fb73830034b61">HT_FUNC</a>);\
     <span class="keywordflow">else</span> \
       <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;debug(<span class="stringliteral">"%s() ENTER"</span>, <a class="code" href="compat-c_8h.html#94e994450e615ac7e57fb73830034b61">HT_FUNC</a>); \
   } \
 } <span class="keywordflow">while</span>(0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00110">110</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00119">119</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -806,11 +866,11 @@ Include dependency graph for Logger.h:</div>
   } \
 } <span class="keywordflow">while</span>(0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00119">119</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00128">128</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="db2ca54e0e863f472da58bc118d96fb8"></a><!-- doxytag: member="Logger.h::HT_LOGF" ref="db2ca54e0e863f472da58bc118d96fb8" args="(_enabled_, _cat_, msg,...)" -->
+<a class="anchor" name="a581420ac92f37b8c852157f586abf43"></a><!-- doxytag: member="Logger.h::HT_LOGF" ref="a581420ac92f37b8c852157f586abf43" args="(_enabled_, _cat_, fmt,...)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -823,7 +883,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">_cat_,         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">msg,         <tr>
+          <td class="paramtype">fmt,         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
@@ -839,13 +899,15 @@ Include dependency graph for Logger.h:</div>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { \
   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_enabled_()) { \
     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_cat_(<span class="stringliteral">"(%s:%d) "</span> msg, __FILE__, __LINE__, __VA_ARGS__); \
+      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;log(log4cpp::Priority::_cat_, <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">Hypertable::format</a>( \
+          <span class="stringliteral">"(%s:%d) "</span> fmt, __FILE__, __LINE__, __VA_ARGS__)); \
     <span class="keywordflow">else</span> \
-      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_cat_(msg, __VA_ARGS__);  \
+      <a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;log(log4cpp::Priority::_cat_, <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">Hypertable::format</a>( \
+          fmt, __VA_ARGS__));  \
   } \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00064">64</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00067">67</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -859,7 +921,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isNoticeEnabled, notice, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isNoticeEnabled, NOTICE, msg)</td>
         </tr>
       </table>
 </div>
@@ -867,7 +929,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00150">150</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00159">159</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -884,7 +946,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00152">152</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00161">161</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -901,7 +963,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isNoticeEnabled, notice, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isNoticeEnabled, NOTICE, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -909,7 +971,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00151">151</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00160">160</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -934,14 +996,14 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_enabled_()) { \
-  <span class="keywordtype">char</span> logbuf[1024]; \
+  <span class="keywordtype">char</span> logbuf[<a class="code" href="_logger_8h.html#aec75f17238de14a30e8167a15d98b1d">HT_LOG_BUF_SIZE</a>]; \
   log4cpp::Priority::PriorityLevel _level_ = log4cpp::Priority::_l_; \
   FixedOstream _out_(logbuf, <span class="keyword">sizeof</span>(logbuf)); \
   <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#1cbf9cfa82aa16e4c5e45df15f729faa">Logger::show_line_numbers</a>) \
     _out_ &lt;&lt;<span class="stringliteral">"("</span>&lt;&lt; __FILE__ &lt;&lt;<span class="charliteral">':'</span>&lt;&lt; __LINE__ &lt;&lt;<span class="stringliteral">") "</span>; \
   _out_
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00074">74</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00081">81</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -966,7 +1028,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 <b>Value:</b><div class="fragment"><pre class="fragment"><span class="keywordflow">do</span> { <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_logger.html#bc1d1812f8a00922d1ad878fab77bf63">Logger::logger</a>-&gt;_enabled_()) { \
-  <span class="keywordtype">char</span> logbuf[1024]; \
+  <span class="keywordtype">char</span> logbuf[<a class="code" href="_logger_8h.html#aec75f17238de14a30e8167a15d98b1d">HT_LOG_BUF_SIZE</a>]; \
   log4cpp::Priority::PriorityLevel _level_ = log4cpp::Priority::_l_; \
   FixedOstream _out_(logbuf, <span class="keyword">sizeof</span>(logbuf)); \
   _out_ &lt;&lt; __func__; \
@@ -974,7 +1036,7 @@ Include dependency graph for Logger.h:</div>
     _out_ &lt;&lt; <span class="stringliteral">" ("</span>&lt;&lt; __FILE__ &lt;&lt;<span class="charliteral">':'</span>&lt;&lt; __LINE__ &lt;&lt;<span class="stringliteral">")"</span>; \
   _out_ &lt;&lt;<span class="stringliteral">": "</span>
 </pre></div>
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00082">82</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00089">89</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -991,7 +1053,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00095">95</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00102">102</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -1005,7 +1067,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype">msg&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isWarnEnabled, warn, msg)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOG(isWarnEnabled, WARN, msg)</td>
         </tr>
       </table>
 </div>
@@ -1013,7 +1075,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00160">160</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00169">169</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -1030,7 +1092,7 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00162">162</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00171">171</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
@@ -1047,7 +1109,7 @@ Include dependency graph for Logger.h:</div>
           <td class="paramtype"> <em>...</em>&nbsp;</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
-          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isWarnEnabled, warn, msg, __VA_ARGS__)</td>
+          <td width="100%">&nbsp;&nbsp;&nbsp;HT_LOGF(isWarnEnabled, WARN, msg, __VA_ARGS__)</td>
         </tr>
       </table>
 </div>
@@ -1055,11 +1117,11 @@ Include dependency graph for Logger.h:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_logger_8h-source.html#l00161">161</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
+<p>Definition at line <a class="el" href="_logger_8h-source.html#l00170">170</a> of file <a class="el" href="_logger_8h-source.html">Logger.h</a>.</p>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:01:39 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:31:19 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

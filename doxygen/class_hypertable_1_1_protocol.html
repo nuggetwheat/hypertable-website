@@ -39,23 +39,23 @@ Inheritance diagram for Hypertable::Protocol:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#c51df8050bb68c24818861ccaafb6d65">~Protocol</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#7a1396871f0d0db47ad436530017bd0a">command_text</a> (short command)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#8d93919c7cc0a85f6a616614e836bcf8">command_text</a> (uint64_t <a class="el" href="_hql_command_interpreter_8cc.html#d732c0c7a8bcc3ecf8c7c360b382740d">command</a>)=0</td></tr>
 
 <tr><td colspan="2"><br><h2>Static Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static int32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">response_code</a> (<a class="el" href="class_hypertable_1_1_event.html">Event</a> *event)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">static int32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#230b7e09e797302848b138c64e793cc6">response_code</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">string_format_message</a> (<a class="el" href="class_hypertable_1_1_event.html">Event</a> *event)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">string_format_message</a> (<a class="el" href="class_hypertable_1_1_event.html">Event</a> *event)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#7ca6798de65b128586246ceeb6a7bbc4">string_format_message</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#4b6ba373cd9a3b577ef556450c47bf47">string_format_message</a> (<a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#be5c6c4141093ec79271ac6fd7a8902e">create_error_message</a> (<a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;hbuilder, int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const char *msg)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_protocol.html#43690282d7947e3e9f309c53b6d7e95c">create_error_message</a> (<a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;header, int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>, const char *msg)</td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00034">34</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00032">32</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="c51df8050bb68c24818861ccaafb6d65"></a><!-- doxytag: member="Hypertable::Protocol::~Protocol" ref="c51df8050bb68c24818861ccaafb6d65" args="()" -->
 <div class="memitem">
@@ -74,7 +74,7 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00038">38</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00036">36</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -119,7 +119,7 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00041">41</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
+<p>Definition at line <a class="el" href="_async_comm_2_protocol_8h-source.html#l00039">39</a> of file <a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a>.</p>
 
 </div>
 </div><p>
@@ -145,12 +145,12 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="7ca6798de65b128586246ceeb6a7bbc4"></a><!-- doxytag: member="Hypertable::Protocol::string_format_message" ref="7ca6798de65b128586246ceeb6a7bbc4" args="(EventPtr &amp;event_ptr)" -->
+<a class="anchor" name="4b6ba373cd9a3b577ef556450c47bf47"></a><!-- doxytag: member="Hypertable::Protocol::string_format_message" ref="4b6ba373cd9a3b577ef556450c47bf47" args="(EventPtr &amp;event_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">static std::string Hypertable::Protocol::string_format_message           </td>
+          <td class="memname">static <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> Hypertable::Protocol::string_format_message           </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>event_ptr</em>          </td>
@@ -167,15 +167,15 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="be5c6c4141093ec79271ac6fd7a8902e"></a><!-- doxytag: member="Hypertable::Protocol::create_error_message" ref="be5c6c4141093ec79271ac6fd7a8902e" args="(HeaderBuilder &amp;hbuilder, int error, const char *msg)" -->
+<a class="anchor" name="43690282d7947e3e9f309c53b6d7e95c"></a><!-- doxytag: member="Hypertable::Protocol::create_error_message" ref="43690282d7947e3e9f309c53b6d7e95c" args="(CommHeader &amp;header, int error, const char *msg)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname"><a class="el" href="class_hypertable_1_1_comm_buf.html">CommBuf</a> * Protocol::create_error_message           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hbuilder</em>, </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>header</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -204,14 +204,14 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 </div>
 </div><p>
-<a class="anchor" name="7a1396871f0d0db47ad436530017bd0a"></a><!-- doxytag: member="Hypertable::Protocol::command_text" ref="7a1396871f0d0db47ad436530017bd0a" args="(short command)=0" -->
+<a class="anchor" name="8d93919c7cc0a85f6a616614e836bcf8"></a><!-- doxytag: member="Hypertable::Protocol::command_text" ref="8d93919c7cc0a85f6a616614e836bcf8" args="(uint64_t command)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">virtual const char* Hypertable::Protocol::command_text           </td>
           <td>(</td>
-          <td class="paramtype">short&nbsp;</td>
+          <td class="paramtype">uint64_t&nbsp;</td>
           <td class="paramname"> <em>command</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
@@ -222,13 +222,13 @@ Inheritance diagram for Hypertable::Protocol:</div>
 
 <p>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#6a931349b47cba24558f19fba1e605c5">Hypertable::DfsBroker::Protocol</a>, <a class="el" href="class_hyperspace_1_1_protocol.html#6922ad18aceb9887fc1a5e04dd035d20">Hyperspace::Protocol</a>, <a class="el" href="class_hypertable_1_1_master_protocol.html#5a39b8c86418fe402a985133c2fcb0e8">Hypertable::MasterProtocol</a>, and <a class="el" href="class_hypertable_1_1_range_server_protocol.html#78b5f35a99a701e8b00e82eef3f97469">Hypertable::RangeServerProtocol</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#7bf01004e07dfd7dd633e9d93106654d">Hypertable::DfsBroker::Protocol</a>, <a class="el" href="class_hyperspace_1_1_protocol.html#5f64b9e97e2c8d9ff6ea6aa7da9057c7">Hyperspace::Protocol</a>, <a class="el" href="class_hypertable_1_1_master_protocol.html#068a6110d3f83316408002bca1f08fd5">Hypertable::MasterProtocol</a>, and <a class="el" href="class_hypertable_1_1_range_server_protocol.html#cf883ed076e8a86e1a5504c5068d087c">Hypertable::RangeServerProtocol</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_async_comm_2_protocol_8h-source.html">Protocol.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_async_comm_2_protocol_8cc-source.html">Protocol.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:04 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:45 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

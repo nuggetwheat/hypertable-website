@@ -2020,7 +2020,7 @@
 <a name="l02002"></a><a class="code" href="minilzo_8c.html#db99a81452604a27150afdce5776a543">02002</a> <span class="preprocessor"></span><span class="preprocessor">#define LZO_DO16(buf,i) LZO_DO8(buf,i); LZO_DO8(buf,i+8);</span>
 <a name="l02003"></a>02003 <span class="preprocessor"></span>
 <a name="l02004"></a>02004 <a class="code" href="lzoconf_8h.html#95d99d008c43c24ae3a28191bb55c065">LZO_PUBLIC</a>(<a class="code" href="lzoconf_8h.html#24f9f4f4cd1ae2dab68d1df9d2cbf059">lzo_uint32</a>)
-<a name="l02005"></a><a class="code" href="minilzo_8c.html#df57001c831e4f7fb33364291b2a971c">02005</a> <a class="code" href="lzoconf_8h.html#f4ad0d00105c9e6e749126ea6e9879bb">lzo_adler32</a>(<a class="code" href="lzoconf_8h.html#24f9f4f4cd1ae2dab68d1df9d2cbf059">lzo_uint32</a> adler, const <a class="code" href="lzoconf_8h.html#b6b0900e4e01fe855f7733509e2f50d1">lzo_bytep</a> buf, <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>)
+<a name="l02005"></a><a class="code" href="minilzo_8c.html#df57001c831e4f7fb33364291b2a971c">02005</a> <a class="code" href="lzoconf_8h.html#f4ad0d00105c9e6e749126ea6e9879bb">lzo_adler32</a>(<a class="code" href="lzoconf_8h.html#24f9f4f4cd1ae2dab68d1df9d2cbf059">lzo_uint32</a> adler, const <a class="code" href="lzoconf_8h.html#b6b0900e4e01fe855f7733509e2f50d1">lzo_bytep</a> buf, <a class="code" href="lzoconf_8h.html#3be3d806d795286654cf766c55057dd5">lzo_uint</a> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)
 <a name="l02006"></a>02006 {
 <a name="l02007"></a>02007     <a class="code" href="lzoconf_8h.html#24f9f4f4cd1ae2dab68d1df9d2cbf059">lzo_uint32</a> s1 = adler &amp; 0xffff;
 <a name="l02008"></a>02008     <a class="code" href="lzoconf_8h.html#24f9f4f4cd1ae2dab68d1df9d2cbf059">lzo_uint32</a> s2 = (adler &gt;&gt; 16) &amp; 0xffff;
@@ -2076,74 +2076,74 @@
 <a name="l02058"></a>02058 <span class="preprocessor"></span><span class="preprocessor">#if !defined(LZOLIB_PUBLIC)</span>
 <a name="l02059"></a>02059 <span class="preprocessor"></span><span class="preprocessor">#  define LZOLIB_PUBLIC(r,f)    r __LZOLIB_FUNCNAME(f)</span>
 <a name="l02060"></a>02060 <span class="preprocessor"></span><span class="preprocessor">#endif</span>
-<a name="l02061"></a><a class="code" href="minilzo_8c.html#59344de36b45a519d4e77283c3778b46">02061</a> <span class="preprocessor"></span><a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<span class="keywordtype">int</span>, <a class="code" href="minilzo_8c.html#a59ca26a17ca6a32574f94ecf156920d">lzo_hmemcmp</a>) (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s1, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s2, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>)
+<a name="l02061"></a><a class="code" href="minilzo_8c.html#59344de36b45a519d4e77283c3778b46">02061</a> <span class="preprocessor"></span><a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<span class="keywordtype">int</span>, <a class="code" href="minilzo_8c.html#a59ca26a17ca6a32574f94ecf156920d">lzo_hmemcmp</a>) (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s1, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s2, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)
 <a name="l02062"></a>02062 {
 <a name="l02063"></a>02063 <span class="preprocessor">#if (LZO_HAVE_MM_HUGE_PTR) || !defined(HAVE_MEMCMP)</span>
 <a name="l02064"></a>02064 <span class="preprocessor"></span>    <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p1 = (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) s1;
 <a name="l02065"></a>02065     <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p2 = (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) s2;
-<a name="l02066"></a>02066     <span class="keywordflow">if</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0) <span class="keywordflow">do</span>
+<a name="l02066"></a>02066     <span class="keywordflow">if</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0) <span class="keywordflow">do</span>
 <a name="l02067"></a>02067     {
 <a name="l02068"></a>02068         <span class="keywordtype">int</span> d = *p1 - *p2;
 <a name="l02069"></a>02069         <span class="keywordflow">if</span> (d != 0)
 <a name="l02070"></a>02070             <span class="keywordflow">return</span> d;
 <a name="l02071"></a>02071         p1++; p2++;
-<a name="l02072"></a>02072     } <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0);
+<a name="l02072"></a>02072     } <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0);
 <a name="l02073"></a>02073     <span class="keywordflow">return</span> 0;
 <a name="l02074"></a>02074 <span class="preprocessor">#else</span>
-<a name="l02075"></a>02075 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memcmp(s1, s2, <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>);
+<a name="l02075"></a>02075 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memcmp(s1, s2, <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>);
 <a name="l02076"></a>02076 <span class="preprocessor">#endif</span>
 <a name="l02077"></a>02077 <span class="preprocessor"></span>}
-<a name="l02078"></a><a class="code" href="minilzo_8c.html#eff7032bd8868417fe854cceb2b09c31">02078</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#a38bf3de4727a7648b327097b6fd0963">lzo_hmemcpy</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> dest, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> src, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>)
+<a name="l02078"></a><a class="code" href="minilzo_8c.html#eff7032bd8868417fe854cceb2b09c31">02078</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#a38bf3de4727a7648b327097b6fd0963">lzo_hmemcpy</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> dest, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> src, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)
 <a name="l02079"></a>02079 {
 <a name="l02080"></a>02080 <span class="preprocessor">#if (LZO_HAVE_MM_HUGE_PTR) || !defined(HAVE_MEMCPY)</span>
 <a name="l02081"></a>02081 <span class="preprocessor"></span>    <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p1 = (<a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) dest;
 <a name="l02082"></a>02082     <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p2 = (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) src;
-<a name="l02083"></a>02083     <span class="keywordflow">if</span> (<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &lt;= 0 || p1 == p2)
+<a name="l02083"></a>02083     <span class="keywordflow">if</span> (<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &lt;= 0 || p1 == p2)
 <a name="l02084"></a>02084         <span class="keywordflow">return</span> dest;
 <a name="l02085"></a>02085     <span class="keywordflow">do</span>
 <a name="l02086"></a>02086         *p1++ = *p2++;
-<a name="l02087"></a>02087     <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0);
+<a name="l02087"></a>02087     <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0);
 <a name="l02088"></a>02088     <span class="keywordflow">return</span> dest;
 <a name="l02089"></a>02089 <span class="preprocessor">#else</span>
-<a name="l02090"></a>02090 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memcpy(dest, src, <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>);
+<a name="l02090"></a>02090 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memcpy(dest, src, <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>);
 <a name="l02091"></a>02091 <span class="preprocessor">#endif</span>
 <a name="l02092"></a>02092 <span class="preprocessor"></span>}
-<a name="l02093"></a><a class="code" href="minilzo_8c.html#234253a591aa78786e5ac7a9a5c866f8">02093</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#b7a4e3bf6837029ea4fde5a8920e428c">lzo_hmemmove</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> dest, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> src, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>)
+<a name="l02093"></a><a class="code" href="minilzo_8c.html#234253a591aa78786e5ac7a9a5c866f8">02093</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#b7a4e3bf6837029ea4fde5a8920e428c">lzo_hmemmove</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> dest, <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> src, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)
 <a name="l02094"></a>02094 {
 <a name="l02095"></a>02095 <span class="preprocessor">#if (LZO_HAVE_MM_HUGE_PTR) || !defined(HAVE_MEMMOVE)</span>
 <a name="l02096"></a>02096 <span class="preprocessor"></span>    <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p1 = (<a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) dest;
 <a name="l02097"></a>02097     <span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p2 = (<span class="keyword">const</span> <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) src;
-<a name="l02098"></a>02098     <span class="keywordflow">if</span> (<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &lt;= 0 || p1 == p2)
+<a name="l02098"></a>02098     <span class="keywordflow">if</span> (<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &lt;= 0 || p1 == p2)
 <a name="l02099"></a>02099         <span class="keywordflow">return</span> dest;
 <a name="l02100"></a>02100     <span class="keywordflow">if</span> (p1 &lt; p2)
 <a name="l02101"></a>02101     {
 <a name="l02102"></a>02102         <span class="keywordflow">do</span>
 <a name="l02103"></a>02103             *p1++ = *p2++;
-<a name="l02104"></a>02104         <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0);
+<a name="l02104"></a>02104         <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0);
 <a name="l02105"></a>02105     }
 <a name="l02106"></a>02106     <span class="keywordflow">else</span>
 <a name="l02107"></a>02107     {
-<a name="l02108"></a>02108         p1 += <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
-<a name="l02109"></a>02109         p2 += <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>;
+<a name="l02108"></a>02108         p1 += <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
+<a name="l02109"></a>02109         p2 += <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
 <a name="l02110"></a>02110         <span class="keywordflow">do</span>
 <a name="l02111"></a>02111             *--p1 = *--p2;
-<a name="l02112"></a>02112         <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0);
+<a name="l02112"></a>02112         <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0);
 <a name="l02113"></a>02113     }
 <a name="l02114"></a>02114     <span class="keywordflow">return</span> dest;
 <a name="l02115"></a>02115 <span class="preprocessor">#else</span>
-<a name="l02116"></a>02116 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memmove(dest, src, <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>);
+<a name="l02116"></a>02116 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memmove(dest, src, <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>);
 <a name="l02117"></a>02117 <span class="preprocessor">#endif</span>
 <a name="l02118"></a>02118 <span class="preprocessor"></span>}
-<a name="l02119"></a><a class="code" href="minilzo_8c.html#088d4becfa3d4978473c076223889279">02119</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#ad12e4d429510615c9bfa68b804dfbc0">lzo_hmemset</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s, <span class="keywordtype">int</span> c, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>)
+<a name="l02119"></a><a class="code" href="minilzo_8c.html#088d4becfa3d4978473c076223889279">02119</a> <a class="code" href="minilzo_8c.html#39db7049ca469c95921e1f7e704ab5ec">LZOLIB_PUBLIC</a>(<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a>, <a class="code" href="minilzo_8c.html#ad12e4d429510615c9bfa68b804dfbc0">lzo_hmemset</a>) (<a class="code" href="minilzo_8c.html#3f52466afbf32f5fa1e66b8ce2938d59">lzo_hvoid_p</a> s, <span class="keywordtype">int</span> c, <a class="code" href="minilzo_8c.html#42ad7a33076549cbdfd5aeffe1e6e27d">lzo_hsize_t</a> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)
 <a name="l02120"></a>02120 {
 <a name="l02121"></a>02121 <span class="preprocessor">#if (LZO_HAVE_MM_HUGE_PTR) || !defined(HAVE_MEMSET)</span>
 <a name="l02122"></a>02122 <span class="preprocessor"></span>    <a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a> p = (<a class="code" href="minilzo_8c.html#4a25193df4511a7913161e6dcf3f698f">lzo_hbyte_p</a>) s;
-<a name="l02123"></a>02123     <span class="keywordflow">if</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0) <span class="keywordflow">do</span>
+<a name="l02123"></a>02123     <span class="keywordflow">if</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0) <span class="keywordflow">do</span>
 <a name="l02124"></a>02124         *p++ = (<span class="keywordtype">unsigned</span> char) c;
-<a name="l02125"></a>02125     <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a> &gt; 0);
+<a name="l02125"></a>02125     <span class="keywordflow">while</span> <a class="code" href="lzodefs_8h.html#a32ed63a0b5b11f0563eb0eeb1d36464">__lzo_likely</a>(--<a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &gt; 0);
 <a name="l02126"></a>02126     <span class="keywordflow">return</span> s;
 <a name="l02127"></a>02127 <span class="preprocessor">#else</span>
-<a name="l02128"></a>02128 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memset(s, c, <a class="code" href="_range_server_8cc.html#7360b55975153b822efc5217b7734e6a">len</a>);
+<a name="l02128"></a>02128 <span class="preprocessor"></span>    <span class="keywordflow">return</span> memset(s, c, <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>);
 <a name="l02129"></a>02129 <span class="preprocessor">#endif</span>
 <a name="l02130"></a>02130 <span class="preprocessor"></span>}
 <a name="l02131"></a>02131 <span class="preprocessor">#undef LZOLIB_PUBLIC</span>
@@ -3842,7 +3842,7 @@
 <a name="l03824"></a>03824 <span class="preprocessor"></span>
 <a name="l03825"></a>03825 <span class="comment">/***** End of minilzo.c *****/</span>
 <a name="l03826"></a>03826 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

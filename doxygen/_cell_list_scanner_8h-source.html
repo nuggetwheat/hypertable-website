@@ -31,22 +31,24 @@
 <a name="l00033"></a>00033 
 <a name="l00034"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html">00034</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
 <a name="l00035"></a>00035   <span class="keyword">public</span>:
-<a name="l00036"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d5a864b9a7d6c9c46290b196265abd2c">00036</a>     <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d5a864b9a7d6c9c46290b196265abd2c">CellListScanner</a>(<a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> &amp;scan_ctx) : <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">m_scan_context_ptr</a>(scan_ctx) { <span class="keywordflow">return</span>; }
-<a name="l00037"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#0b5e59dd22f531e605d5a9b5fb4ea73f">00037</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#0b5e59dd22f531e605d5a9b5fb4ea73f">~CellListScanner</a>() { <span class="keywordflow">return</span>; }
-<a name="l00038"></a>00038     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>() = 0;
-<a name="l00039"></a>00039     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <span class="keyword">get</span>(<a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;key, <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value) = 0;
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041   <span class="keyword">protected</span>:
-<a name="l00042"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">00042</a>     <a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">m_scan_context_ptr</a>;
-<a name="l00043"></a>00043   };
-<a name="l00044"></a>00044 
-<a name="l00045"></a><a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">00045</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;CellListScanner&gt; <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a>;
+<a name="l00036"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#16db81fa02220ec553bf41b85f086709">00036</a>     <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#16db81fa02220ec553bf41b85f086709">CellListScanner</a>() { <span class="keywordflow">return</span>; }
+<a name="l00037"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d5a864b9a7d6c9c46290b196265abd2c">00037</a>     <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#16db81fa02220ec553bf41b85f086709">CellListScanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx) : <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">m_scan_context_ptr</a>(scan_ctx) { }
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#0b5e59dd22f531e605d5a9b5fb4ea73f">00038</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#0b5e59dd22f531e605d5a9b5fb4ea73f">~CellListScanner</a>() { <span class="keywordflow">return</span>; }
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>() = 0;
+<a name="l00041"></a>00041     <span class="keyword">virtual</span> <span class="keywordtype">bool</span> <span class="keyword">get</span>(<a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> &amp;value) = 0;
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043   <span class="keyword">protected</span>:
+<a name="l00044"></a><a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">00044</a>     <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html#d396b75ddccd3302a6fa1a39b126c7ca">m_scan_context_ptr</a>;
+<a name="l00045"></a>00045   };
 <a name="l00046"></a>00046 
-<a name="l00047"></a>00047 }
+<a name="l00047"></a><a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">00047</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;CellListScanner&gt; <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a>;
 <a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="preprocessor">#endif // HYPERTABLE_CELLLISTSCANNER_H</span>
-<a name="l00050"></a>00050 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:27 2008 for hypertable by&nbsp;
+<a name="l00049"></a>00049 }
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="preprocessor">#endif // HYPERTABLE_CELLLISTSCANNER_H</span>
+<a name="l00052"></a>00052 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

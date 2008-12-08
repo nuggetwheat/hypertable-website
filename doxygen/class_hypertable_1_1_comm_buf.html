@@ -40,29 +40,29 @@ Collaboration diagram for Hypertable::CommBuf:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_comm_buf__coll__graph.png" border="0" usemap="#_hypertable_1_1_comm_buf__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_comm_buf__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="5,96,197,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="65,6,137,32"><area shape="rect" href="class_hypertable_1_1_static_buffer.html" title="Hypertable::StaticBuffer" alt="" coords="221,96,387,123"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="6,96,198,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="66,6,138,32"><area shape="rect" href="class_hypertable_1_1_comm_header.html" title="Hypertable::CommHeader" alt="" coords="222,96,400,123"><area shape="rect" href="class_hypertable_1_1_static_buffer.html" title="Hypertable::StaticBuffer" alt="" coords="424,96,590,123"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
 <a href="class_hypertable_1_1_comm_buf-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#8b70e6eb9cbd8545aff72b3b274af04a">CommBuf</a> (<a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;hbuilder, uint32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#ca8862d2378b94e29252b3705f8274f5">CommBuf</a> (<a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;hdr, uint32_t <a class="el" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>=0)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it with the given <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> object, hbuilder.  <a href="#8b70e6eb9cbd8545aff72b3b274af04a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#112836123ce334008f5bbe5829f1eab7">CommBuf</a> (<a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;hbuilder, uint32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it.  <a href="#ca8862d2378b94e29252b3705f8274f5"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#e419490c078636986c60652b409807bc">CommBuf</a> (<a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;hdr, uint32_t <a class="el" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;buffer)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it with the given <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> object, hbuilder.  <a href="#112836123ce334008f5bbe5829f1eab7"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#93026c8c9f308b5c6c386f75000d7f1c">reset_data_pointers</a> ()</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it.  <a href="#e419490c078636986c60652b409807bc"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#bd62ec7b219f4669efc9a743e59ccc9b">write_header_and_reset</a> ()</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Resets the primary and extended data pointers to point to the beginning of their respective buffers.  <a href="#93026c8c9f308b5c6c386f75000d7f1c"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Encodes the header at the beginning of the primary buffer and resets the primary and extended data pointers to point to the beginning of their respective buffers.  <a href="#bd62ec7b219f4669efc9a743e59ccc9b"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#03d3cfe793e0da0dcc3c53d6400bb97c">get_data_ptr</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the primary buffer internal data pointer.  <a href="#03d3cfe793e0da0dcc3c53d6400bb97c"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t **&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#dad1a6335589149b57725c5407b2f4c0">get_data_ptr_address</a> ()</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns address of the primary buffer internal data pointer.  <a href="#dad1a6335589149b57725c5407b2f4c0"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#99d9572f687c2e1762f2063971c04519">advance_data_ptr</a> (size_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#99d9572f687c2e1762f2063971c04519">advance_data_ptr</a> (size_t <a class="el" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Advance the primary buffer internal data pointer by len bytes.  <a href="#99d9572f687c2e1762f2063971c04519"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#74fc9588ee7ac917a08a2088ff5e6bdc">append_bool</a> (bool bval)</td></tr>
@@ -71,7 +71,7 @@ Collaboration diagram for Hypertable::CommBuf:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#65f263d103f7f58f57949464cc903dae">append_byte</a> (uint8_t bval)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Append a byte of data to the primary buffer, advancing the primary buffer internal data pointer by 1.  <a href="#65f263d103f7f58f57949464cc903dae"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#285014ebf96a8a315987d672bccd67ae">append_bytes</a> (uint8_t *bytes, uint32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#285014ebf96a8a315987d672bccd67ae">append_bytes</a> (uint8_t *bytes, uint32_t <a class="el" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Appends a sequence of bytes to the primary buffer, advancing the primary buffer internal data pointer by the number of bytes appended.  <a href="#285014ebf96a8a315987d672bccd67ae"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#5848190632ce7d727b2b749eeec60992">append_str16</a> (const char *str)</td></tr>
@@ -95,13 +95,15 @@ Collaboration diagram for Hypertable::CommBuf:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#28c0428978003dc86ff4526f1af2103a">append_vstr</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;str)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Appends a String to the primary buffer.  <a href="#28c0428978003dc86ff4526f1af2103a"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#edc61b17b32d3d4457b0422abe72fc21">append_vstr</a> (const void *str, uint32_t <a class="el" href="_range_server_8cc.html#96bbf959016e4411c9e6b9812a8be60a">len</a>)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#edc61b17b32d3d4457b0422abe72fc21">append_vstr</a> (const void *str, uint32_t <a class="el" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Appends a string buffer to the primary buffer.  <a href="#edc61b17b32d3d4457b0422abe72fc21"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Appends a variable sized string to the primary buffer.  <a href="#edc61b17b32d3d4457b0422abe72fc21"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#a32930e37c38b3559ea90e0fe635074c">data</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#6dcd4e9b650ed557fbf60275fc71c54e">ext</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#f5790f0cdb9664206ef280c97c3ada59">header</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Protected Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_comm_buf.html#4474cc470147b2a767391ee0eac55af8">data_ptr</a></td></tr>
@@ -119,36 +121,38 @@ Message buffer sent over the network by the AsyncComm subsystem.
 <p>
 It consists of a primary buffer and an extended buffer and also contains buffer pointers that keep track of how much data has already been written in the case of partial writes. These pointers are managed by the AsyncComm subsytem iteslf. The following example illustrates how to build a request message using the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a>.<p>
 <pre>
-   <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> hbuilder(Header::PROTOCOL_DFSBROKER);
-   <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *cbuf = new CommBuf(hbuilder, 2);
-   cbuf-&gt;append_i16(COMMAND_STATUS);
+   <a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> header(COMMAND_FETCH_SCANBLOCK);
+   header.gid = scanner_id;
+   <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> *cbuf = new CommBuf(header, 4);
+   cbuf-&gt;append_i32(scanner_id);
  </pre><p>
 The following is a real world example of a <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> being used to send back a response from a read request.<p>
 <pre>
-   hbuilder.initialize_from_request(m_event_ptr-&gt;header);
-   CommBufPtr cbp(new CommBuf(hbuilder, 16, data, nread));
+   <a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> header;
+   header.initialize_from_request_header(m_event_ptr-&gt;header);
+   CommBufPtr cbp(new CommBuf( header, 10, ext));
    cbp-&gt;append_i32(Error::OK);
-   cbp-&gt;append_i64(offset);
-   cbp-&gt;append_i32(nread);
+   cbp-&gt;append_i16(moreflag);
+   cbp-&gt;append_i32(id);
    error = m_comm-&gt;send_response(m_event_ptr-&gt;addr, cbp);
  </pre> 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00068">68</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00070">70</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="8b70e6eb9cbd8545aff72b3b274af04a"></a><!-- doxytag: member="Hypertable::CommBuf::CommBuf" ref="8b70e6eb9cbd8545aff72b3b274af04a" args="(HeaderBuilder &amp;hbuilder, uint32_t len)" -->
+<a class="anchor" name="ca8862d2378b94e29252b3705f8274f5"></a><!-- doxytag: member="Hypertable::CommBuf::CommBuf" ref="ca8862d2378b94e29252b3705f8274f5" args="(CommHeader &amp;hdr, uint32_t len=0)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Hypertable::CommBuf::CommBuf           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hbuilder</em>, </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>hdr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">uint32_t&nbsp;</td>
-          <td class="paramname"> <em>len</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>len</em> = <code>0</code></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -160,29 +164,29 @@ The following is a real world example of a <a class="el" href="class_hypertable_
 <div class="memdoc">
 
 <p>
-This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it with the given <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> object, hbuilder. 
+This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it. 
 <p>
-It also sets the extended buffer to _ex and takes ownership of it. The total length written into the header is len plus _exLen. The internal pointer into the primary buffer is positioned to just after the header.<p>
+The internal pointer into the primary buffer is positioned to just after the header.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>hbuilder</em>&nbsp;</td><td>the <a class="el" href="class_hypertable_1_1_header.html">Header</a> builder object used to write the header </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>hdr</em>&nbsp;</td><td>comm header </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>the length of the primary buffer to allocate </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00083">83</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00082">82</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="112836123ce334008f5bbe5829f1eab7"></a><!-- doxytag: member="Hypertable::CommBuf::CommBuf" ref="112836123ce334008f5bbe5829f1eab7" args="(HeaderBuilder &amp;hbuilder, uint32_t len, StaticBuffer &amp;buffer)" -->
+<a class="anchor" name="e419490c078636986c60652b409807bc"></a><!-- doxytag: member="Hypertable::CommBuf::CommBuf" ref="e419490c078636986c60652b409807bc" args="(CommHeader &amp;hdr, uint32_t len, StaticBuffer &amp;buffer)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">Hypertable::CommBuf::CommBuf           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="class_hypertable_1_1_header_builder.html">HeaderBuilder</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>hbuilder</em>, </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>hdr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -206,28 +210,28 @@ It also sets the extended buffer to _ex and takes ownership of it. The total len
 <div class="memdoc">
 
 <p>
-This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it with the given <a class="el" href="class_hypertable_1_1_header_builder.html" title="Builds a response or request header for messages sent over the Comm layer.">HeaderBuilder</a> object, hbuilder. 
+This constructor initializes the <a class="el" href="class_hypertable_1_1_comm_buf.html" title="Message buffer sent over the network by the AsyncComm subsystem.">CommBuf</a> object by allocating a primary buffer of length len and writing the header into it. 
 <p>
-It also sets the extended buffer to _ex and takes ownership of it. The total length written into the header is len plus _exLen. The internal pointer into the primary buffer is positioned to just after the header.<p>
+It also sets the extended buffer to ext and takes ownership of it. The total length written into the header is len plus <a class="el" href="lzoconf_8h.html#ab9257c30c984af77be6bc46d052d45d">ext.size</a>. The internal pointer into the primary buffer is positioned to just after the header.<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>hbuilder</em>&nbsp;</td><td>the <a class="el" href="class_hypertable_1_1_header.html">Header</a> builder object used to write the header </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>hdr</em>&nbsp;</td><td>comm header </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>the length of the primary buffer to allocate </td></tr>
     <tr><td valign="top"></td><td valign="top"><em>buffer</em>&nbsp;</td><td>extended buffer </td></tr>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00104">104</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00101">101</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="93026c8c9f308b5c6c386f75000d7f1c"></a><!-- doxytag: member="Hypertable::CommBuf::reset_data_pointers" ref="93026c8c9f308b5c6c386f75000d7f1c" args="()" -->
+<a class="anchor" name="bd62ec7b219f4669efc9a743e59ccc9b"></a><!-- doxytag: member="Hypertable::CommBuf::write_header_and_reset" ref="bd62ec7b219f4669efc9a743e59ccc9b" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Hypertable::CommBuf::reset_data_pointers           </td>
+          <td class="memname">void Hypertable::CommBuf::write_header_and_reset           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -238,10 +242,10 @@ It also sets the extended buffer to _ex and takes ownership of it. The total len
 <div class="memdoc">
 
 <p>
-Resets the primary and extended data pointers to point to the beginning of their respective buffers. 
+Encodes the header at the beginning of the primary buffer and resets the primary and extended data pointers to point to the beginning of their respective buffers. 
 <p>
 The AsyncComm layer uses these pointers to track how much data has been sent and what is remaining to be sent. 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00119">119</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00117">117</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
@@ -655,13 +659,13 @@ A string is encoded as a vint64 length, followed by the characters, followed by 
 <div class="memdoc">
 
 <p>
-Appends a string buffer to the primary buffer. 
+Appends a variable sized string to the primary buffer. 
 <p>
-A string is encoded as a vint64 length, followed by the characters, followed by a terminating '\0'.<p>
+The string is encoded as a vint64 length, followed by the bytes (followed by a terminating '\0').<p>
 <dl compact><dt><b>Parameters:</b></dt><dd>
   <table border="0" cellspacing="2" cellpadding="0">
-    <tr><td valign="top"></td><td valign="top"><em>buf</em>&nbsp;</td><td>input buffer pointer </td></tr>
-    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>input len </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>str</em>&nbsp;</td><td>string to encode </td></tr>
+    <tr><td valign="top"></td><td valign="top"><em>len</em>&nbsp;</td><td>length of string </td></tr>
   </table>
 </dl>
 <dl class="see" compact><dt><b>See also:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_serialization.html#46ee21e21f9ecf2ba6d52e163b8e2f18" title="Encode a buffer as vstr (vint64, data, null).">Serialization::encode_vstr</a> </dd></dl>
@@ -740,6 +744,23 @@ A string is encoded as a vint64 length, followed by the characters, followed by 
 
 </div>
 </div><p>
+<a class="anchor" name="f5790f0cdb9664206ef280c97c3ada59"></a><!-- doxytag: member="Hypertable::CommBuf::header" ref="f5790f0cdb9664206ef280c97c3ada59" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_comm_header.html">CommHeader</a> <a class="el" href="class_hypertable_1_1_comm_buf.html#f5790f0cdb9664206ef280c97c3ada59">Hypertable::CommBuf::header</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00267">267</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="4474cc470147b2a767391ee0eac55af8"></a><!-- doxytag: member="Hypertable::CommBuf::data_ptr" ref="4474cc470147b2a767391ee0eac55af8" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -753,7 +774,7 @@ A string is encoded as a vint64 length, followed by the characters, followed by 
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00269">269</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00270">270</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
@@ -770,13 +791,13 @@ A string is encoded as a vint64 length, followed by the characters, followed by 
 
 <p>
 
-<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00270">270</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
+<p>Definition at line <a class="el" href="_comm_buf_8h-source.html#l00271">271</a> of file <a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_comm_buf_8h-source.html">CommBuf.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:01 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:42 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

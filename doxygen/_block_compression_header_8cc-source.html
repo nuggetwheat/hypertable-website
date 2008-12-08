@@ -33,7 +33,7 @@
 <a name="l00035"></a>00035 <span class="keyword">const</span> <span class="keywordtype">size_t</span> BlockCompressionHeader::LENGTH;
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 
-<a name="l00040"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">00040</a> <span class="keywordtype">void</span> BlockCompressionHeader::encode(uint8_t **bufp) {
+<a name="l00040"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#4ebaea46f9947fd663aa3a2a74c6174b">00040</a> <span class="keywordtype">void</span> BlockCompressionHeader::encode(uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>) {
 <a name="l00041"></a>00041   uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
 <a name="l00042"></a>00042   memcpy(*bufp, <a class="code" href="class_hypertable_1_1_block_compression_header.html#607c54bd1531bbd325632ef3c52b6bcb">m_magic</a>, 10);
 <a name="l00043"></a>00043   (*bufp) += 10;
@@ -47,56 +47,57 @@
 <a name="l00051"></a>00051     <a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">write_header_checksum</a>(base, bufp);
 <a name="l00052"></a>00052 }
 <a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">00054</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">BlockCompressionHeader::write_header_checksum</a>(uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>, uint8_t **bufp) {
-<a name="l00055"></a>00055   uint16_t checksum16 = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(base, *bufp-base);
-<a name="l00056"></a>00056   <a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18" title="Encode a 16-bit integer in little-endian order.">encode_i16</a>(bufp, checksum16);
-<a name="l00057"></a>00057 }
-<a name="l00058"></a>00058 
+<a name="l00054"></a>00054 <span class="keywordtype">void</span>
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">00055</a> <a class="code" href="class_hypertable_1_1_block_compression_header.html#5e84cb4aaff66c1acc3dbf78a26ad5cf">BlockCompressionHeader::write_header_checksum</a>(uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>, uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>) {
+<a name="l00056"></a>00056   uint16_t checksum16 = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(base, *bufp-base);
+<a name="l00057"></a>00057   <a class="code" href="namespace_hypertable_1_1_serialization.html#3463bbf15b8715bd7a6dd7015b5fde18" title="Encode a 16-bit integer in little-endian order.">encode_i16</a>(bufp, checksum16);
+<a name="l00058"></a>00058 }
 <a name="l00059"></a>00059 
-<a name="l00062"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">00062</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">BlockCompressionHeader::decode</a>(<span class="keyword">const</span> uint8_t **bufp, <span class="keywordtype">size_t</span> *remainp) {
-<a name="l00063"></a>00063   <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
-<a name="l00064"></a>00064   uint16_t header_length;
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066   <span class="keywordflow">if</span> (*remainp &lt; <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>())
-<a name="l00067"></a>00067     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b258fbb4f4ef742047227bf0ea9eef97b8">Error::BLOCK_COMPRESSOR_TRUNCATED</a>, <span class="stringliteral">""</span>);
-<a name="l00068"></a>00068 
-<a name="l00069"></a>00069   <span class="comment">// verify checksum</span>
-<a name="l00070"></a>00070   uint16_t header_checksum, header_checksum_computed;
-<a name="l00071"></a>00071   <span class="keywordtype">size_t</span> remaining = 2;
-<a name="l00072"></a>00072   <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = *bufp + <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2;
-<a name="l00073"></a>00073   header_checksum_computed = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(*bufp, <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2);
-<a name="l00074"></a>00074   header_checksum = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;ptr, &amp;remaining);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076   <span class="keywordflow">if</span> (header_checksum_computed != header_checksum)
-<a name="l00077"></a>00077     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8" title="Convenience macros to create an exception stack trace.">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Header checksum mismatch"</span>);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079   memcpy(<a class="code" href="class_hypertable_1_1_block_compression_header.html#607c54bd1531bbd325632ef3c52b6bcb">m_magic</a>, *bufp, 10);
-<a name="l00080"></a>00080   (*bufp) += 10;
-<a name="l00081"></a>00081   *remainp -= 10;
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083   header_length = <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(bufp, remainp);
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085   <span class="keywordflow">if</span> (header_length != <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>())
-<a name="l00086"></a>00086     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Unexpected header length"</span>
-<a name="l00087"></a>00087               <span class="stringliteral">": %lu, expecting: %lu"</span>, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)header_length, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>());
-<a name="l00088"></a>00088 
-<a name="l00089"></a>00089   <a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(bufp, remainp);
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a> &gt;= <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99754536861155759a1bd1e26beeb600ddf6">BlockCompressionCodec::COMPRESSION_TYPE_LIMIT</a>)
-<a name="l00092"></a>00092     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Bad compression type: %d"</span>,
-<a name="l00093"></a>00093               (<span class="keywordtype">int</span>)<a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a>);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095   <a class="code" href="class_hypertable_1_1_block_compression_header.html#1a4c039aaec992e9a98c348e940aa327">m_data_checksum</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
-<a name="l00096"></a>00096   <a class="code" href="class_hypertable_1_1_block_compression_header.html#8c0290191334870d2d6579dc66873637">m_data_length</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
-<a name="l00097"></a>00097   <a class="code" href="class_hypertable_1_1_block_compression_header.html#f1dcee6c8005c9f0b0db9b2f88ebcfea">m_data_zlength</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) == <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2) {
-<a name="l00100"></a>00100     *bufp += 2;
-<a name="l00101"></a>00101     *remainp -= 2;
-<a name="l00102"></a>00102   }
-<a name="l00103"></a>00103 }
-<a name="l00104"></a>00104 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:26 2008 for hypertable by&nbsp;
+<a name="l00060"></a>00060 
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">00063</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_block_compression_header.html#7cdb1bb51901c73dcd85a4cb3faddaf2">BlockCompressionHeader::decode</a>(<span class="keyword">const</span> uint8_t **<a class="code" href="_range_server_8cc.html#dfb94b37a8e871e558c01a70cc878353">bufp</a>, <span class="keywordtype">size_t</span> *remainp) {
+<a name="l00064"></a>00064   <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a> = *bufp;
+<a name="l00065"></a>00065   uint16_t header_length;
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   <span class="keywordflow">if</span> (*remainp &lt; <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>())
+<a name="l00068"></a>00068     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b258fbb4f4ef742047227bf0ea9eef97b8">Error::BLOCK_COMPRESSOR_TRUNCATED</a>, <span class="stringliteral">""</span>);
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070   <span class="comment">// verify checksum</span>
+<a name="l00071"></a>00071   uint16_t header_checksum, header_checksum_computed;
+<a name="l00072"></a>00072   <span class="keywordtype">size_t</span> remaining = 2;
+<a name="l00073"></a>00073   <span class="keyword">const</span> uint8_t *<a class="code" href="lzoconf_8h.html#edc63c09328e8dcce47e667c1cb0e36b">ptr</a> = *bufp + <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2;
+<a name="l00074"></a>00074   header_checksum_computed = <a class="code" href="namespace_hypertable.html#f1c34789fc838c273306faa7d5daf417" title="Compute fletcher32 checksum for arbitary data.">fletcher32</a>(*bufp, <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2);
+<a name="l00075"></a>00075   header_checksum = <a class="code" href="namespace_hypertable_1_1_serialization.html#ec36e9cafce4eb2d8fb75d120f311ca1" title="Decode a 16-bit integer in little-endian order.">decode_i16</a>(&amp;ptr, &amp;remaining);
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077   <span class="keywordflow">if</span> (header_checksum_computed != header_checksum)
+<a name="l00078"></a>00078     <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Header checksum mismatch"</span>);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080   memcpy(<a class="code" href="class_hypertable_1_1_block_compression_header.html#607c54bd1531bbd325632ef3c52b6bcb">m_magic</a>, *bufp, 10);
+<a name="l00081"></a>00081   (*bufp) += 10;
+<a name="l00082"></a>00082   *remainp -= 10;
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084   header_length = <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(bufp, remainp);
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086   <span class="keywordflow">if</span> (header_length != <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>())
+<a name="l00087"></a>00087     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Unexpected header length"</span>
+<a name="l00088"></a>00088               <span class="stringliteral">": %lu, expecting: %lu"</span>, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)header_length, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)<a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>());
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090   <a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#13c5b005af347bb1da1c9c7fbb33e71a" title="Decodes a single byte from the given buffer.">decode_byte</a>(bufp, remainp);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a> &gt;= <a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc99754536861155759a1bd1e26beeb600ddf6">BlockCompressionCodec::COMPRESSION_TYPE_LIMIT</a>)
+<a name="l00093"></a>00093     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27c925cad735291ed8d9135257680289a">Error::BLOCK_COMPRESSOR_BAD_HEADER</a>, <span class="stringliteral">"Bad compression type: %d"</span>,
+<a name="l00094"></a>00094               (<span class="keywordtype">int</span>)<a class="code" href="class_hypertable_1_1_block_compression_header.html#7eb177970951a2d7025728909f37bad1">m_compression_type</a>);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096   <a class="code" href="class_hypertable_1_1_block_compression_header.html#1a4c039aaec992e9a98c348e940aa327">m_data_checksum</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
+<a name="l00097"></a>00097   <a class="code" href="class_hypertable_1_1_block_compression_header.html#8c0290191334870d2d6579dc66873637">m_data_length</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
+<a name="l00098"></a>00098   <a class="code" href="class_hypertable_1_1_block_compression_header.html#f1dcee6c8005c9f0b0db9b2f88ebcfea">m_data_zlength</a> = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(bufp, remainp);
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100   <span class="keywordflow">if</span> ((<span class="keywordtype">size_t</span>)(*bufp - base) == <a class="code" href="class_hypertable_1_1_block_compression_header.html#c250f45a18175c898cdd5a3271a1e6a8">length</a>() - 2) {
+<a name="l00101"></a>00101     *bufp += 2;
+<a name="l00102"></a>00102     *remainp -= 2;
+<a name="l00103"></a>00103   }
+<a name="l00104"></a>00104 }
+<a name="l00105"></a>00105 
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

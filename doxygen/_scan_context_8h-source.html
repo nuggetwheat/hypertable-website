@@ -35,48 +35,57 @@
 <a name="l00037"></a>00037 <span class="keyword">namespace </span>Hypertable {
 <a name="l00038"></a>00038 
 <a name="l00039"></a><a class="code" href="struct_hypertable_1_1_cell_filter_info.html">00039</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_cell_filter_info.html">CellFilterInfo</a> {
-<a name="l00040"></a><a class="code" href="struct_hypertable_1_1_cell_filter_info.html#bafdf3a661f630ad596223ac74dea42e">00040</a>     uint64_t <a class="code" href="struct_hypertable_1_1_cell_filter_info.html#bafdf3a661f630ad596223ac74dea42e">cutoff_time</a>;
+<a name="l00040"></a><a class="code" href="struct_hypertable_1_1_cell_filter_info.html#e0d4a5225d2354aeee41cff93245f6b2">00040</a>     int64_t  <a class="code" href="struct_hypertable_1_1_cell_filter_info.html#e0d4a5225d2354aeee41cff93245f6b2">cutoff_time</a>;
 <a name="l00041"></a><a class="code" href="struct_hypertable_1_1_cell_filter_info.html#69fd30207b01dcc0516b62ee00f6920a">00041</a>     uint32_t <a class="code" href="struct_hypertable_1_1_cell_filter_info.html#69fd30207b01dcc0516b62ee00f6920a">max_versions</a>;
 <a name="l00042"></a>00042   };
 <a name="l00043"></a>00043 
 <a name="l00047"></a><a class="code" href="class_hypertable_1_1_scan_context.html">00047</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
 <a name="l00048"></a>00048   <span class="keyword">public</span>:
 <a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">00050</a>     <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> <a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a>;
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_scan_context.html#56999458f7da9a38071842e78df1c3d9">00051</a>     <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#56999458f7da9a38071842e78df1c3d9">spec</a>;
-<a name="l00052"></a><a class="code" href="class_hypertable_1_1_scan_context.html#58620e3f70f47d9b62f29bab1f4c7de8">00052</a>     <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#58620e3f70f47d9b62f29bab1f4c7de8">range</a>;
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_scan_context.html#a840a0f4895a5a04c830deb6f28e2afc">00053</a>     std::string <a class="code" href="class_hypertable_1_1_scan_context.html#a840a0f4895a5a04c830deb6f28e2afc">start_row</a>;
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_scan_context.html#92b80cd2ee22947f06d1072774e05c3e">00054</a>     std::string <a class="code" href="class_hypertable_1_1_scan_context.html#92b80cd2ee22947f06d1072774e05c3e">end_row</a>;
-<a name="l00055"></a><a class="code" href="class_hypertable_1_1_scan_context.html#b34427857e7c05dd94f6e2d21b851e4c">00055</a>     std::pair&lt;int64_t, int64_t&gt; <a class="code" href="class_hypertable_1_1_scan_context.html#b34427857e7c05dd94f6e2d21b851e4c">interval</a>;
-<a name="l00056"></a><a class="code" href="class_hypertable_1_1_scan_context.html#039c80b199c4532bad37b8e55d503277">00056</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_context.html#039c80b199c4532bad37b8e55d503277">family_mask</a>[256];
-<a name="l00057"></a><a class="code" href="class_hypertable_1_1_scan_context.html#962c1cfc28fd79211a58394af32e1f8f">00057</a>     <a class="code" href="struct_hypertable_1_1_cell_filter_info.html">CellFilterInfo</a> <a class="code" href="class_hypertable_1_1_scan_context.html#962c1cfc28fd79211a58394af32e1f8f">family_info</a>[256];
-<a name="l00058"></a>00058 
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_scan_context.html#9a590609b7d131853904c95d5d8ead48">00067</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#9a590609b7d131853904c95d5d8ead48" title="Constructor.">ScanContext</a>(int64_t ts, <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *ss, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *range_, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp) {
-<a name="l00068"></a>00068       <a class="code" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc" title="Initializes the scan context.">initialize</a>(ts, ss, range_, sp);
-<a name="l00069"></a>00069     }
-<a name="l00070"></a>00070 
-<a name="l00077"></a><a class="code" href="class_hypertable_1_1_scan_context.html#d314c65fcf9dd373b06d99916ed22fe9">00077</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#9a590609b7d131853904c95d5d8ead48" title="Constructor.">ScanContext</a>(int64_t ts, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp) {
-<a name="l00078"></a>00078       <a class="code" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc" title="Initializes the scan context.">initialize</a>(ts, 0, 0, sp);
-<a name="l00079"></a>00079     }
-<a name="l00080"></a>00080 
-<a name="l00086"></a><a class="code" href="class_hypertable_1_1_scan_context.html#e6957a6527496324b4ac406eb0c16543">00086</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#9a590609b7d131853904c95d5d8ead48" title="Constructor.">ScanContext</a>(int64_t ts) {
-<a name="l00087"></a>00087       <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> <a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a>;
-<a name="l00088"></a>00088       <a class="code" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc" title="Initializes the scan context.">initialize</a>(ts, 0, 0, schema_ptr);
-<a name="l00089"></a>00089     }
-<a name="l00090"></a>00090 
-<a name="l00091"></a>00091   <span class="keyword">private</span>:
-<a name="l00092"></a>00092 
-<a name="l00106"></a>00106     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scan_context.html#fdc64411b4bf7e6b7fc47bd5aa7cffcc" title="Initializes the scan context.">initialize</a>(int64_t ts, <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *ss, <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *range_, <a class="code" href="namespace_hypertable.html#d6c6d22234cf68d743468188b6c80a96">SchemaPtr</a> &amp;sp);
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   };
-<a name="l00109"></a>00109 
-<a name="l00110"></a><a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">00110</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;ScanContext&gt; <a class="code" href="namespace_hypertable.html#b197d8d73685b794df06287d394f4126">ScanContextPtr</a>;
-<a name="l00111"></a>00111 
-<a name="l00112"></a>00112 
-<a name="l00113"></a>00113 }
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115 <span class="preprocessor">#endif // HYPERTABLE_SCANCONTEXT_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:00:28 2008 for hypertable by&nbsp;
+<a name="l00050"></a><a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">00050</a>     <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> <a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a>;
+<a name="l00051"></a><a class="code" href="class_hypertable_1_1_scan_context.html#7dc9a27fa2aeeb3ea2e53f44f7f7bbed">00051</a>     <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#7dc9a27fa2aeeb3ea2e53f44f7f7bbed">spec</a>;
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">00052</a>     <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a>;
+<a name="l00053"></a><a class="code" href="class_hypertable_1_1_scan_context.html#13df251f2bd2cd7317a61481c546aef8">00053</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_scan_context.html#13df251f2bd2cd7317a61481c546aef8">dbuf</a>;
+<a name="l00054"></a><a class="code" href="class_hypertable_1_1_scan_context.html#23afd1152d4942934c59fab60ed41488">00054</a>     <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="class_hypertable_1_1_scan_context.html#23afd1152d4942934c59fab60ed41488">start_key</a>, <a class="code" href="class_hypertable_1_1_scan_context.html#7b99a7f780686ccdba0c5f3b85aabde9">end_key</a>;
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_scan_context.html#cbdbaa39374b92a2254e5e32d7865a1a">00055</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_scan_context.html#cbdbaa39374b92a2254e5e32d7865a1a">start_row</a>, <a class="code" href="class_hypertable_1_1_scan_context.html#d0c7a1246845433568073ccb8883a8a0">end_row</a>;
+<a name="l00056"></a><a class="code" href="class_hypertable_1_1_scan_context.html#489fe9dbca50a62a35e9f884034c08c0">00056</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_context.html#489fe9dbca50a62a35e9f884034c08c0">single_row</a>;
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_scan_context.html#ec4d6bcee47ec60623a85915346751a7">00057</a>     int64_t <a class="code" href="class_hypertable_1_1_scan_context.html#ec4d6bcee47ec60623a85915346751a7">revision</a>;
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_scan_context.html#e23150c0d041aa02e99db4d74911f271">00058</a>     std::pair&lt;int64_t, int64_t&gt; <a class="code" href="class_hypertable_1_1_scan_context.html#e23150c0d041aa02e99db4d74911f271">time_interval</a>;
+<a name="l00059"></a><a class="code" href="class_hypertable_1_1_scan_context.html#039c80b199c4532bad37b8e55d503277">00059</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_scan_context.html#039c80b199c4532bad37b8e55d503277">family_mask</a>[256];
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_scan_context.html#962c1cfc28fd79211a58394af32e1f8f">00060</a>     <a class="code" href="struct_hypertable_1_1_cell_filter_info.html">CellFilterInfo</a> <a class="code" href="class_hypertable_1_1_scan_context.html#962c1cfc28fd79211a58394af32e1f8f">family_info</a>[256];
+<a name="l00061"></a>00061 
+<a name="l00070"></a><a class="code" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067">00070</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067" title="Constructor.">ScanContext</a>(int64_t rev, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *ss, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a>,
+<a name="l00071"></a>00071                 <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp) {
+<a name="l00072"></a>00072       <a class="code" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize</a>(rev, ss, range, sp);
+<a name="l00073"></a>00073     }
+<a name="l00074"></a>00074 
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_scan_context.html#94394184e65d0458d50fc09031ba0c7e">00081</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067" title="Constructor.">ScanContext</a>(int64_t rev, <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp) {
+<a name="l00082"></a>00082       <a class="code" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize</a>(rev, 0, 0, sp);
+<a name="l00083"></a>00083     }
+<a name="l00084"></a>00084 
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_scan_context.html#02dda53a45a945b8b5e1d0ef140099df">00090</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067" title="Constructor.">ScanContext</a>(int64_t rev=<a class="code" href="namespace_hypertable.html#9a641818a91ae682ee43e3f97ef89537">TIMESTAMP_MAX</a>) {
+<a name="l00091"></a>00091       <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> <a class="code" href="class_hypertable_1_1_scan_context.html#2a978184dc1cb765c37e3c6dca63fea3">schema_ptr</a>;
+<a name="l00092"></a>00092       <a class="code" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize</a>(rev, 0, 0, schema_ptr);
+<a name="l00093"></a>00093     }
+<a name="l00094"></a>00094 
+<a name="l00100"></a><a class="code" href="class_hypertable_1_1_scan_context.html#a8ea9425dc79779913cf8bffdc243363">00100</a>     <a class="code" href="class_hypertable_1_1_scan_context.html#bbefe5b9ad9926aaecf5c37386576067" title="Constructor.">ScanContext</a>(<a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp) {
+<a name="l00101"></a>00101       <a class="code" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize</a>(<a class="code" href="namespace_hypertable.html#9a641818a91ae682ee43e3f97ef89537">TIMESTAMP_MAX</a>, 0, 0, sp);
+<a name="l00102"></a>00102     }
+<a name="l00103"></a>00103 
+<a name="l00104"></a>00104 
+<a name="l00105"></a>00105   <span class="keyword">private</span>:
+<a name="l00106"></a>00106 
+<a name="l00120"></a>00120     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_scan_context.html#864acc31edd65453cd751c2efd5db8c4" title="Initializes the scan context.">initialize</a>(int64_t rev, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> *ss, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a> *<a class="code" href="class_hypertable_1_1_scan_context.html#680cbad27955bba8aa4a1caadcc31961">range</a>,
+<a name="l00121"></a>00121                     <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;sp);
+<a name="l00122"></a>00122 
+<a name="l00123"></a>00123   };
+<a name="l00124"></a>00124 
+<a name="l00125"></a><a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">00125</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;ScanContext&gt; <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a>;
+<a name="l00126"></a>00126 
+<a name="l00127"></a>00127 } <span class="comment">// namespace Hypertable</span>
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129 <span class="preprocessor">#endif // HYPERTABLE_SCANCONTEXT_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:52 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

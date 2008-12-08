@@ -32,6 +32,13 @@
 <p>
 <a href="class_hypertable_1_1_cell-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
+<tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#4b3872165fb0c2bd619f72810d64dd80">Cell</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#0188f11ead2de119b81a3f1adb70b822">Cell</a> (const char *rk, const char *cf, const char *cq, uint64_t ts, uint64_t rev, uint8_t *val, uint32_t vlen, uint8_t <a class="el" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#371748fcc5a8a64a651cbb6e2c188b4a">sanity_check</a> () const </td></tr>
+
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#a2bc9f1e95556bd9b1ebc3dda663b0a0">row_key</a></td></tr>
 
@@ -40,6 +47,8 @@
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#765f88bfb07c4685da8b1af6e7345297">column_qualifier</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">revision</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const uint8_t *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell.html#1f18462b9457dc6f709e9391129ba0a5">value</a></td></tr>
 
@@ -50,7 +59,118 @@
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Encapsulates decomposed key and value. 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00028">28</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00032">32</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<hr><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" name="4b3872165fb0c2bd619f72810d64dd80"></a><!-- doxytag: member="Hypertable::Cell::Cell" ref="4b3872165fb0c2bd619f72810d64dd80" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::Cell::Cell           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00034">34</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0188f11ead2de119b81a3f1adb70b822"></a><!-- doxytag: member="Hypertable::Cell::Cell" ref="0188f11ead2de119b81a3f1adb70b822" args="(const char *rk, const char *cf, const char *cq, uint64_t ts, uint64_t rev, uint8_t *val, uint32_t vlen, uint8_t flag)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Hypertable::Cell::Cell           </td>
+          <td>(</td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>rk</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>cf</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&nbsp;</td>
+          <td class="paramname"> <em>cq</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&nbsp;</td>
+          <td class="paramname"> <em>ts</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint64_t&nbsp;</td>
+          <td class="paramname"> <em>rev</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&nbsp;</td>
+          <td class="paramname"> <em>val</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&nbsp;</td>
+          <td class="paramname"> <em>vlen</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t&nbsp;</td>
+          <td class="paramname"> <em>flag</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00038">38</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Function Documentation</h2>
+<a class="anchor" name="371748fcc5a8a64a651cbb6e2c188b4a"></a><!-- doxytag: member="Hypertable::Cell::sanity_check" ref="371748fcc5a8a64a651cbb6e2c188b4a" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::Cell::sanity_check           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00043">43</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Member Data Documentation</h2>
 <a class="anchor" name="a2bc9f1e95556bd9b1ebc3dda663b0a0"></a><!-- doxytag: member="Hypertable::Cell::row_key" ref="a2bc9f1e95556bd9b1ebc3dda663b0a0" args="" -->
 <div class="memitem">
@@ -65,7 +185,7 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00030">30</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00052">52</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -82,7 +202,7 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00031">31</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00053">53</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -99,7 +219,7 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00032">32</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00054">54</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -116,7 +236,24 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00033">33</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00055">55</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="5188dfa425aec64f47f0c33d070b2212"></a><!-- doxytag: member="Hypertable::Cell::revision" ref="5188dfa425aec64f47f0c33d070b2212" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint64_t <a class="el" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">Hypertable::Cell::revision</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00056">56</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -133,7 +270,7 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00034">34</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00057">57</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -150,7 +287,7 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00035">35</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00058">58</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
@@ -167,13 +304,13 @@ Encapsulates decomposed key and value.
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_8h-source.html#l00036">36</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_8h-source.html#l00059">59</a> of file <a class="el" href="_cell_8h-source.html">Cell.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_cell_8h-source.html">Cell.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Thu Aug 14 23:08:10 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:54 2008 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

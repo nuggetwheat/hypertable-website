@@ -1,3 +1,4 @@
+<? include("release.inc") ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
@@ -23,24 +24,7 @@
 </head>
 <body>
 <div id="all">
-<div id="header">
-	<div id="logo">
-		<h1><a href="index.html"><img src="images/lgo-hypertable.jpg" alt="Hypertable" /></a></h1>
-		<p>An Open Source, High Performance, Scalable Database</p>
-	</div><!-- logo -->
-	<div id="nav">
-		<ul>
-			<li><a href="about.html">About</a></li>
-			<li><a href="download.html">Download</a></li>
-			<li><a href="license.html">License</a></li>
-			<li><a href="documentation.html">Documentation</a></li>
-			<li><a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
-			<li><a href="mailing-list.html">Mailing Lists</a></li>
-			<li><a href="sponsors.html">Sponsors</a></li>
-			<li class="last"><a href="feedback.html">Feedback</a></li>
-		</ul>
-	</div><!-- nav -->
-</div><!-- header -->
+<? include("header.inc") ?>
 	<div id="contents-container">
 		<div id="contents">
 			<div id="page" class="home">
@@ -58,23 +42,13 @@
 				<p class="btn-big-download">
 					<a href="download.html">
 						Download
-						<span class="version">Hypertable 0.9.2.0 &alpha;</span>
-						<span class="date">January 5 2009</span>
+						<span class="version">Hypertable <?= $release_version ?></span>
+						<span class="date"><?= $release_date ?></span>
 					</a>
 				</p>
 			</div><!-- right -->
 		</div><!-- home -->
-<div id="news">
-	<h3>News and Announcements</h3>
-	<dl>
-		<dt>January 12 2009</dt>
-		<dd><a href="http://www.baidu.com/">Baidu</a> becomes an official sponsor of the Hypertable project. Thanks Baidu! »</dd>
-	</dl>
-	<dl>
-		<dt>November 21 2008</dt>
-		<dd>Hypertable presentation at the QCon San Francisco 2008 Conference<br/>November 21st, <a href="http://qconsf.com/sf2008/">QCon San Francisco 2008</a>, San Francisco, CA »</</dd>
-	</dl>
-</div><!-- news -->
+<? include("news.inc") ?>
 			<div id="sponsors">
 				<h3>Become a Sponsor</h3>
 				<dl>
@@ -84,28 +58,6 @@
 		</div><!-- contents -->
 	</div><!-- contents-container -->
 </div><!-- all -->
-<div id="footer-container">
-	<div id="footer">
-		<p class="nav">
-			<a href="about.html">About</a> |
-			<a href="download.html">Download</a> |
-			<a href="license.html">License</a> |
-			<a href="documentation.html">Documentation</a> |
-			<a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a> |
-			<a href="mailing-list.html">Mailing Lists</a> |
-			<a href="sponsors.html">Sponsors</a> |
-			<a href="feedback.html">Feedback</a> |
-			<a href="sitemap.html">Sitemap</a>
-		</p>
-		<!-- . nav -->
-		<p class="copy">Copyright 2008 Hypertable. All rights reserved. Design by <a href="http://www.bluecoastweb.com" target="_blank">Blue Coast Web</a></p>
-		<ul>
-			<li class="first"><span>Sponsors:</span></li>
-			<li><a href="sponsors.html#zvents"><img src="images/lgo-zvents.gif" alt="Zvents" /></a></li>
-			<li><a href="sponsors.html#baidu"><img src="images/lgo-baidu.gif" alt="Baidu" /></a></li>
-		</ul>
-	</div><!-- footer -->
-</div><!-- footer-container -->
-<!-- generated on Wed, 14 Jan 2009 02:52:50 -0800 -->
+<? include("footer.inc") ?>
 </body>
 </html>

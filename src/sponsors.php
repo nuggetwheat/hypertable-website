@@ -8,24 +8,7 @@
 </head>
 <body>
 <div id="all">
-<div id="header">
-	<div id="logo">
-		<h1><a href="index.html"><img src="images/lgo-hypertable.jpg" alt="Hypertable" /></a></h1>
-		<p>An Open Source, High Performance, Scalable Database</p>
-	</div><!-- logo -->
-	<div id="nav">
-		<ul>
-			<li><a href="about.html">About</a></li>
-			<li><a href="download.html">Download</a></li>
-			<li><a href="license.html">License</a></li>
-			<li><a href="documentation.html">Documentation</a></li>
-			<li><a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
-			<li><a href="mailing-list.html">Mailing Lists</a></li>
-			<li><a href="sponsors.html" class="on">Sponsors</a></li>
-			<li class="last"><a href="feedback.html">Feedback</a></li>
-		</ul>
-	</div><!-- nav -->
-</div><!-- header -->
+<? include("header.inc") ?>
 	<div id="contents-container">
 		<div id="contents">
 			<div id="page" class="sub sponsors">
@@ -51,47 +34,13 @@
 					<p><img src="images/gra-end-of-page.gif" alt=" " /></p>
 				</div><!-- left -->
 				<div class="right">
-<p class="btn-big-download"><a href="download.html">Download
-  <span class="version">Hypertable free!</span></a>
-</p>
-<div id="news">
-	<h3>News and Announcements</h3>
-	<dl>
-		<dt>January 12 2009</dt>
-		<dd><a href="http://www.baidu.com/">Baidu</a> becomes an official sponsor of the Hypertable project. Thanks Baidu! »</dd>
-	</dl>
-	<dl>
-		<dt>November 21 2008</dt>
-		<dd>Hypertable presentation at the QCon San Francisco 2008 Conference<br/>November 21st, <a href="http://qconsf.com/sf2008/">QCon San Francisco 2008</a>, San Francisco, CA »</</dd>
-	</dl>
-</div><!-- news -->
+<? include("download.inc") ?>
+<? include("news.inc") ?>
 				</div><!-- right -->
 			</div><!-- home -->
 		</div><!-- contents -->
 	</div><!-- contents-container -->
 </div><!-- all -->
-<div id="footer-container">
-	<div id="footer">
-		<p class="nav">
-			<a href="about.html">About</a> |
-			<a href="download.html">Download</a> |
-			<a href="license.html">License</a> |
-			<a href="documentation.html">Documentation</a> |
-			<a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a> |
-			<a href="mailing-list.html">Mailing Lists</a> |
-			<a href="sponsors.html">Sponsors</a> |
-			<a href="feedback.html">Feedback</a> |
-			<a href="sitemap.html">Sitemap</a>
-		</p>
-		<!-- . nav -->
-		<p class="copy">Copyright 2008 Hypertable. All rights reserved. Design by <a href="http://www.bluecoastweb.com" target="_blank">Blue Coast Web</a></p>
-		<ul>
-			<li class="first"><span>Sponsors:</span></li>
-			<li><a href="sponsors.html#zvents"><img src="images/lgo-zvents.gif" alt="Zvents" /></a></li>
-			<li><a href="sponsors.html#baidu"><img src="images/lgo-baidu.gif" alt="Baidu" /></a></li>
-		</ul>
-	</div><!-- footer -->
-</div><!-- footer-container -->
-<!-- generated on Wed, 14 Jan 2009 02:52:50 -0800 -->
+<? include("footer.inc") ?>
 </body>
 </html>

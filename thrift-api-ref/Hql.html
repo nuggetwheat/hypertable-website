@@ -1,0 +1,56 @@
+<html><head>
+<link href="style.css" rel="stylesheet" type="text/css"/>
+<title>Thrift module: Hql</title></head><body>
+<h1>Thrift module: Hql</h1>
+<table><tr><th>Module</th><th>Services</th><th>Data types</th><th>Constants</th></tr>
+<tr>
+<td>Hql</td><td><a href="Hql.html#Svc_HqlService">HqlService</a><br/>
+<ul>
+<li><a href="Hql.html#Fn_HqlService_hql_exec">hql_exec</a></li>
+</ul>
+</td>
+<td><a href="Hql.html#Struct_HqlResult">HqlResult</a><br/>
+</td>
+<td><code></code></td>
+</tr></table>
+<hr/><h2 id="Structs">Data structures</h2>
+<div class="definition"><h3 id="Struct_HqlResult">Struct: HqlResult</h3>
+<table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
+<tr><td>results</td><td><code>list&lt;<code>string</code>&gt;</code></td><td>no</td><td></td></tr>
+<tr><td>cells</td><td><code>list&lt;<code><a href="Client.html#Struct_Cell">Client.Cell</a></code>&gt;</code></td><td>no</td><td></td></tr>
+<tr><td>scanner</td><td><code>i64</code></td><td>no</td><td></td></tr>
+<tr><td>mutator</td><td><code>i64</code></td><td>no</td><td></td></tr>
+</table><br/>Result type of HQL queries
+<p/>
+<dl>
+  <dt>results</dt>
+  <dd>String results from metadata queries</dd>
+<p/>
+  <dt>cells</dt>
+  <dd>Resulting table cells of for buffered queries</dd>
+<p/>
+  <dt>scanner</dt>
+  <dd>Resulting scanner ID for unbuffered queries</dd>
+<p/>
+  <dt>mutator</dt>
+  <dd>Resulting mutator ID for unflushed modifying queries</dd>
+</dl>
+<br/></div><hr/><h2 id="Services">Services</h2>
+<h3 id="Svc_HqlService">Service: HqlService</h3>
+<div class="extends"><em>extends</em> <code><a href="Client.html#Svc_ClientService">Client.ClientService</a></code></div>
+HQL service is a superset of Client service
+<p/>
+It adds capability to execute HQL queries to the service
+<br/><div class="definition"><h4 id="Fn_HqlService_hql_exec">Function: HqlService.hql_exec</h4>
+<pre><code><a href="Hql.html#Struct_HqlResult">HqlResult</a></code> hql_exec(<code>string</code> command,
+                   <code>bool</code> noflush = 0,
+                   <code>bool</code> unbuffered = 0)
+    throws <code><a href="Client.html#Struct_ClientException">Client.ClientException</a></code>
+</pre>Execute an HQL command
+<p/>
+@param command - HQL command
+<p/>
+@param noflush - Do not auto commit any modifications (return a mutator)
+<p/>
+@param unbuffered - return a scanner instead of buffered results
+<br/></div></body></html>

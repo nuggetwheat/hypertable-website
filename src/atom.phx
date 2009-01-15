@@ -1,6 +1,18 @@
 <?php
+require_once("release.inc");
+
+function sort_by_updated($x, $y) {
+  return strcmp($y['updated'], $x['updated']);
+}
+
+// Put the release in the atom feed as well.
+$release_time = strtotime($release_date);
+$items[] = array('title' => "Hypertable $release_version released",
+               'content' => "Check it out!",
+               'updated' => date('c', $release_time),
+               'id' => 'http://hypertable.org/feed/r'. $release_time);
+
 // open/parse news.inc 
-$items = array();
 $contents = file_get_contents(dirname(__FILE__) ."/news.inc");
 
 if (preg_match_all('%<dt>(.*?)</dt>\s*<dd>(.*?)</dd>%', $contents, $matches,
@@ -10,24 +22,25 @@ if (preg_match_all('%<dt>(.*?)</dt>\s*<dd>(.*?)</dd>%', $contents, $matches,
     $time = strtotime($date);
     $items[] = array('title' => $date, 'content'=> $match[2],
                      'updated' => date('c', $time),
-                     'id' => 'http://hypertable.org/feed/i'. $time,
-                     'author'=> 'hypertable.org');
+                     'id' => 'http://hypertable.org/feed/n'. $time);
   }
 }
+usort($items, 'sort_by_updated');
 
 echo '<?xml version="1.0"?>', "\n";
 ?>
 <feed xmlns="http://www.w3.org/2005/Atom">
- <updated><?= date("c") ?></updated>
- <id>http://hypertable.org/atom.xml</id>
- <title>Hypertable News &amp; Announcements</title>
- <link rel="self" type="application/atom+xml;type=feed" href="http://hypertable.org/atom.xml"/>
+<updated><?= date("c") ?></updated>
+<id>http://hypertable.org/atom.xml</id>
+<title>Hypertable News &amp; Announcements</title>
+<link rel="self" type="application/atom+xml;type=feed" href="/atom.xml"/>
 <?
   foreach($items as $item) {
     echo "<entry>\n<updated>", $item['updated'], "</updated>\n",
          "<id>", $item['id'], "</id>\n", 
+         '<link rel="alternate" type="text/html" href="/index.html"/>', "\n",
          '<title type="html">', htmlspecialchars($item['title']), "</title>\n",
-         "<author>", htmlspecialchars($item['author']), "</author>\n",
+         "<author>hypertable.org</author>\n",
          '<category term="news" scheme="http://hypertable.org/feed/type"/>',
          "\n", '<content type="html">', htmlspecialchars($item['content']),
          "</content>\n</entry>\n";

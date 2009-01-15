@@ -6,6 +6,6 @@
 	</dl>
 	<dl>
 		<dt>November 21 2008</dt>
-		<dd>Hypertable presentation at the QCon San Francisco 2008 Conference<br/>November 21st, <a href="http://qconsf.com/sf2008/">QCon San Francisco 2008</a>, San Francisco, CA »</</dd>
+		<dd>Hypertable presentation at the QCon San Francisco 2008 Conference<br/>November 21st, <a href="http://qconsf.com/sf2008/">QCon San Francisco 2008</a>, San Francisco, CA »</dd>
 	</dl>
 </div><!-- news -->

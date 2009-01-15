@@ -2,8 +2,13 @@
 
 srcdir=`dirname $0`
 
-for f in $srcdir/*.php; do
-  gen=`basename $f .php`.html
-  echo "Generating $gen"
-  php $f > $gen
-done
+generate() {
+  for f in $srcdir/*.$1; do
+    gen=`basename $f .$1`.$2
+    echo "Generating $gen"
+    php $f > $gen
+  done
+}
+
+generate php html
+generate phx xml

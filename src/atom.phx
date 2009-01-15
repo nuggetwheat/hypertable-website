@@ -1,0 +1,36 @@
+<?php
+// open/parse news.inc 
+$items = array();
+$contents = file_get_contents(dirname(__FILE__) ."/news.inc");
+
+if (preg_match_all('%<dt>(.*?)</dt>\s*<dd>(.*?)</dd>%', $contents, $matches,
+                   PREG_SET_ORDER)) {
+  foreach($matches as $match) {
+    $date = $match[1];
+    $items[] = array('title' => $date, 'content'=> $match[2],
+                     'updated' => date('c', strtotime($date)),
+                     'id' => 'http://hypertable.org/feed/'. strtotime($date),
+                     'author'=> 'hypertable.org');
+  }
+}
+
+echo '<?xml version="1.0"?>', "\n";
+?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <updated><?= date("c") ?></updated>
+ <id>http://hypertable.org/atom.xml</id>
+ <title>Hypertable news</title>
+ <link rel="self" type="application/atom+xml;type=feed" href="http://hypertable.org/atom.xml"/>
+ <link rel="alternate" type="text/html" href="http://hypertable.org/"/>
+<?
+  foreach($items as $item) {
+    echo "<entry>\n<updated>", $item['updated'], "</updated>\n",
+         "<id>", $item['id'], "</id>\n", 
+         '<title type="html">', htmlspecialchars($item['title']), "</title>\n",
+         "<author>", htmlspecialchars($item['author']), "</author>\n",
+         '<category term="news" scheme="http://hypertable.org/feed/type"/>',
+         "\n", '<content type="html">', htmlspecialchars($item['content']),
+         "</conent>\n</entry>\n";
+  }
+?>
+</feed>

@@ -26,7 +26,7 @@ Include dependency graph for Error.h:</div>
 <div class="dynsection">
 <p><center><img src="_error_8h__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Common/Error.h_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Common/Error.h_map">
-<area shape="rect" href="_string_8h.html" title="Common/String.h" alt="" coords="5,80,133,107"></map>
+<area shape="rect" href="_string_8h.html" title="Common/String.h" alt="" coords="12,80,140,107"></map>
 </div>
 
 <p>
@@ -38,6 +38,10 @@ Include dependency graph for Error.h:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_error.html">Hypertable::Error</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_exception_message_renderer.html">Hypertable::ExceptionMessageRenderer</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_exception_messages_renderer.html">Hypertable::ExceptionMessagesRenderer</a></td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_exception.html">Hypertable::Exception</a></td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">This is a generic exception class for <a class="el" href="namespace_hypertable.html" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">Hypertable</a>.  <a href="class_hypertable_1_1_exception.html#_details">More...</a><br></td></tr>
@@ -111,110 +115,117 @@ Include dependency graph for Error.h:</div>
 <br>
 &nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20ed4421fa5f40e5bdd815b1b4778a8b7">Hypertable::Error::BAD_MEMORY_ALLOCATION</a> =  29, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2af71743a97a985918411bac8773fd905">Hypertable::Error::BAD_SCAN_SPEC</a> =  30, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b270ad2697240fbb3f70a90fc98edf9d75">Hypertable::Error::HYPERSPACE_PARSE_ERROR</a> =  31, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22261cdd272daf522bc3bcc7b1b7ae26b">Hypertable::Error::CONFIG_BAD_ARGUMENT</a> =  1001, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b20e51a953b1a3239cd2f63267c21f16">Hypertable::Error::NOT_IMPLEMENTED</a> =  31, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b250ad42295e37c4b6a4b3dc16354c9d36">Hypertable::Error::VERSION_MISMATCH</a> =  32, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f2ba5f7ab9e4730a6d10679dec49492d">Hypertable::Error::CONFIG_BAD_CFG_FILE</a> =  1002, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22261cdd272daf522bc3bcc7b1b7ae26b">Hypertable::Error::CONFIG_BAD_ARGUMENT</a> =  1001, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f2ba5f7ab9e4730a6d10679dec49492d">Hypertable::Error::CONFIG_BAD_CFG_FILE</a> =  1002, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a9dd4fe6b9937bd8443cbc05d4949411">Hypertable::Error::CONFIG_GET_ERROR</a> =  1003, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2975753c76ba29178a842503994ac70a6">Hypertable::Error::CONFIG_BAD_VALUE</a> =  1004, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dda8b9610df5973917c669dbf11e8da1">Hypertable::Error::COMM_NOT_CONNECTED</a> =  0x00010001, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Hypertable::Error::COMM_BROKEN_CONNECTION</a> =  0x00010002, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dda8b9610df5973917c669dbf11e8da1">Hypertable::Error::COMM_NOT_CONNECTED</a> =  0x00010001, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20905dd941372ab788a14be09d3210fea">Hypertable::Error::COMM_BROKEN_CONNECTION</a> =  0x00010002, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4fca06f2563be79f10a82b8d75ee4dc">Hypertable::Error::COMM_CONNECT_ERROR</a> =  0x00010003, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21bbd1dc4e89e97e01da726d3711e01c6">Hypertable::Error::COMM_ALREADY_CONNECTED</a> =  0x00010004, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b5f954c9379f7c6d23688daca9a44c24">Hypertable::Error::COMM_REQUEST_TIMEOUT</a> =  0x00010005, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b235499705110c78f43eec1664ec6f1572">Hypertable::Error::COMM_SEND_ERROR</a> =  0x00010006, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b5f954c9379f7c6d23688daca9a44c24">Hypertable::Error::COMM_REQUEST_TIMEOUT</a> =  0x00010005, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b235499705110c78f43eec1664ec6f1572">Hypertable::Error::COMM_SEND_ERROR</a> =  0x00010006, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26f752b56497f39f319f019cee72d9c90">Hypertable::Error::COMM_RECEIVE_ERROR</a> =  0x00010007, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26e545cd90dc24ec4c5d4016e0fb8e670">Hypertable::Error::COMM_POLL_ERROR</a> =  0x00010008, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26143bce2c94306e9b622363a41879353">Hypertable::Error::COMM_CONFLICTING_ADDRESS</a> =  0x00010009, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b213a51d9df2d44c210d6f5ab924e58b61">Hypertable::Error::COMM_SOCKET_ERROR</a> =  0x0001000A, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26143bce2c94306e9b622363a41879353">Hypertable::Error::COMM_CONFLICTING_ADDRESS</a> =  0x00010009, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b213a51d9df2d44c210d6f5ab924e58b61">Hypertable::Error::COMM_SOCKET_ERROR</a> =  0x0001000A, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2cb54e6a8d22cc4870a0dae2a34d86348">Hypertable::Error::COMM_BIND_ERROR</a> =  0x0001000B, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b244dad1e5f03f306591123246b93bf79f">Hypertable::Error::COMM_LISTEN_ERROR</a> =  0x0001000C, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b253ce25c907b874979a5eb3565c50a80d">Hypertable::Error::COMM_HEADER_CHECKSUM_MISMATCH</a> =  0x0001000D, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d372dbf3fd9141108fe79d40c2b1e437">Hypertable::Error::COMM_PAYLOAD_CHECKSUM_MISMATCH</a> =  0x0001000E, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b253ce25c907b874979a5eb3565c50a80d">Hypertable::Error::COMM_HEADER_CHECKSUM_MISMATCH</a> =  0x0001000D, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d372dbf3fd9141108fe79d40c2b1e437">Hypertable::Error::COMM_PAYLOAD_CHECKSUM_MISMATCH</a> =  0x0001000E, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2ffad917eeaa7a766fd2ce8f8a56c4af9">Hypertable::Error::DFSBROKER_BAD_FILE_HANDLE</a> =  0x00020001, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c2e4e3925a09bbc1f394aabb8f75fd56">Hypertable::Error::DFSBROKER_IO_ERROR</a> =  0x00020002, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2155fd69032d04ba2e191b6ba3b94fef6">Hypertable::Error::DFSBROKER_FILE_NOT_FOUND</a> =  0x00020003, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26527baecd0c51c3c80c73a9b6055878e">Hypertable::Error::DFSBROKER_BAD_FILENAME</a> =  0x00020004, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2155fd69032d04ba2e191b6ba3b94fef6">Hypertable::Error::DFSBROKER_FILE_NOT_FOUND</a> =  0x00020003, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26527baecd0c51c3c80c73a9b6055878e">Hypertable::Error::DFSBROKER_BAD_FILENAME</a> =  0x00020004, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23a63e380ab26e55d0cb4f988c50afe81">Hypertable::Error::DFSBROKER_PERMISSION_DENIED</a> =  0x00020005, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2e3fd994c9414f68fe7a5785930c4f79d">Hypertable::Error::DFSBROKER_INVALID_ARGUMENT</a> =  0x00020006, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dc34d62569f83914171f9b11adbc5a19">Hypertable::Error::DFSBROKER_INVALID_CONFIG</a> =  0x00020007, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24fc66eff07e88f901401d406b1ca07e8">Hypertable::Error::HYPERSPACE_IO_ERROR</a> =  0x00030001, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dc34d62569f83914171f9b11adbc5a19">Hypertable::Error::DFSBROKER_INVALID_CONFIG</a> =  0x00020007, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24fc66eff07e88f901401d406b1ca07e8">Hypertable::Error::HYPERSPACE_IO_ERROR</a> =  0x00030001, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a4f58029b3d7bbbbf1637170e229745e">Hypertable::Error::HYPERSPACE_CREATE_FAILED</a> =  0x00030002, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6eeed0b88f986319667fadf32c7a3eb">Hypertable::Error::HYPERSPACE_FILE_NOT_FOUND</a> =  0x00030003, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Hypertable::Error::HYPERSPACE_ATTR_NOT_FOUND</a> =  0x00030004, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2e12cb453de81c35e9289f25807d60ac6">Hypertable::Error::HYPERSPACE_DELETE_ERROR</a> =  0x00030005, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Hypertable::Error::HYPERSPACE_ATTR_NOT_FOUND</a> =  0x00030004, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2e12cb453de81c35e9289f25807d60ac6">Hypertable::Error::HYPERSPACE_DELETE_ERROR</a> =  0x00030005, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b280d6ae041bebcdd03e0c06a63f553eb6">Hypertable::Error::HYPERSPACE_BAD_PATHNAME</a> =  0x00030006, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b27085d1fbbde510ecf9a285113cc62406">Hypertable::Error::HYPERSPACE_PERMISSION_DENIED</a> =  0x00030007, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a38fc4a0041daa6515f752d5793980e7">Hypertable::Error::HYPERSPACE_EXPIRED_SESSION</a> =  0x00030008, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26b8a455adfa95b9c7036a395d5d5e2f2">Hypertable::Error::HYPERSPACE_FILE_EXISTS</a> =  0x00030009, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a38fc4a0041daa6515f752d5793980e7">Hypertable::Error::HYPERSPACE_EXPIRED_SESSION</a> =  0x00030008, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26b8a455adfa95b9c7036a395d5d5e2f2">Hypertable::Error::HYPERSPACE_FILE_EXISTS</a> =  0x00030009, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b3aec9b205db9f2837326f15251f9d5e">Hypertable::Error::HYPERSPACE_IS_DIRECTORY</a> =  0x0003000A, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2273e468803825b74423058594a7920e6">Hypertable::Error::HYPERSPACE_INVALID_HANDLE</a> =  0x0003000B, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f570b00f075832ebc0e725fb6b1e0eaa">Hypertable::Error::HYPERSPACE_REQUEST_CANCELLED</a> =  0x0003000C, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29503cc2aefef532aa72b83cca13bb44d">Hypertable::Error::HYPERSPACE_MODE_RESTRICTION</a> =  0x0003000D, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f570b00f075832ebc0e725fb6b1e0eaa">Hypertable::Error::HYPERSPACE_REQUEST_CANCELLED</a> =  0x0003000C, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29503cc2aefef532aa72b83cca13bb44d">Hypertable::Error::HYPERSPACE_MODE_RESTRICTION</a> =  0x0003000D, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b22f0cfb1304832665ae9bdf8cd1f49795">Hypertable::Error::HYPERSPACE_ALREADY_LOCKED</a> =  0x0003000E, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2049235d4d2b6cb0a79f8dc104ea01c75">Hypertable::Error::HYPERSPACE_LOCK_CONFLICT</a> =  0x0003000F, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4b8dd0262e637fd3a34a1d7ddf806cb">Hypertable::Error::HYPERSPACE_NOT_LOCKED</a> =  0x00030010, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Hypertable::Error::HYPERSPACE_BAD_ATTRIBUTE</a> =  0x00030011, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f4b8dd0262e637fd3a34a1d7ddf806cb">Hypertable::Error::HYPERSPACE_NOT_LOCKED</a> =  0x00030010, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2eaf0129138ac6f44c14e6389ee6810b1">Hypertable::Error::HYPERSPACE_BAD_ATTRIBUTE</a> =  0x00030011, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26a4f2d571685744bfaed8cd05d5e15cc">Hypertable::Error::HYPERSPACE_BERKELEYDB_ERROR</a> =  0x00030012, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c4e8013639ec55decee4eec60789e717">Hypertable::Error::HYPERSPACE_DIR_NOT_EMPTY</a> =  0x00030013, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d239764467d7c3757b2322007cc9efc8">Hypertable::Error::HYPERSPACE_BERKELEYDB_DEADLOCK</a> =  0x00030014, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b7dec0da39a22e5c6f2607f34a9b4929">Hypertable::Error::HYPERSPACE_FILE_OPEN</a> =  0x00030015, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d239764467d7c3757b2322007cc9efc8">Hypertable::Error::HYPERSPACE_BERKELEYDB_DEADLOCK</a> =  0x00030014, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b7dec0da39a22e5c6f2607f34a9b4929">Hypertable::Error::HYPERSPACE_FILE_OPEN</a> =  0x00030015, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b220f99502b4c957c7fa541a1fe50425f3">Hypertable::Error::HYPERSPACE_CLI_PARSE_ERROR</a> =  0x00030016, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a39b41213844bd73d856160bfaf4274d">Hypertable::Error::MASTER_TABLE_EXISTS</a> =  0x00040001, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2482d275675f7187c234f41b55c7ade50">Hypertable::Error::MASTER_BAD_SCHEMA</a> =  0x00040002, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2220e350af23aa7fb7b0cad7089424da4">Hypertable::Error::MASTER_NOT_RUNNING</a> =  0x00040003, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f84f50f08796a9b96d5949f76ce0c456">Hypertable::Error::MASTER_NO_RANGESERVERS</a> =  0x00040004, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2482d275675f7187c234f41b55c7ade50">Hypertable::Error::MASTER_BAD_SCHEMA</a> =  0x00040002, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2220e350af23aa7fb7b0cad7089424da4">Hypertable::Error::MASTER_NOT_RUNNING</a> =  0x00040003, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2f84f50f08796a9b96d5949f76ce0c456">Hypertable::Error::MASTER_NO_RANGESERVERS</a> =  0x00040004, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b25a6ae949cb59480cc39ad95a50327971">Hypertable::Error::MASTER_FILE_NOT_LOCKED</a> =  0x00040005, 
+<br>
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b248d983b843acfe1972bcb6b065d6a6e4">Hypertable::Error::MASTER_RANGESERVER_ALREADY_REGISTERED</a> =  0x00040006, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2ba7f6b260c71a394562e9db9b6fd2cee">Hypertable::Error::RANGESERVER_GENERATION_MISMATCH</a> =  0x00050001, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b28a9d6598cea3d2f4fdb721a7f59fc2f3">Hypertable::Error::RANGESERVER_RANGE_ALREADY_LOADED</a> =  0x00050002, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29e7b90987be66b213db2066829d62704">Hypertable::Error::RANGESERVER_RANGE_MISMATCH</a> =  0x00050003, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29e7b90987be66b213db2066829d62704">Hypertable::Error::RANGESERVER_RANGE_MISMATCH</a> =  0x00050003, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c438a6a00792ddb51a5189a64f07bbda">Hypertable::Error::RANGESERVER_NONEXISTENT_RANGE</a> =  0x00050004, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c438a6a00792ddb51a5189a64f07bbda">Hypertable::Error::RANGESERVER_NONEXISTENT_RANGE</a> =  0x00050004, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2769e163254af46335740c9ff2e12fedc">Hypertable::Error::RANGESERVER_OUT_OF_RANGE</a> =  0x00050005, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b272f250ef3a753ac81c466b499121e99a">Hypertable::Error::RANGESERVER_RANGE_NOT_FOUND</a> =  0x00050006, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24993ce1514cffdb9b1970a50e2c461ac">Hypertable::Error::RANGESERVER_INVALID_SCANNER_ID</a> =  0x00050007, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24993ce1514cffdb9b1970a50e2c461ac">Hypertable::Error::RANGESERVER_INVALID_SCANNER_ID</a> =  0x00050007, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b254dae7b84a730a0ea7fde81f16da7458">Hypertable::Error::RANGESERVER_SCHEMA_PARSE_ERROR</a> =  0x00050008, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b254dae7b84a730a0ea7fde81f16da7458">Hypertable::Error::RANGESERVER_SCHEMA_PARSE_ERROR</a> =  0x00050008, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2bab684a5e81c52ab470adbed0600b66f">Hypertable::Error::RANGESERVER_SCHEMA_INVALID_CFID</a> =  0x00050009, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2d4c6fda9013f022c263c28decf948372">Hypertable::Error::RANGESERVER_INVALID_COLUMNFAMILY</a> =  0x0005000A, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2960444f6a72014b3c5f277a509598d8f">Hypertable::Error::RANGESERVER_TRUNCATED_COMMIT_LOG</a> =  0x0005000B, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2960444f6a72014b3c5f277a509598d8f">Hypertable::Error::RANGESERVER_TRUNCATED_COMMIT_LOG</a> =  0x0005000B, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b210bb28915dbea986bc88cb2dd62e0e0c">Hypertable::Error::RANGESERVER_NO_METADATA_FOR_RANGE</a> =  0x0005000C, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b210bb28915dbea986bc88cb2dd62e0e0c">Hypertable::Error::RANGESERVER_NO_METADATA_FOR_RANGE</a> =  0x0005000C, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24caa1e959e15baad8308c8d28aa99961">Hypertable::Error::RANGESERVER_SHUTTING_DOWN</a> =  0x0005000D, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b219d66de2969400815c8fb13446cac053">Hypertable::Error::RANGESERVER_CORRUPT_COMMIT_LOG</a> =  0x0005000E, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24cd9ac3feec273b16a243b9d00c410d6">Hypertable::Error::RANGESERVER_UNAVAILABLE</a> =  0x0005000F, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b24cd9ac3feec273b16a243b9d00c410d6">Hypertable::Error::RANGESERVER_UNAVAILABLE</a> =  0x0005000F, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b253cc948a8db16ea2bfc555b5f2cc3542">Hypertable::Error::RANGESERVER_TIMESTAMP_ORDER_ERROR</a> =  0x00050010, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26a1e13c39d95709a2a1ca12b5ab53b29">Hypertable::Error::RANGESERVER_REVISION_ORDER_ERROR</a> =  0x00050010, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b26b0a35007fa62f8b53a43958fa591a96">Hypertable::Error::RANGESERVER_ROW_OVERFLOW</a> =  0x00050011, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21c57efdaf5b515117220a7022e3e4a61">Hypertable::Error::RANGESERVER_TABLE_NOT_FOUND</a> =  0x00050012, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a79e34c7f45ec9e9de73d907cc68954f">Hypertable::Error::RANGESERVER_BAD_SCAN_SPEC</a> =  0x00050013, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a79e34c7f45ec9e9de73d907cc68954f">Hypertable::Error::RANGESERVER_BAD_SCAN_SPEC</a> =  0x00050013, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b21dad16254a3cbb4139642e8aeb557ffa">Hypertable::Error::RANGESERVER_CLOCK_SKEW</a> =  0x00050014, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b287ea718657269d81582eaa0d2ebc5977">Hypertable::Error::RANGESERVER_BAD_CELLSTORE_FILENAME</a> =  0x00050015, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a2f9600fca76152df3ce25e7c64e3fde">Hypertable::Error::RANGESERVER_CORRUPT_CELLSTORE</a> =  0x00050016, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b200c2b65e26be6111cbfb0adb4d91ebd3">Hypertable::Error::HQL_BAD_LOAD_FILE_FORMAT</a> =  0x00060001, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2523145ce47426f1505b4c62a0ac8dd7a">Hypertable::Error::METALOG_VERSION_MISMATCH</a> =  0x00070001, 
+<br>
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2523145ce47426f1505b4c62a0ac8dd7a">Hypertable::Error::METALOG_VERSION_MISMATCH</a> =  0x00070001, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2dd9352427e64d2185061a2ea7e4c29f1">Hypertable::Error::METALOG_BAD_RS_HEADER</a> =  0x00070002, 
-<br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a6a309f64523f532b2542721eb6569b4">Hypertable::Error::METALOG_BAD_M_HEADER</a> =  0x00070003, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a6a309f64523f532b2542721eb6569b4">Hypertable::Error::METALOG_BAD_M_HEADER</a> =  0x00070003, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29c559f76a85ed3e95e9ca27fde16b44b">Hypertable::Error::METALOG_ENTRY_TRUNCATED</a> =  0x00070004, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23156f57e460038e5fe8e34cc302dd03e">Hypertable::Error::METALOG_CHECKSUM_MISMATCH</a> =  0x00070005, 
+<br>
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23156f57e460038e5fe8e34cc302dd03e">Hypertable::Error::METALOG_CHECKSUM_MISMATCH</a> =  0x00070005, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a8d69ad0026021d13b523da4574bbaf6">Hypertable::Error::METALOG_ENTRY_BAD_TYPE</a> =  0x00070006, 
-<br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b247cb21cf59ed9e1037fb4ccada9855e5">Hypertable::Error::METALOG_ENTRY_BAD_ORDER</a> =  0x00070007, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b247cb21cf59ed9e1037fb4ccada9855e5">Hypertable::Error::METALOG_ENTRY_BAD_ORDER</a> =  0x00070007, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2747406643f0292d4ddf606d790ea05d0">Hypertable::Error::SERIALIZATION_INPUT_OVERRUN</a> =  0x00080001, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2421de061ad517108e58a098f1e75a322">Hypertable::Error::SERIALIZATION_BAD_VINT</a> =  0x00080002, 
-<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6a1aab596087ac085b50e05de973fcc">Hypertable::Error::SERIALIZATION_BAD_VSTR</a> =  0x00080003, 
 <br>
-&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2fe50fa403766b5b437c26712468dfeff">Hypertable::Error::THRIFTBROKER_BAD_SCANNER_ID</a> =  0x00090001, 
+&nbsp;&nbsp;<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2421de061ad517108e58a098f1e75a322">Hypertable::Error::SERIALIZATION_BAD_VINT</a> =  0x00080002, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c6a1aab596087ac085b50e05de973fcc">Hypertable::Error::SERIALIZATION_BAD_VSTR</a> =  0x00080003, 
+<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2fe50fa403766b5b437c26712468dfeff">Hypertable::Error::THRIFTBROKER_BAD_SCANNER_ID</a> =  0x00090001, 
 <a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29d90d1520c0119484777cb094c0720d8">Hypertable::Error::THRIFTBROKER_BAD_MUTATOR_ID</a> =  0x00090002
 <br>
  }</td></tr>
@@ -223,6 +234,10 @@ Include dependency graph for Error.h:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">const char *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable_1_1_error.html#988b61d2733dd84d9c5559931e338599">Hypertable::Error::get_text</a> (int <a class="el" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#884d59f22c4851cfb1e89c2a52c0eac1">Hypertable::operator&lt;&lt;</a> (std::ostream &amp;out, const <a class="el" href="class_hypertable_1_1_exception.html">Exception</a> &amp;e)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#4ffa90573ea496ac49346daa653d9159">Hypertable::operator&lt;&lt;</a> (std::ostream &amp;out, const ExceptionMessageRenderer &amp;r)</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">std::ostream &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespace_hypertable.html#055f6cacb9e74bce8f4222557b089252">Hypertable::operator&lt;&lt;</a> (std::ostream &amp;out, const ExceptionMessagesRenderer &amp;r)</td></tr>
 
 </table>
 <hr><h2>Define Documentation</h2>
@@ -249,7 +264,7 @@ Include dependency graph for Error.h:</div>
 Convenience macros to create an exception stack trace. 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00216">216</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00277">277</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -277,7 +292,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00219">219</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00280">280</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -299,7 +314,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00247">247</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00308">308</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -316,7 +331,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00248">248</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00309">309</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -345,15 +360,15 @@ Convenience macros to create an exception stack trace.
     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20ed4421fa5f40e5bdd815b1b4778a8b7">Error::BAD_MEMORY_ALLOCATION</a>, _fmt_, __VA_ARGS__); \
   } \
   <span class="keywordflow">catch</span> (std::exception &amp;e) { \
-    <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20c76a1ee77cbe2e0d65de2b9fb8048d2">Error::EXTERNAL</a>, <span class="stringliteral">"Caught std::exception: %s "</span> _fmt_,  e.what(), \
+    <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20c76a1ee77cbe2e0d65de2b9fb8048d2">Error::EXTERNAL</a>, <span class="stringliteral">"caught std::exception: %s "</span> _fmt_,  e.what(), \
               __VA_ARGS__); \
   } \
   <span class="keywordflow">catch</span> (...) { \
-    <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Caught unknown exception "</span> _fmt_, __VA_ARGS__); \
+    <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"caught unknown exception "</span> _fmt_, __VA_ARGS__); \
     <span class="keywordflow">throw</span>; \
   }
 </pre></div>
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00233">233</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00294">294</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -378,7 +393,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00222">222</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00283">283</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -406,7 +421,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00224">224</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00285">285</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -431,7 +446,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00225">225</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00286">286</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -462,7 +477,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00230">230</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00291">291</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -484,7 +499,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00223">223</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00284">284</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -512,7 +527,7 @@ Convenience macros to create an exception stack trace.
 
 <p>
 
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00227">227</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00288">288</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
@@ -541,11 +556,11 @@ Convenience macros to create an exception stack trace.
   <a class="code" href="_error_8h.html#c6a06df5b797a956ef174f7494840e2d">HT_RETHROW</a>(_s_) \
 } <span class="keywordflow">while</span> (0)
 </pre></div>
-<p>Definition at line <a class="el" href="_error_8h-source.html#l00250">250</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
+<p>Definition at line <a class="el" href="_error_8h-source.html#l00311">311</a> of file <a class="el" href="_error_8h-source.html">Error.h</a>.</p>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:31:08 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:48 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

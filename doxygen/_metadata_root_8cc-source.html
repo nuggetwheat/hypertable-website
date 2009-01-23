@@ -72,42 +72,43 @@
 <a name="l00080"></a>00080   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a> &lt; <a class="code" href="class_hypertable_1_1_metadata_root.html#1baa477dfcd6428a395dc4244ff9b71e">m_agnames</a>.size()) {
 <a name="l00081"></a>00081     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> value(0);
 <a name="l00082"></a>00082     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> attrname = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"files."</span> + <a class="code" href="class_hypertable_1_1_metadata_root.html#1baa477dfcd6428a395dc4244ff9b71e">m_agnames</a>[<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>];
-<a name="l00083"></a>00083     <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>++;
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085     <span class="keywordflow">try</span> {
-<a name="l00086"></a>00086       <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), value);
-<a name="l00087"></a>00087     }
-<a name="l00088"></a>00088     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00089"></a>00089       <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Error::HYPERSPACE_ATTR_NOT_FOUND</a>)
-<a name="l00090"></a>00090         <span class="keywordflow">continue</span>;
-<a name="l00091"></a>00091       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem getting attribute '%s' on Hyperspace file "</span>
-<a name="l00092"></a>00092                 <span class="stringliteral">"'/hypertable/root' - %s"</span>, attrname.c_str(),
-<a name="l00093"></a>00093                 <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
-<a name="l00094"></a>00094       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00095"></a>00095     }
-<a name="l00096"></a>00096     files = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00097"></a>00097     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099 
-<a name="l00100"></a>00100   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00101"></a>00101 }
-<a name="l00102"></a>00102 
+<a name="l00083"></a>00083     ag_name = <a class="code" href="class_hypertable_1_1_metadata_root.html#1baa477dfcd6428a395dc4244ff9b71e">m_agnames</a>[<a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>];
+<a name="l00084"></a>00084     <a class="code" href="class_hypertable_1_1_metadata_root.html#3a268116940e92716aed850c6f02c63a">m_next</a>++;
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086     <span class="keywordflow">try</span> {
+<a name="l00087"></a>00087       <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_get(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), value);
+<a name="l00088"></a>00088     }
+<a name="l00089"></a>00089     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00090"></a>00090       <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() == <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2796a9a0f4c5b8caeb5c8e1ef40424d38">Error::HYPERSPACE_ATTR_NOT_FOUND</a>)
+<a name="l00091"></a>00091         <span class="keywordflow">continue</span>;
+<a name="l00092"></a>00092       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem getting attribute '%s' on Hyperspace file "</span>
+<a name="l00093"></a>00093                 <span class="stringliteral">"'/hypertable/root' - %s"</span>, attrname.c_str(),
+<a name="l00094"></a>00094                 <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00095"></a>00095       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00096"></a>00096     }
+<a name="l00097"></a>00097     files = (<span class="keyword">const</span> <span class="keywordtype">char</span> *)value.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00098"></a>00098     <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00099"></a>00099   }
+<a name="l00100"></a>00100 
+<a name="l00101"></a>00101   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00102"></a>00102 }
 <a name="l00103"></a>00103 
 <a name="l00104"></a>00104 
-<a name="l00105"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#023d239e5328db7eaa0b8678d03641ee">00105</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#023d239e5328db7eaa0b8678d03641ee">MetadataRoot::write_files</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;ag_name, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;files) {
-<a name="l00106"></a>00106   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> attrname = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"files."</span> + ag_name;
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108   <span class="keywordflow">try</span> {
-<a name="l00109"></a>00109     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_set(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), files.c_str(),
-<a name="l00110"></a>00110                                      files.length());
-<a name="l00111"></a>00111   }
-<a name="l00112"></a>00112   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00113"></a>00113     <a class="code" href="_error_8h.html#b49551352d22486918141c548daffc80">HT_THROW2</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Problem creating attribute '"</span> + attrname
-<a name="l00114"></a>00114               + <span class="stringliteral">"' on Hyperspace file '/hypertable/root'"</span>);
-<a name="l00115"></a>00115   }
-<a name="l00116"></a>00116 
-<a name="l00117"></a>00117 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00105"></a>00105 
+<a name="l00106"></a><a class="code" href="class_hypertable_1_1_metadata_root.html#023d239e5328db7eaa0b8678d03641ee">00106</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_metadata_root.html#023d239e5328db7eaa0b8678d03641ee">MetadataRoot::write_files</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;ag_name, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;files) {
+<a name="l00107"></a>00107   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> attrname = (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"files."</span> + ag_name;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109   <span class="keywordflow">try</span> {
+<a name="l00110"></a>00110     <a class="code" href="class_hypertable_1_1_global.html#d0563f57beaa0953fe426c5eefb5a22b">Global::hyperspace_ptr</a>-&gt;attr_set(<a class="code" href="class_hypertable_1_1_metadata_root.html#2453fa349c4b46a1f9e86452d2c1aea3">m_handle</a>, attrname.c_str(), files.c_str(),
+<a name="l00111"></a>00111                                      files.length());
+<a name="l00112"></a>00112   }
+<a name="l00113"></a>00113   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00114"></a>00114     <a class="code" href="_error_8h.html#b49551352d22486918141c548daffc80">HT_THROW2</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, (<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>)<span class="stringliteral">"Problem creating attribute '"</span> + attrname
+<a name="l00115"></a>00115               + <span class="stringliteral">"' on Hyperspace file '/hypertable/root'"</span>);
+<a name="l00116"></a>00116   }
+<a name="l00117"></a>00117 
+<a name="l00118"></a>00118 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:43 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

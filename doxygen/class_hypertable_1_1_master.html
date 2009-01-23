@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::Master:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_master__coll__graph.png" border="0" usemap="#_hypertable_1_1_master__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_master__coll__map">
-<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="343,70,535,96"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="71,34,143,60"><area shape="rect" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer." alt="" coords="341,120,536,147"><area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="359,171,519,198"><area shape="rect" href="class_hypertable_1_1_hyperspace_session_handler.html" title="Hypertable::HyperspaceSessionHandler" alt="" coords="308,222,569,248"><area shape="rect" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace..." alt="" coords="5,222,208,248"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="373,272,504,299"></map>
+<area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="184,59,376,85"><area shape="rect" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem." alt="" coords="578,109,738,136"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,29,79,56"><area shape="rect" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer." alt="" coords="560,160,755,187"><area shape="rect" href="class_hypertable_1_1_hyperspace_session_handler.html" title="Hypertable::HyperspaceSessionHandler" alt="" coords="527,211,788,237"><area shape="rect" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace..." alt="" coords="179,211,382,237"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="592,268,723,295"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -83,6 +83,8 @@ Collaboration diagram for Hypertable::Master:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#29759d3a0cc5ae6bd1785f90ef6043f3">create_hyperspace_dir</a> (const <a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;dir)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#53b3f331929093998c16bd867f02f5be">wait_for_initialization</a> ()</td></tr>
+
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#95040805854399738376d19e6623e96d">m_mutex</a></td></tr>
 
@@ -114,9 +116,13 @@ Collaboration diagram for Hypertable::Master:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#3aef09116c60a4bd461cfbc04c18fb8f">m_max_range_bytes</a></td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#d35246551bbc9b56a6c1b3bfd869497c">m_initialization_mutex</a></td></tr>
+
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">temporary vairables  <a href="#d35246551bbc9b56a6c1b3bfd869497c"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">boost::condition&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#0a0ae301a0771cc8a702363ea45acff7">m_initialization_cond</a></td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#86f2fb46856431491147389b92dc29e7">m_initialized</a></td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">temporary vairables  <a href="#86f2fb46856431491147389b92dc29e7"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">ServerMap</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#23d3da77dd3c601ddbd0ccfb0a2a186b">m_server_map</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">ServerMap::iterator&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_master.html#f18989a702e6db16935bcbbaba3fa803">m_server_map_iter</a></td></tr>
@@ -143,7 +149,7 @@ Collaboration diagram for Hypertable::Master:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00103">103</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00106">106</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -243,7 +249,7 @@ Locate tablet servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00226">226</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00229">229</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -278,7 +284,7 @@ Locate tablet servers
 Check for table existence<p>
 Open table file<p>
 Get schema attribute 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00247">247</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00252">252</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -322,7 +328,7 @@ Open METADATA table<p>
 Load root METADATA range<p>
 Write METADATA entry for second-level METADATA range<p>
 Load second-level METADATA range 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00297">297</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00306">306</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -373,7 +379,7 @@ Load second-level METADATA range
 TEMPORARY: Just turns around and assigns new range to caller. 
 <p>
 NOTE: this call can't be protected by a mutex because it can cause the whole system to wedge under certain situations 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00485">485</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00513">513</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -412,7 +418,7 @@ NOTE: this call can't be protected by a mutex because it can cause the whole sys
 
 <p>
 Open table file 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00527">527</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00557">557</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -434,7 +440,7 @@ Open table file
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00666">666</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00697">697</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -501,7 +507,7 @@ Do (or schedule) tablet re-assignment here
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00993">993</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l01024">1024</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -541,7 +547,7 @@ Write schema attribute<p>
 Create /hypertable/tables/&lt;table&gt;/&lt;accessGroup&gt; directories for this table in DFS<p>
 Write METADATA entry, single range covering entire table '\0' to 0xff 0xff<p>
 TEMPORARY: ask the one <a class="el" href="class_hypertable_1_1_range.html" title="Represents a table row range.">Range</a> Server that we know about to load the range 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00705">705</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00736">736</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -566,7 +572,7 @@ PRIVATE Methods.
 
 <p>
 Create /hypertable/root 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00863">863</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00894">894</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -589,7 +595,7 @@ Create /hypertable/root
 
 <p>
 Open /hyperspace/servers directory and scan for range servers 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00911">911</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00942">942</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -611,7 +617,28 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l00973">973</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l01004">1004</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="53b3f331929093998c16bd867f02f5be"></a><!-- doxytag: member="Hypertable::Master::wait_for_initialization" ref="53b3f331929093998c16bd867f02f5be" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::Master::wait_for_initialization           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8cc-source.html#l01029">1029</a> of file <a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -629,7 +656,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00084">84</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00085">85</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -646,7 +673,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00085">85</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00086">86</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -663,7 +690,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00086">86</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00087">87</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -680,7 +707,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00087">87</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00088">88</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -697,7 +724,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00088">88</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00089">89</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -714,7 +741,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00089">89</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00090">90</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -731,7 +758,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00090">90</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00091">91</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -748,7 +775,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00091">91</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00092">92</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -765,7 +792,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00092">92</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00093">93</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -782,7 +809,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00093">93</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00094">94</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -799,7 +826,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00094">94</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00095">95</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -816,7 +843,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00095">95</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00096">96</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -833,7 +860,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00096">96</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00097">97</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -850,7 +877,7 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00097">97</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00098">98</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -867,7 +894,43 @@ Open /hyperspace/servers directory and scan for range servers
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00098">98</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00099">99</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="d35246551bbc9b56a6c1b3bfd869497c"></a><!-- doxytag: member="Hypertable::Master::m_initialization_mutex" ref="d35246551bbc9b56a6c1b3bfd869497c" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_mutex.html">Mutex</a> Hypertable::Master::m_initialization_mutex<code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+temporary vairables 
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00102">102</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0a0ae301a0771cc8a702363ea45acff7"></a><!-- doxytag: member="Hypertable::Master::m_initialization_cond" ref="0a0ae301a0771cc8a702363ea45acff7" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">boost::condition Hypertable::Master::m_initialization_cond<code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00103">103</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -883,10 +946,8 @@ Open /hyperspace/servers directory and scan for range servers
 <div class="memdoc">
 
 <p>
-temporary vairables 
-<p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00101">101</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00104">104</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -903,7 +964,7 @@ temporary vairables
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00105">105</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00108">108</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -920,7 +981,7 @@ temporary vairables
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00106">106</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00109">109</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -937,7 +998,7 @@ temporary vairables
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00107">107</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00110">110</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
@@ -954,13 +1015,13 @@ temporary vairables
 
 <p>
 
-<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00109">109</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
+<p>Definition at line <a class="el" href="_hypertable_2_master_2_master_8h-source.html#l00112">112</a> of file <a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/Master/<a class="el" href="_hypertable_2_master_2_master_8h-source.html">Master.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Master/<a class="el" href="_hypertable_2_master_2_master_8cc-source.html">Master.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:09 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:22 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

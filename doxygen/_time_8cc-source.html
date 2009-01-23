@@ -19,68 +19,78 @@
 <h1>Time.cc</h1><a href="_time_8cc.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 
 <a name="l00022"></a>00022 <span class="preprocessor">#include "<a class="code" href="_compat_8h.html">Compat.h</a>"</span>
 <a name="l00023"></a>00023 
-<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;iomanip&gt;</span>
-<a name="l00025"></a>00025 
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_time_8h.html">Time.h</a>"</span>
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Mutex.h</a>"</span>
-<a name="l00028"></a>00028 
+<a name="l00024"></a>00024 <span class="preprocessor">#include &lt;<a class="code" href="_time_8h.html">time.h</a>&gt;</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;iomanip&gt;</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_time_8h.html">Time.h</a>"</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_mutex_8h.html">Mutex.h</a>"</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="keyword">using namespace </span>std;
-<a name="l00031"></a>00031 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 uint64_t
-<a name="l00034"></a><a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">00034</a> <a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">Hypertable::get_ts64</a>() {
-<a name="l00035"></a>00035   <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a> mutex;
-<a name="l00036"></a>00036   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(mutex);
-<a name="l00037"></a>00037   <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> now;
-<a name="l00038"></a>00038   <span class="keywordflow">return</span> ((uint64_t)now.sec * 1000000000LL) + (uint64_t)now.nsec;
-<a name="l00039"></a>00039 }
-<a name="l00040"></a>00040 
-<a name="l00041"></a><a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">00041</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">Hypertable::xtime_add_millis</a>(boost::xtime &amp;xt, uint32_t millis) {
-<a name="l00042"></a>00042   uint64_t nsec = (uint64_t)xt.nsec + ((uint64_t)millis * 1000000LL);
-<a name="l00043"></a>00043   <span class="keywordflow">if</span> (nsec &gt; 1000000000LL) {
-<a name="l00044"></a>00044     uint32_t new_secs = xt.sec + (uint32_t)(nsec / 1000000000LL);
-<a name="l00045"></a>00045     <span class="keywordflow">if</span> (new_secs &lt; xt.sec)
-<a name="l00046"></a>00046       <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00047"></a>00047     xt.sec = new_secs;
-<a name="l00048"></a>00048     xt.nsec = (uint32_t)(nsec % 1000000000LL);
-<a name="l00049"></a>00049   }
-<a name="l00050"></a>00050   <span class="keywordflow">else</span>
-<a name="l00051"></a>00051     xt.nsec = nsec;
-<a name="l00052"></a>00052   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00053"></a>00053 }
-<a name="l00054"></a>00054 
-<a name="l00055"></a><a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">00055</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">Hypertable::xtime_sub_millis</a>(boost::xtime &amp;xt, uint32_t millis) {
-<a name="l00056"></a>00056   uint64_t nsec = (uint64_t)millis * 1000000LL;
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058   <span class="keywordflow">if</span> (nsec &lt;= (uint64_t)xt.nsec)
-<a name="l00059"></a>00059     xt.nsec -= (uint32_t)nsec;
-<a name="l00060"></a>00060   <span class="keywordflow">else</span> {
-<a name="l00061"></a>00061     uint32_t secs = millis / 1000;
-<a name="l00062"></a>00062     uint32_t rem = (uint32_t)(nsec % 1000000000LL);
-<a name="l00063"></a>00063     <span class="keywordflow">if</span> (rem &lt;= (uint32_t)xt.nsec) {
-<a name="l00064"></a>00064       <span class="keywordflow">if</span> (secs &lt; xt.sec)
-<a name="l00065"></a>00065         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00066"></a>00066       xt.sec -= secs;
-<a name="l00067"></a>00067       xt.nsec -= rem;
-<a name="l00068"></a>00068     }
-<a name="l00069"></a>00069     <span class="keywordflow">else</span> {
-<a name="l00070"></a>00070       secs++;
-<a name="l00071"></a>00071       <span class="keywordflow">if</span> (secs &lt; xt.sec)
-<a name="l00072"></a>00072         <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00073"></a>00073       xt.sec -= secs;
-<a name="l00074"></a>00074       xt.nsec = 1000000000LL - (rem % xt.nsec);
-<a name="l00075"></a>00075     }
-<a name="l00076"></a>00076   }
-<a name="l00077"></a>00077   <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00078"></a>00078 }
-<a name="l00079"></a>00079 
-<a name="l00080"></a><a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">00080</a> std::ostream &amp;<a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">Hypertable::hires_ts</a>(std::ostream &amp;out) {
-<a name="l00081"></a>00081   <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> now;
-<a name="l00082"></a>00082   out &lt;&lt; now.sec &lt;&lt;<span class="charliteral">'.'</span>&lt;&lt; setw(9) &lt;&lt; setfill(<span class="charliteral">'0'</span>) &lt;&lt; now.nsec;
-<a name="l00083"></a>00083   <span class="keywordflow">return</span> out;
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="keyword">using namespace </span>std;
+<a name="l00032"></a>00032 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 uint64_t
+<a name="l00035"></a><a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">00035</a> <a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">Hypertable::get_ts64</a>() {
+<a name="l00036"></a>00036   <span class="keyword">static</span> <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a> mutex;
+<a name="l00037"></a>00037   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(mutex);
+<a name="l00038"></a>00038   <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> now;
+<a name="l00039"></a>00039   <span class="keywordflow">return</span> ((uint64_t)now.sec * 1000000000LL) + (uint64_t)now.nsec;
+<a name="l00040"></a>00040 }
+<a name="l00041"></a>00041 
+<a name="l00042"></a><a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">00042</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">Hypertable::xtime_add_millis</a>(boost::xtime &amp;xt, uint32_t millis) {
+<a name="l00043"></a>00043   uint64_t nsec = (uint64_t)xt.nsec + ((uint64_t)millis * 1000000LL);
+<a name="l00044"></a>00044   <span class="keywordflow">if</span> (nsec &gt; 1000000000LL) {
+<a name="l00045"></a>00045     uint32_t new_secs = xt.sec + (uint32_t)(nsec / 1000000000LL);
+<a name="l00046"></a>00046     <span class="keywordflow">if</span> (new_secs &lt; xt.sec)
+<a name="l00047"></a>00047       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00048"></a>00048     xt.sec = new_secs;
+<a name="l00049"></a>00049     xt.nsec = (uint32_t)(nsec % 1000000000LL);
+<a name="l00050"></a>00050   }
+<a name="l00051"></a>00051   <span class="keywordflow">else</span>
+<a name="l00052"></a>00052     xt.nsec = nsec;
+<a name="l00053"></a>00053   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00054"></a>00054 }
+<a name="l00055"></a>00055 
+<a name="l00056"></a><a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">00056</a> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">Hypertable::xtime_sub_millis</a>(boost::xtime &amp;xt, uint32_t millis) {
+<a name="l00057"></a>00057   uint64_t nsec = (uint64_t)millis * 1000000LL;
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059   <span class="keywordflow">if</span> (nsec &lt;= (uint64_t)xt.nsec)
+<a name="l00060"></a>00060     xt.nsec -= (uint32_t)nsec;
+<a name="l00061"></a>00061   <span class="keywordflow">else</span> {
+<a name="l00062"></a>00062     uint32_t secs = millis / 1000;
+<a name="l00063"></a>00063     uint32_t rem = (uint32_t)(nsec % 1000000000LL);
+<a name="l00064"></a>00064     <span class="keywordflow">if</span> (rem &lt;= (uint32_t)xt.nsec) {
+<a name="l00065"></a>00065       <span class="keywordflow">if</span> (secs &lt; xt.sec)
+<a name="l00066"></a>00066         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00067"></a>00067       xt.sec -= secs;
+<a name="l00068"></a>00068       xt.nsec -= rem;
+<a name="l00069"></a>00069     }
+<a name="l00070"></a>00070     <span class="keywordflow">else</span> {
+<a name="l00071"></a>00071       secs++;
+<a name="l00072"></a>00072       <span class="keywordflow">if</span> (secs &lt; xt.sec)
+<a name="l00073"></a>00073         <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00074"></a>00074       xt.sec -= secs;
+<a name="l00075"></a>00075       xt.nsec = 1000000000LL - (rem % xt.nsec);
+<a name="l00076"></a>00076     }
+<a name="l00077"></a>00077   }
+<a name="l00078"></a>00078   <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">00081</a> std::ostream &amp;<a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">Hypertable::hires_ts</a>(std::ostream &amp;out) {
+<a name="l00082"></a>00082   <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> now;
+<a name="l00083"></a>00083   <span class="keywordflow">return</span> out &lt;&lt; now.sec &lt;&lt;<span class="charliteral">'.'</span>&lt;&lt; setw(9) &lt;&lt; setfill(<span class="charliteral">'0'</span>) &lt;&lt; now.nsec;
 <a name="l00084"></a>00084 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00085"></a>00085 
+<a name="l00086"></a><a class="code" href="namespace_hypertable.html#cafe6e7854fc38a7a91b0b5ac9301f09">00086</a> std::ostream &amp;<a class="code" href="namespace_hypertable.html#cafe6e7854fc38a7a91b0b5ac9301f09">Hypertable::hires_ts_date</a>(std::ostream &amp;out) {
+<a name="l00087"></a>00087   tm tv;
+<a name="l00088"></a>00088   <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> now;
+<a name="l00089"></a>00089   time_t s = now.sec; <span class="comment">// using const time_t * is not convenient</span>
+<a name="l00090"></a>00090   gmtime_r(&amp;s, &amp;tv);
+<a name="l00091"></a>00091   <span class="keywordflow">return</span> out &lt;&lt; tv.tm_year + 1900 &lt;&lt;<span class="charliteral">'-'</span>&lt;&lt; tv.tm_mon + 1 &lt;&lt;<span class="charliteral">'-'</span>&lt;&lt; tv.tm_mday
+<a name="l00092"></a>00092              &lt;&lt;<span class="charliteral">' '</span>&lt;&lt; tv.tm_hour &lt;&lt;<span class="charliteral">':'</span>&lt;&lt; tv.tm_min &lt;&lt;<span class="charliteral">':'</span>&lt;&lt; tv.tm_sec &lt;&lt;<span class="charliteral">'.'</span>
+<a name="l00093"></a>00093              &lt;&lt; setw(9) &lt;&lt; setfill(<span class="charliteral">'0'</span>) &lt;&lt; now.nsec;
+<a name="l00094"></a>00094 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -102,8 +102,8 @@
 <a name="l00104"></a>00104 }
 <a name="l00105"></a>00105 
 <a name="l00106"></a>00106 
-<a name="l00107"></a>00107 <span class="keywordtype">int</span>
-<a name="l00108"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#67313dc1af142616f424ef2c92969453">00108</a> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#67313dc1af142616f424ef2c92969453" title="Creates a new cell store.">CellStoreV0::create</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, uint32_t blocksize,
+<a name="l00107"></a>00107 <span class="keywordtype">void</span>
+<a name="l00108"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#dc40a51f383c77068abe99aa234da4fb">00108</a> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#dc40a51f383c77068abe99aa234da4fb" title="Creates a new cell store.">CellStoreV0::create</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, uint32_t blocksize,
 <a name="l00109"></a>00109                     <span class="keyword">const</span> std::string &amp;compressor) {
 <a name="l00110"></a>00110   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(blocksize*4);
 <a name="l00111"></a>00111 
@@ -136,465 +136,427 @@
 <a name="l00138"></a>00138       (<a class="code" href="class_hypertable_1_1_block_compression_codec.html#66f4afd71d18673317e426ea1ebc9975">BlockCompressionCodec::Type</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e854addc1824ada64b145f3f7e4cdc47">compression_type</a>,
 <a name="l00139"></a>00139       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#768dd30b6a74595bccded47aa9b78116">m_compressor_args</a>);
 <a name="l00140"></a>00140 
-<a name="l00141"></a>00141   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#6dbb0c7029273eb093b899ff1ebc427a" title="Creates a file asynchronously.">create</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>, <span class="keyword">true</span>, -1, -1, -1); }
-<a name="l00142"></a>00142   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00143"></a>00143     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Error creating cellstore: %s"</span>, e.what());
-<a name="l00144"></a>00144     <span class="keywordflow">return</span> e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>();
-<a name="l00145"></a>00145   }
-<a name="l00146"></a>00146   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00147"></a>00147 }
-<a name="l00148"></a>00148 
+<a name="l00141"></a>00141   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#6dbb0c7029273eb093b899ff1ebc427a" title="Creates a file asynchronously.">create</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>, <span class="keyword">true</span>, -1, -1, -1);
+<a name="l00142"></a>00142   
+<a name="l00143"></a>00143 }
+<a name="l00144"></a>00144 
+<a name="l00145"></a>00145 
+<a name="l00146"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#26996620e55b2992298734aef107bf6b">00146</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#26996620e55b2992298734aef107bf6b" title="Inserts a key/value pair into the cell list.">CellStoreV0::add</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) {
+<a name="l00147"></a>00147   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00148"></a>00148   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zbuf;
 <a name="l00149"></a>00149 
-<a name="l00150"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#26996620e55b2992298734aef107bf6b">00150</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#26996620e55b2992298734aef107bf6b" title="Inserts a key/value pair into the cell list.">CellStoreV0::add</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) {
-<a name="l00151"></a>00151   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00152"></a>00152   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zbuf;
-<a name="l00153"></a>00153 
-<a name="l00154"></a>00154   <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a> &gt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#51d2cd050f9801592ccd9473fee694a1">revision</a>)
-<a name="l00155"></a>00155     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#51d2cd050f9801592ccd9473fee694a1">revision</a> = key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>;
-<a name="l00156"></a>00156 
-<a name="l00157"></a>00157   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#978e6f3941d2625fcabcb9a6b4540b4e">m_uncompressed_blocksize</a>) {
-<a name="l00158"></a>00158     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#06b31fa6eae223f7692196ff9d400d20">DATA_BLOCK_MAGIC</a>);
-<a name="l00159"></a>00159 
-<a name="l00160"></a>00160     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">add_index_entry</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>);
-<a name="l00161"></a>00161 
-<a name="l00162"></a>00162     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> += (float)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00163"></a>00163     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>, zbuf, header);
-<a name="l00164"></a>00164     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> += (float)zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00165"></a>00165     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
+<a name="l00150"></a>00150   <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a> &gt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#51d2cd050f9801592ccd9473fee694a1">revision</a>)
+<a name="l00151"></a>00151     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#51d2cd050f9801592ccd9473fee694a1">revision</a> = key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>;
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#978e6f3941d2625fcabcb9a6b4540b4e">m_uncompressed_blocksize</a>) {
+<a name="l00154"></a>00154     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#06b31fa6eae223f7692196ff9d400d20">DATA_BLOCK_MAGIC</a>);
+<a name="l00155"></a>00155 
+<a name="l00156"></a>00156     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">add_index_entry</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>);
+<a name="l00157"></a>00157 
+<a name="l00158"></a>00158     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> += (float)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00159"></a>00159     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>, zbuf, header);
+<a name="l00160"></a>00160     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> += (float)zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00161"></a>00161     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#7644f842636d70afd7997b0950fdd2b2">clear</a>();
+<a name="l00162"></a>00162 
+<a name="l00163"></a>00163     uint64_t llval = ((uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">blocksize</a>
+<a name="l00164"></a>00164         * (uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a>) / (uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a>;
+<a name="l00165"></a>00165     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#978e6f3941d2625fcabcb9a6b4540b4e">m_uncompressed_blocksize</a> = (uint32_t)llval;
 <a name="l00166"></a>00166 
-<a name="l00167"></a>00167     uint64_t llval = ((uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dd4ddaeedfadf171271563a76b433bcf">blocksize</a>
-<a name="l00168"></a>00168         * (uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a>) / (uint64_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a>;
-<a name="l00169"></a>00169     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#978e6f3941d2625fcabcb9a6b4540b4e">m_uncompressed_blocksize</a> = (uint32_t)llval;
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a> &gt;= <a class="code" href="_cell_store_v0_8cc.html#d0a50e09cda21768f304b1f313c6c627">MAX_APPENDS_OUTSTANDING</a>) {
-<a name="l00172"></a>00172       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00173"></a>00173         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
-<a name="l00174"></a>00174             <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Hypertable::Protocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00175"></a>00175         <span class="keywordflow">return</span> -1;
-<a name="l00176"></a>00176       }
-<a name="l00177"></a>00177       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>--;
-<a name="l00178"></a>00178     }
-<a name="l00179"></a>00179 
-<a name="l00180"></a>00180     <span class="keywordtype">size_t</span> zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00181"></a>00181     <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> send_buf(zbuf);
-<a name="l00182"></a>00182 
-<a name="l00183"></a>00183     <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>); }
-<a name="l00184"></a>00184     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00185"></a>00185       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>,
-<a name="l00186"></a>00186                 <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), e.what());
-<a name="l00187"></a>00187       <span class="keywordflow">return</span> -1;
-<a name="l00188"></a>00188     }
-<a name="l00189"></a>00189     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
-<a name="l00190"></a>00190     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
-<a name="l00191"></a>00191   }
+<a name="l00167"></a>00167     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a> &gt;= <a class="code" href="_cell_store_v0_8cc.html#d0a50e09cda21768f304b1f313c6c627">MAX_APPENDS_OUTSTANDING</a>) {
+<a name="l00168"></a>00168       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
+<a name="l00169"></a>00169         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
+<a name="l00170"></a>00170             <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Hypertable::Protocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00171"></a>00171         <span class="keywordflow">return</span> -1;
+<a name="l00172"></a>00172       }
+<a name="l00173"></a>00173       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>--;
+<a name="l00174"></a>00174     }
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176     <span class="keywordtype">size_t</span> zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00177"></a>00177     <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> send_buf(zbuf);
+<a name="l00178"></a>00178 
+<a name="l00179"></a>00179     <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>); }
+<a name="l00180"></a>00180     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00181"></a>00181       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>,
+<a name="l00182"></a>00182                 <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), e.what());
+<a name="l00183"></a>00183       <span class="keywordflow">return</span> -1;
+<a name="l00184"></a>00184     }
+<a name="l00185"></a>00185     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
+<a name="l00186"></a>00186     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
+<a name="l00187"></a>00187   }
+<a name="l00188"></a>00188 
+<a name="l00189"></a>00189   <span class="keywordtype">size_t</span> value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00190"></a>00190 
+<a name="l00191"></a>00191   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len);
 <a name="l00192"></a>00192 
-<a name="l00193"></a>00193   <span class="keywordtype">size_t</span> value_len = value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00194"></a>00194 
-<a name="l00195"></a>00195   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a> + value_len);
-<a name="l00196"></a>00196 
-<a name="l00197"></a>00197   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_key.html#3c0118439c72c16de3035f7fdc29dd6e">serial</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a>);
-<a name="l00198"></a>00198   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
-<a name="l00199"></a>00199 
-<a name="l00200"></a>00200   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">total_entries</a>++;
+<a name="l00193"></a>00193   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(key.<a class="code" href="class_hypertable_1_1_key.html#3c0118439c72c16de3035f7fdc29dd6e">serial</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key.<a class="code" href="class_hypertable_1_1_key.html#04d3c142c9f358f8ac268edbf1f2bba2">length</a>);
+<a name="l00194"></a>00194   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(value.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, value_len);
+<a name="l00195"></a>00195 
+<a name="l00196"></a>00196   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#7a10a09bb4103c1cedf7eae003229aab">total_entries</a>++;
+<a name="l00197"></a>00197 
+<a name="l00198"></a>00198   <span class="keywordflow">return</span> 0;
+<a name="l00199"></a>00199 }
+<a name="l00200"></a>00200 
 <a name="l00201"></a>00201 
-<a name="l00202"></a>00202   <span class="keywordflow">return</span> 0;
-<a name="l00203"></a>00203 }
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205 
-<a name="l00206"></a>00206 
-<a name="l00207"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#078d654a1672a8b3d49e6492a3451a38">00207</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#078d654a1672a8b3d49e6492a3451a38" title="Finalizes the creation of a cell store, by writing block index and metadata trailer...">CellStoreV0::finalize</a>() {
-<a name="l00208"></a>00208   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
-<a name="l00209"></a>00209   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = -1;
-<a name="l00210"></a>00210   <span class="keywordtype">size_t</span> zlen;
-<a name="l00211"></a>00211   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zbuf(0);
-<a name="l00212"></a>00212   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
-<a name="l00213"></a>00213   uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>;
-<a name="l00214"></a>00214   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00215"></a>00215   <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> send_buf;
+<a name="l00202"></a>00202 
+<a name="l00203"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#9c9b3a60ca28232274c05eb8a5916ae6">00203</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#9c9b3a60ca28232274c05eb8a5916ae6" title="Finalizes the creation of a cell store, by writing block index and metadata trailer...">CellStoreV0::finalize</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table_identifier) {
+<a name="l00204"></a>00204   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00205"></a>00205   <span class="keywordtype">size_t</span> zlen;
+<a name="l00206"></a>00206   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> zbuf(0);
+<a name="l00207"></a>00207   <span class="keywordtype">size_t</span> <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
+<a name="l00208"></a>00208   uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>;
+<a name="l00209"></a>00209   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00210"></a>00210   <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> send_buf;
+<a name="l00211"></a>00211 
+<a name="l00212"></a>00212   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; 0) {
+<a name="l00213"></a>00213     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#06b31fa6eae223f7692196ff9d400d20">DATA_BLOCK_MAGIC</a>);
+<a name="l00214"></a>00214 
+<a name="l00215"></a>00215     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">add_index_entry</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>);
 <a name="l00216"></a>00216 
-<a name="l00217"></a>00217   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>() &gt; 0) {
-<a name="l00218"></a>00218     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#06b31fa6eae223f7692196ff9d400d20">DATA_BLOCK_MAGIC</a>);
-<a name="l00219"></a>00219 
-<a name="l00220"></a>00220     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">add_index_entry</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#aed8d3f7fd044209d65a5d8801cc3d3c">m_last_key</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>);
-<a name="l00221"></a>00221 
-<a name="l00222"></a>00222     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> += (float)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00223"></a>00223     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>, zbuf, header);
-<a name="l00224"></a>00224     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> += (float)zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226     zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00227"></a>00227     send_buf = zbuf;
-<a name="l00228"></a>00228 
-<a name="l00229"></a>00229     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a> &gt;= <a class="code" href="_cell_store_v0_8cc.html#d0a50e09cda21768f304b1f313c6c627">MAX_APPENDS_OUTSTANDING</a>) {
-<a name="l00230"></a>00230       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr)) {
-<a name="l00231"></a>00231         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
-<a name="l00232"></a>00232                   <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr).c_str());
-<a name="l00233"></a>00233         <span class="keywordflow">goto</span> abort;
-<a name="l00234"></a>00234       }
-<a name="l00235"></a>00235       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>--;
-<a name="l00236"></a>00236     }
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238     <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>); }
-<a name="l00239"></a>00239     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00240"></a>00240       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem writing to DFS file '%s' : %s"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
-<a name="l00241"></a>00241                 e.what());
-<a name="l00242"></a>00242       <span class="keywordflow">goto</span> abort;
-<a name="l00243"></a>00243     }
-<a name="l00244"></a>00244     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
-<a name="l00245"></a>00245     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
-<a name="l00246"></a>00246   }
+<a name="l00217"></a>00217     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> += (float)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00218"></a>00218     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>, zbuf, header);
+<a name="l00219"></a>00219     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> += (float)zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221     zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00222"></a>00222     send_buf = zbuf;
+<a name="l00223"></a>00223 
+<a name="l00224"></a>00224     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a> &gt;= <a class="code" href="_cell_store_v0_8cc.html#d0a50e09cda21768f304b1f313c6c627">MAX_APPENDS_OUTSTANDING</a>) {
+<a name="l00225"></a>00225       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00226"></a>00226         <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr),
+<a name="l00227"></a>00227                   <span class="stringliteral">"Problem finalizing CellStore file '%s' : %s"</span>,
+<a name="l00228"></a>00228                   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
+<a name="l00229"></a>00229                   <a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">Protocol::string_format_message</a>(event_ptr).c_str());
+<a name="l00230"></a>00230       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>--;
+<a name="l00231"></a>00231     }
+<a name="l00232"></a>00232 
+<a name="l00233"></a>00233     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>);
+<a name="l00234"></a>00234 
+<a name="l00235"></a>00235     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
+<a name="l00236"></a>00236     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
+<a name="l00237"></a>00237   }
+<a name="l00238"></a>00238 
+<a name="l00239"></a>00239   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b70ba72d8a3a8c4326a19b38dc23de5">free</a>();
+<a name="l00240"></a>00240 
+<a name="l00241"></a>00241   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
+<a name="l00242"></a>00242   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> == 0)
+<a name="l00243"></a>00243     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a> = 1.0;
+<a name="l00244"></a>00244   <span class="keywordflow">else</span>
+<a name="l00245"></a>00245     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> / <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a>;
+<a name="l00246"></a>00246   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a> = 0;
 <a name="l00247"></a>00247 
-<a name="l00248"></a>00248   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#abc41482680735188031efe6f57c54f6">m_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b70ba72d8a3a8c4326a19b38dc23de5">free</a>();
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
-<a name="l00251"></a>00251   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a> == 0)
-<a name="l00252"></a>00252     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a> = 1.0;
-<a name="l00253"></a>00253   <span class="keywordflow">else</span>
-<a name="l00254"></a>00254     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e953c894050ca21ff85db282361d537d">compression_ratio</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ed68408e6adb371a3f25cdc4a5ac93d8">m_compressed_data</a> / <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8e2c4133c5c0d556f5e36a4986adbfe1">m_uncompressed_data</a>;
-<a name="l00255"></a>00255   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a> = 0;
-<a name="l00256"></a>00256 
-<a name="l00260"></a>00260   base = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>(&amp;len);
-<a name="l00261"></a>00261   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(len);
-<a name="l00262"></a>00262   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(base, len);
-<a name="l00263"></a>00263   <span class="keyword">delete</span> [] base;
-<a name="l00264"></a>00264   base = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>(&amp;len);
-<a name="l00265"></a>00265   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(len);
-<a name="l00266"></a>00266   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(base, len);
-<a name="l00267"></a>00267   <span class="keyword">delete</span> [] base;
-<a name="l00268"></a>00268 
-<a name="l00272"></a>00272   {
-<a name="l00273"></a>00273     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#53e2db50dcf58402c9b552e223a34b85">INDEX_FIXED_BLOCK_MAGIC</a>);
-<a name="l00274"></a>00274     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>, zbuf, header);
-<a name="l00275"></a>00275   }
-<a name="l00276"></a>00276 
-<a name="l00277"></a>00277   zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00278"></a>00278   send_buf = zbuf;
-<a name="l00279"></a>00279 
-<a name="l00280"></a>00280   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>); }
-<a name="l00281"></a>00281   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00282"></a>00282     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00283"></a>00283     <span class="keywordflow">goto</span> abort;
-<a name="l00284"></a>00284   }
-<a name="l00285"></a>00285   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
-<a name="l00286"></a>00286   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
-<a name="l00287"></a>00287 
-<a name="l00291"></a>00291   {
-<a name="l00292"></a>00292     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#2d43bbe9820632518095f1f894c84f85">INDEX_VARIABLE_BLOCK_MAGIC</a>);
-<a name="l00293"></a>00293     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
-<a name="l00294"></a>00294     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>, zbuf, header, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
-<a name="l00295"></a>00295   }
-<a name="l00296"></a>00296 
-<a name="l00300"></a>00300   uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>;
-<a name="l00301"></a>00301   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00302"></a>00302   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00303"></a>00303   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>; i++) {
-<a name="l00304"></a>00304     <span class="comment">// variable portion</span>
-<a name="l00305"></a>00305     key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
-<a name="l00306"></a>00306     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00307"></a>00307     <span class="comment">// fixed portion (e.g. offset)</span>
-<a name="l00308"></a>00308     memcpy(&amp;offset, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, <span class="keyword">sizeof</span>(offset));
-<a name="l00309"></a>00309     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
-<a name="l00310"></a>00310     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.insert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(), IndexMap::value_type(key, offset));
-<a name="l00311"></a>00311     <span class="keywordflow">if</span> (i == <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>/2) {
-<a name="l00312"></a>00312       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">record_split_row</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
-<a name="l00313"></a>00313     }
-<a name="l00314"></a>00314   }
-<a name="l00315"></a>00315 
-<a name="l00316"></a>00316   <span class="comment">// deallocate fix index data</span>
-<a name="l00317"></a>00317   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
-<a name="l00318"></a>00318 
-<a name="l00319"></a>00319   <span class="comment">// write filter_offset (empty for now)</span>
-<a name="l00320"></a>00320   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> + zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00251"></a>00251   base = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>(&amp;len);
+<a name="l00252"></a>00252   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(len);
+<a name="l00253"></a>00253   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(base, len);
+<a name="l00254"></a>00254   <span class="keyword">delete</span> [] base;
+<a name="l00255"></a>00255   base = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>(&amp;len);
+<a name="l00256"></a>00256   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#1af91ec703645dbb3a91f62bbcb674ac" title="Reserve space for additional data Will grow the space to exactly what&amp;#39;s needed...">reserve</a>(len);
+<a name="l00257"></a>00257   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#3b63edd17b6635607926114f41e5eba2">add_unchecked</a>(base, len);
+<a name="l00258"></a>00258   <span class="keyword">delete</span> [] base;
+<a name="l00259"></a>00259 
+<a name="l00263"></a>00263   {
+<a name="l00264"></a>00264     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#53e2db50dcf58402c9b552e223a34b85">INDEX_FIXED_BLOCK_MAGIC</a>);
+<a name="l00265"></a>00265     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>, zbuf, header);
+<a name="l00266"></a>00266   }
+<a name="l00267"></a>00267 
+<a name="l00268"></a>00268   zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00269"></a>00269   send_buf = zbuf;
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf, 0, &amp;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#3f8d096221d68e92732cc6796757ca97">m_sync_handler</a>);
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
+<a name="l00274"></a>00274   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
+<a name="l00275"></a>00275 
+<a name="l00279"></a>00279   {
+<a name="l00280"></a>00280     <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#2d43bbe9820632518095f1f894c84f85">INDEX_VARIABLE_BLOCK_MAGIC</a>);
+<a name="l00281"></a>00281     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
+<a name="l00282"></a>00282     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#f3d2398391fbda25c44729758c244106">deflate</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>, zbuf, header, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
+<a name="l00283"></a>00283   }
+<a name="l00284"></a>00284 
+<a name="l00288"></a>00288   uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>;
+<a name="l00289"></a>00289   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00290"></a>00290   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00291"></a>00291   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>; i++) {
+<a name="l00292"></a>00292     <span class="comment">// variable portion</span>
+<a name="l00293"></a>00293     key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
+<a name="l00294"></a>00294     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00295"></a>00295     <span class="comment">// fixed portion (e.g. offset)</span>
+<a name="l00296"></a>00296     memcpy(&amp;offset, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, <span class="keyword">sizeof</span>(offset));
+<a name="l00297"></a>00297     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
+<a name="l00298"></a>00298     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.insert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(), IndexMap::value_type(key, offset));
+<a name="l00299"></a>00299     <span class="keywordflow">if</span> (i == <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>/2) {
+<a name="l00300"></a>00300       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">record_split_row</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
+<a name="l00301"></a>00301     }
+<a name="l00302"></a>00302   }
+<a name="l00303"></a>00303 
+<a name="l00304"></a>00304   <span class="comment">// deallocate fix index data</span>
+<a name="l00305"></a>00305   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
+<a name="l00306"></a>00306 
+<a name="l00307"></a>00307   <span class="comment">// write filter_offset (empty for now)</span>
+<a name="l00308"></a>00308   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> + zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00309"></a>00309 
+<a name="l00310"></a>00310   <span class="comment">// Add table information</span>
+<a name="l00311"></a>00311   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#846defac5209ccb508eb126a3196ca1f">table_id</a> = table_identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>;
+<a name="l00312"></a>00312   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#e9c93bbf23c6e7360ee4e6fcea34849a">table_generation</a> = table_identifier-&gt;<a class="code" href="class_hypertable_1_1_table_identifier.html#30552d7531d122a5843deab20815344b">generation</a>;
+<a name="l00313"></a>00313 
+<a name="l00314"></a>00314   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#a8dd78cf2300e7fe0f14117ad4dd1e5e" title="Serializes this trailer to the given buffer;.">serialize</a>(zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
+<a name="l00315"></a>00315   zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>();
+<a name="l00316"></a>00316 
+<a name="l00317"></a>00317   zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
+<a name="l00318"></a>00318   send_buf = zbuf;
+<a name="l00319"></a>00319 
+<a name="l00320"></a>00320   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf);
 <a name="l00321"></a>00321 
-<a name="l00322"></a>00322   <span class="comment">//</span>
-<a name="l00323"></a>00323   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#a8dd78cf2300e7fe0f14117ad4dd1e5e" title="Serializes this trailer to the given buffer;.">serialize</a>(zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>);
-<a name="l00324"></a>00324   zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>();
-<a name="l00325"></a>00325 
-<a name="l00326"></a>00326   zlen = zbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#63691b7eae8f01678606c60e69983471">fill</a>();
-<a name="l00327"></a>00327   send_buf = zbuf;
-<a name="l00328"></a>00328 
-<a name="l00329"></a>00329   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acddb6f90f22984a0c8e0d0014ae5701" title="Appends data to a file asynchronously.">append</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, send_buf); }
-<a name="l00330"></a>00330   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00331"></a>00331     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00332"></a>00332     <span class="keywordflow">goto</span> abort;
-<a name="l00333"></a>00333   }
-<a name="l00334"></a>00334   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
-<a name="l00335"></a>00335   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
-<a name="l00336"></a>00336 
-<a name="l00338"></a>00338   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#d3deed031599d136309dc75369b72f6a" title="Closes a file asynchronously.">close</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>); }
-<a name="l00339"></a>00339   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00340"></a>00340     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00341"></a>00341     <span class="keywordflow">goto</span> abort;
-<a name="l00342"></a>00342   }
-<a name="l00343"></a>00343 
-<a name="l00345"></a>00345   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
+<a name="l00322"></a>00322   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#adf473fc7ed82a9d3ec30ec81e5a7bdb">m_outstanding_appends</a>++;
+<a name="l00323"></a>00323   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a> += zlen;
+<a name="l00324"></a>00324 
+<a name="l00326"></a>00326   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#d3deed031599d136309dc75369b72f6a" title="Closes a file asynchronously.">close</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>);
+<a name="l00327"></a>00327 
+<a name="l00329"></a>00329   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c745b211d14a373e7062cb409275e85c">m_offset</a>;
+<a name="l00330"></a>00330 
+<a name="l00332"></a>00332   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f566ed0356e11e0e2fadee80f462959a" title="Opens a file asynchronously.">open</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>);
+<a name="l00333"></a>00333 
+<a name="l00334"></a>00334   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f0d21b7ee0ba3e883794f076db70ecf2">m_disk_usage</a> = (uint32_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
+<a name="l00335"></a>00335 
+<a name="l00336"></a>00336   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#a416aa57393e538b7d2d0ee0c24bd3ae">m_memory_consumed</a> = <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>) + <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#39906993a2e02eaf3eaf333674da0eee">size</a>
+<a name="l00337"></a>00337       + (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.size() * 2 * <span class="keyword">sizeof</span>(IndexMap::value_type));
+<a name="l00338"></a>00338   <a class="code" href="class_hypertable_1_1_global.html#c5a71b47a9c909db915648eda97a1db2">Global::memory_tracker</a>.<a class="code" href="class_hypertable_1_1_memory_tracker.html#6295eb6bf97459f29b2a406df44f9a7f">add</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#a416aa57393e538b7d2d0ee0c24bd3ae">m_memory_consumed</a>);
+<a name="l00339"></a>00339 
+<a name="l00340"></a>00340   <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>;
+<a name="l00341"></a>00341   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = 0;
+<a name="l00342"></a>00342 
+<a name="l00343"></a>00343 }
+<a name="l00344"></a>00344 
+<a name="l00345"></a>00345 
 <a name="l00346"></a>00346 
-<a name="l00348"></a>00348   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f566ed0356e11e0e2fadee80f462959a" title="Opens a file asynchronously.">open</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>); }
-<a name="l00349"></a>00349   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00350"></a>00350     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"Error reopening cellstore: "</span>&lt;&lt;  e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00351"></a>00351     <span class="keywordflow">goto</span> abort;
-<a name="l00352"></a>00352   }
-<a name="l00353"></a>00353 
-<a name="l00354"></a>00354   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f0d21b7ee0ba3e883794f076db70ecf2">m_disk_usage</a> = (uint32_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
-<a name="l00355"></a>00355   error = 0;
+<a name="l00350"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">00350</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">CellStoreV0::add_index_entry</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>) {
+<a name="l00351"></a>00351 
+<a name="l00352"></a>00352   <span class="keywordtype">size_t</span> key_len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00353"></a>00353   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key_len);
+<a name="l00354"></a>00354   memcpy(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key_len);
+<a name="l00355"></a>00355   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += key_len;
 <a name="l00356"></a>00356 
-<a name="l00357"></a>00357   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#a416aa57393e538b7d2d0ee0c24bd3ae">m_memory_consumed</a> = <span class="keyword">sizeof</span>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>) + <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#39906993a2e02eaf3eaf333674da0eee">size</a>
-<a name="l00358"></a>00358       + (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.size() * 2 * <span class="keyword">sizeof</span>(IndexMap::value_type));
-<a name="l00359"></a>00359   <a class="code" href="class_hypertable_1_1_global.html#c5a71b47a9c909db915648eda97a1db2">Global::memory_tracker</a>.<a class="code" href="class_hypertable_1_1_memory_tracker.html#6295eb6bf97459f29b2a406df44f9a7f">add</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#a416aa57393e538b7d2d0ee0c24bd3ae">m_memory_consumed</a>);
-<a name="l00360"></a>00360 
-<a name="l00361"></a>00361  abort:
-<a name="l00362"></a>00362   <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>;
-<a name="l00363"></a>00363   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = 0;
+<a name="l00357"></a>00357   <span class="comment">// Serialize offset into fix index buffer</span>
+<a name="l00358"></a>00358   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(<span class="keyword">sizeof</span>(offset));
+<a name="l00359"></a>00359   memcpy(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, &amp;offset, <span class="keyword">sizeof</span>(offset));
+<a name="l00360"></a>00360   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
+<a name="l00361"></a>00361 
+<a name="l00362"></a>00362   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>++;
+<a name="l00363"></a>00363 }
 <a name="l00364"></a>00364 
-<a name="l00365"></a>00365   <span class="keywordflow">return</span> error;
-<a name="l00366"></a>00366 }
-<a name="l00367"></a>00367 
-<a name="l00368"></a>00368 
-<a name="l00369"></a>00369 
-<a name="l00373"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">00373</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#e4901321591427bb0517badc549d5fd7">CellStoreV0::add_index_entry</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>) {
-<a name="l00374"></a>00374 
-<a name="l00375"></a>00375   <span class="keywordtype">size_t</span> key_len = key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00376"></a>00376   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(key_len);
-<a name="l00377"></a>00377   memcpy(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, key.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a>, key_len);
-<a name="l00378"></a>00378   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += key_len;
+<a name="l00365"></a>00365 
+<a name="l00366"></a>00366 
+<a name="l00370"></a>00370 <span class="keywordtype">void</span>
+<a name="l00371"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#cc153b310b83b52862a02f76553591ae">00371</a> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#cc153b310b83b52862a02f76553591ae" title="Opens a cell store with possibly a restricted view.">CellStoreV0::open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>,
+<a name="l00372"></a>00372                   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>) {
+<a name="l00373"></a>00373   <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a> = (start_row) ? start_row : <span class="stringliteral">""</span>;
+<a name="l00374"></a>00374   <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a> = (end_row) ? end_row : <a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">Key::END_ROW_MARKER</a>;
+<a name="l00375"></a>00375 
+<a name="l00376"></a>00376   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = -1;
+<a name="l00377"></a>00377 
+<a name="l00378"></a>00378   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> = fname;
 <a name="l00379"></a>00379 
-<a name="l00380"></a>00380   <span class="comment">// Serialize offset into fix index buffer</span>
-<a name="l00381"></a>00381   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#964e910bedd2a7bf294277cf0d1ecf5c" title="Ensure space for additional data Will grow the space to 1.5 of the needed space with...">ensure</a>(<span class="keyword">sizeof</span>(offset));
-<a name="l00382"></a>00382   memcpy(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, &amp;offset, <span class="keyword">sizeof</span>(offset));
-<a name="l00383"></a>00383   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
-<a name="l00384"></a>00384 
-<a name="l00385"></a>00385   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>++;
-<a name="l00386"></a>00386 }
+<a name="l00381"></a>00381   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>);
+<a name="l00382"></a>00382 
+<a name="l00383"></a>00383   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>())
+<a name="l00384"></a>00384     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a2f9600fca76152df3ce25e7c64e3fde">Error::RANGESERVER_CORRUPT_CELLSTORE</a>,
+<a name="l00385"></a>00385               <span class="stringliteral">"Bad length of CellStore file '%s' - %llu"</span>,
+<a name="l00386"></a>00386               <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>);
 <a name="l00387"></a>00387 
-<a name="l00388"></a>00388 
-<a name="l00389"></a>00389 
-<a name="l00393"></a>00393 <span class="keywordtype">int</span>
-<a name="l00394"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#f25665252bc0d1e10e6fa866f9cb4852">00394</a> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f25665252bc0d1e10e6fa866f9cb4852" title="Opens a cell store with possibly a restricted view.">CellStoreV0::open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>,
-<a name="l00395"></a>00395                   <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>) {
-<a name="l00396"></a>00396   <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a> = (start_row) ? start_row : <span class="stringliteral">""</span>;
-<a name="l00397"></a>00397   <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a> = (end_row) ? end_row : <a class="code" href="class_hypertable_1_1_key.html#1ae1a400b2a9d57e610f0fba1be2665b">Key::END_ROW_MARKER</a>;
-<a name="l00398"></a>00398 
-<a name="l00399"></a>00399   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = -1;
+<a name="l00389"></a>00389   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f566ed0356e11e0e2fadee80f462959a" title="Opens a file asynchronously.">open</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>);
+<a name="l00390"></a>00390 
+<a name="l00394"></a>00394   {
+<a name="l00395"></a>00395     uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
+<a name="l00396"></a>00396     uint8_t *trailer_buf = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()];
+<a name="l00397"></a>00397 
+<a name="l00398"></a>00398     len = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#10eacbee5398a645d6329160881aade7" title="Reads data from a file at the specified position asynchronously.">pread</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, trailer_buf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>(),
+<a name="l00399"></a>00399                            <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
 <a name="l00400"></a>00400 
-<a name="l00401"></a>00401   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> = fname;
-<a name="l00402"></a>00402 
-<a name="l00404"></a>00404   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>); }
-<a name="l00405"></a>00405   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00406"></a>00406     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00407"></a>00407     <span class="keywordflow">goto</span> abort;
-<a name="l00408"></a>00408   }
-<a name="l00409"></a>00409 
-<a name="l00410"></a>00410   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()) {
-<a name="l00411"></a>00411     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Bad length of CellStore file '%s' - %llu"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
-<a name="l00412"></a>00412               (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>);
-<a name="l00413"></a>00413     <span class="keywordflow">goto</span> abort;
-<a name="l00414"></a>00414   }
-<a name="l00415"></a>00415 
-<a name="l00417"></a>00417   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> =  <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#f566ed0356e11e0e2fadee80f462959a" title="Opens a file asynchronously.">open</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>); }
-<a name="l00418"></a>00418   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00419"></a>00419     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00420"></a>00420     <span class="keywordflow">goto</span> abort;
-<a name="l00421"></a>00421   }
-<a name="l00422"></a>00422 
-<a name="l00426"></a>00426   {
-<a name="l00427"></a>00427     uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a>;
-<a name="l00428"></a>00428     uint8_t *trailer_buf = <span class="keyword">new</span> uint8_t [<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()];
-<a name="l00429"></a>00429 
-<a name="l00430"></a>00430     <span class="keywordflow">try</span> {
-<a name="l00431"></a>00431       len = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#10eacbee5398a645d6329160881aade7" title="Reads data from a file at the specified position asynchronously.">pread</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, trailer_buf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>(),
-<a name="l00432"></a>00432                              <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
-<a name="l00433"></a>00433     }
-<a name="l00434"></a>00434     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00435"></a>00435       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem reading trailer for CellStore '%s': %s"</span>,
-<a name="l00436"></a>00436                 <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), e.what());
-<a name="l00437"></a>00437       <span class="keyword">delete</span> [] trailer_buf;
-<a name="l00438"></a>00438       <span class="keywordflow">goto</span> abort;
-<a name="l00439"></a>00439     }
-<a name="l00440"></a>00440 
-<a name="l00441"></a>00441     <span class="keywordflow">if</span> (len != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()) {
-<a name="l00442"></a>00442       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem reading trailer for CellStore file '%s' - only read "</span>
-<a name="l00443"></a>00443                 <span class="stringliteral">"%u of %lu bytes"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), len, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
-<a name="l00444"></a>00444       <span class="keyword">delete</span> [] trailer_buf;
-<a name="l00445"></a>00445       <span class="keywordflow">goto</span> abort;
-<a name="l00446"></a>00446     }
-<a name="l00447"></a>00447 
-<a name="l00448"></a>00448     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dbe91d87d67c4f9e9c1c9a5ee9bf3bab" title="Deserializes the trailer from the given buffer.">deserialize</a>(trailer_buf);
-<a name="l00449"></a>00449     <span class="keyword">delete</span> [] trailer_buf;
-<a name="l00450"></a>00450   }
-<a name="l00451"></a>00451 
-<a name="l00453"></a>00453   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a> != 0) {
-<a name="l00454"></a>00454     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Unsupported CellStore version (%d) for file '%s'"</span>,
-<a name="l00455"></a>00455               <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a>, fname);
-<a name="l00456"></a>00456     <span class="keywordflow">goto</span> abort;
-<a name="l00457"></a>00457   }
-<a name="l00458"></a>00458   <span class="keywordflow">if</span> (!(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> &amp;&amp;
-<a name="l00459"></a>00459         <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>)) {
-<a name="l00460"></a>00460     <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Bad index offsets in CellStore trailer fix=%u, var=%u, "</span>
-<a name="l00461"></a>00461               <span class="stringliteral">"length=%llu, file='%s'"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>,
-<a name="l00462"></a>00462               <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>, (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>, fname);
-<a name="l00463"></a>00463     <span class="keywordflow">goto</span> abort;
-<a name="l00464"></a>00464   }
+<a name="l00401"></a>00401     <span class="keywordflow">if</span> (len != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>())
+<a name="l00402"></a>00402       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c2e4e3925a09bbc1f394aabb8f75fd56">Error::DFSBROKER_IO_ERROR</a>,
+<a name="l00403"></a>00403                 <span class="stringliteral">"Problem reading trailer for CellStore file '%s'"</span>
+<a name="l00404"></a>00404                 <span class="stringliteral">" - only read %u of %lu bytes"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(),
+<a name="l00405"></a>00405                 len, (<a class="code" href="namespace_hypertable.html#ef3ce232ba4129a8c9b691a614505f9a">Lu</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>());
+<a name="l00406"></a>00406 
+<a name="l00407"></a>00407     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#dbe91d87d67c4f9e9c1c9a5ee9bf3bab" title="Deserializes the trailer from the given buffer.">deserialize</a>(trailer_buf);
+<a name="l00408"></a>00408     <span class="keyword">delete</span> [] trailer_buf;
+<a name="l00409"></a>00409   }
+<a name="l00410"></a>00410 
+<a name="l00412"></a>00412   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a> != 0)
+<a name="l00413"></a>00413     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b250ad42295e37c4b6a4b3dc16354c9d36">Error::VERSION_MISMATCH</a>,
+<a name="l00414"></a>00414               <span class="stringliteral">"Unsupported CellStore version (%d) for file '%s'"</span>,
+<a name="l00415"></a>00415               <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#46858c6e857e31b7a441e4416fe8bd6b">version</a>, fname);
+<a name="l00416"></a>00416 
+<a name="l00417"></a>00417   <span class="keywordflow">if</span> (!(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> &amp;&amp;
+<a name="l00418"></a>00418         <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> &lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>))
+<a name="l00419"></a>00419     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a2f9600fca76152df3ce25e7c64e3fde">Error::RANGESERVER_CORRUPT_CELLSTORE</a>,
+<a name="l00420"></a>00420               <span class="stringliteral">"Bad index offsets in CellStore trailer fix=%u, var=%u, "</span>
+<a name="l00421"></a>00421               <span class="stringliteral">"length=%llu, file='%s'"</span>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>,
+<a name="l00422"></a>00422               <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>, (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>, fname);
+<a name="l00423"></a>00423   
+<a name="l00424"></a>00424 }
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426 
+<a name="l00427"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#dabd674b7655d87aab28092df6b216db">00427</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#dabd674b7655d87aab28092df6b216db" title="Loads the block index data into an in-memory map.">CellStoreV0::load_index</a>() {
+<a name="l00428"></a>00428   uint32_t amount, index_amount;
+<a name="l00429"></a>00429   uint8_t *fix_end;
+<a name="l00430"></a>00430   uint8_t *var_end;
+<a name="l00431"></a>00431   uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = 0;
+<a name="l00432"></a>00432   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header;
+<a name="l00433"></a>00433   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00434"></a>00434   <span class="keywordtype">bool</span> inflating_fixed=<span class="keyword">true</span>;
+<a name="l00435"></a>00435   <span class="keywordtype">bool</span> second_try = <span class="keyword">false</span>;
+<a name="l00436"></a>00436 
+<a name="l00437"></a>00437   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#3d2b193d73117ff5783bd4d9b73bbb95">create_block_compression_codec</a>();
+<a name="l00438"></a>00438 
+<a name="l00439"></a>00439   amount = index_amount = (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>())
+<a name="l00440"></a>00440                           - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>;
+<a name="l00441"></a>00441 
+<a name="l00442"></a>00442  try_again:
+<a name="l00443"></a>00443 
+<a name="l00444"></a>00444   <span class="keywordflow">try</span> {
+<a name="l00445"></a>00445     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> buf(amount);
+<a name="l00446"></a>00446 
+<a name="l00447"></a>00447     <span class="keywordflow">if</span> (second_try)
+<a name="l00448"></a>00448       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f9092d4fd576a0eafb757220063aeb99">reopen_fd</a>();
+<a name="l00449"></a>00449 
+<a name="l00451"></a>00451     len = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#10eacbee5398a645d6329160881aade7" title="Reads data from a file at the specified position asynchronously.">pread</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, buf.ptr, amount, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>);
+<a name="l00452"></a>00452 
+<a name="l00453"></a>00453     <span class="keywordflow">if</span> (len != amount)
+<a name="l00454"></a>00454       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c2e4e3925a09bbc1f394aabb8f75fd56">Error::DFSBROKER_IO_ERROR</a>, <span class="stringliteral">"Error loading index for "</span>
+<a name="l00455"></a>00455                 <span class="stringliteral">"CellStore '%s' : tried to read %d but only got %d"</span>,
+<a name="l00456"></a>00456                 <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), amount, len);
+<a name="l00458"></a>00458     buf.ptr += (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>);
+<a name="l00459"></a>00459     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#fc5d02d2e8eba18108a024ac3443a2e9">inflate</a>(buf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>, header);
+<a name="l00460"></a>00460 
+<a name="l00461"></a>00461     inflating_fixed = <span class="keyword">false</span>;
+<a name="l00462"></a>00462 
+<a name="l00463"></a>00463     <span class="keywordflow">if</span> (!header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#53e2db50dcf58402c9b552e223a34b85">INDEX_FIXED_BLOCK_MAGIC</a>))
+<a name="l00464"></a>00464       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b273b32e829b47abc774375b4eb8fe0395">Error::BLOCK_COMPRESSOR_BAD_MAGIC</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>);
 <a name="l00465"></a>00465 
-<a name="l00466"></a>00466   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00467"></a>00467 
-<a name="l00468"></a>00468  abort:
-<a name="l00469"></a>00469   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2b71d91055958fc134dd648c2cb3427f8">Error::LOCAL_IO_ERROR</a>;
-<a name="l00470"></a>00470 }
+<a name="l00467"></a>00467     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> vbuf(0, <span class="keyword">false</span>);
+<a name="l00468"></a>00468     amount = (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>-<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()) - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>;
+<a name="l00469"></a>00469     vbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> = buf.ptr;
+<a name="l00470"></a>00470     vbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = buf.ptr + amount;
 <a name="l00471"></a>00471 
-<a name="l00472"></a>00472 
-<a name="l00473"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#81490e50ef84429513e98d061d59a784">00473</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#81490e50ef84429513e98d061d59a784" title="Loads the block index data into an in-memory map.">CellStoreV0::load_index</a>() {
-<a name="l00474"></a>00474   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = -1;
-<a name="l00475"></a>00475   uint32_t amount, index_amount;
-<a name="l00476"></a>00476   uint8_t *fix_end;
-<a name="l00477"></a>00477   uint8_t *var_end;
-<a name="l00478"></a>00478   uint32_t <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> = 0;
-<a name="l00479"></a>00479   <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> header;
-<a name="l00480"></a>00480   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00481"></a>00481   <span class="keywordtype">bool</span> inflating_fixed=<span class="keyword">true</span>;
-<a name="l00482"></a>00482 
-<a name="l00483"></a>00483   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#3d2b193d73117ff5783bd4d9b73bbb95">create_block_compression_codec</a>();
-<a name="l00484"></a>00484 
-<a name="l00485"></a>00485   amount = index_amount = (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>())
-<a name="l00486"></a>00486                           - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>;
-<a name="l00487"></a>00487   <span class="keywordflow">try</span> {
-<a name="l00488"></a>00488     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> buf(amount);
-<a name="l00489"></a>00489 
-<a name="l00491"></a>00491     len = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#b9eba48f654cd2911af6179f8152b6e9">m_filesys</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#10eacbee5398a645d6329160881aade7" title="Reads data from a file at the specified position asynchronously.">pread</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a>, buf.ptr, amount, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>);
-<a name="l00492"></a>00492 
-<a name="l00493"></a>00493     <span class="keywordflow">if</span> (len != amount)
-<a name="l00494"></a>00494       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2c2e4e3925a09bbc1f394aabb8f75fd56">Error::DFSBROKER_IO_ERROR</a>, <span class="stringliteral">"Error loading index for "</span>
-<a name="l00495"></a>00495                 <span class="stringliteral">"CellStore '%s' : tried to read %d but only got %d"</span>,
-<a name="l00496"></a>00496                 <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>.c_str(), amount, len);
-<a name="l00498"></a>00498     buf.ptr += (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a> - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#ebbe5f20a0f76ea73b3d89408f03d1fe">fix_index_offset</a>);
-<a name="l00499"></a>00499     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#fc5d02d2e8eba18108a024ac3443a2e9">inflate</a>(buf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>, header);
-<a name="l00500"></a>00500 
-<a name="l00501"></a>00501     inflating_fixed = <span class="keyword">false</span>;
-<a name="l00502"></a>00502 
-<a name="l00503"></a>00503     <span class="keywordflow">if</span> (!header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#53e2db50dcf58402c9b552e223a34b85">INDEX_FIXED_BLOCK_MAGIC</a>))
-<a name="l00504"></a>00504       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b273b32e829b47abc774375b4eb8fe0395">Error::BLOCK_COMPRESSOR_BAD_MAGIC</a>, <span class="stringliteral">""</span>);
+<a name="l00472"></a>00472     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#fc5d02d2e8eba18108a024ac3443a2e9">inflate</a>(vbuf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>, header);
+<a name="l00473"></a>00473 
+<a name="l00474"></a>00474     <span class="keywordflow">if</span> (!header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#2d43bbe9820632518095f1f894c84f85">INDEX_VARIABLE_BLOCK_MAGIC</a>))
+<a name="l00475"></a>00475       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b273b32e829b47abc774375b4eb8fe0395">Error::BLOCK_COMPRESSOR_BAD_MAGIC</a>, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a>);
+<a name="l00476"></a>00476   }
+<a name="l00477"></a>00477   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00478"></a>00478     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> msg;
+<a name="l00479"></a>00479     <span class="keywordflow">if</span> (inflating_fixed) {
+<a name="l00480"></a>00480       msg = <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Error inflating FIXED index for cellstore '"</span>) + <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> + <span class="stringliteral">"'"</span>;
+<a name="l00481"></a>00481       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; msg &lt;&lt; <span class="stringliteral">": "</span>&lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00482"></a>00482     }
+<a name="l00483"></a>00483     <span class="keywordflow">else</span> {
+<a name="l00484"></a>00484       msg = <span class="stringliteral">"Error inflating VARIABLE index for cellstore '"</span> + <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> + <span class="stringliteral">"'"</span>;
+<a name="l00485"></a>00485       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; msg &lt;&lt; <span class="stringliteral">": "</span> &lt;&lt;  e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00486"></a>00486     }
+<a name="l00487"></a>00487     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"pread(fd="</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> &lt;&lt; <span class="stringliteral">", len="</span> &lt;&lt; <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &lt;&lt; <span class="stringliteral">", amount="</span>
+<a name="l00488"></a>00488         &lt;&lt; index_amount &lt;&lt; <span class="stringliteral">")\n"</span> &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00489"></a>00489     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a> &lt;&lt; HT_END;
+<a name="l00490"></a>00490     <span class="keywordflow">if</span> (second_try)
+<a name="l00491"></a>00491       <a class="code" href="_error_8h.html#b49551352d22486918141c548daffc80">HT_THROW2</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, msg);
+<a name="l00492"></a>00492     second_try = <span class="keyword">true</span>;
+<a name="l00493"></a>00493     <span class="keywordflow">goto</span> try_again;
+<a name="l00494"></a>00494   }
+<a name="l00495"></a>00495 
+<a name="l00496"></a>00496   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.clear();
+<a name="l00497"></a>00497 
+<a name="l00498"></a>00498   uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>;
+<a name="l00499"></a>00499 
+<a name="l00500"></a>00500   <span class="comment">// record end offsets for sanity checking and reset ptr</span>
+<a name="l00501"></a>00501   fix_end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
+<a name="l00502"></a>00502   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
+<a name="l00503"></a>00503   var_end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
+<a name="l00504"></a>00504   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
 <a name="l00505"></a>00505 
-<a name="l00507"></a>00507     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> vbuf(0, <span class="keyword">false</span>);
-<a name="l00508"></a>00508     amount = (<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>-<a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#c3360f6fcae5128b71b16a82262a438b" title="Returns the serialized size of the trailer.">size</a>()) - <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#6bc3cdc82d1dd276e807436580705893">var_index_offset</a>;
-<a name="l00509"></a>00509     vbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a> = buf.ptr;
-<a name="l00510"></a>00510     vbuf.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = buf.ptr + amount;
-<a name="l00511"></a>00511 
-<a name="l00512"></a>00512     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>-&gt;<a class="code" href="class_hypertable_1_1_block_compression_codec.html#fc5d02d2e8eba18108a024ac3443a2e9">inflate</a>(vbuf, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>, header);
+<a name="l00506"></a>00506   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>; i++) {
+<a name="l00507"></a>00507     assert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> &lt; fix_end);
+<a name="l00508"></a>00508     assert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> &lt; var_end);
+<a name="l00509"></a>00509 
+<a name="l00510"></a>00510     <span class="comment">// Deserialized cell key (variable portion)</span>
+<a name="l00511"></a>00511     <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
+<a name="l00512"></a>00512     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
 <a name="l00513"></a>00513 
-<a name="l00514"></a>00514     <span class="keywordflow">if</span> (!header.<a class="code" href="class_hypertable_1_1_block_compression_header.html#027e882e82a9f6db2cc1b823ed22bfd2">check_magic</a>(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#2d43bbe9820632518095f1f894c84f85">INDEX_VARIABLE_BLOCK_MAGIC</a>))
-<a name="l00515"></a>00515       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b273b32e829b47abc774375b4eb8fe0395">Error::BLOCK_COMPRESSOR_BAD_MAGIC</a>, <span class="stringliteral">""</span>);
-<a name="l00516"></a>00516   }
-<a name="l00517"></a>00517   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00518"></a>00518     <span class="keywordflow">if</span> (inflating_fixed)
-<a name="l00519"></a>00519       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt;<span class="stringliteral">"Error inflating FIXED index for cellstore '"</span>
-<a name="l00520"></a>00520           &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> &lt;&lt;<span class="stringliteral">"': "</span>&lt;&lt;  e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00521"></a>00521     <span class="keywordflow">else</span>
-<a name="l00522"></a>00522       <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt;<span class="stringliteral">"Error inflating VARIABLE index for cellstore '"</span>
-<a name="l00523"></a>00523           &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#21e3b1d7d5c8136dfe5b49a0c875b559">m_filename</a> &lt;&lt;<span class="stringliteral">"': "</span>&lt;&lt;  e &lt;&lt; HT_END;
-<a name="l00524"></a>00524     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"pread(fd="</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#318b1e40fd81d0a56eb65bd17cb88538">m_fd</a> &lt;&lt; <span class="stringliteral">", len="</span> &lt;&lt; <a class="code" href="_range_server_8cc.html#ccdb2dff228b7a3ea4c3f61937a82412">len</a> &lt;&lt; <span class="stringliteral">", amount="</span>
-<a name="l00525"></a>00525         &lt;&lt; index_amount &lt;&lt; <span class="stringliteral">")\n"</span> &lt;&lt; HT_END;
-<a name="l00526"></a>00526     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a> &lt;&lt; HT_END;
-<a name="l00527"></a>00527     <span class="keywordflow">goto</span> abort;
-<a name="l00528"></a>00528   }
-<a name="l00529"></a>00529 
-<a name="l00530"></a>00530   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.clear();
-<a name="l00531"></a>00531 
-<a name="l00532"></a>00532   uint32_t <a class="code" href="code__search__and__replace_8cc.html#d5f0842c40c7e46344fd8df70187fa0f">offset</a>;
-<a name="l00533"></a>00533 
-<a name="l00534"></a>00534   <span class="comment">// record end offsets for sanity checking and reset ptr</span>
-<a name="l00535"></a>00535   fix_end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
-<a name="l00536"></a>00536   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00537"></a>00537   var_end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
-<a name="l00538"></a>00538   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#ef7acccec46adcb90a926977a61e99a4">base</a>;
-<a name="l00539"></a>00539 
-<a name="l00540"></a>00540   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt; <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#da3c2d09e0edbb86be2956d2091761aa">index_entries</a>; i++) {
-<a name="l00541"></a>00541     assert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> &lt; fix_end);
-<a name="l00542"></a>00542     assert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> &lt; var_end);
-<a name="l00543"></a>00543 
-<a name="l00544"></a>00544     <span class="comment">// Deserialized cell key (variable portion)</span>
-<a name="l00545"></a>00545     <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>;
-<a name="l00546"></a>00546     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#be9cbbf7d41c705a4169723cc55c0853">m_var_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00547"></a>00547 
-<a name="l00548"></a>00548     <span class="comment">// Deserialize offset</span>
-<a name="l00549"></a>00549     memcpy(&amp;offset, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, <span class="keyword">sizeof</span>(offset));
-<a name="l00550"></a>00550     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
-<a name="l00551"></a>00551 
-<a name="l00552"></a>00552     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.insert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(), IndexMap::value_type(<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, offset));
-<a name="l00553"></a>00553   }
-<a name="l00554"></a>00554 
-<a name="l00558"></a>00558   {
-<a name="l00559"></a>00559     uint32_t <a class="code" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a> = 0;
-<a name="l00560"></a>00560     uint32_t <a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a> = (uint32_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
-<a name="l00561"></a>00561     <span class="keywordtype">size_t</span> start_row_length = <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.length() + 1;
-<a name="l00562"></a>00562     <span class="keywordtype">size_t</span> end_row_length = <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.length() + 1;
-<a name="l00563"></a>00563     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> dbuf(7 + std::max(start_row_length, end_row_length));
-<a name="l00564"></a>00564     <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> serkey;
-<a name="l00565"></a>00565     CellStoreV0::IndexMap::const_iterator iter, mid_iter, end_iter;
-<a name="l00566"></a>00566 
-<a name="l00567"></a>00567     dbuf.clear();
-<a name="l00568"></a>00568     <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(dbuf, <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.c_str());
-<a name="l00569"></a>00569     serkey.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = dbuf.base;
-<a name="l00570"></a>00570     iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.upper_bound(serkey);
-<a name="l00571"></a>00571     start = (*iter).second;
-<a name="l00572"></a>00572 
-<a name="l00573"></a>00573     dbuf.clear();
-<a name="l00574"></a>00574     <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(dbuf, <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.c_str());
-<a name="l00575"></a>00575     serkey.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = dbuf.base;
-<a name="l00576"></a>00576     <span class="keywordflow">if</span> ((end_iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.lower_bound(serkey)) == <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end())
-<a name="l00577"></a>00577       end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
-<a name="l00578"></a>00578     <span class="keywordflow">else</span>
-<a name="l00579"></a>00579       end = (*end_iter).second;
-<a name="l00580"></a>00580 
-<a name="l00581"></a>00581     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f0d21b7ee0ba3e883794f076db70ecf2">m_disk_usage</a> = end - start;
-<a name="l00582"></a>00582 
-<a name="l00583"></a>00583     <span class="keywordtype">size_t</span> i=0;
-<a name="l00584"></a>00584     <span class="keywordflow">for</span> (mid_iter=iter; iter!=end_iter; ++iter,++i) {
-<a name="l00585"></a>00585       <span class="keywordflow">if</span> ((i%2)==0)
-<a name="l00586"></a>00586         ++mid_iter;
-<a name="l00587"></a>00587     }
-<a name="l00588"></a>00588     <span class="keywordflow">if</span> (mid_iter != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end())
-<a name="l00589"></a>00589       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">record_split_row</a>((*mid_iter).first);
-<a name="l00590"></a>00590   }
+<a name="l00514"></a>00514     <span class="comment">// Deserialize offset</span>
+<a name="l00515"></a>00515     memcpy(&amp;offset, <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a>, <span class="keyword">sizeof</span>(offset));
+<a name="l00516"></a>00516     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#75bf05f5ca8497b2b53a744b8aa051a8">ptr</a> += <span class="keyword">sizeof</span>(offset);
+<a name="l00517"></a>00517 
+<a name="l00518"></a>00518     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.insert(<a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(), IndexMap::value_type(<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, offset));
+<a name="l00519"></a>00519   }
+<a name="l00520"></a>00520 
+<a name="l00524"></a>00524   {
+<a name="l00525"></a>00525     uint32_t <a class="code" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a> = 0;
+<a name="l00526"></a>00526     uint32_t <a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a> = (uint32_t)<a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
+<a name="l00527"></a>00527     <span class="keywordtype">size_t</span> start_row_length = <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.length() + 1;
+<a name="l00528"></a>00528     <span class="keywordtype">size_t</span> end_row_length = <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.length() + 1;
+<a name="l00529"></a>00529     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> dbuf(7 + std::max(start_row_length, end_row_length));
+<a name="l00530"></a>00530     <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> serkey;
+<a name="l00531"></a>00531     CellStoreV0::IndexMap::const_iterator iter, mid_iter, end_iter;
+<a name="l00532"></a>00532 
+<a name="l00533"></a>00533     dbuf.clear();
+<a name="l00534"></a>00534     <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(dbuf, <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a>.c_str());
+<a name="l00535"></a>00535     serkey.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = dbuf.base;
+<a name="l00536"></a>00536     iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.upper_bound(serkey);
+<a name="l00537"></a>00537     start = (*iter).second;
+<a name="l00538"></a>00538 
+<a name="l00539"></a>00539     dbuf.clear();
+<a name="l00540"></a>00540     <a class="code" href="namespace_hypertable.html#2ab33881b483bdd381e9401f3d29fd33">create_key_and_append</a>(dbuf, <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>.c_str());
+<a name="l00541"></a>00541     serkey.<a class="code" href="class_hypertable_1_1_byte_string.html#538ec5b176600856cab1646d59be7034">ptr</a> = dbuf.base;
+<a name="l00542"></a>00542     <span class="keywordflow">if</span> ((end_iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.lower_bound(serkey)) == <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end())
+<a name="l00543"></a>00543       end = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f991a9ea8d3c7a85b3f2ef592cb8a06a">m_file_length</a>;
+<a name="l00544"></a>00544     <span class="keywordflow">else</span>
+<a name="l00545"></a>00545       end = (*end_iter).second;
+<a name="l00546"></a>00546 
+<a name="l00547"></a>00547     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#f0d21b7ee0ba3e883794f076db70ecf2">m_disk_usage</a> = end - start;
+<a name="l00548"></a>00548 
+<a name="l00549"></a>00549     <span class="keywordtype">size_t</span> i=0;
+<a name="l00550"></a>00550     <span class="keywordflow">for</span> (mid_iter=iter; iter!=end_iter; ++iter,++i) {
+<a name="l00551"></a>00551       <span class="keywordflow">if</span> ((i%2)==0)
+<a name="l00552"></a>00552         ++mid_iter;
+<a name="l00553"></a>00553     }
+<a name="l00554"></a>00554     <span class="keywordflow">if</span> (mid_iter != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end())
+<a name="l00555"></a>00555       <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">record_split_row</a>((*mid_iter).first);
+<a name="l00556"></a>00556   }
+<a name="l00557"></a>00557 
+<a name="l00558"></a>00558   <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>;
+<a name="l00559"></a>00559   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = 0;
+<a name="l00560"></a>00560   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
+<a name="l00561"></a>00561 }
+<a name="l00562"></a>00562 
+<a name="l00563"></a>00563 
+<a name="l00567"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#61c0b41c9aa9313b3f03f9ed0bdf34fc">00567</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#61c0b41c9aa9313b3f03f9ed0bdf34fc" title="Displays block map information to stdout.">CellStoreV0::display_block_info</a>() {
+<a name="l00568"></a>00568   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> last_key;
+<a name="l00569"></a>00569   uint32_t last_offset = 0;
+<a name="l00570"></a>00570   uint32_t block_size;
+<a name="l00571"></a>00571   <span class="keywordtype">size_t</span> i=0;
+<a name="l00572"></a>00572   <span class="keywordflow">for</span> (IndexMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.begin();
+<a name="l00573"></a>00573        iter != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(); ++iter) {
+<a name="l00574"></a>00574     <span class="keywordflow">if</span> (last_key) {
+<a name="l00575"></a>00575       block_size = (*iter).second - last_offset;
+<a name="l00576"></a>00576       cout &lt;&lt; i &lt;&lt; <span class="stringliteral">": offset="</span> &lt;&lt; last_offset &lt;&lt; <span class="stringliteral">" size="</span> &lt;&lt; block_size
+<a name="l00577"></a>00577            &lt;&lt; <span class="stringliteral">" row="</span> &lt;&lt; last_key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>() &lt;&lt; endl;
+<a name="l00578"></a>00578       i++;
+<a name="l00579"></a>00579     }
+<a name="l00580"></a>00580     last_offset = (*iter).second;
+<a name="l00581"></a>00581     last_key = (*iter).first;
+<a name="l00582"></a>00582   }
+<a name="l00583"></a>00583   <span class="keywordflow">if</span> (last_key) {
+<a name="l00584"></a>00584     block_size = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a> - last_offset;
+<a name="l00585"></a>00585     cout &lt;&lt; i &lt;&lt; <span class="stringliteral">": offset="</span> &lt;&lt; last_offset &lt;&lt; <span class="stringliteral">" size="</span> &lt;&lt; block_size
+<a name="l00586"></a>00586          &lt;&lt; <span class="stringliteral">" row="</span> &lt;&lt; last_key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>() &lt;&lt; endl;
+<a name="l00587"></a>00587   }
+<a name="l00588"></a>00588 }
+<a name="l00589"></a>00589 
+<a name="l00590"></a>00590 
 <a name="l00591"></a>00591 
-<a name="l00592"></a>00592   <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = 0;
-<a name="l00593"></a>00593 
-<a name="l00594"></a>00594  abort:
-<a name="l00595"></a>00595   <span class="keyword">delete</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a>;
-<a name="l00596"></a>00596   <a class="code" href="class_hypertable_1_1_cell_store_v0.html#2931232400926828a96a1c41d763bb08">m_compressor</a> = 0;
-<a name="l00597"></a>00597   <span class="keyword">delete</span> [] <a class="code" href="class_hypertable_1_1_cell_store_v0.html#8698408261fe5811738e336e2e884c02">m_fix_index_buffer</a>.<a class="code" href="class_hypertable_1_1_dynamic_buffer.html#28252917fc8bfa187208d8c376b80a85">release</a>();
-<a name="l00598"></a>00598   <span class="keywordflow">return</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00599"></a>00599 }
-<a name="l00600"></a>00600 
-<a name="l00601"></a>00601 
-<a name="l00605"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#61c0b41c9aa9313b3f03f9ed0bdf34fc">00605</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#61c0b41c9aa9313b3f03f9ed0bdf34fc" title="Displays block map information to stdout.">CellStoreV0::display_block_info</a>() {
-<a name="l00606"></a>00606   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> last_key;
-<a name="l00607"></a>00607   uint32_t last_offset = 0;
-<a name="l00608"></a>00608   uint32_t block_size;
-<a name="l00609"></a>00609   <span class="keywordtype">size_t</span> i=0;
-<a name="l00610"></a>00610   <span class="keywordflow">for</span> (IndexMap::const_iterator iter = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.begin();
-<a name="l00611"></a>00611        iter != <a class="code" href="class_hypertable_1_1_cell_store_v0.html#07ec17def3f31f211676d94d052b5b12">m_index</a>.end(); ++iter) {
-<a name="l00612"></a>00612     <span class="keywordflow">if</span> (last_key) {
-<a name="l00613"></a>00613       block_size = (*iter).second - last_offset;
-<a name="l00614"></a>00614       cout &lt;&lt; i &lt;&lt; <span class="stringliteral">": offset="</span> &lt;&lt; last_offset &lt;&lt; <span class="stringliteral">" size="</span> &lt;&lt; block_size
-<a name="l00615"></a>00615            &lt;&lt; <span class="stringliteral">" row="</span> &lt;&lt; last_key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>() &lt;&lt; endl;
-<a name="l00616"></a>00616       i++;
-<a name="l00617"></a>00617     }
-<a name="l00618"></a>00618     last_offset = (*iter).second;
-<a name="l00619"></a>00619     last_key = (*iter).first;
-<a name="l00620"></a>00620   }
-<a name="l00621"></a>00621   <span class="keywordflow">if</span> (last_key) {
-<a name="l00622"></a>00622     block_size = <a class="code" href="class_hypertable_1_1_cell_store_v0.html#c402581d70672613cdc24a1b6e7c7afc">m_trailer</a>.<a class="code" href="class_hypertable_1_1_cell_store_trailer_v0.html#3e1131b2b02021c58f688984d59cfa5c">filter_offset</a> - last_offset;
-<a name="l00623"></a>00623     cout &lt;&lt; i &lt;&lt; <span class="stringliteral">": offset="</span> &lt;&lt; last_offset &lt;&lt; <span class="stringliteral">" size="</span> &lt;&lt; block_size
-<a name="l00624"></a>00624          &lt;&lt; <span class="stringliteral">" row="</span> &lt;&lt; last_key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>() &lt;&lt; endl;
-<a name="l00625"></a>00625   }
-<a name="l00626"></a>00626 }
-<a name="l00627"></a>00627 
-<a name="l00628"></a>00628 
-<a name="l00629"></a>00629 
-<a name="l00630"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">00630</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">CellStoreV0::record_split_row</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>) {
-<a name="l00631"></a>00631   std::string split_row = key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>();
-<a name="l00632"></a>00632   <span class="keywordflow">if</span> (split_row &gt; <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a> &amp;&amp; split_row &lt; <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>)
-<a name="l00633"></a>00633     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#a076d1b4ba895b562c1e07aca1a9d91b">m_split_row</a> = split_row;
-<a name="l00634"></a>00634 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00592"></a><a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">00592</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html#ad458ebc52c169a8f2414f107c89e86f">CellStoreV0::record_split_row</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>) {
+<a name="l00593"></a>00593   std::string split_row = key.<a class="code" href="class_hypertable_1_1_serialized_key.html#78f46a8a96c124a6105dd38904bc1984">row</a>();
+<a name="l00594"></a>00594   <span class="keywordflow">if</span> (split_row &gt; <a class="code" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">m_start_row</a> &amp;&amp; split_row &lt; <a class="code" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">m_end_row</a>)
+<a name="l00595"></a>00595     <a class="code" href="class_hypertable_1_1_cell_store_v0.html#a076d1b4ba895b562c1e07aca1a9d91b">m_split_row</a> = split_row;
+<a name="l00596"></a>00596 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -20,49 +20,48 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_TABLESCANNER_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_TABLESCANNER_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_common_2_config_8h.html">Common/Config.h</a>"</span>
-<a name="l00026"></a>00026 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_synchronizer_8h.html">AsyncComm/DispatchHandlerSynchronizer.h</a>"</span>
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_cells_8h.html">Cells.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_range_locator_8h.html">RangeLocator.h</a>"</span>
-<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_range_server_client_8h.html">RangeServerClient.h</a>"</span>
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_interval_scanner_8h.html">IntervalScanner.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_scan_block_8h.html">ScanBlock.h</a>"</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_schema_8h.html">Schema.h</a>"</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_table_8h.html">Table.h</a>"</span>
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="keyword">namespace </span>Hypertable {
-<a name="l00040"></a>00040 
-<a name="l00041"></a><a class="code" href="class_hypertable_1_1_table_scanner.html">00041</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043   <span class="keyword">public</span>:
-<a name="l00055"></a>00055     <a class="code" href="class_hypertable_1_1_table_scanner.html#0a97b5f7829186077e58b7dbb6096b29" title="Constructs a TableScanner object.">TableScanner</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> *table, <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;schema,
-<a name="l00056"></a>00056                  <a class="code" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;range_locator, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec,
-<a name="l00057"></a>00057                  uint32_t timeout_ms);
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">next</a>(<a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> &amp;cell);
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="keyword">private</span>:
-<a name="l00062"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">00062</a>     std::vector&lt;IntervalScannerPtr&gt;  <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>;
-<a name="l00063"></a>00063 
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">00064</a>     <span class="keywordtype">bool</span>      <a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a>;
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">00065</a>     <span class="keywordtype">size_t</span>    <a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>;
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">00066</a>     int64_t   <a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">m_rows_seen</a>;
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#4b4bb19ff20ac87a2dd1073e4e1098a5">00067</a>     <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a>  <a class="code" href="class_hypertable_1_1_table_scanner.html#4b4bb19ff20ac87a2dd1073e4e1098a5">m_table</a>;
-<a name="l00068"></a>00068   };
-<a name="l00069"></a>00069 
-<a name="l00070"></a><a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">00070</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;TableScanner&gt; <a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">TableScannerPtr</a>;
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(<a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> &amp;, <a class="code" href="class_hypertable_1_1_cells_builder.html">CellsBuilder</a> &amp;);
-<a name="l00073"></a><a class="code" href="namespace_hypertable.html#86e620475297f75682f5ae206544b876">00073</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(<a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">TableScannerPtr</a> &amp;p, <a class="code" href="class_hypertable_1_1_cells_builder.html">CellsBuilder</a> &amp;v) { <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(*p.get(), v); }
-<a name="l00074"></a>00074 
-<a name="l00075"></a>00075 } <span class="comment">// namespace Hypertable</span>
-<a name="l00076"></a>00076 
-<a name="l00077"></a>00077 <span class="preprocessor">#endif // HYPERTABLE_TABLESCANNER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00025"></a>00025 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_dispatch_handler_synchronizer_8h.html">AsyncComm/DispatchHandlerSynchronizer.h</a>"</span>
+<a name="l00028"></a>00028 
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_cells_8h.html">Cells.h</a>"</span>
+<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_range_locator_8h.html">RangeLocator.h</a>"</span>
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_range_server_client_8h.html">RangeServerClient.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_interval_scanner_8h.html">IntervalScanner.h</a>"</span>
+<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_scan_block_8h.html">ScanBlock.h</a>"</span>
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_schema_8h.html">Schema.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Types.h</a>"</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_table_8h.html">Table.h</a>"</span>
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038 <span class="keyword">namespace </span>Hypertable {
+<a name="l00039"></a>00039 
+<a name="l00040"></a><a class="code" href="class_hypertable_1_1_table_scanner.html">00040</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00041"></a>00041 
+<a name="l00042"></a>00042   <span class="keyword">public</span>:
+<a name="l00054"></a>00054     <a class="code" href="class_hypertable_1_1_table_scanner.html#0a97b5f7829186077e58b7dbb6096b29" title="Constructs a TableScanner object.">TableScanner</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="class_hypertable_1_1_table.html" title="Represents an open table.">Table</a> *table, <a class="code" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;schema,
+<a name="l00055"></a>00055                  <a class="code" href="namespace_hypertable.html#e3fc82d318cb3fa924bbe42b7df61927">RangeLocatorPtr</a> &amp;range_locator, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_scan_spec.html" title="Represents a scan predicate.">ScanSpec</a> &amp;scan_spec,
+<a name="l00056"></a>00056                  uint32_t timeout_ms);
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_table_scanner.html#f786056cbd2fd5262a07163f2fedbd00">next</a>(<a class="code" href="class_hypertable_1_1_cell.html" title="Encapsulates decomposed key and value.">Cell</a> &amp;cell);
+<a name="l00059"></a>00059 
+<a name="l00060"></a>00060   <span class="keyword">private</span>:
+<a name="l00061"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">00061</a>     std::vector&lt;IntervalScannerPtr&gt;  <a class="code" href="class_hypertable_1_1_table_scanner.html#570020443d63857d24e3c581b88b91f7">m_interval_scanners</a>;
+<a name="l00062"></a>00062 
+<a name="l00063"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">00063</a>     <span class="keywordtype">bool</span>      <a class="code" href="class_hypertable_1_1_table_scanner.html#5a42def69a54ceef613111463545c445">m_eos</a>;
+<a name="l00064"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">00064</a>     <span class="keywordtype">size_t</span>    <a class="code" href="class_hypertable_1_1_table_scanner.html#911b4aaf2cedaeb2b2beee358036c7d8">m_scanneri</a>;
+<a name="l00065"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">00065</a>     int64_t   <a class="code" href="class_hypertable_1_1_table_scanner.html#7b6c419aba1c7db17bd45aa61ce34bbb">m_rows_seen</a>;
+<a name="l00066"></a><a class="code" href="class_hypertable_1_1_table_scanner.html#4b4bb19ff20ac87a2dd1073e4e1098a5">00066</a>     <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a>  <a class="code" href="class_hypertable_1_1_table_scanner.html#4b4bb19ff20ac87a2dd1073e4e1098a5">m_table</a>;
+<a name="l00067"></a>00067   };
+<a name="l00068"></a>00068 
+<a name="l00069"></a><a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">00069</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;TableScanner&gt; <a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">TableScannerPtr</a>;
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071   <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(<a class="code" href="class_hypertable_1_1_table_scanner.html">TableScanner</a> &amp;, <a class="code" href="class_hypertable_1_1_cells_builder.html">CellsBuilder</a> &amp;);
+<a name="l00072"></a><a class="code" href="namespace_hypertable.html#86e620475297f75682f5ae206544b876">00072</a>   <span class="keyword">inline</span> <span class="keywordtype">void</span> <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(<a class="code" href="namespace_hypertable.html#ec5eeec65d09ad656c434b6ce60b1d87">TableScannerPtr</a> &amp;p, <a class="code" href="class_hypertable_1_1_cells_builder.html">CellsBuilder</a> &amp;v) { <a class="code" href="namespace_hypertable.html#c6c23eac564ecbd443aaf41f8b36716f">copy</a>(*p.get(), v); }
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074 } <span class="comment">// namespace Hypertable</span>
+<a name="l00075"></a>00075 
+<a name="l00076"></a>00076 <span class="preprocessor">#endif // HYPERTABLE_TABLESCANNER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

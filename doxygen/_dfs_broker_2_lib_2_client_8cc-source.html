@@ -662,13 +662,47 @@
 <a name="l00670"></a>00670 
 <a name="l00671"></a>00671 
 <a name="l00672"></a>00672 <span class="keywordtype">void</span>
-<a name="l00673"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24">00673</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24" title="Sends a message to the DFS broker.">Client::send_message</a>(<a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;cbp, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
-<a name="l00674"></a>00674   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#cceb4d213c3db795b15a7118114cae8b" title="Sends a request message over a connection, expecting a response.">send_request</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d38135ee0619906a3131f18805403b94">m_addr</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e4ab0092e00b8a88d17fbfae1ecc133a">m_timeout_ms</a>, cbp, handler);
-<a name="l00675"></a>00675 
-<a name="l00676"></a>00676   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
-<a name="l00677"></a>00677     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(error, <span class="stringliteral">"DFS send_request to %s failed"</span>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d38135ee0619906a3131f18805403b94">m_addr</a>.<a class="code" href="struct_hypertable_1_1_inet_addr.html#2fb8f62a3e54cf558d93b9914f1a6dc4">format</a>().c_str());
-<a name="l00678"></a>00678 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00673"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#7270d716f24d1af1901d6ee5e3fca444">00673</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#b3ace6b412e3645ef158609f0287623a" title="Invokes debug request asynchronously.">Client::debug</a>(int32_t <a class="code" href="_hql_command_interpreter_8cc.html#d732c0c7a8bcc3ecf8c7c360b382740d">command</a>, <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;serialized_parameters,
+<a name="l00674"></a>00674               <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00675"></a>00675   <a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#043fc7db22e4ab960ce18e613e4d4ca2">m_protocol</a>.<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#ed7bad62e99e1bca6c1aa6bd82ab803e">create_debug_request</a>(command,
+<a name="l00676"></a>00676                  serialized_parameters));
+<a name="l00677"></a>00677 
+<a name="l00678"></a>00678   <span class="keywordflow">try</span> { <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24" title="Sends a message to the DFS broker.">send_message</a>(cbp, handler); }
+<a name="l00679"></a>00679   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00680"></a>00680     <a class="code" href="_error_8h.html#e61e8974d9d73f82af9b9597f21d194f">HT_THROW2F</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, <span class="stringliteral">"Error sending debug command %d request"</span>, command);
+<a name="l00681"></a>00681   }
+<a name="l00682"></a>00682 }
+<a name="l00683"></a>00683 
+<a name="l00684"></a>00684 
+<a name="l00685"></a>00685 <span class="keywordtype">void</span>
+<a name="l00686"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#b3ace6b412e3645ef158609f0287623a">00686</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#b3ace6b412e3645ef158609f0287623a" title="Invokes debug request asynchronously.">Client::debug</a>(int32_t <a class="code" href="_hql_command_interpreter_8cc.html#d732c0c7a8bcc3ecf8c7c360b382740d">command</a>, <a class="code" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;serialized_parameters) {
+<a name="l00687"></a>00687   <a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html" title="This class is a DispatchHandler class that can be used by a client to synchronize...">DispatchHandlerSynchronizer</a> sync_handler;
+<a name="l00688"></a>00688   <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> event_ptr;
+<a name="l00689"></a>00689   <a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> cbp(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#043fc7db22e4ab960ce18e613e4d4ca2">m_protocol</a>.<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_protocol.html#ed7bad62e99e1bca6c1aa6bd82ab803e">create_debug_request</a>(command,
+<a name="l00690"></a>00690                  serialized_parameters));
+<a name="l00691"></a>00691 
+<a name="l00692"></a>00692   <span class="keywordflow">try</span> {
+<a name="l00693"></a>00693     <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24" title="Sends a message to the DFS broker.">send_message</a>(cbp, &amp;sync_handler);
+<a name="l00694"></a>00694 
+<a name="l00695"></a>00695     <span class="keywordflow">if</span> (!sync_handler.<a class="code" href="class_hypertable_1_1_dispatch_handler_synchronizer.html#8db4bb995a8c2632c5e704e0a97d0667" title="This method is used by a client to synchronize.">wait_for_reply</a>(event_ptr))
+<a name="l00696"></a>00696       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="class_hypertable_1_1_protocol.html#6d98deec5dca167978eadfa078b03ab9">Protocol::response_code</a>(event_ptr.get()),
+<a name="l00697"></a>00697                <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#043fc7db22e4ab960ce18e613e4d4ca2">m_protocol</a>.<a class="code" href="class_hypertable_1_1_protocol.html#2713455aaf3d892163ab7be0e1859327">string_format_message</a>(event_ptr).c_str());
+<a name="l00698"></a>00698   }
+<a name="l00699"></a>00699   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00700"></a>00700     <a class="code" href="_error_8h.html#e61e8974d9d73f82af9b9597f21d194f">HT_THROW2F</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, <span class="stringliteral">"Error sending debug command %d request"</span>, command);
+<a name="l00701"></a>00701   }
+<a name="l00702"></a>00702 }
+<a name="l00703"></a>00703 
+<a name="l00704"></a>00704 
+<a name="l00705"></a>00705 
+<a name="l00706"></a>00706 <span class="keywordtype">void</span>
+<a name="l00707"></a><a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24">00707</a> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#5c20dc8ba368ba356107bf5cd5482e24" title="Sends a message to the DFS broker.">Client::send_message</a>(<a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;cbp, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *handler) {
+<a name="l00708"></a>00708   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e23b8dd22571bf11530123c48e2f8e84">m_comm</a>-&gt;<a class="code" href="class_hypertable_1_1_comm.html#cceb4d213c3db795b15a7118114cae8b" title="Sends a request message over a connection, expecting a response.">send_request</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d38135ee0619906a3131f18805403b94">m_addr</a>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#e4ab0092e00b8a88d17fbfae1ecc133a">m_timeout_ms</a>, cbp, handler);
+<a name="l00709"></a>00709 
+<a name="l00710"></a>00710   <span class="keywordflow">if</span> (error != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>)
+<a name="l00711"></a>00711     <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(error, <span class="stringliteral">"DFS send_request to %s failed"</span>, <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#d38135ee0619906a3131f18805403b94">m_addr</a>.<a class="code" href="struct_hypertable_1_1_inet_addr.html#2fb8f62a3e54cf558d93b9914f1a6dc4">format</a>().c_str());
+<a name="l00712"></a>00712 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -33,8 +33,8 @@
 <a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
 <a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
 <a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_timer_8h.html">Common/Timer.h</a>"</span>
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_hyperspace_2_config_8h.html">Config.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
+<a name="l00039"></a>00039 
 <a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_client_keepalive_handler_8h.html">ClientKeepaliveHandler.h</a>"</span>
 <a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_handle_callback_8h.html">HandleCallback.h</a>"</span>
 <a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_lock_sequencer_8h.html">LockSequencer.h</a>"</span>
@@ -118,95 +118,95 @@
 <a name="l00159"></a>00159     <span class="keyword">virtual</span> <a class="code" href="class_hyperspace_1_1_session.html#8753bb9dee966b7d39abc9b7237cd665">~Session</a>();
 <a name="l00160"></a>00160 
 <a name="l00173"></a>00173     uint64_t <a class="code" href="class_hyperspace_1_1_session.html#3adb14ffa9eaf008decb68b051ab4941" title="Opens a file.">open</a>(<span class="keyword">const</span> std::string &amp;name, uint32_t flags,
-<a name="l00174"></a>00174                   <a class="code" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;callback, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer = 0);
+<a name="l00174"></a>00174                   <a class="code" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;callback, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer = 0);
 <a name="l00175"></a>00175 
 <a name="l00192"></a>00192     uint64_t <a class="code" href="class_hyperspace_1_1_session.html#6da8f7a0ea7a35774bfb484fbc75556a" title="Creates a file.">create</a>(<span class="keyword">const</span> std::string &amp;name, uint32_t flags,
 <a name="l00193"></a>00193                     <a class="code" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> &amp;callback,
-<a name="l00194"></a>00194                     std::vector&lt;Attribute&gt; &amp;init_attrs, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
+<a name="l00194"></a>00194                     std::vector&lt;Attribute&gt; &amp;init_attrs, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
 <a name="l00195"></a>00195 
 <a name="l00196"></a>00196     <span class="comment">/*</span>
 <a name="l00197"></a>00197 <span class="comment">    int cancel(uint64_t handle);</span>
 <a name="l00198"></a>00198 <span class="comment">    int poison(uint64_t handle);</span>
 <a name="l00199"></a>00199 <span class="comment">    */</span>
 <a name="l00200"></a>00200 
-<a name="l00206"></a>00206     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#eb2eacdaf3dc2d6aeb8bf2efa9ae9f54" title="Closes a file handle.">close</a>(uint64_t handle, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
+<a name="l00206"></a>00206     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#eb2eacdaf3dc2d6aeb8bf2efa9ae9f54" title="Closes a file handle.">close</a>(uint64_t handle, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
 <a name="l00207"></a>00207 
-<a name="l00217"></a>00217     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1a7ebaa266c3934e733a12728e3dfdc6" title="Creates a directory.">mkdir</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
+<a name="l00217"></a>00217     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1a7ebaa266c3934e733a12728e3dfdc6" title="Creates a directory.">mkdir</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
 <a name="l00218"></a>00218 
 <a name="l00227"></a>00227     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#5df0d0e6dec1b6643870c94b4b2aec0a" title="Sets an extended attribute of a file.">attr_set</a>(uint64_t handle, <span class="keyword">const</span> std::string &amp;name,
-<a name="l00228"></a>00228                   <span class="keyword">const</span> <span class="keywordtype">void</span> *value, <span class="keywordtype">size_t</span> value_len, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
+<a name="l00228"></a>00228                   <span class="keyword">const</span> <span class="keywordtype">void</span> *value, <span class="keywordtype">size_t</span> value_len, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
 <a name="l00229"></a>00229 
-<a name="l00237"></a>00237     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#19e610cbdfedbbbb8481bc7f7874246d" title="Gets an extended attribute of a file.">attr_get</a>(uint64_t handle, <span class="keyword">const</span> std::string &amp;name,
-<a name="l00238"></a>00238                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;value, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00239"></a>00239 
-<a name="l00246"></a>00246     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#b6171fe4fa10fae1b1bc88ee6ee41ea9" title="Deletes an extended attribute of a file.">attr_del</a>(uint64_t handle, <span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00247"></a>00247 
-<a name="l00254"></a>00254     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#34cd6cdff5fbb86dd8383b64b7ea7a10" title="Checks for the existence of a file.">exists</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00255"></a>00255 
-<a name="l00262"></a>00262     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#e2b711b6377c6c20e7cd5ea4cef4fa25" title="Removes a file or directory.">unlink</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00263"></a>00263 
-<a name="l00272"></a>00272     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1ce52ac0bfd5bfe6ae01a6e5615ab6b5" title="Gets a directory listing.">readdir</a>(uint64_t handle, std::vector&lt;DirEntry&gt; &amp;listing,
-<a name="l00273"></a>00273                  <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275 
-<a name="l00292"></a>00292     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#aec997db0d622e92e0d0bf6d36f88c6d" title="Locks a file.">lock</a>(uint64_t handle, uint32_t mode,
-<a name="l00293"></a>00293               <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00294"></a>00294 
-<a name="l00315"></a>00315     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#f4c7bb3b3e55dc29ed2df5fbc7124817" title="Attempts to lock a file.">try_lock</a>(uint64_t handle, uint32_t mode, uint32_t *statusp,
-<a name="l00316"></a>00316                   <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00317"></a>00317 
-<a name="l00323"></a>00323     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1651aa009d116eb544ba5838564352ad" title="Releases any file handle locks.">release</a>(uint64_t handle, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00324"></a>00324 
-<a name="l00331"></a>00331     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#b136da442df74b32980f9e17ea850761" title="Gets the lock sequencer of a locked file or directory handle.">get_sequencer</a>(uint64_t handle, <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp,
-<a name="l00332"></a>00332                        <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00333"></a>00333 
-<a name="l00342"></a>00342     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#30871a72eb7651e0e9fba50f0f1d97d1" title="Checks to see if a lock sequencer is valid.">check_sequencer</a>(<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> &amp;sequencer, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00343"></a>00343 
-<a name="l00349"></a>00349     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#b822effa2812a8e2f810937503c7b793" title="Check the status of the Hyperspace master server.">status</a>(<a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer=0);
-<a name="l00350"></a>00350 
-<a name="l00356"></a>00356     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218" title="Waits for session state to change to STATE_SAFE.">wait_for_connection</a>(uint32_t max_wait_ms);
-<a name="l00357"></a>00357 
-<a name="l00363"></a>00363     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218" title="Waits for session state to change to STATE_SAFE.">wait_for_connection</a>(<a class="code" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer);
-<a name="l00364"></a>00364 
-<a name="l00369"></a><a class="code" href="class_hyperspace_1_1_session.html#6397ca528fe4061a597daa3bceeaf37a">00369</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#6397ca528fe4061a597daa3bceeaf37a" title="Sets verbose flag.">set_verbose_flag</a>(<span class="keywordtype">bool</span> verbose) { <a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">m_verbose</a> = verbose; }
-<a name="l00370"></a>00370 
-<a name="l00376"></a>00376     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#38d31246122250916f2072f34cc1b0db" title="Transions state (internal method).">state_transition</a>(<span class="keywordtype">int</span> state);
-<a name="l00377"></a>00377 
-<a name="l00382"></a>00382     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#ce85fd3b5b4c1969655502c85a897310" title="Returns current state (internal method).">get_state</a>();
-<a name="l00383"></a>00383 
-<a name="l00389"></a>00389     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#98c83473c415a35f8fca492500359e86" title="Checks for session expiration (internal method).">expired</a>();
-<a name="l00390"></a>00390 
-<a name="l00396"></a>00396      <a class="code" href="class_hyperspace_1_1_hs_command_interpreter.html">HsCommandInterpreter</a>* <a class="code" href="class_hyperspace_1_1_session.html#43e52aa4aed8f4f5467bfff0223969b7" title="Creates a new Hyperspace command interpreter.">create_hs_interpreter</a>();
-<a name="l00397"></a>00397 
-<a name="l00398"></a>00398 
-<a name="l00399"></a>00399   <span class="keyword">private</span>:
+<a name="l00240"></a>00240     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#19e610cbdfedbbbb8481bc7f7874246d" title="Gets an extended attribute of a file.">attr_get</a>(uint64_t handle, <span class="keyword">const</span> std::string &amp;name,
+<a name="l00241"></a>00241                   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;value, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00242"></a>00242 
+<a name="l00249"></a>00249     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#b6171fe4fa10fae1b1bc88ee6ee41ea9" title="Deletes an extended attribute of a file.">attr_del</a>(uint64_t handle, <span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00250"></a>00250 
+<a name="l00257"></a>00257     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#34cd6cdff5fbb86dd8383b64b7ea7a10" title="Checks for the existence of a file.">exists</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00258"></a>00258 
+<a name="l00265"></a>00265     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#e2b711b6377c6c20e7cd5ea4cef4fa25" title="Removes a file or directory.">unlink</a>(<span class="keyword">const</span> std::string &amp;name, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00266"></a>00266 
+<a name="l00275"></a>00275     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1ce52ac0bfd5bfe6ae01a6e5615ab6b5" title="Gets a directory listing.">readdir</a>(uint64_t handle, std::vector&lt;DirEntry&gt; &amp;listing,
+<a name="l00276"></a>00276                  <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00277"></a>00277 
+<a name="l00278"></a>00278 
+<a name="l00295"></a>00295     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#aec997db0d622e92e0d0bf6d36f88c6d" title="Locks a file.">lock</a>(uint64_t handle, uint32_t mode,
+<a name="l00296"></a>00296               <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00297"></a>00297 
+<a name="l00318"></a>00318     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#f4c7bb3b3e55dc29ed2df5fbc7124817" title="Attempts to lock a file.">try_lock</a>(uint64_t handle, uint32_t mode, uint32_t *statusp,
+<a name="l00319"></a>00319                   <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00320"></a>00320 
+<a name="l00326"></a>00326     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#1651aa009d116eb544ba5838564352ad" title="Releases any file handle locks.">release</a>(uint64_t handle, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00327"></a>00327 
+<a name="l00334"></a>00334     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#b136da442df74b32980f9e17ea850761" title="Gets the lock sequencer of a locked file or directory handle.">get_sequencer</a>(uint64_t handle, <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> *sequencerp,
+<a name="l00335"></a>00335                        <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00336"></a>00336 
+<a name="l00345"></a>00345     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#30871a72eb7651e0e9fba50f0f1d97d1" title="Checks to see if a lock sequencer is valid.">check_sequencer</a>(<a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> &amp;sequencer, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00346"></a>00346 
+<a name="l00352"></a>00352     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#b822effa2812a8e2f810937503c7b793" title="Check the status of the Hyperspace master server.">status</a>(<a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer=0);
+<a name="l00353"></a>00353 
+<a name="l00359"></a>00359     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218" title="Waits for session state to change to STATE_SAFE.">wait_for_connection</a>(uint32_t max_wait_ms);
+<a name="l00360"></a>00360 
+<a name="l00366"></a>00366     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#fe7b8b5453dcadfab8fc8f61c62e3218" title="Waits for session state to change to STATE_SAFE.">wait_for_connection</a>(<a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> &amp;timer);
+<a name="l00367"></a>00367 
+<a name="l00372"></a><a class="code" href="class_hyperspace_1_1_session.html#6397ca528fe4061a597daa3bceeaf37a">00372</a>     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#6397ca528fe4061a597daa3bceeaf37a" title="Sets verbose flag.">set_verbose_flag</a>(<span class="keywordtype">bool</span> verbose) { <a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">m_verbose</a> = verbose; }
+<a name="l00373"></a>00373 
+<a name="l00379"></a>00379     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#38d31246122250916f2072f34cc1b0db" title="Transions state (internal method).">state_transition</a>(<span class="keywordtype">int</span> state);
+<a name="l00380"></a>00380 
+<a name="l00385"></a>00385     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#ce85fd3b5b4c1969655502c85a897310" title="Returns current state (internal method).">get_state</a>();
+<a name="l00386"></a>00386 
+<a name="l00392"></a>00392     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#98c83473c415a35f8fca492500359e86" title="Checks for session expiration (internal method).">expired</a>();
+<a name="l00393"></a>00393 
+<a name="l00399"></a>00399      <a class="code" href="class_hyperspace_1_1_hs_command_interpreter.html">HsCommandInterpreter</a>* <a class="code" href="class_hyperspace_1_1_session.html#43e52aa4aed8f4f5467bfff0223969b7" title="Creates a new Hyperspace command interpreter.">create_hs_interpreter</a>();
 <a name="l00400"></a>00400 
-<a name="l00401"></a>00401     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#aee3344ea6f8d94222197cacadfed0a3">wait_for_safe</a>();
-<a name="l00402"></a>00402     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#130965215d1ab969ddb876fa7ef6a42b">send_message</a>(<a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer);
-<a name="l00403"></a>00403     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#4d50f43110180a7bd9e528af0088d43a">normalize_name</a>(<span class="keyword">const</span> std::string &amp;name, std::string &amp;normal);
-<a name="l00404"></a>00404     uint64_t <a class="code" href="class_hyperspace_1_1_session.html#3adb14ffa9eaf008decb68b051ab4941" title="Opens a file.">open</a>(<a class="code" href="namespace_hyperspace.html#f51254291e9d2ec71ff55ffe7793c646">ClientHandleStatePtr</a> &amp;, <a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> *timer);
-<a name="l00405"></a>00405 
-<a name="l00406"></a><a class="code" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">00406</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">m_mutex</a>;
-<a name="l00407"></a><a class="code" href="class_hyperspace_1_1_session.html#b10938a4971781ee06e153cbececb362">00407</a>     boost::condition <a class="code" href="class_hyperspace_1_1_session.html#b10938a4971781ee06e153cbececb362">m_cond</a>;
-<a name="l00408"></a><a class="code" href="class_hyperspace_1_1_session.html#980b2ecdca0668063e26cab2872e3a2b">00408</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hyperspace_1_1_session.html#980b2ecdca0668063e26cab2872e3a2b">m_comm</a>;
-<a name="l00409"></a><a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">00409</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">m_verbose</a>;
-<a name="l00410"></a><a class="code" href="class_hyperspace_1_1_session.html#c5f0f45d7da4683d9398be72a80b0574">00410</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#c5f0f45d7da4683d9398be72a80b0574">m_silent</a>;
-<a name="l00411"></a><a class="code" href="class_hyperspace_1_1_session.html#30319582404ef847c067cabc2297d770">00411</a>     <span class="keywordtype">int</span>  <a class="code" href="class_hyperspace_1_1_session.html#30319582404ef847c067cabc2297d770">m_state</a>;
-<a name="l00412"></a><a class="code" href="class_hyperspace_1_1_session.html#6e5689378a6b1c63027422130f13382f">00412</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#6e5689378a6b1c63027422130f13382f">m_grace_period</a>;
-<a name="l00413"></a><a class="code" href="class_hyperspace_1_1_session.html#0a54d3699859a7c6de7dda3b601621ac">00413</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#0a54d3699859a7c6de7dda3b601621ac">m_lease_interval</a>;
-<a name="l00414"></a><a class="code" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">00414</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">m_timeout_ms</a>;
-<a name="l00415"></a><a class="code" href="class_hyperspace_1_1_session.html#3bf8b015648f0b873b1a8920099b31df">00415</a>     boost::xtime <a class="code" href="class_hyperspace_1_1_session.html#3bf8b015648f0b873b1a8920099b31df">m_expire_time</a>;
-<a name="l00416"></a><a class="code" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">00416</a>     <a class="code" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address.">InetAddr</a> <a class="code" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">m_master_addr</a>;
-<a name="l00417"></a><a class="code" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">00417</a>     <a class="code" href="namespace_hyperspace.html#fd838844485ef3d5e97f42f312981a78">ClientKeepaliveHandlerPtr</a> <a class="code" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">m_keepalive_handler_ptr</a>;
-<a name="l00418"></a><a class="code" href="class_hyperspace_1_1_session.html#ef79c4101bb76b6c48e4e3537657e75a">00418</a>     <a class="code" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace...">SessionCallback</a> *<a class="code" href="class_hyperspace_1_1_session.html#ef79c4101bb76b6c48e4e3537657e75a">m_session_callback</a>;
-<a name="l00419"></a>00419   };
-<a name="l00420"></a>00420 
-<a name="l00421"></a><a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">00421</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;Session&gt; <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">SessionPtr</a>;
-<a name="l00422"></a>00422 
-<a name="l00423"></a>00423 } <span class="comment">// namespace Hyperspace</span>
-<a name="l00424"></a>00424 
-<a name="l00425"></a>00425 <span class="preprocessor">#endif // HYPERSPACE_SESSION_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
+<a name="l00401"></a>00401 
+<a name="l00402"></a>00402   <span class="keyword">private</span>:
+<a name="l00403"></a>00403 
+<a name="l00404"></a>00404     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#aee3344ea6f8d94222197cacadfed0a3">wait_for_safe</a>();
+<a name="l00405"></a>00405     <span class="keywordtype">int</span> <a class="code" href="class_hyperspace_1_1_session.html#130965215d1ab969ddb876fa7ef6a42b">send_message</a>(<a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer.">DispatchHandler</a> *, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer);
+<a name="l00406"></a>00406     <span class="keywordtype">void</span> <a class="code" href="class_hyperspace_1_1_session.html#4d50f43110180a7bd9e528af0088d43a">normalize_name</a>(<span class="keyword">const</span> std::string &amp;name, std::string &amp;normal);
+<a name="l00407"></a>00407     uint64_t <a class="code" href="class_hyperspace_1_1_session.html#3adb14ffa9eaf008decb68b051ab4941" title="Opens a file.">open</a>(<a class="code" href="namespace_hyperspace.html#f51254291e9d2ec71ff55ffe7793c646">ClientHandleStatePtr</a> &amp;, <a class="code" href="namespace_hypertable.html#af375d92595688fe01237202c19367ea">CommBufPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> *timer);
+<a name="l00408"></a>00408 
+<a name="l00409"></a><a class="code" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">00409</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hyperspace_1_1_session.html#0ccb59ffdf5166f45fa5e61456ec2583">m_mutex</a>;
+<a name="l00410"></a><a class="code" href="class_hyperspace_1_1_session.html#b10938a4971781ee06e153cbececb362">00410</a>     boost::condition <a class="code" href="class_hyperspace_1_1_session.html#b10938a4971781ee06e153cbececb362">m_cond</a>;
+<a name="l00411"></a><a class="code" href="class_hyperspace_1_1_session.html#980b2ecdca0668063e26cab2872e3a2b">00411</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hyperspace_1_1_session.html#980b2ecdca0668063e26cab2872e3a2b">m_comm</a>;
+<a name="l00412"></a><a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">00412</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#5edf23c9c8f291bf831ab66aca0e04e5">m_verbose</a>;
+<a name="l00413"></a><a class="code" href="class_hyperspace_1_1_session.html#c5f0f45d7da4683d9398be72a80b0574">00413</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_session.html#c5f0f45d7da4683d9398be72a80b0574">m_silent</a>;
+<a name="l00414"></a><a class="code" href="class_hyperspace_1_1_session.html#30319582404ef847c067cabc2297d770">00414</a>     <span class="keywordtype">int</span>  <a class="code" href="class_hyperspace_1_1_session.html#30319582404ef847c067cabc2297d770">m_state</a>;
+<a name="l00415"></a><a class="code" href="class_hyperspace_1_1_session.html#6e5689378a6b1c63027422130f13382f">00415</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#6e5689378a6b1c63027422130f13382f">m_grace_period</a>;
+<a name="l00416"></a><a class="code" href="class_hyperspace_1_1_session.html#0a54d3699859a7c6de7dda3b601621ac">00416</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#0a54d3699859a7c6de7dda3b601621ac">m_lease_interval</a>;
+<a name="l00417"></a><a class="code" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">00417</a>     uint32_t <a class="code" href="class_hyperspace_1_1_session.html#a438667eb8a053ecb87cb36913bfa7b3">m_timeout_ms</a>;
+<a name="l00418"></a><a class="code" href="class_hyperspace_1_1_session.html#3bf8b015648f0b873b1a8920099b31df">00418</a>     boost::xtime <a class="code" href="class_hyperspace_1_1_session.html#3bf8b015648f0b873b1a8920099b31df">m_expire_time</a>;
+<a name="l00419"></a><a class="code" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">00419</a>     <a class="code" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address.">InetAddr</a> <a class="code" href="class_hyperspace_1_1_session.html#5aa145f0b5c4318ae55d2313925ac1c6">m_master_addr</a>;
+<a name="l00420"></a><a class="code" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">00420</a>     <a class="code" href="namespace_hyperspace.html#fd838844485ef3d5e97f42f312981a78">ClientKeepaliveHandlerPtr</a> <a class="code" href="class_hyperspace_1_1_session.html#99acf8e13850b1e5c04be6b237541ec2">m_keepalive_handler_ptr</a>;
+<a name="l00421"></a><a class="code" href="class_hyperspace_1_1_session.html#ef79c4101bb76b6c48e4e3537657e75a">00421</a>     <a class="code" href="class_hyperspace_1_1_session_callback.html" title="A callback object derived from this class gets passed into the constructor of Hyperspace...">SessionCallback</a> *<a class="code" href="class_hyperspace_1_1_session.html#ef79c4101bb76b6c48e4e3537657e75a">m_session_callback</a>;
+<a name="l00422"></a>00422   };
+<a name="l00423"></a>00423 
+<a name="l00424"></a><a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">00424</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;Session&gt; <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">SessionPtr</a>;
+<a name="l00425"></a>00425 
+<a name="l00426"></a>00426 } <span class="comment">// namespace Hyperspace</span>
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428 <span class="preprocessor">#endif // HYPERSPACE_SESSION_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:40 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

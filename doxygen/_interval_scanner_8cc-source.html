@@ -144,7 +144,7 @@
 <a name="l00153"></a>00153   <a class="code" href="class_hypertable_1_1_serialized_key.html">SerializedKey</a> serkey;
 <a name="l00154"></a>00154   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
 <a name="l00155"></a>00155   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00156"></a>00156   <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> timer(<a class="code" href="class_hypertable_1_1_interval_scanner.html#baf73a5b7e6b24f641a76264ffb2f1ca">m_timeout_ms</a>, <span class="stringliteral">"foo"</span>);
+<a name="l00156"></a>00156   <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> timer(<a class="code" href="class_hypertable_1_1_interval_scanner.html#baf73a5b7e6b24f641a76264ffb2f1ca">m_timeout_ms</a>);
 <a name="l00157"></a>00157 
 <a name="l00158"></a>00158   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_interval_scanner.html#bdf84be554cdbb5b1d9547d72fad2313">m_eos</a>)
 <a name="l00159"></a>00159     <span class="keywordflow">return</span> <span class="keyword">false</span>;
@@ -264,7 +264,7 @@
 <a name="l00273"></a>00273 
 <a name="l00274"></a>00274 
 <a name="l00275"></a>00275 <span class="keywordtype">void</span>
-<a name="l00276"></a><a class="code" href="class_hypertable_1_1_interval_scanner.html#5d685933249e2936f5c750e21df60edb">00276</a> <a class="code" href="class_hypertable_1_1_interval_scanner.html#5d685933249e2936f5c750e21df60edb">IntervalScanner::find_range_and_start_scan</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *row_key, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer) {
+<a name="l00276"></a><a class="code" href="class_hypertable_1_1_interval_scanner.html#5d685933249e2936f5c750e21df60edb">00276</a> <a class="code" href="class_hypertable_1_1_interval_scanner.html#5d685933249e2936f5c750e21df60edb">IntervalScanner::find_range_and_start_scan</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *row_key, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> &amp;timer) {
 <a name="l00277"></a>00277   <a class="code" href="class_hypertable_1_1_range_spec.html" title="Identifies a range.">RangeSpec</a>  range;
 <a name="l00278"></a>00278   <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> dbuf(0);
 <a name="l00279"></a>00279 
@@ -309,8 +309,8 @@
 <a name="l00318"></a>00318     }
 <a name="l00319"></a>00319     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
 <a name="l00320"></a>00320 
-<a name="l00321"></a>00321       <span class="keywordflow">if</span> (e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a34972308357f4c31923b957b60b9e06">Error::REQUEST_TIMEOUT</a>
-<a name="l00322"></a>00322           &amp;&amp; e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b272f250ef3a753ac81c466b499121e99a">Error::RANGESERVER_RANGE_NOT_FOUND</a>
+<a name="l00321"></a>00321       <span class="keywordflow">if</span> ((e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a34972308357f4c31923b957b60b9e06">Error::REQUEST_TIMEOUT</a>
+<a name="l00322"></a>00322            &amp;&amp; e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>() != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b272f250ef3a753ac81c466b499121e99a">Error::RANGESERVER_RANGE_NOT_FOUND</a>)
 <a name="l00323"></a>00323           || timer.<a class="code" href="class_hypertable_1_1_timer.html#e221e86867b3c767b814122c257991b6">remaining</a>() &lt;= 3.0) {
 <a name="l00324"></a>00324         <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"%s - %s"</span>, e.what(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
 <a name="l00325"></a>00325         <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>(<span class="stringliteral">"Problem creating scanner on "</span>)
@@ -338,7 +338,7 @@
 <a name="l00347"></a>00347   <span class="keywordflow">else</span>
 <a name="l00348"></a>00348     <a class="code" href="class_hypertable_1_1_interval_scanner.html#9b2826c10976a9a18bd872442110943a">m_fetch_outstanding</a> = <span class="keyword">false</span>;
 <a name="l00349"></a>00349 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:41 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -47,6 +47,8 @@ Collaboration diagram for Hypertable::MetaLogReader:</div>
 <a href="class_hypertable_1_1_meta_log_reader-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#443924bf7bba1418f452ce7916b83851">MetaLogReader</a> ()</td></tr>
+
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#f8321a8cde35788db6194fe131358d28">~MetaLogReader</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual <a class="el" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">ScanEntry</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#bab5c2b9e104b9eba623ad7050f338e6">next</a> (<a class="el" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">ScanEntry</a> &amp;)=0</td></tr>
@@ -55,6 +57,13 @@ Collaboration diagram for Hypertable::MetaLogReader:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual <a class="el" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#d9d1cb7de40a761f358de5a3cb992799">read</a> ()=0</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">read and get ready for the next record, throws if invalid  <a href="#d9d1cb7de40a761f358de5a3cb992799"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#d9488fe0d2e191943ff0d87129383510">skips_errors</a> () const </td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#dd972d16a9a1ee97136a996952617d62">set_skips_errors</a> (bool choice)</td></tr>
+
+<tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">m_skips_errors</a></td></tr>
+
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">ScanEntry</a></td></tr>
 
@@ -63,6 +72,27 @@ Collaboration diagram for Hypertable::MetaLogReader:</div>
 Interface for meta log readers. 
 <p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00034">34</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" name="443924bf7bba1418f452ce7916b83851"></a><!-- doxytag: member="Hypertable::MetaLogReader::MetaLogReader" ref="443924bf7bba1418f452ce7916b83851" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">MetaLogReader::MetaLogReader           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_meta_log_reader_8cc-source.html#l00028">28</a> of file <a class="el" href="_meta_log_reader_8cc-source.html">MetaLogReader.cc</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="f8321a8cde35788db6194fe131358d28"></a><!-- doxytag: member="Hypertable::MetaLogReader::~MetaLogReader" ref="f8321a8cde35788db6194fe131358d28" args="()" -->
 <div class="memitem">
 <div class="memproto">
@@ -80,7 +110,7 @@ Interface for meta log readers.
 
 <p>
 
-<p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00045">45</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
+<p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00046">46</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
 
 </div>
 </div><p>
@@ -130,9 +160,70 @@ read and get ready for the next record, throws if invalid
 
 </div>
 </div><p>
-<hr>The documentation for this class was generated from the following file:<ul>
-<li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:01 2008 for hypertable by&nbsp;
+<a class="anchor" name="d9488fe0d2e191943ff0d87129383510"></a><!-- doxytag: member="Hypertable::MetaLogReader::skips_errors" ref="d9488fe0d2e191943ff0d87129383510" args="() const " -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::MetaLogReader::skips_errors           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"> const<code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00058">58</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="dd972d16a9a1ee97136a996952617d62"></a><!-- doxytag: member="Hypertable::MetaLogReader::set_skips_errors" ref="dd972d16a9a1ee97136a996952617d62" args="(bool choice)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool Hypertable::MetaLogReader::set_skips_errors           </td>
+          <td>(</td>
+          <td class="paramtype">bool&nbsp;</td>
+          <td class="paramname"> <em>choice</em>          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00060">60</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="610640d6261b75b874862c6b315213a2"></a><!-- doxytag: member="Hypertable::MetaLogReader::m_skips_errors" ref="610640d6261b75b874862c6b315213a2" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">Hypertable::MetaLogReader::m_skips_errors</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_meta_log_reader_8h-source.html#l00067">67</a> of file <a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a>.</p>
+
+</div>
+</div><p>
+<hr>The documentation for this class was generated from the following files:<ul>
+<li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_meta_log_reader_8h-source.html">MetaLogReader.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/Lib/<a class="el" href="_meta_log_reader_8cc-source.html">MetaLogReader.cc</a></ul>
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:21 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

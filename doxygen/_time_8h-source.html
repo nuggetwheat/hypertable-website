@@ -24,33 +24,44 @@
 <a name="l00026"></a>00026 <span class="preprocessor">#include &lt;boost/thread/xtime.hpp&gt;</span>
 <a name="l00027"></a>00027 
 <a name="l00028"></a>00028 <span class="keyword">namespace </span>Hypertable {
-<a name="l00029"></a>00029   <span class="keyword">using</span> boost::TIME_UTC;
-<a name="l00030"></a>00030 
-<a name="l00033"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html">00033</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> : <span class="keyword">public</span> boost::xtime {
-<a name="l00034"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#d5460397f33160522f63925b7d22700c">00034</a>     <a class="code" href="struct_hypertable_1_1_hi_res_time.html#d5460397f33160522f63925b7d22700c">HiResTime</a>(<span class="keywordtype">int</span> type = TIME_UTC) { <a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a" title="get the current hi-res time return true on success; otherwise false">reset</a>(type); }
-<a name="l00035"></a>00035 
-<a name="l00039"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a">00039</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a" title="get the current hi-res time return true on success; otherwise false">reset</a>(<span class="keywordtype">int</span> type = TIME_UTC) {
-<a name="l00040"></a>00040       <span class="keywordflow">return</span> boost::xtime_get(<span class="keyword">this</span>, type) != 0;
-<a name="l00041"></a>00041     }
-<a name="l00042"></a>00042 
-<a name="l00046"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6">00046</a>     <span class="keywordtype">int</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{
-<a name="l00047"></a>00047       <span class="keywordflow">return</span> boost::xtime_cmp(*<span class="keyword">this</span>, y);
-<a name="l00048"></a>00048     }
-<a name="l00049"></a>00049 
-<a name="l00050"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#257a56c2ed798fa56743313ace4c3974">00050</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#257a56c2ed798fa56743313ace4c3974">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(y) &lt; 0; }
-<a name="l00051"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#da43f792e3704e759be4729265837f18">00051</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#da43f792e3704e759be4729265837f18">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(y) == 0; }
-<a name="l00052"></a>00052   };
+<a name="l00029"></a>00029 
+<a name="l00030"></a>00030   <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">xtime_add_millis</a>(boost::xtime &amp;xt, uint32_t millis);
+<a name="l00031"></a>00031   <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">xtime_sub_millis</a>(boost::xtime &amp;xt, uint32_t millis);
+<a name="l00032"></a>00032 
+<a name="l00033"></a>00033   <span class="keyword">using</span> boost::TIME_UTC;
+<a name="l00034"></a>00034 
+<a name="l00037"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html">00037</a>   <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> : <span class="keyword">public</span> boost::xtime {
+<a name="l00038"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#d5460397f33160522f63925b7d22700c">00038</a>     <a class="code" href="struct_hypertable_1_1_hi_res_time.html#d5460397f33160522f63925b7d22700c">HiResTime</a>(<span class="keywordtype">int</span> type = TIME_UTC) { <a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a" title="get the current hi-res time return true on success; otherwise false">reset</a>(type); }
+<a name="l00039"></a>00039 
+<a name="l00043"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a">00043</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#f4a5d212fa24691ccc484236af858f1a" title="get the current hi-res time return true on success; otherwise false">reset</a>(<span class="keywordtype">int</span> type = TIME_UTC) {
+<a name="l00044"></a>00044       <span class="keywordflow">return</span> boost::xtime_get(<span class="keyword">this</span>, type) != 0;
+<a name="l00045"></a>00045     }
+<a name="l00046"></a>00046 
+<a name="l00050"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6">00050</a>     <span class="keywordtype">int</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{
+<a name="l00051"></a>00051       <span class="keywordflow">return</span> boost::xtime_cmp(*<span class="keyword">this</span>, y);
+<a name="l00052"></a>00052     }
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054   <span class="keyword">extern</span> uint64_t <a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">get_ts64</a>();
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056   <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">xtime_add_millis</a>(boost::xtime &amp;xt, uint32_t millis);
-<a name="l00057"></a>00057   <span class="keyword">extern</span> <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">xtime_sub_millis</a>(boost::xtime &amp;xt, uint32_t millis);
-<a name="l00058"></a>00058   <span class="keyword">extern</span> std::ostream &amp;<a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">hires_ts</a>(std::ostream &amp;);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060 } <span class="comment">// namespace Hypertable</span>
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062 <span class="preprocessor">#endif // HYPERTABLE_HIRES_TIME_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00054"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#257a56c2ed798fa56743313ace4c3974">00054</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#257a56c2ed798fa56743313ace4c3974">operator&lt;</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(y) &lt; 0; }
+<a name="l00055"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#da43f792e3704e759be4729265837f18">00055</a>     <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#da43f792e3704e759be4729265837f18">operator==</a>(<span class="keyword">const</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;y)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="struct_hypertable_1_1_hi_res_time.html#fb7254b777c81bffbb68a849b51952b6" title="compare with other HiResTime &amp;lt;: -1; ==: 0; &amp;gt;: 1">cmp</a>(y) == 0; }
+<a name="l00056"></a>00056 
+<a name="l00057"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#e670cea809cee58ed1240109dd2a8b37">00057</a>     <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;<a class="code" href="struct_hypertable_1_1_hi_res_time.html#e670cea809cee58ed1240109dd2a8b37">operator+=</a>(uint32_t ms) {
+<a name="l00058"></a>00058       <a class="code" href="namespace_hypertable.html#52b53a78b7c849eeb5927e5b33b943ca">xtime_add_millis</a>(*<span class="keyword">this</span>, ms);
+<a name="l00059"></a>00059       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00060"></a>00060     }
+<a name="l00061"></a><a class="code" href="struct_hypertable_1_1_hi_res_time.html#9b804f6df3cd89b63dca3d21bd35cfc9">00061</a>     <a class="code" href="struct_hypertable_1_1_hi_res_time.html" title="High-Resolution Time.">HiResTime</a> &amp;<a class="code" href="struct_hypertable_1_1_hi_res_time.html#9b804f6df3cd89b63dca3d21bd35cfc9">operator-=</a>(uint32_t ms) {
+<a name="l00062"></a>00062       <a class="code" href="namespace_hypertable.html#634d439c12778a6b43727dfc584e4052">xtime_sub_millis</a>(*<span class="keyword">this</span>, ms);
+<a name="l00063"></a>00063       <span class="keywordflow">return</span> *<span class="keyword">this</span>;
+<a name="l00064"></a>00064     }
+<a name="l00065"></a>00065   };
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067   <span class="keyword">extern</span> uint64_t <a class="code" href="namespace_hypertable.html#ab247d7c0f17d641aff201e7c6f64c32">get_ts64</a>();
+<a name="l00068"></a>00068   <span class="keyword">extern</span> std::ostream &amp;<a class="code" href="namespace_hypertable.html#5c38bdaefd4a66d95dd486aff33a821e">hires_ts</a>(std::ostream &amp;);
+<a name="l00069"></a>00069   <span class="keyword">extern</span> std::ostream &amp;<a class="code" href="namespace_hypertable.html#cafe6e7854fc38a7a91b0b5ac9301f09">hires_ts_date</a>(std::ostream &amp;);
+<a name="l00070"></a>00070 
+<a name="l00071"></a>00071 } <span class="comment">// namespace Hypertable</span>
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 <span class="preprocessor">#endif // HYPERTABLE_HIRES_TIME_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

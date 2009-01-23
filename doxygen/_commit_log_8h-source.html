@@ -30,7 +30,7 @@
 <a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_dynamic_buffer_8h.html">Common/DynamicBuffer.h</a>"</span>
 <a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
 <a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_common_2_config_8h.html">Common/Config.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
 <a name="l00036"></a>00036 
 <a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_block_compression_codec_8h.html">Hypertable/Lib/BlockCompressionCodec.h</a>"</span>
 <a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_filesystem_8h.html">Hypertable/Lib/Filesystem.h</a>"</span>
@@ -57,44 +57,44 @@
 <a name="l00081"></a>00081       <a class="code" href="class_hypertable_1_1_commit_log.html#5705bbcc977b33aa89c6701ebeb1618a">initialize</a>(fs, log_dir, props, init_log);
 <a name="l00082"></a>00082     }
 <a name="l00083"></a>00083 
-<a name="l00090"></a><a class="code" href="class_hypertable_1_1_commit_log.html#afde3948d8c0f7eed8f731c172ccc1ac">00090</a>     <a class="code" href="class_hypertable_1_1_commit_log.html#8e6fd8218c9ca13d276f2f0c87db5f75" title="Constructs a CommitLog object using supplied properties.">CommitLog</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir) : <a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a>(log_dir) {
-<a name="l00091"></a>00091       <a class="code" href="class_hypertable_1_1_commit_log.html#5705bbcc977b33aa89c6701ebeb1618a">initialize</a>(fs, log_dir, <a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">Config::properties</a>, 0);
-<a name="l00092"></a>00092     }
+<a name="l00090"></a>00090     <a class="code" href="class_hypertable_1_1_commit_log.html#8e6fd8218c9ca13d276f2f0c87db5f75" title="Constructs a CommitLog object using supplied properties.">CommitLog</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_commit_log.html#10c615b8d9a9bee2505632a92cb72341">~CommitLog</a>();
 <a name="l00093"></a>00093 
-<a name="l00094"></a>00094     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_commit_log.html#10c615b8d9a9bee2505632a92cb72341">~CommitLog</a>();
-<a name="l00095"></a>00095 
-<a name="l00101"></a>00101     int64_t <a class="code" href="class_hypertable_1_1_commit_log.html#3daeb06956a2d8e70ddf799e1427491e" title="Atomically obtains a timestamp.">get_timestamp</a>();
-<a name="l00102"></a>00102 
-<a name="l00109"></a>00109     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#7d9ac9168a02cd56014fc120387f1d3c" title="Writes a block of updates to the commit log.">write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;buffer, int64_t revision);
-<a name="l00110"></a>00110 
-<a name="l00116"></a>00116     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#245b4d6060ca725d3c4630a417563571" title="Links an external log into this log.">link_log</a>(<a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a> *log_base);
-<a name="l00117"></a>00117 
-<a name="l00122"></a>00122     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#a71a817375981ed756923923c8bacd94" title="Closes the log.">close</a>();
-<a name="l00123"></a>00123 
-<a name="l00129"></a>00129     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#eedb1a1ab7fc0cc7d08c0de50ea6c936" title="Purges the log.">purge</a>(int64_t revision);
-<a name="l00130"></a>00130 
-<a name="l00140"></a>00140     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log.html#fb3d6dcd8f4c6795c0a832e2835a0d95" title="Fills up a map of per-fragment priority information.">load_fragment_priority_map</a>(<a class="code" href="namespace_hypertable.html#7a32ca858f9c7514456d1ba3acc85c70">LogFragmentPriorityMap</a> &amp;frag_map);
-<a name="l00141"></a>00141 
-<a name="l00145"></a><a class="code" href="class_hypertable_1_1_commit_log.html#5b6e9122cd2a31935618f63360030820">00145</a>     int64_t <a class="code" href="class_hypertable_1_1_commit_log.html#5b6e9122cd2a31935618f63360030820" title="Returns the maximum size of each log fragment file.">get_max_fragment_size</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">m_max_fragment_size</a>; }
-<a name="l00146"></a>00146 
-<a name="l00147"></a><a class="code" href="class_hypertable_1_1_commit_log.html#094c2a1606b26396c9d62b712deecf16">00147</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_commit_log.html#094c2a1606b26396c9d62b712deecf16">MAGIC_DATA</a>[10];
-<a name="l00148"></a><a class="code" href="class_hypertable_1_1_commit_log.html#e5037b08e56aa6f4f923e0c5f373f305">00148</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_commit_log.html#e5037b08e56aa6f4f923e0c5f373f305">MAGIC_LINK</a>[10];
-<a name="l00149"></a>00149 
-<a name="l00150"></a>00150   <span class="keyword">private</span>:
-<a name="l00151"></a>00151     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log.html#5705bbcc977b33aa89c6701ebeb1618a">initialize</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir,
-<a name="l00152"></a>00152                     <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a> *init_log);
-<a name="l00153"></a>00153     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#86f4b2a04424dfd38814c0c2d9723bdc">roll</a>();
-<a name="l00154"></a>00154     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#d5ae54873b3da53945cb3182610496da">compress_and_write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> *header,
-<a name="l00155"></a>00155                            int64_t revision);
-<a name="l00156"></a>00156 
-<a name="l00157"></a><a class="code" href="class_hypertable_1_1_commit_log.html#292d4b2188d1676c1c90fb29d982c6f1">00157</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>                   <a class="code" href="class_hypertable_1_1_commit_log.html#292d4b2188d1676c1c90fb29d982c6f1">m_mutex</a>;
-<a name="l00158"></a><a class="code" href="class_hypertable_1_1_commit_log.html#87b904e8aa4896214f9abfb12534ec9c">00158</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>             *<a class="code" href="class_hypertable_1_1_commit_log.html#87b904e8aa4896214f9abfb12534ec9c">m_fs</a>;
-<a name="l00159"></a><a class="code" href="class_hypertable_1_1_commit_log.html#3a9019594f3e051c3351cd208f286f21">00159</a>     <a class="code" href="class_hypertable_1_1_block_compression_codec.html" title="Abstract base class for block compression codecs.">BlockCompressionCodec</a>  *<a class="code" href="class_hypertable_1_1_commit_log.html#3a9019594f3e051c3351cd208f286f21">m_compressor</a>;
-<a name="l00160"></a><a class="code" href="class_hypertable_1_1_commit_log.html#2c865dd4604c18ca9366bc18d2e77218">00160</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>                  <a class="code" href="class_hypertable_1_1_commit_log.html#2c865dd4604c18ca9366bc18d2e77218">m_cur_fragment_fname</a>;
-<a name="l00161"></a><a class="code" href="class_hypertable_1_1_commit_log.html#ba7b467baf65925714882fd288bc2820">00161</a>     int64_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#ba7b467baf65925714882fd288bc2820">m_cur_fragment_length</a>;
-<a name="l00162"></a><a class="code" href="class_hypertable_1_1_commit_log.html#82de55657ff1b9d1d3d173bcca951165">00162</a>     uint32_t                <a class="code" href="class_hypertable_1_1_commit_log.html#82de55657ff1b9d1d3d173bcca951165">m_cur_fragment_num</a>;
-<a name="l00163"></a><a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">00163</a>     int64_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">m_max_fragment_size</a>;
-<a name="l00164"></a><a class="code" href="class_hypertable_1_1_commit_log.html#bb129d2bbd2d6a1e421eabddf8436d2a">00164</a>     int32_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#bb129d2bbd2d6a1e421eabddf8436d2a">m_fd</a>;
+<a name="l00099"></a>00099     int64_t <a class="code" href="class_hypertable_1_1_commit_log.html#3daeb06956a2d8e70ddf799e1427491e" title="Atomically obtains a timestamp.">get_timestamp</a>();
+<a name="l00100"></a>00100 
+<a name="l00107"></a>00107     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#7d9ac9168a02cd56014fc120387f1d3c" title="Writes a block of updates to the commit log.">write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;buffer, int64_t revision);
+<a name="l00108"></a>00108 
+<a name="l00114"></a>00114     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#245b4d6060ca725d3c4630a417563571" title="Links an external log into this log.">link_log</a>(<a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a> *log_base);
+<a name="l00115"></a>00115 
+<a name="l00120"></a>00120     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#a71a817375981ed756923923c8bacd94" title="Closes the log.">close</a>();
+<a name="l00121"></a>00121 
+<a name="l00127"></a>00127     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#eedb1a1ab7fc0cc7d08c0de50ea6c936" title="Purges the log.">purge</a>(int64_t revision);
+<a name="l00128"></a>00128 
+<a name="l00138"></a>00138     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log.html#fb3d6dcd8f4c6795c0a832e2835a0d95" title="Fills up a map of per-fragment priority information.">load_fragment_priority_map</a>(<a class="code" href="namespace_hypertable.html#7a32ca858f9c7514456d1ba3acc85c70">LogFragmentPriorityMap</a> &amp;frag_map);
+<a name="l00139"></a>00139 
+<a name="l00143"></a><a class="code" href="class_hypertable_1_1_commit_log.html#5b6e9122cd2a31935618f63360030820">00143</a>     int64_t <a class="code" href="class_hypertable_1_1_commit_log.html#5b6e9122cd2a31935618f63360030820" title="Returns the maximum size of each log fragment file.">get_max_fragment_size</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">m_max_fragment_size</a>; }
+<a name="l00144"></a>00144 
+<a name="l00145"></a><a class="code" href="class_hypertable_1_1_commit_log.html#094c2a1606b26396c9d62b712deecf16">00145</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_commit_log.html#094c2a1606b26396c9d62b712deecf16">MAGIC_DATA</a>[10];
+<a name="l00146"></a><a class="code" href="class_hypertable_1_1_commit_log.html#e5037b08e56aa6f4f923e0c5f373f305">00146</a>     <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="class_hypertable_1_1_commit_log.html#e5037b08e56aa6f4f923e0c5f373f305">MAGIC_LINK</a>[10];
+<a name="l00147"></a>00147 
+<a name="l00148"></a>00148   <span class="keyword">private</span>:
+<a name="l00149"></a>00149     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_commit_log.html#5705bbcc977b33aa89c6701ebeb1618a">initialize</a>(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;log_dir,
+<a name="l00150"></a>00150                     <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="code" href="class_hypertable_1_1_commit_log_base.html">CommitLogBase</a> *init_log);
+<a name="l00151"></a>00151     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#86f4b2a04424dfd38814c0c2d9723bdc">roll</a>();
+<a name="l00152"></a>00152     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log.html#d5ae54873b3da53945cb3182610496da">compress_and_write</a>(<a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> &amp;input, <a class="code" href="class_hypertable_1_1_block_compression_header.html" title="Base class for compressed block header.">BlockCompressionHeader</a> *header,
+<a name="l00153"></a>00153                            int64_t revision);
+<a name="l00154"></a>00154 
+<a name="l00155"></a><a class="code" href="class_hypertable_1_1_commit_log.html#292d4b2188d1676c1c90fb29d982c6f1">00155</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>                   <a class="code" href="class_hypertable_1_1_commit_log.html#292d4b2188d1676c1c90fb29d982c6f1">m_mutex</a>;
+<a name="l00156"></a><a class="code" href="class_hypertable_1_1_commit_log.html#87b904e8aa4896214f9abfb12534ec9c">00156</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>             *<a class="code" href="class_hypertable_1_1_commit_log.html#87b904e8aa4896214f9abfb12534ec9c">m_fs</a>;
+<a name="l00157"></a><a class="code" href="class_hypertable_1_1_commit_log.html#3a9019594f3e051c3351cd208f286f21">00157</a>     <a class="code" href="class_hypertable_1_1_block_compression_codec.html" title="Abstract base class for block compression codecs.">BlockCompressionCodec</a>  *<a class="code" href="class_hypertable_1_1_commit_log.html#3a9019594f3e051c3351cd208f286f21">m_compressor</a>;
+<a name="l00158"></a><a class="code" href="class_hypertable_1_1_commit_log.html#2c865dd4604c18ca9366bc18d2e77218">00158</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>                  <a class="code" href="class_hypertable_1_1_commit_log.html#2c865dd4604c18ca9366bc18d2e77218">m_cur_fragment_fname</a>;
+<a name="l00159"></a><a class="code" href="class_hypertable_1_1_commit_log.html#ba7b467baf65925714882fd288bc2820">00159</a>     int64_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#ba7b467baf65925714882fd288bc2820">m_cur_fragment_length</a>;
+<a name="l00160"></a><a class="code" href="class_hypertable_1_1_commit_log.html#82de55657ff1b9d1d3d173bcca951165">00160</a>     uint32_t                <a class="code" href="class_hypertable_1_1_commit_log.html#82de55657ff1b9d1d3d173bcca951165">m_cur_fragment_num</a>;
+<a name="l00161"></a><a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">00161</a>     int64_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#f04da6d08397e8f2c4077f72da78014c">m_max_fragment_size</a>;
+<a name="l00162"></a><a class="code" href="class_hypertable_1_1_commit_log.html#bb129d2bbd2d6a1e421eabddf8436d2a">00162</a>     int32_t                 <a class="code" href="class_hypertable_1_1_commit_log.html#bb129d2bbd2d6a1e421eabddf8436d2a">m_fd</a>;
+<a name="l00163"></a><a class="code" href="class_hypertable_1_1_commit_log.html#5488cbf4657d8a2a3dffbdbedcd145be">00163</a>     uint32_t                <a class="code" href="class_hypertable_1_1_commit_log.html#5488cbf4657d8a2a3dffbdbedcd145be">m_flush_flag</a>;
+<a name="l00164"></a><a class="code" href="class_hypertable_1_1_commit_log.html#1aa7451377381ce327a8324af74269c2">00164</a>     <span class="keywordtype">bool</span>                    <a class="code" href="class_hypertable_1_1_commit_log.html#1aa7451377381ce327a8324af74269c2">m_needs_roll</a>;
 <a name="l00165"></a>00165   };
 <a name="l00166"></a>00166 
 <a name="l00167"></a><a class="code" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">00167</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;CommitLog&gt; <a class="code" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">CommitLogPtr</a>;
@@ -102,7 +102,7 @@
 <a name="l00169"></a>00169 } <span class="comment">// namespace Hypertable</span>
 <a name="l00170"></a>00170 
 <a name="l00171"></a>00171 <span class="preprocessor">#endif // HYPERTABLE_COMMITLOG_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:40 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

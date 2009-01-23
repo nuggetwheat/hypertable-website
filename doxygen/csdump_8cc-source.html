@@ -81,7 +81,7 @@
 <a name="l00083"></a>00083   <span class="keywordflow">try</span> {
 <a name="l00084"></a>00084     init_with_policies&lt;Policies&gt;(argc, argv);
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086     <span class="keywordtype">bool</span> <a class="code" href="system__info_8cc.html#566268caad46115cc2575723dabe8402">dump_all</a> = <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"all"</span>);
+<a name="l00086"></a>00086     <span class="keywordtype">bool</span> <a class="code" href="system__info_8cc.html#8dfae47b6ca268a7f2323397df420e4f">dump_all</a> = <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"all"</span>);
 <a name="l00087"></a>00087     <span class="keywordtype">bool</span> count_keys = <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"count"</span>);
 <a name="l00088"></a>00088     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> start_key = <span class="keyword">get</span>(<span class="stringliteral">"start-key"</span>, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>());
 <a name="l00089"></a>00089     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> end_key = <span class="keyword">get</span>(<span class="stringliteral">"end-key"</span>, <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>());
@@ -104,69 +104,66 @@
 <a name="l00109"></a>00109     <a class="code" href="namespace_hypertable.html#8a1144a096aa2cd7a6c8c6e9410bfd2d">CellStoreV0Ptr</a> cellstore = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(dfs);
 <a name="l00110"></a>00110     <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *scanner = 0;
 <a name="l00111"></a>00111 
-<a name="l00112"></a>00112     <span class="keywordflow">if</span> (cellstore-&gt;open(fname.c_str(), 0, 0) != 0)
-<a name="l00113"></a>00113       <span class="keywordflow">return</span> 1;
-<a name="l00114"></a>00114 
-<a name="l00115"></a>00115     <span class="keywordflow">if</span> (cellstore-&gt;load_index() != 0)
-<a name="l00116"></a>00116       <span class="keywordflow">return</span> 1;
-<a name="l00117"></a>00117 
-<a name="l00118"></a>00118 
-<a name="l00122"></a>00122     uint64_t key_count = 0;
-<a name="l00123"></a>00123     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, value;
-<a name="l00124"></a>00124     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
-<a name="l00125"></a>00125 
-<a name="l00129"></a>00129     <span class="keywordflow">if</span> (dump_all || count_keys) {
-<a name="l00130"></a>00130       <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_ctx(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>());
+<a name="l00112"></a>00112     cellstore-&gt;open(fname.c_str(), 0, 0);
+<a name="l00113"></a>00113 
+<a name="l00114"></a>00114     cellstore-&gt;load_index();
+<a name="l00115"></a>00115 
+<a name="l00119"></a>00119     uint64_t key_count = 0;
+<a name="l00120"></a>00120     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, value;
+<a name="l00121"></a>00121     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
+<a name="l00122"></a>00122 
+<a name="l00126"></a>00126     <span class="keywordflow">if</span> (dump_all || count_keys) {
+<a name="l00127"></a>00127       <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_ctx(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>());
+<a name="l00128"></a>00128 
+<a name="l00129"></a>00129       scanner = cellstore-&gt;create_scanner(scan_ctx);
+<a name="l00130"></a>00130       <span class="keywordflow">while</span> (scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#b897362e3a1373bec433a0248485ae27">get</a>(key_comps, value)) {
 <a name="l00131"></a>00131 
-<a name="l00132"></a>00132       scanner = cellstore-&gt;create_scanner(scan_ctx);
-<a name="l00133"></a>00133       <span class="keywordflow">while</span> (scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#b897362e3a1373bec433a0248485ae27">get</a>(key_comps, value)) {
-<a name="l00134"></a>00134 
-<a name="l00135"></a>00135         <span class="keywordflow">if</span> (!hit_start) {
-<a name="l00136"></a>00136           <span class="keywordflow">if</span> (strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, start_key.c_str()) &lt;= 0) {
-<a name="l00137"></a>00137             scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
-<a name="l00138"></a>00138             <span class="keywordflow">continue</span>;
-<a name="l00139"></a>00139           }
-<a name="l00140"></a>00140           hit_start = <span class="keyword">true</span>;
-<a name="l00141"></a>00141         }
-<a name="l00142"></a>00142         <span class="keywordflow">if</span> (got_end_key &amp;&amp; strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, end_key.c_str()) &gt; 0)
-<a name="l00143"></a>00143           <span class="keywordflow">break</span>;
-<a name="l00144"></a>00144         <span class="keywordflow">if</span> (count_keys)
-<a name="l00145"></a>00145           key_count++;
-<a name="l00146"></a>00146         <span class="keywordflow">else</span>
-<a name="l00147"></a>00147           cout &lt;&lt; key_comps &lt;&lt; endl;
-<a name="l00148"></a>00148         scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
-<a name="l00149"></a>00149       }
-<a name="l00150"></a>00150       <span class="keyword">delete</span> scanner;
-<a name="l00151"></a>00151     }
-<a name="l00152"></a>00152 
-<a name="l00153"></a>00153     <span class="keywordflow">if</span> (count_keys) {
-<a name="l00154"></a>00154       cout &lt;&lt; key_count &lt;&lt; endl;
-<a name="l00155"></a>00155       <span class="keywordflow">return</span> 0;
-<a name="l00156"></a>00156     }
-<a name="l00157"></a>00157 
-<a name="l00161"></a>00161     cout &lt;&lt; endl;
-<a name="l00162"></a>00162     cout &lt;&lt; <span class="stringliteral">"BLOCK INDEX:"</span> &lt;&lt; endl;
-<a name="l00163"></a>00163     cellstore-&gt;display_block_info();
-<a name="l00164"></a>00164 
-<a name="l00165"></a>00165 
-<a name="l00169"></a>00169     <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> *trailer = cellstore-&gt;get_trailer();
-<a name="l00170"></a>00170 
-<a name="l00171"></a>00171     cout &lt;&lt; endl;
-<a name="l00172"></a>00172     cout &lt;&lt; <span class="stringliteral">"TRAILER:"</span> &lt;&lt; endl;
-<a name="l00173"></a>00173     cout &lt;&lt; *trailer;
-<a name="l00174"></a>00174 
-<a name="l00175"></a>00175     cout &lt;&lt; endl;
-<a name="l00176"></a>00176     cout &lt;&lt; <span class="stringliteral">"OTHER:"</span> &lt;&lt; endl;
-<a name="l00177"></a>00177     cout &lt;&lt; <span class="stringliteral">"split row '"</span> &lt;&lt; cellstore-&gt;get_split_row() &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl;
-<a name="l00178"></a>00178   }
-<a name="l00179"></a>00179   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00180"></a>00180     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00181"></a>00181     <span class="keywordflow">return</span> 1;
-<a name="l00182"></a>00182   }
-<a name="l00183"></a>00183 
-<a name="l00184"></a>00184   <span class="keywordflow">return</span> 0;
-<a name="l00185"></a>00185 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00132"></a>00132         <span class="keywordflow">if</span> (!hit_start) {
+<a name="l00133"></a>00133           <span class="keywordflow">if</span> (strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, start_key.c_str()) &lt;= 0) {
+<a name="l00134"></a>00134             scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
+<a name="l00135"></a>00135             <span class="keywordflow">continue</span>;
+<a name="l00136"></a>00136           }
+<a name="l00137"></a>00137           hit_start = <span class="keyword">true</span>;
+<a name="l00138"></a>00138         }
+<a name="l00139"></a>00139         <span class="keywordflow">if</span> (got_end_key &amp;&amp; strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, end_key.c_str()) &gt; 0)
+<a name="l00140"></a>00140           <span class="keywordflow">break</span>;
+<a name="l00141"></a>00141         <span class="keywordflow">if</span> (count_keys)
+<a name="l00142"></a>00142           key_count++;
+<a name="l00143"></a>00143         <span class="keywordflow">else</span>
+<a name="l00144"></a>00144           cout &lt;&lt; key_comps &lt;&lt; endl;
+<a name="l00145"></a>00145         scanner-&gt;<a class="code" href="class_hypertable_1_1_cell_list_scanner.html#5cdead4713bc95e91e75b8e89d3b2e7f">forward</a>();
+<a name="l00146"></a>00146       }
+<a name="l00147"></a>00147       <span class="keyword">delete</span> scanner;
+<a name="l00148"></a>00148     }
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150     <span class="keywordflow">if</span> (count_keys) {
+<a name="l00151"></a>00151       cout &lt;&lt; key_count &lt;&lt; endl;
+<a name="l00152"></a>00152       <span class="keywordflow">return</span> 0;
+<a name="l00153"></a>00153     }
+<a name="l00154"></a>00154 
+<a name="l00158"></a>00158     cout &lt;&lt; endl;
+<a name="l00159"></a>00159     cout &lt;&lt; <span class="stringliteral">"BLOCK INDEX:"</span> &lt;&lt; endl;
+<a name="l00160"></a>00160     cellstore-&gt;display_block_info();
+<a name="l00161"></a>00161 
+<a name="l00162"></a>00162 
+<a name="l00166"></a>00166     <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> *trailer = cellstore-&gt;get_trailer();
+<a name="l00167"></a>00167 
+<a name="l00168"></a>00168     cout &lt;&lt; endl;
+<a name="l00169"></a>00169     cout &lt;&lt; <span class="stringliteral">"TRAILER:"</span> &lt;&lt; endl;
+<a name="l00170"></a>00170     cout &lt;&lt; *trailer;
+<a name="l00171"></a>00171 
+<a name="l00172"></a>00172     cout &lt;&lt; endl;
+<a name="l00173"></a>00173     cout &lt;&lt; <span class="stringliteral">"OTHER:"</span> &lt;&lt; endl;
+<a name="l00174"></a>00174     cout &lt;&lt; <span class="stringliteral">"split row '"</span> &lt;&lt; cellstore-&gt;get_split_row() &lt;&lt; <span class="stringliteral">"'"</span> &lt;&lt; endl;
+<a name="l00175"></a>00175   }
+<a name="l00176"></a>00176   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00177"></a>00177     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00178"></a>00178     <span class="keywordflow">return</span> 1;
+<a name="l00179"></a>00179   }
+<a name="l00180"></a>00180 
+<a name="l00181"></a>00181   <span class="keywordflow">return</span> 0;
+<a name="l00182"></a>00182 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -37,7 +37,7 @@ Collaboration diagram for Hypertable::LocalBroker:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_local_broker__coll__graph.png" border="0" usemap="#_hypertable_1_1_local_broker__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_local_broker__coll__map">
-<area shape="rect" href="class_hypertable_1_1_dfs_broker_1_1_broker.html" title="Hypertable::DfsBroker::Broker" alt="" coords="124,187,327,213"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="6,96,198,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="66,5,138,32"><area shape="rect" href="class_hypertable_1_1_open_file_map.html" title="Hypertable::OpenFileMap" alt="" coords="222,96,398,123"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="244,5,375,32"></map>
+<area shape="rect" href="class_hypertable_1_1_dfs_broker_1_1_broker.html" title="Hypertable::DfsBroker::Broker" alt="" coords="84,187,287,213"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="84,96,276,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="77,5,149,32"><area shape="rect" href="class_hypertable_1_1_open_file_map.html" title="Hypertable::OpenFileMap" alt="" coords="300,96,476,123"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="323,5,453,32"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -82,6 +82,8 @@ Collaboration diagram for Hypertable::LocalBroker:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_local_broker.html#9804def5561598b9ff8e77a920330f43">rename</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, const char *src, const char *<a class="el" href="lzoconf_8h.html#19cbb22b1e5f063785152ae6b1755c18">dst</a>)</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_local_broker.html#ac2f30262caaac317b142f35ff116c7f">debug</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *, int32_t <a class="el" href="_hql_command_interpreter_8cc.html#d732c0c7a8bcc3ecf8c7c360b382740d">command</a>, <a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;serialized_parameters)</td></tr>
+
 <tr><td colspan="2"><br><h2>Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_local_broker.html#c694b6811baa9a3945e417784828c767">report_error</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb)</td></tr>
 
@@ -90,10 +92,13 @@ Collaboration diagram for Hypertable::LocalBroker:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_local_broker.html#0e8cae88d9a8125a301e31b0c39248f4">m_rootdir</a></td></tr>
 
+<tr><td colspan="2"><br><h2>Static Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">static <a class="el" href="structatomic__t.html">atomic_t</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_local_broker.html#1500a7d202362c44e59a6be4779f6b6a">ms_next_fd</a> = ATOMIC_INIT(0)</td></tr>
+
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 
-<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00069">69</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00070">70</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="7a98294a5429e5a420dc9f23bb97af26"></a><!-- doxytag: member="Hypertable::LocalBroker::LocalBroker" ref="7a98294a5429e5a420dc9f23bb97af26" args="(PropertiesPtr &amp;props)" -->
 <div class="memitem">
@@ -115,7 +120,7 @@ Collaboration diagram for Hypertable::LocalBroker:</div>
 
 <p>
 Determine root directory 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00049">49</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00051">51</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -136,7 +141,7 @@ Determine root directory
 
 <p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00069">69</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00071">71</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -178,7 +183,7 @@ Determine root directory
 Open the file 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#752f737f3f025021badf51d10c3e6fef">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00074">74</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00076">76</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -237,7 +242,7 @@ Open the file
 Open the file 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#86aa2abfa5dac9ea9567cae6c61f10cc">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00110">110</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00112">112</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -270,7 +275,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#0d8e047df84fb7ecd05cc3100d7ec288">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00154">154</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00156">156</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -309,7 +314,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#ab7677d97c8155e07ff8e0ea0b9b3439">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00161">161</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00163">163</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -360,7 +365,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0831f9f4b22d5ad4709d1d3c24732c0">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00196">196</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00199">199</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -399,7 +404,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#133900b16bcfa91e033dccc135d74b61">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00236">236</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00239">239</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -432,7 +437,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#a0f9c734910fff44ee8d9bfc282d0cfd">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00259">259</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00262">262</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -465,7 +470,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#c2f8ec8336b5c65042e4fcf2242bbdf0">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00280">280</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00283">283</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -510,7 +515,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#25df3c0f7391b18aa4f3c1fcb74384fd">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00303">303</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00306">306</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -543,7 +548,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#2c6831d1f2530f1693868865b5077985">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00332">332</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00335">335</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -576,7 +581,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#9d0dafbff5643f8ba2f518539d2820e0">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00353">353</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00356">356</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -609,7 +614,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#243b408968d511fc710523d90dc590b9">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00384">384</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00387">387</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -642,7 +647,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#7e723ff9999b4699657ba2b9ec884ad3">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00430">430</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00433">433</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -666,7 +671,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#70a38b9d98e2bd1819ac311ebb1f5edc">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00452">452</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00455">455</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -690,7 +695,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#d01c5f935cbc17fa8813e9297190ccd6">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00457">457</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00460">460</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -723,7 +728,7 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#32973f4568ce3d092b3b8e6d4c82ea79">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00464">464</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00467">467</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -762,7 +767,46 @@ Open the file
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#5d4659c55e88a5c749f201bbdb6c0a9b">Hypertable::DfsBroker::Broker</a>.</p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00479">479</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00482">482</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="ac2f30262caaac317b142f35ff116c7f"></a><!-- doxytag: member="Hypertable::LocalBroker::debug" ref="ac2f30262caaac317b142f35ff116c7f" args="(ResponseCallback *, int32_t command, StaticBuffer &amp;serialized_parameters)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void LocalBroker::debug           </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *&nbsp;</td>
+          <td class="paramname"> <em>cb</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int32_t&nbsp;</td>
+          <td class="paramname"> <em>command</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_static_buffer.html">StaticBuffer</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>serialized_parameters</em></td><td>&nbsp;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td><td width="100%"><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Implements <a class="el" href="class_hypertable_1_1_dfs_broker_1_1_broker.html#70065b80286403e3ed8c2f30ea56fabc">Hypertable::DfsBroker::Broker</a>.</p>
+
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00498">498</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
@@ -784,11 +828,28 @@ Open the file
 
 <p>
 
-<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00495">495</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8cc-source.html#l00507">507</a> of file <a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="1500a7d202362c44e59a6be4779f6b6a"></a><!-- doxytag: member="Hypertable::LocalBroker::ms_next_fd" ref="1500a7d202362c44e59a6be4779f6b6a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="structatomic__t.html">atomic_t</a> <a class="el" href="class_hypertable_1_1_local_broker.html#1500a7d202362c44e59a6be4779f6b6a">LocalBroker::ms_next_fd</a> = ATOMIC_INIT(0)<code> [static, private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00103">103</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
+
+</div>
+</div><p>
 <a class="anchor" name="3a4c53a2224caa47365186fe1f0f15c3"></a><!-- doxytag: member="Hypertable::LocalBroker::m_verbose" ref="3a4c53a2224caa47365186fe1f0f15c3" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -802,7 +863,7 @@ Open the file
 
 <p>
 
-<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00101">101</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00107">107</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
 
 </div>
 </div><p>
@@ -819,13 +880,13 @@ Open the file
 
 <p>
 
-<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00102">102</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
+<p>Definition at line <a class="el" href="_local_broker_8h-source.html#l00108">108</a> of file <a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/DfsBroker/local/<a class="el" href="_local_broker_8h-source.html">LocalBroker.h</a><li>/Users/doug/src/hypertable/src/cc/DfsBroker/local/<a class="el" href="_local_broker_8cc-source.html">LocalBroker.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:53 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:19 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

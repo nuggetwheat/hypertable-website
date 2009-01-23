@@ -64,9 +64,9 @@
 <a name="l00066"></a>00066 
 <a name="l00067"></a><a class="code" href="dumplog_8cc.html#6b168dafa3c0fbb2b3d7b9563073f865">00067</a> <span class="keyword">typedef</span> Meta::list&lt;AppPolicy, DfsClientPolicy, DefaultCommPolicy&gt; <a class="code" href="ht__write__test_8cc.html#dd683989a0cc69a7faf829f613ed92ac">Policies</a>;
 <a name="l00068"></a>00068 
-<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00069"></a>00069 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#2a848d6fd2ae927cecbe6fa9548ae101">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
 <a name="l00070"></a>00070     <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values);
-<a name="l00071"></a>00071 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client,
+<a name="l00071"></a>00071 <span class="keywordtype">void</span> <a class="code" href="dumplog_8cc.html#20fce1403fc0ca193291559cb3a0abe9">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client,
 <a name="l00072"></a>00072     <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix, <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader);
 <a name="l00073"></a>00073 
 <a name="l00074"></a>00074 } <span class="comment">// local namespace</span>
@@ -103,10 +103,10 @@
 <a name="l00108"></a>00108 
 <a name="l00109"></a>00109     <span class="keywordflow">if</span> (<a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"block_summary"</span>)) {
 <a name="l00110"></a>00110       printf(<span class="stringliteral">"LOG %s\n"</span>, log_dir.c_str());
-<a name="l00111"></a>00111       <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get());
+<a name="l00111"></a>00111       <a class="code" href="dumplog_8cc.html#20fce1403fc0ca193291559cb3a0abe9">display_log_block_summary</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get());
 <a name="l00112"></a>00112     }
 <a name="l00113"></a>00113     <span class="keywordflow">else</span>
-<a name="l00114"></a>00114       <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get(), <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"display_values"</span>));
+<a name="l00114"></a>00114       <a class="code" href="dumplog_8cc.html#2a848d6fd2ae927cecbe6fa9548ae101">display_log</a>(dfs_client, <span class="stringliteral">""</span>, log_reader.get(), <a class="code" href="namespace_hypertable_1_1_config.html#b2683b12a789a7d7a93731f6da3eb76e" title="check existence of config value">has</a>(<span class="stringliteral">"display_values"</span>));
 <a name="l00115"></a>00115   }
 <a name="l00116"></a>00116   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
 <a name="l00117"></a>00117     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
@@ -119,7 +119,7 @@
 <a name="l00124"></a>00124 <span class="keyword">namespace </span>{
 <a name="l00125"></a>00125 
 <a name="l00126"></a>00126   <span class="keywordtype">void</span>
-<a name="l00127"></a><a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">00127</a>   <a class="code" href="dumplog_8cc.html#c26ff11a05b4edde082436fe1507e960">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00127"></a><a class="code" href="dumplog_8cc.html#2a848d6fd2ae927cecbe6fa9548ae101">00127</a>   <a class="code" href="dumplog_8cc.html#2a848d6fd2ae927cecbe6fa9548ae101">display_log</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
 <a name="l00128"></a>00128               <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader, <span class="keywordtype">bool</span> display_values) {
 <a name="l00129"></a>00129     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
 <a name="l00130"></a>00130     <span class="keyword">const</span> uint8_t *<a class="code" href="_range_server_8cc.html#dbd66ce89dbc0cb63e00b9e33b33ff26">base</a>;
@@ -171,7 +171,7 @@
 <a name="l00176"></a>00176 
 <a name="l00177"></a>00177 
 <a name="l00178"></a>00178   <span class="keywordtype">void</span>
-<a name="l00179"></a><a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">00179</a>   <a class="code" href="dumplog_8cc.html#ceb8e2d361f7c968435beccaaee6c969">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
+<a name="l00179"></a><a class="code" href="dumplog_8cc.html#20fce1403fc0ca193291559cb3a0abe9">00179</a>   <a class="code" href="dumplog_8cc.html#20fce1403fc0ca193291559cb3a0abe9">display_log_block_summary</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *dfs_client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix,
 <a name="l00180"></a>00180       <a class="code" href="class_hypertable_1_1_commit_log_reader.html">CommitLogReader</a> *log_reader) {
 <a name="l00181"></a>00181     <a class="code" href="class_hypertable_1_1_commit_log_block_info.html">CommitLogBlockInfo</a> binfo;
 <a name="l00182"></a>00182     <a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> header;
@@ -196,7 +196,7 @@
 <a name="l00201"></a>00201   }
 <a name="l00202"></a>00202 
 <a name="l00203"></a>00203 } <span class="comment">// local namespace</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:53 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:44 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

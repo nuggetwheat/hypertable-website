@@ -62,38 +62,39 @@
 <a name="l00066"></a>00066     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#201514829b69559631c8bc56fe0b5380">flush_send_queue</a>();
 <a name="l00067"></a>00067 
 <a name="l00068"></a>00068 <span class="preprocessor">#if defined(__APPLE__)</span>
-<a name="l00069"></a>00069 <span class="preprocessor"></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> handle_event(<span class="keyword">struct</span> kevent *event);
+<a name="l00069"></a>00069 <span class="preprocessor"></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> handle_event(<span class="keyword">struct</span> kevent *event, clock_t arrival_clocks);
 <a name="l00070"></a>00070 <span class="preprocessor">#elif defined(__linux__)</span>
-<a name="l00071"></a>00071 <span class="preprocessor"></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> handle_event(<span class="keyword">struct</span> epoll_event *event);
-<a name="l00072"></a>00072 <span class="preprocessor">#else</span>
-<a name="l00073"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">00073</a> <span class="preprocessor"></span>    <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">ImplementMe</a>;
-<a name="l00074"></a>00074 <span class="preprocessor">#endif</span>
-<a name="l00075"></a>00075 <span class="preprocessor"></span>
-<a name="l00076"></a>00076     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>();
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078   <span class="keyword">private</span>:
-<a name="l00079"></a>00079     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2460954a197ffda454b235263cca02e4">handle_message_header</a>();
-<a name="l00080"></a>00080     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b1404914c5923d3d8f3cd27a748ad85a">handle_message_body</a>();
-<a name="l00081"></a>00081     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#1638311d6e7866e87247df8763654312">handle_disconnect</a>(<span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>);
-<a name="l00082"></a>00082 
-<a name="l00083"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">00083</a>     <span class="keywordtype">bool</span>                <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a>;
-<a name="l00084"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4d60d1c0f00319b62f9ed64202acf4">00084</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>               <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4d60d1c0f00319b62f9ed64202acf4">m_mutex</a>;
-<a name="l00085"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#816f4d56a6ba35e807c36c185ad7de70">00085</a>     <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>              *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#816f4d56a6ba35e807c36c185ad7de70">m_event</a>;
-<a name="l00086"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#ef5c70b9f676daf1b53402c67cc27d67">00086</a>     uint8_t             <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#ef5c70b9f676daf1b53402c67cc27d67">m_message_header</a>[64];
-<a name="l00087"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8c4ddcf21c92608bd93646b42114f6d6">00087</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8c4ddcf21c92608bd93646b42114f6d6">m_message_header_ptr</a>;
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">00088</a>     <span class="keywordtype">size_t</span>              <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>;
-<a name="l00089"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">00089</a>     <span class="keywordtype">bool</span>                <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>;
-<a name="l00090"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">00090</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>;
-<a name="l00091"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">00091</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>;
-<a name="l00092"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">00092</a>     <span class="keywordtype">size_t</span>              <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a>;
-<a name="l00093"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">00093</a>     std::list&lt;CommBufPtr&gt; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>;
-<a name="l00094"></a>00094   };
-<a name="l00095"></a>00095 
-<a name="l00096"></a><a class="code" href="namespace_hypertable.html#35491c2af74ef778cd0495e2cd9c4ccf">00096</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;IOHandlerData&gt; <a class="code" href="namespace_hypertable.html#35491c2af74ef778cd0495e2cd9c4ccf">IOHandlerDataPtr</a>;
-<a name="l00097"></a>00097 }
-<a name="l00098"></a>00098 
-<a name="l00099"></a>00099 <span class="preprocessor">#endif // HYPERTABLE_IOHANDLERDATA_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
+<a name="l00071"></a>00071 <span class="preprocessor"></span>    <span class="keyword">virtual</span> <span class="keywordtype">bool</span> handle_event(<span class="keyword">struct</span> epoll_event *event,
+<a name="l00072"></a>00072                               clock_t arrival_clocks);
+<a name="l00073"></a>00073 <span class="preprocessor">#else</span>
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">00074</a> <span class="preprocessor"></span>    <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4183561bef1218346869c4fa063262">ImplementMe</a>;
+<a name="l00075"></a>00075 <span class="preprocessor">#endif</span>
+<a name="l00076"></a>00076 <span class="preprocessor"></span>
+<a name="l00077"></a>00077     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8e26e5140492c32ecd8de1f8b97cca54">handle_write_readiness</a>();
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="keyword">private</span>:
+<a name="l00080"></a>00080     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#d2cfee235c460f15e462fff50877672a">handle_message_header</a>(clock_t arrival_clocks);
+<a name="l00081"></a>00081     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b1404914c5923d3d8f3cd27a748ad85a">handle_message_body</a>();
+<a name="l00082"></a>00082     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#1638311d6e7866e87247df8763654312">handle_disconnect</a>(<span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a> = <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>);
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">00084</a>     <span class="keywordtype">bool</span>                <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#48f8f6ae98279b7e2f521c6603af7033">m_connected</a>;
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4d60d1c0f00319b62f9ed64202acf4">00085</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>               <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#2c4d60d1c0f00319b62f9ed64202acf4">m_mutex</a>;
+<a name="l00086"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#816f4d56a6ba35e807c36c185ad7de70">00086</a>     <a class="code" href="class_hypertable_1_1_event.html" title="Objects of the is class represent communication events.">Event</a>              *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#816f4d56a6ba35e807c36c185ad7de70">m_event</a>;
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#ef5c70b9f676daf1b53402c67cc27d67">00087</a>     uint8_t             <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#ef5c70b9f676daf1b53402c67cc27d67">m_message_header</a>[64];
+<a name="l00088"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8c4ddcf21c92608bd93646b42114f6d6">00088</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#8c4ddcf21c92608bd93646b42114f6d6">m_message_header_ptr</a>;
+<a name="l00089"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">00089</a>     <span class="keywordtype">size_t</span>              <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#5519847c74a0cd274522abafce263c23">m_message_header_remaining</a>;
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">00090</a>     <span class="keywordtype">bool</span>                <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#b0782a71aa61300a42b5bc39b3ad7287">m_got_header</a>;
+<a name="l00091"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">00091</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9a64081b681b52180a7f097ad263c13c">m_message</a>;
+<a name="l00092"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">00092</a>     uint8_t            *<a class="code" href="class_hypertable_1_1_i_o_handler_data.html#9dd9b16885e3dc34dbaa105c9da2b488">m_message_ptr</a>;
+<a name="l00093"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">00093</a>     <span class="keywordtype">size_t</span>              <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#98d46a27a028d4b386c03d3b0e43bdd8">m_message_remaining</a>;
+<a name="l00094"></a><a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">00094</a>     std::list&lt;CommBufPtr&gt; <a class="code" href="class_hypertable_1_1_i_o_handler_data.html#af271a0b0939246f34a4ca1982d1e575">m_send_queue</a>;
+<a name="l00095"></a>00095   };
+<a name="l00096"></a>00096 
+<a name="l00097"></a><a class="code" href="namespace_hypertable.html#35491c2af74ef778cd0495e2cd9c4ccf">00097</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;IOHandlerData&gt; <a class="code" href="namespace_hypertable.html#35491c2af74ef778cd0495e2cd9c4ccf">IOHandlerDataPtr</a>;
+<a name="l00098"></a>00098 }
+<a name="l00099"></a>00099 
+<a name="l00100"></a>00100 <span class="preprocessor">#endif // HYPERTABLE_IOHANDLERDATA_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:37 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

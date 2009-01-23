@@ -50,595 +50,556 @@
 <a name="l00052"></a>00052     m_earliest_cached_revision(<a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>),
 <a name="l00053"></a>00053     m_earliest_cached_revision_saved(<a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>),
 <a name="l00054"></a>00054     m_collisions(0), m_needs_compaction(false), m_drop(false),
-<a name="l00055"></a>00055     m_scanners_blocked(false) {
-<a name="l00056"></a>00056   <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
-<a name="l00057"></a>00057   <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> = range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>;
-<a name="l00058"></a>00058   <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> = range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>;
-<a name="l00059"></a>00059   <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> + <span class="stringliteral">"["</span> + <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> + <span class="stringliteral">".."</span> + <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> + <span class="stringliteral">"]"</span>;
-<a name="l00060"></a>00060   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keywordflow">foreach</span>(<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">Schema::ColumnFamily</a> *cf, ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#7743b31ad829efff54c93d3df3578481">columns</a>)
-<a name="l00063"></a>00063     <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.insert(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>);
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065   <span class="keywordflow">if</span> (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a> != 0)
-<a name="l00066"></a>00066     <a class="code" href="class_hypertable_1_1_access_group.html#908663c56c4c46e77a4b7f075dac71ad">m_blocksize</a> = ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a>;
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <a class="code" href="class_hypertable_1_1_access_group.html#7c08fc12ce2e0ab1b945ffe3fe23f400">m_compressor</a> = (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> != <span class="stringliteral">""</span>) ? ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a>
-<a name="l00069"></a>00069                                         : schema_ptr-&gt;get_compressor();
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071   <a class="code" href="class_hypertable_1_1_access_group.html#0dab1707fb458d7ef6b6c60579d7eddf">m_is_root</a> = (<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> == 0 &amp;&amp; *range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> == 0
-<a name="l00072"></a>00072                &amp;&amp; !strcmp(range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>, <a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">Key::END_ROOT_ROW</a>));
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074   <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a> = ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a>;
-<a name="l00075"></a>00075 }
-<a name="l00076"></a>00076 
+<a name="l00055"></a>00055     m_file_tracker(identifier, schema_ptr, range, ag-&gt;name),
+<a name="l00056"></a>00056     m_scanners_blocked(false) {
+<a name="l00057"></a>00057   <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#c7e881a7ef2e13d766ca7497b044bcda">name</a>;
+<a name="l00058"></a>00058   <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> = range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a>;
+<a name="l00059"></a>00059   <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> = range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>;
+<a name="l00060"></a>00060   <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> + <span class="stringliteral">"["</span> + <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> + <span class="stringliteral">".."</span> + <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> + <span class="stringliteral">"]"</span>;
+<a name="l00061"></a>00061   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   <span class="keywordflow">foreach</span>(<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">Schema::ColumnFamily</a> *cf, ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#7743b31ad829efff54c93d3df3578481">columns</a>)
+<a name="l00064"></a>00064     <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.insert(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b475a258fe229c47090ef433ab98756f">id</a>);
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066   <span class="keywordflow">if</span> (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a> != 0)
+<a name="l00067"></a>00067     <a class="code" href="class_hypertable_1_1_access_group.html#908663c56c4c46e77a4b7f075dac71ad">m_blocksize</a> = ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#18987204f756e93815e614214cba8050">blocksize</a>;
+<a name="l00068"></a>00068 
+<a name="l00069"></a>00069   <a class="code" href="class_hypertable_1_1_access_group.html#7c08fc12ce2e0ab1b945ffe3fe23f400">m_compressor</a> = (ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a> != <span class="stringliteral">""</span>) ? ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#1c74b9ff41bfe0e05cf616533ee4b996">compressor</a>
+<a name="l00070"></a>00070                                         : schema_ptr-&gt;get_compressor();
+<a name="l00071"></a>00071 
+<a name="l00072"></a>00072   <a class="code" href="class_hypertable_1_1_access_group.html#0dab1707fb458d7ef6b6c60579d7eddf">m_is_root</a> = (<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> == 0 &amp;&amp; *range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#07e574487a466e0e25ef576163399de8">start_row</a> == 0
+<a name="l00073"></a>00073                &amp;&amp; !strcmp(range-&gt;<a class="code" href="class_hypertable_1_1_range_spec.html#beafe30f1c7e3ea3ea5f6c7aada9c899">end_row</a>, <a class="code" href="class_hypertable_1_1_key.html#1d3faf7ddb325905e9546c8c08c3d9f6">Key::END_ROOT_ROW</a>));
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075   <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a> = ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f00c75922a651bcdd0a3be32e6c22f9c">in_memory</a>;
+<a name="l00076"></a>00076 }
 <a name="l00077"></a>00077 
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_access_group.html#18f68628270d2235d82efe844dee859e">00078</a> <a class="code" href="class_hypertable_1_1_access_group.html#18f68628270d2235d82efe844dee859e">AccessGroup::~AccessGroup</a>() {
-<a name="l00079"></a>00079   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#597dfea78e4ef90c1c3de279dbb62de5">m_drop</a>) {
-<a name="l00080"></a>00080     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> == 0) {
-<a name="l00081"></a>00081       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"~AccessGroup has drop bit set, but table is METADATA"</span>);
-<a name="l00082"></a>00082       <span class="keywordflow">return</span>;
-<a name="l00083"></a>00083     }
-<a name="l00084"></a>00084     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> metadata_key = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%u:%s"</span>, <a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>, <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a>.c_str());
-<a name="l00085"></a>00085     <a class="code" href="namespace_hypertable.html#a11c0e04e8944428cc219a8357a8d6f4">TableMutatorPtr</a> mutator_ptr;
-<a name="l00086"></a>00086     <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088     <span class="keywordflow">try</span> {
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090       mutator_ptr = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_mutator();
-<a name="l00091"></a>00091 
-<a name="l00092"></a>00092       key.<a class="code" href="class_hypertable_1_1_key_spec.html#40369f5a201a674f92d5b20d1d154396">row</a> = metadata_key.c_str();
-<a name="l00093"></a>00093       key.<a class="code" href="class_hypertable_1_1_key_spec.html#ff2126e370d03427e6209eca7211feff">row_len</a> = metadata_key.length();
-<a name="l00094"></a>00094       key.<a class="code" href="class_hypertable_1_1_key_spec.html#62878b08e5b98e9e78ec6317fd0f9b40">column_family</a> = <span class="stringliteral">"Files"</span>;
-<a name="l00095"></a>00095       key.<a class="code" href="class_hypertable_1_1_key_spec.html#67418ffbae9c2eb8fa8525bb496e55f2">column_qualifier</a> = <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str();
-<a name="l00096"></a>00096       key.<a class="code" href="class_hypertable_1_1_key_spec.html#4fab3b4e8b573592e4fe3a6d1bf08776">column_qualifier_len</a> = <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.length();
-<a name="l00097"></a>00097       mutator_ptr-&gt;set(key, (uint8_t *)<span class="stringliteral">"!"</span>, 1);
-<a name="l00098"></a>00098       mutator_ptr-&gt;flush();
-<a name="l00099"></a>00099     }
-<a name="l00100"></a>00100     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
-<a name="l00101"></a>00101       <span class="comment">// TODO: propagate exception</span>
-<a name="l00102"></a>00102       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem updating 'File' column of METADATA (%s) - %s"</span>,
-<a name="l00103"></a>00103                 metadata_key.c_str(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
-<a name="l00104"></a>00104     }
-<a name="l00105"></a>00105   }
-<a name="l00106"></a>00106   <span class="keywordflow">return</span>;
-<a name="l00107"></a>00107 }
-<a name="l00108"></a>00108 
-<a name="l00114"></a><a class="code" href="class_hypertable_1_1_access_group.html#1a33512c5030b798579e8ef0179628dc">00114</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_access_group.html#1a33512c5030b798579e8ef0179628dc" title="This should be called with the CellCache locked Also, at the end of compaction processing...">AccessGroup::add</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) {
-<a name="l00115"></a>00115   <span class="keywordflow">if</span> (key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a> &gt; <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> || <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00116"></a>00116     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> == <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
-<a name="l00117"></a>00117       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>;
-<a name="l00118"></a>00118     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;add(key, value);
-<a name="l00119"></a>00119   }
-<a name="l00120"></a>00120   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00121"></a>00121 }
-<a name="l00122"></a>00122 
+<a name="l00078"></a>00078 
+<a name="l00079"></a><a class="code" href="class_hypertable_1_1_access_group.html#18f68628270d2235d82efe844dee859e">00079</a> <a class="code" href="class_hypertable_1_1_access_group.html#18f68628270d2235d82efe844dee859e">AccessGroup::~AccessGroup</a>() {
+<a name="l00080"></a>00080   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#597dfea78e4ef90c1c3de279dbb62de5">m_drop</a>) {
+<a name="l00081"></a>00081     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a> == 0) {
+<a name="l00082"></a>00082       <a class="code" href="_logger_8h.html#921dd3a93ee580255a43ff2160a38109">HT_ERROR</a>(<span class="stringliteral">"~AccessGroup has drop bit set, but table is METADATA"</span>);
+<a name="l00083"></a>00083       <span class="keywordflow">return</span>;
+<a name="l00084"></a>00084     }
+<a name="l00085"></a>00085     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> metadata_key = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"%u:%s"</span>, <a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>.<a class="code" href="class_hypertable_1_1_table_identifier.html#413901de0724f5f917199d1a251f4af4">id</a>, <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a>.c_str());
+<a name="l00086"></a>00086     <a class="code" href="namespace_hypertable.html#a11c0e04e8944428cc219a8357a8d6f4">TableMutatorPtr</a> mutator_ptr;
+<a name="l00087"></a>00087     <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00088"></a>00088 
+<a name="l00089"></a>00089     <span class="keywordflow">try</span> {
+<a name="l00090"></a>00090 
+<a name="l00091"></a>00091       mutator_ptr = <a class="code" href="class_hypertable_1_1_global.html#bd504a80300e09853755abdd7da0b420">Global::metadata_table_ptr</a>-&gt;create_mutator();
+<a name="l00092"></a>00092 
+<a name="l00093"></a>00093       key.<a class="code" href="class_hypertable_1_1_key_spec.html#40369f5a201a674f92d5b20d1d154396">row</a> = metadata_key.c_str();
+<a name="l00094"></a>00094       key.<a class="code" href="class_hypertable_1_1_key_spec.html#ff2126e370d03427e6209eca7211feff">row_len</a> = metadata_key.length();
+<a name="l00095"></a>00095       key.<a class="code" href="class_hypertable_1_1_key_spec.html#62878b08e5b98e9e78ec6317fd0f9b40">column_family</a> = <span class="stringliteral">"Files"</span>;
+<a name="l00096"></a>00096       key.<a class="code" href="class_hypertable_1_1_key_spec.html#67418ffbae9c2eb8fa8525bb496e55f2">column_qualifier</a> = <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str();
+<a name="l00097"></a>00097       key.<a class="code" href="class_hypertable_1_1_key_spec.html#4fab3b4e8b573592e4fe3a6d1bf08776">column_qualifier_len</a> = <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.length();
+<a name="l00098"></a>00098       mutator_ptr-&gt;set(key, (uint8_t *)<span class="stringliteral">"!"</span>, 1);
+<a name="l00099"></a>00099       mutator_ptr-&gt;flush();
+<a name="l00100"></a>00100     }
+<a name="l00101"></a>00101     <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
+<a name="l00102"></a>00102       <span class="comment">// TODO: propagate exception</span>
+<a name="l00103"></a>00103       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem updating 'File' column of METADATA (%s) - %s"</span>,
+<a name="l00104"></a>00104                 metadata_key.c_str(), <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>()));
+<a name="l00105"></a>00105     }
+<a name="l00106"></a>00106   }
+<a name="l00107"></a>00107   <span class="keywordflow">return</span>;
+<a name="l00108"></a>00108 }
+<a name="l00109"></a>00109 
+<a name="l00115"></a><a class="code" href="class_hypertable_1_1_access_group.html#1a33512c5030b798579e8ef0179628dc">00115</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_access_group.html#1a33512c5030b798579e8ef0179628dc" title="This should be called with the CellCache locked Also, at the end of compaction processing...">AccessGroup::add</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) {
+<a name="l00116"></a>00116   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_access_group.html#d08a33f5411e49ff4f3e142ede7717be">m_recovering</a> || key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a> &gt; <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> || <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00117"></a>00117     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> == <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
+<a name="l00118"></a>00118       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = key.<a class="code" href="class_hypertable_1_1_key.html#34c2ebe0cd13d96682b201403b44ca47">revision</a>;
+<a name="l00119"></a>00119     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;add(key, value);
+<a name="l00120"></a>00120   }
+<a name="l00121"></a>00121   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
+<a name="l00122"></a>00122 }
 <a name="l00123"></a>00123 
-<a name="l00124"></a><a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5">00124</a> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *<a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5" title="Creates a scanner on this cell list.">AccessGroup::create_scanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_context_ptr) {
-<a name="l00125"></a>00125   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00124"></a>00124 
+<a name="l00125"></a><a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5">00125</a> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *<a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5" title="Creates a scanner on this cell list.">AccessGroup::create_scanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_context_ptr) {
 <a name="l00126"></a>00126   <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> *scanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a>(scan_context_ptr);
-<a name="l00127"></a>00127   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>;
+<a name="l00127"></a>00127   std::vector&lt;String&gt; filenames;
 <a name="l00128"></a>00128 
-<a name="l00129"></a>00129   <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a>)
-<a name="l00130"></a>00130     <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.wait(lock);
+<a name="l00129"></a>00129   {
+<a name="l00130"></a>00130     <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
 <a name="l00131"></a>00131 
-<a name="l00132"></a>00132   scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;create_scanner(scan_context_ptr));
-<a name="l00133"></a>00133   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
-<a name="l00134"></a>00134     scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
-<a name="l00135"></a>00135                          scan_context_ptr));
-<a name="l00136"></a>00136   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00137"></a>00137     <a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> callback(<span class="keyword">this</span>);
-<a name="l00138"></a>00138     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
-<a name="l00139"></a>00139       scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;<a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5" title="Creates a scanner on this cell list.">create_scanner</a>(scan_context_ptr));
-<a name="l00140"></a>00140       filename = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename();
-<a name="l00141"></a>00141       callback.<a class="code" href="class_hypertable_1_1_cell_store_release_callback.html#1742fdb69a1a202e395f36b1df1eb544">add_file</a>(filename);
-<a name="l00142"></a>00142       <a class="code" href="class_hypertable_1_1_access_group.html#291d3583974d7e29b2a2b25811b46ad1" title="Needs to be called with m_mutex locked.">increment_file_refcount</a>(filename);
-<a name="l00143"></a>00143     }
-<a name="l00144"></a>00144     scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">install_release_callback</a>(callback);
-<a name="l00145"></a>00145   }
-<a name="l00146"></a>00146   <span class="keywordflow">return</span> scanner;
-<a name="l00147"></a>00147 }
-<a name="l00148"></a>00148 
-<a name="l00149"></a><a class="code" href="class_hypertable_1_1_access_group.html#be18c2f794b1f346bf7a6732eeebfad4">00149</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_access_group.html#be18c2f794b1f346bf7a6732eeebfad4">AccessGroup::include_in_scan</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_context_ptr) {
-<a name="l00150"></a>00150   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00151"></a>00151   <span class="keywordflow">for</span> (std::set&lt;uint8_t&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.begin();
-<a name="l00152"></a>00152        iter != <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.end(); ++iter) {
-<a name="l00153"></a>00153     <span class="keywordflow">if</span> (scan_context_ptr-&gt;family_mask[*iter])
-<a name="l00154"></a>00154       <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00155"></a>00155   }
-<a name="l00156"></a>00156   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00157"></a>00157 }
-<a name="l00158"></a>00158 
-<a name="l00159"></a><a class="code" href="class_hypertable_1_1_access_group.html#05ffa3787cf16b8c7edd6c925a142da8">00159</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_access_group.html#05ffa3787cf16b8c7edd6c925a142da8" title="Returns a split row for this cell list.">AccessGroup::get_split_row</a>() {
-<a name="l00160"></a>00160   std::vector&lt;String&gt; split_rows;
-<a name="l00161"></a>00161   <a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">get_split_rows</a>(split_rows, <span class="keyword">true</span>);
-<a name="l00162"></a>00162   <span class="keywordflow">if</span> (split_rows.size() &gt; 0) {
-<a name="l00163"></a>00163     sort(split_rows.begin(), split_rows.end());
-<a name="l00164"></a>00164     <span class="keywordflow">return</span> (split_rows[split_rows.size()/2]).c_str();
-<a name="l00165"></a>00165   }
-<a name="l00166"></a>00166   <span class="keywordflow">return</span> <span class="stringliteral">""</span>;
-<a name="l00167"></a>00167 }
-<a name="l00168"></a>00168 
-<a name="l00169"></a>00169 <span class="keywordtype">void</span>
-<a name="l00170"></a><a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">00170</a> <a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">AccessGroup::get_split_rows</a>(std::vector&lt;String&gt; &amp;split_rows,
-<a name="l00171"></a>00171                             <span class="keywordtype">bool</span> include_cache) {
-<a name="l00172"></a>00172   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00173"></a>00173   <span class="keyword">const</span> <span class="keywordtype">char</span> *row;
-<a name="l00174"></a>00174   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
-<a name="l00175"></a>00175     row = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_split_row();
-<a name="l00176"></a>00176     <span class="keywordflow">if</span> (row)
-<a name="l00177"></a>00177       split_rows.push_back(row);
-<a name="l00178"></a>00178   }
-<a name="l00179"></a>00179   <span class="keywordflow">if</span> (include_cache)
-<a name="l00180"></a>00180     <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_split_rows(split_rows);
-<a name="l00181"></a>00181 }
-<a name="l00182"></a>00182 
-<a name="l00183"></a><a class="code" href="class_hypertable_1_1_access_group.html#3a3769bfcb6c3befd484901ae669fc72">00183</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#3a3769bfcb6c3befd484901ae669fc72">AccessGroup::get_cached_rows</a>(std::vector&lt;String&gt; &amp;rows) {
-<a name="l00184"></a>00184   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00185"></a>00185   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_rows(rows);
-<a name="l00186"></a>00186 }
-<a name="l00187"></a>00187 
-<a name="l00188"></a><a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">00188</a> uint64_t <a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">AccessGroup::disk_usage</a>() {
-<a name="l00189"></a>00189   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00190"></a>00190   uint64_t du = (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) ? 0 : <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a>;
-<a name="l00191"></a>00191   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
-<a name="l00192"></a>00192   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
-<a name="l00193"></a>00193     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
-<a name="l00194"></a>00194   <span class="keywordflow">return</span> du + (uint64_t)(<a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> * (<span class="keywordtype">float</span>)mu);
-<a name="l00195"></a>00195 }
-<a name="l00196"></a>00196 
-<a name="l00197"></a><a class="code" href="class_hypertable_1_1_access_group.html#9462d0a327a1f07b5e269a3e3dbaa93f">00197</a> uint64_t <a class="code" href="class_hypertable_1_1_access_group.html#9462d0a327a1f07b5e269a3e3dbaa93f">AccessGroup::memory_usage</a>() {
-<a name="l00198"></a>00198   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00199"></a>00199   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
-<a name="l00200"></a>00200   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
-<a name="l00201"></a>00201     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
-<a name="l00202"></a>00202   <span class="keywordflow">return</span> mu;
-<a name="l00203"></a>00203 }
-<a name="l00204"></a>00204 
-<a name="l00205"></a>00205 <span class="keywordtype">void</span>
-<a name="l00206"></a><a class="code" href="class_hypertable_1_1_access_group.html#d8f152275d767dbe74f25f9ced17d2c0">00206</a> <a class="code" href="class_hypertable_1_1_access_group.html#d8f152275d767dbe74f25f9ced17d2c0">AccessGroup::get_compaction_priority_data</a>(
-<a name="l00207"></a>00207     <a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">CompactionPriorityData</a> &amp;priority_data) {
-<a name="l00208"></a>00208   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00209"></a>00209   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#c55f6505aca849a06540ba9eca62ac79">ag</a> = <span class="keyword">this</span>;
-<a name="l00210"></a>00210 
-<a name="l00211"></a>00211   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
-<a name="l00212"></a>00212     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#1b5d8c355966fb6edfe25bf347951469">earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
-<a name="l00213"></a>00213   <span class="keywordflow">else</span>
-<a name="l00214"></a>00214     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#1b5d8c355966fb6edfe25bf347951469">earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a>;
-<a name="l00215"></a>00215 
-<a name="l00216"></a>00216   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
-<a name="l00217"></a>00217   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
-<a name="l00218"></a>00218     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
-<a name="l00219"></a>00219   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#dabbdac328cc0b222d741a7f5a1ef3e2">mem_used</a> = mu;
-<a name="l00220"></a>00220   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#f474880b7f9215709ca59b377f4ba5d1">disk_used</a> = <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> + (uint64_t)(<a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a>
-<a name="l00221"></a>00221                                                       * (<span class="keywordtype">float</span>)mu);
-<a name="l00222"></a>00222   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#c91d786b9f57c5fb2d0e075016fcd539">in_memory</a> = <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>;
-<a name="l00223"></a>00223   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#4812f55e72dbb7ed70cfcc594731db32">deletes</a> = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_delete_count();
-<a name="l00224"></a>00224   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
-<a name="l00225"></a>00225     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#4812f55e72dbb7ed70cfcc594731db32">deletes</a> += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;get_delete_count();
-<a name="l00226"></a>00226 }
-<a name="l00227"></a>00227 
-<a name="l00228"></a>00228 
-<a name="l00229"></a><a class="code" href="class_hypertable_1_1_access_group.html#6bb8e4c11f9e2bdf67c31b50dba9faea">00229</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#6bb8e4c11f9e2bdf67c31b50dba9faea">AccessGroup::add_cell_store</a>(<a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;cellstore_ptr, uint32_t <span class="keywordtype">id</span>) {
-<a name="l00230"></a>00230   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00132"></a>00132     <span class="keywordflow">while</span> (<a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a>)
+<a name="l00133"></a>00133       <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.wait(lock);
+<a name="l00134"></a>00134 
+<a name="l00135"></a>00135     scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;create_scanner(scan_context_ptr));
+<a name="l00136"></a>00136     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00137"></a>00137       scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
+<a name="l00138"></a>00138                                                                  scan_context_ptr));
+<a name="l00139"></a>00139     <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00140"></a>00140       <a class="code" href="class_hypertable_1_1_cell_store_release_callback.html">CellStoreReleaseCallback</a> callback(<span class="keyword">this</span>);
+<a name="l00141"></a>00141       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
+<a name="l00142"></a>00142         scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;<a class="code" href="class_hypertable_1_1_access_group.html#0e25eacc28d335b68bf86504a4fed2d5" title="Creates a scanner on this cell list.">create_scanner</a>(scan_context_ptr));
+<a name="l00143"></a>00143         callback.<a class="code" href="class_hypertable_1_1_cell_store_release_callback.html#1742fdb69a1a202e395f36b1df1eb544">add_file</a>( <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename() );
+<a name="l00144"></a>00144       }
+<a name="l00145"></a>00145       filenames = callback.<a class="code" href="class_hypertable_1_1_cell_store_release_callback.html#14a7c1944f763dae090c9400910d00f4">get_file_vector</a>();
+<a name="l00146"></a>00146       scanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#e2a59b3fcf06bfa0e97a026648ba8d31">install_release_callback</a>(callback);
+<a name="l00147"></a>00147     }
+<a name="l00148"></a>00148   }
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150   <span class="comment">// This can't be done while holding m_mutex (causes deadlock)</span>
+<a name="l00151"></a>00151   <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#6744ca7634e6cf20ab7d2d4f54cc3b4a" title="Adds a set of files to the referenced file set.">add_references</a>(filenames);
+<a name="l00152"></a>00152 
+<a name="l00153"></a>00153   <span class="keywordflow">return</span> scanner;
+<a name="l00154"></a>00154 }
+<a name="l00155"></a>00155 
+<a name="l00156"></a><a class="code" href="class_hypertable_1_1_access_group.html#be18c2f794b1f346bf7a6732eeebfad4">00156</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_access_group.html#be18c2f794b1f346bf7a6732eeebfad4">AccessGroup::include_in_scan</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_context_ptr) {
+<a name="l00157"></a>00157   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00158"></a>00158   <span class="keywordflow">for</span> (std::set&lt;uint8_t&gt;::iterator iter = <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.begin();
+<a name="l00159"></a>00159        iter != <a class="code" href="class_hypertable_1_1_access_group.html#6ae38583c84d68652dc661e5188d188b">m_column_families</a>.end(); ++iter) {
+<a name="l00160"></a>00160     <span class="keywordflow">if</span> (scan_context_ptr-&gt;family_mask[*iter])
+<a name="l00161"></a>00161       <span class="keywordflow">return</span> <span class="keyword">true</span>;
+<a name="l00162"></a>00162   }
+<a name="l00163"></a>00163   <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00164"></a>00164 }
+<a name="l00165"></a>00165 
+<a name="l00166"></a><a class="code" href="class_hypertable_1_1_access_group.html#05ffa3787cf16b8c7edd6c925a142da8">00166</a> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_access_group.html#05ffa3787cf16b8c7edd6c925a142da8" title="Returns a split row for this cell list.">AccessGroup::get_split_row</a>() {
+<a name="l00167"></a>00167   std::vector&lt;String&gt; split_rows;
+<a name="l00168"></a>00168   <a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">get_split_rows</a>(split_rows, <span class="keyword">true</span>);
+<a name="l00169"></a>00169   <span class="keywordflow">if</span> (split_rows.size() &gt; 0) {
+<a name="l00170"></a>00170     sort(split_rows.begin(), split_rows.end());
+<a name="l00171"></a>00171     <span class="keywordflow">return</span> (split_rows[split_rows.size()/2]).c_str();
+<a name="l00172"></a>00172   }
+<a name="l00173"></a>00173   <span class="keywordflow">return</span> <span class="stringliteral">""</span>;
+<a name="l00174"></a>00174 }
+<a name="l00175"></a>00175 
+<a name="l00176"></a>00176 <span class="keywordtype">void</span>
+<a name="l00177"></a><a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">00177</a> <a class="code" href="class_hypertable_1_1_access_group.html#bfa95d1a7e8f87f5c2208108cc741688">AccessGroup::get_split_rows</a>(std::vector&lt;String&gt; &amp;split_rows,
+<a name="l00178"></a>00178                             <span class="keywordtype">bool</span> include_cache) {
+<a name="l00179"></a>00179   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00180"></a>00180   <span class="keyword">const</span> <span class="keywordtype">char</span> *row;
+<a name="l00181"></a>00181   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
+<a name="l00182"></a>00182     row = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_split_row();
+<a name="l00183"></a>00183     <span class="keywordflow">if</span> (row)
+<a name="l00184"></a>00184       split_rows.push_back(row);
+<a name="l00185"></a>00185   }
+<a name="l00186"></a>00186   <span class="keywordflow">if</span> (include_cache) {
+<a name="l00187"></a>00187     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> &amp;&amp;
+<a name="l00188"></a>00188         <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;size() &gt; <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;size())
+<a name="l00189"></a>00189       <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;get_split_rows(split_rows);
+<a name="l00190"></a>00190     <span class="keywordflow">else</span>
+<a name="l00191"></a>00191       <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_split_rows(split_rows);
+<a name="l00192"></a>00192   }
+<a name="l00193"></a>00193 }
+<a name="l00194"></a>00194 
+<a name="l00195"></a><a class="code" href="class_hypertable_1_1_access_group.html#3a3769bfcb6c3befd484901ae669fc72">00195</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#3a3769bfcb6c3befd484901ae669fc72">AccessGroup::get_cached_rows</a>(std::vector&lt;String&gt; &amp;rows) {
+<a name="l00196"></a>00196   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00197"></a>00197   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> &amp;&amp;
+<a name="l00198"></a>00198       <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;size() &gt; <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;size())
+<a name="l00199"></a>00199     <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;get_rows(rows);
+<a name="l00200"></a>00200   <span class="keywordflow">else</span>
+<a name="l00201"></a>00201     <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_rows(rows);
+<a name="l00202"></a>00202 }
+<a name="l00203"></a>00203 
+<a name="l00204"></a><a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">00204</a> uint64_t <a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">AccessGroup::disk_usage</a>() {
+<a name="l00205"></a>00205   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00206"></a>00206   uint64_t du = (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) ? 0 : <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a>;
+<a name="l00207"></a>00207   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
+<a name="l00208"></a>00208   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00209"></a>00209     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
+<a name="l00210"></a>00210   <span class="keywordflow">return</span> du + (uint64_t)(<a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> * (<span class="keywordtype">float</span>)mu);
+<a name="l00211"></a>00211 }
+<a name="l00212"></a>00212 
+<a name="l00213"></a><a class="code" href="class_hypertable_1_1_access_group.html#9462d0a327a1f07b5e269a3e3dbaa93f">00213</a> uint64_t <a class="code" href="class_hypertable_1_1_access_group.html#9462d0a327a1f07b5e269a3e3dbaa93f">AccessGroup::memory_usage</a>() {
+<a name="l00214"></a>00214   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00215"></a>00215   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
+<a name="l00216"></a>00216   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00217"></a>00217     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
+<a name="l00218"></a>00218   <span class="keywordflow">return</span> mu;
+<a name="l00219"></a>00219 }
+<a name="l00220"></a>00220 
+<a name="l00221"></a>00221 <span class="keywordtype">void</span>
+<a name="l00222"></a><a class="code" href="class_hypertable_1_1_access_group.html#d8f152275d767dbe74f25f9ced17d2c0">00222</a> <a class="code" href="class_hypertable_1_1_access_group.html#d8f152275d767dbe74f25f9ced17d2c0">AccessGroup::get_compaction_priority_data</a>(
+<a name="l00223"></a>00223     <a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">CompactionPriorityData</a> &amp;priority_data) {
+<a name="l00224"></a>00224   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00225"></a>00225   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#c55f6505aca849a06540ba9eca62ac79">ag</a> = <span class="keyword">this</span>;
+<a name="l00226"></a>00226 
+<a name="l00227"></a>00227   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
+<a name="l00228"></a>00228     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#1b5d8c355966fb6edfe25bf347951469">earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
+<a name="l00229"></a>00229   <span class="keywordflow">else</span>
+<a name="l00230"></a>00230     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#1b5d8c355966fb6edfe25bf347951469">earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a>;
 <a name="l00231"></a>00231 
-<a name="l00232"></a>00232   <span class="comment">// Figure out the "next" CellStore number</span>
-<a name="l00233"></a>00233   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &gt;= <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a>)
-<a name="l00234"></a>00234     <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a> = <span class="keywordtype">id</span>+1;
-<a name="l00235"></a>00235   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>)
-<a name="l00236"></a>00236     <span class="keywordflow">return</span>;
-<a name="l00237"></a>00237 
-<a name="l00238"></a>00238   <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> += cellstore_ptr-&gt;disk_usage();
-<a name="l00239"></a>00239   <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> = cellstore_ptr-&gt;compression_ratio();
-<a name="l00240"></a>00240 
-<a name="l00241"></a>00241   <span class="comment">// Record the most recent compaction revision</span>
-<a name="l00242"></a>00242   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> == 0)
-<a name="l00243"></a>00243     <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = cellstore_ptr-&gt;get_revision();
-<a name="l00244"></a>00244   <span class="keywordflow">else</span> {
-<a name="l00245"></a>00245     int64_t revision = cellstore_ptr-&gt;get_revision();
-<a name="l00246"></a>00246     <span class="keywordflow">if</span> (revision &gt; <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a>)
-<a name="l00247"></a>00247       <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = revision;
-<a name="l00248"></a>00248   }
-<a name="l00249"></a>00249 
-<a name="l00250"></a>00250   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00251"></a>00251     <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
-<a name="l00252"></a>00252     <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr =
-<a name="l00253"></a>00253         cellstore_ptr-&gt;create_scanner(scan_context_ptr);
-<a name="l00254"></a>00254     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, value;
-<a name="l00255"></a>00255     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
-<a name="l00256"></a>00256     <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
-<a name="l00257"></a>00257     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key_comps, value)) {
-<a name="l00258"></a>00258       <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;add(key_comps, value);
-<a name="l00259"></a>00259       scanner_ptr-&gt;forward();
-<a name="l00260"></a>00260     }
-<a name="l00261"></a>00261   }
-<a name="l00262"></a>00262 
-<a name="l00263"></a>00263   <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.push_back(cellstore_ptr);
-<a name="l00264"></a>00264 
-<a name="l00265"></a>00265 }
-<a name="l00266"></a>00266 
-<a name="l00267"></a>00267 <span class="keyword">namespace </span>{
-<a name="l00268"></a>00268   <span class="keyword">struct </span>LtCellStore {
-<a name="l00269"></a>00269     <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;x, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;y)<span class="keyword"> const </span>{
-<a name="l00270"></a>00270       <span class="keywordflow">return</span> !(x-&gt;disk_usage() &lt; y-&gt;disk_usage());
-<a name="l00271"></a>00271     }
-<a name="l00272"></a>00272   };
-<a name="l00273"></a>00273 }
-<a name="l00274"></a>00274 
-<a name="l00275"></a>00275 
-<a name="l00276"></a><a class="code" href="class_hypertable_1_1_access_group.html#79091a87a1d6358ffa8c7bce02ba7a00">00276</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#79091a87a1d6358ffa8c7bce02ba7a00">AccessGroup::run_compaction</a>(<span class="keywordtype">bool</span> major) {
-<a name="l00277"></a>00277   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bskey;
-<a name="l00278"></a>00278   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00279"></a>00279   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00280"></a>00280   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr;
-<a name="l00281"></a>00281   <span class="keywordtype">size_t</span> tableidx = 1;
-<a name="l00282"></a>00282   <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> cellstore;
-<a name="l00283"></a>00283   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> metadata_key_str;
-<a name="l00284"></a>00284 
-<a name="l00285"></a>00285   <span class="keywordflow">try</span> {
-<a name="l00286"></a>00286 
-<a name="l00287"></a>00287     <span class="keywordflow">if</span> (!major &amp;&amp; !<a class="code" href="class_hypertable_1_1_access_group.html#c7463126dee30de787edccd870ede56c">m_needs_compaction</a>)
-<a name="l00288"></a>00288       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
-<a name="l00289"></a>00289 
-<a name="l00290"></a>00290     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>);
+<a name="l00232"></a>00232   uint64_t mu = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;memory_used();
+<a name="l00233"></a>00233   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00234"></a>00234     mu += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used();
+<a name="l00235"></a>00235   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#dabbdac328cc0b222d741a7f5a1ef3e2">mem_used</a> = mu;
+<a name="l00236"></a>00236   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#f474880b7f9215709ca59b377f4ba5d1">disk_used</a> = <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> + (uint64_t)(<a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a>
+<a name="l00237"></a>00237                                                       * (<span class="keywordtype">float</span>)mu);
+<a name="l00238"></a>00238   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#c91d786b9f57c5fb2d0e075016fcd539">in_memory</a> = <a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>;
+<a name="l00239"></a>00239   priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#4812f55e72dbb7ed70cfcc594731db32">deletes</a> = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;get_delete_count();
+<a name="l00240"></a>00240   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00241"></a>00241     priority_data.<a class="code" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html#4812f55e72dbb7ed70cfcc594731db32">deletes</a> += <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;get_delete_count();
+<a name="l00242"></a>00242 }
+<a name="l00243"></a>00243 
+<a name="l00244"></a>00244 
+<a name="l00245"></a><a class="code" href="class_hypertable_1_1_access_group.html#6bb8e4c11f9e2bdf67c31b50dba9faea">00245</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#6bb8e4c11f9e2bdf67c31b50dba9faea">AccessGroup::add_cell_store</a>(<a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;cellstore_ptr, uint32_t <span class="keywordtype">id</span>) {
+<a name="l00246"></a>00246   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00247"></a>00247 
+<a name="l00248"></a>00248   <span class="comment">// Figure out the "next" CellStore number</span>
+<a name="l00249"></a>00249   <span class="keywordflow">if</span> (<span class="keywordtype">id</span> &gt;= <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a>)
+<a name="l00250"></a>00250     <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a> = <span class="keywordtype">id</span>+1;
+<a name="l00251"></a>00251   <span class="keywordflow">else</span> <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>)
+<a name="l00252"></a>00252     <span class="keywordflow">return</span>;
+<a name="l00253"></a>00253 
+<a name="l00254"></a>00254   <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> += cellstore_ptr-&gt;disk_usage();
+<a name="l00255"></a>00255   <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> = cellstore_ptr-&gt;compression_ratio();
+<a name="l00256"></a>00256 
+<a name="l00257"></a>00257   <span class="comment">// Record the most recent compaction revision</span>
+<a name="l00258"></a>00258   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> == 0)
+<a name="l00259"></a>00259     <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = cellstore_ptr-&gt;get_revision();
+<a name="l00260"></a>00260   <span class="keywordflow">else</span> {
+<a name="l00261"></a>00261     int64_t revision = cellstore_ptr-&gt;get_revision();
+<a name="l00262"></a>00262     <span class="keywordflow">if</span> (revision &gt; <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a>)
+<a name="l00263"></a>00263       <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = revision;
+<a name="l00264"></a>00264   }
+<a name="l00265"></a>00265 
+<a name="l00266"></a>00266   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00267"></a>00267     <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
+<a name="l00268"></a>00268     <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr =
+<a name="l00269"></a>00269         cellstore_ptr-&gt;create_scanner(scan_context_ptr);
+<a name="l00270"></a>00270     <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, value;
+<a name="l00271"></a>00271     <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
+<a name="l00272"></a>00272     <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
+<a name="l00273"></a>00273     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key_comps, value)) {
+<a name="l00274"></a>00274       <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;add(key_comps, value);
+<a name="l00275"></a>00275       scanner_ptr-&gt;forward();
+<a name="l00276"></a>00276     }
+<a name="l00277"></a>00277   }
+<a name="l00278"></a>00278 
+<a name="l00279"></a>00279   <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.push_back(cellstore_ptr);
+<a name="l00280"></a>00280 
+<a name="l00281"></a>00281 }
+<a name="l00282"></a>00282 
+<a name="l00283"></a>00283 <span class="keyword">namespace </span>{
+<a name="l00284"></a>00284   <span class="keyword">struct </span>LtCellStore {
+<a name="l00285"></a>00285     <span class="keywordtype">bool</span> operator()(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;x, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> &amp;y)<span class="keyword"> const </span>{
+<a name="l00286"></a>00286       <span class="keywordflow">return</span> !(x-&gt;disk_usage() &lt; y-&gt;disk_usage());
+<a name="l00287"></a>00287     }
+<a name="l00288"></a>00288   };
+<a name="l00289"></a>00289 }
+<a name="l00290"></a>00290 
 <a name="l00291"></a>00291 
-<a name="l00292"></a>00292     <a class="code" href="class_hypertable_1_1_access_group.html#c7463126dee30de787edccd870ede56c">m_needs_compaction</a> = <span class="keyword">false</span>;
-<a name="l00293"></a>00293 
-<a name="l00294"></a>00294     {
-<a name="l00295"></a>00295       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00296"></a>00296       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00297"></a>00297         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0) {
-<a name="l00298"></a>00298           <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
-<a name="l00299"></a>00299           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
-<a name="l00300"></a>00300         }
-<a name="l00301"></a>00301         tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size();
-<a name="l00302"></a>00302         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting InMemory Compaction of %s(%s)"</span>,
-<a name="l00303"></a>00303                  <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
-<a name="l00304"></a>00304       }
-<a name="l00305"></a>00305       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (major) {
-<a name="l00306"></a>00306         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0
-<a name="l00307"></a>00307             &amp;&amp; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() &lt;= (size_t)1) {
-<a name="l00308"></a>00308           <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
-<a name="l00309"></a>00309           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
-<a name="l00310"></a>00310         }
-<a name="l00311"></a>00311         tableidx = 0;
-<a name="l00312"></a>00312         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Major Compaction of %s(%s)"</span>,
-<a name="l00313"></a>00313                  <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
-<a name="l00314"></a>00314       }
-<a name="l00315"></a>00315       <span class="keywordflow">else</span> {
-<a name="l00316"></a>00316         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() &gt; (size_t)<a class="code" href="class_hypertable_1_1_global.html#1e574898024e9e712be780156826c2a9">Global::access_group_max_files</a>) {
-<a name="l00317"></a>00317           LtCellStore ascending;
-<a name="l00318"></a>00318           sort(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.begin(), <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.end(), ascending);
-<a name="l00319"></a>00319           tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() - <a class="code" href="class_hypertable_1_1_global.html#53ca29922966f7c96c25719e10ee7ba8">Global::access_group_merge_files</a>;
-<a name="l00320"></a>00320           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Merging Compaction of %s(%s)"</span>,
-<a name="l00321"></a>00321                    <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
-<a name="l00322"></a>00322         }
-<a name="l00323"></a>00323         <span class="keywordflow">else</span> {
-<a name="l00324"></a>00324           <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0) {
-<a name="l00325"></a>00325             <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
-<a name="l00326"></a>00326             <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
-<a name="l00327"></a>00327           }
-<a name="l00328"></a>00328           tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size();
-<a name="l00329"></a>00329           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Minor Compaction of %s(%s)"</span>,
-<a name="l00330"></a>00330                    <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
-<a name="l00331"></a>00331         }
-<a name="l00332"></a>00332       }
-<a name="l00333"></a>00333     }
-<a name="l00334"></a>00334 
-<a name="l00335"></a>00335   }
-<a name="l00336"></a>00336   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00337"></a>00337     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
-<a name="l00338"></a>00338       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
-<a name="l00339"></a>00339     <span class="keywordflow">return</span>;
-<a name="l00340"></a>00340   }
-<a name="l00341"></a>00341 
-<a name="l00342"></a>00342   <span class="keywordflow">try</span> {
-<a name="l00343"></a>00343 
-<a name="l00344"></a>00344     <span class="comment">// TODO: Issue 11</span>
-<a name="l00345"></a>00345     <span class="keywordtype">char</span> hash_str[33];
-<a name="l00346"></a>00346 
-<a name="l00347"></a>00347     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> == <span class="stringliteral">""</span>)
-<a name="l00348"></a>00348       memset(hash_str, <span class="charliteral">'0'</span>, 24);
-<a name="l00349"></a>00349     <span class="keywordflow">else</span>
-<a name="l00350"></a>00350       <a class="code" href="md5_8cc.html#5ed908adb13f21c8d086c70a2a0c723b">md5_string</a>(<a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a>.c_str(), hash_str);
-<a name="l00351"></a>00351 
-<a name="l00352"></a>00352     hash_str[24] = 0;
-<a name="l00353"></a>00353     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> cs_file = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"/hypertable/tables/%s/%s/%s/cs%d"</span>,
-<a name="l00354"></a>00354                             <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str(), hash_str,
-<a name="l00355"></a>00355                             <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a>++);
-<a name="l00356"></a>00356 
-<a name="l00357"></a>00357     cellstore = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(<a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>);
-<a name="l00358"></a>00358 
-<a name="l00359"></a>00359     <span class="keywordflow">if</span> (cellstore-&gt;create(cs_file.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#908663c56c4c46e77a4b7f075dac71ad">m_blocksize</a>, <a class="code" href="class_hypertable_1_1_access_group.html#7c08fc12ce2e0ab1b945ffe3fe23f400">m_compressor</a>) != 0)
-<a name="l00360"></a>00360       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23f106235029a40c71cd1713e2b9a7e49">Error::UNPOSSIBLE</a>, <span class="stringliteral">"Problem compacting locality group to file "</span>
-<a name="l00361"></a>00361                 <span class="stringliteral">"'%s'"</span>, cs_file.c_str());
-<a name="l00362"></a>00362 
-<a name="l00363"></a>00363     {
-<a name="l00364"></a>00364       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00365"></a>00365       <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
-<a name="l00366"></a>00366 
-<a name="l00367"></a>00367       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00368"></a>00368         <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> *mscanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a>(scan_context_ptr, <span class="keyword">false</span>);
-<a name="l00369"></a>00369         mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
-<a name="l00370"></a>00370                               scan_context_ptr));
-<a name="l00371"></a>00371         scanner_ptr = mscanner;
-<a name="l00372"></a>00372       }
-<a name="l00373"></a>00373       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (major || tableidx &lt; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size()) {
-<a name="l00374"></a>00374         <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> *mscanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a>(scan_context_ptr, !major);
-<a name="l00375"></a>00375         mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
-<a name="l00376"></a>00376                               scan_context_ptr));
-<a name="l00377"></a>00377         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=tableidx; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
-<a name="l00378"></a>00378           mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;create_scanner(scan_context_ptr));
-<a name="l00379"></a>00379         scanner_ptr = mscanner;
-<a name="l00380"></a>00380       }
-<a name="l00381"></a>00381       <span class="keywordflow">else</span>
-<a name="l00382"></a>00382         scanner_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(scan_context_ptr);
-<a name="l00383"></a>00383     }
-<a name="l00384"></a>00384 
-<a name="l00385"></a>00385     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key, value)) {
-<a name="l00386"></a>00386       cellstore-&gt;add(key, value);
-<a name="l00387"></a>00387       scanner_ptr-&gt;forward();
-<a name="l00388"></a>00388     }
-<a name="l00389"></a>00389 
-<a name="l00390"></a>00390     <span class="keywordflow">if</span> (cellstore-&gt;finalize() != 0)
-<a name="l00391"></a>00391       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23f106235029a40c71cd1713e2b9a7e49">Error::UNPOSSIBLE</a>, <span class="stringliteral">"Problem finalizing CellStore '%s'"</span>,
-<a name="l00392"></a>00392                 cs_file.c_str());
-<a name="l00393"></a>00393 
-<a name="l00397"></a>00397     {
-<a name="l00398"></a>00398       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00399"></a>00399 
-<a name="l00400"></a>00400       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
-<a name="l00401"></a>00401         <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7">merge_caches</a>();
-<a name="l00402"></a>00402         <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.clear();
-<a name="l00403"></a>00403         <a class="code" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a>.clear();
-<a name="l00404"></a>00404       }
-<a name="l00405"></a>00405       <span class="keywordflow">else</span> {
-<a name="l00406"></a>00406 
-<a name="l00407"></a>00407         <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
-<a name="l00408"></a>00408 
-<a name="l00410"></a>00410         <span class="keywordflow">if</span> (tableidx &lt; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size()) {
-<a name="l00411"></a>00411           <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.resize(tableidx);
-<a name="l00412"></a>00412           <a class="code" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a>.clear();
-<a name="l00413"></a>00413           <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
-<a name="l00414"></a>00414             <a class="code" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a>.insert(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename());
-<a name="l00415"></a>00415         }
-<a name="l00416"></a>00416       }
-<a name="l00417"></a>00417 
-<a name="l00421"></a>00421       <span class="keywordflow">if</span> (cellstore-&gt;get_total_entries() &gt; 0) {
-<a name="l00422"></a>00422         <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.push_back(cellstore);
-<a name="l00423"></a>00423         <a class="code" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a>.insert(cellstore-&gt;get_filename());
-<a name="l00424"></a>00424       }
-<a name="l00425"></a>00425       <span class="keywordflow">else</span> {
-<a name="l00426"></a>00426         <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> fname = cellstore-&gt;get_filename();
-<a name="l00427"></a>00427         cellstore = 0;
-<a name="l00428"></a>00428         <a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#deb5ac28802270aedb63d3d4fee7f9ad" title="Removes a file asynchronously.">remove</a>(fname);
-<a name="l00429"></a>00429       }
-<a name="l00430"></a>00430 
-<a name="l00432"></a>00432       <a class="code" href="class_hypertable_1_1_access_group.html#5cf5823ebd505dd6dd70b58fccfca72e">m_gc_locked_files</a>.clear();
-<a name="l00433"></a>00433       <span class="keywordflow">foreach</span>(<span class="keyword">const</span> FileRefCountMap::value_type &amp;v, <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>)
-<a name="l00434"></a>00434         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#890b3d7414f0a59d8ee884dc95483287">m_live_files</a>.count(v.first) == 0)
-<a name="l00435"></a>00435           <a class="code" href="class_hypertable_1_1_access_group.html#5cf5823ebd505dd6dd70b58fccfca72e">m_gc_locked_files</a>.insert(v.first);
-<a name="l00436"></a>00436 
-<a name="l00438"></a>00438       <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> = 0;
-<a name="l00439"></a>00439       <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> = 0.0;
-<a name="l00440"></a>00440       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
-<a name="l00441"></a>00441         <span class="keywordtype">double</span> <a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">disk_usage</a> = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;disk_usage();
-<a name="l00442"></a>00442         <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> += (uint64_t)disk_usage;
-<a name="l00443"></a>00443         <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> += <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;compression_ratio() * disk_usage;
-<a name="l00444"></a>00444       }
-<a name="l00445"></a>00445       <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> /= <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a>;
-<a name="l00446"></a>00446 
-<a name="l00447"></a>00447       <span class="keywordflow">if</span> (cellstore)
-<a name="l00448"></a>00448         <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = cellstore-&gt;get_revision();
-<a name="l00449"></a>00449 
-<a name="l00450"></a>00450       <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">true</span>;
-<a name="l00451"></a>00451     }
-<a name="l00452"></a>00452 
-<a name="l00453"></a>00453     <a class="code" href="class_hypertable_1_1_access_group.html#3d65e77bd2f85be7b74c4dad3f26992d">update_files_column</a>();
-<a name="l00454"></a>00454 
-<a name="l00458"></a>00458     <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">false</span>;
-<a name="l00459"></a>00459     <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.notify_all();
-<a name="l00460"></a>00460 
-<a name="l00461"></a>00461     <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> = <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>;
-<a name="l00462"></a>00462 
-<a name="l00463"></a>00463     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Finished Compaction of %s(%s)"</span>, <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(),
-<a name="l00464"></a>00464              <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
-<a name="l00465"></a>00465 
-<a name="l00466"></a>00466   }
-<a name="l00467"></a>00467   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00468"></a>00468     <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00469"></a>00469     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00470"></a>00470     <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7">merge_caches</a>();
-<a name="l00471"></a>00471     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
-<a name="l00472"></a>00472       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
-<a name="l00473"></a>00473     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a>) {
-<a name="l00474"></a>00474       <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">false</span>;
-<a name="l00475"></a>00475       <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.notify_all();
-<a name="l00476"></a>00476     }
-<a name="l00477"></a>00477   }
-<a name="l00478"></a>00478 
-<a name="l00479"></a>00479 }
+<a name="l00292"></a><a class="code" href="class_hypertable_1_1_access_group.html#79091a87a1d6358ffa8c7bce02ba7a00">00292</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#79091a87a1d6358ffa8c7bce02ba7a00">AccessGroup::run_compaction</a>(<span class="keywordtype">bool</span> major) {
+<a name="l00293"></a>00293   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> bskey;
+<a name="l00294"></a>00294   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
+<a name="l00295"></a>00295   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00296"></a>00296   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr;
+<a name="l00297"></a>00297   <span class="keywordtype">size_t</span> tableidx = 1;
+<a name="l00298"></a>00298   <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a> cellstore;
+<a name="l00299"></a>00299   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> metadata_key_str;
+<a name="l00300"></a>00300 
+<a name="l00301"></a>00301   <span class="keywordflow">try</span> {
+<a name="l00302"></a>00302 
+<a name="l00303"></a>00303     <span class="keywordflow">if</span> (!major &amp;&amp; !<a class="code" href="class_hypertable_1_1_access_group.html#c7463126dee30de787edccd870ede56c">m_needs_compaction</a>)
+<a name="l00304"></a>00304       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
+<a name="l00305"></a>00305 
+<a name="l00306"></a>00306     <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>);
+<a name="l00307"></a>00307 
+<a name="l00308"></a>00308     {
+<a name="l00309"></a>00309       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00310"></a>00310       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00311"></a>00311         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0) {
+<a name="l00312"></a>00312           <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
+<a name="l00313"></a>00313           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
+<a name="l00314"></a>00314         }
+<a name="l00315"></a>00315         tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size();
+<a name="l00316"></a>00316         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting InMemory Compaction of %s(%s)"</span>,
+<a name="l00317"></a>00317                  <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
+<a name="l00318"></a>00318       }
+<a name="l00319"></a>00319       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (major) {
+<a name="l00320"></a>00320         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0
+<a name="l00321"></a>00321             &amp;&amp; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() &lt;= (size_t)1) {
+<a name="l00322"></a>00322           <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
+<a name="l00323"></a>00323           <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
+<a name="l00324"></a>00324         }
+<a name="l00325"></a>00325         tableidx = 0;
+<a name="l00326"></a>00326         <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Major Compaction of %s(%s)"</span>,
+<a name="l00327"></a>00327                  <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
+<a name="l00328"></a>00328       }
+<a name="l00329"></a>00329       <span class="keywordflow">else</span> {
+<a name="l00330"></a>00330         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() &gt; (size_t)<a class="code" href="class_hypertable_1_1_global.html#1e574898024e9e712be780156826c2a9">Global::access_group_max_files</a>) {
+<a name="l00331"></a>00331           LtCellStore ascending;
+<a name="l00332"></a>00332           sort(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.begin(), <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.end(), ascending);
+<a name="l00333"></a>00333           tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size() - <a class="code" href="class_hypertable_1_1_global.html#53ca29922966f7c96c25719e10ee7ba8">Global::access_group_merge_files</a>;
+<a name="l00334"></a>00334           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Merging Compaction of %s(%s)"</span>,
+<a name="l00335"></a>00335                    <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
+<a name="l00336"></a>00336         }
+<a name="l00337"></a>00337         <span class="keywordflow">else</span> {
+<a name="l00338"></a>00338           <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;memory_used() == 0) {
+<a name="l00339"></a>00339             <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
+<a name="l00340"></a>00340             <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>, <span class="stringliteral">""</span>);
+<a name="l00341"></a>00341           }
+<a name="l00342"></a>00342           tableidx = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size();
+<a name="l00343"></a>00343           <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Starting Minor Compaction of %s(%s)"</span>,
+<a name="l00344"></a>00344                    <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
+<a name="l00345"></a>00345         }
+<a name="l00346"></a>00346       }
+<a name="l00347"></a>00347     }
+<a name="l00348"></a>00348 
+<a name="l00349"></a>00349   }
+<a name="l00350"></a>00350   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00351"></a>00351     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
+<a name="l00352"></a>00352       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
+<a name="l00353"></a>00353     <span class="keywordflow">return</span>;
+<a name="l00354"></a>00354   }
+<a name="l00355"></a>00355 
+<a name="l00356"></a>00356   <span class="keywordflow">try</span> {
+<a name="l00357"></a>00357 
+<a name="l00358"></a>00358     <span class="comment">// TODO: Issue 11</span>
+<a name="l00359"></a>00359     <span class="keywordtype">char</span> hash_str[33];
+<a name="l00360"></a>00360 
+<a name="l00361"></a>00361     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> == <span class="stringliteral">""</span>)
+<a name="l00362"></a>00362       memset(hash_str, <span class="charliteral">'0'</span>, 24);
+<a name="l00363"></a>00363     <span class="keywordflow">else</span>
+<a name="l00364"></a>00364       <a class="code" href="md5_8cc.html#5ed908adb13f21c8d086c70a2a0c723b">md5_string</a>(<a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a>.c_str(), hash_str);
+<a name="l00365"></a>00365 
+<a name="l00366"></a>00366     hash_str[24] = 0;
+<a name="l00367"></a>00367     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> cs_file = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"/hypertable/tables/%s/%s/%s/cs%d"</span>,
+<a name="l00368"></a>00368                             <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a>.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str(), hash_str,
+<a name="l00369"></a>00369                             <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a>++);
+<a name="l00370"></a>00370 
+<a name="l00371"></a>00371     cellstore = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(<a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>);
+<a name="l00372"></a>00372 
+<a name="l00373"></a>00373     cellstore-&gt;create(cs_file.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#908663c56c4c46e77a4b7f075dac71ad">m_blocksize</a>, <a class="code" href="class_hypertable_1_1_access_group.html#7c08fc12ce2e0ab1b945ffe3fe23f400">m_compressor</a>);
+<a name="l00374"></a>00374 
+<a name="l00375"></a>00375     {
+<a name="l00376"></a>00376       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00377"></a>00377       <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
+<a name="l00378"></a>00378 
+<a name="l00379"></a>00379       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00380"></a>00380         <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> *mscanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a>(scan_context_ptr, <span class="keyword">false</span>);
+<a name="l00381"></a>00381         mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
+<a name="l00382"></a>00382                               scan_context_ptr));
+<a name="l00383"></a>00383         scanner_ptr = mscanner;
+<a name="l00384"></a>00384       }
+<a name="l00385"></a>00385       <span class="keywordflow">else</span> <span class="keywordflow">if</span> (major || tableidx &lt; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size()) {
+<a name="l00386"></a>00386         <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a> *mscanner = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_merge_scanner.html">MergeScanner</a>(scan_context_ptr, !major);
+<a name="l00387"></a>00387         mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(
+<a name="l00388"></a>00388                               scan_context_ptr));
+<a name="l00389"></a>00389         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=tableidx; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
+<a name="l00390"></a>00390           mscanner-&gt;<a class="code" href="class_hypertable_1_1_merge_scanner.html#be1524c48a4169cbfa211d27ddbdeedf">add_scanner</a>(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;create_scanner(scan_context_ptr));
+<a name="l00391"></a>00391         scanner_ptr = mscanner;
+<a name="l00392"></a>00392       }
+<a name="l00393"></a>00393       <span class="keywordflow">else</span>
+<a name="l00394"></a>00394         scanner_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(scan_context_ptr);
+<a name="l00395"></a>00395     }
+<a name="l00396"></a>00396 
+<a name="l00397"></a>00397     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key, value)) {
+<a name="l00398"></a>00398       cellstore-&gt;add(key, value);
+<a name="l00399"></a>00399       scanner_ptr-&gt;forward();
+<a name="l00400"></a>00400     }
+<a name="l00401"></a>00401 
+<a name="l00402"></a>00402     cellstore-&gt;finalize(&amp;<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>);
+<a name="l00403"></a>00403 
+<a name="l00407"></a>00407     {
+<a name="l00408"></a>00408       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00409"></a>00409 
+<a name="l00410"></a>00410       <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#f3ca58d512b2bebc2eafa796c123737f" title="Clears the live file set.">clear_live</a>();
+<a name="l00411"></a>00411 
+<a name="l00412"></a>00412       <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00413"></a>00413         <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;tableidx; i++)
+<a name="l00414"></a>00414           <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#9558919a0c12a4b9da353cc5c212d2e8" title="Adds a file to the live file set.">add_live</a>(<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename());
+<a name="l00415"></a>00415       }
+<a name="l00416"></a>00416       <span class="keywordflow">if</span> (cellstore-&gt;get_total_entries() &gt; 0)
+<a name="l00417"></a>00417         <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#9558919a0c12a4b9da353cc5c212d2e8" title="Adds a file to the live file set.">add_live</a>(cellstore-&gt;get_filename());
+<a name="l00418"></a>00418     }
+<a name="l00419"></a>00419 
+<a name="l00420"></a>00420     <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#722564f7a79d7d3e4343c77a13422f66" title="Updates the &amp;#39;Files&amp;#39; METADATA column if it needs updating.">update_files_column</a>();
+<a name="l00421"></a>00421 
+<a name="l00425"></a>00425     {
+<a name="l00426"></a>00426       <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00427"></a>00427 
+<a name="l00428"></a>00428       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#78301f3c42c2abb65e0df3de5ce82be1">m_in_memory</a>) {
+<a name="l00429"></a>00429         <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7" title="Assumes mutex is locked.">merge_caches</a>();
+<a name="l00430"></a>00430         <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.clear();
+<a name="l00431"></a>00431       }
+<a name="l00432"></a>00432       <span class="keywordflow">else</span> {
+<a name="l00433"></a>00433 
+<a name="l00434"></a>00434         <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
+<a name="l00435"></a>00435 
+<a name="l00437"></a>00437         <span class="keywordflow">if</span> (tableidx &lt; <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size())
+<a name="l00438"></a>00438           <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.resize(tableidx);
+<a name="l00439"></a>00439       }
+<a name="l00440"></a>00440 
+<a name="l00444"></a>00444       <span class="keywordflow">if</span> (cellstore-&gt;get_total_entries() &gt; 0) {
+<a name="l00445"></a>00445         <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.push_back(cellstore);
+<a name="l00446"></a>00446       }
+<a name="l00447"></a>00447       <span class="keywordflow">else</span> {
+<a name="l00448"></a>00448         <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> fname = cellstore-&gt;get_filename();
+<a name="l00449"></a>00449         cellstore = 0;
+<a name="l00450"></a>00450         <span class="keywordflow">try</span> {
+<a name="l00451"></a>00451           <a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#deb5ac28802270aedb63d3d4fee7f9ad" title="Removes a file asynchronously.">remove</a>(fname);
+<a name="l00452"></a>00452         }
+<a name="l00453"></a>00453         <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
+<a name="l00454"></a>00454           <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <span class="stringliteral">"Problem removing '"</span> &lt;&lt; fname.c_str() &lt;&lt; <span class="stringliteral">"' "</span> \
+<a name="l00455"></a>00455                        &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00456"></a>00456         }
+<a name="l00457"></a>00457       }
+<a name="l00458"></a>00458 
+<a name="l00460"></a>00460       <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> = 0;
+<a name="l00461"></a>00461       <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> = 0.0;
+<a name="l00462"></a>00462       <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
+<a name="l00463"></a>00463         <span class="keywordtype">double</span> <a class="code" href="class_hypertable_1_1_access_group.html#d1375044d841df5f00b46d5fb04dea5c">disk_usage</a> = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;disk_usage();
+<a name="l00464"></a>00464         <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a> += (uint64_t)disk_usage;
+<a name="l00465"></a>00465         <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> += <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;compression_ratio() * disk_usage;
+<a name="l00466"></a>00466       }
+<a name="l00467"></a>00467       <a class="code" href="class_hypertable_1_1_access_group.html#3cddc7a3d8c29f767dde69361ade3755">m_compression_ratio</a> /= <a class="code" href="class_hypertable_1_1_access_group.html#63e32d40c44b5bd7c8d7ff67d2933ab0">m_disk_usage</a>;
+<a name="l00468"></a>00468 
+<a name="l00469"></a>00469       <span class="keywordflow">if</span> (cellstore)
+<a name="l00470"></a>00470         <a class="code" href="class_hypertable_1_1_access_group.html#b93d59a9a4ab680e4b38c60fa5b0a5f4">m_compaction_revision</a> = cellstore-&gt;get_revision();
+<a name="l00471"></a>00471 
+<a name="l00472"></a>00472       <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">true</span>;
+<a name="l00473"></a>00473     }
+<a name="l00474"></a>00474 
+<a name="l00478"></a>00478     <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">false</span>;
+<a name="l00479"></a>00479     <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.notify_all();
 <a name="l00480"></a>00480 
-<a name="l00481"></a>00481 
+<a name="l00481"></a>00481     <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> = <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>;
 <a name="l00482"></a>00482 
-<a name="l00486"></a><a class="code" href="class_hypertable_1_1_access_group.html#ce90dd056ecd9babe789e2cb9f4f31cd">00486</a> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_access_group.html#ce90dd056ecd9babe789e2cb9f4f31cd">AccessGroup::shrink</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;new_start_row) {
-<a name="l00487"></a>00487   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00488"></a>00488   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
-<a name="l00489"></a>00489   <a class="code" href="namespace_hypertable.html#384fe9fe04e37c6354d117e6faf96c1b">CellCachePtr</a> old_cell_cache_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>;
-<a name="l00490"></a>00490   <a class="code" href="namespace_hypertable.html#384fe9fe04e37c6354d117e6faf96c1b">CellCachePtr</a> new_cell_cache_ptr;
-<a name="l00491"></a>00491   <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
-<a name="l00492"></a>00492   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> cell_cache_scanner_ptr;
-<a name="l00493"></a>00493   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00494"></a>00494   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00495"></a>00495   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
-<a name="l00496"></a>00496   std::vector&lt;CellStorePtr&gt; new_stores;
-<a name="l00497"></a>00497   <a class="code" href="class_hypertable_1_1_cell_store.html" title="Abstract base class for persistent cell lists (ones that are stored on disk).">CellStore</a> *new_cell_store;
-<a name="l00498"></a>00498   uint64_t memory_added = 0;
-<a name="l00499"></a>00499   uint64_t items_added = 0;
-<a name="l00500"></a>00500 
-<a name="l00501"></a>00501   <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> = new_start_row;
-<a name="l00502"></a>00502   <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> + <span class="stringliteral">"["</span> + <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> + <span class="stringliteral">".."</span> + <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> + <span class="stringliteral">"]"</span>;
+<a name="l00483"></a>00483     <a class="code" href="_logger_8h.html#4dcbf79f28e1da27d954a2648db871fa">HT_INFOF</a>(<span class="stringliteral">"Finished Compaction of %s(%s)"</span>, <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a>.c_str(),
+<a name="l00484"></a>00484              <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>.c_str());
+<a name="l00485"></a>00485 
+<a name="l00486"></a>00486   }
+<a name="l00487"></a>00487   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00488"></a>00488     <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00489"></a>00489     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a> &lt;&lt; <span class="stringliteral">"("</span> &lt;&lt; <a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a> &lt;&lt; <span class="stringliteral">") "</span> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00490"></a>00490     <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7" title="Assumes mutex is locked.">merge_caches</a>();
+<a name="l00491"></a>00491     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> != <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>)
+<a name="l00492"></a>00492       <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a>;
+<a name="l00493"></a>00493     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a>) {
+<a name="l00494"></a>00494       <a class="code" href="class_hypertable_1_1_access_group.html#70e9b73c3d7a1d843ee14f3e69bd79e5">m_scanners_blocked</a> = <span class="keyword">false</span>;
+<a name="l00495"></a>00495       <a class="code" href="class_hypertable_1_1_access_group.html#3b595db77ea41d24467842610d7cc9e3">m_scanner_blocked_cond</a>.notify_all();
+<a name="l00496"></a>00496     }
+<a name="l00497"></a>00497     <span class="keywordflow">throw</span>;
+<a name="l00498"></a>00498   }
+<a name="l00499"></a>00499 
+<a name="l00500"></a>00500   <a class="code" href="class_hypertable_1_1_access_group.html#c7463126dee30de787edccd870ede56c">m_needs_compaction</a> = <span class="keyword">false</span>;
+<a name="l00501"></a>00501 }
+<a name="l00502"></a>00502 
 <a name="l00503"></a>00503 
-<a name="l00504"></a>00504   new_cell_cache_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
-<a name="l00505"></a>00505   new_cell_cache_ptr-&gt;lock();
-<a name="l00506"></a>00506 
-<a name="l00507"></a>00507   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = new_cell_cache_ptr;
-<a name="l00508"></a>00508 
-<a name="l00509"></a>00509   cell_cache_scanner_ptr = old_cell_cache_ptr-&gt;create_scanner(scan_context_ptr);
-<a name="l00510"></a>00510 
-<a name="l00514"></a>00514   <span class="keywordflow">while</span> (cell_cache_scanner_ptr-&gt;get(key_comps, value)) {
-<a name="l00515"></a>00515     <span class="keywordflow">if</span> (strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>.c_str()) &gt; 0) {
-<a name="l00516"></a>00516       <span class="keyword">add</span>(key_comps, value);
-<a name="l00517"></a>00517       memory_added += key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>() + value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
-<a name="l00518"></a>00518       items_added++;
-<a name="l00519"></a>00519     }
-<a name="l00520"></a>00520     cell_cache_scanner_ptr-&gt;forward();
-<a name="l00521"></a>00521   }
+<a name="l00504"></a>00504 
+<a name="l00508"></a><a class="code" href="class_hypertable_1_1_access_group.html#2781ce078681755e7dca9d2455575ab8">00508</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#2781ce078681755e7dca9d2455575ab8">AccessGroup::shrink</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;split_row, <span class="keywordtype">bool</span> drop_high) {
+<a name="l00509"></a>00509   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00510"></a>00510   <a class="code" href="namespace_hypertable.html#384fe9fe04e37c6354d117e6faf96c1b">CellCachePtr</a> old_cell_cache_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>;
+<a name="l00511"></a>00511   <a class="code" href="namespace_hypertable.html#384fe9fe04e37c6354d117e6faf96c1b">CellCachePtr</a> new_cell_cache_ptr;
+<a name="l00512"></a>00512   <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
+<a name="l00513"></a>00513   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> cell_cache_scanner_ptr;
+<a name="l00514"></a>00514   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00515"></a>00515   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
+<a name="l00516"></a>00516   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> key_comps;
+<a name="l00517"></a>00517   std::vector&lt;CellStorePtr&gt; new_stores;
+<a name="l00518"></a>00518   <a class="code" href="class_hypertable_1_1_cell_store.html" title="Abstract base class for persistent cell lists (ones that are stored on disk).">CellStore</a> *new_cell_store;
+<a name="l00519"></a>00519   uint64_t memory_added = 0;
+<a name="l00520"></a>00520   uint64_t items_added = 0;
+<a name="l00521"></a>00521   <span class="keywordtype">int</span> cmp;
 <a name="l00522"></a>00522 
-<a name="l00523"></a>00523   new_cell_cache_ptr-&gt;unlock();
-<a name="l00524"></a>00524 
-<a name="l00528"></a>00528   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
-<a name="l00529"></a>00529     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a> = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename();
-<a name="l00530"></a>00530     new_cell_store = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(<a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>);
-<a name="l00531"></a>00531     <span class="keywordflow">if</span> ((error = new_cell_store-&gt;<a class="code" href="class_hypertable_1_1_cell_store.html#aca7beb67e3d5b4332726954de3270a4" title="Opens a cell store with possibly a restricted view.">open</a>(filename.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>.c_str(),
-<a name="l00532"></a>00532         m_end_row.c_str())) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00533"></a>00533       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem opening cell store '%s' [%s:%s] - %s"</span>,
-<a name="l00534"></a>00534                 filename.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>.c_str(), m_end_row.c_str(),
-<a name="l00535"></a>00535                 <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(error));
-<a name="l00536"></a>00536       <span class="keywordflow">return</span> error;
-<a name="l00537"></a>00537     }
-<a name="l00538"></a>00538     <span class="keywordflow">if</span> ((error = new_cell_store-&gt;<a class="code" href="class_hypertable_1_1_cell_store.html#514f9a0b9584e833e9ba1596769ac4bf" title="Loads the block index data into an in-memory map.">load_index</a>()) != <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>) {
-<a name="l00539"></a>00539       <a class="code" href="_logger_8h.html#a7782b40800c410a4406ef4a23bf8b36">HT_ERRORF</a>(<span class="stringliteral">"Problem loading index of cell store '%s' [%s:%s] - %s"</span>,
-<a name="l00540"></a>00540                 filename.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>.c_str(), m_end_row.c_str(),
-<a name="l00541"></a>00541                 <a class="code" href="namespace_error.html#294304c14f3e4e2da3429d95a0879b84">Error::get_text</a>(error));
-<a name="l00542"></a>00542       <span class="keywordflow">return</span> error;
-<a name="l00543"></a>00543     }
-<a name="l00544"></a>00544     new_stores.push_back(new_cell_store);
-<a name="l00545"></a>00545   }
-<a name="l00546"></a>00546 
-<a name="l00547"></a>00547   <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a> = new_stores;
-<a name="l00548"></a>00548 
-<a name="l00549"></a>00549   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
-<a name="l00550"></a>00550 }
-<a name="l00551"></a>00551 
-<a name="l00552"></a>00552 
-<a name="l00553"></a>00553 
-<a name="l00556"></a><a class="code" href="class_hypertable_1_1_access_group.html#ba4c93366610f80b473f83153415b544">00556</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#ba4c93366610f80b473f83153415b544">AccessGroup::get_files</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="_error_8cc.html#16343090e80c4472521560f30113d96c">text</a>) {
-<a name="l00557"></a>00557   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00558"></a>00558   text = <span class="stringliteral">""</span>;
-<a name="l00559"></a>00559   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
-<a name="l00560"></a>00560     text += <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename() + <span class="stringliteral">";\n"</span>;
-<a name="l00561"></a>00561 }
-<a name="l00562"></a>00562 
-<a name="l00563"></a>00563 
-<a name="l00566"></a><a class="code" href="class_hypertable_1_1_access_group.html#2f060dae4f15cfc225de152dd97925b6">00566</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#2f060dae4f15cfc225de152dd97925b6">AccessGroup::release_files</a>(<span class="keyword">const</span> std::vector&lt;String&gt; &amp;files) {
-<a name="l00567"></a>00567   <span class="keywordtype">bool</span> need_files_update = <span class="keyword">false</span>;
-<a name="l00568"></a>00568 
-<a name="l00569"></a>00569   {
-<a name="l00570"></a>00570     <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00571"></a>00571     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;files.size(); i++) {
-<a name="l00572"></a>00572       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#6b93b7c2b4704b7f3cea31a4c827b524" title="Needs to be called with m_mutex locked.">decrement_file_refcount</a>(files[i])) {
-<a name="l00573"></a>00573         <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#5cf5823ebd505dd6dd70b58fccfca72e">m_gc_locked_files</a>.count(files[i]) &gt; 0) {
-<a name="l00574"></a>00574           <a class="code" href="class_hypertable_1_1_access_group.html#5cf5823ebd505dd6dd70b58fccfca72e">m_gc_locked_files</a>.erase(files[i]);
-<a name="l00575"></a>00575           need_files_update = <span class="keyword">true</span>;
-<a name="l00576"></a>00576         }
-<a name="l00577"></a>00577       }
-<a name="l00578"></a>00578     }
-<a name="l00579"></a>00579   }
-<a name="l00580"></a>00580 
-<a name="l00581"></a>00581   <span class="keywordflow">if</span> (need_files_update)
-<a name="l00582"></a>00582     <a class="code" href="class_hypertable_1_1_access_group.html#3d65e77bd2f85be7b74c4dad3f26992d">update_files_column</a>();
-<a name="l00583"></a>00583 }
+<a name="l00523"></a>00523   <span class="keywordflow">if</span> (drop_high) {
+<a name="l00524"></a>00524     <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> = split_row;
+<a name="l00525"></a>00525     <a class="code" href="class_hypertable_1_1_access_group.html#0386bca2130c2f3ad7e48b57ef6bffcf">m_next_table_id</a> = 0;
+<a name="l00526"></a>00526   }
+<a name="l00527"></a>00527   <span class="keywordflow">else</span>
+<a name="l00528"></a>00528     <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> = split_row;
+<a name="l00529"></a>00529 
+<a name="l00530"></a>00530   <a class="code" href="class_hypertable_1_1_access_group.html#c795c49adbe90b285a30f762b5bc4590">m_range_name</a> = <a class="code" href="class_hypertable_1_1_access_group.html#5035d6d8a0355d600e111513f5d4fd23">m_table_name</a> + <span class="stringliteral">"["</span> + <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a> + <span class="stringliteral">".."</span> + <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a> + <span class="stringliteral">"]"</span>;
+<a name="l00531"></a>00531 
+<a name="l00532"></a>00532   <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#37189075ccc89e5295dc5407fd61fa1a">change_range</a>(<a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>, m_end_row);
+<a name="l00533"></a>00533 
+<a name="l00534"></a>00534   new_cell_cache_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
+<a name="l00535"></a>00535   new_cell_cache_ptr-&gt;lock();
+<a name="l00536"></a>00536 
+<a name="l00537"></a>00537   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = new_cell_cache_ptr;
+<a name="l00538"></a>00538 
+<a name="l00539"></a>00539   cell_cache_scanner_ptr = old_cell_cache_ptr-&gt;create_scanner(scan_context_ptr);
+<a name="l00540"></a>00540 
+<a name="l00544"></a>00544   <span class="keywordflow">while</span> (cell_cache_scanner_ptr-&gt;get(key_comps, value)) {
+<a name="l00545"></a>00545 
+<a name="l00546"></a>00546     cmp = strcmp(key_comps.<a class="code" href="class_hypertable_1_1_key.html#510ab6d7e8ac4afcd2a8aedb7eaee252">row</a>, split_row.c_str());
+<a name="l00547"></a>00547 
+<a name="l00548"></a>00548     <span class="keywordflow">if</span> ((cmp &gt; 0 &amp;&amp; !drop_high) || (cmp &lt;= 0 &amp;&amp; drop_high)) {
+<a name="l00549"></a>00549       <span class="keyword">add</span>(key_comps, value);
+<a name="l00550"></a>00550       memory_added += key.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>() + value.<a class="code" href="class_hypertable_1_1_byte_string.html#9220bf75429b9574f5f346fa47049055">length</a>();
+<a name="l00551"></a>00551       items_added++;
+<a name="l00552"></a>00552     }
+<a name="l00553"></a>00553     cell_cache_scanner_ptr-&gt;forward();
+<a name="l00554"></a>00554   }
+<a name="l00555"></a>00555 
+<a name="l00556"></a>00556   new_cell_cache_ptr-&gt;unlock();
+<a name="l00557"></a>00557 
+<a name="l00561"></a>00561   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++) {
+<a name="l00562"></a>00562     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a> = <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename();
+<a name="l00563"></a>00563     new_cell_store = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_store_v0.html">CellStoreV0</a>(<a class="code" href="class_hypertable_1_1_global.html#398cae8d4baba15bf528e3f93bf7d584">Global::dfs</a>);
+<a name="l00564"></a>00564     new_cell_store-&gt;<a class="code" href="class_hypertable_1_1_cell_store.html#cf2b7f1ab5975c3cc85f823d14751a47" title="Opens a cell store with possibly a restricted view.">open</a>(filename.c_str(), <a class="code" href="class_hypertable_1_1_access_group.html#6e5c13fff155d0afa5746104e32c897d">m_start_row</a>.c_str(),
+<a name="l00565"></a>00565                          m_end_row.c_str());
+<a name="l00566"></a>00566     new_cell_store-&gt;<a class="code" href="class_hypertable_1_1_cell_store.html#a4b37e4341a35f81329362c69713ccde" title="Loads the block index data into an in-memory map.">load_index</a>();
+<a name="l00567"></a>00567     new_stores.push_back(new_cell_store);
+<a name="l00568"></a>00568   }
+<a name="l00569"></a>00569 
+<a name="l00570"></a>00570   <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a> = new_stores;
+<a name="l00571"></a>00571 }
+<a name="l00572"></a>00572 
+<a name="l00573"></a>00573 
+<a name="l00574"></a>00574 
+<a name="l00577"></a><a class="code" href="class_hypertable_1_1_access_group.html#ba4c93366610f80b473f83153415b544">00577</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#ba4c93366610f80b473f83153415b544">AccessGroup::get_files</a>(<a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="_error_8cc.html#16343090e80c4472521560f30113d96c">text</a>) {
+<a name="l00578"></a>00578   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00579"></a>00579   text = <span class="stringliteral">""</span>;
+<a name="l00580"></a>00580   <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
+<a name="l00581"></a>00581     text += <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename() + <span class="stringliteral">";\n"</span>;
+<a name="l00582"></a>00582 }
+<a name="l00583"></a>00583 
 <a name="l00584"></a>00584 
-<a name="l00587"></a><a class="code" href="class_hypertable_1_1_access_group.html#3d65e77bd2f85be7b74c4dad3f26992d">00587</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#3d65e77bd2f85be7b74c4dad3f26992d">AccessGroup::update_files_column</a>() {
-<a name="l00588"></a>00588   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> files;
-<a name="l00589"></a>00589 
-<a name="l00590"></a>00590   {
-<a name="l00591"></a>00591     <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00587"></a><a class="code" href="class_hypertable_1_1_access_group.html#2f060dae4f15cfc225de152dd97925b6">00587</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#2f060dae4f15cfc225de152dd97925b6">AccessGroup::release_files</a>(<span class="keyword">const</span> std::vector&lt;String&gt; &amp;files) {
+<a name="l00588"></a>00588   <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#eef1420af2fc814eede83a4caa833bbf" title="Decrements the reference count of each file in the given vector.">remove_references</a>(files);
+<a name="l00589"></a>00589   <a class="code" href="class_hypertable_1_1_access_group.html#a7935e73850dc1b2568ea1f58dab90a2">m_file_tracker</a>.<a class="code" href="class_hypertable_1_1_live_file_tracker.html#722564f7a79d7d3e4343c77a13422f66" title="Updates the &amp;#39;Files&amp;#39; METADATA column if it needs updating.">update_files_column</a>();
+<a name="l00590"></a>00590 }
+<a name="l00591"></a>00591 
 <a name="l00592"></a>00592 
-<a name="l00596"></a>00596     files = <span class="stringliteral">""</span>;
-<a name="l00597"></a>00597     <span class="comment">// get the "live" ones</span>
-<a name="l00598"></a>00598     <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i=0; i&lt;<a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>.size(); i++)
-<a name="l00599"></a>00599       files += <a class="code" href="class_hypertable_1_1_access_group.html#aa1e959e9d89c52abe6d344190c94f1d">m_stores</a>[i]-&gt;get_filename() + <span class="stringliteral">";\n"</span>;
-<a name="l00600"></a>00600     <span class="comment">// get the "locked" ones (prevents gc)</span>
-<a name="l00601"></a>00601     <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;f, <a class="code" href="class_hypertable_1_1_access_group.html#5cf5823ebd505dd6dd70b58fccfca72e">m_gc_locked_files</a>)
-<a name="l00602"></a>00602       files += <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"#%s;\n"</span>, f.c_str());
-<a name="l00603"></a>00603   }
+<a name="l00593"></a><a class="code" href="class_hypertable_1_1_access_group.html#f35b3f31147746497b03d368c95186c9">00593</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#f35b3f31147746497b03d368c95186c9">AccessGroup::initiate_compaction</a>() {
+<a name="l00594"></a>00594   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
+<a name="l00595"></a>00595   <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(!<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>);
+<a name="l00596"></a>00596   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>;
+<a name="l00597"></a>00597   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;freeze();
+<a name="l00598"></a>00598   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
+<a name="l00599"></a>00599   <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> = <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a>;
+<a name="l00600"></a>00600   <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>;
+<a name="l00601"></a>00601 }
+<a name="l00602"></a>00602 
+<a name="l00603"></a>00603 
 <a name="l00604"></a>00604 
-<a name="l00605"></a>00605   <span class="keywordflow">try</span> {
-<a name="l00606"></a>00606     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#0dab1707fb458d7ef6b6c60579d7eddf">m_is_root</a>) {
-<a name="l00607"></a>00607       <a class="code" href="class_hypertable_1_1_metadata_root.html">MetadataRoot</a> metadata(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
-<a name="l00608"></a>00608       metadata.<a class="code" href="class_hypertable_1_1_metadata_root.html#023d239e5328db7eaa0b8678d03641ee">write_files</a>(<a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>, files);
-<a name="l00609"></a>00609     }
-<a name="l00610"></a>00610     <span class="keywordflow">else</span> {
-<a name="l00611"></a>00611       <a class="code" href="class_hypertable_1_1_metadata_normal.html">MetadataNormal</a> metadata(&amp;<a class="code" href="class_hypertable_1_1_access_group.html#b6ed7f1aac399b88b4ca93f6bc3c4320">m_identifier</a>, <a class="code" href="class_hypertable_1_1_access_group.html#4dfdd44bf32b0bf9872e11b553f42f3d">m_end_row</a>);
-<a name="l00612"></a>00612       metadata.<a class="code" href="class_hypertable_1_1_metadata_normal.html#efd4c4f6ce9d5c4226a395725eba70b9">write_files</a>(<a class="code" href="class_hypertable_1_1_access_group.html#05719e18d4eb33eff0c2777dbec4770c">m_name</a>, files);
-<a name="l00613"></a>00613     }
-<a name="l00614"></a>00614   }
-<a name="l00615"></a>00615   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Hypertable::Exception</a> &amp;e) {
-<a name="l00616"></a>00616     <span class="comment">// TODO: propagate exception</span>
-<a name="l00617"></a>00617     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt;<span class="stringliteral">"Problem updating 'Files' column of METADATA: "</span>
-<a name="l00618"></a>00618                  &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00619"></a>00619   }
-<a name="l00620"></a>00620 }
-<a name="l00621"></a>00621 
-<a name="l00622"></a>00622 
-<a name="l00626"></a><a class="code" href="class_hypertable_1_1_access_group.html#291d3583974d7e29b2a2b25811b46ad1">00626</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#291d3583974d7e29b2a2b25811b46ad1" title="Needs to be called with m_mutex locked.">AccessGroup::increment_file_refcount</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>) {
-<a name="l00627"></a>00627   FileRefCountMap::iterator iter = <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>.find(filename);
-<a name="l00628"></a>00628 
-<a name="l00629"></a>00629   <span class="keywordflow">if</span> (iter == <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>.end())
-<a name="l00630"></a>00630     <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>[filename] = 1;
-<a name="l00631"></a>00631   <span class="keywordflow">else</span>
-<a name="l00632"></a>00632     (*iter).second++;
-<a name="l00633"></a>00633 }
-<a name="l00634"></a>00634 
-<a name="l00635"></a>00635 
-<a name="l00639"></a><a class="code" href="class_hypertable_1_1_access_group.html#6b93b7c2b4704b7f3cea31a4c827b524">00639</a> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_access_group.html#6b93b7c2b4704b7f3cea31a4c827b524" title="Needs to be called with m_mutex locked.">AccessGroup::decrement_file_refcount</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>) {
-<a name="l00640"></a>00640   FileRefCountMap::iterator iter = <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>.find(filename);
-<a name="l00641"></a>00641 
-<a name="l00642"></a>00642   <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(iter != <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>.end());
-<a name="l00643"></a>00643 
-<a name="l00644"></a>00644   <span class="keywordflow">if</span> (--(*iter).second == 0) {
-<a name="l00645"></a>00645     <a class="code" href="class_hypertable_1_1_access_group.html#7fd329022a1fe0ba3c3caca54bbd8ac8">m_file_refcounts</a>.erase(iter);
-<a name="l00646"></a>00646     <span class="keywordflow">return</span> <span class="keyword">true</span>;
-<a name="l00647"></a>00647   }
-<a name="l00648"></a>00648 
-<a name="l00649"></a>00649   <span class="keywordflow">return</span> <span class="keyword">false</span>;
-<a name="l00650"></a>00650 }
-<a name="l00651"></a>00651 
-<a name="l00652"></a>00652 
-<a name="l00653"></a><a class="code" href="class_hypertable_1_1_access_group.html#f35b3f31147746497b03d368c95186c9">00653</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#f35b3f31147746497b03d368c95186c9">AccessGroup::initiate_compaction</a>() {
-<a name="l00654"></a>00654   <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> <a class="code" href="class_hypertable_1_1_access_group.html#255dc3d80b648bfe3aeab2965cfb48d4">lock</a>(<a class="code" href="class_hypertable_1_1_access_group.html#a3ae7007cc2a7b07f8db6f67e7fbbeab">m_mutex</a>);
-<a name="l00655"></a>00655   <a class="code" href="_logger_8h.html#cf985e8f1a1bebe7d622115e4b3e08a6">HT_ASSERT</a>(!<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>);
-<a name="l00656"></a>00656   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>;
-<a name="l00657"></a>00657   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;freeze();
-<a name="l00658"></a>00658   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
-<a name="l00659"></a>00659   <a class="code" href="class_hypertable_1_1_access_group.html#6e346dfb4a4b52bdc69541fc05dad9d5">m_earliest_cached_revision_saved</a> = <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a>;
-<a name="l00660"></a>00660   <a class="code" href="class_hypertable_1_1_access_group.html#7ba3d3a31eea12b4afca516961b697ad">m_earliest_cached_revision</a> = <a class="code" href="namespace_hypertable.html#2f905de3237fa0a5ef08ffa80f89e19b">TIMESTAMP_NULL</a>;
-<a name="l00661"></a>00661 }
-<a name="l00662"></a>00662 
-<a name="l00663"></a>00663 
-<a name="l00664"></a>00664 
-<a name="l00665"></a><a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7">00665</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7">AccessGroup::merge_caches</a>() {
-<a name="l00666"></a>00666   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr;
-<a name="l00667"></a>00667   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
-<a name="l00668"></a>00668   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
-<a name="l00669"></a>00669 
-<a name="l00670"></a>00670   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;unfreeze();
-<a name="l00671"></a>00671   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;size() &gt; 0) {
-<a name="l00672"></a>00672     <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
-<a name="l00673"></a>00673     scanner_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;create_scanner(scan_context_ptr);
-<a name="l00674"></a>00674     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key, value)) {
-<a name="l00675"></a>00675       <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;add(key, value);
-<a name="l00676"></a>00676       scanner_ptr-&gt;forward();
-<a name="l00677"></a>00677     }
-<a name="l00678"></a>00678   }
-<a name="l00679"></a>00679   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>;
-<a name="l00680"></a>00680   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
-<a name="l00681"></a>00681 }
-<a name="l00682"></a>00682 
-<a name="l00683"></a>00683 
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00608"></a><a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7">00608</a> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_access_group.html#5aa1c81ef6490f5211d1d209493859e7" title="Assumes mutex is locked.">AccessGroup::merge_caches</a>() {
+<a name="l00609"></a>00609   <a class="code" href="namespace_hypertable.html#027a752d2aa1fbf732e6fd4a331ffc56">CellListScannerPtr</a> scanner_ptr;
+<a name="l00610"></a>00610   <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> <a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>;
+<a name="l00611"></a>00611   <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value;
+<a name="l00612"></a>00612   <a class="code" href="namespace_hypertable.html#384fe9fe04e37c6354d117e6faf96c1b">CellCachePtr</a> merged_cache_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_cell_cache.html" title="Represents a sorted list of key/value pairs in memory.">CellCache</a>();
+<a name="l00613"></a>00613   <a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> scan_context_ptr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_scan_context.html" title="Scan context information.">ScanContext</a>(<a class="code" href="class_hypertable_1_1_access_group.html#8ad90097703911a17fe480aa1f10990f">m_schema_ptr</a>);
+<a name="l00614"></a>00614 
+<a name="l00615"></a>00615   <span class="keywordflow">if</span> (!<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>)
+<a name="l00616"></a>00616     <span class="keywordflow">return</span>;
+<a name="l00617"></a>00617 
+<a name="l00618"></a>00618   <span class="comment">// Add immutable cache</span>
+<a name="l00619"></a>00619   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;size() &gt; 0) {
+<a name="l00620"></a>00620     scanner_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a>-&gt;create_scanner(scan_context_ptr);
+<a name="l00621"></a>00621     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key, value)) {
+<a name="l00622"></a>00622       merged_cache_ptr-&gt;add(key, value);
+<a name="l00623"></a>00623       scanner_ptr-&gt;forward();
+<a name="l00624"></a>00624     }
+<a name="l00625"></a>00625   }
+<a name="l00626"></a>00626 
+<a name="l00627"></a>00627   <span class="comment">// Add cell cache</span>
+<a name="l00628"></a>00628   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;size() &gt; 0) {
+<a name="l00629"></a>00629     scanner_ptr = <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a>-&gt;create_scanner(scan_context_ptr);
+<a name="l00630"></a>00630     <span class="keywordflow">while</span> (scanner_ptr-&gt;get(key, value)) {
+<a name="l00631"></a>00631       merged_cache_ptr-&gt;add(key, value);
+<a name="l00632"></a>00632       scanner_ptr-&gt;forward();
+<a name="l00633"></a>00633     }
+<a name="l00634"></a>00634   }
+<a name="l00635"></a>00635   <a class="code" href="class_hypertable_1_1_access_group.html#42973413161409465518c1a9eadfddd2">m_immutable_cache_ptr</a> = 0;
+<a name="l00636"></a>00636   <a class="code" href="class_hypertable_1_1_access_group.html#686003c5698c7b7f3683d3dc063466e4">m_cell_cache_ptr</a> = merged_cache_ptr;
+<a name="l00637"></a>00637 }
+<a name="l00638"></a>00638 
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

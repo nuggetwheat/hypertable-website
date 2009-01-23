@@ -106,7 +106,7 @@ Collaboration diagram for Hypertable::RangeServer:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#1971e99d6733c03d7ccf2d85724e2bbf">replay_log</a> (<a class="el" href="namespace_hypertable.html#a403476082b15bf1a679d6e624394056">CommitLogReaderPtr</a> &amp;log_reader)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#16fcbf4f10a9fdcc8801774f5ba1854c">verify_schema</a> (<a class="el" href="namespace_hypertable.html#0d533c30b66bf152467d57c7ce207724">TableInfoPtr</a> &amp;, int generation)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#16fcbf4f10a9fdcc8801774f5ba1854c">verify_schema</a> (<a class="el" href="namespace_hypertable.html#4dab50af662aa2eb8f7ebe08a2f4f48d">TableInfoPtr</a> &amp;, int generation)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#f1d12e773d787ba8e8443a69725c5f81">schedule_log_cleanup_compactions</a> (std::vector&lt; <a class="el" href="namespace_hypertable.html#1d11823031679a66d80b82e35facfb1e">RangePtr</a> &gt; &amp;range_vec, <a class="el" href="class_hypertable_1_1_commit_log.html">CommitLog</a> *log, uint64_t prune_threshold)</td></tr>
 
@@ -151,8 +151,6 @@ Collaboration diagram for Hypertable::RangeServer:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hyperspace_1_1_lock_sequencer.html">LockSequencer</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#20954894297a06ec21e164d50321517c">m_existence_file_sequencer</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">std::string&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#f23a2903df0c2b6a53e9ff8ad380dc50">m_location</a></td></tr>
-
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html">ConnectionHandler</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#da282756f7a5b220900aae834a4475f1">m_master_connection_handler</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#22fddcf5499a02a3779b26187e11dbde">MasterClientPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#6db46bad934df76ba8b8a1ed9c3adb0b">m_master_client</a></td></tr>
@@ -164,6 +162,8 @@ Collaboration diagram for Hypertable::RangeServer:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">long&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#43b1bac65220dead7809570e988bff78">m_last_commit_log_clean</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#fddbe97a7f76565dcda6454b9e79005e">m_timer_interval</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">int32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#11a39f53286620fa062a8bc81d5b4c68">m_max_clock_skew</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range_server.html#f305b29e39112d554ff928c776724a41">m_bytes_loaded</a></td></tr>
 
@@ -241,7 +241,7 @@ Create <a class="el" href="class_hypertable_1_1_master.html">Master</a> client
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00174">174</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00177">177</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -288,7 +288,7 @@ Create <a class="el" href="class_hypertable_1_1_master.html">Master</a> client
 <p>
 Fetch table info<p>
 Fetch range info 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00503">503</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00508">508</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -333,7 +333,7 @@ Fetch range info
 
 <p>
 Send back data 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00564">564</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00569">569</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -364,7 +364,7 @@ Send back data
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00648">648</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00666">666</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -397,7 +397,7 @@ Send back data
 
 <p>
 Send back data 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00656">656</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00674">674</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -455,7 +455,7 @@ Take ownership of the range<p>
 Check for existence of and create, if necessary, range directory (md5 of endrow) under all locality group directories for this table<p>
 Create root and/or metadata log if necessary<p>
 NOTE: The range does not need to be locked in the following replay since it has not been added yet and therefore no one else can find it and concurrently access it. 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00709">709</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00727">727</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -506,7 +506,7 @@ Commit valid (go) mutations<p>
 Apply the modifications<p>
 Split and Compaction processing<p>
 Send back response 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00957">957</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00982">982</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -537,7 +537,7 @@ Send back response
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01328">1328</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01410">1410</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -559,7 +559,7 @@ Send back response
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01387">1387</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01469">1469</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -581,7 +581,7 @@ Send back response
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01404">1404</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01486">1486</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -615,7 +615,7 @@ Send back response
 <p>
 Remove old replay log directory<p>
 Create new replay log directory 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01431">1431</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01513">1513</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -662,7 +662,7 @@ Create new replay log directory
 Get <a class="el" href="class_hypertable_1_1_table_info.html">TableInfo</a> from replay map, or copy it from live map, or create if doesn't exist<p>
 Make sure this range is not already loaded<p>
 Lazily create METADATA table pointer 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01472">1472</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01554">1554</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -699,7 +699,7 @@ Lazily create METADATA table pointer
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01548">1548</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01632">1632</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -721,7 +721,7 @@ Lazily create METADATA table pointer
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01662">1662</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01746">1746</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -761,7 +761,7 @@ Lazily create METADATA table pointer
 <p>
 Get <a class="el" href="class_hypertable_1_1_table_info.html">TableInfo</a><p>
 Remove the range 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01707">1707</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01791">1791</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -783,7 +783,7 @@ Remove the range
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01731">1731</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01815">1815</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -807,7 +807,7 @@ Remove the range
 <p>
 Purge expired scanners<p>
 Schedule log cleanup 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01809">1809</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01893">1893</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -830,7 +830,7 @@ Schedule log cleanup
 
 <p>
 If we've got METADATA ranges, process them first 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01845">1845</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01929">1929</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -851,7 +851,7 @@ If we've got METADATA ranges, process them first
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01951">1951</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l02033">2033</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -933,7 +933,7 @@ If we've got METADATA ranges, process them first
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01956">1956</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l02038">2038</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -964,7 +964,7 @@ If we've got METADATA ranges, process them first
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01966">1966</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l02048">2048</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -995,7 +995,7 @@ If we've got METADATA ranges, process them first
 <p>
 Create "server existence" file in <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> and lock it exclusively<p>
 Create log directories 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00193">193</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00196">196</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1022,7 +1022,7 @@ First ROOT metadata range<p>
 Then recover other metadata ranges<p>
 Then recover the normal ranges<p>
 Create the logs 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00250">250</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00253">253</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1044,7 +1044,7 @@ Create the logs
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00430">430</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00433">433</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1055,7 +1055,7 @@ Create the logs
         <tr>
           <td class="memname">void RangeServer::verify_schema           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#0d533c30b66bf152467d57c7ce207724">TableInfoPtr</a> &amp;&nbsp;</td>
+          <td class="paramtype"><a class="el" href="namespace_hypertable.html#4dab50af662aa2eb8f7ebe08a2f4f48d">TableInfoPtr</a> &amp;&nbsp;</td>
           <td class="paramname"> <em>table_info</em>, </td>
         </tr>
         <tr>
@@ -1075,7 +1075,7 @@ Create the logs
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01772">1772</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01856">1856</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1114,7 +1114,7 @@ Create the logs
 
 <p>
 Determine which AGs need compaction for the sake of garbage collecting commit log fragments 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01894">1894</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l01978">1978</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1157,7 +1157,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00895">895</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8cc-source.html#l00920">920</a> of file <a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1485,23 +1485,6 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 </div>
 </div><p>
-<a class="anchor" name="f23a2903df0c2b6a53e9ff8ad380dc50"></a><!-- doxytag: member="Hypertable::RangeServer::m_location" ref="f23a2903df0c2b6a53e9ff8ad380dc50" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">std::string <a class="el" href="class_hypertable_1_1_range_server.html#f23a2903df0c2b6a53e9ff8ad380dc50">Hypertable::RangeServer::m_location</a><code> [private]</code>          </td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-
-<p>
-
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00136">136</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
-
-</div>
-</div><p>
 <a class="anchor" name="da282756f7a5b220900aae834a4475f1"></a><!-- doxytag: member="Hypertable::RangeServer::m_master_connection_handler" ref="da282756f7a5b220900aae834a4475f1" args="" -->
 <div class="memitem">
 <div class="memproto">
@@ -1515,7 +1498,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00137">137</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00136">136</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
 
 </div>
 </div><p>
@@ -1532,7 +1515,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00138">138</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00137">137</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
 
 </div>
 </div><p>
@@ -1549,7 +1532,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00139">139</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00138">138</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
 
 </div>
 </div><p>
@@ -1566,7 +1549,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00140">140</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00139">139</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
 
 </div>
 </div><p>
@@ -1583,7 +1566,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00141">141</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00140">140</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
 
 </div>
 </div><p>
@@ -1593,6 +1576,23 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
       <table class="memname">
         <tr>
           <td class="memname">uint32_t <a class="el" href="class_hypertable_1_1_range_server.html#fddbe97a7f76565dcda6454b9e79005e">Hypertable::RangeServer::m_timer_interval</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_server_8h-source.html#l00141">141</a> of file <a class="el" href="_range_server_8h-source.html">RangeServer.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="11a39f53286620fa062a8bc81d5b4c68"></a><!-- doxytag: member="Hypertable::RangeServer::m_max_clock_skew" ref="11a39f53286620fa062a8bc81d5b4c68" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int32_t <a class="el" href="class_hypertable_1_1_range_server.html#11a39f53286620fa062a8bc81d5b4c68">Hypertable::RangeServer::m_max_clock_skew</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1657,7 +1657,7 @@ Determine which AGs need compaction for the sake of garbage collecting commit lo
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_range_server_8h-source.html">RangeServer.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_range_server_8cc-source.html">RangeServer.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:19 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:25 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -35,40 +35,57 @@
 <a name="l00035"></a>00035 
 <a name="l00036"></a>00036 <span class="comment">// helper to initialize base class of Client</span>
 <a name="l00037"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">00037</a> <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">ClientHelper</a> {
-<a name="l00038"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#ffc30196d55689e98fd1ef1d07ce6090">00038</a>   boost::shared_ptr&lt;TTransport&gt; <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#ffc30196d55689e98fd1ef1d07ce6090">socket</a>;
+<a name="l00038"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">00038</a>   boost::shared_ptr&lt;TSocket&gt; <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>;
 <a name="l00039"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">00039</a>   boost::shared_ptr&lt;TTransport&gt; <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>;
 <a name="l00040"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">00040</a>   boost::shared_ptr&lt;TProtocol&gt; <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">protocol</a>;
 <a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9c2bc1bf6ebaea110cd644f04bd7b329">00042</a>   <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9c2bc1bf6ebaea110cd644f04bd7b329">ClientHelper</a>(<span class="keyword">const</span> std::string &amp;host, <span class="keywordtype">int</span> port)
-<a name="l00043"></a>00043     : <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#ffc30196d55689e98fd1ef1d07ce6090">socket</a>(new TSocket(host, port)),
-<a name="l00044"></a>00044       <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>(new TFramedTransport(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#ffc30196d55689e98fd1ef1d07ce6090">socket</a>)),
-<a name="l00045"></a>00045       <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">protocol</a>(new TBinaryProtocol(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>)) { }
-<a name="l00046"></a>00046 };
-<a name="l00047"></a>00047 
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html">00051</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html" title="A client for the ThriftBroker.">Client</a> : <span class="keyword">private</span> <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">ClientHelper</a>, <span class="keyword">public</span> ThriftGen::HqlServiceClient {
-<a name="l00052"></a>00052 <span class="keyword">public</span>:
-<a name="l00053"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#5bfd8ed2d527e8177b3c37ad5fd057c1">00053</a>   <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#5bfd8ed2d527e8177b3c37ad5fd057c1">Client</a>(<span class="keyword">const</span> std::string &amp;host, <span class="keywordtype">int</span> port, <span class="keywordtype">int</span> timeout_ms = 30000,
-<a name="l00054"></a>00054          <span class="keywordtype">bool</span> open = <span class="keyword">true</span>)
-<a name="l00055"></a>00055     : <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">ClientHelper</a>(host, port), <a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_service_client.html#5c1b499fcc7978a3028112f6fce4166d">HqlServiceClient</a>(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">protocol</a>) {
-<a name="l00056"></a>00056     <span class="keywordflow">if</span> (open)
-<a name="l00057"></a>00057       <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#b5114649dcd6a19daac30bf8c3162ed5">connect</a>(timeout_ms);
-<a name="l00058"></a>00058   }
-<a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#b5114649dcd6a19daac30bf8c3162ed5">00060</a>   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#b5114649dcd6a19daac30bf8c3162ed5">connect</a>(<span class="keywordtype">int</span> timeout_ms) {
-<a name="l00061"></a>00061     <span class="comment">// nop until thrift transport has a timeout, which it should</span>
-<a name="l00062"></a>00062     <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>-&gt;open();
-<a name="l00063"></a>00063   }
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065   <span class="comment">// convenience method for common case</span>
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#a7191ded487d07e6267d962d861d5e33">00066</a>   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#a7191ded487d07e6267d962d861d5e33">hql_query</a>(<a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_result.html">ThriftGen::HqlResult</a> &amp;ret, <span class="keyword">const</span> std::string &amp;cmd) {
-<a name="l00067"></a>00067     <a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_service_client.html#ffd3dcfe2ead17405ab6875cba7f0df5">hql_exec</a>(ret, cmd, 0, 0);
-<a name="l00068"></a>00068   }
-<a name="l00069"></a>00069 };
-<a name="l00070"></a>00070 
-<a name="l00071"></a>00071 }} <span class="comment">// namespace Hypertable::Thrift</span>
+<a name="l00042"></a><a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#efa05723d9391048e7893032943ae154">00042</a>   <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#efa05723d9391048e7893032943ae154">ClientHelper</a>(<span class="keyword">const</span> std::string &amp;host, <span class="keywordtype">int</span> port, <span class="keywordtype">int</span> timeout_ms)
+<a name="l00043"></a>00043     : <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>(new TSocket(host, port)),
+<a name="l00044"></a>00044       <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>(new TFramedTransport(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>)),
+<a name="l00045"></a>00045       <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">protocol</a>(new TBinaryProtocol(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>)) {
+<a name="l00046"></a>00046     <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>-&gt;setConnTimeout(timeout_ms);
+<a name="l00047"></a>00047     <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>-&gt;setSendTimeout(timeout_ms);
+<a name="l00048"></a>00048     <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#9a4207cd5bffa600c591a5756ee432b8">socket</a>-&gt;setRecvTimeout(timeout_ms);
+<a name="l00049"></a>00049   }
+<a name="l00050"></a>00050 };
+<a name="l00051"></a>00051 
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html">00055</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html" title="A client for the ThriftBroker.">Client</a> : <span class="keyword">private</span> <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">ClientHelper</a>, <span class="keyword">public</span> ThriftGen::HqlServiceClient {
+<a name="l00056"></a>00056 <span class="keyword">public</span>:
+<a name="l00057"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#5bfd8ed2d527e8177b3c37ad5fd057c1">00057</a>   <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#5bfd8ed2d527e8177b3c37ad5fd057c1">Client</a>(<span class="keyword">const</span> std::string &amp;host, <span class="keywordtype">int</span> port, <span class="keywordtype">int</span> timeout_ms = 30000,
+<a name="l00058"></a>00058          <span class="keywordtype">bool</span> open = <span class="keyword">true</span>)
+<a name="l00059"></a>00059     : <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html">ClientHelper</a>(host, port, timeout_ms), <a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_service_client.html#5c1b499fcc7978a3028112f6fce4166d">HqlServiceClient</a>(<a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#2cd1a8f3f8e984e66598a62562f9eedc">protocol</a>),
+<a name="l00060"></a>00060       <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a>(false) {
+<a name="l00061"></a>00061 
+<a name="l00062"></a>00062     <span class="keywordflow">if</span> (open)
+<a name="l00063"></a>00063       <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#1225128be8f45535fd3ad15b7e92ac7c">connect</a>();
+<a name="l00064"></a>00064   }
+<a name="l00065"></a>00065 
+<a name="l00066"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#1170c52bffc6848256b7533ba42b6a39">00066</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#1170c52bffc6848256b7533ba42b6a39">~Client</a>() {
+<a name="l00067"></a>00067     <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a>) {
+<a name="l00068"></a>00068       <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>-&gt;close();
+<a name="l00069"></a>00069       <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a> = <span class="keyword">false</span>;
+<a name="l00070"></a>00070     }
+<a name="l00071"></a>00071   }
 <a name="l00072"></a>00072 
-<a name="l00073"></a>00073 <span class="preprocessor">#endif </span><span class="comment">/* HYPERTABLE_THRIFT_CLIENT_H */</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00073"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#1225128be8f45535fd3ad15b7e92ac7c">00073</a>   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#1225128be8f45535fd3ad15b7e92ac7c">connect</a>() {
+<a name="l00074"></a>00074     <span class="comment">// nop until thrift transport has a timeout, which it should</span>
+<a name="l00075"></a>00075     <a class="code" href="struct_hypertable_1_1_thrift_1_1_client_helper.html#fc60b8de3b4ec2c2a55ca6f76fba4c1c">transport</a>-&gt;open();
+<a name="l00076"></a>00076     <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a> = <span class="keyword">true</span>;
+<a name="l00077"></a>00077   }
+<a name="l00078"></a>00078 
+<a name="l00079"></a>00079   <span class="comment">// convenience method for common case</span>
+<a name="l00080"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#a7191ded487d07e6267d962d861d5e33">00080</a>   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#a7191ded487d07e6267d962d861d5e33">hql_query</a>(<a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_result.html">ThriftGen::HqlResult</a> &amp;ret, <span class="keyword">const</span> std::string &amp;cmd) {
+<a name="l00081"></a>00081     <a class="code" href="class_hypertable_1_1_thrift_gen_1_1_hql_service_client.html#ffd3dcfe2ead17405ab6875cba7f0df5">hql_exec</a>(ret, cmd, 0, 0);
+<a name="l00082"></a>00082   }
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 <span class="keyword">private</span>:
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">00085</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a>;
+<a name="l00086"></a>00086 };
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088 }} <span class="comment">// namespace Hypertable::Thrift</span>
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090 <span class="preprocessor">#endif </span><span class="comment">/* HYPERTABLE_THRIFT_CLIENT_H */</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

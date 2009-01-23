@@ -27,16 +27,16 @@
 <a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
 <a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_string_8h.html">Common/String.h</a>"</span>
 <a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_string_ext_8h.html">Common/StringExt.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="preprocessor">#include "<a class="code" href="_application_queue_8h.html">AsyncComm/ApplicationQueue.h</a>"</span>
-<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
-<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_connection_manager_8h.html">AsyncComm/ConnectionManager.h</a>"</span>
-<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_event_8h.html">AsyncComm/Event.h</a>"</span>
-<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_response_callback_8h.html">AsyncComm/ResponseCallback.h</a>"</span>
-<a name="l00038"></a>00038 
-<a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
-<a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_config_8h.html">Hypertable/Lib/Config.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_properties_8h.html">Common/Properties.h</a>"</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="preprocessor">#include "<a class="code" href="_application_queue_8h.html">AsyncComm/ApplicationQueue.h</a>"</span>
+<a name="l00035"></a>00035 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
+<a name="l00036"></a>00036 <span class="preprocessor">#include "<a class="code" href="_connection_manager_8h.html">AsyncComm/ConnectionManager.h</a>"</span>
+<a name="l00037"></a>00037 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_event_8h.html">AsyncComm/Event.h</a>"</span>
+<a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_response_callback_8h.html">AsyncComm/ResponseCallback.h</a>"</span>
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040 <span class="preprocessor">#include "<a class="code" href="_session_8h.html">Hyperspace/Session.h</a>"</span>
+<a name="l00041"></a>00041 
 <a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_filesystem_8h.html">Hypertable/Lib/Filesystem.h</a>"</span>
 <a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_table_8h.html">Hypertable/Lib/Table.h</a>"</span>
 <a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Hypertable/Lib/Types.h</a>"</span>
@@ -51,7 +51,7 @@
 <a name="l00053"></a>00053 
 <a name="l00054"></a><a class="code" href="class_hypertable_1_1_master.html">00054</a>   <span class="keyword">class </span><a class="code" href="class_hyperspace_1_1_master.html">Master</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
 <a name="l00055"></a>00055   <span class="keyword">public</span>:
-<a name="l00056"></a>00056     <a class="code" href="class_hyperspace_1_1_master.html#5efa12b4f86734c451f106aa599e600f" title="Sets up the m_base_dir variable to be the absolute path of the root of the Hyperspace...">Master</a>(<a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;);
+<a name="l00056"></a>00056     <a class="code" href="class_hyperspace_1_1_master.html#4630a2e7ce8b071034f025adb5753bc6" title="Sets up the m_base_dir variable to be the absolute path of the root of the Hyperspace...">Master</a>(<a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> &amp;, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;);
 <a name="l00057"></a>00057     <a class="code" href="class_hyperspace_1_1_master.html#20f70958ed75532ba672af1b780f59eb">~Master</a>();
 <a name="l00058"></a>00058 
 <a name="l00059"></a>00059     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master.html#d33d9203dfe0fd10a5371191b5d00352">create_table</a>(<a class="code" href="class_hypertable_1_1_response_callback.html" title="This class is used to deliver responses, corresponding to a request, back to a client...">ResponseCallback</a> *cb, <span class="keyword">const</span> <span class="keywordtype">char</span> *tablename,
@@ -78,40 +78,43 @@
 <a name="l00080"></a>00080     <span class="keywordtype">bool</span> <a class="code" href="namespace_hypertable_1_1_logger.html#53e39dccd8c7ead3805b1a4c95850619">initialize</a>();
 <a name="l00081"></a>00081     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master.html#caeec82cba12c8672d7419e966ced069">scan_servers_directory</a>();
 <a name="l00082"></a>00082     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_master.html#29759d3a0cc5ae6bd1785f90ef6043f3">create_hyperspace_dir</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;dir);
-<a name="l00083"></a>00083 
-<a name="l00084"></a><a class="code" href="class_hypertable_1_1_master.html#95040805854399738376d19e6623e96d">00084</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hypertable_1_1_master.html#95040805854399738376d19e6623e96d">m_mutex</a>;
-<a name="l00085"></a><a class="code" href="class_hypertable_1_1_master.html#59661d1596edc5bb72b6999bbd3e87de">00085</a>     <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="class_hypertable_1_1_master.html#59661d1596edc5bb72b6999bbd3e87de">m_props_ptr</a>;
-<a name="l00086"></a><a class="code" href="class_hypertable_1_1_master.html#a60418d37494f9aa8a6d64fa2048545b">00086</a>     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="code" href="class_hypertable_1_1_master.html#a60418d37494f9aa8a6d64fa2048545b">m_conn_manager_ptr</a>;
-<a name="l00087"></a><a class="code" href="class_hypertable_1_1_master.html#9fccbffbcfc59f71c6fedcfa008ea1ef">00087</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a>;
-<a name="l00088"></a><a class="code" href="class_hypertable_1_1_master.html#62e2942bdb162cf21622e04bfdca551f">00088</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_master.html#74924c1db7e0185ad3101079fe639193">m_verbose</a>;
-<a name="l00089"></a><a class="code" href="class_hypertable_1_1_master.html#b858324da74798e7cefb2eaf07100715">00089</a>     <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="code" href="class_hypertable_1_1_master.html#b858324da74798e7cefb2eaf07100715">m_hyperspace_ptr</a>;
-<a name="l00090"></a><a class="code" href="class_hypertable_1_1_master.html#12ed12b98ee14946e1b2b3c2a7a4eb0a">00090</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *<a class="code" href="class_hypertable_1_1_master.html#12ed12b98ee14946e1b2b3c2a7a4eb0a">m_dfs_client</a>;
-<a name="l00091"></a><a class="code" href="class_hypertable_1_1_master.html#8e30a5b07dd148bbfcb19ae4ea2388f6">00091</a>     <a class="code" href="structatomic__t.html">atomic_t</a> <a class="code" href="class_hypertable_1_1_master.html#8e30a5b07dd148bbfcb19ae4ea2388f6">m_last_table_id</a>;
-<a name="l00092"></a><a class="code" href="class_hypertable_1_1_master.html#f7f7420f11a11d5110149effb911b8cc">00092</a>     <a class="code" href="class_hypertable_1_1_hyperspace_session_handler.html">HyperspaceSessionHandler</a> <a class="code" href="class_hypertable_1_1_master.html#f7f7420f11a11d5110149effb911b8cc">m_hyperspace_session_handler</a>;
-<a name="l00093"></a><a class="code" href="class_hypertable_1_1_master.html#1a4c252f7dabff96ded4816c23e854c1">00093</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#1a4c252f7dabff96ded4816c23e854c1">m_master_file_handle</a>;
-<a name="l00094"></a><a class="code" href="class_hypertable_1_1_master.html#15c75f2ecd4d95a3792e149af5c1eff7">00094</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#15c75f2ecd4d95a3792e149af5c1eff7">m_servers_dir_handle</a>;
-<a name="l00095"></a><a class="code" href="class_hypertable_1_1_master.html#b80620f69b65bb5e174920520254bbe5">00095</a>     <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> <a class="code" href="class_hypertable_1_1_master.html#b80620f69b65bb5e174920520254bbe5">m_master_file_sequencer</a>;
-<a name="l00096"></a><a class="code" href="class_hypertable_1_1_master.html#30d9fa936a5819ad6d7ffb9c7f983f00">00096</a>     <a class="code" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> <a class="code" href="class_hypertable_1_1_master.html#30d9fa936a5819ad6d7ffb9c7f983f00">m_servers_dir_callback_ptr</a>;
-<a name="l00097"></a><a class="code" href="class_hypertable_1_1_master.html#1317635750837d6ae2a52531c2df06d3">00097</a>     <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a> <a class="code" href="class_hypertable_1_1_master.html#1317635750837d6ae2a52531c2df06d3">m_metadata_table_ptr</a>;
-<a name="l00098"></a><a class="code" href="class_hypertable_1_1_master.html#3aef09116c60a4bd461cfbc04c18fb8f">00098</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#3aef09116c60a4bd461cfbc04c18fb8f">m_max_range_bytes</a>;
-<a name="l00099"></a>00099 
-<a name="l00101"></a><a class="code" href="class_hypertable_1_1_master.html#86f2fb46856431491147389b92dc29e7">00101</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_master.html#86f2fb46856431491147389b92dc29e7" title="temporary vairables">m_initialized</a>;
-<a name="l00102"></a>00102 
-<a name="l00103"></a><a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">00103</a>     <span class="keyword">typedef</span> hash_map&lt;String, RangeServerStatePtr&gt; <a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">ServerMap</a>;
-<a name="l00104"></a>00104 
-<a name="l00105"></a><a class="code" href="class_hypertable_1_1_master.html#23d3da77dd3c601ddbd0ccfb0a2a186b">00105</a>     <a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">ServerMap</a>  <a class="code" href="class_hypertable_1_1_master.html#23d3da77dd3c601ddbd0ccfb0a2a186b">m_server_map</a>;
-<a name="l00106"></a><a class="code" href="class_hypertable_1_1_master.html#f18989a702e6db16935bcbbaba3fa803">00106</a>     ServerMap::iterator <a class="code" href="class_hypertable_1_1_master.html#f18989a702e6db16935bcbbaba3fa803">m_server_map_iter</a>;
-<a name="l00107"></a><a class="code" href="class_hypertable_1_1_master.html#6499c1fd5b88badb7bf2e8936d16d671">00107</a>     boost::condition  <a class="code" href="class_hypertable_1_1_master.html#6499c1fd5b88badb7bf2e8936d16d671">m_no_servers_cond</a>;
-<a name="l00108"></a>00108 
-<a name="l00109"></a><a class="code" href="class_hypertable_1_1_master.html#a5c03adafe643a59efefb7c40d6baad8">00109</a>     <a class="code" href="namespace_hypertable.html#cb6323b468d9e6e6ffd213d0e36c3f1e">ThreadGroup</a> <a class="code" href="class_hypertable_1_1_master.html#a5c03adafe643a59efefb7c40d6baad8">m_threads</a>;
-<a name="l00110"></a>00110   };
+<a name="l00083"></a>00083     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_master.html#53b3f331929093998c16bd867f02f5be">wait_for_initialization</a>();
+<a name="l00084"></a>00084 
+<a name="l00085"></a><a class="code" href="class_hypertable_1_1_master.html#95040805854399738376d19e6623e96d">00085</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>        <a class="code" href="class_hypertable_1_1_master.html#95040805854399738376d19e6623e96d">m_mutex</a>;
+<a name="l00086"></a><a class="code" href="class_hypertable_1_1_master.html#59661d1596edc5bb72b6999bbd3e87de">00086</a>     <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="class_hypertable_1_1_master.html#59661d1596edc5bb72b6999bbd3e87de">m_props_ptr</a>;
+<a name="l00087"></a><a class="code" href="class_hypertable_1_1_master.html#a60418d37494f9aa8a6d64fa2048545b">00087</a>     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> <a class="code" href="class_hypertable_1_1_master.html#a60418d37494f9aa8a6d64fa2048545b">m_conn_manager_ptr</a>;
+<a name="l00088"></a><a class="code" href="class_hypertable_1_1_master.html#9fccbffbcfc59f71c6fedcfa008ea1ef">00088</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> <a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">m_app_queue_ptr</a>;
+<a name="l00089"></a><a class="code" href="class_hypertable_1_1_master.html#62e2942bdb162cf21622e04bfdca551f">00089</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hyperspace_1_1_master.html#74924c1db7e0185ad3101079fe639193">m_verbose</a>;
+<a name="l00090"></a><a class="code" href="class_hypertable_1_1_master.html#b858324da74798e7cefb2eaf07100715">00090</a>     <a class="code" href="namespace_hyperspace.html#a6fd2655b7a3b3be4389099597a40d72">Hyperspace::SessionPtr</a> <a class="code" href="class_hypertable_1_1_master.html#b858324da74798e7cefb2eaf07100715">m_hyperspace_ptr</a>;
+<a name="l00091"></a><a class="code" href="class_hypertable_1_1_master.html#12ed12b98ee14946e1b2b3c2a7a4eb0a">00091</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *<a class="code" href="class_hypertable_1_1_master.html#12ed12b98ee14946e1b2b3c2a7a4eb0a">m_dfs_client</a>;
+<a name="l00092"></a><a class="code" href="class_hypertable_1_1_master.html#8e30a5b07dd148bbfcb19ae4ea2388f6">00092</a>     <a class="code" href="structatomic__t.html">atomic_t</a> <a class="code" href="class_hypertable_1_1_master.html#8e30a5b07dd148bbfcb19ae4ea2388f6">m_last_table_id</a>;
+<a name="l00093"></a><a class="code" href="class_hypertable_1_1_master.html#f7f7420f11a11d5110149effb911b8cc">00093</a>     <a class="code" href="class_hypertable_1_1_hyperspace_session_handler.html">HyperspaceSessionHandler</a> <a class="code" href="class_hypertable_1_1_master.html#f7f7420f11a11d5110149effb911b8cc">m_hyperspace_session_handler</a>;
+<a name="l00094"></a><a class="code" href="class_hypertable_1_1_master.html#1a4c252f7dabff96ded4816c23e854c1">00094</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#1a4c252f7dabff96ded4816c23e854c1">m_master_file_handle</a>;
+<a name="l00095"></a><a class="code" href="class_hypertable_1_1_master.html#15c75f2ecd4d95a3792e149af5c1eff7">00095</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#15c75f2ecd4d95a3792e149af5c1eff7">m_servers_dir_handle</a>;
+<a name="l00096"></a><a class="code" href="class_hypertable_1_1_master.html#b80620f69b65bb5e174920520254bbe5">00096</a>     <a class="code" href="struct_hyperspace_1_1_lock_sequencer.html" title="Lock sequencer.">LockSequencer</a> <a class="code" href="class_hypertable_1_1_master.html#b80620f69b65bb5e174920520254bbe5">m_master_file_sequencer</a>;
+<a name="l00097"></a><a class="code" href="class_hypertable_1_1_master.html#30d9fa936a5819ad6d7ffb9c7f983f00">00097</a>     <a class="code" href="namespace_hyperspace.html#caac2c6eb284451eb2a0a0dea6caead5">HandleCallbackPtr</a> <a class="code" href="class_hypertable_1_1_master.html#30d9fa936a5819ad6d7ffb9c7f983f00">m_servers_dir_callback_ptr</a>;
+<a name="l00098"></a><a class="code" href="class_hypertable_1_1_master.html#1317635750837d6ae2a52531c2df06d3">00098</a>     <a class="code" href="namespace_hypertable.html#c71c18ddb7522183899f6a8cd29a997a">TablePtr</a> <a class="code" href="class_hypertable_1_1_master.html#1317635750837d6ae2a52531c2df06d3">m_metadata_table_ptr</a>;
+<a name="l00099"></a><a class="code" href="class_hypertable_1_1_master.html#3aef09116c60a4bd461cfbc04c18fb8f">00099</a>     uint64_t <a class="code" href="class_hypertable_1_1_master.html#3aef09116c60a4bd461cfbc04c18fb8f">m_max_range_bytes</a>;
+<a name="l00100"></a>00100 
+<a name="l00102"></a><a class="code" href="class_hypertable_1_1_master.html#d35246551bbc9b56a6c1b3bfd869497c">00102</a>     <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>             <a class="code" href="class_hypertable_1_1_master.html#d35246551bbc9b56a6c1b3bfd869497c" title="temporary vairables">m_initialization_mutex</a>;
+<a name="l00103"></a><a class="code" href="class_hypertable_1_1_master.html#0a0ae301a0771cc8a702363ea45acff7">00103</a>     boost::condition  <a class="code" href="class_hypertable_1_1_master.html#0a0ae301a0771cc8a702363ea45acff7">m_initialization_cond</a>;
+<a name="l00104"></a><a class="code" href="class_hypertable_1_1_master.html#86f2fb46856431491147389b92dc29e7">00104</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_master.html#86f2fb46856431491147389b92dc29e7">m_initialized</a>;
+<a name="l00105"></a>00105 
+<a name="l00106"></a><a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">00106</a>     <span class="keyword">typedef</span> hash_map&lt;String, RangeServerStatePtr&gt; <a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">ServerMap</a>;
+<a name="l00107"></a>00107 
+<a name="l00108"></a><a class="code" href="class_hypertable_1_1_master.html#23d3da77dd3c601ddbd0ccfb0a2a186b">00108</a>     <a class="code" href="class_hypertable_1_1_master.html#938ff52dcecf49e5caf77929292cc279">ServerMap</a>  <a class="code" href="class_hypertable_1_1_master.html#23d3da77dd3c601ddbd0ccfb0a2a186b">m_server_map</a>;
+<a name="l00109"></a><a class="code" href="class_hypertable_1_1_master.html#f18989a702e6db16935bcbbaba3fa803">00109</a>     ServerMap::iterator <a class="code" href="class_hypertable_1_1_master.html#f18989a702e6db16935bcbbaba3fa803">m_server_map_iter</a>;
+<a name="l00110"></a><a class="code" href="class_hypertable_1_1_master.html#6499c1fd5b88badb7bf2e8936d16d671">00110</a>     boost::condition  <a class="code" href="class_hypertable_1_1_master.html#6499c1fd5b88badb7bf2e8936d16d671">m_no_servers_cond</a>;
 <a name="l00111"></a>00111 
-<a name="l00112"></a><a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">00112</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;Master&gt; <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a>;
-<a name="l00113"></a>00113 
-<a name="l00114"></a>00114 } <span class="comment">// namespace Hypertable</span>
-<a name="l00115"></a>00115 
-<a name="l00116"></a>00116 <span class="preprocessor">#endif // HYPERTABLE_MASTER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:49 2008 for hypertable by&nbsp;
+<a name="l00112"></a><a class="code" href="class_hypertable_1_1_master.html#a5c03adafe643a59efefb7c40d6baad8">00112</a>     <a class="code" href="namespace_hypertable.html#cb6323b468d9e6e6ffd213d0e36c3f1e">ThreadGroup</a> <a class="code" href="class_hypertable_1_1_master.html#a5c03adafe643a59efefb7c40d6baad8">m_threads</a>;
+<a name="l00113"></a>00113   };
+<a name="l00114"></a>00114 
+<a name="l00115"></a><a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">00115</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;Master&gt; <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a>;
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117 } <span class="comment">// namespace Hypertable</span>
+<a name="l00118"></a>00118 
+<a name="l00119"></a>00119 <span class="preprocessor">#endif // HYPERTABLE_MASTER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:40 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

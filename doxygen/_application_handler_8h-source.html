@@ -29,24 +29,32 @@
 <a name="l00043"></a><a class="code" href="class_hypertable_1_1_application_handler.html">00043</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_application_handler.html" title="Abstract base clase for application request handlers.">ApplicationHandler</a> {
 <a name="l00044"></a>00044 
 <a name="l00045"></a>00045   <span class="keyword">public</span>:
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_application_handler.html#1656f1fa7feabd48978c6247040e46da">00051</a>     <a class="code" href="class_hypertable_1_1_application_handler.html#1656f1fa7feabd48978c6247040e46da" title="Initializes the handler object with the event object that generated the request.">ApplicationHandler</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) : <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>(event_ptr) { <span class="keywordflow">return</span>; }
+<a name="l00051"></a><a class="code" href="class_hypertable_1_1_application_handler.html#1656f1fa7feabd48978c6247040e46da">00051</a>     <a class="code" href="class_hypertable_1_1_application_handler.html#5d97de50485707940daad0f5ce24eec8" title="Initializes the handler object with NULL event object.">ApplicationHandler</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event_ptr) : <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>(event_ptr) { <span class="keywordflow">return</span>; }
 <a name="l00052"></a>00052 
-<a name="l00054"></a><a class="code" href="class_hypertable_1_1_application_handler.html#573a5940f8e1187992050117f725c427">00054</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_application_handler.html#573a5940f8e1187992050117f725c427" title="Destructor.">~ApplicationHandler</a>() { <span class="keywordflow">return</span>; }
-<a name="l00055"></a>00055 
-<a name="l00059"></a>00059     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_application_handler.html#3d964c1af46eed4b4a1ced39c91e95e9" title="Abstract method to carry out the request.">run</a>() = 0;
-<a name="l00060"></a>00060 
-<a name="l00064"></a><a class="code" href="class_hypertable_1_1_application_handler.html#ab1977edf2e9145c1d3ed11fc692e483">00064</a>     uint64_t <a class="code" href="class_hypertable_1_1_application_handler.html#ab1977edf2e9145c1d3ed11fc692e483" title="Returns the thread group that this request belongs to.">get_thread_group</a>() {
-<a name="l00065"></a>00065       <span class="keywordflow">return</span> (<a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>) ?  <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;thread_group : 0;
-<a name="l00066"></a>00066     }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068   <span class="keyword">protected</span>:
-<a name="l00069"></a><a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">00069</a>     <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>;
-<a name="l00070"></a>00070   };
+<a name="l00055"></a><a class="code" href="class_hypertable_1_1_application_handler.html#5d97de50485707940daad0f5ce24eec8">00055</a>     <a class="code" href="class_hypertable_1_1_application_handler.html#5d97de50485707940daad0f5ce24eec8" title="Initializes the handler object with NULL event object.">ApplicationHandler</a>() { <span class="keywordflow">return</span>; }
+<a name="l00056"></a>00056 
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_application_handler.html#573a5940f8e1187992050117f725c427">00058</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_application_handler.html#573a5940f8e1187992050117f725c427" title="Destructor.">~ApplicationHandler</a>() { <span class="keywordflow">return</span>; }
+<a name="l00059"></a>00059 
+<a name="l00063"></a>00063     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_application_handler.html#3d964c1af46eed4b4a1ced39c91e95e9" title="Abstract method to carry out the request.">run</a>() = 0;
+<a name="l00064"></a>00064 
+<a name="l00068"></a><a class="code" href="class_hypertable_1_1_application_handler.html#ab1977edf2e9145c1d3ed11fc692e483">00068</a>     uint64_t <a class="code" href="class_hypertable_1_1_application_handler.html#ab1977edf2e9145c1d3ed11fc692e483" title="Returns the thread group that this request belongs to.">get_thread_group</a>() {
+<a name="l00069"></a>00069       <span class="keywordflow">return</span> (<a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>) ?  <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;thread_group : 0;
+<a name="l00070"></a>00070     }
 <a name="l00071"></a>00071 
-<a name="l00072"></a>00072 } <span class="comment">// namespace Hypertable</span>
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074 <span class="preprocessor">#endif // HYPERTABLE_APPLICATIONHANDLER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
+<a name="l00074"></a><a class="code" href="class_hypertable_1_1_application_handler.html#c0ddbf033f2f31b2d9f997513fad4c7c">00074</a>     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_application_handler.html#c0ddbf033f2f31b2d9f997513fad4c7c" title="Returns true of the &amp;#39;urgent&amp;#39; bit is set in the message header.">is_urgent</a>() {
+<a name="l00075"></a>00075       <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>)
+<a name="l00076"></a>00076         <span class="keywordflow">return</span> (<span class="keywordtype">bool</span>)(<a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>-&gt;header.flags &amp; <a class="code" href="class_hypertable_1_1_comm_header.html#e1876a0981480855a113e0d85570fb87">CommHeader::FLAGS_BIT_URGENT</a>);
+<a name="l00077"></a>00077       <span class="keywordflow">return</span> <span class="keyword">false</span>;
+<a name="l00078"></a>00078     }
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080   <span class="keyword">protected</span>:
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">00081</a>     <a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> <a class="code" href="class_hypertable_1_1_application_handler.html#feb7922be25e065526c4b713e0d85319">m_event_ptr</a>;
+<a name="l00082"></a>00082   };
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 } <span class="comment">// namespace Hypertable</span>
+<a name="l00085"></a>00085 
+<a name="l00086"></a>00086 <span class="preprocessor">#endif // HYPERTABLE_APPLICATIONHANDLER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:37 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

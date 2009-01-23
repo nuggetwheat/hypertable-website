@@ -37,20 +37,32 @@
 <a name="l00042"></a>00042   };
 <a name="l00043"></a>00043 
 <a name="l00044"></a>00044 <span class="keyword">public</span>:
-<a name="l00045"></a><a class="code" href="class_hypertable_1_1_meta_log_reader.html#f8321a8cde35788db6194fe131358d28">00045</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#f8321a8cde35788db6194fe131358d28">~MetaLogReader</a>() {}
-<a name="l00046"></a>00046 
-<a name="l00050"></a>00050   <span class="keyword">virtual</span> ScanEntry *<a class="code" href="class_hypertable_1_1_meta_log_reader.html#bab5c2b9e104b9eba623ad7050f338e6" title="quick scan without deserialize entries, throws if invalid">next</a>(ScanEntry &amp;) = 0;
-<a name="l00051"></a>00051 
-<a name="l00055"></a>00055   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *<a class="code" href="class_hypertable_1_1_meta_log_reader.html#d9d1cb7de40a761f358de5a3cb992799" title="read and get ready for the next record, throws if invalid">read</a>() = 0;
-<a name="l00056"></a>00056 };
+<a name="l00045"></a>00045   <a class="code" href="class_hypertable_1_1_meta_log_reader.html#443924bf7bba1418f452ce7916b83851">MetaLogReader</a>();
+<a name="l00046"></a><a class="code" href="class_hypertable_1_1_meta_log_reader.html#f8321a8cde35788db6194fe131358d28">00046</a>   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#f8321a8cde35788db6194fe131358d28">~MetaLogReader</a>() {}
+<a name="l00047"></a>00047 
+<a name="l00051"></a>00051   <span class="keyword">virtual</span> ScanEntry *<a class="code" href="class_hypertable_1_1_meta_log_reader.html#bab5c2b9e104b9eba623ad7050f338e6" title="quick scan without deserialize entries, throws if invalid">next</a>(ScanEntry &amp;) = 0;
+<a name="l00052"></a>00052 
+<a name="l00056"></a>00056   <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_meta_log_entry.html">MetaLogEntry</a> *<a class="code" href="class_hypertable_1_1_meta_log_reader.html#d9d1cb7de40a761f358de5a3cb992799" title="read and get ready for the next record, throws if invalid">read</a>() = 0;
 <a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="namespace_hypertable.html#d7728c7c7ad615a961e7678cc81dff9c">00058</a> <span class="keyword">typedef</span> std::vector&lt;MetaLogEntryPtr&gt; <a class="code" href="namespace_hypertable.html#d7728c7c7ad615a961e7678cc81dff9c">MetaLogEntries</a>;
-<a name="l00059"></a><a class="code" href="namespace_hypertable.html#f244c2877193d58dfbe57ccd0a93b381">00059</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLogReader&gt; <a class="code" href="namespace_hypertable.html#f244c2877193d58dfbe57ccd0a93b381">MetaLogReaderPtr</a>;
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061 } <span class="comment">// namespace Hypertable</span>
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063 <span class="preprocessor">#endif // HYPERTABLE_METALOG_READER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
+<a name="l00058"></a><a class="code" href="class_hypertable_1_1_meta_log_reader.html#d9488fe0d2e191943ff0d87129383510">00058</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#d9488fe0d2e191943ff0d87129383510">skips_errors</a>()<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">m_skips_errors</a>; }
+<a name="l00059"></a>00059 
+<a name="l00060"></a><a class="code" href="class_hypertable_1_1_meta_log_reader.html#dd972d16a9a1ee97136a996952617d62">00060</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#dd972d16a9a1ee97136a996952617d62">set_skips_errors</a>(<span class="keywordtype">bool</span> choice) {
+<a name="l00061"></a>00061     <span class="keywordtype">bool</span> old = <a class="code" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">m_skips_errors</a>;
+<a name="l00062"></a>00062     <a class="code" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">m_skips_errors</a> = choice;
+<a name="l00063"></a>00063     <span class="keywordflow">return</span> old;
+<a name="l00064"></a>00064   }
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066 <span class="keyword">private</span>:
+<a name="l00067"></a><a class="code" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">00067</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_meta_log_reader.html#610640d6261b75b874862c6b315213a2">m_skips_errors</a>;
+<a name="l00068"></a>00068 };
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="namespace_hypertable.html#d7728c7c7ad615a961e7678cc81dff9c">00070</a> <span class="keyword">typedef</span> std::vector&lt;MetaLogEntryPtr&gt; <a class="code" href="namespace_hypertable.html#d7728c7c7ad615a961e7678cc81dff9c">MetaLogEntries</a>;
+<a name="l00071"></a><a class="code" href="namespace_hypertable.html#f244c2877193d58dfbe57ccd0a93b381">00071</a> <span class="keyword">typedef</span> intrusive_ptr&lt;MetaLogReader&gt; <a class="code" href="namespace_hypertable.html#f244c2877193d58dfbe57ccd0a93b381">MetaLogReaderPtr</a>;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073 } <span class="comment">// namespace Hypertable</span>
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075 <span class="preprocessor">#endif // HYPERTABLE_METALOG_READER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:41 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

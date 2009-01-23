@@ -40,7 +40,7 @@ Collaboration diagram for Hypertable::Range:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_range__coll__graph.png" border="0" usemap="#_hypertable_1_1_range__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_range__coll__map">
-<area shape="rect" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs)." alt="" coords="528,8,667,35"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,8,372,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="class_hypertable_1_1_range_state_managed.html" title="Holds the storage the persistent state of a Range." alt="" coords="487,59,708,86"><area shape="rect" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range." alt="" coords="193,59,359,86"><area shape="rect" href="class_hypertable_1_1_range_update_barrier.html" title="Hypertable::RangeUpdateBarrier" alt="" coords="488,174,707,200"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,143,341,170"><area shape="rect" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier." alt="" coords="479,224,716,251"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="185,224,367,251"></map>
+<area shape="rect" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs)." alt="" coords="528,8,667,35"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="180,8,372,35"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="7,8,79,35"><area shape="rect" href="class_hypertable_1_1_range_state_managed.html" title="Holds the storage the persistent state of a Range." alt="" coords="487,59,708,85"><area shape="rect" href="class_hypertable_1_1_range_state.html" title="Holds the persistent state of a Range." alt="" coords="193,59,359,85"><area shape="rect" href="class_hypertable_1_1_table_identifier_managed.html" title="Wrapper for TableIdentifier." alt="" coords="479,109,716,136"><area shape="rect" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation." alt="" coords="185,109,367,136"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="211,187,341,213"><area shape="rect" href="class_hypertable_1_1_barrier.html" title="Hypertable::Barrier" alt="" coords="529,224,665,251"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -51,7 +51,7 @@ Collaboration diagram for Hypertable::Range:</div>
 &lt; <a class="el" href="struct_hypertable_1_1_access_group_1_1_compaction_priority_data.html">AccessGroup::CompactionPriorityData</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#b7c94667da08ce76533110a406ad51ae">CompactionPriorityData</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#d5ffcca6260e5fc328e302c47ffad36c">Range</a> (<a class="el" href="namespace_hypertable.html#22fddcf5499a02a3779b26187e11dbde">MasterClientPtr</a> &amp;, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *, <a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> *)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#d9f2c5088f0a5b13bb6667ba8771520a">Range</a> (<a class="el" href="namespace_hypertable.html#22fddcf5499a02a3779b26187e11dbde">MasterClientPtr</a> &amp;, const <a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *, <a class="el" href="namespace_hypertable.html#af3160d3193975ee13e5505c19974dcb">SchemaPtr</a> &amp;, const <a class="el" href="class_hypertable_1_1_range_spec.html">RangeSpec</a> *range, <a class="el" href="class_hypertable_1_1_range_set.html">RangeSet</a> *range_set, const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> *)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#2b3ba4f69eaa564dd67a5e8e70aab835">~Range</a> ()</td></tr>
 
@@ -96,13 +96,19 @@ Collaboration diagram for Hypertable::Range:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#3883f173e0b201a2df4c375af1407cd7">compact</a> (bool major=false)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#91f608447bf21cd25ccadbbd8675d42f">post_replay</a> ()</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#347189fbab6fcc07a4f6f73a13a56f4a">recovery_initialize</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#0f62977899fa57e73a71bb3a46d447c5">recovery_finalize</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#ca9ca42201f43c72eba607216d3e98be">increment_update_counter</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#f83562d5885bdfdcea0c814dbb074fd4">decrement_update_counter</a> ()</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#7b0780c2a9773979a0a8e193d78f919b">get_split_info</a> (<a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;split_row, <a class="el" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">CommitLogPtr</a> &amp;split_log_ptr)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#5b70ae0af598797470c871f9717efae0">increment_scan_counter</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#9069cd6550bf3b8ce5932cf84f7e60ec">decrement_scan_counter</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#58c0ee095846126cda81a8fd587c902b">get_split_info</a> (<a class="el" href="class_hypertable_1_1_split_predicate.html">SplitPredicate</a> &amp;predicate, <a class="el" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">CommitLogPtr</a> &amp;split_log_ptr, int64_t *latest_revisionp)</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">std::vector<br>
 &lt; <a class="el" href="class_hypertable_1_1_access_group.html">AccessGroup</a> * &gt; &amp;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#f0f95d637cb960b3ac276bcf6926b36a">access_group_vector</a> ()</td></tr>
@@ -178,13 +184,19 @@ Collaboration diagram for Hypertable::Range:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">CommitLogPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#c1ad77955c4371a11c683a8dff1d4e5a">m_split_log_ptr</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_range_update_barrier.html">RangeUpdateBarrier</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#7138f6bb9496f7532a790bf8bdf40ce1">m_update_barrier</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#0b98969d5ae52498710a16d84b12c273">m_split_off_high</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_barrier.html">Barrier</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#aa1c154b4b719431dc1f4ee6960a5f3b">m_update_barrier</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_barrier.html">Barrier</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#54fde14877aa63ee06ed493f5400e910">m_scan_barrier</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#73aa910958d82bef1bab7a4a8fb3f986">m_is_root</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#7ae296cb4de1cbc666029052e33866fd">m_added_deletes</a> [3]</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">uint64_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#85d14f751b1465b515f0467c1b8a5a9d">m_added_inserts</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="namespace_hypertable.html#8f6dff6cbdfdf568497e39a72916acd8">RangeSetPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#1417eca9c560096a3a976f6548bb3314">m_range_set_ptr</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_range_state_managed.html">RangeStateManaged</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_range.html#f4093bab9dccfd6545293ed2875476fe">m_state</a></td></tr>
 
@@ -193,7 +205,7 @@ Collaboration diagram for Hypertable::Range:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Represents a table row range. 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00050">50</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00053">53</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 <hr><h2>Member Typedef Documentation</h2>
 <a class="anchor" name="2d0a20ffef25e90b922e69cbd0430a8e"></a><!-- doxytag: member="Hypertable::Range::AccessGroupMap" ref="2d0a20ffef25e90b922e69cbd0430a8e" args="" -->
 <div class="memitem">
@@ -208,7 +220,7 @@ Represents a table row range.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00052">52</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00055">55</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -225,7 +237,7 @@ Represents a table row range.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00053">53</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00056">56</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -242,12 +254,12 @@ Represents a table row range.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00103">103</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00107">107</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="d5ffcca6260e5fc328e302c47ffad36c"></a><!-- doxytag: member="Hypertable::Range::Range" ref="d5ffcca6260e5fc328e302c47ffad36c" args="(MasterClientPtr &amp;, const TableIdentifier *, SchemaPtr &amp;, const RangeSpec *range, const RangeState *)" -->
+<a class="anchor" name="d9f2c5088f0a5b13bb6667ba8771520a"></a><!-- doxytag: member="Hypertable::Range::Range" ref="d9f2c5088f0a5b13bb6667ba8771520a" args="(MasterClientPtr &amp;, const TableIdentifier *, SchemaPtr &amp;, const RangeSpec *range, RangeSet *range_set, const RangeState *)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -278,6 +290,12 @@ Represents a table row range.
         <tr>
           <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_range_set.html">RangeSet</a> *&nbsp;</td>
+          <td class="paramname"> <em>range_set</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const <a class="el" href="class_hypertable_1_1_range_state.html">RangeState</a> *&nbsp;</td>
           <td class="paramname"> <em>state</em></td><td>&nbsp;</td>
         </tr>
@@ -292,7 +310,9 @@ Represents a table row range.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00054">54</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>
+Determine split side 
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00055">55</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -313,7 +333,7 @@ Represents a table row range.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00104">104</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00126">126</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -356,7 +376,7 @@ Inserts a key/value pair into the cell list.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#be66f748688ef5a59febafcaf877da7d">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00209">209</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00220">220</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -383,7 +403,7 @@ This should be an approximation of the middle row key in the list.<p>
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#912843dc3f7f586cbec0c460e7cf236a">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00060">60</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00063">63</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -409,7 +429,7 @@ Returns the number of key/value pairs in the list.
 
 <p>Implements <a class="el" href="class_hypertable_1_1_cell_list.html#7e2c3b7605ec5c36202ba2698edcbb1e">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00062">62</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00065">65</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -430,7 +450,7 @@ Returns the number of key/value pairs in the list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00741">741</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00819">819</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -451,7 +471,7 @@ Returns the number of key/value pairs in the list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00749">749</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00827">827</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -472,7 +492,7 @@ Returns the number of key/value pairs in the list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00258">258</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00269">269</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -504,7 +524,7 @@ Creates a scanner on this cell list.
 
 <p>Reimplemented from <a class="el" href="class_hypertable_1_1_cell_list.html#1b35cdbe298a0f24613b3e14fd779747">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00245">245</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00256">256</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -525,7 +545,7 @@ Creates a scanner on this cell list.
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00077">77</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00080">80</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -549,7 +569,7 @@ Returns the end row of the range.
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the end row of the range</dd></dl>
 This does not need to be protected by a lock because the end row of a range never changes. 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00090">90</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00093">93</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -570,7 +590,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00094">94</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00098">98</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -591,7 +611,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00096">96</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00100">100</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -612,7 +632,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00832">832</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00910">910</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -634,7 +654,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00766">766</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00844">844</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -656,7 +676,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00271">271</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00282">282</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -677,7 +697,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00107">107</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00111">111</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -698,7 +718,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00114">114</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00118">118</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -719,7 +739,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00286">286</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00297">297</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -741,16 +761,37 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00635">635</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00700">700</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="91f608447bf21cd25ccadbbd8675d42f"></a><!-- doxytag: member="Hypertable::Range::post_replay" ref="91f608447bf21cd25ccadbbd8675d42f" args="()" -->
+<a class="anchor" name="347189fbab6fcc07a4f6f73a13a56f4a"></a><!-- doxytag: member="Hypertable::Range::recovery_initialize" ref="347189fbab6fcc07a4f6f73a13a56f4a" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void Range::post_replay           </td>
+          <td class="memname">void Hypertable::Range::recovery_initialize           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00126">126</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="0f62977899fa57e73a71bb3a46d447c5"></a><!-- doxytag: member="Hypertable::Range::recovery_finalize" ref="0f62977899fa57e73a71bb3a46d447c5" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Range::recovery_finalize           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -762,7 +803,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00657">657</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00731">731</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -783,7 +824,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00124">124</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00134">134</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -804,25 +845,73 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00127">127</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00137">137</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="7b0780c2a9773979a0a8e193d78f919b"></a><!-- doxytag: member="Hypertable::Range::get_split_info" ref="7b0780c2a9773979a0a8e193d78f919b" args="(String &amp;split_row, CommitLogPtr &amp;split_log_ptr)" -->
+<a class="anchor" name="5b70ae0af598797470c871f9717efae0"></a><!-- doxytag: member="Hypertable::Range::increment_scan_counter" ref="5b70ae0af598797470c871f9717efae0" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::Range::increment_scan_counter           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00141">141</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="9069cd6550bf3b8ce5932cf84f7e60ec"></a><!-- doxytag: member="Hypertable::Range::decrement_scan_counter" ref="9069cd6550bf3b8ce5932cf84f7e60ec" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Hypertable::Range::decrement_scan_counter           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00144">144</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="58c0ee095846126cda81a8fd587c902b"></a><!-- doxytag: member="Hypertable::Range::get_split_info" ref="58c0ee095846126cda81a8fd587c902b" args="(SplitPredicate &amp;predicate, CommitLogPtr &amp;split_log_ptr, int64_t *latest_revisionp)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">bool Hypertable::Range::get_split_info           </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511">String</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>split_row</em>, </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_split_predicate.html">SplitPredicate</a> &amp;&nbsp;</td>
+          <td class="paramname"> <em>predicate</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hypertable.html#81b8680a25dc2eb43d53e24e44042c46">CommitLogPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>split_log_ptr</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>split_log_ptr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int64_t *&nbsp;</td>
+          <td class="paramname"> <em>latest_revisionp</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -835,7 +924,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00131">131</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00149">149</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -856,7 +945,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00138">138</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00162">162</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -878,7 +967,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00142">142</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00166">166</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -899,7 +988,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00676">676</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00754">754</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -921,7 +1010,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00701">701</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00779">779</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -942,7 +1031,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00149">149</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00173">173</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -963,7 +1052,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00151">151</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00175">175</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -984,7 +1073,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00153">153</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00177">177</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1005,7 +1094,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00159">159</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00183">183</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1026,7 +1115,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00164">164</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00188">188</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1047,7 +1136,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00166">166</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00190">190</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1069,7 +1158,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00114">114</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00136">136</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1100,7 +1189,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00195">195</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00206">206</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1122,7 +1211,7 @@ This does not need to be protected by a lock because the end row of a range neve
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00641">641</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00714">714</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1150,7 +1239,7 @@ If we still didn't get a good split row, try again the *really* hard way by coll
 Create split (transfer) log<p>
 Create and install the split log<p>
 Write SPLIT_START <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog</a> entry 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00322">322</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00336">336</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1173,11 +1262,10 @@ Write SPLIT_START <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLo
 
 <p>
 Perform major compactions<p>
-Shrink old range in METADATA by updating the 'StartRow' column.<p>
-Create an entry for the new range<p>
 Shrink the range<p>
-Write SPLIT_SHRUNK <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog</a> entry 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00449">449</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+Write SPLIT_SHRUNK <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog</a> entry<p>
+Create DFS directories for this range 
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00467">467</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1201,7 +1289,7 @@ Write SPLIT_SHRUNK <a class="el" href="class_hypertable_1_1_meta_log.html">MetaL
 <p>
 NOTE: try the following crash and make sure that the master does not try to load the range twice.<p>
 Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog</a> entry 
-<p>Definition at line <a class="el" href="_range_8cc-source.html#l00570">570</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
+<p>Definition at line <a class="el" href="_range_8cc-source.html#l00634">634</a> of file <a class="el" href="_range_8cc-source.html">Range.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1219,7 +1307,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00180">180</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00204">204</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1236,7 +1324,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00181">181</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00205">205</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1253,7 +1341,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00182">182</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00206">206</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1270,7 +1358,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00183">183</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00207">207</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1289,7 +1377,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>Reimplemented from <a class="el" href="class_hypertable_1_1_cell_list.html#1573fbbadc835d2f4c9a322aad972fa8">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00184">184</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00208">208</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1308,7 +1396,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>Reimplemented from <a class="el" href="class_hypertable_1_1_cell_list.html#205819152ea45e8773b62d02f5ca26e7">Hypertable::CellList</a>.</p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00185">185</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00209">209</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1325,7 +1413,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00186">186</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00210">210</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1342,7 +1430,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00187">187</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00211">211</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1359,7 +1447,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00188">188</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00212">212</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1376,7 +1464,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00189">189</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00213">213</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1393,7 +1481,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00190">190</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00214">214</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1410,7 +1498,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00191">191</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00215">215</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1427,7 +1515,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00192">192</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00216">216</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1444,7 +1532,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00194">194</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00218">218</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1461,16 +1549,16 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00195">195</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00219">219</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="7138f6bb9496f7532a790bf8bdf40ce1"></a><!-- doxytag: member="Hypertable::Range::m_update_barrier" ref="7138f6bb9496f7532a790bf8bdf40ce1" args="" -->
+<a class="anchor" name="0b98969d5ae52498710a16d84b12c273"></a><!-- doxytag: member="Hypertable::Range::m_split_off_high" ref="0b98969d5ae52498710a16d84b12c273" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="class_hypertable_1_1_range_update_barrier.html">RangeUpdateBarrier</a> <a class="el" href="class_hypertable_1_1_range.html#7138f6bb9496f7532a790bf8bdf40ce1">Hypertable::Range::m_update_barrier</a><code> [private]</code>          </td>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_range.html#0b98969d5ae52498710a16d84b12c273">Hypertable::Range::m_split_off_high</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -1478,7 +1566,41 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00197">197</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00220">220</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="aa1c154b4b719431dc1f4ee6960a5f3b"></a><!-- doxytag: member="Hypertable::Range::m_update_barrier" ref="aa1c154b4b719431dc1f4ee6960a5f3b" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_barrier.html">Barrier</a> <a class="el" href="class_hypertable_1_1_range.html#aa1c154b4b719431dc1f4ee6960a5f3b">Hypertable::Range::m_update_barrier</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00221">221</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="54fde14877aa63ee06ed493f5400e910"></a><!-- doxytag: member="Hypertable::Range::m_scan_barrier" ref="54fde14877aa63ee06ed493f5400e910" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_barrier.html">Barrier</a> <a class="el" href="class_hypertable_1_1_range.html#54fde14877aa63ee06ed493f5400e910">Hypertable::Range::m_scan_barrier</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00222">222</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1495,7 +1617,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00198">198</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00223">223</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1512,7 +1634,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00199">199</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00224">224</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1529,7 +1651,24 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00200">200</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00225">225</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1417eca9c560096a3a976f6548bb3314"></a><!-- doxytag: member="Hypertable::Range::m_range_set_ptr" ref="1417eca9c560096a3a976f6548bb3314" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="namespace_hypertable.html#8f6dff6cbdfdf568497e39a72916acd8">RangeSetPtr</a> <a class="el" href="class_hypertable_1_1_range.html#1417eca9c560096a3a976f6548bb3314">Hypertable::Range::m_range_set_ptr</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00226">226</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1546,7 +1685,7 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00201">201</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00227">227</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
@@ -1563,13 +1702,13 @@ Write SPLIT_DONE <a class="el" href="class_hypertable_1_1_meta_log.html">MetaLog
 
 <p>
 
-<p>Definition at line <a class="el" href="_range_8h-source.html#l00202">202</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
+<p>Definition at line <a class="el" href="_range_8h-source.html#l00228">228</a> of file <a class="el" href="_range_8h-source.html">Range.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_range_8h-source.html">Range.h</a><li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_range_8cc-source.html">Range.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:19 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:25 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

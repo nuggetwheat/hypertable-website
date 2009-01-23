@@ -45,7 +45,7 @@
 <a name="l00047"></a>00047 
 <a name="l00048"></a>00048 <span class="preprocessor">#if defined(__linux__)</span>
 <a name="l00049"></a>00049 <span class="preprocessor"></span>
-<a name="l00050"></a>00050 <span class="keywordtype">bool</span> IOHandlerDatagram::handle_event(<span class="keyword">struct</span> epoll_event *event) {
+<a name="l00050"></a>00050 <span class="keywordtype">bool</span> IOHandlerDatagram::handle_event(<span class="keyword">struct</span> epoll_event *event, clock_t ) {
 <a name="l00051"></a>00051   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
 <a name="l00052"></a>00052 
 <a name="l00053"></a>00053   <span class="comment">//DisplayEvent(event);</span>
@@ -100,7 +100,7 @@
 <a name="l00102"></a>00102 
 <a name="l00103"></a>00103 <span class="preprocessor">#elif defined(__APPLE__)</span>
 <a name="l00104"></a>00104 <span class="preprocessor"></span>
-<a name="l00108"></a>00108 <span class="keywordtype">bool</span> IOHandlerDatagram::handle_event(<span class="keyword">struct</span> kevent *event) {
+<a name="l00108"></a>00108 <span class="keywordtype">bool</span> IOHandlerDatagram::handle_event(<span class="keyword">struct</span> kevent *event, clock_t ) {
 <a name="l00109"></a>00109   <span class="keywordtype">int</span> <a class="code" href="_range_server_8cc.html#11614f44ef4d939bdd984953346a7572">error</a>;
 <a name="l00110"></a>00110 
 <a name="l00111"></a>00111   <span class="comment">//DisplayEvent(event);</span>
@@ -235,7 +235,7 @@
 <a name="l00240"></a>00240 
 <a name="l00241"></a>00241   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
 <a name="l00242"></a>00242 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:37 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

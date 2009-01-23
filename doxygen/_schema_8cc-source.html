@@ -51,7 +51,7 @@
 <a name="l00053"></a>00053 
 <a name="l00054"></a>00054 <span class="keyword">namespace </span>{
 <a name="l00055"></a>00055 
-<a name="l00056"></a><a class="code" href="_schema_8cc.html#30bfa2751837aa9bbaff23cb526669a6">00056</a> <span class="keywordtype">bool</span> <a class="code" href="_schema_8cc.html#30bfa2751837aa9bbaff23cb526669a6">hql_needs_quotes</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
+<a name="l00056"></a><a class="code" href="_schema_8cc.html#f023fe2d1c20173bfc6b8da36c488814">00056</a> <span class="keywordtype">bool</span> <a class="code" href="_schema_8cc.html#f023fe2d1c20173bfc6b8da36c488814">hql_needs_quotes</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *name) {
 <a name="l00057"></a>00057   <span class="keywordflow">if</span> (!isalpha(*name))
 <a name="l00058"></a>00058     <span class="keywordflow">return</span> <span class="keyword">true</span>;
 <a name="l00059"></a>00059   <span class="keywordflow">else</span> {
@@ -395,7 +395,7 @@
 <a name="l00401"></a>00401 
 <a name="l00402"></a>00402   <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html">ColumnFamily</a> *cf, <a class="code" href="class_hypertable_1_1_schema.html#34cf43067d475734f03662724a69d7f4">m_column_families</a>) {
 <a name="l00403"></a>00403     <span class="comment">// check to see if column family name needs quotes around it</span>
-<a name="l00404"></a>00404     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#30bfa2751837aa9bbaff23cb526669a6">hql_needs_quotes</a>(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str()))
+<a name="l00404"></a>00404     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#f023fe2d1c20173bfc6b8da36c488814">hql_needs_quotes</a>(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str()))
 <a name="l00405"></a>00405       output += <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"  '%s'"</span>, cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str());
 <a name="l00406"></a>00406     <span class="keywordflow">else</span>
 <a name="l00407"></a>00407       output += <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"  %s"</span>, cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str());
@@ -413,7 +413,7 @@
 <a name="l00419"></a>00419   <span class="keywordflow">foreach</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html">AccessGroup</a> *ag, <a class="code" href="class_hypertable_1_1_schema.html#6c6c15410961bfd51191270a20ba84fd">m_access_groups</a>) {
 <a name="l00420"></a>00420     output += <span class="stringliteral">"  ACCESS GROUP "</span>;
 <a name="l00421"></a>00421 
-<a name="l00422"></a>00422     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#30bfa2751837aa9bbaff23cb526669a6">hql_needs_quotes</a>(ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>.c_str()))
+<a name="l00422"></a>00422     <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#f023fe2d1c20173bfc6b8da36c488814">hql_needs_quotes</a>(ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>.c_str()))
 <a name="l00423"></a>00423       output += <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"'%s'"</span>, ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>.c_str());
 <a name="l00424"></a>00424     <span class="keywordflow">else</span>
 <a name="l00425"></a>00425       output += ag-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_access_group.html#f73dc29e25d8ce7ca2b67c15a3ced902">name</a>;
@@ -438,7 +438,7 @@
 <a name="l00444"></a>00444         <span class="keywordflow">else</span>
 <a name="l00445"></a>00445           display_comma = <span class="keyword">true</span>;
 <a name="l00446"></a>00446 
-<a name="l00447"></a>00447         <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#30bfa2751837aa9bbaff23cb526669a6">hql_needs_quotes</a>(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str()))
+<a name="l00447"></a>00447         <span class="keywordflow">if</span> (<a class="code" href="_schema_8cc.html#f023fe2d1c20173bfc6b8da36c488814">hql_needs_quotes</a>(cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str()))
 <a name="l00448"></a>00448           output += <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"'%s'"</span>, cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>.c_str());
 <a name="l00449"></a>00449         <span class="keywordflow">else</span>
 <a name="l00450"></a>00450           output += cf-&gt;<a class="code" href="class_hypertable_1_1_schema_1_1_column_family.html#b9d8e97ac1b6a3f5ee71e24ee85a9752">name</a>;
@@ -501,7 +501,7 @@
 <a name="l00514"></a>00514   <a class="code" href="class_hypertable_1_1_schema.html#34cf43067d475734f03662724a69d7f4">m_column_families</a>.push_back(cf);
 <a name="l00515"></a>00515   ag_iter-&gt;second-&gt;columns.push_back(cf);
 <a name="l00516"></a>00516 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

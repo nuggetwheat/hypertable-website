@@ -68,11 +68,11 @@
 <a name="l00070"></a>00070     (<span class="keyword">const</span> <span class="keywordtype">char</span> *)0
 <a name="l00071"></a>00071   };
 <a name="l00072"></a>00072 
-<a name="l00073"></a><a class="code" href="dfs_test_8cc.html#3c161217179eb0d2be580535e3c89b9c">00073</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#3c161217179eb0d2be580535e3c89b9c">test_copy</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
+<a name="l00073"></a><a class="code" href="dfs_test_8cc.html#0728948fb0ce02e7ca33adb389c17ffb">00073</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#0728948fb0ce02e7ca33adb389c17ffb">test_copy</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
 <a name="l00074"></a>00074     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> outfileA = testdir + <span class="stringliteral">"/output.a"</span>;
 <a name="l00075"></a>00075     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> outfileB = testdir + <span class="stringliteral">"/output.b"</span>;
 <a name="l00076"></a>00076 
-<a name="l00077"></a>00077     <a class="code" href="class_hypertable_1_1_dfs_test_thread_function.html">DfsTestThreadFunction</a> thread_func(client, <span class="stringliteral">"/usr/share/dict/words"</span>);
+<a name="l00077"></a>00077     <a class="code" href="class_hypertable_1_1_dfs_test_thread_function.html">DfsTestThreadFunction</a> thread_func(client, <span class="stringliteral">"words"</span>);
 <a name="l00078"></a>00078 
 <a name="l00079"></a>00079     thread_func.<a class="code" href="class_hypertable_1_1_dfs_test_thread_function.html#254daa2798a6649d90922c1a567a587f">set_dfs_file</a>(outfileA);
 <a name="l00080"></a>00080     thread_func.<a class="code" href="class_hypertable_1_1_dfs_test_thread_function.html#f7a7e390a7c2a59077843ceaa344c6b4">set_output_file</a>(<span class="stringliteral">"output.a"</span>);
@@ -85,14 +85,14 @@
 <a name="l00087"></a>00087     thread1.join();
 <a name="l00088"></a>00088     thread2.join();
 <a name="l00089"></a>00089 
-<a name="l00090"></a>00090     <span class="keywordflow">if</span> (system(<span class="stringliteral">"diff /usr/share/dict/words output.a"</span>))
+<a name="l00090"></a>00090     <span class="keywordflow">if</span> (system(<span class="stringliteral">"diff words output.a"</span>))
 <a name="l00091"></a>00091       exit(1);
 <a name="l00092"></a>00092 
 <a name="l00093"></a>00093     <span class="keywordflow">if</span> (system(<span class="stringliteral">"diff output.a output.b"</span>))
 <a name="l00094"></a>00094       exit(1);
 <a name="l00095"></a>00095   }
 <a name="l00096"></a>00096 
-<a name="l00097"></a><a class="code" href="dfs_test_8cc.html#790d9873eb2b61e3e4a2f9bd52ad2685">00097</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#790d9873eb2b61e3e4a2f9bd52ad2685">test_readdir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
+<a name="l00097"></a><a class="code" href="dfs_test_8cc.html#ff3c2b6fdf513f202810dd60acbecc8d">00097</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#ff3c2b6fdf513f202810dd60acbecc8d">test_readdir</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
 <a name="l00098"></a>00098     ofstream filestr (<span class="stringliteral">"dfsTest.out"</span>);
 <a name="l00099"></a>00099     vector&lt;string&gt; listing;
 <a name="l00100"></a>00100 
@@ -109,7 +109,7 @@
 <a name="l00111"></a>00111       exit(1);
 <a name="l00112"></a>00112   }
 <a name="l00113"></a>00113 
-<a name="l00114"></a><a class="code" href="dfs_test_8cc.html#e376c982397a1acf48785cd04f38f0e3">00114</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#e376c982397a1acf48785cd04f38f0e3">test_rename</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
+<a name="l00114"></a><a class="code" href="dfs_test_8cc.html#9e6d9fa8e37b0e2ef78371b95825d329">00114</a>   <span class="keywordtype">void</span> <a class="code" href="dfs_test_8cc.html#9e6d9fa8e37b0e2ef78371b95825d329">test_rename</a>(<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html" title="Proxy class for DFS broker.">DfsBroker::Client</a> *client, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;testdir) {
 <a name="l00115"></a>00115     <span class="keyword">const</span> <span class="keywordtype">char</span> *magic = <span class="stringliteral">"the quick brown fox jumps over a lazy dog"</span>;
 <a name="l00116"></a>00116     <span class="keywordtype">char</span> buf[1024];
 <a name="l00117"></a>00117     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> file_a = testdir +<span class="stringliteral">"/filename.a"</span>;
@@ -153,9 +153,9 @@
 <a name="l00155"></a>00155     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> testdir = <a class="code" href="namespace_hypertable.html#baf99b188906f473b0ff1c3eaef925b4" title="Return a String using printf like format facilities vanilla snprintf is about 1.5x...">format</a>(<span class="stringliteral">"/dfsTest%d"</span>, getpid());
 <a name="l00156"></a>00156     client-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#952e2f8e844f58d12b4908669bc860cb" title="Creates a directory asynchronously.">mkdirs</a>(testdir);
 <a name="l00157"></a>00157 
-<a name="l00158"></a>00158     <a class="code" href="dfs_test_8cc.html#3c161217179eb0d2be580535e3c89b9c">test_copy</a>(client, testdir);
-<a name="l00159"></a>00159     <a class="code" href="dfs_test_8cc.html#790d9873eb2b61e3e4a2f9bd52ad2685">test_readdir</a>(client, testdir);
-<a name="l00160"></a>00160     <a class="code" href="dfs_test_8cc.html#e376c982397a1acf48785cd04f38f0e3">test_rename</a>(client, testdir);
+<a name="l00158"></a>00158     <a class="code" href="dfs_test_8cc.html#0728948fb0ce02e7ca33adb389c17ffb">test_copy</a>(client, testdir);
+<a name="l00159"></a>00159     <a class="code" href="dfs_test_8cc.html#ff3c2b6fdf513f202810dd60acbecc8d">test_readdir</a>(client, testdir);
+<a name="l00160"></a>00160     <a class="code" href="dfs_test_8cc.html#9e6d9fa8e37b0e2ef78371b95825d329">test_rename</a>(client, testdir);
 <a name="l00161"></a>00161 
 <a name="l00162"></a>00162     client-&gt;<a class="code" href="class_hypertable_1_1_dfs_broker_1_1_client.html#cc100849eaa7950de085437eb1a15ee8" title="Recursively removes a directory asynchronously.">rmdir</a>(testdir);
 <a name="l00163"></a>00163   }
@@ -169,7 +169,7 @@
 <a name="l00171"></a>00171   }
 <a name="l00172"></a>00172   <span class="keywordflow">return</span> 0;
 <a name="l00173"></a>00173 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:53 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:44 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

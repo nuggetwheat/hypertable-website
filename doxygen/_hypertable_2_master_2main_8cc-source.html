@@ -36,71 +36,74 @@
 <a name="l00038"></a>00038 <span class="preprocessor">#include "<a class="code" href="_comm_8h.html">AsyncComm/Comm.h</a>"</span>
 <a name="l00039"></a>00039 <span class="preprocessor">#include "<a class="code" href="_async_comm_2_connection_handler_factory_8h.html">AsyncComm/ConnectionHandlerFactory.h</a>"</span>
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_master_2_connection_handler_8h.html">ConnectionHandler.h</a>"</span>
-<a name="l00042"></a>00042 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_master_2_master_8h.html">Master.h</a>"</span>
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044 <span class="keyword">using namespace </span>Hypertable;
-<a name="l00045"></a>00045 <span class="keyword">using namespace </span>Config;
-<a name="l00046"></a>00046 <span class="keyword">using namespace </span>std;
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048 
-<a name="l00049"></a>00049 <span class="keyword">namespace </span>{
+<a name="l00041"></a>00041 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_lib_2_config_8h.html">Hypertable/Lib/Config.h</a>"</span>
+<a name="l00042"></a>00042 
+<a name="l00043"></a>00043 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_master_2_connection_handler_8h.html">ConnectionHandler.h</a>"</span>
+<a name="l00044"></a>00044 <span class="preprocessor">#include "<a class="code" href="_hypertable_2_master_2_master_8h.html">Master.h</a>"</span>
+<a name="l00045"></a>00045 
+<a name="l00046"></a>00046 <span class="keyword">using namespace </span>Hypertable;
+<a name="l00047"></a>00047 <span class="keyword">using namespace </span>Config;
+<a name="l00048"></a>00048 <span class="keyword">using namespace </span>std;
+<a name="l00049"></a>00049 
 <a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keyword">struct </span>MyPolicy : Config::Policy {
-<a name="l00052"></a>00052     <span class="keyword">static</span> <span class="keywordtype">void</span> init_options() {
-<a name="l00053"></a>00053       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"port"</span>, <span class="stringliteral">"Hypertable.Master.Port"</span>);
-<a name="l00054"></a>00054       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"workers"</span>, <span class="stringliteral">"Hypertable.Master.Workers"</span>);
-<a name="l00055"></a>00055       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"reactors"</span>, <span class="stringliteral">"Hypertable.Master.Reactors"</span>);
-<a name="l00056"></a>00056     }
-<a name="l00057"></a>00057   };
-<a name="l00058"></a>00058 
-<a name="l00059"></a>00059   <span class="keyword">typedef</span> Meta::list&lt;MyPolicy, GenericServerPolicy, DfsClientPolicy,
-<a name="l00060"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#202d20987812b477bf6f2f86f9caa993">00060</a>           HyperspaceClientPolicy, <a class="code" href="namespace_hypertable_1_1_config.html#6473e17d9f24878ffcfd5e9d07f1cc27">DefaultCommPolicy</a>&gt; <a class="code" href="ht__write__test_8cc.html#dd683989a0cc69a7faf829f613ed92ac">Policies</a>;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_handler_factory.html">HandlerFactory</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_connection_handler_factory.html">ConnectionHandlerFactory</a> {
-<a name="l00063"></a>00063   <span class="keyword">public</span>:
-<a name="l00064"></a>00064     <a class="code" href="class_handler_factory.html#988345ae8b4e9aa5f71ffc2218a60957">HandlerFactory</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue,
-<a name="l00065"></a>00065                    <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a> &amp;master_ptr)
-<a name="l00066"></a>00066       : <a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>(comm), <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>(app_queue), <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>(master_ptr) { }
-<a name="l00067"></a>00067 
-<a name="l00068"></a>00068     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_handler_factory.html#4e458bcbb5f4848b6674d97b9f23e37b">get_instance</a>(<a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;dhp) {
-<a name="l00069"></a>00069       dhp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html">ConnectionHandler</a>(<a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>, <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>, <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>);
-<a name="l00070"></a>00070     }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072   <span class="keyword">private</span>:
-<a name="l00073"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#ffb7a36560f93bdb01c809443608e3eb">00073</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                *<a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>;
-<a name="l00074"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">00074</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>  <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>;
-<a name="l00075"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">00075</a>     <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a>            <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>;
-<a name="l00076"></a>00076   };
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 } <span class="comment">// local namespace</span>
+<a name="l00051"></a>00051 <span class="keyword">namespace </span>{
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053   <span class="keyword">struct </span>MyPolicy : Config::Policy {
+<a name="l00054"></a>00054     <span class="keyword">static</span> <span class="keywordtype">void</span> init_options() {
+<a name="l00055"></a>00055       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"port"</span>, <span class="stringliteral">"Hypertable.Master.Port"</span>);
+<a name="l00056"></a>00056       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"workers"</span>, <span class="stringliteral">"Hypertable.Master.Workers"</span>);
+<a name="l00057"></a>00057       <a class="code" href="namespace_hypertable_1_1_config.html#f1b97a89b0c8f92359cc4ddf4da76886" title="Setup command line option alias for config file option.">alias</a>(<span class="stringliteral">"reactors"</span>, <span class="stringliteral">"Hypertable.Master.Reactors"</span>);
+<a name="l00058"></a>00058     }
+<a name="l00059"></a>00059   };
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061   <span class="keyword">typedef</span> Meta::list&lt;MyPolicy, GenericServerPolicy, DfsClientPolicy,
+<a name="l00062"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#202d20987812b477bf6f2f86f9caa993">00062</a>           HyperspaceClientPolicy, <a class="code" href="namespace_hypertable_1_1_config.html#6473e17d9f24878ffcfd5e9d07f1cc27">DefaultCommPolicy</a>&gt; <a class="code" href="ht__write__test_8cc.html#dd683989a0cc69a7faf829f613ed92ac">Policies</a>;
+<a name="l00063"></a>00063 
+<a name="l00064"></a>00064   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_handler_factory.html">HandlerFactory</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_connection_handler_factory.html">ConnectionHandlerFactory</a> {
+<a name="l00065"></a>00065   <span class="keyword">public</span>:
+<a name="l00066"></a>00066     <a class="code" href="class_handler_factory.html#988345ae8b4e9aa5f71ffc2218a60957">HandlerFactory</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm, <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> &amp;app_queue,
+<a name="l00067"></a>00067                    <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a> &amp;master_ptr)
+<a name="l00068"></a>00068       : <a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>(comm), <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>(app_queue), <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>(master_ptr) { }
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_handler_factory.html#4e458bcbb5f4848b6674d97b9f23e37b">get_instance</a>(<a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;dhp) {
+<a name="l00071"></a>00071       dhp = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_dfs_broker_1_1_connection_handler.html">ConnectionHandler</a>(<a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>, <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>, <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>);
+<a name="l00072"></a>00072     }
+<a name="l00073"></a>00073 
+<a name="l00074"></a>00074   <span class="keyword">private</span>:
+<a name="l00075"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#ffb7a36560f93bdb01c809443608e3eb">00075</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>                *<a class="code" href="class_handler_factory.html#6c881abac090ae23411df9f1481d39e6">m_comm</a>;
+<a name="l00076"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#6177d6113d136c70fec346b28daaac03">00076</a>     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a>  <a class="code" href="class_handler_factory.html#b3f9725d04408b4ff2baa13b27a489b0">m_app_queue_ptr</a>;
+<a name="l00077"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#ddb51d58f0a311cf4d2a3bc30e121745">00077</a>     <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a>            <a class="code" href="class_handler_factory.html#9f28a8ded0dffb1a70c16754a54ea648">m_master_ptr</a>;
+<a name="l00078"></a>00078   };
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080 
-<a name="l00081"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00081</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
-<a name="l00082"></a>00082   <span class="keywordflow">try</span> {
-<a name="l00083"></a>00083     init_with_policies&lt;Policies&gt;(argc, argv);
-<a name="l00084"></a>00084 
-<a name="l00085"></a>00085     uint16_t port = get_i16(<span class="stringliteral">"port"</span>);
-<a name="l00086"></a>00086     <span class="keywordtype">int</span> worker_count  = get_i32(<span class="stringliteral">"workers"</span>);
-<a name="l00087"></a>00087 
-<a name="l00088"></a>00088     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = Comm::instance();
-<a name="l00089"></a>00089     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(comm);
-<a name="l00090"></a>00090     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> app_queue = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(worker_count);
-<a name="l00091"></a>00091     <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a> master = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_master.html">Master</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>, conn_mgr, app_queue);
-<a name="l00092"></a>00092     <a class="code" href="namespace_hypertable.html#943250a09f1d457488330abcb5425a7c">ConnectionHandlerFactoryPtr</a> hf(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_handler_factory.html">HandlerFactory</a>(comm, app_queue, master));
-<a name="l00093"></a>00093     <a class="code" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address.">InetAddr</a> listen_addr(INADDR_ANY, port);
-<a name="l00094"></a>00094 
-<a name="l00095"></a>00095     comm-&gt;<a class="code" href="class_hypertable_1_1_comm.html#d8e49fbe70932e0df390f018cfede4c3" title="Tells the communication subsystem to listen for connection requests on the address...">listen</a>(listen_addr, hf);
+<a name="l00080"></a>00080 } <span class="comment">// local namespace</span>
+<a name="l00081"></a>00081 
+<a name="l00082"></a>00082 
+<a name="l00083"></a><a class="code" href="_hypertable_2_master_2main_8cc.html#3c04138a5bfe5d72780bb7e82a18e627">00083</a> <span class="keywordtype">int</span> <a class="code" href="sample_client_8cc.html#3c04138a5bfe5d72780bb7e82a18e627" title="main function">main</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> **argv) {
+<a name="l00084"></a>00084   <span class="keywordflow">try</span> {
+<a name="l00085"></a>00085     init_with_policies&lt;Policies&gt;(argc, argv);
+<a name="l00086"></a>00086 
+<a name="l00087"></a>00087     uint16_t port = get_i16(<span class="stringliteral">"port"</span>);
+<a name="l00088"></a>00088     <span class="keywordtype">int</span> worker_count  = get_i32(<span class="stringliteral">"workers"</span>);
+<a name="l00089"></a>00089 
+<a name="l00090"></a>00090     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = Comm::instance();
+<a name="l00091"></a>00091     <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a> conn_mgr = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a>(comm);
+<a name="l00092"></a>00092     <a class="code" href="namespace_hypertable.html#cf99fcce27d4a99f148f0af4969ebb81">ApplicationQueuePtr</a> app_queue = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_application_queue.html" title="Provides application work queue and worker threads.">ApplicationQueue</a>(worker_count);
+<a name="l00093"></a>00093     <a class="code" href="namespace_hypertable.html#5d1fe05db9fc6954e9a6a9d6b6c9d18b">MasterPtr</a> master = <span class="keyword">new</span> <a class="code" href="class_hyperspace_1_1_master.html">Master</a>(<a class="code" href="namespace_hypertable_1_1_config.html#9e3d35daa165758659d83583f7a53c44" title="stored option variables map singleton">properties</a>, conn_mgr, app_queue);
+<a name="l00094"></a>00094     <a class="code" href="namespace_hypertable.html#943250a09f1d457488330abcb5425a7c">ConnectionHandlerFactoryPtr</a> hf(<span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_handler_factory.html">HandlerFactory</a>(comm, app_queue, master));
+<a name="l00095"></a>00095     <a class="code" href="struct_hypertable_1_1_inet_addr.html" title="Encapsulate an internet address.">InetAddr</a> listen_addr(INADDR_ANY, port);
 <a name="l00096"></a>00096 
-<a name="l00097"></a>00097     master-&gt;join();
-<a name="l00098"></a>00098   }
-<a name="l00099"></a>00099   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00100"></a>00100     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00101"></a>00101     <span class="keywordflow">return</span> 1;
-<a name="l00102"></a>00102   }
-<a name="l00103"></a>00103   <span class="keywordflow">return</span> 0;
-<a name="l00104"></a>00104 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00097"></a>00097     comm-&gt;<a class="code" href="class_hypertable_1_1_comm.html#d8e49fbe70932e0df390f018cfede4c3" title="Tells the communication subsystem to listen for connection requests on the address...">listen</a>(listen_addr, hf);
+<a name="l00098"></a>00098 
+<a name="l00099"></a>00099     master-&gt;join();
+<a name="l00100"></a>00100     comm-&gt;<a class="code" href="class_hypertable_1_1_comm.html#f28dd696003d36d7677b3719e2cfeb46" title="Closes the socket connection specified by the addr argument.">close_socket</a>(listen_addr);
+<a name="l00101"></a>00101   }
+<a name="l00102"></a>00102   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00103"></a>00103     <a class="code" href="_logger_8h.html#92469733c369eec23e81bdd53e233985">HT_ERROR_OUT</a> &lt;&lt; e &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00104"></a>00104     <span class="keywordflow">return</span> 1;
+<a name="l00105"></a>00105   }
+<a name="l00106"></a>00106   <span class="keywordflow">return</span> 0;
+<a name="l00107"></a>00107 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

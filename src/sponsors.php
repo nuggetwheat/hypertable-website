@@ -28,7 +28,7 @@
 					</dl>
 					<dl>
 						<dt><a name="baidu" class="external" href="http://www.baidu.com/" target="_blank" >Baidu</a></dt>
-							<dd>Baidu (Nasdaq: BIDU), the leading internet search services provider in China has decided to become an official sponsor by adopting Hypertable across the company and committing a team of engineers and numerous servers to use and improve Hypertable. Baidu's decision came after months of evaluting Hypertable and other alternative solutions. We believe that Baidu's commitment further validates the quality and progress of the project and bodes well for the long term viability of Hypertable.
+							<dd>Baidu (Nasdaq: BIDU), the leading internet search services provider in China has decided to become an official sponsor by adopting Hypertable across the company and committing a team of engineers and numerous servers to use and improve Hypertable. Baidu's decision came after months of evaluating Hypertable and other alternative solutions. We believe that Baidu's commitment further validates the quality and progress of the project and bodes well for the long term viability of Hypertable.
 					</dl>
 					<p></p>
 					<p><img src="images/gra-end-of-page.gif" alt=" " /></p>

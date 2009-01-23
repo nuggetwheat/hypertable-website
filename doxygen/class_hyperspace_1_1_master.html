@@ -44,9 +44,9 @@ Collaboration diagram for Hyperspace::Master:</div>
 <a href="class_hyperspace_1_1_master-members.html">List of all members.</a><table border="0" cellpadding="0" cellspacing="0">
 <tr><td></td></tr>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#5efa12b4f86734c451f106aa599e600f">Master</a> (ConnectionManagerPtr &amp;, <a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#4630a2e7ce8b071034f025adb5753bc6">Master</a> (ConnectionManagerPtr &amp;, <a class="el" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;, <a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;, ApplicationQueuePtr &amp;app_queue_ptr)</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets up the m_base_dir variable to be the absolute path of the root of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> directory (with no trailing slash); Locks this root directory to prevent concurrent masters and then reads/increments/writes the 32-bit integer attribute 'generation'; Creates the server Keepalive handler.  <a href="#5efa12b4f86734c451f106aa599e600f"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Sets up the m_base_dir variable to be the absolute path of the root of the <a class="el" href="namespace_hyperspace.html" title="-*- c++ -*- Copyright (C) 2008 Doug Judd (Zvents, Inc.">Hyperspace</a> directory (with no trailing slash); Locks this root directory to prevent concurrent masters and then reads/increments/writes the 32-bit integer attribute 'generation'; Creates the server Keepalive handler.  <a href="#4630a2e7ce8b071034f025adb5753bc6"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#20f70958ed75532ba672af1b780f59eb">~Master</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hyperspace_1_1_master.html#ffb4120218185ca6935f38987f0df956">mkdir</a> (<a class="el" href="class_hypertable_1_1_response_callback.html">ResponseCallback</a> *cb, uint64_t session_id, const char *name)</td></tr>
@@ -251,7 +251,7 @@ Collaboration diagram for Hyperspace::Master:</div>
 </div>
 </div><p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
-<a class="anchor" name="5efa12b4f86734c451f106aa599e600f"></a><!-- doxytag: member="Hyperspace::Master::Master" ref="5efa12b4f86734c451f106aa599e600f" args="(ConnectionManagerPtr &amp;, PropertiesPtr &amp;, ServerKeepaliveHandlerPtr &amp;)" -->
+<a class="anchor" name="4630a2e7ce8b071034f025adb5753bc6"></a><!-- doxytag: member="Hyperspace::Master::Master" ref="4630a2e7ce8b071034f025adb5753bc6" args="(ConnectionManagerPtr &amp;, PropertiesPtr &amp;, ServerKeepaliveHandlerPtr &amp;, ApplicationQueuePtr &amp;app_queue_ptr)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
@@ -271,7 +271,13 @@ Collaboration diagram for Hyperspace::Master:</div>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype"><a class="el" href="namespace_hyperspace.html#3e886fe6754f12ba9f134097157d2673">ServerKeepaliveHandlerPtr</a> &amp;&nbsp;</td>
-          <td class="paramname"> <em>keepalive_handler</em></td><td>&nbsp;</td>
+          <td class="paramname"> <em>keepalive_handler</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ApplicationQueuePtr &amp;&nbsp;</td>
+          <td class="paramname"> <em>app_queue_ptr</em></td><td>&nbsp;</td>
         </tr>
         <tr>
           <td></td>
@@ -289,7 +295,7 @@ Sets up the m_base_dir variable to be the absolute path of the root of the <a cl
 <p>
 Lock the base directory to prevent concurrent masters<p>
 Load and increment generation number 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00105">105</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00107">107</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -310,7 +316,7 @@ Load and increment generation number
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00170">170</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00177">177</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -350,7 +356,7 @@ Load and increment generation number
 Creates a directory with absolute path 'name'. 
 <p>
 It locks the parent node to prevent concurrent modifications. 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00323">323</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00321">321</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -389,7 +395,7 @@ It locks the parent node to prevent concurrent modifications.
 Delete. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00362">362</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00360">360</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -448,7 +454,7 @@ Open.
 
 <p>
 If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00417">417</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00415">415</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -485,7 +491,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00562">562</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00560">560</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -540,7 +546,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00600">600</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00598">598</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -583,7 +589,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00638">638</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00636">636</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -626,7 +632,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00673">673</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00671">671</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -663,7 +669,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00708">708</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00706">706</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -700,7 +706,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00730">730</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00728">728</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -749,7 +755,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00761">761</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00759">759</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -786,7 +792,7 @@ If open flags LOCK_SHARED or LOCK_EXCLUSIVE, then obtain lock
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00893">893</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00891">891</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -816,7 +822,7 @@ Creates a new session by allocating a new <a class="el" href="class_hyperspace_1
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the new session ID </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00176">176</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00183">183</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -856,7 +862,7 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if found, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00187">187</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00194">194</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -878,7 +884,7 @@ Obtains the <a class="el" href="class_hyperspace_1_1_session_data.html">SessionD
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00196">196</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00203">203</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -909,7 +915,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>Error::OK if successful </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00210">210</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00217">217</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -931,7 +937,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00223">223</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00230">230</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -952,7 +958,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00247">247</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00254">254</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -983,7 +989,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00282">282</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00280">280</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1014,7 +1020,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00294">294</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00292">292</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1045,7 +1051,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00306">306</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00304">304</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1088,7 +1094,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01145">1145</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01143">1143</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1156,7 +1162,7 @@ If the session cannot be found or if it is expired, the method returns Error::HY
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01002">1002</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01000">1000</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1195,7 +1201,7 @@ Assumes node is locked.
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01031">1031</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01029">1029</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1243,7 +1249,7 @@ It determines the name of the parent node by stripping off the characters incudi
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>true if parent node found, false otherwise </dd></dl>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01051">1051</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01049">1049</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1286,7 +1292,7 @@ It determines the name of the parent node by stripping off the characters incudi
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01092">1092</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l01090">1090</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1317,7 +1323,7 @@ It determines the name of the parent node by stripping off the characters incudi
 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00919">919</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00917">917</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1350,7 +1356,7 @@ It determines the name of the parent node by stripping off the characters incudi
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00863">863</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00861">861</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1389,7 +1395,7 @@ Assumes node is locked.
 Assumes node is locked. 
 <p>
 
-<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00877">877</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
+<p>Definition at line <a class="el" href="_hyperspace_2_master_8cc-source.html#l00875">875</a> of file <a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a>.</p>
 
 </div>
 </div><p>
@@ -1741,7 +1747,7 @@ Safely obtains the node with the given pathname from the NodeMap, creating one a
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_master_8h-source.html">Master.h</a><li>/Users/doug/src/hypertable/src/cc/Hyperspace/<a class="el" href="_hyperspace_2_master_8cc-source.html">Master.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:33 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:13 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

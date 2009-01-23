@@ -49,14 +49,19 @@ Collaboration diagram for Hypertable::Thrift::Client:</div>
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#5bfd8ed2d527e8177b3c37ad5fd057c1">Client</a> (const std::string &amp;host, int port, int timeout_ms=30000, bool open=true)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#b5114649dcd6a19daac30bf8c3162ed5">connect</a> (int timeout_ms)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#1170c52bffc6848256b7533ba42b6a39">~Client</a> ()</td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#1225128be8f45535fd3ad15b7e92ac7c">connect</a> ()</td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#a7191ded487d07e6267d962d861d5e33">hql_query</a> (<a class="el" href="class_hypertable_1_1_thrift_gen_1_1_hql_result.html">ThriftGen::HqlResult</a> &amp;ret, const std::string &amp;cmd)</td></tr>
+
+<tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">m_do_close</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 A client for the <a class="el" href="namespace_hypertable_1_1_thrift_broker.html">ThriftBroker</a>. 
-<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00051">51</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00055">55</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="5bfd8ed2d527e8177b3c37ad5fd057c1"></a><!-- doxytag: member="Hypertable::Thrift::Client::Client" ref="5bfd8ed2d527e8177b3c37ad5fd057c1" args="(const std::string &amp;host, int port, int timeout_ms=30000, bool open=true)" -->
 <div class="memitem">
@@ -97,20 +102,40 @@ A client for the <a class="el" href="namespace_hypertable_1_1_thrift_broker.html
 
 <p>
 
-<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00053">53</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00057">57</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1170c52bffc6848256b7533ba42b6a39"></a><!-- doxytag: member="Hypertable::Thrift::Client::~Client" ref="1170c52bffc6848256b7533ba42b6a39" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">virtual Hypertable::Thrift::Client::~Client           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline, virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00066">66</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Function Documentation</h2>
-<a class="anchor" name="b5114649dcd6a19daac30bf8c3162ed5"></a><!-- doxytag: member="Hypertable::Thrift::Client::connect" ref="b5114649dcd6a19daac30bf8c3162ed5" args="(int timeout_ms)" -->
+<a class="anchor" name="1225128be8f45535fd3ad15b7e92ac7c"></a><!-- doxytag: member="Hypertable::Thrift::Client::connect" ref="1225128be8f45535fd3ad15b7e92ac7c" args="()" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">void Hypertable::Thrift::Client::connect           </td>
           <td>(</td>
-          <td class="paramtype">int&nbsp;</td>
-          <td class="paramname"> <em>timeout_ms</em>          </td>
+          <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [inline]</code></td>
         </tr>
@@ -120,7 +145,7 @@ A client for the <a class="el" href="namespace_hypertable_1_1_thrift_broker.html
 
 <p>
 
-<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00060">60</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00073">73</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
@@ -151,13 +176,31 @@ A client for the <a class="el" href="namespace_hypertable_1_1_thrift_broker.html
 
 <p>
 
-<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00066">66</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00080">80</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
+
+</div>
+</div><p>
+<hr><h2>Member Data Documentation</h2>
+<a class="anchor" name="23ca716c24fa4f643860f2894033b3e0"></a><!-- doxytag: member="Hypertable::Thrift::Client::m_do_close" ref="23ca716c24fa4f643860f2894033b3e0" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="class_hypertable_1_1_thrift_1_1_client.html#23ca716c24fa4f643860f2894033b3e0">Hypertable::Thrift::Client::m_do_close</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_thrift_broker_2_client_8h-source.html#l00085">85</a> of file <a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/ThriftBroker/<a class="el" href="_thrift_broker_2_client_8h-source.html">Client.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:56 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:33 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

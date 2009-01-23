@@ -18,7 +18,7 @@
 <a class="el" href="dir_9e51036813d6151dfecc72d5fa7c02b3.html">Users</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_5708de38a757cb70589c505d18009990.html">doug</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_a5f6cd2e2a2b5320bbe75e5c719f1fee.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_752ad1e2f45ee7988941467b4eccee0e.html">hypertable</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_9031e3d7c38caf639b0143600d70b482.html">src</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_f5aae9766518c5969fd00e3382787720.html">cc</a>&nbsp;&raquo&nbsp;<a class="el" href="dir_c15830aad3a99e858e4f63b1b1579632.html">Common</a></div>
 <h1>Properties.cc File Reference</h1><code>#include &quot;<a class="el" href="_compat_8h-source.html">Common/Compat.h</a>&quot;</code><br>
 <code>#include &quot;<a class="el" href="_properties_8h-source.html">Common/Properties.h</a>&quot;</code><br>
-<code>#include &quot;<a class="el" href="_common_2_config_8h-source.html">Common/Config.h</a>&quot;</code><br>
+<code>#include &quot;<a class="el" href="_logger_8h-source.html">Common/Logger.h</a>&quot;</code><br>
 <code>#include &lt;errno.h&gt;</code><br>
 <code>#include &lt;fstream&gt;</code><br>
 
@@ -28,7 +28,7 @@ Include dependency graph for Properties.cc:</div>
 <div class="dynsection">
 <p><center><img src="_properties_8cc__incl.png" border="0" usemap="#/Users/doug/src/hypertable/src/cc/Common/Properties.cc_map" alt=""></center>
 <map name="/Users/doug/src/hypertable/src/cc/Common/Properties.cc_map">
-<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="311,80,450,107"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="942,155,1096,181"><area shape="rect" href="_common_2_config_8h.html" title="Common/Config.h" alt="" coords="1194,80,1324,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="336,155,424,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="118,155,216,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="1062,453,1128,480"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="582,229,771,256"><area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="1158,379,1280,405"><area shape="rect" href="atomic_8h.html" title="atomic.h" alt="" coords="675,304,750,331"><area shape="rect" href="_mutex_8h.html" title="Common/Mutex.h" alt="" coords="1475,229,1603,256"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="1296,304,1430,331"><area shape="rect" href="_system_8h.html" title="Common/System.h" alt="" coords="1191,155,1327,181"><area shape="rect" href="_meta_8h.html" title="Common/Meta.h" alt="" coords="1632,155,1755,181"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="1304,379,1414,405"></map>
+<area shape="rect" href="_compat_8h.html" title="Common/Compat.h" alt="" coords="304,80,443,107"><area shape="rect" href="_properties_8h.html" title="Common/Properties.h" alt="" coords="1292,80,1447,107"><area shape="rect" href="_logger_8h.html" title="Common/Logger.h" alt="" coords="687,80,820,107"><area shape="rect" href="compat&#45;c_8h.html" title="compat&#45;c.h" alt="" coords="329,155,417,181"><area shape="rect" href="_sweetener_8h.html" title="Sweetener.h" alt="" coords="115,155,213,181"><area shape="rect" href="_string_8h.html" title="string.h" alt="" coords="531,229,597,256"><area shape="rect" href="_reference_count_8h.html" title="Common/ReferenceCount.h" alt="" coords="1275,155,1464,181"><area shape="rect" href="_error_8h.html" title="Common/Error.h" alt="" coords="917,155,1040,181"><area shape="rect" href="atomic_8h.html" title="atomic.h" alt="" coords="1205,229,1280,256"><area shape="rect" href="_fixed_stream_8h.html" title="FixedStream.h" alt="" coords="515,155,624,181"></map>
 </div>
 
 <p>
@@ -39,10 +39,6 @@ Include dependency graph for Properties.cc:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">namespace &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1program__options.html">boost::program_options</a></td></tr>
 
-<tr><td colspan="2"><br><h2>Typedefs</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef std::vector<br>
-&lt; std::string &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">boost::program_options::Strings</a></td></tr>
-
 <tr><td colspan="2"><br><h2>Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">boost::program_options::validate</a> (boost::any &amp;v, const Strings &amp;values, int64_t *, int)</td></tr>
 
@@ -50,16 +46,16 @@ Include dependency graph for Properties.cc:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="namespaceboost_1_1program__options.html#df608fa85b4536b268e47069546002cb">boost::program_options::validate</a> (boost::any &amp;v, const Strings &amp;values, uint16_t *, int)</td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_properties_8cc.html#229debc63c4fc89f6603285a1ea9a870">parse</a> (command_line_parser &amp;parser, const PropertiesDesc &amp;desc, variables_map &amp;result, const PropertiesDesc *hidden, const PositionalDesc *p)</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="_properties_8cc.html#e165c242135359e3fb4527638001ed6c">parse</a> (command_line_parser &amp;parser, const PropertiesDesc &amp;desc, variables_map &amp;result, const PropertiesDesc *hidden, const PositionalDesc *p)</td></tr>
 
 </table>
 <hr><h2>Function Documentation</h2>
-<a class="anchor" name="229debc63c4fc89f6603285a1ea9a870"></a><!-- doxytag: member="Properties.cc::parse" ref="229debc63c4fc89f6603285a1ea9a870" args="(command_line_parser &amp;parser, const PropertiesDesc &amp;desc, variables_map &amp;result, const PropertiesDesc *hidden, const PositionalDesc *p)" -->
+<a class="anchor" name="e165c242135359e3fb4527638001ed6c"></a><!-- doxytag: member="Properties.cc::parse" ref="e165c242135359e3fb4527638001ed6c" args="(command_line_parser &amp;parser, const PropertiesDesc &amp;desc, variables_map &amp;result, const PropertiesDesc *hidden, const PositionalDesc *p)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void @88::parse           </td>
+          <td class="memname">void @84::parse           </td>
           <td>(</td>
           <td class="paramtype">command_line_parser &amp;&nbsp;</td>
           <td class="paramname"> <em>parser</em>, </td>
@@ -99,11 +95,11 @@ Include dependency graph for Properties.cc:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00088">88</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
+<p>Definition at line <a class="el" href="_properties_8cc-source.html#l00085">85</a> of file <a class="el" href="_properties_8cc-source.html">Properties.cc</a>.</p>
 
 </div>
 </div><p>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:31:24 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:49 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

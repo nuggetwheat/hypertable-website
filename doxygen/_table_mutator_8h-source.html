@@ -90,7 +90,7 @@
 <a name="l00168"></a><a class="code" href="class_hypertable_1_1_table_mutator.html#9db1b3c2ebdfddf009c27ad78e3be60b739153d9f7963d491f8c2d555762e3c6">00168</a>       <a class="code" href="class_hypertable_1_1_table_mutator.html#9db1b3c2ebdfddf009c27ad78e3be60b739153d9f7963d491f8c2d555762e3c6">FLUSH</a>
 <a name="l00169"></a>00169     };
 <a name="l00170"></a>00170 
-<a name="l00171"></a>00171     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#fc204551dd64bc2be94622410f41a30d">wait_for_previous_buffer</a>(<a class="code" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer);
+<a name="l00171"></a>00171     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#fc204551dd64bc2be94622410f41a30d">wait_for_previous_buffer</a>(<a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> &amp;timer);
 <a name="l00172"></a>00172     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#20a2f4a2b8dac0ac0448964202d4c517">to_full_key</a>(<span class="keyword">const</span> <span class="keywordtype">void</span> *row, <span class="keyword">const</span> <span class="keywordtype">char</span> *cf, <span class="keyword">const</span> <span class="keywordtype">void</span> *cq,
 <a name="l00173"></a>00173                      int64_t ts, int64_t rev, uint8_t flag, <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;full_key);
 <a name="l00174"></a><a class="code" href="class_hypertable_1_1_table_mutator.html#93f7f0760789c8cc2fbac8d304740c70">00174</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#20a2f4a2b8dac0ac0448964202d4c517">to_full_key</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;full_key) {
@@ -102,7 +102,7 @@
 <a name="l00180"></a>00180                   cell.<a class="code" href="class_hypertable_1_1_cell.html#da5f90a5852924922cc8024403ede417">timestamp</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#5188dfa425aec64f47f0c33d070b2212">revision</a>, cell.<a class="code" href="class_hypertable_1_1_cell.html#53eb7078da9d8341895205234ada830f">flag</a>, full_key);
 <a name="l00181"></a>00181     }
 <a name="l00182"></a>00182     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#eebce21a62d77d4ec1c013d97f05e464" title="Insert a bunch of cells into the table (atomically if cells are in the same range/row)...">set_cells</a>(Cells::const_iterator <a class="code" href="_range_locator_8cc.html#b40328f79e021050ac262dc0a6019667">start</a>, Cells::const_iterator <a class="code" href="_range_locator_8cc.html#8fd806ad19b8f5513a4cf18cbf77532c">end</a>);
-<a name="l00183"></a>00183     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#c78421fd06a1f10c49bd5616708a6ccb">auto_flush</a>(<a class="code" href="class_hypertable_1_1_timer.html">Timer</a> &amp;);
+<a name="l00183"></a>00183     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#c78421fd06a1f10c49bd5616708a6ccb">auto_flush</a>(<a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> &amp;);
 <a name="l00184"></a>00184 
 <a name="l00185"></a><a class="code" href="class_hypertable_1_1_table_mutator.html#7ff64d69dfcc10ff52543a1381498bc3">00185</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_table_mutator.html#7ff64d69dfcc10ff52543a1381498bc3">save_last</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key_spec.html">KeySpec</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <span class="keywordtype">void</span> *value, <span class="keywordtype">size_t</span> value_len) {
 <a name="l00186"></a>00186       <a class="code" href="class_hypertable_1_1_table_mutator.html#6afa40240af65c1bbff2d962a16dcf26">m_last_key</a> = key;
@@ -143,7 +143,7 @@
 <a name="l00221"></a>00221 } <span class="comment">// namespace Hypertable</span>
 <a name="l00222"></a>00222 
 <a name="l00223"></a>00223 <span class="preprocessor">#endif // HYPERTABLE_TABLEMUTATOR_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

@@ -1,7 +1,7 @@
 <div id="news">
 	<h3>News and Announcements</h3>
 	<dl>
-		<dt>January 12 2009</dt>
+		<dt>January 22 2009</dt>
 		<dd><a href="http://www.baidu.com/">Baidu</a> becomes an official sponsor of the Hypertable project. Thanks Baidu! »</dd>
 	</dl>
 	<dl>

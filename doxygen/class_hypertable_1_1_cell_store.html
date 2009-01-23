@@ -61,18 +61,18 @@ Collaboration diagram for Hypertable::CellStore:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual <a class="el" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d">create_scanner</a> (<a class="el" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx)</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a scanner on this cell list.  <a href="#ff9650bd617205910425380b9859d58d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#7858a79369de1cb22928efbe44f4acc9">create</a> (const char *fname, uint32_t blocksize, const std::string &amp;compressor)=0</td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#cbedef441c38fc6be53b2019543ec315">create</a> (const char *fname, uint32_t blocksize, const std::string &amp;compressor)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new cell store.  <a href="#7858a79369de1cb22928efbe44f4acc9"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#4923d9f08718e60e17f7584fb9e5ae7d">finalize</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Creates a new cell store.  <a href="#cbedef441c38fc6be53b2019543ec315"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#10a8b647d6afcf7dcb8c99af629d9643">finalize</a> (<a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *table_identifier)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Finalizes the creation of a cell store, by writing block index and metadata trailer.  <a href="#4923d9f08718e60e17f7584fb9e5ae7d"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#aca7beb67e3d5b4332726954de3270a4">open</a> (const char *fname, const char *<a class="el" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>, const char *<a class="el" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>)=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Finalizes the creation of a cell store, by writing block index and metadata trailer.  <a href="#10a8b647d6afcf7dcb8c99af629d9643"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#cf2b7f1ab5975c3cc85f823d14751a47">open</a> (const char *fname, const char *<a class="el" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>, const char *<a class="el" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>)=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Opens a cell store with possibly a restricted view.  <a href="#aca7beb67e3d5b4332726954de3270a4"></a><br></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual int&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#514f9a0b9584e833e9ba1596769ac4bf">load_index</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Opens a cell store with possibly a restricted view.  <a href="#cf2b7f1ab5975c3cc85f823d14751a47"></a><br></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#a4b37e4341a35f81329362c69713ccde">load_index</a> ()=0</td></tr>
 
-<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Loads the block index data into an in-memory map.  <a href="#514f9a0b9584e833e9ba1596769ac4bf"></a><br></td></tr>
+<tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Loads the block index data into an in-memory map.  <a href="#a4b37e4341a35f81329362c69713ccde"></a><br></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual uint32_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_cell_store.html#c1b4f7803a736e8367ff75585d3664b9">get_blocksize</a> ()=0</td></tr>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Returns the block size used for this cell store.  <a href="#c1b4f7803a736e8367ff75585d3664b9"></a><br></td></tr>
@@ -95,7 +95,7 @@ Collaboration diagram for Hypertable::CellStore:</div>
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
 Abstract base class for persistent cell lists (ones that are stored on disk). 
-<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00039">39</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00040">40</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
 <hr><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" name="8613a1387587b6332b014ff4692cce53"></a><!-- doxytag: member="Hypertable::CellStore::~CellStore" ref="8613a1387587b6332b014ff4692cce53" args="()" -->
 <div class="memitem">
@@ -114,7 +114,7 @@ Abstract base class for persistent cell lists (ones that are stored on disk).
 
 <p>
 
-<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00042">42</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00043">43</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
 
 </div>
 </div><p>
@@ -244,16 +244,16 @@ Creates a scanner on this cell list.
 
 <p>Reimplemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#2537fc114a27c9054f8c732835b2619e">Hypertable::CellStoreV0</a>.</p>
 
-<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00051">51</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
+<p>Definition at line <a class="el" href="_cell_store_8h-source.html#l00052">52</a> of file <a class="el" href="_cell_store_8h-source.html">CellStore.h</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="7858a79369de1cb22928efbe44f4acc9"></a><!-- doxytag: member="Hypertable::CellStore::create" ref="7858a79369de1cb22928efbe44f4acc9" args="(const char *fname, uint32_t blocksize, const std::string &amp;compressor)=0" -->
+<a class="anchor" name="cbedef441c38fc6be53b2019543ec315"></a><!-- doxytag: member="Hypertable::CellStore::create" ref="cbedef441c38fc6be53b2019543ec315" args="(const char *fname, uint32_t blocksize, const std::string &amp;compressor)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int Hypertable::CellStore::create           </td>
+          <td class="memname">virtual void Hypertable::CellStore::create           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>fname</em>, </td>
@@ -289,20 +289,20 @@ Creates a new cell store.
     <tr><td valign="top"></td><td valign="top"><em>compressor</em>&nbsp;</td><td>string indicating compressor type and arguments (e.g. "zlib --best") </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success, error code on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#67313dc1af142616f424ef2c92969453">Hypertable::CellStoreV0</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#dc40a51f383c77068abe99aa234da4fb">Hypertable::CellStoreV0</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="4923d9f08718e60e17f7584fb9e5ae7d"></a><!-- doxytag: member="Hypertable::CellStore::finalize" ref="4923d9f08718e60e17f7584fb9e5ae7d" args="()=0" -->
+<a class="anchor" name="10a8b647d6afcf7dcb8c99af629d9643"></a><!-- doxytag: member="Hypertable::CellStore::finalize" ref="10a8b647d6afcf7dcb8c99af629d9643" args="(TableIdentifier *table_identifier)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int Hypertable::CellStore::finalize           </td>
+          <td class="memname">virtual void Hypertable::CellStore::finalize           </td>
           <td>(</td>
-          <td class="paramname">          </td>
+          <td class="paramtype"><a class="el" href="class_hypertable_1_1_table_identifier.html">TableIdentifier</a> *&nbsp;</td>
+          <td class="paramname"> <em>table_identifier</em>          </td>
           <td>&nbsp;)&nbsp;</td>
           <td width="100%"><code> [pure virtual]</code></td>
         </tr>
@@ -313,18 +313,22 @@ Creates a new cell store.
 <p>
 Finalizes the creation of a cell store, by writing block index and metadata trailer. 
 <p>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success, error code on failure </dd></dl>
+<dl compact><dt><b>Parameters:</b></dt><dd>
+  <table border="0" cellspacing="2" cellpadding="0">
+    <tr><td valign="top"></td><td valign="top"><em>table_identifier</em>&nbsp;</td><td>table identifier </td></tr>
+  </table>
+</dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#078d654a1672a8b3d49e6492a3451a38">Hypertable::CellStoreV0</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#9c9b3a60ca28232274c05eb8a5916ae6">Hypertable::CellStoreV0</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="aca7beb67e3d5b4332726954de3270a4"></a><!-- doxytag: member="Hypertable::CellStore::open" ref="aca7beb67e3d5b4332726954de3270a4" args="(const char *fname, const char *start_row, const char *end_row)=0" -->
+<a class="anchor" name="cf2b7f1ab5975c3cc85f823d14751a47"></a><!-- doxytag: member="Hypertable::CellStore::open" ref="cf2b7f1ab5975c3cc85f823d14751a47" args="(const char *fname, const char *start_row, const char *end_row)=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int Hypertable::CellStore::open           </td>
+          <td class="memname">virtual void Hypertable::CellStore::open           </td>
           <td>(</td>
           <td class="paramtype">const char *&nbsp;</td>
           <td class="paramname"> <em>fname</em>, </td>
@@ -361,18 +365,17 @@ When a range splits, the cell stores that comprise the range get shared between 
     <tr><td valign="top"></td><td valign="top"><em>end_row</em>&nbsp;</td><td>restricts view of this store to key/value pairs that are less than or equal to this value </td></tr>
   </table>
 </dl>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success, error code on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#f25665252bc0d1e10e6fa866f9cb4852">Hypertable::CellStoreV0</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#cc153b310b83b52862a02f76553591ae">Hypertable::CellStoreV0</a>.</p>
 
 </div>
 </div><p>
-<a class="anchor" name="514f9a0b9584e833e9ba1596769ac4bf"></a><!-- doxytag: member="Hypertable::CellStore::load_index" ref="514f9a0b9584e833e9ba1596769ac4bf" args="()=0" -->
+<a class="anchor" name="a4b37e4341a35f81329362c69713ccde"></a><!-- doxytag: member="Hypertable::CellStore::load_index" ref="a4b37e4341a35f81329362c69713ccde" args="()=0" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">virtual int Hypertable::CellStore::load_index           </td>
+          <td class="memname">virtual void Hypertable::CellStore::load_index           </td>
           <td>(</td>
           <td class="paramname">          </td>
           <td>&nbsp;)&nbsp;</td>
@@ -385,9 +388,8 @@ When a range splits, the cell stores that comprise the range get shared between 
 <p>
 Loads the block index data into an in-memory map. 
 <p>
-<dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success, error code on failure </dd></dl>
 
-<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#81490e50ef84429513e98d061d59a784">Hypertable::CellStoreV0</a>.</p>
+<p>Implemented in <a class="el" href="class_hypertable_1_1_cell_store_v0.html#dabd674b7655d87aab28092df6b216db">Hypertable::CellStoreV0</a>.</p>
 
 </div>
 </div><p>
@@ -538,7 +540,7 @@ Return a pointer to the trailer object for this cell store.
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_cell_store_8h-source.html">CellStore.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:14 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:24 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

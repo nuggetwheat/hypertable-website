@@ -24,56 +24,57 @@
 <a name="l00026"></a>00026 
 <a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_byte_string_8h.html">Common/ByteString.h</a>"</span>
 <a name="l00028"></a>00028 
-<a name="l00029"></a>00029 
-<a name="l00030"></a>00030 <span class="preprocessor">#include "<a class="code" href="_cell_list_8h.html">CellList.h</a>"</span>
-<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033 <span class="keyword">namespace </span>Hypertable {
-<a name="l00034"></a>00034 
-<a name="l00039"></a><a class="code" href="class_hypertable_1_1_cell_store.html">00039</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_store.html" title="Abstract base class for persistent cell lists (ones that are stored on disk).">CellStore</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs).">CellList</a> {
-<a name="l00040"></a>00040   <span class="keyword">public</span>:
-<a name="l00041"></a>00041 
-<a name="l00042"></a><a class="code" href="class_hypertable_1_1_cell_store.html#8613a1387587b6332b014ff4692cce53">00042</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store.html#8613a1387587b6332b014ff4692cce53">~CellStore</a>() { <span class="keywordflow">return</span>; }
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) = 0;
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_store.html#59750a08c01b8254b4537c1cf893b3b1" title="Returns a split row for this cell list.">get_split_row</a>() = 0;
-<a name="l00047"></a>00047 
-<a name="l00048"></a>00048     <span class="keyword">virtual</span> uint32_t <a class="code" href="class_hypertable_1_1_cell_store.html#fa5695df6b7025a20ecdf5a88ac31c0a" title="Returns the number of key/value pairs in the list.">get_total_entries</a>() = 0;
-<a name="l00049"></a>00049 
-<a name="l00050"></a>00050     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *
-<a name="l00051"></a><a class="code" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d">00051</a>     <a class="code" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d" title="Creates a scanner on this cell list.">create_scanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx) { <span class="keywordflow">return</span> 0; }
-<a name="l00052"></a>00052 
-<a name="l00062"></a>00062     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store.html#7858a79369de1cb22928efbe44f4acc9" title="Creates a new cell store.">create</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, uint32_t blocksize,
-<a name="l00063"></a>00063                        <span class="keyword">const</span> std::string &amp;compressor) = 0;
+<a name="l00029"></a>00029 <span class="preprocessor">#include "<a class="code" href="_types_8h.html">Hypertable/Lib/Types.h</a>"</span>
+<a name="l00030"></a>00030 
+<a name="l00031"></a>00031 <span class="preprocessor">#include "<a class="code" href="_cell_list_8h.html">CellList.h</a>"</span>
+<a name="l00032"></a>00032 <span class="preprocessor">#include "<a class="code" href="_cell_store_trailer_8h.html">CellStoreTrailer.h</a>"</span>
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034 <span class="keyword">namespace </span>Hypertable {
+<a name="l00035"></a>00035 
+<a name="l00040"></a><a class="code" href="class_hypertable_1_1_cell_store.html">00040</a>   <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_cell_store.html" title="Abstract base class for persistent cell lists (ones that are stored on disk).">CellStore</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_cell_list.html" title="Abstract base class for cell lists (sorted lists of key/value pairs).">CellList</a> {
+<a name="l00041"></a>00041   <span class="keyword">public</span>:
+<a name="l00042"></a>00042 
+<a name="l00043"></a><a class="code" href="class_hypertable_1_1_cell_store.html#8613a1387587b6332b014ff4692cce53">00043</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store.html#8613a1387587b6332b014ff4692cce53">~CellStore</a>() { <span class="keywordflow">return</span>; }
+<a name="l00044"></a>00044 
+<a name="l00045"></a>00045     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_key.html" title="Provides access to internal components of opaque key.">Key</a> &amp;<a class="code" href="_table_mutator_scatter_buffer_8cc.html#79858bab496ff26b53d2a211eaa995fe">key</a>, <span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_byte_string.html">ByteString</a> value) = 0;
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047     <span class="keyword">virtual</span> <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="class_hypertable_1_1_cell_store.html#59750a08c01b8254b4537c1cf893b3b1" title="Returns a split row for this cell list.">get_split_row</a>() = 0;
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049     <span class="keyword">virtual</span> uint32_t <a class="code" href="class_hypertable_1_1_cell_store.html#fa5695df6b7025a20ecdf5a88ac31c0a" title="Returns the number of key/value pairs in the list.">get_total_entries</a>() = 0;
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_list_scanner.html">CellListScanner</a> *
+<a name="l00052"></a><a class="code" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d">00052</a>     <a class="code" href="class_hypertable_1_1_cell_store.html#ff9650bd617205910425380b9859d58d" title="Creates a scanner on this cell list.">create_scanner</a>(<a class="code" href="namespace_hypertable.html#3125aa98d9d4a9a4557de4703da95b9a">ScanContextPtr</a> &amp;scan_ctx) { <span class="keywordflow">return</span> 0; }
+<a name="l00053"></a>00053 
+<a name="l00062"></a>00062     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store.html#cbedef441c38fc6be53b2019543ec315" title="Creates a new cell store.">create</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, uint32_t blocksize,
+<a name="l00063"></a>00063                         <span class="keyword">const</span> std::string &amp;compressor) = 0;
 <a name="l00064"></a>00064 
-<a name="l00071"></a>00071     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store.html#4923d9f08718e60e17f7584fb9e5ae7d" title="Finalizes the creation of a cell store, by writing block index and metadata trailer...">finalize</a>() = 0;
+<a name="l00071"></a>00071     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store.html#10a8b647d6afcf7dcb8c99af629d9643" title="Finalizes the creation of a cell store, by writing block index and metadata trailer...">finalize</a>(<a class="code" href="class_hypertable_1_1_table_identifier.html" title="Identifies a specific table and generation.">TableIdentifier</a> *table_identifier) = 0;
 <a name="l00072"></a>00072 
-<a name="l00086"></a>00086     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store.html#aca7beb67e3d5b4332726954de3270a4" title="Opens a cell store with possibly a restricted view.">open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>,
-<a name="l00087"></a>00087                      <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>) = 0;
-<a name="l00088"></a>00088 
-<a name="l00094"></a>00094     <span class="keyword">virtual</span> <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_cell_store.html#514f9a0b9584e833e9ba1596769ac4bf" title="Loads the block index data into an in-memory map.">load_index</a>() = 0;
-<a name="l00095"></a>00095 
-<a name="l00103"></a>00103     <span class="keyword">virtual</span> uint32_t <a class="code" href="class_hypertable_1_1_cell_store.html#c1b4f7803a736e8367ff75585d3664b9" title="Returns the block size used for this cell store.">get_blocksize</a>() = 0;
-<a name="l00104"></a>00104 
-<a name="l00108"></a>00108     <span class="keyword">virtual</span> int64_t <a class="code" href="class_hypertable_1_1_cell_store.html#d20ca6fc3e1e6c5621a3263fae1a74df" title="Returns the compaction revision of this cell store.">get_revision</a>() = 0;
-<a name="l00109"></a>00109 
-<a name="l00117"></a>00117     <span class="keyword">virtual</span> uint64_t <a class="code" href="class_hypertable_1_1_cell_store.html#377c2aec76bf8994b629f686a436eb0e" title="Returns the disk used by this cell store.">disk_usage</a>() = 0;
-<a name="l00118"></a>00118 
-<a name="l00124"></a>00124     <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="class_hypertable_1_1_cell_store.html#e84ff0548d83f36219bac5e851e163e3" title="Returns block compression ratio of this cell store.">compression_ratio</a>() = 0;
-<a name="l00125"></a>00125 
-<a name="l00131"></a>00131     <span class="keyword">virtual</span> std::string &amp;<a class="code" href="class_hypertable_1_1_cell_store.html#8413f6770992b32ecd78a9c69b30fa70" title="Pathname of cell store file.">get_filename</a>() = 0;
-<a name="l00132"></a>00132 
-<a name="l00138"></a>00138     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> *<a class="code" href="class_hypertable_1_1_cell_store.html#18d2f584431b7572a26a14ad4896d7ba" title="Return a pointer to the trailer object for this cell store.">get_trailer</a>() = 0;
-<a name="l00139"></a>00139 
-<a name="l00140"></a>00140   };
-<a name="l00141"></a>00141 
-<a name="l00142"></a><a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">00142</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;CellStore&gt; <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a>;
-<a name="l00143"></a>00143 
-<a name="l00144"></a>00144 } <span class="comment">// namespace Hypertable</span>
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146 <span class="preprocessor">#endif // HYPERTABLE_CELLSTORE_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:51 2008 for hypertable by&nbsp;
+<a name="l00085"></a>00085     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store.html#cf2b7f1ab5975c3cc85f823d14751a47" title="Opens a cell store with possibly a restricted view.">open</a>(<span class="keyword">const</span> <span class="keywordtype">char</span> *fname, <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#d6c04088883956588cfd69672375f8e4">start_row</a>,
+<a name="l00086"></a>00086                       <span class="keyword">const</span> <span class="keywordtype">char</span> *<a class="code" href="count__stored_8cc.html#c9eab154ce1e711a00b841c6b3705433">end_row</a>) = 0;
+<a name="l00087"></a>00087 
+<a name="l00091"></a>00091     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_cell_store.html#a4b37e4341a35f81329362c69713ccde" title="Loads the block index data into an in-memory map.">load_index</a>() = 0;
+<a name="l00092"></a>00092 
+<a name="l00100"></a>00100     <span class="keyword">virtual</span> uint32_t <a class="code" href="class_hypertable_1_1_cell_store.html#c1b4f7803a736e8367ff75585d3664b9" title="Returns the block size used for this cell store.">get_blocksize</a>() = 0;
+<a name="l00101"></a>00101 
+<a name="l00105"></a>00105     <span class="keyword">virtual</span> int64_t <a class="code" href="class_hypertable_1_1_cell_store.html#d20ca6fc3e1e6c5621a3263fae1a74df" title="Returns the compaction revision of this cell store.">get_revision</a>() = 0;
+<a name="l00106"></a>00106 
+<a name="l00114"></a>00114     <span class="keyword">virtual</span> uint64_t <a class="code" href="class_hypertable_1_1_cell_store.html#377c2aec76bf8994b629f686a436eb0e" title="Returns the disk used by this cell store.">disk_usage</a>() = 0;
+<a name="l00115"></a>00115 
+<a name="l00121"></a>00121     <span class="keyword">virtual</span> <span class="keywordtype">float</span> <a class="code" href="class_hypertable_1_1_cell_store.html#e84ff0548d83f36219bac5e851e163e3" title="Returns block compression ratio of this cell store.">compression_ratio</a>() = 0;
+<a name="l00122"></a>00122 
+<a name="l00128"></a>00128     <span class="keyword">virtual</span> std::string &amp;<a class="code" href="class_hypertable_1_1_cell_store.html#8413f6770992b32ecd78a9c69b30fa70" title="Pathname of cell store file.">get_filename</a>() = 0;
+<a name="l00129"></a>00129 
+<a name="l00135"></a>00135     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_cell_store_trailer.html" title="Abstract base class for cell store trailer.">CellStoreTrailer</a> *<a class="code" href="class_hypertable_1_1_cell_store.html#18d2f584431b7572a26a14ad4896d7ba" title="Return a pointer to the trailer object for this cell store.">get_trailer</a>() = 0;
+<a name="l00136"></a>00136 
+<a name="l00137"></a>00137   };
+<a name="l00138"></a>00138 
+<a name="l00139"></a><a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">00139</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;CellStore&gt; <a class="code" href="namespace_hypertable.html#34b097b6b1b505525d20686878b7c12e">CellStorePtr</a>;
+<a name="l00140"></a>00140 
+<a name="l00141"></a>00141 } <span class="comment">// namespace Hypertable</span>
+<a name="l00142"></a>00142 
+<a name="l00143"></a>00143 <span class="preprocessor">#endif // HYPERTABLE_CELLSTORE_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:42 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

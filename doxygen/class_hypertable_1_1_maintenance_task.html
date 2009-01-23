@@ -49,6 +49,8 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">virtual void&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#e2d5661dae44a8ea260e664ac70968c7">execute</a> ()=0</td></tr>
 
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#d2ed9118a75374691d662bb4b1208c70">increment_attempt_count</a> ()</td></tr>
+
 <tr><td colspan="2"><br><h2>Public Attributes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">boost::xtime&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#69c4131f01f2dee0d57611facd91ee6f">start_time</a></td></tr>
 
@@ -56,6 +58,8 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">bool&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#7899dcbcd7012d544f2d692bc6412ce8">m_retry</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">time_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#5978486ece2db5e2631dba88c34e8784">m_retry_delay_seconds</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">size_t&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_maintenance_task.html#1836d83af6ca4fc6f7de240b3cfe6a91">m_attempts</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -175,7 +179,7 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00044">44</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00045">45</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
 
 </div>
 </div><p>
@@ -201,6 +205,27 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 </div>
 </div><p>
+<a class="anchor" name="d2ed9118a75374691d662bb4b1208c70"></a><!-- doxytag: member="Hypertable::MaintenanceTask::increment_attempt_count" ref="d2ed9118a75374691d662bb4b1208c70" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t Hypertable::MaintenanceTask::increment_attempt_count           </td>
+          <td>(</td>
+          <td class="paramname">          </td>
+          <td>&nbsp;)&nbsp;</td>
+          <td width="100%"><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00048">48</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+
+</div>
+</div><p>
 <hr><h2>Member Data Documentation</h2>
 <a class="anchor" name="69c4131f01f2dee0d57611facd91ee6f"></a><!-- doxytag: member="Hypertable::MaintenanceTask::start_time" ref="69c4131f01f2dee0d57611facd91ee6f" args="" -->
 <div class="memitem">
@@ -215,7 +240,7 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00046">46</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00053">53</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
 
 </div>
 </div><p>
@@ -232,7 +257,7 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00049">49</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00056">56</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
 
 </div>
 </div><p>
@@ -249,13 +274,30 @@ Inheritance diagram for Hypertable::MaintenanceTask:</div>
 
 <p>
 
-<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00050">50</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00057">57</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="1836d83af6ca4fc6f7de240b3cfe6a91"></a><!-- doxytag: member="Hypertable::MaintenanceTask::m_attempts" ref="1836d83af6ca4fc6f7de240b3cfe6a91" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">size_t <a class="el" href="class_hypertable_1_1_maintenance_task.html#1836d83af6ca4fc6f7de240b3cfe6a91">Hypertable::MaintenanceTask::m_attempts</a><code> [private]</code>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_maintenance_task_8h-source.html#l00058">58</a> of file <a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following file:<ul>
 <li>/Users/doug/src/hypertable/src/cc/Hypertable/RangeServer/<a class="el" href="_maintenance_task_8h-source.html">MaintenanceTask.h</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:38:17 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:24 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

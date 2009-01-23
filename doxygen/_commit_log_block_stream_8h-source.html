@@ -56,26 +56,28 @@
 <a name="l00058"></a>00058 
 <a name="l00059"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#dcfa43da34b5ae9eb91263e4791833f2">00059</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#dcfa43da34b5ae9eb91263e4791833f2">get_fname</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#fadf36ac4572341bd86d0aefecfd8110">m_fname</a>; }
 <a name="l00060"></a>00060 
-<a name="l00061"></a>00061   <span class="keyword">private</span>:
+<a name="l00061"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cad7d888149d6c14f3a19e427a1388e7">00061</a>     <span class="keyword">static</span> <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cad7d888149d6c14f3a19e427a1388e7">ms_assert_on_error</a>;
 <a name="l00062"></a>00062 
-<a name="l00063"></a>00063     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#2dfd8ef9afe7970e18ca757b2bd05b60">load_next_valid_header</a>(<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header);
+<a name="l00063"></a>00063   <span class="keyword">private</span>:
 <a name="l00064"></a>00064 
-<a name="l00065"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#efddc750da70933ecba1321d53695363">00065</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>   *<a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#efddc750da70933ecba1321d53695363">m_fs</a>;
-<a name="l00066"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cc3c8df48ddbb0e35e3df48b29b453c1">00066</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>        <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cc3c8df48ddbb0e35e3df48b29b453c1">m_fragment</a>;
-<a name="l00067"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#fadf36ac4572341bd86d0aefecfd8110">00067</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>        <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#fadf36ac4572341bd86d0aefecfd8110">m_fname</a>;
-<a name="l00068"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#c483c3a5c4e06c10c06a067427f3bc87">00068</a>     int32_t       <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#c483c3a5c4e06c10c06a067427f3bc87">m_fd</a>;
-<a name="l00069"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#1d84cbf398c3991b468344ebae752ff2">00069</a>     uint64_t      <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#1d84cbf398c3991b468344ebae752ff2">m_cur_offset</a>;
-<a name="l00070"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#56d2bead78f7d20a9bc3b80b151a412a">00070</a>     uint64_t      <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#56d2bead78f7d20a9bc3b80b151a412a">m_file_length</a>;
-<a name="l00071"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#73bc4d51bc5f5f0bd7ddf3b9aa056bc0">00071</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#73bc4d51bc5f5f0bd7ddf3b9aa056bc0">m_block_buffer</a>;
-<a name="l00072"></a>00072   };
-<a name="l00073"></a>00073 
-<a name="l00074"></a><a class="code" href="namespace_hypertable.html#f7af6144ebecedbd3eea989ef616c788">00074</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;CommitLogBlockStream&gt; <a class="code" href="namespace_hypertable.html#f7af6144ebecedbd3eea989ef616c788">CommitLogBlockStreamPtr</a>;
+<a name="l00065"></a>00065     <span class="keywordtype">int</span> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#2dfd8ef9afe7970e18ca757b2bd05b60">load_next_valid_header</a>(<a class="code" href="class_hypertable_1_1_block_compression_header_commit_log.html" title="Base class for compressed block header for Cell Store blocks.">BlockCompressionHeaderCommitLog</a> *header);
+<a name="l00066"></a>00066 
+<a name="l00067"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#efddc750da70933ecba1321d53695363">00067</a>     <a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a>   *<a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#efddc750da70933ecba1321d53695363">m_fs</a>;
+<a name="l00068"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cc3c8df48ddbb0e35e3df48b29b453c1">00068</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>        <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#cc3c8df48ddbb0e35e3df48b29b453c1">m_fragment</a>;
+<a name="l00069"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#fadf36ac4572341bd86d0aefecfd8110">00069</a>     <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a>        <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#fadf36ac4572341bd86d0aefecfd8110">m_fname</a>;
+<a name="l00070"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#c483c3a5c4e06c10c06a067427f3bc87">00070</a>     int32_t       <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#c483c3a5c4e06c10c06a067427f3bc87">m_fd</a>;
+<a name="l00071"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#1d84cbf398c3991b468344ebae752ff2">00071</a>     uint64_t      <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#1d84cbf398c3991b468344ebae752ff2">m_cur_offset</a>;
+<a name="l00072"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#56d2bead78f7d20a9bc3b80b151a412a">00072</a>     uint64_t      <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#56d2bead78f7d20a9bc3b80b151a412a">m_file_length</a>;
+<a name="l00073"></a><a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#73bc4d51bc5f5f0bd7ddf3b9aa056bc0">00073</a>     <a class="code" href="class_hypertable_1_1_dynamic_buffer.html">DynamicBuffer</a> <a class="code" href="class_hypertable_1_1_commit_log_block_stream.html#73bc4d51bc5f5f0bd7ddf3b9aa056bc0">m_block_buffer</a>;
+<a name="l00074"></a>00074   };
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076 }
+<a name="l00076"></a><a class="code" href="namespace_hypertable.html#f7af6144ebecedbd3eea989ef616c788">00076</a>   <span class="keyword">typedef</span> intrusive_ptr&lt;CommitLogBlockStream&gt; <a class="code" href="namespace_hypertable.html#f7af6144ebecedbd3eea989ef616c788">CommitLogBlockStreamPtr</a>;
 <a name="l00077"></a>00077 
-<a name="l00078"></a>00078 <span class="preprocessor">#endif // HYPERTABLE_COMMITLOGBLOCKSTREAM_H</span>
-<a name="l00079"></a>00079 <span class="preprocessor"></span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
+<a name="l00078"></a>00078 }
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 <span class="preprocessor">#endif // HYPERTABLE_COMMITLOGBLOCKSTREAM_H</span>
+<a name="l00081"></a>00081 <span class="preprocessor"></span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:40 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

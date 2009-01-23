@@ -20,176 +20,251 @@
 <a name="l00022"></a>00022 <span class="preprocessor">#ifndef HYPERTABLE_PROPERTIES_H</span>
 <a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define HYPERTABLE_PROPERTIES_H</span>
 <a name="l00024"></a>00024 <span class="preprocessor"></span>
-<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;boost/program_options.hpp&gt;</span>
-<a name="l00026"></a>00026 
-<a name="l00027"></a>00027 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
-<a name="l00028"></a>00028 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
+<a name="l00025"></a>00025 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00026"></a>00026 <span class="preprocessor">#include &lt;string&gt;</span>
+<a name="l00027"></a>00027 <span class="preprocessor">#include &lt;boost/version.hpp&gt;</span>
+<a name="l00028"></a>00028 <span class="preprocessor">#include &lt;boost/any.hpp&gt;</span>
 <a name="l00029"></a>00029 
-<a name="l00030"></a><a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437">00030</a> <span class="preprocessor">#define HT_PROPERTIES_ABBR_ACCESSORS \</span>
-<a name="l00031"></a>00031 <span class="preprocessor">  inline bool get_bool(const String &amp;name) { return get&lt;bool&gt;(name); } \</span>
-<a name="l00032"></a>00032 <span class="preprocessor">  inline String get_str(const String &amp;name) { return get&lt;String&gt;(name); } \</span>
-<a name="l00033"></a>00033 <span class="preprocessor">  inline uint16_t get_i16(const String &amp;name) { return get&lt;uint16_t&gt;(name); } \</span>
-<a name="l00034"></a>00034 <span class="preprocessor">  inline int32_t get_i32(const String &amp;name) { return get&lt;int32_t&gt;(name); } \</span>
-<a name="l00035"></a>00035 <span class="preprocessor">  inline int64_t get_i64(const String &amp;name) { return get&lt;int64_t&gt;(name); } \</span>
-<a name="l00036"></a>00036 <span class="preprocessor">  inline bool get_bool(const String &amp;name, bool default_value) { \</span>
-<a name="l00037"></a>00037 <span class="preprocessor">    return get(name, default_value); \</span>
-<a name="l00038"></a>00038 <span class="preprocessor">  } \</span>
-<a name="l00039"></a>00039 <span class="preprocessor">  inline String get_str(const String &amp;name, const String &amp;default_value) { \</span>
-<a name="l00040"></a>00040 <span class="preprocessor">    return get(name, default_value); \</span>
-<a name="l00041"></a>00041 <span class="preprocessor">  } \</span>
-<a name="l00042"></a>00042 <span class="preprocessor">  inline uint16_t get_i16(const String &amp;name, uint16_t default_value) { \</span>
-<a name="l00043"></a>00043 <span class="preprocessor">    return get(name, default_value); \</span>
-<a name="l00044"></a>00044 <span class="preprocessor">  } \</span>
-<a name="l00045"></a>00045 <span class="preprocessor">  inline int32_t get_i32(const String &amp;name, int32_t default_value) { \</span>
-<a name="l00046"></a>00046 <span class="preprocessor">    return get(name, default_value); \</span>
-<a name="l00047"></a>00047 <span class="preprocessor">  } \</span>
-<a name="l00048"></a>00048 <span class="preprocessor">  inline int64_t get_i64(const String &amp;name, int64_t default_value) { \</span>
-<a name="l00049"></a>00049 <span class="preprocessor">    return get(name, default_value); \</span>
-<a name="l00050"></a>00050 <span class="preprocessor">  }</span>
-<a name="l00051"></a>00051 <span class="preprocessor"></span>
-<a name="l00052"></a>00052 <span class="keyword">namespace </span>Hypertable {
+<a name="l00030"></a>00030 <span class="comment">// Required declarations for custom validators *before* including the header,</span>
+<a name="l00031"></a>00031 <span class="comment">// otherwise no overloading would happen in standard conforming compilers.</span>
+<a name="l00032"></a>00032 <span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>program_options {
+<a name="l00033"></a>00033 
+<a name="l00034"></a><a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">00034</a> <span class="keyword">typedef</span> std::vector&lt;std::string&gt; <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a>;
+<a name="l00035"></a><a class="code" href="namespaceboost_1_1program__options.html#3059f5cbda9544dfd6444949763cfd02">00035</a> <span class="keyword">typedef</span> std::vector&lt;int64_t&gt; <a class="code" href="namespaceboost_1_1program__options.html#3059f5cbda9544dfd6444949763cfd02">Int64s</a>;
+<a name="l00036"></a>00036 
+<a name="l00037"></a>00037 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(boost::any &amp;v, <span class="keyword">const</span> <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> &amp;values, int64_t *, <span class="keywordtype">int</span>);
+<a name="l00038"></a>00038 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(boost::any &amp;v, <span class="keyword">const</span> <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> &amp;values, int32_t *, <span class="keywordtype">int</span>);
+<a name="l00039"></a>00039 <span class="keyword">extern</span> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(boost::any &amp;v, <span class="keyword">const</span> <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> &amp;values, uint16_t *, <span class="keywordtype">int</span>);
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041 <span class="comment">// pre 1.35 vector&lt;T&gt; validate doesn't pickup user defined validate for T</span>
+<a name="l00042"></a>00042 <span class="preprocessor">#if BOOST_VERSION &lt; 103500</span>
+<a name="l00043"></a>00043 <span class="preprocessor"></span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
+<a name="l00044"></a>00044 <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(boost::any&amp; v, <span class="keyword">const</span> <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> &amp;s, std::vector&lt;T&gt;*, <span class="keywordtype">int</span>);
+<a name="l00045"></a>00045 <span class="preprocessor">#endif</span>
+<a name="l00046"></a>00046 <span class="preprocessor"></span>
+<a name="l00047"></a>00047 }} <span class="comment">// namespace boost::program_options</span>
+<a name="l00048"></a>00048 
+<a name="l00049"></a>00049 <span class="preprocessor">#include &lt;boost/program_options.hpp&gt;</span>
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051 <span class="preprocessor">#include "<a class="code" href="_reference_count_8h.html">Common/ReferenceCount.h</a>"</span>
+<a name="l00052"></a>00052 <span class="preprocessor">#include "<a class="code" href="_error_8h.html">Common/Error.h</a>"</span>
 <a name="l00053"></a>00053 
-<a name="l00054"></a>00054 <span class="keyword">namespace </span>Po = boost::program_options;
+<a name="l00054"></a>00054 <span class="keyword">namespace </span>boost { <span class="keyword">namespace </span>program_options {
 <a name="l00055"></a>00055 
-<a name="l00056"></a><a class="code" href="namespace_hypertable_1_1_property.html">00056</a> <span class="keyword">namespace </span>Property {
-<a name="l00057"></a>00057 
-<a name="l00058"></a><a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">00058</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">K</a> = 1000;
-<a name="l00059"></a><a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">00059</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">KiB</a> = 1024;
-<a name="l00060"></a><a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">00060</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a> = <a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">K</a> * 1000;
-<a name="l00061"></a><a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">00061</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">MiB</a> = <a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">KiB</a> * 1024;
-<a name="l00062"></a><a class="code" href="namespace_hypertable_1_1_property.html#870ab8abaaea4256b9f153095d6da53b">00062</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#870ab8abaaea4256b9f153095d6da53b">G</a> = <a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a> * 1000;
-<a name="l00063"></a><a class="code" href="namespace_hypertable_1_1_property.html#8899637cb631e238d965ef9f62a07222">00063</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#8899637cb631e238d965ef9f62a07222">GiB</a> = <a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">MiB</a> * 1024;
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065 <span class="comment">// Abbrs for some common types</span>
-<a name="l00066"></a><a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">00066</a> <span class="keyword">inline</span> Po::typed_value&lt;bool&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>() { <span class="keywordflow">return</span> Po::value&lt;bool&gt;(); }
-<a name="l00067"></a><a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">00067</a> <span class="keyword">inline</span> Po::typed_value&lt;String&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>() { <span class="keywordflow">return</span> Po::value&lt;String&gt;(); }
-<a name="l00068"></a><a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">00068</a> <span class="keyword">inline</span> Po::typed_value&lt;uint16_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>() { <span class="keywordflow">return</span> Po::value&lt;uint16_t&gt;(); }
-<a name="l00069"></a><a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">00069</a> <span class="keyword">inline</span> Po::typed_value&lt;int32_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>() { <span class="keywordflow">return</span> Po::value&lt;int32_t&gt;(); }
-<a name="l00070"></a><a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">00070</a> <span class="keyword">inline</span> Po::typed_value&lt;int64_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>() { <span class="keywordflow">return</span> Po::value&lt;int64_t&gt;(); }
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072 } <span class="comment">// namespace Property</span>
-<a name="l00073"></a>00073 
-<a name="l00074"></a><a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">00074</a> <span class="keyword">typedef</span> Po::options_description <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a>;
-<a name="l00075"></a><a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">00075</a> <span class="keyword">typedef</span> Po::positional_options_description <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a>;
-<a name="l00076"></a>00076 
-<a name="l00077"></a><a class="code" href="class_hypertable_1_1_properties.html">00077</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_properties.html">Properties</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
-<a name="l00078"></a><a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">00078</a>   <span class="keyword">typedef</span> Po::variable_value <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>;
-<a name="l00079"></a><a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">00079</a>   <span class="keyword">typedef</span> Po::variables_map <a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a>;
-<a name="l00080"></a><a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">00080</a>   <span class="keyword">typedef</span> std::map&lt;String, String&gt; <a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a>;
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082 <span class="keyword">public</span>:
-<a name="l00083"></a><a class="code" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">00083</a>   <a class="code" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">Properties</a>() : <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a>(false) {}
-<a name="l00084"></a>00084 
-<a name="l00092"></a>00092   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#ad5d5482e096b7cde40ede788cc22b14" title="load a property config file">load</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
-<a name="l00093"></a>00093             <span class="keywordtype">bool</span> allow_unregistered = <span class="keyword">false</span>);
-<a name="l00094"></a>00094 
-<a name="l00104"></a>00104   <span class="keywordtype">void</span>
-<a name="l00105"></a>00105   <a class="code" href="class_hypertable_1_1_properties.html#ecc842535ce878c244e90804564dd50e" title="Parse arguments.">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
-<a name="l00106"></a>00106              <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden = 0, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p = 0);
-<a name="l00107"></a>00107 
-<a name="l00111"></a>00111   <span class="keywordtype">void</span>
-<a name="l00112"></a>00112   <a class="code" href="class_hypertable_1_1_properties.html#ecc842535ce878c244e90804564dd50e" title="Parse arguments.">parse_args</a>(<span class="keyword">const</span> std::vector&lt;String&gt; &amp;args, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
-<a name="l00113"></a>00113              <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden = 0, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p = 0);
-<a name="l00114"></a>00114 
-<a name="l00120"></a>00120   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00121"></a><a class="code" href="class_hypertable_1_1_properties.html#d072be099f1311b186b9a0efa7987a1e">00121</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) <span class="keyword">const</span> {
-<a name="l00122"></a>00122     <span class="keywordflow">try</span> { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>[name].template as&lt;T&gt;(); }
-<a name="l00123"></a>00123     <span class="keywordflow">catch</span> (std::exception &amp;e) {
-<a name="l00124"></a>00124       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a9dd4fe6b9937bd8443cbc05d4949411">Error::CONFIG_GET_ERROR</a>, <span class="stringliteral">"getting value of %s: %s"</span>,
-<a name="l00125"></a>00125                 name.c_str(), e.what());
-<a name="l00126"></a>00126     }
-<a name="l00127"></a>00127   }
-<a name="l00128"></a>00128 
-<a name="l00138"></a>00138   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00139"></a><a class="code" href="class_hypertable_1_1_properties.html#e1f94f80d45743fd461e0284f062f1a5">00139</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> T &amp;default_value) <span class="keyword">const</span> {
-<a name="l00140"></a>00140     <span class="keywordflow">try</span> {
-<a name="l00141"></a>00141       Map::const_iterator it = <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.find(name);
-<a name="l00142"></a>00142 
-<a name="l00143"></a>00143       <span class="keywordflow">if</span> (it != <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.end())
-<a name="l00144"></a>00144         <span class="keywordflow">return</span> (*it).second.template as&lt;T&gt;();
-<a name="l00145"></a>00145 
-<a name="l00146"></a>00146       <span class="keywordflow">return</span> default_value;
-<a name="l00147"></a>00147     }
-<a name="l00148"></a>00148     <span class="keywordflow">catch</span> (std::exception &amp;e) {
-<a name="l00149"></a>00149       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a9dd4fe6b9937bd8443cbc05d4949411">Error::CONFIG_GET_ERROR</a>, <span class="stringliteral">"getting value of %s: %s"</span>,
-<a name="l00150"></a>00150                 name.c_str(), e.what());
-<a name="l00151"></a>00151     }
-<a name="l00152"></a>00152   }
-<a name="l00153"></a>00153 
-<a name="l00160"></a><a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00">00160</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
-<a name="l00161"></a>00161     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>[name].defaulted();
-<a name="l00162"></a>00162   }
-<a name="l00163"></a>00163 
-<a name="l00164"></a><a class="code" href="class_hypertable_1_1_properties.html#a1e685b910c846108ddd858523c19c57">00164</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#a1e685b910c846108ddd858523c19c57">has</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.count(name); }
+<a name="l00056"></a>00056 <span class="comment">// pre 1.35 vector&lt;T&gt; validate doesn't pickup user defined validate for T</span>
+<a name="l00057"></a>00057 <span class="preprocessor">#if BOOST_VERSION &lt; 103500</span>
+<a name="l00058"></a>00058 <span class="preprocessor"></span><span class="keyword">template</span>&lt;<span class="keyword">typename</span> T&gt;
+<a name="l00059"></a><a class="code" href="namespaceboost_1_1program__options.html#b8ddce504dcd12848b53d8e3a48cc844">00059</a> <span class="keywordtype">void</span> <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(boost::any&amp; v, <span class="keyword">const</span> <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> &amp;s, std::vector&lt;T&gt;*, <span class="keywordtype">int</span>) {
+<a name="l00060"></a>00060   <span class="keywordflow">if</span> (v.empty())
+<a name="l00061"></a>00061       v = boost::any(std::vector&lt;T&gt;());
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063   std::vector&lt;T&gt;* tv = boost::any_cast&lt; std::vector&lt;T&gt; &gt;(&amp;v);
+<a name="l00064"></a>00064   assert(NULL != tv);
+<a name="l00065"></a>00065 
+<a name="l00066"></a>00066   <span class="keywordflow">for</span> (<span class="keywordtype">unsigned</span> i = 0; i &lt; s.size(); ++i) {
+<a name="l00067"></a>00067     <span class="keywordflow">try</span> {
+<a name="l00068"></a>00068       <span class="comment">// so we can pick up user defined validate for T here</span>
+<a name="l00069"></a>00069       boost::any a;
+<a name="l00070"></a>00070       <a class="code" href="namespaceboost_1_1program__options.html#d34bf8a7fb6c710088c537d0c93a94b5">Strings</a> sv;
+<a name="l00071"></a>00071       sv.push_back(s[i]);
+<a name="l00072"></a>00072       <a class="code" href="namespaceboost_1_1program__options.html#8068aae7d7fe297fc60e8ca779ca94b6">validate</a>(a, sv, (T*)0, 0);
+<a name="l00073"></a>00073       tv-&gt;push_back(boost::any_cast&lt;T&gt;(a));
+<a name="l00074"></a>00074     }
+<a name="l00075"></a>00075     <span class="keywordflow">catch</span>(<span class="keyword">const</span> bad_lexical_cast&amp; <span class="comment">/*e*/</span>) {
+<a name="l00076"></a>00076       boost::throw_exception(invalid_option_value(s[i]));
+<a name="l00077"></a>00077     }
+<a name="l00078"></a>00078   }
+<a name="l00079"></a>00079 }
+<a name="l00080"></a>00080 <span class="preprocessor">#endif // &lt; boost 1.35</span>
+<a name="l00081"></a>00081 <span class="preprocessor"></span>
+<a name="l00082"></a>00082 }} <span class="comment">// namespace boost::program_options</span>
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084 <span class="comment">// convenience/abbreviated accessors</span>
+<a name="l00085"></a><a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437">00085</a> <span class="preprocessor">#define HT_PROPERTIES_ABBR_ACCESSORS \</span>
+<a name="l00086"></a>00086 <span class="preprocessor">  inline bool get_bool(const String &amp;name) { return get&lt;bool&gt;(name); } \</span>
+<a name="l00087"></a>00087 <span class="preprocessor">  inline String get_str(const String &amp;name) { return get&lt;String&gt;(name); } \</span>
+<a name="l00088"></a>00088 <span class="preprocessor">  inline Strings get_strs(const String &amp;name) { return get&lt;Strings&gt;(name); } \</span>
+<a name="l00089"></a>00089 <span class="preprocessor">  inline uint16_t get_i16(const String &amp;name) { return get&lt;uint16_t&gt;(name); } \</span>
+<a name="l00090"></a>00090 <span class="preprocessor">  inline int32_t get_i32(const String &amp;name) { return get&lt;int32_t&gt;(name); } \</span>
+<a name="l00091"></a>00091 <span class="preprocessor">  inline int64_t get_i64(const String &amp;name) { return get&lt;int64_t&gt;(name); } \</span>
+<a name="l00092"></a>00092 <span class="preprocessor">  inline Int64s get_i64s(const String &amp;name) { return get&lt;Int64s&gt;(name); } \</span>
+<a name="l00093"></a>00093 <span class="preprocessor">  inline bool get_bool(const String &amp;name, bool default_value) { \</span>
+<a name="l00094"></a>00094 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00095"></a>00095 <span class="preprocessor">  } \</span>
+<a name="l00096"></a>00096 <span class="preprocessor">  inline String get_str(const String &amp;name, const String &amp;default_value) { \</span>
+<a name="l00097"></a>00097 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00098"></a>00098 <span class="preprocessor">  } \</span>
+<a name="l00099"></a>00099 <span class="preprocessor">  inline Strings get_strs(const String &amp;name, const Strings &amp;default_value) { \</span>
+<a name="l00100"></a>00100 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00101"></a>00101 <span class="preprocessor">  } \</span>
+<a name="l00102"></a>00102 <span class="preprocessor">  inline uint16_t get_i16(const String &amp;name, uint16_t default_value) { \</span>
+<a name="l00103"></a>00103 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00104"></a>00104 <span class="preprocessor">  } \</span>
+<a name="l00105"></a>00105 <span class="preprocessor">  inline int32_t get_i32(const String &amp;name, int32_t default_value) { \</span>
+<a name="l00106"></a>00106 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00107"></a>00107 <span class="preprocessor">  } \</span>
+<a name="l00108"></a>00108 <span class="preprocessor">  inline int64_t get_i64(const String &amp;name, int64_t default_value) { \</span>
+<a name="l00109"></a>00109 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00110"></a>00110 <span class="preprocessor">  } \</span>
+<a name="l00111"></a>00111 <span class="preprocessor">  inline Int64s get_i64s(const String &amp;name, const Int64s &amp;default_value) { \</span>
+<a name="l00112"></a>00112 <span class="preprocessor">    return get(name, default_value); \</span>
+<a name="l00113"></a>00113 <span class="preprocessor">  }</span>
+<a name="l00114"></a>00114 <span class="preprocessor"></span>
+<a name="l00115"></a>00115 <span class="keyword">namespace </span>Hypertable {
+<a name="l00116"></a>00116 
+<a name="l00117"></a>00117 <span class="keyword">namespace </span>Po = boost::program_options;
+<a name="l00118"></a>00118 
+<a name="l00119"></a><a class="code" href="namespace_hypertable.html#2406ce0ea57a82c53f8635a4911a0886">00119</a> <span class="keyword">typedef</span> std::vector&lt;String&gt; <a class="code" href="namespace_hypertable.html#2406ce0ea57a82c53f8635a4911a0886">Strings</a>;
+<a name="l00120"></a><a class="code" href="namespace_hypertable.html#02875f59f44edb71d4cd1adb0a144de9">00120</a> <span class="keyword">typedef</span> std::vector&lt;int64_t&gt; <a class="code" href="namespace_hypertable.html#02875f59f44edb71d4cd1adb0a144de9">Int64s</a>;
+<a name="l00121"></a>00121 
+<a name="l00122"></a><a class="code" href="namespace_hypertable_1_1_property.html">00122</a> <span class="keyword">namespace </span>Property {
+<a name="l00123"></a>00123 
+<a name="l00124"></a><a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">00124</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">K</a> = 1000;
+<a name="l00125"></a><a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">00125</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">KiB</a> = 1024;
+<a name="l00126"></a><a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">00126</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a> = <a class="code" href="namespace_hypertable_1_1_property.html#b4c8455cb33bbca3bd132a442ca10145">K</a> * 1000;
+<a name="l00127"></a><a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">00127</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">MiB</a> = <a class="code" href="namespace_hypertable_1_1_property.html#6d8ad320f17858647e09f67cdee41d03">KiB</a> * 1024;
+<a name="l00128"></a><a class="code" href="namespace_hypertable_1_1_property.html#870ab8abaaea4256b9f153095d6da53b">00128</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#870ab8abaaea4256b9f153095d6da53b">G</a> = <a class="code" href="namespace_hypertable_1_1_property.html#c8396c19956cb74dd8abfde1f18be57b">M</a> * 1000;
+<a name="l00129"></a><a class="code" href="namespace_hypertable_1_1_property.html#8899637cb631e238d965ef9f62a07222">00129</a> <span class="keyword">const</span> uint64_t <a class="code" href="namespace_hypertable_1_1_property.html#8899637cb631e238d965ef9f62a07222">GiB</a> = <a class="code" href="namespace_hypertable_1_1_property.html#d6c3a5b45ba68e0b3d184baa05262700">MiB</a> * 1024;
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 <span class="comment">// Abbrs for some common types</span>
+<a name="l00132"></a><a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">00132</a> <span class="keyword">inline</span> Po::typed_value&lt;bool&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#2ff9d7a0e0eb0be0f9fcfcc7c1668a68">boo</a>() { <span class="keywordflow">return</span> Po::value&lt;bool&gt;(); }
+<a name="l00133"></a><a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">00133</a> <span class="keyword">inline</span> Po::typed_value&lt;String&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#85c9eccd71abb77e3c7b42ea81dc9ac4">str</a>() { <span class="keywordflow">return</span> Po::value&lt;String&gt;(); }
+<a name="l00134"></a><a class="code" href="namespace_hypertable_1_1_property.html#dbb066ebd77c2dc7aefebe2bdcfc0f42">00134</a> <span class="keyword">inline</span> Po::typed_value&lt;Strings&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#dbb066ebd77c2dc7aefebe2bdcfc0f42">strs</a>() { <span class="keywordflow">return</span> Po::value&lt;Strings&gt;(); }
+<a name="l00135"></a><a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">00135</a> <span class="keyword">inline</span> Po::typed_value&lt;uint16_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#3e4583b1dd7beb7c84454a882093ce00">i16</a>() { <span class="keywordflow">return</span> Po::value&lt;uint16_t&gt;(); }
+<a name="l00136"></a><a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">00136</a> <span class="keyword">inline</span> Po::typed_value&lt;int32_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#b6662b85fbafef892b60552ee13e3b61">i32</a>() { <span class="keywordflow">return</span> Po::value&lt;int32_t&gt;(); }
+<a name="l00137"></a><a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">00137</a> <span class="keyword">inline</span> Po::typed_value&lt;int64_t&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#755543720206b91972fdc663b46a6fef">i64</a>() { <span class="keywordflow">return</span> Po::value&lt;int64_t&gt;(); }
+<a name="l00138"></a><a class="code" href="namespace_hypertable_1_1_property.html#271caab10447458b93605f572ab6a27c">00138</a> <span class="keyword">inline</span> Po::typed_value&lt;Int64s&gt; *<a class="code" href="namespace_hypertable_1_1_property.html#271caab10447458b93605f572ab6a27c">i64s</a>() { <span class="keywordflow">return</span> Po::value&lt;Int64s&gt;(); }
+<a name="l00139"></a>00139 
+<a name="l00140"></a>00140 } <span class="comment">// namespace Property</span>
+<a name="l00141"></a>00141 
+<a name="l00142"></a><a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">00142</a> <span class="keyword">typedef</span> Po::options_description <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a>;
+<a name="l00143"></a><a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">00143</a> <span class="keyword">typedef</span> Po::positional_options_description <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a>;
+<a name="l00144"></a>00144 
+<a name="l00145"></a><a class="code" href="class_hypertable_1_1_properties.html">00145</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_properties.html">Properties</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00146"></a><a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">00146</a>   <span class="keyword">typedef</span> Po::variable_value <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>;
+<a name="l00147"></a><a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">00147</a>   <span class="keyword">typedef</span> Po::variables_map <a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a>;
+<a name="l00148"></a><a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">00148</a>   <span class="keyword">typedef</span> std::map&lt;String, String&gt; <a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a>;
+<a name="l00149"></a>00149 
+<a name="l00150"></a>00150 <span class="keyword">public</span>:
+<a name="l00151"></a><a class="code" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">00151</a>   <a class="code" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">Properties</a>() : <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a>(false) {}
+<a name="l00152"></a><a class="code" href="class_hypertable_1_1_properties.html#9a06b350fe736c42282742a5972972c4">00152</a>   <a class="code" href="class_hypertable_1_1_properties.html#83cc7769158ae22c9309950c06dcd358">Properties</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
+<a name="l00153"></a>00153              <span class="keywordtype">bool</span> allow_unregistered = <span class="keyword">false</span>)
+<a name="l00154"></a>00154     : <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a>(false) { <a class="code" href="class_hypertable_1_1_properties.html#ad5d5482e096b7cde40ede788cc22b14" title="load a property config file">load</a>(filename, desc, allow_unregistered); }
+<a name="l00155"></a>00155 
+<a name="l00163"></a>00163   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#ad5d5482e096b7cde40ede788cc22b14" title="load a property config file">load</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;<a class="code" href="namespace_hypertable_1_1_config.html#7baecce376f227f99664f0b4ee8609ca" title="config filename">filename</a>, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
+<a name="l00164"></a>00164             <span class="keywordtype">bool</span> allow_unregistered = <span class="keyword">false</span>);
 <a name="l00165"></a>00165 
-<a name="l00166"></a>00166   <a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">HT_PROPERTIES_ABBR_ACCESSORS</a>
-<a name="l00167"></a>00167 
-<a name="l00175"></a>00175   std::pair&lt;Map::iterator, bool&gt;
-<a name="l00176"></a><a class="code" href="class_hypertable_1_1_properties.html#ec044270001df58122691e93d0a3912b">00176</a>   <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> boost::any &amp;v, <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a> = <span class="keyword">false</span>) {
-<a name="l00177"></a>00177     <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a> = <span class="keyword">true</span>;
-<a name="l00178"></a>00178     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.insert(Map::value_type(name, <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>(v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>)));
-<a name="l00179"></a>00179   }
-<a name="l00180"></a>00180 
-<a name="l00188"></a><a class="code" href="class_hypertable_1_1_properties.html#c434d274194953e8e2e6bda0689adf76">00188</a>   <span class="keywordtype">void</span> <span class="keyword">set</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> boost::any &amp;v, <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a> = <span class="keyword">false</span>) {
-<a name="l00189"></a>00189     std::pair&lt;Map::iterator, bool&gt; r = <span class="keyword">add</span>(name, v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>);
-<a name="l00190"></a>00190 
-<a name="l00191"></a>00191     <span class="keywordflow">if</span> (!r.second)
-<a name="l00192"></a>00192       (*r.first).second = <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>(v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>);
-<a name="l00193"></a>00193   }
-<a name="l00194"></a>00194 
-<a name="l00203"></a>00203   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#a50cb77f3fa27d5621c6461f97ebf83a" title="Setup an property alias.">alias</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;primary, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;secondary,
-<a name="l00204"></a>00204              <span class="keywordtype">bool</span> overwrite = <span class="keyword">false</span>);
-<a name="l00205"></a>00205 
-<a name="l00211"></a>00211   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#5af13ff84fb25196bf68487f8e4956e3" title="Sync alias values.">sync_aliases</a>();
-<a name="l00212"></a>00212 
-<a name="l00219"></a>00219   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#5fa712d3f1a38ccd95def59e5166e9f1" title="Print config key-value map.">print</a>(std::ostream &amp;out, <span class="keywordtype">bool</span> include_default = <span class="keyword">false</span>);
-<a name="l00220"></a>00220 
-<a name="l00224"></a>00224   <span class="keyword">static</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_properties.html#60cec1a50f42deac183b212769ccd3b8" title="Helper to print boost::any used by property values.">to_str</a>(<span class="keyword">const</span> boost::any &amp;);
-<a name="l00225"></a>00225 
-<a name="l00226"></a>00226 <span class="keyword">private</span>:
-<a name="l00227"></a><a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">00227</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a>;
-<a name="l00228"></a><a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">00228</a>   <a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>;
-<a name="l00229"></a><a class="code" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">00229</a>   <a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a> <a class="code" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">m_alias_map</a>;
-<a name="l00230"></a>00230 };
-<a name="l00231"></a>00231 
-<a name="l00232"></a><a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">00232</a> <span class="keyword">typedef</span> intrusive_ptr&lt;Properties&gt; <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a>;
+<a name="l00175"></a>00175   <span class="keywordtype">void</span>
+<a name="l00176"></a>00176   <a class="code" href="class_hypertable_1_1_properties.html#ecc842535ce878c244e90804564dd50e" title="Parse arguments.">parse_args</a>(<span class="keywordtype">int</span> argc, <span class="keywordtype">char</span> *argv[], <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
+<a name="l00177"></a>00177              <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden = 0, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p = 0);
+<a name="l00178"></a>00178 
+<a name="l00182"></a>00182   <span class="keywordtype">void</span>
+<a name="l00183"></a>00183   <a class="code" href="class_hypertable_1_1_properties.html#ecc842535ce878c244e90804564dd50e" title="Parse arguments.">parse_args</a>(<span class="keyword">const</span> std::vector&lt;String&gt; &amp;args, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> &amp;desc,
+<a name="l00184"></a>00184              <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#054109b96c200e93e48a85284e14d265">PropertiesDesc</a> *hidden = 0, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#a59036b4bb8f2c0a13b86eab5dc62b2a">PositionalDesc</a> *p = 0);
+<a name="l00185"></a>00185 
+<a name="l00191"></a>00191   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00192"></a><a class="code" href="class_hypertable_1_1_properties.html#d072be099f1311b186b9a0efa7987a1e">00192</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) <span class="keyword">const</span> {
+<a name="l00193"></a>00193     <span class="keywordflow">try</span> { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>[name].template as&lt;T&gt;(); }
+<a name="l00194"></a>00194     <span class="keywordflow">catch</span> (std::exception &amp;e) {
+<a name="l00195"></a>00195       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a9dd4fe6b9937bd8443cbc05d4949411">Error::CONFIG_GET_ERROR</a>, <span class="stringliteral">"getting value of %s: %s"</span>,
+<a name="l00196"></a>00196                 name.c_str(), e.what());
+<a name="l00197"></a>00197     }
+<a name="l00198"></a>00198   }
+<a name="l00199"></a>00199 
+<a name="l00209"></a>00209   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00210"></a><a class="code" href="class_hypertable_1_1_properties.html#e1f94f80d45743fd461e0284f062f1a5">00210</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> T &amp;default_value) <span class="keyword">const</span> {
+<a name="l00211"></a>00211     <span class="keywordflow">try</span> {
+<a name="l00212"></a>00212       Map::const_iterator it = <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.find(name);
+<a name="l00213"></a>00213 
+<a name="l00214"></a>00214       <span class="keywordflow">if</span> (it != <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.end())
+<a name="l00215"></a>00215         <span class="keywordflow">return</span> (*it).second.template as&lt;T&gt;();
+<a name="l00216"></a>00216 
+<a name="l00217"></a>00217       <span class="keywordflow">return</span> default_value;
+<a name="l00218"></a>00218     }
+<a name="l00219"></a>00219     <span class="keywordflow">catch</span> (std::exception &amp;e) {
+<a name="l00220"></a>00220       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b2a9dd4fe6b9937bd8443cbc05d4949411">Error::CONFIG_GET_ERROR</a>, <span class="stringliteral">"getting value of %s: %s"</span>,
+<a name="l00221"></a>00221                 name.c_str(), e.what());
+<a name="l00222"></a>00222     }
+<a name="l00223"></a>00223   }
+<a name="l00224"></a>00224 
+<a name="l00230"></a><a class="code" href="class_hypertable_1_1_properties.html#31733269f5574fbc3115fb91ea38c402">00230</a>   <span class="keyword">const</span> boost::any &amp;<a class="code" href="class_hypertable_1_1_properties.html#31733269f5574fbc3115fb91ea38c402" title="Get the underlying boost::any value of &amp;#39;name&amp;#39;.">operator[]</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
+<a name="l00231"></a>00231     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>[name].value();
+<a name="l00232"></a>00232   }
 <a name="l00233"></a>00233 
-<a name="l00237"></a><a class="code" href="class_hypertable_1_1_sub_properties.html">00237</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sub_properties.html" title="Convenient help class for access parts of properties.">SubProperties</a> {
-<a name="l00238"></a>00238 <span class="keyword">public</span>:
-<a name="l00239"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#d3c40232fa469fcf2f0bdefe3fecbcbc">00239</a>   <a class="code" href="class_hypertable_1_1_sub_properties.html#d3c40232fa469fcf2f0bdefe3fecbcbc">SubProperties</a>(<a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;props, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix)
-<a name="l00240"></a>00240     : <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>(props), <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a>(prefix) { }
-<a name="l00241"></a>00241 
-<a name="l00242"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">00242</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a> + name; }
+<a name="l00240"></a><a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00">00240</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
+<a name="l00241"></a>00241     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>[name].defaulted();
+<a name="l00242"></a>00242   }
 <a name="l00243"></a>00243 
-<a name="l00244"></a>00244   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00245"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#e67bfaa9e1140e4a72b5c73fd2290afa">00245</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) <span class="keyword">const</span> {
-<a name="l00246"></a>00246     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;get&lt;T&gt;(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
-<a name="l00247"></a>00247   }
-<a name="l00248"></a>00248 
-<a name="l00249"></a>00249   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
-<a name="l00250"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#bdee7398f584260f6691d773dfb6bc7e">00250</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> T &amp;default_value) <span class="keyword">const</span> {
-<a name="l00251"></a>00251     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;get(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name), default_value);
-<a name="l00252"></a>00252   }
-<a name="l00253"></a>00253 
-<a name="l00254"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#ac9fe01761b1904f945e3125f2184e94">00254</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#ac9fe01761b1904f945e3125f2184e94">defaulted</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
-<a name="l00255"></a>00255     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;defaulted(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
-<a name="l00256"></a>00256   }
-<a name="l00257"></a>00257 
-<a name="l00258"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#1bd51b3efe0db36f96c1b2867602df49">00258</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#1bd51b3efe0db36f96c1b2867602df49">has</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
-<a name="l00259"></a>00259     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;has(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
-<a name="l00260"></a>00260   }
-<a name="l00261"></a>00261 
-<a name="l00262"></a>00262   <a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437" title="Copyright (C) 2007 Doug Judd (Zvents, Inc.">HT_PROPERTIES_ABBR_ACCESSORS</a>
-<a name="l00263"></a>00263 
-<a name="l00264"></a>00264 <span class="keyword">private</span>:
-<a name="l00265"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">00265</a>   <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>;
-<a name="l00266"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">00266</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a>;
-<a name="l00267"></a>00267 };
-<a name="l00268"></a>00268 
-<a name="l00269"></a>00269 } <span class="comment">// namespace Hypertable</span>
+<a name="l00244"></a><a class="code" href="class_hypertable_1_1_properties.html#a1e685b910c846108ddd858523c19c57">00244</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#a1e685b910c846108ddd858523c19c57">has</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.count(name); }
+<a name="l00245"></a>00245 
+<a name="l00246"></a>00246   <a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437">HT_PROPERTIES_ABBR_ACCESSORS</a>
+<a name="l00247"></a>00247 
+<a name="l00255"></a>00255   std::pair&lt;Map::iterator, bool&gt;
+<a name="l00256"></a><a class="code" href="class_hypertable_1_1_properties.html#ec044270001df58122691e93d0a3912b">00256</a>   <span class="keyword">add</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> boost::any &amp;v, <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a> = <span class="keyword">false</span>) {
+<a name="l00257"></a>00257     <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a> = <span class="keyword">true</span>;
+<a name="l00258"></a>00258     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>.insert(Map::value_type(name, <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>(v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>)));
+<a name="l00259"></a>00259   }
+<a name="l00260"></a>00260 
+<a name="l00268"></a><a class="code" href="class_hypertable_1_1_properties.html#c434d274194953e8e2e6bda0689adf76">00268</a>   <span class="keywordtype">void</span> <span class="keyword">set</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> boost::any &amp;v, <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a> = <span class="keyword">false</span>) {
+<a name="l00269"></a>00269     std::pair&lt;Map::iterator, bool&gt; r = <span class="keyword">add</span>(name, v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>);
 <a name="l00270"></a>00270 
-<a name="l00271"></a>00271 <span class="preprocessor">#endif // HYPERTABLE_PROPERTIES_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:48 2008 for hypertable by&nbsp;
+<a name="l00271"></a>00271     <span class="keywordflow">if</span> (!r.second)
+<a name="l00272"></a>00272       (*r.first).second = <a class="code" href="class_hypertable_1_1_properties.html#f100d52bb6b245dd1486089bfecc71a7">Value</a>(v, <a class="code" href="class_hypertable_1_1_properties.html#737e889d5d6be4fec90a9ab6c7b1ab00" title="Check whether a property have default value.">defaulted</a>);
+<a name="l00273"></a>00273   }
+<a name="l00274"></a>00274 
+<a name="l00283"></a>00283   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#a50cb77f3fa27d5621c6461f97ebf83a" title="Setup an property alias.">alias</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;primary, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;secondary,
+<a name="l00284"></a>00284              <span class="keywordtype">bool</span> overwrite = <span class="keyword">false</span>);
+<a name="l00285"></a>00285 
+<a name="l00291"></a>00291   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#5af13ff84fb25196bf68487f8e4956e3" title="Sync alias values.">sync_aliases</a>();
+<a name="l00292"></a>00292 
+<a name="l00299"></a>00299   <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_properties.html#5fa712d3f1a38ccd95def59e5166e9f1" title="Print config key-value map.">print</a>(std::ostream &amp;out, <span class="keywordtype">bool</span> include_default = <span class="keyword">false</span>);
+<a name="l00300"></a>00300 
+<a name="l00304"></a>00304   <span class="keyword">static</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_properties.html#60cec1a50f42deac183b212769ccd3b8" title="Helper to print boost::any used by property values.">to_str</a>(<span class="keyword">const</span> boost::any &amp;);
+<a name="l00305"></a>00305 
+<a name="l00306"></a>00306 <span class="keyword">private</span>:
+<a name="l00307"></a><a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">00307</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_properties.html#666d2d6141e9dacbb53aaee77215252d">m_need_alias_sync</a>;
+<a name="l00308"></a><a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">00308</a>   <a class="code" href="class_hypertable_1_1_properties.html#446c4e99f34437d159c7dbb29dff5ffa">Map</a> <a class="code" href="class_hypertable_1_1_properties.html#8ab2be77aa1c68b2668826f3dfba645f">m_map</a>;
+<a name="l00309"></a><a class="code" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">00309</a>   <a class="code" href="class_hypertable_1_1_properties.html#b6c2d6657fe1c828ef92ce617a5e0d9e">AliasMap</a> <a class="code" href="class_hypertable_1_1_properties.html#7c06f762c899a742c94ebbbc2132a914">m_alias_map</a>;
+<a name="l00310"></a>00310 };
+<a name="l00311"></a>00311 
+<a name="l00312"></a><a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">00312</a> <span class="keyword">typedef</span> intrusive_ptr&lt;Properties&gt; <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a>;
+<a name="l00313"></a>00313 
+<a name="l00317"></a><a class="code" href="class_hypertable_1_1_sub_properties.html">00317</a> <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_sub_properties.html" title="Convenient help class for access parts of properties.">SubProperties</a> {
+<a name="l00318"></a>00318 <span class="keyword">public</span>:
+<a name="l00319"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#d3c40232fa469fcf2f0bdefe3fecbcbc">00319</a>   <a class="code" href="class_hypertable_1_1_sub_properties.html#d3c40232fa469fcf2f0bdefe3fecbcbc">SubProperties</a>(<a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> &amp;props, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;prefix)
+<a name="l00320"></a>00320     : <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>(props), <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a>(prefix) { }
+<a name="l00321"></a>00321 
+<a name="l00322"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">00322</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{ <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a> + name; }
+<a name="l00323"></a>00323 
+<a name="l00324"></a>00324   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00325"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#e67bfaa9e1140e4a72b5c73fd2290afa">00325</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name) <span class="keyword">const</span> {
+<a name="l00326"></a>00326     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;get&lt;T&gt;(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
+<a name="l00327"></a>00327   }
+<a name="l00328"></a>00328 
+<a name="l00329"></a>00329   <span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;
+<a name="l00330"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#bdee7398f584260f6691d773dfb6bc7e">00330</a>   T <span class="keyword">get</span>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name, <span class="keyword">const</span> T &amp;default_value) <span class="keyword">const</span> {
+<a name="l00331"></a>00331     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;get(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name), default_value);
+<a name="l00332"></a>00332   }
+<a name="l00333"></a>00333 
+<a name="l00334"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#ac9fe01761b1904f945e3125f2184e94">00334</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#ac9fe01761b1904f945e3125f2184e94">defaulted</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
+<a name="l00335"></a>00335     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;defaulted(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
+<a name="l00336"></a>00336   }
+<a name="l00337"></a>00337 
+<a name="l00338"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#1bd51b3efe0db36f96c1b2867602df49">00338</a>   <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#1bd51b3efe0db36f96c1b2867602df49">has</a>(<span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;name)<span class="keyword"> const </span>{
+<a name="l00339"></a>00339     <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>-&gt;has(<a class="code" href="class_hypertable_1_1_sub_properties.html#ffc2cc732e0c31d4fa92292d2d970a6b">full_name</a>(name));
+<a name="l00340"></a>00340   }
+<a name="l00341"></a>00341 
+<a name="l00342"></a>00342   <a class="code" href="_properties_8h.html#b58eb84cb59f1f819c0f81eb7076b437">HT_PROPERTIES_ABBR_ACCESSORS</a>
+<a name="l00343"></a>00343 
+<a name="l00344"></a>00344 <span class="keyword">private</span>:
+<a name="l00345"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">00345</a>   <a class="code" href="namespace_hypertable.html#3c17fee96d466b253b38bf89565838ff">PropertiesPtr</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#6a411e30c488cf97f83751c3e82da1c2">m_props</a>;
+<a name="l00346"></a><a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">00346</a>   <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> <a class="code" href="class_hypertable_1_1_sub_properties.html#2985b0b2dd1b839f45a5fc4c048e27cd">m_prefix</a>;
+<a name="l00347"></a>00347 };
+<a name="l00348"></a>00348 
+<a name="l00349"></a>00349 } <span class="comment">// namespace Hypertable</span>
+<a name="l00350"></a>00350 
+<a name="l00351"></a>00351 <span class="preprocessor">#endif // HYPERTABLE_PROPERTIES_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:38 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

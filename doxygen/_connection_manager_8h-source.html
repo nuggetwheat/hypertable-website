@@ -71,74 +71,92 @@
 <a name="l00078"></a>00078       }
 <a name="l00079"></a>00079     };
 <a name="l00080"></a>00080 
-<a name="l00081"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">00081</a>     <span class="keyword">struct </span><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> {
-<a name="l00082"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">00082</a>       <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>              *<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">comm</a>;
-<a name="l00083"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#c7dd077b7dba1a25d9077f0d6761ca4b">00083</a>       <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>              <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#c7dd077b7dba1a25d9077f0d6761ca4b">mutex</a>;
-<a name="l00084"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#8341af4dacaee642f2b3e8d56a2cb61e">00084</a>       boost::condition   <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#8341af4dacaee642f2b3e8d56a2cb61e">retry_cond</a>;
-<a name="l00085"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">00085</a>       boost::thread     *<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">thread</a>;
-<a name="l00086"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#b99db181614e8ca32a6daabcaf580e16">00086</a>       <a class="code" href="class_hypertable_1_1_sock_addr_map.html">SockAddrMap&lt;ConnectionStatePtr&gt;</a>  <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#b99db181614e8ca32a6daabcaf580e16">conn_map</a>;
-<a name="l00087"></a>00087       std::priority_queue&lt;ConnectionStatePtr, std::vector&lt;ConnectionStatePtr&gt;,
-<a name="l00088"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#ac995bac177ea012af6bc10dd0fb4f69">00088</a>           <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_lt_connection_state.html">LtConnectionState</a>&gt; <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#ac995bac177ea012af6bc10dd0fb4f69">retry_queue</a>;
-<a name="l00089"></a><a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">00089</a>       <span class="keywordtype">bool</span> <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">quiet_mode</a>;
-<a name="l00090"></a>00090     };
-<a name="l00091"></a>00091 
-<a name="l00097"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da">00097</a>     <a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da" title="Constructor.">ConnectionManager</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = 0) {
-<a name="l00098"></a>00098       <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a> = <span class="keyword">new</span> <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a>;
-<a name="l00099"></a>00099       <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>-&gt;<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">comm</a> = comm ? comm : <a class="code" href="class_hypertable_1_1_comm.html#193565c5dddb894233ad534e5f11b8f7">Comm::instance</a>();
-<a name="l00100"></a>00100       <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>-&gt;<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">thread</a> = <span class="keyword">new</span> boost::thread(*<span class="keyword">this</span>);
-<a name="l00101"></a>00101       <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>-&gt;<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">quiet_mode</a> = <span class="keyword">false</span>;
-<a name="l00102"></a>00102     }
-<a name="l00103"></a>00103 
-<a name="l00107"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#d31170e904a6220e401c1143bb3abcee">00107</a>     <a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da" title="Constructor.">ConnectionManager</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a> &amp;cm) {
-<a name="l00108"></a>00108       <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a> = cm.<a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>;
-<a name="l00109"></a>00109       <a class="code" href="class_hypertable_1_1_reference_count.html#69c9b55270517d731376a3d6f06c53e4" title="Atomically increments reference count.">intrusive_ptr_add_ref</a>(<span class="keyword">this</span>);
-<a name="l00110"></a>00110     }
-<a name="l00111"></a>00111 
-<a name="l00115"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#c084866426806920b97828e432e10285">00115</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#c084866426806920b97828e432e10285" title="Destructor.">~ConnectionManager</a>() {
-<a name="l00116"></a>00116       <span class="keywordflow">return</span>;
-<a name="l00117"></a>00117     }
-<a name="l00118"></a>00118 
-<a name="l00136"></a>00136     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t timeout_ms,
-<a name="l00137"></a>00137              <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name);
-<a name="l00138"></a>00138 
-<a name="l00151"></a>00151     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t timeout_ms,
-<a name="l00152"></a>00152              <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name, <a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;handler);
-<a name="l00153"></a>00153 
-<a name="l00172"></a>00172     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, <span class="keyword">const</span> sockaddr_in &amp;local_addr,
-<a name="l00173"></a>00173              uint32_t timeout_ms, <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name);
-<a name="l00174"></a>00174 
-<a name="l00188"></a>00188     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, <span class="keyword">const</span> sockaddr_in &amp;local_addr,
-<a name="l00189"></a>00189              uint32_t timeout_ms, <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name,
-<a name="l00190"></a>00190              <a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;handler);
-<a name="l00191"></a>00191 
-<a name="l00198"></a>00198     <span class="keywordtype">int</span> <span class="keyword">remove</span>(<span class="keyword">struct </span>sockaddr_in &amp;addr);
-<a name="l00199"></a>00199 
-<a name="l00211"></a>00211     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3d36e9e3a53d27f9fb9ddb04e49e18cf" title="This method blocks until the connection to the given address is established.">wait_for_connection</a>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t max_wait_ms);
-<a name="l00212"></a>00212 
-<a name="l00223"></a>00223     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3d36e9e3a53d27f9fb9ddb04e49e18cf" title="This method blocks until the connection to the given address is established.">wait_for_connection</a>(<span class="keyword">const</span> sockaddr_in &amp;addr, <a class="code" href="class_hypertable_1_1_timer.html">Timer</a> &amp;timer);
-<a name="l00224"></a>00224 
-<a name="l00230"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#8bdcf7ea409fbdee6180f53b72eddb4a">00230</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hypertable_1_1_connection_manager.html#8bdcf7ea409fbdee6180f53b72eddb4a" title="Returns the Comm object associated with this connection manager.">get_comm</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>-&gt;<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">comm</a>; }
-<a name="l00231"></a>00231 
-<a name="l00239"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#3e4f5c32cf6c45083e042fc2dc75f9bc">00239</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3e4f5c32cf6c45083e042fc2dc75f9bc" title="This method sets a &amp;#39;quiet_mode&amp;#39; flag which can disable the generation of...">set_quiet_mode</a>(<span class="keywordtype">bool</span> mode) { <a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>-&gt;<a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">quiet_mode</a> = mode; }
-<a name="l00240"></a>00240 
-<a name="l00245"></a>00245     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#64d32639f3dec20bd4301d5c7b738064" title="This is the comm layer dispatch callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event);
-<a name="l00246"></a>00246 
-<a name="l00251"></a>00251     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#4b6fe917e7be3812c4fdafa84b103a89" title="This is the Boost thread &amp;quot;run&amp;quot; method.">operator()</a>();
-<a name="l00252"></a>00252 
-<a name="l00253"></a>00253   <span class="keyword">private</span>:
-<a name="l00254"></a>00254 
-<a name="l00255"></a>00255     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#cee8344dd731e118249fc494085ad5f8" title="Attempts to establish a connection for the given ConnectionState object.">send_connect_request</a>(ConnectionState *conn_state);
-<a name="l00256"></a>00256 
-<a name="l00257"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">00257</a>     <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> *<a class="code" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a>;
+<a name="l00081"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">00081</a>     <span class="keyword">class </span><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> : <span class="keyword">public</span> <a class="code" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced...">ReferenceCount</a> {
+<a name="l00082"></a>00082     <span class="keyword">public</span>:
+<a name="l00083"></a>00083 
+<a name="l00084"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#93ed1c5dafa575bda6c7e145b587bf54">00084</a>       <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#93ed1c5dafa575bda6c7e145b587bf54">~SharedImpl</a>() {
+<a name="l00085"></a>00085         {
+<a name="l00086"></a>00086           <a class="code" href="namespace_hypertable.html#40784200dfed22d08fc5b7329dd1f663">ScopedLock</a> lock(<a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#c7dd077b7dba1a25d9077f0d6761ca4b">mutex</a>);
+<a name="l00087"></a>00087           <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#f49140cd3ecf6947405b4259fdfee314">joined</a>)
+<a name="l00088"></a>00088             <span class="keywordflow">return</span>;
+<a name="l00089"></a>00089           <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#f49140cd3ecf6947405b4259fdfee314">joined</a> = <span class="keyword">true</span>;
+<a name="l00090"></a>00090         }
+<a name="l00091"></a>00091         <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#fa92280b9ea0399cf0eea4088f7bcf9c">shutdown</a> = <span class="keyword">true</span>;
+<a name="l00092"></a>00092         <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#8341af4dacaee642f2b3e8d56a2cb61e">retry_cond</a>.notify_one();
+<a name="l00093"></a>00093         <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">thread</a>-&gt;join();
+<a name="l00094"></a>00094       }
+<a name="l00095"></a>00095 
+<a name="l00096"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">00096</a>       <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a>              *<a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#288e409e67f3b32948ed9f7d5574aa18">comm</a>;
+<a name="l00097"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#c7dd077b7dba1a25d9077f0d6761ca4b">00097</a>       <a class="code" href="class_hypertable_1_1_mutex.html">Mutex</a>              <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#c7dd077b7dba1a25d9077f0d6761ca4b">mutex</a>;
+<a name="l00098"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#8341af4dacaee642f2b3e8d56a2cb61e">00098</a>       boost::condition   <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#8341af4dacaee642f2b3e8d56a2cb61e">retry_cond</a>;
+<a name="l00099"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">00099</a>       boost::thread     *<a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#3542d685d45ac4d9406c20b2d4fa4d2b">thread</a>;
+<a name="l00100"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#b99db181614e8ca32a6daabcaf580e16">00100</a>       <a class="code" href="class_hypertable_1_1_sock_addr_map.html">SockAddrMap&lt;ConnectionStatePtr&gt;</a>  <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#b99db181614e8ca32a6daabcaf580e16">conn_map</a>;
+<a name="l00101"></a>00101       std::priority_queue&lt;ConnectionStatePtr, std::vector&lt;ConnectionStatePtr&gt;,
+<a name="l00102"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#ac995bac177ea012af6bc10dd0fb4f69">00102</a>           <a class="code" href="struct_hypertable_1_1_connection_manager_1_1_lt_connection_state.html">LtConnectionState</a>&gt; <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#ac995bac177ea012af6bc10dd0fb4f69">retry_queue</a>;
+<a name="l00103"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">00103</a>       <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#420f660f79719433bc6cc8582eea3314">quiet_mode</a>;
+<a name="l00104"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#fa92280b9ea0399cf0eea4088f7bcf9c">00104</a>       <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#fa92280b9ea0399cf0eea4088f7bcf9c">shutdown</a>;
+<a name="l00105"></a><a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#f49140cd3ecf6947405b4259fdfee314">00105</a>       <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html#f49140cd3ecf6947405b4259fdfee314">joined</a>;
+<a name="l00106"></a>00106     };
+<a name="l00107"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">00107</a>     <span class="keyword">typedef</span> boost::intrusive_ptr&lt;SharedImpl&gt; <a class="code" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">SharedImplPtr</a>;
+<a name="l00108"></a>00108 
+<a name="l00109"></a>00109 
+<a name="l00115"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da">00115</a>     <a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da" title="Constructor.">ConnectionManager</a>(<a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *comm = 0) {
+<a name="l00116"></a>00116       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a> = <span class="keyword">new</span> <a class="code" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a>;
+<a name="l00117"></a>00117       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;comm = comm ? comm : <a class="code" href="class_hypertable_1_1_comm.html#193565c5dddb894233ad534e5f11b8f7">Comm::instance</a>();
+<a name="l00118"></a>00118       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;quiet_mode = <span class="keyword">false</span>;
+<a name="l00119"></a>00119       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;shutdown = <span class="keyword">false</span>;
+<a name="l00120"></a>00120       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;joined = <span class="keyword">false</span>;
+<a name="l00121"></a>00121       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;thread = <span class="keyword">new</span> boost::thread(*<span class="keyword">this</span>);
+<a name="l00122"></a>00122     }
+<a name="l00123"></a>00123 
+<a name="l00127"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#d31170e904a6220e401c1143bb3abcee">00127</a>     <a class="code" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da" title="Constructor.">ConnectionManager</a>(<span class="keyword">const</span> <a class="code" href="class_hypertable_1_1_connection_manager.html" title="Establishes and maintains a set of TCP connections.">ConnectionManager</a> &amp;cm) {
+<a name="l00128"></a>00128       <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a> = cm.<a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>;
+<a name="l00129"></a>00129       <a class="code" href="class_hypertable_1_1_reference_count.html#69c9b55270517d731376a3d6f06c53e4" title="Atomically increments reference count.">intrusive_ptr_add_ref</a>(<span class="keyword">this</span>);
+<a name="l00130"></a>00130     }
+<a name="l00131"></a>00131 
+<a name="l00135"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#c084866426806920b97828e432e10285">00135</a>     <span class="keyword">virtual</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#c084866426806920b97828e432e10285" title="Destructor.">~ConnectionManager</a>() { }
+<a name="l00136"></a>00136 
+<a name="l00154"></a>00154     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t timeout_ms,
+<a name="l00155"></a>00155              <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name);
+<a name="l00156"></a>00156 
+<a name="l00169"></a>00169     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t timeout_ms,
+<a name="l00170"></a>00170              <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name, <a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;handler);
+<a name="l00171"></a>00171 
+<a name="l00190"></a>00190     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, <span class="keyword">const</span> sockaddr_in &amp;local_addr,
+<a name="l00191"></a>00191              uint32_t timeout_ms, <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name);
+<a name="l00192"></a>00192 
+<a name="l00206"></a>00206     <span class="keywordtype">void</span> <span class="keyword">add</span>(<span class="keyword">const</span> sockaddr_in &amp;addr, <span class="keyword">const</span> sockaddr_in &amp;local_addr,
+<a name="l00207"></a>00207              uint32_t timeout_ms, <span class="keyword">const</span> <span class="keywordtype">char</span> *service_name,
+<a name="l00208"></a>00208              <a class="code" href="namespace_hypertable.html#be9c0c322c8046d0d9354fa21badf501">DispatchHandlerPtr</a> &amp;handler);
+<a name="l00209"></a>00209 
+<a name="l00216"></a>00216     <span class="keywordtype">int</span> <span class="keyword">remove</span>(<span class="keyword">struct </span>sockaddr_in &amp;addr);
+<a name="l00217"></a>00217 
+<a name="l00229"></a>00229     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3d36e9e3a53d27f9fb9ddb04e49e18cf" title="This method blocks until the connection to the given address is established.">wait_for_connection</a>(<span class="keyword">const</span> sockaddr_in &amp;addr, uint32_t max_wait_ms);
+<a name="l00230"></a>00230 
+<a name="l00241"></a>00241     <span class="keywordtype">bool</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3d36e9e3a53d27f9fb9ddb04e49e18cf" title="This method blocks until the connection to the given address is established.">wait_for_connection</a>(<span class="keyword">const</span> sockaddr_in &amp;addr, <a class="code" href="class_hypertable_1_1_timer.html" title="A timer class to keep timeout states across comm related calls.">Timer</a> &amp;timer);
+<a name="l00242"></a>00242 
+<a name="l00248"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#8bdcf7ea409fbdee6180f53b72eddb4a">00248</a>     <a class="code" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application.">Comm</a> *<a class="code" href="class_hypertable_1_1_connection_manager.html#8bdcf7ea409fbdee6180f53b72eddb4a" title="Returns the Comm object associated with this connection manager.">get_comm</a>() { <span class="keywordflow">return</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;comm; }
+<a name="l00249"></a>00249 
+<a name="l00257"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#3e4f5c32cf6c45083e042fc2dc75f9bc">00257</a>     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#3e4f5c32cf6c45083e042fc2dc75f9bc" title="This method sets a &amp;#39;quiet_mode&amp;#39; flag which can disable the generation of...">set_quiet_mode</a>(<span class="keywordtype">bool</span> mode) { <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>-&gt;quiet_mode = mode; }
 <a name="l00258"></a>00258 
-<a name="l00259"></a>00259   };
-<a name="l00260"></a><a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">00260</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;ConnectionManager&gt; <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>;
-<a name="l00261"></a>00261 
-<a name="l00262"></a>00262 }
-<a name="l00263"></a>00263 
+<a name="l00263"></a>00263     <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#64d32639f3dec20bd4301d5c7b738064" title="This is the comm layer dispatch callback method.">handle</a>(<a class="code" href="namespace_hypertable.html#a8cafde9646a93ee97cfb6b26a9ec9b2">EventPtr</a> &amp;event);
 <a name="l00264"></a>00264 
-<a name="l00265"></a>00265 <span class="preprocessor">#endif // HYPERTABLE_CONNECTIONMANAGER_H</span>
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
+<a name="l00269"></a>00269     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#4b6fe917e7be3812c4fdafa84b103a89" title="This is the Boost thread &amp;quot;run&amp;quot; method.">operator()</a>();
+<a name="l00270"></a>00270 
+<a name="l00271"></a>00271   <span class="keyword">private</span>:
+<a name="l00272"></a>00272 
+<a name="l00273"></a>00273     <span class="keywordtype">void</span> <a class="code" href="class_hypertable_1_1_connection_manager.html#cee8344dd731e118249fc494085ad5f8" title="Attempts to establish a connection for the given ConnectionState object.">send_connect_request</a>(ConnectionState *conn_state);
+<a name="l00274"></a>00274 
+<a name="l00275"></a><a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">00275</a>     <a class="code" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">SharedImplPtr</a> <a class="code" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a>;
+<a name="l00276"></a>00276 
+<a name="l00277"></a>00277   };
+<a name="l00278"></a><a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">00278</a>   <span class="keyword">typedef</span> boost::intrusive_ptr&lt;ConnectionManager&gt; <a class="code" href="namespace_hypertable.html#e048a08bc9bd9505788d6e5823c948ae">ConnectionManagerPtr</a>;
+<a name="l00279"></a>00279 
+<a name="l00280"></a>00280 }
+<a name="l00281"></a>00281 
+<a name="l00282"></a>00282 
+<a name="l00283"></a>00283 <span class="preprocessor">#endif // HYPERTABLE_CONNECTIONMANAGER_H</span>
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:37 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

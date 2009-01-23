@@ -33,63 +33,64 @@
 <a name="l00035"></a><a class="code" href="_meta_log_reader_dfs_base_8cc.html#521b3aebce26f47053519fc52fee6e12">00035</a>   <span class="keyword">const</span> uint32_t <a class="code" href="_meta_log_reader_dfs_base_8cc.html#521b3aebce26f47053519fc52fee6e12">OUTSTANDING_READS</a> = 1;
 <a name="l00036"></a>00036 }
 <a name="l00037"></a>00037 
-<a name="l00038"></a><a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#5ecb862f5f8c6636f02665515e96d6ef">00038</a> MetaLogReaderDfsBase::MetaLogReaderDfsBase(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;path) :
-<a name="l00039"></a>00039     <a class="code" href="_master_gc_8cc.html#51a6a59072bffa39a9536f577d592c4a">m_fs</a>(fs), m_path(path), m_cur(0) {
-<a name="l00040"></a>00040   <span class="keywordflow">if</span> (fs) {
-<a name="l00041"></a>00041     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a> = fs-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(path);
-<a name="l00042"></a>00042     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a> = fs-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#ce1524fe81ee6080968738cd605169f3" title="Opens a file in buffered (readahead) mode.">open_buffered</a>(path, <a class="code" href="_meta_log_reader_dfs_base_8cc.html#e09ffb5fb9db52eac6fa56541e86e5c4">READAHEAD_BUFSZ</a>, <a class="code" href="_meta_log_reader_dfs_base_8cc.html#521b3aebce26f47053519fc52fee6e12">OUTSTANDING_READS</a>);
-<a name="l00043"></a>00043   }
-<a name="l00044"></a>00044 }
-<a name="l00045"></a>00045 
-<a name="l00046"></a>00046 <a class="code" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">MetaLogReader::ScanEntry</a> *
-<a name="l00047"></a><a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#09e1316ab4b3151e77b1863a19dc604e">00047</a> <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#09e1316ab4b3151e77b1863a19dc604e">MetaLogReaderDfsBase::next</a>(ScanEntry &amp;entry) {
-<a name="l00048"></a>00048   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> &gt;= <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a>)
-<a name="l00049"></a>00049     <span class="keywordflow">return</span> 0;
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051   <span class="keywordflow">try</span> {
-<a name="l00052"></a>00052     uint8_t buf[<a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>];
-<a name="l00053"></a>00053     <span class="keyword">const</span> uint8_t *p = buf;
-<a name="l00054"></a>00054     <span class="keywordtype">size_t</span> nread = <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#21515873bdabbd27bad0303ff7dfc40e">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acd4652b3396d670963584b7d12f2910" title="Reads data from a file at the current position asynchronously.">read</a>(<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a>, buf, <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>);
-<a name="l00055"></a>00055     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> += nread;
-<a name="l00056"></a>00056 
-<a name="l00057"></a>00057     <span class="keywordflow">if</span> (nread != <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>)
-<a name="l00058"></a>00058       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29c559f76a85ed3e95e9ca27fde16b44b">Error::METALOG_ENTRY_TRUNCATED</a>, <span class="stringliteral">"reading header"</span>);
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060     <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding scan entry"</span>,
-<a name="l00061"></a>00061       entry.checksum = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;p, &amp;nread);
-<a name="l00062"></a>00062       entry.timestamp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;p, &amp;nread);
-<a name="l00063"></a>00063       entry.type = <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(&amp;p, &amp;nread);
-<a name="l00064"></a>00064       entry.payload_size = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;p, &amp;nread));
-<a name="l00065"></a>00065 
-<a name="l00066"></a>00066     entry.buf.clear();
-<a name="l00067"></a>00067     entry.buf.reserve(entry.payload_size);
-<a name="l00068"></a>00068     nread = <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#21515873bdabbd27bad0303ff7dfc40e">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acd4652b3396d670963584b7d12f2910" title="Reads data from a file at the current position asynchronously.">read</a>(<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a>, entry.buf.ptr, entry.payload_size);
-<a name="l00069"></a>00069     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> += nread;
-<a name="l00070"></a>00070     entry.buf.ptr += nread;
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072     <a class="code" href="_logger_8h.html#75176db3f3b090dc47d4fb088f4fda24">HT_DEBUG_OUT</a> &lt;&lt;<span class="stringliteral">"checksum="</span>&lt;&lt; entry.checksum &lt;&lt;<span class="stringliteral">" timestamp="</span>
-<a name="l00073"></a>00073         &lt;&lt; entry.timestamp &lt;&lt;<span class="stringliteral">" type="</span>&lt;&lt; entry.type &lt;&lt;<span class="stringliteral">" payload="</span>
-<a name="l00074"></a>00074         &lt;&lt; entry.payload_size &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076     <span class="keywordflow">if</span> (nread != entry.payload_size)
-<a name="l00077"></a>00077       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29c559f76a85ed3e95e9ca27fde16b44b">Error::METALOG_ENTRY_TRUNCATED</a>, <span class="stringliteral">"reading payload"</span>);
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079     <span class="comment">// checksum include timestamp, type, payload size and payload data</span>
-<a name="l00080"></a>00080     uint32_t checksum = <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">crc32</a>(buf + 4, <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a> - 4);
-<a name="l00081"></a>00081     checksum = <a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a" title="Update crc32 checksum incrementally.">crc32_update</a>(checksum, entry.buf.base, entry.payload_size);
-<a name="l00082"></a>00082 
-<a name="l00083"></a>00083     <span class="keywordflow">if</span> (entry.checksum != checksum)
-<a name="l00084"></a>00084       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23156f57e460038e5fe8e34cc302dd03e">Error::METALOG_CHECKSUM_MISMATCH</a>, <span class="stringliteral">"type=%d expected %x, got %x"</span>,
-<a name="l00085"></a>00085                 entry.type, entry.checksum, checksum);
-<a name="l00086"></a>00086 
-<a name="l00087"></a>00087     <span class="keywordflow">return</span> &amp;entry;
-<a name="l00088"></a>00088   }
-<a name="l00089"></a>00089   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
-<a name="l00090"></a>00090     <a class="code" href="_error_8h.html#e61e8974d9d73f82af9b9597f21d194f">HT_THROW2F</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, <span class="stringliteral">"Error reading metalog: %s: read %llu/%llu"</span>,
-<a name="l00091"></a>00091                <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#1f5ebd874fa7d775641cf9f1f6b9ff63">m_path</a>.c_str(), (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a>, (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a>);
-<a name="l00092"></a>00092   }
-<a name="l00093"></a>00093 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:50 2008 for hypertable by&nbsp;
+<a name="l00038"></a><a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#5ecb862f5f8c6636f02665515e96d6ef">00038</a> MetaLogReaderDfsBase::MetaLogReaderDfsBase(<a class="code" href="class_hypertable_1_1_filesystem.html" title="Abstract base class for a filesystem.">Filesystem</a> *fs, <span class="keyword">const</span> <a class="code" href="namespace_hypertable.html#bd74d0aa26c0528285dc77325ca89511" title="We might want to use something better later, as std::string always causes a heap...">String</a> &amp;path)
+<a name="l00039"></a>00039   : <a class="code" href="class_hypertable_1_1_meta_log_reader.html" title="Interface for meta log readers.">MetaLogReader</a>(), <a class="code" href="_master_gc_8cc.html#51a6a59072bffa39a9536f577d592c4a">m_fs</a>(fs), m_path(path), m_cur(0) {
+<a name="l00040"></a>00040 
+<a name="l00041"></a>00041   <span class="keywordflow">if</span> (fs) {
+<a name="l00042"></a>00042     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a> = fs-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#1e43c618369f230d5d6549a44e2bfaa9" title="Gets the length of a file asynchronously.">length</a>(path);
+<a name="l00043"></a>00043     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a> = fs-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#ce1524fe81ee6080968738cd605169f3" title="Opens a file in buffered (readahead) mode.">open_buffered</a>(path, <a class="code" href="_meta_log_reader_dfs_base_8cc.html#e09ffb5fb9db52eac6fa56541e86e5c4">READAHEAD_BUFSZ</a>, <a class="code" href="_meta_log_reader_dfs_base_8cc.html#521b3aebce26f47053519fc52fee6e12">OUTSTANDING_READS</a>);
+<a name="l00044"></a>00044   }
+<a name="l00045"></a>00045 }
+<a name="l00046"></a>00046 
+<a name="l00047"></a>00047 <a class="code" href="struct_hypertable_1_1_meta_log_reader_1_1_scan_entry.html">MetaLogReader::ScanEntry</a> *
+<a name="l00048"></a><a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#09e1316ab4b3151e77b1863a19dc604e">00048</a> <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#09e1316ab4b3151e77b1863a19dc604e">MetaLogReaderDfsBase::next</a>(ScanEntry &amp;entry) {
+<a name="l00049"></a>00049   <span class="keywordflow">if</span> (<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> &gt;= <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a>)
+<a name="l00050"></a>00050     <span class="keywordflow">return</span> 0;
+<a name="l00051"></a>00051 
+<a name="l00052"></a>00052   <span class="keywordflow">try</span> {
+<a name="l00053"></a>00053     uint8_t buf[<a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>];
+<a name="l00054"></a>00054     <span class="keyword">const</span> uint8_t *p = buf;
+<a name="l00055"></a>00055     <span class="keywordtype">size_t</span> nread = <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#21515873bdabbd27bad0303ff7dfc40e">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acd4652b3396d670963584b7d12f2910" title="Reads data from a file at the current position asynchronously.">read</a>(<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a>, buf, <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>);
+<a name="l00056"></a>00056     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> += nread;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058     <span class="keywordflow">if</span> (nread != <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a>)
+<a name="l00059"></a>00059       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29c559f76a85ed3e95e9ca27fde16b44b">Error::METALOG_ENTRY_TRUNCATED</a>, <span class="stringliteral">"reading header"</span>);
+<a name="l00060"></a>00060 
+<a name="l00061"></a>00061     <a class="code" href="_error_8h.html#2d697a9a3513b9d966fb2669532ef5cd">HT_TRY</a>(<span class="stringliteral">"decoding scan entry"</span>,
+<a name="l00062"></a>00062       entry.checksum = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;p, &amp;nread);
+<a name="l00063"></a>00063       entry.timestamp = <a class="code" href="namespace_hypertable_1_1_serialization.html#328e404dee6b6951756209d65e562bfe" title="Decode a 64-bit integer in little-endian order.">decode_i64</a>(&amp;p, &amp;nread);
+<a name="l00064"></a>00064       entry.type = <a class="code" href="namespace_hypertable_1_1_serialization.html#9172e2982cf93570438f27818fac95c1" title="Decode a 8-bit integer (a byte/character).">decode_i8</a>(&amp;p, &amp;nread);
+<a name="l00065"></a>00065       entry.payload_size = <a class="code" href="namespace_hypertable_1_1_serialization.html#19437f0438392abdc4a62fde605d7707" title="Decode a 32-bit integer in little-endian order.">decode_i32</a>(&amp;p, &amp;nread));
+<a name="l00066"></a>00066 
+<a name="l00067"></a>00067     entry.buf.clear();
+<a name="l00068"></a>00068     entry.buf.reserve(entry.payload_size);
+<a name="l00069"></a>00069     nread = <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#21515873bdabbd27bad0303ff7dfc40e">m_fs</a>-&gt;<a class="code" href="class_hypertable_1_1_filesystem.html#acd4652b3396d670963584b7d12f2910" title="Reads data from a file at the current position asynchronously.">read</a>(<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#c04d5ee584720f9f2f442568271a44e2">m_fd</a>, entry.buf.ptr, entry.payload_size);
+<a name="l00070"></a>00070     <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a> += nread;
+<a name="l00071"></a>00071     entry.buf.ptr += nread;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073     <a class="code" href="_logger_8h.html#75176db3f3b090dc47d4fb088f4fda24">HT_DEBUG_OUT</a> &lt;&lt;<span class="stringliteral">"checksum="</span>&lt;&lt; entry.checksum &lt;&lt;<span class="stringliteral">" timestamp="</span>
+<a name="l00074"></a>00074         &lt;&lt; entry.timestamp &lt;&lt;<span class="stringliteral">" type="</span>&lt;&lt; entry.type &lt;&lt;<span class="stringliteral">" payload="</span>
+<a name="l00075"></a>00075         &lt;&lt; entry.payload_size &lt;&lt; <a class="code" href="_logger_8h.html#eba017ae55e6acb68f5873e157192427">HT_END</a>;
+<a name="l00076"></a>00076 
+<a name="l00077"></a>00077     <span class="keywordflow">if</span> (nread != entry.payload_size)
+<a name="l00078"></a>00078       <a class="code" href="_error_8h.html#7d401d8c606e7f717e3b1ae0452895c8">HT_THROW</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b29c559f76a85ed3e95e9ca27fde16b44b">Error::METALOG_ENTRY_TRUNCATED</a>, <span class="stringliteral">"reading payload"</span>);
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080     <span class="comment">// checksum include timestamp, type, payload size and payload data</span>
+<a name="l00081"></a>00081     uint32_t checksum = <a class="code" href="namespace_hypertable.html#1380d7acd2de773b097dcaf6fe35f685" title="Compute crc32 checksum.">crc32</a>(buf + 4, <a class="code" href="namespace_hypertable.html#ce6f9acaa29b01eb88692281d9e7a154d6bfd277f566ed30001568222610847f">ML_ENTRY_HEADER_SIZE</a> - 4);
+<a name="l00082"></a>00082     checksum = <a class="code" href="namespace_hypertable.html#d6b58456652be2fbaced0c34770b252a" title="Update crc32 checksum incrementally.">crc32_update</a>(checksum, entry.buf.base, entry.payload_size);
+<a name="l00083"></a>00083 
+<a name="l00084"></a>00084     <span class="keywordflow">if</span> (entry.checksum != checksum)
+<a name="l00085"></a>00085       <a class="code" href="_error_8h.html#a274083bca13ee78497570285c908c80">HT_THROWF</a>(<a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b23156f57e460038e5fe8e34cc302dd03e">Error::METALOG_CHECKSUM_MISMATCH</a>, <span class="stringliteral">"type=%d expected %x, got %x"</span>,
+<a name="l00086"></a>00086                 entry.type, entry.checksum, checksum);
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088     <span class="keywordflow">return</span> &amp;entry;
+<a name="l00089"></a>00089   }
+<a name="l00090"></a>00090   <span class="keywordflow">catch</span> (<a class="code" href="class_hypertable_1_1_exception.html" title="This is a generic exception class for Hypertable.">Exception</a> &amp;e) {
+<a name="l00091"></a>00091     <a class="code" href="_error_8h.html#e61e8974d9d73f82af9b9597f21d194f">HT_THROW2F</a>(e.<a class="code" href="class_hypertable_1_1_exception.html#160a1277f173192e3b7993f60323a00b">code</a>(), e, <span class="stringliteral">"Error reading metalog: %s: read %llu/%llu"</span>,
+<a name="l00092"></a>00092                <a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#1f5ebd874fa7d775641cf9f1f6b9ff63">m_path</a>.c_str(), (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#22d2cd4abd1ae8398960c3b3c38ab1eb">m_cur</a>, (<a class="code" href="namespace_hypertable.html#85c40099ee846f8b60b73c30c6ee2162">Llu</a>)<a class="code" href="class_hypertable_1_1_meta_log_reader_dfs_base.html#7f986fa5efdb37ab0ee2fd6800ef994c">m_file_size</a>);
+<a name="l00093"></a>00093   }
+<a name="l00094"></a>00094 }
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:41 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

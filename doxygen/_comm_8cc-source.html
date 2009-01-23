@@ -75,11 +75,11 @@
 <a name="l00077"></a>00077   set&lt;IOHandler *&gt; handlers;
 <a name="l00078"></a>00078   <a class="code" href="class_hypertable_1_1_comm.html#0a79bcca2a1ab2cf6c45cdfbff0802ac">m_handler_map_ptr</a>-&gt;decomission_all(handlers);
 <a name="l00079"></a>00079 
-<a name="l00080"></a>00080   <span class="comment">// Since Comm is a singleton, this is OK</span>
-<a name="l00081"></a>00081   <a class="code" href="class_hypertable_1_1_reactor_factory.html#bb7ca684db20435d14838165cb1515c1" title="This method shuts down the reactors.">ReactorFactory::destroy</a>();
+<a name="l00080"></a>00080   <span class="keywordflow">foreach</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler, handlers)
+<a name="l00081"></a>00081     handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">shutdown</a>();
 <a name="l00082"></a>00082 
-<a name="l00083"></a>00083   <span class="keywordflow">foreach</span>(<a class="code" href="class_hypertable_1_1_i_o_handler.html">IOHandler</a> *handler, handlers)
-<a name="l00084"></a>00084     handler-&gt;<a class="code" href="class_hypertable_1_1_i_o_handler.html#4842b2378d05e8eb66a3689c7e1fc423">shutdown</a>();
+<a name="l00083"></a>00083   <span class="comment">// Since Comm is a singleton, this is OK</span>
+<a name="l00084"></a>00084   <a class="code" href="class_hypertable_1_1_reactor_factory.html#bb7ca684db20435d14838165cb1515c1" title="This method shuts down the reactors.">ReactorFactory::destroy</a>();
 <a name="l00085"></a>00085 
 <a name="l00086"></a>00086   <span class="comment">// wait for all decomissioned handlers to get purged by Reactor</span>
 <a name="l00087"></a>00087   <a class="code" href="class_hypertable_1_1_comm.html#0a79bcca2a1ab2cf6c45cdfbff0802ac">m_handler_map_ptr</a>-&gt;wait_for_empty();
@@ -417,7 +417,7 @@
 <a name="l00423"></a>00423 
 <a name="l00424"></a>00424   <span class="keywordflow">return</span> <a class="code" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a>;
 <a name="l00425"></a>00425 }
-</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:29:47 2008 for hypertable by&nbsp;
+</pre></div><hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:08:37 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

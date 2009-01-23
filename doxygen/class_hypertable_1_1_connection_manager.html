@@ -40,7 +40,7 @@ Collaboration diagram for Hypertable::ConnectionManager:</div>
 <div class="dynsection">
 <p><center><img src="class_hypertable_1_1_connection_manager__coll__graph.png" border="0" usemap="#_hypertable_1_1_connection_manager__coll__map" alt="Collaboration graph"></center>
 <map name="_hypertable_1_1_connection_manager__coll__map">
-<area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="307,238,502,264"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="338,96,530,123"><area shape="rect" href="class_hypertable_1_1_comm.html" title="Provides communication (message passing) services to an application." alt="" coords="126,187,259,214"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="226,6,298,32"><area shape="rect" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html" title="Hypertable::ConnectionManager::SharedImpl" alt="" coords="46,288,339,315"><area shape="rect" href="class_hypertable_1_1_mutex.html" title="Hypertable::Mutex" alt="" coords="6,96,136,123"></map>
+<area shape="rect" href="class_hypertable_1_1_dispatch_handler.html" title="Abstract base class that is the main callback class of the Comm layer." alt="" coords="17,174,212,200"><area shape="rect" href="class_hypertable_1_1_reference_count.html" title="This class is meant to be a base class for all classes that want to be referenced..." alt="" coords="19,96,211,123"><area shape="rect" href="structatomic__t.html" title="atomic_t" alt="" coords="79,6,151,32"></map>
 <center><font size="2">[<a href="graph_legend.html">legend</a>]</font></center></div>
 
 <p>
@@ -50,6 +50,10 @@ Collaboration diagram for Hypertable::ConnectionManager:</div>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
 intrusive_ptr<br>
 &lt; <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#ae4a771f169bc7718aa5f6082faed993">ConnectionStatePtr</a></td></tr>
+
+<tr><td class="memItemLeft" nowrap align="right" valign="top">typedef <br>
+boost::intrusive_ptr<br>
+&lt; <a class="el" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> &gt;&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">SharedImplPtr</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#35cea429c36a77c77c4b1c4dcaf424da">ConnectionManager</a> (<a class="el" href="class_hypertable_1_1_comm.html">Comm</a> *comm=0)</td></tr>
@@ -99,14 +103,14 @@ intrusive_ptr<br>
 
 <tr><td class="mdescLeft">&nbsp;</td><td class="mdescRight">Attempts to establish a connection for the given <a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a> object.  <a href="#cee8344dd731e118249fc494085ad5f8"></a><br></td></tr>
 <tr><td colspan="2"><br><h2>Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a> *&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">m_impl</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top"><a class="el" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">SharedImplPtr</a>&nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">m_impl</a></td></tr>
 
 <tr><td colspan="2"><br><h2>Classes</h2></td></tr>
 <tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager_1_1_connection_state.html">ConnectionState</a></td></tr>
 
 <tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_lt_connection_state.html">LtConnectionState</a></td></tr>
 
-<tr><td class="memItemLeft" nowrap align="right" valign="top">struct &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a></td></tr>
+<tr><td class="memItemLeft" nowrap align="right" valign="top">class &nbsp;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a></td></tr>
 
 </table>
 <hr><a name="_details"></a><h2>Detailed Description</h2>
@@ -129,6 +133,23 @@ If any of the connections gets broken, then this class will continuously attempt
 <p>
 
 <p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00071">71</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+
+</div>
+</div><p>
+<a class="anchor" name="dcba5f6ef4a287aadfbcb556894d8143"></a><!-- doxytag: member="Hypertable::ConnectionManager::SharedImplPtr" ref="dcba5f6ef4a287aadfbcb556894d8143" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">typedef boost::intrusive_ptr&lt;<a class="el" href="class_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a>&gt; <a class="el" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">Hypertable::ConnectionManager::SharedImplPtr</a>          </td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+
+<p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00107">107</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -159,7 +180,7 @@ Creates a thread to do connection retry attempts.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00097">97</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00115">115</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -183,7 +204,7 @@ Creates a thread to do connection retry attempts.<p>
 Copy Constructor. 
 <p>
 Shares the implementation with object being copied. 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00107">107</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00127">127</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -205,8 +226,8 @@ Shares the implementation with object being copied.
 <p>
 Destructor. 
 <p>
-TBD. 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00115">115</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00135">135</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -451,7 +472,7 @@ Removes a connection from the connection manager.
 </dl>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd><a class="el" href="namespace_hypertable_1_1_error.html">Error</a> code (<a class="el" href="namespace_hypertable_1_1_error.html#73c48f53deb2941a8c0ef156a899c3b20a5285a55ffe0563faf08208db78e4a6">Error::OK</a> on success) </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00214">214</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00216">216</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -557,7 +578,7 @@ Returns the <a class="el" href="class_hypertable_1_1_comm.html" title="Provides 
 <p>
 <dl class="return" compact><dt><b>Returns:</b></dt><dd>the assocated comm object </dd></dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00230">230</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00248">248</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -587,7 +608,7 @@ It is set to false by default.<p>
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00239">239</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00257">257</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
@@ -621,7 +642,7 @@ It gets called for each connection related event (establishment, disconnect, etc
 
 <p>Implements <a class="el" href="class_hypertable_1_1_dispatch_handler.html#e1f871312036aeb52e8e391ad0d70b55">Hypertable::DispatchHandler</a>.</p>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00252">252</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00254">254</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -645,7 +666,7 @@ This is the Boost thread "run" method.
 <p>
 This is the boost::thread run method.<p>
 It is called by the manager thread when it starts up. 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00299">299</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00301">301</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
@@ -675,17 +696,17 @@ If a failure occurs, it prints an error message and then schedules a retry by up
   </table>
 </dl>
 
-<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00169">169</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8cc-source.html#l00171">171</a> of file <a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a>.</p>
 
 </div>
 </div><p>
 <hr><h2>Member Data Documentation</h2>
-<a class="anchor" name="5815b5557e73ac9c2fb970b4dfcdc518"></a><!-- doxytag: member="Hypertable::ConnectionManager::m_impl" ref="5815b5557e73ac9c2fb970b4dfcdc518" args="" -->
+<a class="anchor" name="17526ad5935aae9516a7a0e3295cc14a"></a><!-- doxytag: member="Hypertable::ConnectionManager::m_impl" ref="17526ad5935aae9516a7a0e3295cc14a" args="" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="struct_hypertable_1_1_connection_manager_1_1_shared_impl.html">SharedImpl</a>* <a class="el" href="class_hypertable_1_1_connection_manager.html#5815b5557e73ac9c2fb970b4dfcdc518">Hypertable::ConnectionManager::m_impl</a><code> [private]</code>          </td>
+          <td class="memname"><a class="el" href="class_hypertable_1_1_connection_manager.html#dcba5f6ef4a287aadfbcb556894d8143">SharedImplPtr</a> <a class="el" href="class_hypertable_1_1_connection_manager.html#17526ad5935aae9516a7a0e3295cc14a">Hypertable::ConnectionManager::m_impl</a><code> [private]</code>          </td>
         </tr>
       </table>
 </div>
@@ -693,13 +714,13 @@ If a failure occurs, it prints an error message and then schedules a retry by up
 
 <p>
 
-<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00257">257</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
+<p>Definition at line <a class="el" href="_connection_manager_8h-source.html#l00275">275</a> of file <a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a>.</p>
 
 </div>
 </div><p>
 <hr>The documentation for this class was generated from the following files:<ul>
 <li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_connection_manager_8h-source.html">ConnectionManager.h</a><li>/Users/doug/src/hypertable/src/cc/AsyncComm/<a class="el" href="_connection_manager_8cc-source.html">ConnectionManager.cc</a></ul>
-<hr size="1"><address style="text-align: right;"><small>Generated on Mon Dec 8 12:37:43 2008 for hypertable by&nbsp;
+<hr size="1"><address style="text-align: right;"><small>Generated on Thu Jan 22 17:09:16 2009 for hypertable by&nbsp;
 <a href="http://www.doxygen.org/index.html">
 <img src="doxygen.png" alt="doxygen" align="middle" border="0"></a> 1.5.3 </small></address>
 </body>

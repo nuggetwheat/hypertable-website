@@ -1,11 +1,11 @@
 <div id="news">
 	<h3>News and Announcements</h3>
 	<dl>
-		<dt>January 22 2009</dt>
-		<dd><a href="http://www.baidu.com/">Baidu</a> becomes an official sponsor of the Hypertable project. Thanks Baidu! »</dd>
+		<dt>February 9 2009</dt>
+		<dd>O'Reilly Velocity has selected Hypertable for the 2009 Conference Program<br/>June 22 - 24, <a href="http://en.oreilly.com/velocity2009">Velocity 2009»</a> San Jose, CA</dd>
 	</dl>
 	<dl>
-		<dt>November 21 2008</dt>
-		<dd>Hypertable presentation at the QCon San Francisco 2008 Conference November 21st, <a href="http://qconsf.com/sf2008/">QCon San Francisco 2008</a>, San Francisco, CA »</dd>
+		<dt>January 22 2009</dt>
+		<dd><a href="http://www.baidu.com/">Baidu</a> becomes an official sponsor of the Hypertable project. Thanks Baidu! »</dd>
 	</dl>
 </div><!-- news -->

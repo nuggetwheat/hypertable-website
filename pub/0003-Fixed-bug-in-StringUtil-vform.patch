@@ -1,0 +1,39 @@
+From 84e8a07065543be09fd41ed594c80760c527f2d6 Mon Sep 17 00:00:00 2001
+From: Josh Taylor <jtaylor@cs.stanford.edu>
+Date: Fri, 29 Aug 2008 18:06:34 -0700
+Subject: [PATCH] Fixed bug in StringUtil::vform().
+
+StringUtil::vform() formats a variable argument vector into a
+std::string.  It tries to use vsnprintf into a 1024 character buffer.
+If that fails because the buffer is too small, it grows the buffer and
+tries again.  However, it was reusing the same va_list argument
+pointer, which points off the end of the argument list after the first
+go-around with vsnprintf.  The second try usually crashes, or at least
+results in something unexpected.  Fixed this by saving the va_list
+state using va_copy().  This is a C99 macro, so older systems might
+have a problem with this fix.
+---
+ src/StringUtil.cpp |    7 ++++++-
+ 1 files changed, 6 insertions(+), 1 deletions(-)
+
+diff --git a/src/StringUtil.cpp b/src/StringUtil.cpp
+index e30890a..6b050a3 100644
+--- a/src/StringUtil.cpp
++++ b/src/StringUtil.cpp
+@@ -39,7 +39,12 @@ namespace log4cpp {
+ 	char* buffer = new char[size];
+             
+ 	while (1) {
+-	    int n = VSNPRINTF(buffer, size, format, args);
++            va_list args_copy;
++            va_copy(args_copy, args);
++
++	    int n = VSNPRINTF(buffer, size, format, args_copy);
++
++            va_end(args_copy);
+                 
+ 	    // If that worked, return a string.
+ 	    if ((n > -1) && (static_cast<size_t>(n) < size)) {
+-- 
+1.5.6.GIT
+

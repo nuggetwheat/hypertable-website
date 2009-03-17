@@ -7,6 +7,7 @@
 <td>Hql</td><td><a href="Hql.html#Svc_HqlService">HqlService</a><br/>
 <ul>
 <li><a href="Hql.html#Fn_HqlService_hql_exec">hql_exec</a></li>
+<li><a href="Hql.html#Fn_HqlService_hql_query">hql_query</a></li>
 </ul>
 </td>
 <td><a href="Hql.html#Struct_HqlResult">HqlResult</a><br/>
@@ -53,4 +54,12 @@ It adds capability to execute HQL queries to the service
 @param noflush - Do not auto commit any modifications (return a mutator)
 <p/>
 @param unbuffered - return a scanner instead of buffered results
+<br/></div><div class="definition"><h4 id="Fn_HqlService_hql_query">Function: HqlService.hql_query</h4>
+<pre><code><a href="Hql.html#Struct_HqlResult">HqlResult</a></code> hql_query(<code>string</code> command)
+    throws <code><a href="Client.html#Struct_ClientException">Client.ClientException</a></code>
+</pre>Convenience method for executing an buffered and flushed query
+<p/>
+because thrift doesn't (and probably won't) support default argument values
+<p/>
+@param command - HQL command
 <br/></div></body></html>

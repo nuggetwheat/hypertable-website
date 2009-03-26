@@ -13,18 +13,26 @@
 <li><a href="Client.html#Fn_ClientService_flush_mutator">flush_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cell">get_cell</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cells">get_cells</a></li>
+<li><a href="Client.html#Fn_ClientService_get_cells_as_arrays">get_cells_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_get_row">get_row</a></li>
+<li><a href="Client.html#Fn_ClientService_get_row_as_arrays">get_row_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_get_schema">get_schema</a></li>
 <li><a href="Client.html#Fn_ClientService_get_table_id">get_table_id</a></li>
 <li><a href="Client.html#Fn_ClientService_get_tables">get_tables</a></li>
 <li><a href="Client.html#Fn_ClientService_next_cells">next_cells</a></li>
+<li><a href="Client.html#Fn_ClientService_next_cells_as_arrays">next_cells_as_arrays</a></li>
+<li><a href="Client.html#Fn_ClientService_next_row">next_row</a></li>
+<li><a href="Client.html#Fn_ClientService_next_row_as_arrays">next_row_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_open_mutator">open_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_open_scanner">open_scanner</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cell">set_cell</a></li>
+<li><a href="Client.html#Fn_ClientService_set_cell_as_array">set_cell_as_array</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cells">set_cells</a></li>
+<li><a href="Client.html#Fn_ClientService_set_cells_as_arrays">set_cells_as_arrays</a></li>
 </ul>
 </td>
 <td><a href="Client.html#Struct_Cell">Cell</a><br/>
+<a href="Client.html#Typedef_CellAsArray">CellAsArray</a><br/>
 <a href="Client.html#Enum_CellFlag">CellFlag</a><br/>
 <a href="Client.html#Struct_CellInterval">CellInterval</a><br/>
 <a href="Client.html#Struct_ClientException">ClientException</a><br/>
@@ -76,6 +84,18 @@ many calls to mutator methods)
 Value for table cell
 <p/>
 Use binary instead of string to generate efficient type for Java.
+<br/></div>
+<div class="definition"><h3 id="Typedef_CellAsArray">Typedef: CellAsArray</h3>
+<p><strong>Base type:</strong>&nbsp;<code>list&lt;<code>string</code>&gt;</code></p>
+Alternative Cell interface for languages (e.g., Ruby) where user defined
+objects are much more expensive to create than builtin primitives. The order
+of members is the same as that in the <a href="#Struct_Cell">Cell</a> object
+definition.
+<p/>
+The returned cells (as arrays) contain Cell as array:
+["row_key", "column_family", "column_qualifier", "value", "timestamp"]
+<p/>
+Note, revision and cell flag are not returned for the array interface.
 <br/></div>
 <hr/><h2 id="Structs">Data structures</h2>
 <div class="definition"><h3 id="Struct_RowInterval">Struct: RowInterval</h3>
@@ -139,6 +159,7 @@ Use binary instead of string to generate efficient type for Java.
 <tr><td>row_limit</td><td><code>i32</code></td><td>no</td><td>0</td></tr>
 <tr><td>start_time</td><td><code>i64</code></td><td>no</td><td></td></tr>
 <tr><td>end_time</td><td><code>i64</code></td><td>no</td><td></td></tr>
+<tr><td>columns</td><td><code>list&lt;<code>string</code>&gt;</code></td><td>no</td><td></td></tr>
 </table><br/>Specifies options for a scan
 <p/>
 <dl>
@@ -165,6 +186,10 @@ Use binary instead of string to generate efficient type for Java.
 <p/>
   <dt>end_time</dt>
   <dd>Specifies end time in nanoseconds since epoch for cells to return</dd>
+<p/>
+  <dt>columns</dt>
+  <dd>Specifies the names of the columns to return</dd>
+</dl>
 <br/></div><div class="definition"><h3 id="Struct_Cell">Struct: Cell</h3>
 <table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
 <tr><td>row_key</td><td><code>string</code></td><td>no</td><td></td></tr>
@@ -247,6 +272,19 @@ mutator interface flattened.
 </pre>Iterate over cells of a scanner
 <p/>
 @param scanner - scanner id
+<br/></div><div class="definition"><h4 id="Fn_ClientService_next_cells_as_arrays">Function: ClientService.next_cells_as_arrays</h4>
+<pre><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> next_cells_as_arrays(<code><a href="Client.html#Typedef_Scanner">Scanner</a></code> scanner)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre></div><div class="definition"><h4 id="Fn_ClientService_next_row">Function: ClientService.next_row</h4>
+<pre><code>list&lt;<code><a href="Client.html#Struct_Cell">Cell</a></code>&gt;</code> next_row(<code><a href="Client.html#Typedef_Scanner">Scanner</a></code> scanner)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Iterate over rows of a scanner
+<p/>
+@param scanner - scanner id
+<br/></div><div class="definition"><h4 id="Fn_ClientService_next_row_as_arrays">Function: ClientService.next_row_as_arrays</h4>
+<pre><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> next_row_as_arrays(<code><a href="Client.html#Typedef_Scanner">Scanner</a></code> scanner)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_get_row">Function: ClientService.get_row</h4>
 <pre><code>list&lt;<code><a href="Client.html#Struct_Cell">Cell</a></code>&gt;</code> get_row(<code>string</code> name,
                    <code>string</code> row)
@@ -258,6 +296,11 @@ mutator interface flattened.
 @param row - row key
 <p/>
 @return a list of cells (with row_keys unset)
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_row_as_arrays">Function: ClientService.get_row_as_arrays</h4>
+<pre><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> get_row_as_arrays(<code>string</code> name,
+                                    <code>string</code> row)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_get_cell">Function: ClientService.get_cell</h4>
 <pre><code><a href="Client.html#Typedef_Value">Value</a></code> get_cell(<code>string</code> name,
                <code>string</code> row,
@@ -284,6 +327,11 @@ mutator interface flattened.
 <p/>
 @return a list of cells (a cell with no row key set is assumed to have
         the same row key as the previous cell)
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_cells_as_arrays">Function: ClientService.get_cells_as_arrays</h4>
+<pre><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> get_cells_as_arrays(<code>string</code> name,
+                                      <code><a href="Client.html#Struct_ScanSpec">ScanSpec</a></code> scan_spec)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_open_mutator">Function: ClientService.open_mutator</h4>
 <pre><code><a href="Client.html#Typedef_Mutator">Mutator</a></code> open_mutator(<code>string</code> name)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
@@ -308,6 +356,11 @@ mutator interface flattened.
 @param mutator - mutator id
 <p/>
 @param cell - the cell to set
+<br/></div><div class="definition"><h4 id="Fn_ClientService_set_cell_as_array">Function: ClientService.set_cell_as_array</h4>
+<pre><code>void</code> set_cell_as_array(<code><a href="Client.html#Typedef_Mutator">Mutator</a></code> mutator,
+                       <code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code> cell)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_set_cells">Function: ClientService.set_cells</h4>
 <pre><code>void</code> set_cells(<code><a href="Client.html#Typedef_Mutator">Mutator</a></code> mutator,
                <code>list&lt;<code><a href="Client.html#Struct_Cell">Cell</a></code>&gt;</code> cells)
@@ -318,6 +371,11 @@ mutator interface flattened.
 <p/>
 @param cells - a list of cells (a cell with no row key set is assumed
        to have the same row key as the previous cell)
+<br/></div><div class="definition"><h4 id="Fn_ClientService_set_cells_as_arrays">Function: ClientService.set_cells_as_arrays</h4>
+<pre><code>void</code> set_cells_as_arrays(<code><a href="Client.html#Typedef_Mutator">Mutator</a></code> mutator,
+                         <code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> cells)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_flush_mutator">Function: ClientService.flush_mutator</h4>
 <pre><code>void</code> flush_mutator(<code><a href="Client.html#Typedef_Mutator">Mutator</a></code> mutator)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>

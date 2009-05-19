@@ -11,6 +11,9 @@ function req_is_spam() {
       empty($_SERVER['HTTP_USER_AGENT']))
     return true;
 
+  if (preg_match('/href\s*=/', req_get('message')))
+    return true;
+
   $version = trim(req_get('version'));
 
   if (!empty($version) && !preg_match('/^\d+(?:\.\d+){1,3}$/', $version))

@@ -26,10 +26,10 @@
 						<dt><label for="subject">Subject:</label></dt>
 						<dd><input type="text" id="subject" name="subject" /></dd>
 						<dt><label for="message">Feedback:</label></dt>
-						<dd><textarea name="message" rows="9" wrap="virtual" id="message" ></textarea></dd>
+						<dd><textarea name="message" rows="9" cols="100%" id="message" ></textarea></dd>
 						<dt><label for="version">Version:</label></dt>
 						<dd><input type="text" id="version" name="version" /></dd>
-						<dt><label for="attachment:">Attachment:</label></dt>
+						<dt><label for="attachment">Attachment:</label></dt>
 						<dd class="attach"><input type="text" id="attachment" name="attachment" /><a href="#" class="file">Browse</a></dd>
 						</dl>
 						<hr noshade="noshade" width="500" />

@@ -6,7 +6,7 @@
 <meta http-equiv="description" content="Hypertable is an open source project based on published best practices and our own experience in solving large-scale data-intensive tasks. Our goal is nothing less than that Hypertable become the world's most massively parallel high performance database platform." />
 <meta http-equiv="keywords" content="hyper table, hyypertable, hipertable, hyprotable, hypertble" />
 <link rel="stylesheet" type="text/css" href="inc/styles.css" />
-<link rel="alternate" type="application/atom+xml" href="atom.xml" title="Hypertable News & Announcements" />
+<link rel="alternate" type="application/atom+xml" href="atom.xml" title="Hypertable News &amp; Announcements" />
 
 <title>Hypertable: An Open Source, High Performance, Scalable Database</title>
 <script type="text/javascript">

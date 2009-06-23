@@ -21,14 +21,19 @@
 					<p>
 						<a href="#zvents"><img src="images/lgo-sponsors-zvents.gif" alt="Zvents logo" /></a>
 						<a href="#baidu"><img src="images/lgo-sponsors-baidu.gif" alt="Baidu logo" /></a>
+						<a href="#rediff"><img src="images/lgo-sponsors-rediff.gif" alt="Rediff logo" /></a>
 					</p>
 					<dl>
 						<dt><a name="zvents" class="external" href="http://www.zvents.com/" target="_blank" >Zvents</a></dt>
-							<dd>Zvents, the local search engine for things to do, is the employer of all of the initial authors and contributors to Hypertable. Zvents has sponsored the Hypertable project for its own local search and local ad targeting solutions, and has chosen to release it under an open-source license to participate in the many benefits of the open-source community.</dd>
+						<dd>Zvents, the local search engine for things to do, is the employer of all of the initial authors and contributors to Hypertable. Zvents has sponsored the Hypertable project for its own local search and local ad targeting solutions, and has chosen to release it under an open-source license to participate in the many benefits of the open-source community.</dd>
 					</dl>
 					<dl>
 						<dt><a name="baidu" class="external" href="http://www.baidu.com/" target="_blank" >Baidu</a></dt>
-							<dd>Baidu (Nasdaq: BIDU), the leading internet search services provider in China has decided to become an official sponsor by adopting Hypertable across the company and committing a team of engineers and numerous servers to use and improve Hypertable. Baidu's decision came after months of evaluating Hypertable and other alternative solutions. We believe that Baidu's commitment further validates the quality and progress of the project and bodes well for the long term viability of Hypertable.
+						<dd>Baidu (Nasdaq: BIDU), the leading internet search services provider in China has decided to become an official sponsor by adopting Hypertable across the company and committing a team of engineers and numerous servers to use and improve Hypertable. Baidu's decision came after months of evaluating Hypertable and other alternative solutions. We believe that Baidu's commitment further validates the quality and progress of the project and bodes well for the long term viability of Hypertable.
+					</dl>
+					<dl>
+						<dt><a name="rediff" class="external" href="http://www.rediff.com/" target="_blank" >Rediff.com</a></dt>
+						<dd>Rediff.com (Nasdaq: REDF) is one of the premier worldwide online providers of news, information, communication, entertainment and shopping service. Rediff.com provides a platform for Indians worldwide to connect with one another online. Rediff.com is committed to offering a personalized and secure user experience. Founded in 1996, Rediff.com is headquartered in Mumbai, India, with offices in New Delhi, Bangalore, Chennai, Hyderabad and New York, USA. Rediff.com has decided to become an official sponsor by adopting Hypertable in its products and services.</dd>
 					</dl>
 					<p></p>
 					<p><img src="images/gra-end-of-page.gif" alt=" " /></p>

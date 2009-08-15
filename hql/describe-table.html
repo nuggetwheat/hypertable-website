@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<link rel="stylesheet" type="text/css" href="../inc/styles.css" />
+<title>Documentation for Hypertable</title>
+</head>
+<body>
+<div id="all">
+<div id="header">
+	<div id="logo">
+		<h1><a href="../index.html"><img src="../images/lgo-hypertable.jpg" alt="Hypertable" /></a></h1>
+		<p>An Open Source, High Performance, Scalable Database</p>
+	</div><!-- logo -->
+	<div id="nav">
+		<ul>
+			<li><a href="../about.html">About</a></li>
+			<li><a href="../download.html">Download</a></li>
+			<li><a href="../license.html">License</a></li>
+			<li><a href="../documentation.html" class="on">Documentation</a></li>
+			<li><a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
+			<li><a href="../mailing-list.html">Mailing Lists</a></li>
+			<li><a href="../sponsors.html">Sponsors</a></li>
+			<li class="last"><a href="../feedback.html">Feedback</a></li>
+		</ul>
+	</div><!-- nav -->
+</div><!-- header -->
+	<div id="contents-container">
+		<div id="contents">
+			<div id="fullpage" class="sub documentation">
+<h2>DESCRIBE TABLE</h2>
+
+<h4>EBNF</h4>
+
+<pre><code>DESCRIBE TABLE [ WITH IDS ] table_name
+</code></pre>
+
+<h4>Description</h4>
+
+<p><p>
+The <code>DESCRIBE TABLE</code> command displays the XML-style schema for a table.  The
+output of the straight <code>DESCRIBE TABLE</code> command can be passed into the
+Hypertable C++ <code>Client::create_table()</code> API as the schema parameter.  If the
+optional <code>WITH IDS</code> clause is supplied, then the schema "generation" attribute
+and the column family "id" attributes are included in the XML output.  For
+example, the following table creation statement:</p>
+
+<pre><code>CREATE TABLE foo (
+  a MAX_VERSIONS=1,
+  b TTL=1 DAY,
+  c,
+  ACCESS GROUP primary BLOCKSIZE=1024 ( a, b ),
+  ACCESS GROUP secondary compressor="zlib --best" ( c )
+)
+</code></pre>
+
+<p>will create a table with the following schema as reported by the <code>CREATE TABLE</code>
+command:</p>
+
+<pre><code>&lt;Schema&gt;
+  &lt;AccessGroup name="primary" blksz="1024"&gt;
+    &lt;ColumnFamily&gt;
+      &lt;Name&gt;a&lt;/Name&gt;
+      &lt;MaxVersions&gt;1&lt;/MaxVersions&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+    &lt;ColumnFamily&gt;
+      &lt;Name&gt;b&lt;/Name&gt;
+      &lt;ttl&gt;86400&lt;/ttl&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+  &lt;/AccessGroup&gt;
+  &lt;AccessGroup name="secondary" compressor="zlib --best"&gt;
+    &lt;ColumnFamily&gt;
+      &lt;Name&gt;c&lt;/Name&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+  &lt;/AccessGroup&gt;
+&lt;/Schema&gt;
+</code></pre>
+
+<p>and the following output will be generated when the <code>WITH IDS</code> clause is
+supplied in the <code>CREATE TABLE</code> statement:</p>
+
+<pre><code>&lt;Schema generation="1"&gt;
+  &lt;AccessGroup name="primary" blksz="1024"&gt;
+    &lt;ColumnFamily id="1"&gt;
+      &lt;Generation&gt;1&lt;/Generation&gt;
+      &lt;Name&gt;a&lt;/Name&gt;
+      &lt;MaxVersions&gt;1&lt;/MaxVersions&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+    &lt;ColumnFamily id="2"&gt;
+      &lt;Generation&gt;1&lt;/Generation&gt;
+      &lt;Name&gt;b&lt;/Name&gt;
+      &lt;ttl&gt;86400&lt;/ttl&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+  &lt;/AccessGroup&gt;
+  &lt;AccessGroup name="secondary" compressor="zlib --best"&gt;
+    &lt;ColumnFamily id="3"&gt;
+      &lt;Generation&gt;1&lt;/Generation&gt;
+      &lt;Name&gt;c&lt;/Name&gt;
+      &lt;deleted&gt;false&lt;/deleted&gt;
+    &lt;/ColumnFamily&gt;
+  &lt;/AccessGroup&gt;
+&lt;/Schema&gt;
+</code></pre>
+			</div><!-- home -->
+		</div><!-- contents -->
+	</div><!-- contents-container -->
+</div><!-- all -->
+<div id="footer-container">
+	<div id="footer">
+		<p class="nav">
+			<a href="../about.html">About</a> |
+			<a href="../download.html">Download</a> |
+			<a href="../license.html">License</a> |
+			<a href="../documentation.html">Documentation</a> |
+			<a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a> |
+			<a href="../mailing-list.html">Mailing Lists</a> |
+			<a href="../sponsors.html">Sponsors</a> |
+			<a href="../feedback.html">Feedback</a> |
+			<a href="../sitemap.html">Sitemap</a>
+		</p>
+		<!-- . nav -->
+		<p class="copy">&copy; 2009 Hypertable. All rights reserved. Design by <a href="http://www.bluecoastweb.com" target="_blank">Blue Coast Web</a></p>
+		<ul>
+			<li class="first"><span>Sponsors:</span></li>
+			<li><a href="../sponsors.html#zvents"><img src="../images/lgo-zvents.gif" alt="Zvents" /></a></li>
+			<li><a href="../sponsors.html#baidu"><img src="../images/lgo-baidu.gif" alt="Baidu" /></a></li>
+			<li><a href="../sponsors.html#rediff"><img src="../images/lgo-rediff.gif" alt="Rediff" /></a></li>
+		</ul>
+	</div><!-- footer -->
+</div><!-- footer-container -->
+<!-- generated on Wed, 29 Jul 2009 18:31:00 -0700 -->
+</body>
+</html>

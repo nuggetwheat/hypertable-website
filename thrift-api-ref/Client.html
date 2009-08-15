@@ -37,6 +37,7 @@
 <a href="Client.html#Struct_CellInterval">CellInterval</a><br/>
 <a href="Client.html#Struct_ClientException">ClientException</a><br/>
 <a href="Client.html#Typedef_Mutator">Mutator</a><br/>
+<a href="Client.html#Enum_MutatorFlag">MutatorFlag</a><br/>
 <a href="Client.html#Struct_RowInterval">RowInterval</a><br/>
 <a href="Client.html#Struct_ScanSpec">ScanSpec</a><br/>
 <a href="Client.html#Typedef_Scanner">Scanner</a><br/>
@@ -63,6 +64,13 @@ INSERT: cell is an insert/update (default state)
 <tr><td><code>DELETE_CF</code></td><td><code>1</code></td></tr>
 <tr><td><code>DELETE_CELL</code></td><td><code>2</code></td></tr>
 <tr><td><code>INSERT</code></td><td><code>255</code></td></tr>
+</table></div>
+<div class="definition"><h3 id="Enum_MutatorFlag">Enumeration: MutatorFlag</h3>
+Mutator creation flags
+<p/>
+NO_LOG_SYNC: Do not sync the commit log
+<br/><br/><table>
+<tr><td><code>NO_LOG_SYNC</code></td><td><code>1</code></td></tr>
 </table></div>
 <hr/><h2 id="Typedefs">Type declarations</h2>
 <div class="definition"><h3 id="Typedef_Scanner">Typedef: Scanner</h3>
@@ -228,12 +236,12 @@ Note, revision and cell flag are not returned for the array interface.
 <br/></div><div class="definition"><h3 id="Struct_ClientException">Exception: ClientException</h3>
 <table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
 <tr><td>code</td><td><code>i32</code></td><td>yes</td><td></td></tr>
-<tr><td>what</td><td><code>string</code></td><td>yes</td><td></td></tr>
+<tr><td>message</td><td><code>string</code></td><td>yes</td><td></td></tr>
 </table><br/>Exception for thrift clients.
 <p/>
 <dl>
   <dt>code</dt><dd>Internal use (defined in src/cc/Common/Error.h)</dd>
-  <dt>what</dt><dd>A message about the exception</dd>
+  <dt>message</dt><dd>A message about the exception</dd>
 </dl>
 <p/>
 Note: some languages (like php) don't have adequate namespace, so Exception
@@ -253,13 +261,17 @@ mutator interface flattened.
 @param schema - schema of the table (in xml)
 <br/></div><div class="definition"><h4 id="Fn_ClientService_open_scanner">Function: ClientService.open_scanner</h4>
 <pre><code><a href="Client.html#Typedef_Scanner">Scanner</a></code> open_scanner(<code>string</code> name,
-                     <code><a href="Client.html#Struct_ScanSpec">ScanSpec</a></code> scan_spec)
+                     <code><a href="Client.html#Struct_ScanSpec">ScanSpec</a></code> scan_spec,
+                     <code>bool</code> retry_table_not_found = 0)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Open a table scanner
 <p/>
 @param name - table name
 <p/>
 @param scan_spec - scan specification
+<p/>
+@param retry_table_not_found - whether to retry upon errors caused by
+       drop/create tables with the same name
 <br/></div><div class="definition"><h4 id="Fn_ClientService_close_scanner">Function: ClientService.close_scanner</h4>
 <pre><code>void</code> close_scanner(<code><a href="Client.html#Typedef_Scanner">Scanner</a></code> scanner)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
@@ -333,11 +345,17 @@ mutator interface flattened.
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Alternative interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_open_mutator">Function: ClientService.open_mutator</h4>
-<pre><code><a href="Client.html#Typedef_Mutator">Mutator</a></code> open_mutator(<code>string</code> name)
+<pre><code><a href="Client.html#Typedef_Mutator">Mutator</a></code> open_mutator(<code>string</code> name,
+                     <code>i32</code> flags = 0,
+                     <code>i32</code> flush_interval = 0)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Open a table mutator
 <p/>
 @param name - table name
+<p/>
+@param flags - mutator flags
+<p/>
+@param flush_interval - auto-flush interval in milliseconds; 0 disables it.
 <p/>
 @return mutator id
 <br/></div><div class="definition"><h4 id="Fn_ClientService_close_mutator">Function: ClientService.close_mutator</h4>

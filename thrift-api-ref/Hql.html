@@ -7,10 +7,13 @@
 <td>Hql</td><td><a href="Hql.html#Svc_HqlService">HqlService</a><br/>
 <ul>
 <li><a href="Hql.html#Fn_HqlService_hql_exec">hql_exec</a></li>
+<li><a href="Hql.html#Fn_HqlService_hql_exec2">hql_exec2</a></li>
 <li><a href="Hql.html#Fn_HqlService_hql_query">hql_query</a></li>
+<li><a href="Hql.html#Fn_HqlService_hql_query2">hql_query2</a></li>
 </ul>
 </td>
 <td><a href="Hql.html#Struct_HqlResult">HqlResult</a><br/>
+<a href="Hql.html#Struct_HqlResult2">HqlResult2</a><br/>
 </td>
 <td><code></code></td>
 </tr></table>
@@ -36,6 +39,13 @@
   <dt>mutator</dt>
   <dd>Resulting mutator ID for unflushed modifying queries</dd>
 </dl>
+<br/></div><div class="definition"><h3 id="Struct_HqlResult2">Struct: HqlResult2</h3>
+<table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
+<tr><td>results</td><td><code>list&lt;<code>string</code>&gt;</code></td><td>no</td><td></td></tr>
+<tr><td>cells</td><td><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">Client.CellAsArray</a></code>&gt;</code></td><td>no</td><td></td></tr>
+<tr><td>scanner</td><td><code>i64</code></td><td>no</td><td></td></tr>
+<tr><td>mutator</td><td><code>i64</code></td><td>no</td><td></td></tr>
+</table><br/>Same as HqlResult except with cell as array
 <br/></div><hr/><h2 id="Services">Services</h2>
 <h3 id="Svc_HqlService">Service: HqlService</h3>
 <div class="extends"><em>extends</em> <code><a href="Client.html#Svc_ClientService">Client.ClientService</a></code></div>
@@ -62,4 +72,14 @@ It adds capability to execute HQL queries to the service
 because thrift doesn't (and probably won't) support default argument values
 <p/>
 @param command - HQL command
+<br/></div><div class="definition"><h4 id="Fn_HqlService_hql_exec2">Function: HqlService.hql_exec2</h4>
+<pre><code><a href="Hql.html#Struct_HqlResult2">HqlResult2</a></code> hql_exec2(<code>string</code> command,
+                     <code>bool</code> noflush = 0,
+                     <code>bool</code> unbuffered = 0)
+    throws <code><a href="Client.html#Struct_ClientException">Client.ClientException</a></code>
+</pre>@see hql_exec
+<br/></div><div class="definition"><h4 id="Fn_HqlService_hql_query2">Function: HqlService.hql_query2</h4>
+<pre><code><a href="Hql.html#Struct_HqlResult2">HqlResult2</a></code> hql_query2(<code>string</code> command)
+    throws <code><a href="Client.html#Struct_ClientException">Client.ClientException</a></code>
+</pre>@see hql_query
 <br/></div></body></html>

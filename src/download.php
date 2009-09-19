@@ -13,7 +13,7 @@
 		<div id="contents">
 			<div id="page" class="sub download">
 				<div class="left">
-					<h2>Download</h2>
+					<h2>Download source code</h2>
 					<p class="btn-big-download">
 						<a href="download.php?v=<?= $download_version ?>">
 							Download
@@ -22,6 +22,8 @@
 						</a>
 					</p>
 					<p>Get the latest <a class="external" href="http://code.google.com/p/hypertable/wiki/SourceCode?tm=4">source code from the repository</a></p>
+					<h2>Download binary packages</h2>
+					<p>For your convenience, some binary packages are available at <a href="http://package.hypertable.org/">package.hypertable.org</a></p>
 				</div><!-- left -->
 				<div class="right">
 <? include("news.inc") ?>

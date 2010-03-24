@@ -10,6 +10,7 @@
 <li><a href="Client.html#Fn_ClientService_close_scanner">close_scanner</a></li>
 <li><a href="Client.html#Fn_ClientService_create_table">create_table</a></li>
 <li><a href="Client.html#Fn_ClientService_drop_table">drop_table</a></li>
+<li><a href="Client.html#Fn_ClientService_exists_table">exists_table</a></li>
 <li><a href="Client.html#Fn_ClientService_flush_mutator">flush_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cell">get_cell</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cells">get_cells</a></li>
@@ -18,6 +19,7 @@
 <li><a href="Client.html#Fn_ClientService_get_row_as_arrays">get_row_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_get_schema">get_schema</a></li>
 <li><a href="Client.html#Fn_ClientService_get_table_id">get_table_id</a></li>
+<li><a href="Client.html#Fn_ClientService_get_table_splits">get_table_splits</a></li>
 <li><a href="Client.html#Fn_ClientService_get_tables">get_tables</a></li>
 <li><a href="Client.html#Fn_ClientService_next_cells">next_cells</a></li>
 <li><a href="Client.html#Fn_ClientService_next_cells_as_arrays">next_cells_as_arrays</a></li>
@@ -25,6 +27,10 @@
 <li><a href="Client.html#Fn_ClientService_next_row_as_arrays">next_row_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_open_mutator">open_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_open_scanner">open_scanner</a></li>
+<li><a href="Client.html#Fn_ClientService_put_cell">put_cell</a></li>
+<li><a href="Client.html#Fn_ClientService_put_cell_as_array">put_cell_as_array</a></li>
+<li><a href="Client.html#Fn_ClientService_put_cells">put_cells</a></li>
+<li><a href="Client.html#Fn_ClientService_put_cells_as_arrays">put_cells_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cell">set_cell</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cell_as_array">set_cell_as_array</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cells">set_cells</a></li>
@@ -36,11 +42,14 @@
 <a href="Client.html#Enum_CellFlag">CellFlag</a><br/>
 <a href="Client.html#Struct_CellInterval">CellInterval</a><br/>
 <a href="Client.html#Struct_ClientException">ClientException</a><br/>
+<a href="Client.html#Struct_Key">Key</a><br/>
+<a href="Client.html#Struct_MutateSpec">MutateSpec</a><br/>
 <a href="Client.html#Typedef_Mutator">Mutator</a><br/>
 <a href="Client.html#Enum_MutatorFlag">MutatorFlag</a><br/>
 <a href="Client.html#Struct_RowInterval">RowInterval</a><br/>
 <a href="Client.html#Struct_ScanSpec">ScanSpec</a><br/>
 <a href="Client.html#Typedef_Scanner">Scanner</a><br/>
+<a href="Client.html#Struct_TableSplit">TableSplit</a><br/>
 <a href="Client.html#Typedef_Value">Value</a><br/>
 </td>
 <td><code></code></td>
@@ -69,8 +78,10 @@ INSERT: cell is an insert/update (default state)
 Mutator creation flags
 <p/>
 NO_LOG_SYNC: Do not sync the commit log
+IGNORE_UNKNOWN_CFS: Don't throw exception if mutator writes to unknown column family
 <br/><br/><table>
 <tr><td><code>NO_LOG_SYNC</code></td><td><code>1</code></td></tr>
+<tr><td><code>IGNORE_UNKNOWN_CFS</code></td><td><code>2</code></td></tr>
 </table></div>
 <hr/><h2 id="Typedefs">Type declarations</h2>
 <div class="definition"><h3 id="Typedef_Scanner">Typedef: Scanner</h3>
@@ -168,6 +179,7 @@ Note, revision and cell flag are not returned for the array interface.
 <tr><td>start_time</td><td><code>i64</code></td><td>no</td><td></td></tr>
 <tr><td>end_time</td><td><code>i64</code></td><td>no</td><td></td></tr>
 <tr><td>columns</td><td><code>list&lt;<code>string</code>&gt;</code></td><td>no</td><td></td></tr>
+<tr><td>keys_only</td><td><code>bool</code></td><td>no</td><td>0</td></tr>
 </table><br/>Specifies options for a scan
 <p/>
 <dl>
@@ -198,19 +210,18 @@ Note, revision and cell flag are not returned for the array interface.
   <dt>columns</dt>
   <dd>Specifies the names of the columns to return</dd>
 </dl>
-<br/></div><div class="definition"><h3 id="Struct_Cell">Struct: Cell</h3>
+<br/></div><div class="definition"><h3 id="Struct_Key">Struct: Key</h3>
 <table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
-<tr><td>row_key</td><td><code>string</code></td><td>no</td><td></td></tr>
-<tr><td>column_family</td><td><code>string</code></td><td>no</td><td></td></tr>
-<tr><td>column_qualifier</td><td><code>string</code></td><td>no</td><td></td></tr>
-<tr><td>value</td><td><code><a href="Client.html#Typedef_Value">Value</a></code></td><td>no</td><td></td></tr>
+<tr><td>row</td><td><code>string</code></td><td>yes</td><td></td></tr>
+<tr><td>column_family</td><td><code>string</code></td><td>yes</td><td></td></tr>
+<tr><td>column_qualifier</td><td><code>string</code></td><td>yes</td><td></td></tr>
 <tr><td>timestamp</td><td><code>i64</code></td><td>no</td><td></td></tr>
 <tr><td>revision</td><td><code>i64</code></td><td>no</td><td></td></tr>
-<tr><td>flag</td><td><code>i16</code></td><td>no</td><td>255</td></tr>
-</table><br/>Defines a table cell
+<tr><td>flag</td><td><code>i16</code></td><td>yes</td><td>255</td></tr>
+</table><br/>Defines a cell key
 <p/>
 <dl>
-  <dt>row_key</dt>
+  <dt>row</dt>
   <dd>Specifies the row key. Note, it cannot contain null characters.
   If a row key is not specified in a return cell, it's assumed to
   be the same as the previous cell</dd>
@@ -221,9 +232,6 @@ Note, revision and cell flag are not returned for the array interface.
   <dt>column_qualifier</dt>
   <dd>Specifies the column qualifier. A column family must be specified.</dd>
 <p/>
-  <dt>value</dt>
-  <dd>Value of a cell. Currently a sequence of uninterpreted bytes.</dd>
-<p/>
   <dt>timestamp</dt>
   <dd>Nanoseconds since epoch for the cell<dd>
 <p/>
@@ -232,6 +240,57 @@ Note, revision and cell flag are not returned for the array interface.
 <p/>
   <dt>flag</dt>
   <dd>A 16-bit integer indicating the state of the cell</dd>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_MutateSpec">Struct: MutateSpec</h3>
+<table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
+<tr><td>appname</td><td><code>string</code></td><td>yes</td><td>""</td></tr>
+<tr><td>flush_interval</td><td><code>i32</code></td><td>yes</td><td>1000</td></tr>
+<tr><td>flags</td><td><code>i32</code></td><td>yes</td><td>2</td></tr>
+</table><br/>Specifies options for a shared periodic mutator
+<p/>
+<dl>
+  <dt>appname</dt>
+  <dd>String key used to share/retrieve mutator, eg: "my_ht_app"</dd>
+<p/>
+  <dt>flush_interval</dt>
+  <dd>Time interval between flushes</dd>
+<p/>
+  <dt>flags</dt>
+  <dd>Mutator flags</dt>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_Cell">Struct: Cell</h3>
+<table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
+<tr><td>key</td><td><code><a href="Client.html#Struct_Key">Key</a></code></td><td>yes</td><td></td></tr>
+<tr><td>value</td><td><code><a href="Client.html#Typedef_Value">Value</a></code></td><td>no</td><td></td></tr>
+</table><br/>Defines a table cell
+<p/>
+<dl>
+  <dt>key</dt>
+  <dd>Specifies the cell key</dd>
+<p/>
+  <dt>value</dt>
+  <dd>Value of a cell. Currently a sequence of uninterpreted bytes.</dd>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_TableSplit">Struct: TableSplit</h3>
+<table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
+<tr><td>start_row</td><td><code>string</code></td><td>no</td><td></td></tr>
+<tr><td>end_row</td><td><code>string</code></td><td>no</td><td></td></tr>
+<tr><td>location</td><td><code>string</code></td><td>no</td><td></td></tr>
+<tr><td>ip_address</td><td><code>string</code></td><td>no</td><td></td></tr>
+</table><br/>Defines a table split
+<p/>
+<dl>
+  <dt>start_row</dt>
+  <dd>Starting row of the split.</dd>
+<p/>
+  <dt>end_row</dt>
+  <dd>Ending row of the split.</dd>
+<p/>
+  <dt>location</dt>
+  <dd>Location (proxy name) of the split.</dd>
+<p/>
+  <dt>ip_address</dt>
+  <dd>The IP address of the split.</dd>
 </dl>
 <br/></div><div class="definition"><h3 id="Struct_ClientException">Exception: ClientException</h3>
 <table><tr><th>Field</th><th>Type</th><th>Required</th><th>Default value</th></tr>
@@ -344,6 +403,48 @@ mutator interface flattened.
                                       <code><a href="Client.html#Struct_ScanSpec">ScanSpec</a></code> scan_spec)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Alternative interface using array as cell
+<br/></div><div class="definition"><h4 id="Fn_ClientService_put_cells">Function: ClientService.put_cells</h4>
+<pre><code>void</code> put_cells(<code>string</code> tablename,
+               <code><a href="Client.html#Struct_MutateSpec">MutateSpec</a></code> mutate_spec,
+               <code>list&lt;<code><a href="Client.html#Struct_Cell">Cell</a></code>&gt;</code> cells)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Open a shared periodic mutator which causes cells to be written asyncronously.
+Users beware: calling this method merely writes
+cells to a local buffer and does not guarantee that the cells have been persisted.
+If you want guaranteed durability, use the open_mutator+set_cells* interface instead.
+<p/>
+@param tablename - table name
+<p/>
+@param mutate_spec - mutator specification
+<p/>
+@param cells - set of cells to be written
+<br/></div><div class="definition"><h4 id="Fn_ClientService_put_cells_as_arrays">Function: ClientService.put_cells_as_arrays</h4>
+<pre><code>void</code> put_cells_as_arrays(<code>string</code> tablename,
+                         <code><a href="Client.html#Struct_MutateSpec">MutateSpec</a></code> mutate_spec,
+                         <code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code> cells)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative to put_cell interface using array as cell
+<br/></div><div class="definition"><h4 id="Fn_ClientService_put_cell">Function: ClientService.put_cell</h4>
+<pre><code>void</code> put_cell(<code>string</code> tablename,
+              <code><a href="Client.html#Struct_MutateSpec">MutateSpec</a></code> mutate_spec,
+              <code><a href="Client.html#Struct_Cell">Cell</a></code> cell)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Open a shared periodic mutator which causes cells to be written asyncronously.
+Users beware: calling this method merely writes
+cells to a local buffer and does not guarantee that the cells have been persisted.
+If you want guaranteed durability, use the open_mutator+set_cells* interface instead.
+<p/>
+@param tablename - table name
+<p/>
+@param mutate_spec - mutator specification
+<p/>
+@param cell - cell to be written
+<br/></div><div class="definition"><h4 id="Fn_ClientService_put_cell_as_array">Function: ClientService.put_cell_as_array</h4>
+<pre><code>void</code> put_cell_as_array(<code>string</code> tablename,
+                       <code><a href="Client.html#Struct_MutateSpec">MutateSpec</a></code> mutate_spec,
+                       <code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code> cell)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Alternative to put_cell interface using array as cell
 <br/></div><div class="definition"><h4 id="Fn_ClientService_open_mutator">Function: ClientService.open_mutator</h4>
 <pre><code><a href="Client.html#Typedef_Mutator">Mutator</a></code> open_mutator(<code>string</code> name,
                      <code>i32</code> flags = 0,
@@ -398,6 +499,14 @@ mutator interface flattened.
 <pre><code>void</code> flush_mutator(<code><a href="Client.html#Typedef_Mutator">Mutator</a></code> mutator)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Flush mutator buffers
+<br/></div><div class="definition"><h4 id="Fn_ClientService_exists_table">Function: ClientService.exists_table</h4>
+<pre><code>bool</code> exists_table(<code>string</code> name)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Check if the table exists
+<p/>
+@param name - table name
+<p/>
+@return true if table exists, false ow
 <br/></div><div class="definition"><h4 id="Fn_ClientService_get_table_id">Function: ClientService.get_table_id</h4>
 <pre><code>i32</code> get_table_id(<code>string</code> name)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
@@ -418,6 +527,14 @@ mutator interface flattened.
 <pre><code>list&lt;<code>string</code>&gt;</code> get_tables()
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Get a list of table names in the cluster
+<p/>
+@return a list of table names
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_table_splits">Function: ClientService.get_table_splits</h4>
+<pre><code>list&lt;<code><a href="Client.html#Struct_TableSplit">TableSplit</a></code>&gt;</code> get_table_splits(<code>string</code> name)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Get a list of table splits
+<p/>
+@param name - table name
 <p/>
 @return a list of table names
 <br/></div><div class="definition"><h4 id="Fn_ClientService_drop_table">Function: ClientService.drop_table</h4>

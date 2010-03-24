@@ -42,7 +42,10 @@ options:
    | TIMESTAMP_COLUMN '=' name |
    | HEADER_FILE '=' '"' filename '"'
    | ROW_UNIQUIFY_CHARS '=' n
-   | NOESCAPE)*
+   | NO_ESCAPE
+   | IGNORE_UNKNOWN_CFS
+   | SINGLE_CELL_FORMAT
+   | RETURN_DELETES)*
 
 column_specifier =
   [ column_format ] column_name
@@ -63,8 +66,8 @@ in the file.  The header can optionlly be stored in a separate file and
 referenced with the <code>HEADER_FILE</code> option.  The header is expected to have the
 following format:</p>
 
-<pre><code>header = 
-  [ '#' ] single_cell_format 
+<pre><code>header =
+  [ '#' ] single_cell_format
   | [ '#' ] multi_cell_format
 
 single_cell_format =
@@ -252,16 +255,48 @@ timestamp as the row key.  However, as in the case of an Apache log, the
 timestamp usually only has resolution down to the second and there may be
 many entries that fall within the same second.</p>
 
-<h4><code>NOESCAPE</code></h4>
+<h4><code>NO_ESCAPE</code></h4>
 
 <p><p>
-The <code>NOESCAPE</code> option provides a way to disable the escaping mechanism.  The
-newline and tab characters are escaped and unescaped when transferred in
+The <code>NO_ESCAPE</code> option provides a way to disable the escaping mechanism.
+The newline and tab characters are escaped and unescaped when transferred in
 and out of the system.  The <code>LOAD DATA INFILE</code> command will scan the input
 for the two character sequence '\' 'n' and will convert it into a newline
 character.  It will also scan the input for the two character sequence
-'\' 't' and will convert it into a tab character.  The <code>NOESCAPE</code> option
+'\' 't' and will convert it into a tab character.  The <code>NO_ESCAPE</code> option
 disables this conversion.</p>
+
+<h4><code>IGNORE_UNKNOWN_CFS</code></h4>
+
+<p><p>
+Ignore unknown (non-existent) column families in the LOAD DATA INFILE input
+and insert other cells </p>
+
+<h4><code>SINGLE_CELL_FORMAT</code></h4>
+
+<p><p>
+The <code>LOAD DATA INFILE</code> command will attempt to detect the format of the input
+file by parsing the first line if it begins with a '#' character.  It assumes
+that the remainder of the line is a tab-delimited list of column names.
+However, if the file format is the 3-field single-cell format
+(i.e. row,column,value) and lacks a header, and the first character of the
+row key in first line happens to be the '#' character, the parser will get
+confused and interpret the first cell as the format line.  The
+<code>SINGLE_CELL_FORMAT</code> option provides a way to tell the interpreter that there
+is no header format line and the format of the load file is one of the single
+cell formats (e.g. row,column,value or timestamp,row,column,value) and have
+it determine the format by counting the tabs on the first line.</p>
+
+<h4><code>RETURN_DELETES</code></h4>
+
+<p><p>
+The RETURN<em>DELETES option is used internally for debugging.  When data is
+deleted from a table, the data is not actually deleted right away.  A delete
+key will get inserted into the database and the delete will get processed
+and applied during subsequent scans.  The RETURN</em>DELETES option will return
+the delete keys in addition to the normal cell keys and values.  This option
+can be useful when used in conjuction with the DISPLAY_TIMESTAMPS option to
+understand how the delete mechanism works.</p>
 
 <h4>Compression</h4>
 

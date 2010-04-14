@@ -40,6 +40,7 @@ table_option:
   | TTL '=' duration
   | IN_MEMORY
   | BLOCKSIZE '=' int
+  | REPLICATION '=' int
   | COMPRESSOR '=' compressor_spec
 
 create_definition:
@@ -58,6 +59,7 @@ duration:
 access_group_option:
   IN_MEMORY
   | BLOCKSIZE '=' int
+  | REPLICATION '=' int
   | COMPRESSOR '=' compressor_spec
   | BLOOMFILTER '=' bloom_filter_spec
 
@@ -176,6 +178,7 @@ The following table options are supported:</p>
 <li><code>TTL '=' duration</code></li>
 <li><code>IN_MEMORY</code></li>
 <li><code>BLOCKSIZE '=' int</code></li>
+<li><code>REPLICATION '=' int</code></li>
 <li><code>COMPRESSOR '=' compressor_spec</code></li>
 </ul>
 
@@ -215,6 +218,7 @@ The following access group options are supported:</p>
 <ul>
 <li><code>IN_MEMORY</code></li>
 <li><code>BLOCKSIZE '=' int</code></li>
+<li><code>REPLICATION '=' int</code></li>
 <li><code>COMPRESSOR '=' compressor_spec</code></li>
 <li><code>BLOOMFILTER '=' bloom_filter_spec</code></li>
 </ul>
@@ -236,6 +240,11 @@ Filter.</p>
 stores.  A smaller block size minimizes the amount of data that must be read
 from disk and decompressed for a key lookup at the expense of a larger block
 index which consumes memory.  The default value for the block size is 65K.</p>
+
+<p>The <code>REPLICATION</code> option controls the replication level in the underlying
+distributed file system (DFS) for cell store files created for this access
+group.  The default is unspecified, which translates to whatever the default
+replication level is for the underlying file system.</p>
 
 <p>The <code>COMPRESSOR</code> option specifies the compression codec that should be used for
 cell store blocks within an access group.  See the Compressors section below

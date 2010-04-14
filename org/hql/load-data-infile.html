@@ -32,9 +32,9 @@
 
 <h4>EBNF</h4>
 
-<pre><code>LOAD DATA INFILE [options] fname INTO TABLE name
+<pre><code>LOAD DATA INFILE [options] [file_location]fname[.gz] INTO TABLE name
 
-LOAD DATA INFILE [options] fname INTO FILE fname
+LOAD DATA INFILE [options] [file_location]fname[.gz] INTO FILE fname
 
 options:
 
@@ -43,7 +43,8 @@ options:
    | HEADER_FILE '=' '"' filename '"'
    | ROW_UNIQUIFY_CHARS '=' n
    | NO_ESCAPE
-   | IGNORE_UNKNOWN_CFS
+   | DUPLICATE_KEY_COLUMNS
+   | IGNORE_UNKNOWN_COLUMNS
    | SINGLE_CELL_FORMAT
    | RETURN_DELETES)*
 
@@ -54,6 +55,9 @@ column_format
   "%0" int
   | "%-"
   | "%"
+
+file_location:
+  "dfs://" | "file://"
 </code></pre>
 
 <h4>Description</h4>
@@ -163,11 +167,11 @@ file will produce a set of cells equivalent to Example 1 above.</p>
 The <code>LOAD DATA INFILE</code> command accepts a number of options.  The first is the
 <code>ROW_KEY_COLUMN</code> option.  This is used in conjunction with the multi-cell
 input file format.  It provides a way to select which column in the input
-file should be used as the row key.  By separating two or more column names
-with the '+' character, multiple column values will be concatenated together,
-separated by a single space character to form the row key.  Also, each
-column specifier can have one of the following prefixes to control field width
-and justification:</p>
+file should be used as the row key (default is first column).  By separating
+two or more column names with the '+' character, multiple column values will
+be concatenated together, separated by a single space character to form the
+row key.  Also, each column specifier can have one of the following prefixes
+to control field width and justification:</p>
 
 <h5>Table 1</h5>
 
@@ -261,16 +265,22 @@ many entries that fall within the same second.</p>
 The <code>NO_ESCAPE</code> option provides a way to disable the escaping mechanism.
 The newline and tab characters are escaped and unescaped when transferred in
 and out of the system.  The <code>LOAD DATA INFILE</code> command will scan the input
-for the two character sequence '\' 'n' and will convert it into a newline
-character.  It will also scan the input for the two character sequence
-'\' 't' and will convert it into a tab character.  The <code>NO_ESCAPE</code> option
+for the two character sequences '\' 'n', '\' 't', and '\' '\' and will convert them
+into a newline, tab, and backslash, respectively.  The <code>NO_ESCAPE</code> option
 disables this conversion.</p>
 
-<h4><code>IGNORE_UNKNOWN_CFS</code></h4>
+<h4><code>DUPLICATE_KEY_COLUMNS</code></h4>
 
 <p><p>
-Ignore unknown (non-existent) column families in the LOAD DATA INFILE input
-and insert other cells </p>
+Normally input fields that represent the row key (the first field or the
+ones designated in the <code>ROW_KEY_COLUMN</code> option) are not also inserted as cell
+data.  This option causes the system to also insert the row key fields
+as cell data.</p>
+
+<h4><code>IGNORE_UNKNOWN_COLUMNS</code></h4>
+
+<p><p>
+Skip input lines that refer to unknown (non-existent) column families.</p>
 
 <h4><code>SINGLE_CELL_FORMAT</code></h4>
 
@@ -297,6 +307,14 @@ and applied during subsequent scans.  The RETURN</em>DELETES option will return
 the delete keys in addition to the normal cell keys and values.  This option
 can be useful when used in conjuction with the DISPLAY_TIMESTAMPS option to
 understand how the delete mechanism works.</p>
+
+<h4>Load from DFS file</h4>
+
+<p><p>
+If the data file name starts with the location specifier <code>dfs://</code> then the file is 
+read from the DFS over the DfsBroker. If it begins with the specifier <code>file://</code> then 
+it is read from the local FS (this is the default in the absence of a location 
+specifier).</p>
 
 <h4>Compression</h4>
 

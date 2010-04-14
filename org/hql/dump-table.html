@@ -46,9 +46,12 @@ timestamp_predicate:
 
 options_spec:
   (REVS revision_count
-  | INTO FILE filename[.gz]
+  | INTO FILE [file_location]filename[.gz]
   | BUCKETS n
   | NO_ESCAPE)*
+
+file_location:
+  "dfs://" | "file://"
 
 timestamp:
   'YYYY-MM-DD HH:MM:SS[.nanoseconds]'
@@ -82,12 +85,16 @@ default all revisions of a cell are returned by the <code>DUMP TABLE</code> stat
 cell revisions are stored in reverse-chronological order, so <code>REVS 1</code> will
 return the most recent version of the cell.</p>
 
-<h4><code>INTO FILE filename[.gz]</code></h4>
+<h4><code>INTO FILE [file://|dfs://]filename[.gz]</code></h4>
 
 <p><p>
 The result of a <code>DUMP TABLE</code> command is displayed to standard output by default.
-The <code>INTO FILE</code> option allows the output to get redirected to a file.  If the
-file name specified ends in a <code>.gz</code> extension, then the output is compressed
+The <code>INTO FILE</code> option allows the output to get redirected to a file. <br />
+If the file name starts with the location specifier <code>dfs://</code> then the output file is 
+assumed to reside in the DFS. If it starts with <code>file://</code> then output is 
+sent to a local file. This is also the default location in the absence of any 
+location specifier.
+If the file name specified ends in a <code>.gz</code> extension, then the output is compressed
 with gzip before it is written to the file.</p>
 
 <h4><code>BUCKETS n</code></h4>
@@ -97,20 +104,24 @@ This option causes the <code>DUMP TABLE</code> command to use <code>n</code> buc
 50.  It is recommended that <code>n</code> is at least as large as the number of nodes
 in the cluster that the backup with be restored to.</p>
 
-<h4><code>NOESCAPE</code></h4>
+<h4><code>NO_ESCAPE</code></h4>
 
 <p><p>
 The output format of a <code>DUMP TABLE</code> command comprises tab delimited lines, one
 cell per line, which is suitable for input to the <code>LOAD DATA INFILE</code>
 command.  However, if the value portion of the cell contains either newline
 or tab characters, then it will confuse the <code>LOAD DATA INFILE</code> input parser.
-To prevent this from happening, newline and tab characters are converted into
-two character escape sequences, described in the following table.</p>
+To prevent this from happening, newline, tab, and backslash characters are
+converted into two character escape sequences, described in the following table.</p>
 
 <table border="1">
 <tr>
 <td>&nbsp;<b>Character</b>&nbsp;</td>
 <td>&nbsp;<b>Escape Sequence</b>&nbsp;</td>
+</tr>
+<tr>
+<td>&nbsp;backslash \</td>
+<td><pre> '\' '\' </pre></td>
 </tr>
 <tr>
 <td>&nbsp;newline \n&nbsp;</td>
@@ -123,7 +134,7 @@ two character escape sequences, described in the following table.</p>
 </table>
 
 <p><p>
-The <code>NOESCAPE</code> option turns off this escaping mechanism.
+The <code>NO_ESCAPE</code> option turns off this escaping mechanism.
 <p></p>
 
 <h4>Examples</h4>

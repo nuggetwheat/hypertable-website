@@ -25,8 +25,8 @@ $(document).ready(function () {
 
     // apply our left + right buttons
     $scroll
-        .before('<img class="scrollButtons left" src="/images/btn-prev-trans.png" />')
-        .after('<img class="scrollButtons right" src="/images/btn-next-trans.png" />');
+        .before('<img class="scrollButtons left" src="./images/btn-prev-trans.png" />')
+        .after('<img class="scrollButtons right" src="./images/btn-next-trans.png" />');
 
     // handle nav selection
     function selectNav() {
@@ -43,7 +43,7 @@ $(document).ready(function () {
 
     // go find the navigation link that has this target and select the nav
     function trigger(data) {
-        var el = $('#slider .navigation').find('a[href$="' + data.id + '"]').get(0);
+        var el = $('#slider .navigation').find('a.anchornav[href$="' + data.id + '"]').get(0);
         selectNav.call(el);
     }
 
@@ -75,7 +75,7 @@ $(document).ready(function () {
         next: 'img.right',
 
         // allow the scroll effect to run both directions
-        axis: 'xy',
+        axis: 'x',
 
         onAfter: trigger, // our final callback
 
@@ -102,7 +102,7 @@ $(document).ready(function () {
     // setting the duration to 1 because I don't want it to scroll in the
     // very first page load.  We don't always need this, but it ensures
     // the positioning is absolutely spot on when the pages loads.
-    scrollOptions.duration = 1;
+    scrollOptions.duration = 0;
     $.localScroll.hash(scrollOptions);
 
 });

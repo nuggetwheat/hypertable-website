@@ -29,7 +29,7 @@
 	//@see http://flesler.webs/jQuery.ScrollTo/
 	$serialScroll.defaults = {//the defaults are public and can be overriden.
 		duration:1000, //how long to animate.
-		axis:'y', //which of top and left should be scrolled
+		axis:'x', //which of top and left should be scrolled
 		event:'click', //on which event to react.
 		start:0, //first element (zero-based index)
 		step:1, //how many elements to scroll on each action

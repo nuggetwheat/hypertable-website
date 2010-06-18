@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">	<head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <title>Hypertable vs. HBase Performance Evaluation Test 1 Setup</title>
-<link href="../inc/style.css" rel="stylesheet" type="text/css" />
+<link href="/inc/style.css" rel="stylesheet" type="text/css" />
 <link href="/inc/slider.css" rel="stylesheet" type="text/css" />
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
 <script src="http://cdn.jquerytools.org/1.1.2/full/jquery.tools.min.js" type="text/javascript"></script>
@@ -40,9 +40,9 @@ thefield.value = ""
 
 <div id="download">
 
-<h1>Hypertable vs. HBase Performance Evaluation Test 1 Setup<br>
-</h1>
-<h2>Introduction</h2>
+<h2>Hypertable vs. HBase Performance Evaluation Test 1 Setup<br>
+</h2>
+<h3>Introduction</h3>
 This document describes how we set up and ran a performance evaluation
 test, comparing Hypertable version 0.9.3.3 with HBase 0.20.4.&nbsp; All
 of the test specific configuration and run files can be found in <a style="font-family: monospace;" href="test1-config.tgz">test1-config.tgz</a>
@@ -54,7 +54,7 @@ into the <a href="http://www.hypertable.org/download.php?v=0.9.3.3-alpha">Hypert
 <a style="font-family: monospace;" href="Driver.txt">Driver.java</a><span style="font-family: monospace;"></span><br style="font-family: monospace;">
 <a href="DriverHypertable.txt"><span style="font-family: monospace;">DriverHypertable.java</span></a><br style="font-family: monospace;">
 <a href="DriverHBase.txt"><span style="font-family: monospace;">DriverHBase.java</span></a><br>
-<h2>1. Setup and Install Hadoop</h2>
+<h3>1. Setup and Install Hadoop</h3>
 The first step was to setup and install HDFS.&nbsp; We ran the test
 using HDFS version 0.20.2 with the following configuration files:<br>
 <br>
@@ -64,28 +64,20 @@ using HDFS version 0.20.2 with the following configuration files:<br>
 </a><a href="config/hadoop/conf/masters.txt">hadoop/conf/masters</a><br>
 <a href="config/hadoop/conf/slaves.txt">hadoop/conf/slaves</a><br>
 </code>
-
-
-
-
-<br>
-<h2>2. Setup and Install HBase</h2>
+<h3>2. Setup and Install HBase</h3>
 Next we setup HBase version 0.20.4.&nbsp; We used the following configuration files in our test:<br>
 <br>
 <code><a href="config/hbase/conf/regionservers.txt">hbase/conf/regionservers</a><br>
 <a href="config/hbase/conf/hbase-env.txt">hbase/conf/hbase-env.sh</a><br>
 <a href="config/hbase/conf/hbase-site.txt">hbase/conf/hbase-site.xml</a></code>
-
-
-<br>
 <br>
 Some notable non-default configuration includes the following variables set in <span style="font-family: monospace;">hbase-env.sh</span>:<br>
 <br>
 <code>export HBASE_HEAPSIZE=5000<br>
 export HBASE_OPTS="$HBASE_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode"<br>
 </code>
-<h2>
-3. Setup and Install Hypertable</h2>
+<h3>
+3. Setup and Install Hypertable</h3>
 
 Then we setup Hypertable version 0.9.3.3 (<a href="http://www.hypertable.com/download/">download</a>) using the following configuration file:<br>
 <br>
@@ -102,7 +94,7 @@ for the CellStores to "none" to match the default compression algorithm
 used in the HBase HFile.<br>
 <br>
 For more information on how to setup and run Hypertable see the <a href="http://code.google.com/p/hypertable/wiki/GettingStartedGuide">Hypertable Getting Started Guide</a>.<br>
-<h2>4. Configure Capistrano "Capfile"</h2>
+<h3>4. Configure Capistrano "Capfile"</h3>
 We use a tool called Capistrano to manage Hypertable clusters.&nbsp;
 Capistrano is a simple tool that facilitates remote task
 execution.&nbsp; It relies on ssh and reads its instructions from a
@@ -139,9 +131,7 @@ role :spare<br>
 role :localhost, "mothercompiler"<br>
 role :test_client, "motherlode005", "motherlode006", "motherlode007", "motherlode008"<br>
 role :test_dispatcher, "motherlode004"</code><br>
-<h2>5. Configure test script</h2>
-
-
+<h3>5. Configure test script</h3>
 We wrote a test driver script that runs all of the tests.&nbsp; <br>
 <br>
 <a style="font-family: monospace;" href="config/bin/run-test.txt">bin/run-test.sh</a><br>
@@ -149,7 +139,7 @@ We wrote a test driver script that runs all of the tests.&nbsp; <br>
 To modify the test to run in a different environment or with a
 different configuration, modify the variable definitions at the top of
 the test script.&nbsp; The variables used for our test are shown in the
-listing below.<br>
+listing below.
 <br>
 <code>HADOOP_HOME=/opt/hadoop/current<br>
 HYPERTABLE_HOME=/opt/hypertable/current<br>
@@ -161,8 +151,8 @@ WRITE_MULTIPLIER="-S client_multiplier=6"<br>
 READ_MULTIPLIER="-S client_multiplier=8"<br>
 SCAN_MULTIPLIER="-S client_multiplier=6"<br>
 let RANDOM_READ_KEYS=(DATA_SIZE/4)/1000<br>
-</code><br>
-<h2>6. Set up an SSH Agent</h2>
+</code>
+<h3>6. Set up an SSH Agent</h3>
 
 The test can take a very long time to run (e.g. days).&nbsp; If the
 terminal session from which you started the test closes for whatever
@@ -183,9 +173,9 @@ below.<br>
 <br>
 <code>SSH_AUTH_SOCK=/tmp/ssh-hneEx23633/agent.23633; export SSH_AUTH_SOCK;<br>
 SSH_AGENT_PID=23634; export SSH_AGENT_PID;<br>
-echo Agent pid 23634;</code><br>
+echo Agent pid 23634;</code>
 <br>
-<h2><span style="font-weight: bold;">7</span>. Run the test</h2>
+<h3><span style="font-weight: bold;">7</span>. Run the test</h3>
 To run the test, you need to execute the run-test.sh script twice, once
 for Hypertable, and once for HBase.&nbsp; Here's how we executed the
 script for the&nbsp; Hypertable test.<br>

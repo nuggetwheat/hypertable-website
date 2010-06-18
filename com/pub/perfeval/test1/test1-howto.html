@@ -1,0 +1,235 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Hypertable vs. HBase Performance Evaluation Test 1 Setup</title>
+<link href="../inc/style.css" rel="stylesheet" type="text/css" />
+<link href="/inc/slider.css" rel="stylesheet" type="text/css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://cdn.jquerytools.org/1.1.2/full/jquery.tools.min.js" type="text/javascript"></script>
+<script src="/scripts/scrollto.js" type="text/javascript"></script>
+<script src="/scripts/serialscroll.js" type="text/javascript"></script>
+<script src="/scripts/localscroll.js" type="text/javascript"></script>
+<script src="/scripts/rotator.js" type="text/javascript"></script>
+<script src="/scripts/anchor.js" type="text/javascript"></script>
+<script type="text/javascript">
+function clearText(thefield){
+if (thefield.defaultValue==thefield.value)
+thefield.value = ""
+} 
+</script>
+
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE9.js" type="text/javascript"></script>
+<![endif]-->
+</head>
+<body>
+<div id="menubar">
+<div id="menuwrap">
+
+<a href="/index.html#top" class="logo anchornav">Hypertable</a>
+
+<ul id="nav">
+<li><a href="/index.html">&larr; Back to Hypertable Home</a></li>
+</ul>
+
+</div><!-- menuwrap -->
+</div><!-- menubar -->
+
+<div id="wrapper">
+<a class="anchor" name="top"></a>
+
+<div id="download">
+
+<h1>Hypertable vs. HBase Performance Evaluation Test 1 Setup<br>
+</h1>
+<h2>Introduction</h2>
+This document describes how we set up and ran a performance evaluation
+test, comparing Hypertable version 0.9.3.3 with HBase 0.20.4.&nbsp; All
+of the test specific configuration and run files can be found in <a style="font-family: monospace;" href="test1-config.tgz">test1-config.tgz</a>
+and can be examined via the links provided in the pertinent sections
+below.&nbsp; The test was modeled after the one described in section 7
+of the Bigtable paper.&nbsp; We built the test framework and checked it
+into the <a href="http://www.hypertable.org/download.php?v=0.9.3.3-alpha">Hypertable source tree</a> under <span style="font-family: monospace;">examples/java/org/hypertable/examples/PerformanceTest/</span>.&nbsp; The test framework is compiled and included in the <span style="font-family: monospace;">hypertable-0.9.3.3-examples.jar</span> file included in the <a href="http://www.hypertable.com/download/">Hypertable binary packages</a>.&nbsp; The following source files contain the code which encapsulates the interaction with the Hypertable and HBase APIs:<br>
+<br>
+<a style="font-family: monospace;" href="Driver.txt">Driver.java</a><span style="font-family: monospace;"></span><br style="font-family: monospace;">
+<a href="DriverHypertable.txt"><span style="font-family: monospace;">DriverHypertable.java</span></a><br style="font-family: monospace;">
+<a href="DriverHBase.txt"><span style="font-family: monospace;">DriverHBase.java</span></a><br>
+<h2>1. Setup and Install Hadoop</h2>
+The first step was to setup and install HDFS.&nbsp; We ran the test
+using HDFS version 0.20.2 with the following configuration files:<br>
+<br>
+<code><a href="config/hadoop/conf/core-site.txt">hadoop/conf/core-site.xml</a><br>
+<a href="config/hadoop/conf/hadoop-env.txt">hadoop/conf/hadoop-env.sh<br>
+</a><a href="config/hadoop/conf/hdfs-site.txt">hadoop/conf/hdfs-site.xml<br>
+</a><a href="config/hadoop/conf/masters.txt">hadoop/conf/masters</a><br>
+<a href="config/hadoop/conf/slaves.txt">hadoop/conf/slaves</a><br>
+</code>
+
+
+
+
+<br>
+<h2>2. Setup and Install HBase</h2>
+Next we setup HBase version 0.20.4.&nbsp; We used the following configuration files in our test:<br>
+<br>
+<code><a href="config/hbase/conf/regionservers.txt">hbase/conf/regionservers</a><br>
+<a href="config/hbase/conf/hbase-env.txt">hbase/conf/hbase-env.sh</a><br>
+<a href="config/hbase/conf/hbase-site.txt">hbase/conf/hbase-site.xml</a></code>
+
+
+<br>
+<br>
+Some notable non-default configuration includes the following variables set in <span style="font-family: monospace;">hbase-env.sh</span>:<br>
+<br>
+<code>export HBASE_HEAPSIZE=5000<br>
+export HBASE_OPTS="$HBASE_OPTS -XX:+HeapDumpOnOutOfMemoryError -XX:+UseConcMarkSweepGC -XX:+CMSIncrementalMode"<br>
+</code>
+<h2>
+3. Setup and Install Hypertable</h2>
+
+Then we setup Hypertable version 0.9.3.3 (<a href="http://www.hypertable.com/download/">download</a>) using the following configuration file:<br>
+<br>
+<a href="config/hypertable/conf/perftest-hypertable.txt"><code>hypertable/conf/perftest-hypertable.cfg</code><br style="font-family: Courier New,Courier,monospace;"></a><br>
+Some notable non-default configuration includes the the following properties:<br>
+<br>
+<code>Hypertable.RangeServer.MemoryLimit=5G<br>
+Hypertable.Mutator.ScatterBuffer.FlushLimit.Aggregate=12M<br>
+Hypertable.RangeServer.CellStore.DefaultCompressor=none</code><br>
+<br>
+We set the aggregate flush limit to 12 MB to match the writeBufferSize
+that was set on the HTable.&nbsp; We also set the default compressor
+for the CellStores to "none" to match the default compression algorithm
+used in the HBase HFile.<br>
+<br>
+For more information on how to setup and run Hypertable see the <a href="http://code.google.com/p/hypertable/wiki/GettingStartedGuide">Hypertable Getting Started Guide</a>.<br>
+<h2>4. Configure Capistrano "Capfile"</h2>
+We use a tool called Capistrano to manage Hypertable clusters.&nbsp;
+Capistrano is a simple tool that facilitates remote task
+execution.&nbsp; It relies on ssh and reads its instructions from a
+file called "Capfile".&nbsp; We augmented the Capfile to include tasks
+for starting and stopping the test framework.&nbsp; The following
+Capfile was used in our test:<br>
+<br>
+<code><a href="config/Capfile.txt">Capfile</a></code><br style="font-family: Courier New,Courier,monospace;">
+
+<a href="config/bin/run-benchmark.txt"><span style="font-family: Courier New,Courier,monospace;"></span></a><br>
+This Capfile can be used to run the test on a different set of machines
+with a different configuration.&nbsp; The only requirement would be to
+edit the variables and role definitions at the top of the file.&nbsp;
+The following listing shows the top portion of the Capfile that would
+need to change to launch Hypertable and the performance evaluation test
+on a different cluster with a different configuration.<br>
+<br>
+<code>set :source_machine, "mothercompiler"<br>
+set :install_dir,&nbsp; "/opt/hypertable"<br>
+set :hypertable_version, "0.9.3.2"<br>
+set :default_dfs, "hadoop"<br>
+set :default_config, "/opt/doug/perfeval/perftest-hypertable.cfg"<br>
+set :default_additional_args, ""<br>
+set :hbase_home, "/opt/hbase/current"<br>
+set :default_client_multiplier, 1<br>
+set :default_test_driver, "hypertable"<br>
+set :default_test_args, ""<br>
+<br>
+role :master, "mothercompiler"<br>
+role :hyperspace, "mothercompiler", "motherlode000", "motherlode001"<br>
+role :slave,&nbsp; "motherlode000", "motherlode001", "motherlode002", "motherlode003"<br>
+role :thriftbroker<br>
+role :spare<br>
+role :localhost, "mothercompiler"<br>
+role :test_client, "motherlode005", "motherlode006", "motherlode007", "motherlode008"<br>
+role :test_dispatcher, "motherlode004"</code><br>
+<h2>5. Configure test script</h2>
+
+
+We wrote a test driver script that runs all of the tests.&nbsp; <br>
+<br>
+<a style="font-family: monospace;" href="config/bin/run-test.txt">bin/run-test.sh</a><br>
+<br>
+To modify the test to run in a different environment or with a
+different configuration, modify the variable definitions at the top of
+the test script.&nbsp; The variables used for our test are shown in the
+listing below.<br>
+<br>
+<code>HADOOP_HOME=/opt/hadoop/current<br>
+HYPERTABLE_HOME=/opt/hypertable/current<br>
+HBASE_HOME=/opt/hbase/current<br>
+REPORT_DIR=/home/doug/benchmark<br>
+TEST_NAME=test1<br>
+let DATA_SIZE=80000000000<br>
+WRITE_MULTIPLIER="-S client_multiplier=6"<br>
+READ_MULTIPLIER="-S client_multiplier=8"<br>
+SCAN_MULTIPLIER="-S client_multiplier=6"<br>
+let RANDOM_READ_KEYS=(DATA_SIZE/4)/1000<br>
+</code><br>
+<h2>6. Set up an SSH Agent</h2>
+
+The test can take a very long time to run (e.g. days).&nbsp; If the
+terminal session from which you started the test closes for whatever
+reason, ssh will stop working, which will prevent Capistrano from
+carrying out the tasks involved in running the test.&nbsp; This ssh
+failure will happen even if the test script is run with nohup or
+screen.&nbsp; To prevent this from happening, you just need to run an
+ssh agent.&nbsp; The test script assumes that an ssh agent is running
+and that a file named ~/.ssh-agent contains environment variable
+settings that tell ssh how to connect to the agent.&nbsp; To get an ssh
+agent up and running, execute the following command:<br>
+<br>
+<code>$ nohup ssh-agent -s &gt; ~/.ssh-agent</code><br>
+<br>
+This will generate the appropriate ~/.ssh-agent file.&nbsp; The
+contents of the file that was used for our test is shown in the listing
+below.<br>
+<br>
+<code>SSH_AUTH_SOCK=/tmp/ssh-hneEx23633/agent.23633; export SSH_AUTH_SOCK;<br>
+SSH_AGENT_PID=23634; export SSH_AGENT_PID;<br>
+echo Agent pid 23634;</code><br>
+<br>
+<h2><span style="font-weight: bold;">7</span>. Run the test</h2>
+To run the test, you need to execute the run-test.sh script twice, once
+for Hypertable, and once for HBase.&nbsp; Here's how we executed the
+script for the&nbsp; Hypertable test.<br>
+<br>
+<code>$ nohup ./bin/run-test.sh hypertable &gt;&amp; hypertable.output&amp;<br>
+</code><br>
+And then after the Hypertable test completed, we ran the HBase test as follows:<br>
+<br>
+<code>$ nohup ./bin/run-test.sh hbase &gt;&amp; hbase.output&amp;</code><br>
+<br>
+As these tests run, they will generate reports for the individual
+sub-tests and deposit them in files on the test dispatcher machine (see
+test_dispatcher role in Capfile) in a directory indicated by the
+REPORT_DIR variable at the<code></code> top of the run-test.sh script.&nbsp; The following are the report files generated during our test run.<br>
+<br>
+</div><!-- download -->
+<p style="clear:both;"></p>
+</div><!-- wrapper -->
+
+<div id="footer">
+<div id="footwrap">
+<p>&copy; 2010 Hypertable Inc. All Rights Reserved. Site by <a href="http://bluecoastweb.com">Blue Coast Web</a>.</p>
+</div><!-- footwrap -->
+</div><!-- footer -->
+<span class="bg"></span>
+<script type="text/javascript">
+$(document).ready(function() {
+// initialize tooltip
+$("span.bubble").tooltip({
+// tweak the position
+relative: true,
+effect: 'slide'
+})
+});
+</script>
+<script src="/scripts/slider.js" type="text/javascript"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15422628-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

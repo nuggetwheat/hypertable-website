@@ -1,0 +1,45 @@
+#
+# dev-hypertable.cfg
+#
+
+# Kosmos Broker
+Kfs.MetaServer.Name=mothercompiler
+Kfs.MetaServer.Port=20000
+
+# HDFS Broker
+HdfsBroker.Port=38030
+HdfsBroker.fs.default.name=hdfs://mothercompiler:9000
+HdfsBroker.Workers=20
+
+# Local Broker
+DfsBroker.Local.Port=38030
+DfsBroker.Local.Root=fs/local
+
+# DFS Broker - for clients
+DfsBroker.Host=localhost
+DfsBroker.Port=38030
+DfsBroker.Timeout=180000
+
+# Hyperspace
+Hyperspace.Replica.Host=mothercompiler
+Hyperspace.Replica.Host=motherlode000
+Hyperspace.Replica.Host=motherlode001
+Hyperspace.Replica.Port=38040
+Hyperspace.Replica.Dir=hyperspace
+Hyperspace.Replica.Workers=20
+
+# Hypertable.Master
+Hypertable.Master.Host=mothercompiler
+Hypertable.Master.Port=38050
+Hypertable.Master.Workers=20
+
+# Hypertable.RangeServer
+Hypertable.RangeServer.Port=38060
+
+# ThriftBroker
+ThriftBroker.Port=38080
+
+# Test specific stuff
+Hypertable.RangeServer.MemoryLimit=5G
+Hypertable.Mutator.ScatterBuffer.FlushLimit.Aggregate=12M
+Hypertable.RangeServer.CellStore.DefaultCompressor=none

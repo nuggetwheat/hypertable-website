@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+
+<!-- Put site-specific property overrides in this file. -->
+
+<configuration>
+
+<property>
+  <name>mapred.job.tracker</name>
+  <value>mothercompiler:9001</value>
+</property>
+
+<property>
+  <name>mapred.local.dir</name>
+  <value>/data1/hadoop/mapred/local,/data2/hadoop/mapred/local,/data3/hadoop/mapred/local</value>
+</property>
+
+<property>
+  <name>io.sort.factor</name>
+  <value>25</value>
+</property>
+
+<property>
+  <name>io.sort.mb</name>
+  <value>250</value>
+</property>
+
+<property>
+  <name>mapred.tasktracker.map.tasks.maximum</name>
+  <value>3</value>
+</property>
+
+<property>
+  <name>mapred.map.max.attempts</name>
+  <value>1</value>
+</property>
+
+<property>
+  <name>mapred.child.java.opts</name>
+  <value>-Xmx1024m -XX:+UseConcMarkSweepGC </value>
+</property>
+
+<property>
+  <name>mapred.reduce.parallel.copies</name>
+  <value>20</value>
+</property>
+
+<property>
+  <name>mapred.job.tracker.handler.count</name>
+  <value>10</value>
+</property>
+
+</configuration>

@@ -1,0 +1,229 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+
+
+
+
+
+
+<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Performance Evaluation: Hypertable vs. HBase - Test 1</title></head><body>
+<h1></h1>
+<h2>Hypertable vs. HBase Performance Evaluation Test 1</h2>
+<h1><span style="font-weight: bold;"></span></h1>
+<h3><span style="font-weight: bold;">Introduction</span></h3>
+
+<h1><span style="font-weight: bold;"></span></h1>
+<span style="font-weight: bold;"></span>We conducted a performance
+evaluation, comparing the performance of Hypertable version 0.9.3.3
+with that of HBase 0.20.4.&nbsp; We attempted to make the test as
+"apples-to-apples" as possible, while keeping each system as
+"out-of-the-box" as possible.&nbsp; There were a few small, up-front
+configuration file changes made for the purpose of equalizing the
+systems, but beyond that, there were no additional configuration
+changes.&nbsp; No per-test configuration changes were made.<br>
+<br>
+The test was modeled after the one
+described in Section 7 of the Bigtable paper, with the following changes:<br>
+<ul>
+  <li>The systems alternately ran on top of the same fixed, ten-node HDFS 0.20.2 instance.</li>
+  <li>The Tablet Server equivalents (RangeServer &amp; RegionServer) were configured to use 5 GB of RAM</li>
+  <li>Depending on the test, we ran either 6 or 8 test clients per client test machine, for the purposes of maximizing throughput<br>
+  </li>
+  <li>We did not include a Sequential Write test because it caused too many HDFS errors when pushed to the limit<br>
+  </li>
+  <li>A Random Read test that followed a Zipfian distribution was added to more closely model realistic workload</li>
+  <li>The Random Read tests were performed on different data set sizes, ranging from 80 GB down to 2.5 GB</li>
+  <li>For all tests, except Random Read, we included results for
+different value sizes ranging from 10,000 down to either 100 or 10 bytes<br>
+  </li>
+</ul>
+
+The test was run on a total of ten machines connected together with
+Gigabit ethernet switching technology.&nbsp; The machines had the
+following hardware configuration:<br>
+<br>
+<table style="text-align: left; width: 679px; height: 124px;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Machine Name(s)<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Hardware Configuration<br>
+      </td><td style="vertical-align: top; font-weight: bold;">Operating System<br>
+      </td>
+
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><code>
+motherlode000 - motherlode008</code></td>
+      <td style="vertical-align: top;">
+1 X 1.8 GHz Dual-core Opteron<br>
+
+
+10 GB RAM<br>
+
+
+3 X 250GB STAT drives</td><td style="vertical-align: top;">CentOS 5.2<br>
+      </td>
+
+    </tr>
+    <tr>
+      <td style="vertical-align: top;"><code>mothercompiler</code><br>
+      </td>
+      <td style="vertical-align: top;">
+1 X 2.33 GHz Intel Quad-core<br>
+
+
+16 GB RAM</td><td style="vertical-align: top;">CentOS 5.2<br>
+      </td>
+
+    </tr>
+  </tbody>
+</table>
+<br>
+The HDFS NameNode was run on <code>mothercompiler</code> and the DataNodes were run on <code>motherlode000...motherlode008</code>.&nbsp; For the HBase test, we ran three Zookeeper replicas on <code>mothercompiler</code>, <code>motherlode000</code>, and <code>motherlode001</code>.&nbsp; For the Hypertable test, we ran three Hyperspace replicas on <code>mothercompiler</code>, <code>motherlode000</code>, and <code>motherlode001</code>.&nbsp;
+The Table Server equivalents (RangeServers and RegionServers), were run on
+<span style="font-family: monospace;">motherlode000...motherlode003</span> and were configured to use 5 GB of RAM.&nbsp; The Master processes were run on <code>mothercompiler</code>.<br>
+<br>As described in section 7 of the Bigtable paper, the test consisted of a central dispatcher (run on <code>motherlode004</code>), and some number of client processes (running on <code>motherlode005...motherlode008)</code>.&nbsp;
+The test operated over a range of row keys and the dispatcher
+would break the keys into <span style="font-family: monospace;">10*N</span> equal sized ranges, where <span style="font-family: monospace;">N</span> was the
+number of clients.&nbsp; We found that when running just a single
+client process per machine,&nbsp; the client processes became a
+bottleneck, so we ran either six or eight client processes per
+client machine, depending on the test.<br>
+<br>
+See&nbsp; Hypertable / HBase Performance Evaluation Instructions for details on exactly how to recreate this test.<br>
+<br>
+All of the throughput numbers are reported in aggregate.&nbsp; We
+calculated them by adding together all of the queries issued or bytes
+returned, dividing by the sum of the time taken by each of the clients
+to issue the queries, and then multiplying by the number of clients,
+which was either 24 or 32, depending on the test.<br>
+<h3>Random Query Throughput</h3>
+For this test, we kept the value size fixed at 1000 bytes, but varied
+the size of the data set to measure the performance of the system under
+different RAM-to-disk ratios.&nbsp; The data set sizes measured were
+80, 40, 20, 10, 5, and 2.5 Gigabytes.&nbsp; The number of queries
+issued for each different value size remained constant at 20 million.<br>
+
+<br>
+
+<img style="width: 599px; height: 355px;" alt="Aggregate Query Throughput" src="test1-query-throughput.png"><br>
+Part of why Hypertable performs so well in comparison to HBase in this
+test is because Hypertable dynamically adjusts how much memory it
+allocates to each subsystem, depending on the measured workload.&nbsp;
+For read-intensive workloads it will allocate most of memory to the
+block cache.&nbsp; HBase has a fixed block cache allocation which
+defaults to just 20% of the Java heap.&nbsp; The reason we measured the
+performance of the system on a data set size of 2.5 GB was to have at
+least one test where the entire data set would fit comfortably in the
+HBase block cache.&nbsp; The reason Hypertable performs significantly
+better with Zipfian workload is because it has a query cache.<br>
+<h3>Average Query Latency</h3>
+This next chart is an alternate view of the previous chart.&nbsp; We
+calculated the results by adding together all of the time taken by each
+of the clients and then dividing by the total number of queries issued.<br>
+<br>
+<img style="width: 599px; height: 357px;" alt="Query Latency" src="test1-query-latency.png"><br>
+<br>
+<h2>Random Write</h2>
+
+For this test, we inserted 80 GB of data, but varied the size of the
+values written during each test from 10000 bytes to 10 bytes.&nbsp; We
+ran 6 test clients per machine, for a total of 24 clients.&nbsp; The
+writes were buffered in both systems using a 12 MB write buffer.<br>
+<br>
+<font size="+1"><img style="width: 597px; height: 356px;" alt="Random Write Throughput" src="random-write-throughput.png"></font><br>
+<table style="text-align: left; width: 100%;" title="Random Write Throughput (bytes/s)" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Value Size<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">HBase<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Hypertable<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">difference<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">10000<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">28336838.17<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">40381417.41<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">&nbsp;42.5 %<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">1000<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">19359527.29<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">39693384.42<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">105.0 %<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">100<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">5514127.97<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">28599552.13<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">418.0 %<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">10<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">9656875.29<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<br>
+Table1. Random Write Throughput (bytes/s)<br>
+<h2>Sequential Read</h2>
+For this test, we used the same data set that was inserted in the
+random write test, 80 GB of data that varied by the size of the values
+written, from 10000 bytes to 100 bytes.&nbsp; We
+ran 8 test clients per machine, for a total of 32 clients.&nbsp; The
+row keys were read in series and each read was a separate request.<br>
+<br>
+<img style="width: 599px; height: 358px;" alt="Sequential Read Throughput" src="sequential-read-throughput.png"><br>
+<h2>Scan</h2>
+For this test, we used the same data set that was inserted in the
+random write test, 80 GB of data that varied by the size of the files
+written, from 10000 bytes to 10 bytes.&nbsp; We
+ran 8 test clients per machine, for a total of 32 clients.&nbsp; The row
+keys were read using the scanner interface of both systems.<br>
+<br>
+<img style="width: 598px; height: 357px;" alt="Scan Throughput" src="scan-throughput.png"><br>
+<br>
+<h2>
+Query Throughput</h2>
+
+For this test, we kept the value size fixed at 1000 bytes, but varied
+the size of the data set to measure the performance of the system under
+different RAM-to-disk ratios.&nbsp; The data set sizes measured were
+80, 40, 20, and 10 Gigabytes.<br>
+<br>
+<img style="width: 599px; height: 355px;" alt="Query Throughput" src="test1-query-throughput.png"><br>
+<h2>
+Query Latency</h2>
+
+
+This was the same test as the query throughput test, but the query latency was measured.<br>
+<br>
+<img style="width: 599px; height: 357px;" alt="Query Latency" src="query-latency.png"><br>
+<br>
+<br>
+
+
+</body></html>

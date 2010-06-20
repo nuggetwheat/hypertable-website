@@ -1,15 +1,45 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
-<html><head>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">	<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Performance Evaluation: Hypertable vs. HBase Test 1</title>
+<link href="/inc/style.css" rel="stylesheet" type="text/css" />
+<link href="/inc/slider.css" rel="stylesheet" type="text/css" />
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js" type="text/javascript"></script>
+<script src="http://cdn.jquerytools.org/1.1.2/full/jquery.tools.min.js" type="text/javascript"></script>
+<script src="/scripts/scrollto.js" type="text/javascript"></script>
+<script src="/scripts/serialscroll.js" type="text/javascript"></script>
+<script src="/scripts/localscroll.js" type="text/javascript"></script>
+<script src="/scripts/rotator.js" type="text/javascript"></script>
+<script src="/scripts/anchor.js" type="text/javascript"></script>
+<script type="text/javascript">
+function clearText(thefield){
+if (thefield.defaultValue==thefield.value)
+thefield.value = ""
+} 
+</script>
 
+<!--[if lt IE 9]>
+<script src="http://ie7-js.googlecode.com/svn/version/2.1(beta3)/IE9.js" type="text/javascript"></script>
+<![endif]-->
+</head>
+<body>
+<div id="menubar">
+<div id="menuwrap">
 
+<a href="/index.html#top" class="logo anchornav">Hypertable</a>
 
+<ul id="nav">
+<li><a href="/index.html">&larr; Back to Hypertable Home</a></li>
+</ul>
 
+</div><!-- menuwrap -->
+</div><!-- menubar -->
 
+<div id="wrapper">
+<a class="anchor" name="top"></a>
 
-
-<meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Performance Evaluation: Hypertable vs. HBase - Test 1</title></head><body>
-<h1></h1>
-<h2 style="text-align: center;">Hypertable vs. HBase Performance Evaluation Test 1</h2>
+<div id="performance">
+<h2>Hypertable vs. HBase Performance Evaluation Test 1</h2>
 <h1><span style="font-weight: bold;"></span></h1>
 <h3><span style="font-weight: bold;">Introduction</span></h3>
 
@@ -43,16 +73,15 @@ The test was run on a total of ten machines connected together with
 Gigabit ethernet switching technology.&nbsp; The machines had the
 following hardware configuration:<br>
 <br>
-<table style="text-align: left; width: 679px; height: 124px;" border="1" cellpadding="2" cellspacing="2">
-  <tbody>
+<table>
+  <thead>
     <tr>
-      <td style="vertical-align: top; font-weight: bold;">Machine Name(s)<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">Hardware Configuration<br>
-      </td><td style="vertical-align: top; font-weight: bold;">Operating System<br>
-      </td>
-
+      <th>Machine Name(s)</th>
+      <th>Hardware Configuration</th>
+      <th>Operating System</th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
       <td style="vertical-align: top;"><code>
 motherlode000 - motherlode008</code></td>
@@ -159,7 +188,7 @@ versions.<br>
 <br>
 <img style="width: 598px; height: 357px;" alt="Sequential Read Throughput" src="test1-sequential-read-throughput.png"><br>
 As can be seen from the chart, the HBase result for 10000 byte values
-appears to be an anomoly.&nbsp; From what we can tell, there seems to
+appears to be an anomaly.&nbsp; From what we can tell, there seems to
 be degenerate behavior in how HBase handles 10000 byte values.&nbsp; We
 ran this test a second time, to be sure that some other factor was not
 causing the problem, and got a similar result.<br>
@@ -172,7 +201,7 @@ ran 8 test clients per machine, for a total of 32 clients.&nbsp; The row
 keys were read using the scanner interface of both systems.<br>
 <br>
 <img style="width: 598px; height: 357px;" alt="Scan Throughput" src="test1-scan-throughput.png"><br>We
-were initially surprised that HBase compared resonably well in theses
+were initially surprised that HBase compared reasonably well in these
 tests, in particular the 10000 byte value test.&nbsp; After digging
 into it a bit we came to the conclusion that the reason HBase performs
 so well is that it maintains much of the recently inserted data in the
@@ -192,18 +221,16 @@ both Hypertable and HBase.&nbsp; The % Difference column represents the
 Hypertable performance improvement percentage in relation to
 HBase.&nbsp; It was computed as <span style="font-family: monospace;">100*((Hypertable/HBase)-1)</span>.<br>
 <br>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
-  <tbody>
+<table>
+  <thead>
     <tr>
-      <td style="vertical-align: top; font-weight: bold;">Test<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">Hypertable<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">HBase<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">% Difference<br>
-      </td>
+      <th>Test</th>
+      <th>Hypertable</th>
+      <th>HBase</th>
+      <th>% Difference</th>
     </tr>
+  <thead>
+  <tbody>
     <tr>
       <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 80 GB<br>
       </td>
@@ -443,7 +470,7 @@ section.&nbsp; The report generation logic in the test Dispatcher had a
 bug in it during the HBase scan tests, so no conclusion can be drawn
 from the discrepancy there.<br>
 <br>
-<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+<table>
   <tbody>
     <tr>
       <td style="vertical-align: top;">1. Random Read / Uniform / 80 GB<br>
@@ -570,5 +597,35 @@ from the discrepancy there.<br>
   </tbody>
 </table>
 <br>
-<br>
-</body></html>
+</div><!-- performance -->
+<p style="clear:both;"></p>
+</div><!-- wrapper -->
+
+<div id="footer">
+<div id="footwrap">
+<p>&copy; 2010 Hypertable Inc. All Rights Reserved. Site by <a href="http://bluecoastweb.com">Blue Coast Web</a>.</p>
+</div><!-- footwrap -->
+</div><!-- footer -->
+<span class="bg"></span>
+<script type="text/javascript">
+$(document).ready(function() {
+// initialize tooltip
+$("span.bubble").tooltip({
+// tweak the position
+relative: true,
+effect: 'slide'
+})
+});
+</script>
+<script src="/scripts/slider.js" type="text/javascript"></script>
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-15422628-2");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+</body>
+</html>

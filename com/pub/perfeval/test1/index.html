@@ -9,7 +9,7 @@
 
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Performance Evaluation: Hypertable vs. HBase - Test 1</title></head><body>
 <h1></h1>
-<h2>Hypertable vs. HBase Performance Evaluation Test 1</h2>
+<h2 style="text-align: center;">Hypertable vs. HBase Performance Evaluation Test 1</h2>
 <h1><span style="font-weight: bold;"></span></h1>
 <h3><span style="font-weight: bold;">Introduction</span></h3>
 
@@ -19,7 +19,7 @@ evaluation, comparing the performance of Hypertable version 0.9.3.3
 with that of HBase 0.20.4.&nbsp; We attempted to make the test as
 "apples-to-apples" as possible, while keeping each system as
 "out-of-the-box" as possible.&nbsp; There were a few small, up-front
-configuration file changes made for the purpose of equalizing the
+configuration file changes made for the purpose of normalizing the
 systems, but beyond that, there were no additional configuration
 changes.&nbsp; No per-test configuration changes were made.<br>
 <br>
@@ -28,7 +28,7 @@ described in Section 7 of the Bigtable paper, with the following changes:<br>
 <ul>
   <li>The systems alternately ran on top of the same fixed, ten-node HDFS 0.20.2 instance.</li>
   <li>The Tablet Server equivalents (RangeServer &amp; RegionServer) were configured to use 5 GB of RAM</li>
-  <li>Depending on the test, we ran either 6 or 8 test clients per client test machine, for the purposes of maximizing throughput<br>
+  <li>Depending on the test, we ran either 6 or 8 test clients per client test machine to maximize throughput<br>
   </li>
   <li>We did not include a Sequential Write test because it caused too many HDFS errors when pushed to the limit<br>
   </li>
@@ -85,10 +85,7 @@ The HDFS NameNode was run on <code>mothercompiler</code> and the DataNodes were 
 The Table Server equivalents (RangeServers and RegionServers), were run on
 <span style="font-family: monospace;">motherlode000...motherlode003</span> and were configured to use 5 GB of RAM.&nbsp; The Master processes were run on <code>mothercompiler</code>.<br>
 <br>As described in section 7 of the Bigtable paper, the test consisted of a central dispatcher (run on <code>motherlode004</code>), and some number of client processes (running on <code>motherlode005...motherlode008)</code>.&nbsp;
-The test operated over a range of row keys, R, which varied depending
-on the test.&nbsp; For the write tests, R was adjusted depending on the
-value size so that the appropriate amount of data was written for the
-test.&nbsp; The dispatcher
+The test operated over a range of row keys, <span style="font-family: monospace;">R</span>, which varied depending on the test.&nbsp; For the write tests, <span style="font-family: monospace;">R</span> was adjusted depending on the value size so that the appropriate amount of data was written for the test.&nbsp; The dispatcher
 would break the keys into <span style="font-family: monospace;">10*N</span> equal sized ranges, where <span style="font-family: monospace;">N</span>
 was the
 number of clients.&nbsp; Each client would request a range from the
@@ -108,7 +105,7 @@ calculated them by adding together all of the queries issued or bytes
 returned, dividing by the sum of the time taken by each of the clients
 to issue the queries, and then multiplying by the number of clients,
 which was either 24 or 32, depending on the test.<br>
-<h3>Query Throughput</h3>
+<h3>Random Read Throughput</h3>
 For this test, the keys were randomized with both a uniform and Zipfian
 distribution.&nbsp; We kept the value size fixed at 1000 bytes, but
 varied
@@ -131,8 +128,8 @@ defaults to just 20% of the Java heap.&nbsp; The reason we measured the
 performance of the system on a data set size of 2.5 GB was to have at
 least one test where the entire data set would fit comfortably in the
 HBase block cache.&nbsp; The reason Hypertable performs significantly
-better with Zipfian workload is because it has a query cache.<br>
-<h3>Average Query Latency</h3>
+better with Zipfian workload is because of the effects of the query cache.<br>
+<h3>Random Read Latency</h3>
 This next chart is an alternate view of the previous chart.&nbsp; We
 calculated the results by adding together all of the time taken by each
 of the clients and then dividing by the total number of queries issued.<br>
@@ -150,7 +147,8 @@ writes were buffered in both systems using a 12 MB write buffer.<br>
 <h3>Sequential Read</h3>
 For this test, we used the same data set that was inserted in the
 random write test, 80 GB of data that varied by the size of the values
-written, from 10000 bytes to 100 bytes.&nbsp; We
+written, from 10000 bytes to 100 bytes (we omitted 10 byte values
+because the tests took too long).&nbsp; We
 ran 8 test clients per machine, for a total of 32 clients.&nbsp; The
 row keys were read in series and each read was a separate
 request.&nbsp; For both systems, the number of cell versions to return
@@ -160,9 +158,11 @@ which caused some rows to be empty and some rows to have multiple cell
 versions.<br>
 <br>
 <img style="width: 598px; height: 357px;" alt="Sequential Read Throughput" src="test1-sequential-read-throughput.png"><br>
-There appears to be some sort of degenerate behavior in how HBase
-handles 10000 byte values.&nbsp; We ran this test twice to be sure that
-some other factor was not causing the problem and got a similar result.<br>
+As can be seen from the chart, the HBase result for 10000 byte values
+appears to be an anomoly.&nbsp; From what we can tell, there seems to
+be degenerate behavior in how HBase handles 10000 byte values.&nbsp; We
+ran this test a second time, to be sure that some other factor was not
+causing the problem, and got a similar result.<br>
 <h3>Scan</h3>
 
 For this test, we used the same data set that was inserted in the
@@ -171,12 +171,26 @@ written, from 10000 bytes to 10 bytes.&nbsp; We
 ran 8 test clients per machine, for a total of 32 clients.&nbsp; The row
 keys were read using the scanner interface of both systems.<br>
 <br>
-<img style="width: 598px; height: 357px;" alt="Scan Throughput" src="scan-throughput.png"><br>
+<img style="width: 598px; height: 357px;" alt="Scan Throughput" src="test1-scan-throughput.png"><br>We
+were initially surprised that HBase compared resonably well in theses
+tests, in particular the 10000 byte value test.&nbsp; After digging
+into it a bit we came to the conclusion that the reason HBase performs
+so well is that it maintains much of the recently inserted data in the
+in-memory Memtables.&nbsp; Hypertable, on the other hand, aggressively
+prunes back the commit log (forcing compactions) in an attempt to
+minimize unavailability during failure recovery (TBD).&nbsp; Hypertable
+has an optional "shadow cache" feature that forces recently compacted
+CellCaches (Memtables) to remain in memory, shadowing the on-disk
+CellCaches (SSTables).&nbsp; When we turned this feature on, the 10000,
+1000, 100, and 10 byte tests resulted in 134, 151, 112, and 46 MB/s,
+respectively.&nbsp; We keep the shadow cache feature disabled by
+default because, overall, it negatively impacts performance due to
+increased heap fragmentation.<br>
 <h3>System Performance Difference</h3>
 The table below shows, for each test, the raw throughput numbers for
 both Hypertable and HBase.&nbsp; The % Difference column represents the
 Hypertable performance improvement percentage in relation to
-HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
+HBase.&nbsp; It was computed as <span style="font-family: monospace;">100*((Hypertable/HBase)-1)</span>.<br>
 <br>
 <table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
   <tbody>
@@ -191,7 +205,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 80 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 80 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">20535629.19<br>
       </td>
@@ -201,7 +215,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 40 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 40 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">23172611.58<br>
       </td>
@@ -211,7 +225,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 20 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 20 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">25199797.28<br>
       </td>
@@ -221,7 +235,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 10 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 10 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">38820491.26<br>
       </td>
@@ -231,7 +245,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 5 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 5 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">46631077.77<br>
       </td>
@@ -241,7 +255,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 2.5 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Uniform / 2.5 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">49628606.51<br>
       </td>
@@ -251,7 +265,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 80 GB<br>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 80 GB<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">36901295.88<br>
       </td>
@@ -261,7 +275,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 40 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 40 GB</td>
       <td style="vertical-align: top; font-family: monospace;">32763951.54<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">4463995.91<br>
@@ -270,7 +284,7 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 20 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 20 GB</td>
       <td style="vertical-align: top; font-family: monospace;">38113207.55<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">4346335.13<br>
@@ -279,36 +293,136 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 10 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 10 GB</td>
       <td style="vertical-align: top; font-family: monospace;">57077262.69<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">6849634.42<br>
       </td>
-      <td style="vertical-align: top; font-family: monospace;"><br>
+      <td style="vertical-align: top; font-family: monospace;">733<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 5 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 5 GB</td>
       <td style="vertical-align: top; font-family: monospace;">57673090.65<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">11222417.06<br>
       </td>
-      <td style="vertical-align: top; font-family: monospace;"><br>
+      <td style="vertical-align: top; font-family: monospace;">414<br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 2.5 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">Random Read / Zipfian / 2.5 GB</td>
       <td style="vertical-align: top; font-family: monospace;">56591205.52<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;">28337764.67<br>
       </td>
+      <td style="vertical-align: top; font-family: monospace;">100<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Random Write / 10000 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">43775006.25<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">28726574.09<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">52<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Random Write / 1000 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">40755086.91<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">19215295.57<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">112<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Random Write / 100 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">28916185.43<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">5461629.24<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">429<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Random Write / 10 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">10951962.92<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
       <td style="vertical-align: top; font-family: monospace;"><br>
       </td>
     </tr>
     <tr>
-      <td style="vertical-align: top; font-family: monospace;"><br>
+      <td style="vertical-align: top; font-family: monospace;">Sequential Read / 10000 byte values<br>
       </td>
-      <td style="vertical-align: top; font-family: monospace;"><br>
+      <td style="vertical-align: top; font-family: monospace;">86113042.77<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">7421950.66<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">1060<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Sequential Read / 1000 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">29686517.72<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">17633597.58<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">68<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Sequential Read / 100 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">3223337.95<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">1407678.64<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">129<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Scan / 10000 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">98344308.03<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">98575080.96<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">0<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Scan / 1000 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">136163768.46<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">93255975.69<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">46<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Scan / 100 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">91401964.74<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">48144188.75<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">90<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Scan / 10 byte values<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">44744038.74<br>
       </td>
       <td style="vertical-align: top; font-family: monospace;"><br>
       </td>
@@ -318,6 +432,143 @@ HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
   </tbody>
 </table>
 <br>
-
-
+<h3>Individual Test Reports</h3>
+The following table provides links to the individual test reports
+generated by the test dispatcher.&nbsp; One thing to note is that it
+appears that HBase has some consistency problems as evidenced by the
+discrepancy between the keys submitted and the items returned in the
+results for tests 3 and 4.&nbsp; The discrepancy in the&nbsp;
+Sequential Read results are explained above in the Sequential Read
+section.&nbsp; The report generation logic in the test Dispatcher had a
+bug in it during the HBase scan tests, so no conclusion can be drawn
+from the discrepancy there.<br>
+<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top;">1. Random Read / Uniform / 80 GB<br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-80000000-10-1000-32clients.txt">Hypertable</a><br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-80000000-10-1000-32clients.txt">HBase</a><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">2. Random Read / Uniform / 40 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-40000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-40000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">3. Random Read / Uniform / 20 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-20000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-20000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">4. Random Read / Uniform / 10 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-10000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-10000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">5. Random Read / Uniform / 5 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-5000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-5000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">6. Random Read / Uniform / 2.5 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-2500000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-uniform-2500000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">7. Random Read / Zipfian / 80 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-zipfian-80000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-80000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">8. Random Read / Zipfian / 40 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-zipfian-40000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-40000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">9. Random Read / Zipfian / 20 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-zipfian-20000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-20000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">10. Random Read / Zipfian / 10 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-10000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-10000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">11. Random Read / Zipfian / 5 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-uniform-5000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-5000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">12. Random Read / Zipfian / 2.5 GB</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-read-zipfian-2500000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-read-zipfian-2500000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">13. Random Write / 10000 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-write-8000000-10-10000-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-write-8000000-10-10000-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">14. Random Write / 1000 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-write-80000000-10-1000-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-write-80000000-10-1000-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">15. Random Write / 100 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-write-800000000-10-100-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-random-write-800000000-10-100-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">16. Random Write / 10 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-random-write-8000000000-10-10-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;">HBase</td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">17. Sequential Read / 10000 byte values<br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-sequential-read-8000000-10-10000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-sequential-read-8000000-10-10000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">18. Sequential Read / 1000 byte values<br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-sequential-read-80000000-10-1000-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-sequential-read-80000000-10-1000-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">19. Sequential Read / 100 byte values<br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-sequential-read-800000000-10-100-32clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-sequential-read-800000000-10-100-32clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">20. Scan / 10000 byte values<br>
+      </td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-scan-8000000-10-10000-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-scan-8000000-10-10000-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">21. Scan / 1000 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-scan-80000000-10-1000-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-scan-80000000-10-1000-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">22. Scan / 100 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-scan-800000000-10-100-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;"><a href="reports/test1-hbase-scan-800000000-10-100-24clients.txt">HBase</a></td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top;">23. Scan / 10 byte values</td>
+      <td style="vertical-align: top;"><a href="reports/test1-hypertable-scan-8000000000-10-10-24clients.txt">Hypertable</a></td>
+      <td style="vertical-align: top;">HBase</td>
+    </tr>
+  </tbody>
+</table>
+<br>
+<br>
 </body></html>

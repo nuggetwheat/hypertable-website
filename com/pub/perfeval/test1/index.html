@@ -6,6 +6,7 @@
 
 
 
+
 <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type"><title>Performance Evaluation: Hypertable vs. HBase - Test 1</title></head><body>
 <h1></h1>
 <h2>Hypertable vs. HBase Performance Evaluation Test 1</h2>
@@ -84,26 +85,39 @@ The HDFS NameNode was run on <code>mothercompiler</code> and the DataNodes were 
 The Table Server equivalents (RangeServers and RegionServers), were run on
 <span style="font-family: monospace;">motherlode000...motherlode003</span> and were configured to use 5 GB of RAM.&nbsp; The Master processes were run on <code>mothercompiler</code>.<br>
 <br>As described in section 7 of the Bigtable paper, the test consisted of a central dispatcher (run on <code>motherlode004</code>), and some number of client processes (running on <code>motherlode005...motherlode008)</code>.&nbsp;
-The test operated over a range of row keys and the dispatcher
-would break the keys into <span style="font-family: monospace;">10*N</span> equal sized ranges, where <span style="font-family: monospace;">N</span> was the
-number of clients.&nbsp; We found that when running just a single
+The test operated over a range of row keys, R, which varied depending
+on the test.&nbsp; For the write tests, R was adjusted depending on the
+value size so that the appropriate amount of data was written for the
+test.&nbsp; The dispatcher
+would break the keys into <span style="font-family: monospace;">10*N</span> equal sized ranges, where <span style="font-family: monospace;">N</span>
+was the
+number of clients.&nbsp; Each client would request a range from the
+dispatcher, process it, and then request another range, keeping all of
+the clients busy until the test was complete.&nbsp; For the random
+tests, each key in the range was run through a hash function (either
+uniform or Zipfian) and then modulo R was applied to the result.&nbsp;
+We found that when running just a single
 client process per machine,&nbsp; the client processes became a
 bottleneck, so we ran either six or eight client processes per
 client machine, depending on the test.<br>
 <br>
-See&nbsp; Hypertable / HBase Performance Evaluation Instructions for details on exactly how to recreate this test.<br>
+See&nbsp; <a href="test1-howto.html">Hypertable vs. HBase Performance Evaluation Test 1 Setup</a> for details on exactly how to recreate this test.<br>
 <br>
 All of the throughput numbers are reported in aggregate.&nbsp; We
 calculated them by adding together all of the queries issued or bytes
 returned, dividing by the sum of the time taken by each of the clients
 to issue the queries, and then multiplying by the number of clients,
 which was either 24 or 32, depending on the test.<br>
-<h3>Random Query Throughput</h3>
-For this test, we kept the value size fixed at 1000 bytes, but varied
+<h3>Query Throughput</h3>
+For this test, the keys were randomized with both a uniform and Zipfian
+distribution.&nbsp; We kept the value size fixed at 1000 bytes, but
+varied
 the size of the data set to measure the performance of the system under
 different RAM-to-disk ratios.&nbsp; The data set sizes measured were
 80, 40, 20, 10, 5, and 2.5 Gigabytes.&nbsp; The number of queries
-issued for each different value size remained constant at 20 million.<br>
+issued for each different value size remained constant at 20
+million.&nbsp; We
+ran 8 test clients per machine, for a total of 32 clients.&nbsp; <br>
 
 <br>
 
@@ -124,80 +138,33 @@ calculated the results by adding together all of the time taken by each
 of the clients and then dividing by the total number of queries issued.<br>
 <br>
 <img style="width: 599px; height: 357px;" alt="Query Latency" src="test1-query-latency.png"><br>
-<br>
-<h2>Random Write</h2>
-
+<h3>Random Write</h3>
 For this test, we inserted 80 GB of data, but varied the size of the
-values written during each test from 10000 bytes to 10 bytes.&nbsp; We
+values written during each test from 10000 bytes to 10 bytes.&nbsp; The
+keys were randomized with a uniform distribution prior to
+insertion.&nbsp; We
 ran 6 test clients per machine, for a total of 24 clients.&nbsp; The
 writes were buffered in both systems using a 12 MB write buffer.<br>
 <br>
-<font size="+1"><img style="width: 597px; height: 356px;" alt="Random Write Throughput" src="random-write-throughput.png"></font><br>
-<table style="text-align: left; width: 100%;" title="Random Write Throughput (bytes/s)" border="1" cellpadding="2" cellspacing="2">
-  <tbody>
-    <tr>
-      <td style="vertical-align: top; font-weight: bold;">Value Size<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">HBase<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">Hypertable<br>
-      </td>
-      <td style="vertical-align: top; font-weight: bold;">difference<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; font-family: monospace;">10000<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">28336838.17<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">40381417.41<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">&nbsp;42.5 %<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; font-family: monospace;">1000<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">19359527.29<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">39693384.42<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">105.0 %<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; font-family: monospace;">100<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">5514127.97<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">28599552.13<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">418.0 %<br>
-      </td>
-    </tr>
-    <tr>
-      <td style="vertical-align: top; font-family: monospace;">10<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;"><br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;">9656875.29<br>
-      </td>
-      <td style="vertical-align: top; font-family: monospace;"><br>
-      </td>
-    </tr>
-  </tbody>
-</table>
-<br>
-Table1. Random Write Throughput (bytes/s)<br>
-<h2>Sequential Read</h2>
+<font size="+1"><img style="width: 597px; height: 356px;" alt="Random Write Throughput" src="test1-random-write-throughput.png"></font><br>
+<h3>Sequential Read</h3>
 For this test, we used the same data set that was inserted in the
 random write test, 80 GB of data that varied by the size of the values
 written, from 10000 bytes to 100 bytes.&nbsp; We
 ran 8 test clients per machine, for a total of 32 clients.&nbsp; The
-row keys were read in series and each read was a separate request.<br>
+row keys were read in series and each read was a separate
+request.&nbsp; For both systems, the number of cell versions to return
+was set to one, which caused less data to be returned than was
+inserted.&nbsp; This is because the data was inserted in random order
+which caused some rows to be empty and some rows to have multiple cell
+versions.<br>
 <br>
-<img style="width: 599px; height: 358px;" alt="Sequential Read Throughput" src="sequential-read-throughput.png"><br>
-<h2>Scan</h2>
+<img style="width: 598px; height: 357px;" alt="Sequential Read Throughput" src="test1-sequential-read-throughput.png"><br>
+There appears to be some sort of degenerate behavior in how HBase
+handles 10000 byte values.&nbsp; We ran this test twice to be sure that
+some other factor was not causing the problem and got a similar result.<br>
+<h3>Scan</h3>
+
 For this test, we used the same data set that was inserted in the
 random write test, 80 GB of data that varied by the size of the files
 written, from 10000 bytes to 10 bytes.&nbsp; We
@@ -205,24 +172,151 @@ ran 8 test clients per machine, for a total of 32 clients.&nbsp; The row
 keys were read using the scanner interface of both systems.<br>
 <br>
 <img style="width: 598px; height: 357px;" alt="Scan Throughput" src="scan-throughput.png"><br>
+<h3>System Performance Difference</h3>
+The table below shows, for each test, the raw throughput numbers for
+both Hypertable and HBase.&nbsp; The % Difference column represents the
+Hypertable performance improvement percentage in relation to
+HBase.&nbsp; It was computed as 100 * ((Hypertable/HBase)-1).<br>
 <br>
-<h2>
-Query Throughput</h2>
-
-For this test, we kept the value size fixed at 1000 bytes, but varied
-the size of the data set to measure the performance of the system under
-different RAM-to-disk ratios.&nbsp; The data set sizes measured were
-80, 40, 20, and 10 Gigabytes.<br>
-<br>
-<img style="width: 599px; height: 355px;" alt="Query Throughput" src="test1-query-throughput.png"><br>
-<h2>
-Query Latency</h2>
-
-
-This was the same test as the query throughput test, but the query latency was measured.<br>
-<br>
-<img style="width: 599px; height: 357px;" alt="Query Latency" src="query-latency.png"><br>
-<br>
+<table style="text-align: left; width: 100%;" border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <td style="vertical-align: top; font-weight: bold;">Test<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">Hypertable<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">HBase<br>
+      </td>
+      <td style="vertical-align: top; font-weight: bold;">% Difference<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 80 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">20535629.19<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">4140802.66<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">396<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 40 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">23172611.58<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">4422429.60<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">424<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 20 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">25199797.28<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">4804411.73<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">424<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 10 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">38820491.26<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">6579268.46<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">490<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 5 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">46631077.77<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">9130588.32<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">411<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Uniform / 2.5 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">49628606.51<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">25174658.92<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">97<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 80 GB<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">36901295.88<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">3599189.29<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">925<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 40 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">32763951.54<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">4463995.91<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">634<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 20 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">38113207.55<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">4346335.13<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">777<br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 10 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">57077262.69<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">6849634.42<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 5 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">57673090.65<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">11222417.06<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;">Query Throughput / Zipfian / 2.5 GB</td>
+      <td style="vertical-align: top; font-family: monospace;">56591205.52<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;">28337764.67<br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+    </tr>
+    <tr>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+      <td style="vertical-align: top; font-family: monospace;"><br>
+      </td>
+    </tr>
+  </tbody>
+</table>
 <br>
 
 

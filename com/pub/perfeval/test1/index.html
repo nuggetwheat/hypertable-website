@@ -54,7 +54,7 @@ systems, but beyond that, there were no additional configuration
 changes.&nbsp; No per-test configuration changes were made.<br>
 <br>
 The test was modeled after the one
-described in Section 7 of the Bigtable paper, with the following changes:
+described in Section 7 of the <a href="http://labs.google.com/papers/bigtable.html">Bigtable paper</a>, with the following changes:
 <p>
 <ul>
   <li>The systems alternately ran on top of the same fixed, ten-node HDFS 0.20.2 instance.</li>
@@ -208,13 +208,11 @@ so well is that it maintains much of the recently inserted data in the
 in-memory Memtables.&nbsp; Hypertable, on the other hand, aggressively
 prunes back the commit log (forcing compactions) in an attempt to
 minimize unavailability during failure recovery (TBD).&nbsp; Hypertable
-has an optional "shadow cache" feature that forces recently compacted
-CellCaches (Memtables) to remain in memory, shadowing the on-disk
-CellCaches (SSTables).&nbsp; When we turned this feature on, the 10000,
-1000, 100, and 10 byte tests resulted in 134, 151, 112, and 46 MB/s,
-respectively.&nbsp; We keep the shadow cache feature disabled by
-default because overall, it negatively impacts performance due to
-increased heap fragmentation.<br>
+has an optional "shadow cache" feature (disabled by default) that forces
+recently compacted CellCaches (Memtables) to remain in memory, shadowing
+the on-disk CellCaches (SSTables).&nbsp; When we turned this feature on,
+the 10000, 1000, 100, and 10 byte tests resulted in 134, 151, 112, and 46 MB/s,
+respectively.<br>
 <h3>System Performance Difference</h3>
 The table below shows, for each test, the raw throughput numbers for
 both Hypertable and HBase.&nbsp; The % Difference column represents the

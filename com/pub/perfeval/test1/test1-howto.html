@@ -91,9 +91,8 @@ Hypertable.RangeServer.CellStore.DefaultCompressor=none</code><br>
 We set the aggregate flush limit to 12 MB to match the writeBufferSize
 that was set on the HTable.&nbsp; We also set the default compressor
 for the CellStores to "none" to match the default compression algorithm
-used in the HBase HFile.<br>
-<br>
-For more information on how to setup and run Hypertable see the <a href="http://code.google.com/p/hypertable/wiki/GettingStartedGuide">Hypertable Getting Started Guide</a>.<br>
+used in the HBase HFile.  For more information on how to setup and run
+Hypertable see the <a href="http://code.google.com/p/hypertable/wiki/GettingStartedGuide">Hypertable Getting Started Guide</a>.<br>
 <h3>4. Configure Capistrano "Capfile"</h3>
 We use a tool called Capistrano to manage Hypertable clusters.&nbsp;
 Capistrano is a simple tool that facilitates remote task
@@ -114,7 +113,7 @@ on a different cluster with a different configuration.<br>
 <br>
 <code>set :source_machine, "mothercompiler"<br>
 set :install_dir,&nbsp; "/opt/hypertable"<br>
-set :hypertable_version, "0.9.3.2"<br>
+set :hypertable_version, "0.9.3.3"<br>
 set :default_dfs, "hadoop"<br>
 set :default_config, "/opt/doug/perfeval/perftest-hypertable.cfg"<br>
 set :default_additional_args, ""<br>
@@ -140,7 +139,7 @@ To modify the test to run in a different environment or with a
 different configuration, modify the variable definitions at the top of
 the test script.&nbsp; The variables used for our test are shown in the
 listing below.
-<br>
+<p>
 <code>HADOOP_HOME=/opt/hadoop/current<br>
 HYPERTABLE_HOME=/opt/hypertable/current<br>
 HBASE_HOME=/opt/hbase/current<br>
@@ -176,12 +175,27 @@ SSH_AGENT_PID=23634; export SSH_AGENT_PID;<br>
 echo Agent pid 23634;</code>
 <br>
 <h3><span style="font-weight: bold;">7</span>. Run the test</h3>
-To run the test, you need to execute the run-test.sh script twice, once
+To run the test, create a directory, TESTDIR, in which you will run the
+test from.  Copy the Capfile which was configured in Step 4 into TESTDIR.
+Copy the test script that was configured in Step 5 into the bin/
+subdirectory of TESTDIR.  Then, make sure HDFS is up and running and make sure
+HBase and Hypertable are both shut down and cleaned out:
+<p>
+<pre>
+$ /opt/hbase/current/bin/stop-hbase.sh
+$ hadoop fs -rmr /hbase
+$ cap stop     # stop Hypertable
+$ cap cleandb  # clean Hypertable
+</pre>
+<br>
+You will need to execute the run-test.sh script twice, once
 for Hypertable, and once for HBase.&nbsp; Here's how we executed the
 script for the&nbsp; Hypertable test.<br>
 <br>
-<code>$ nohup ./bin/run-test.sh hypertable &gt;&amp; hypertable.output&amp;<br>
-</code><br>
+<pre>
+$ cd $TESTDIR
+$ nohup ./bin/run-test.sh hypertable &gt;&amp; hypertable.output&amp;<br>
+</pre>
 And then after the Hypertable test completed, we ran the HBase test as follows:<br>
 <br>
 <code>$ nohup ./bin/run-test.sh hbase &gt;&amp; hbase.output&amp;</code><br>
@@ -189,7 +203,7 @@ And then after the Hypertable test completed, we ran the HBase test as follows:<
 As these tests run, they will generate reports for the individual
 sub-tests and deposit them in files on the test dispatcher machine (see
 test_dispatcher role in Capfile) in a directory indicated by the
-REPORT_DIR variable at the<code></code> top of the run-test.sh script.&nbsp; The following are the report files generated during our test run.<br>
+REPORT_DIR variable at the top of the run-test.sh script.<br>
 <br>
 </div><!-- download -->
 <p style="clear:both;"></p>

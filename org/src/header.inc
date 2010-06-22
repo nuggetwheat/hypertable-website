@@ -18,7 +18,8 @@ function tab_on($name) {
 			<li><a class="external" href="http://code.google.com/p/hypertable/issues/list">Bug Tracker</a></li>
 			<li><a href="mailing-list.html"<? tab_on("mailing-list") ?>>Mailing Lists</a></li>
 			<li><a href="sponsors.html"<? tab_on("sponsors") ?>>Sponsors</a></li>
-			<li class="last"><a href="feedback.html"<? tab_on("feedback") ?>>Feedback</a></li>
+			<li><a href="feedback.html"<? tab_on("feedback") ?>>Feedback</a></li>
+                        <li><a class="last" href="http://www.twitter.com/hypertable"><img src="http://twitter-badges.s3.amazonaws.com/t_mini-c.png" alt="Follow hypertable on Twitter" border="0" align="middle"/></a></li>
 		</ul>
 	</div><!-- nav -->
 </div><!-- header -->

@@ -13,13 +13,13 @@
 			<div id="page" class="sub documentation">
 				<div class="left">
 					<h2>Documentation</h2>
-					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/GettingStartedGuide">Getting Started Guide</a> - This document gives you everything you need to know to get up and running with Hypertable.</p>
+					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/HypertableManual">Hypertable Manual</a> - This is the ultimate Hypertable reference.  The first few sections describe how to quickly get up and running.</p>
 					<p><a href="hql/index.html">HQL Statement Syntax</a> - This document describes the Hypertable Query Language (HQL). For each command it provides the BNF, describes how it is used, and gives working examples.</p>
 					<p><a href="thrift-api-ref/index.html">Thrift client API reference</a> - Generated documentation from <a class="external" href="http://wiki.apache.org/thrift/">Thrift</a> IDLs for Hypertable client services</p>
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/ArchitecturalOverview">Architectural Overview</a> - This document provides an architectural overview of Hypertable and includes references to the source code</p>
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/HyperRecord">HyperRecord</a> - This document describes the integration of Hypertable with ActiveRecord, the Ruby on Rails ORM.</p>
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/UsingThriftClientWithRuby">Thrift Client for Ruby</a> - This document describes how to use the Thrift client to access Hypertable from Ruby</p>
-					<p><a class="external"  href="http://code.google.com/p/hypertable/wiki/ConfigPropetiesReference?tm=1">Config Property Reference</a> - This document describes all of the available config file properties.</p>
+					<p><a class="external"  href="http://code.google.com/p/hypertable/wiki/HiveIntegration">Hypertable-Hive Integration</a> - This document describes how to access Hypertable from the Hive data warehouse system.</p>
 					<p><a href="doxygen/index.html">Source Documentation</a> - Doxygen documentation for the source code.  Includes class references, class relationship diagrams, and annotated source files.</p>
 				</div><!-- left -->
 				<div class="right">

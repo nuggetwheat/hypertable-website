@@ -19,7 +19,7 @@
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/ArchitecturalOverview">Architectural Overview</a> - This document provides an architectural overview of Hypertable and includes references to the source code</p>
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/HyperRecord">HyperRecord</a> - This document describes the integration of Hypertable with ActiveRecord, the Ruby on Rails ORM.</p>
 					<p><a class="external" href="http://code.google.com/p/hypertable/wiki/UsingThriftClientWithRuby">Thrift Client for Ruby</a> - This document describes how to use the Thrift client to access Hypertable from Ruby</p>
-					<p><a class="external"  href="http://code.google.com/p/hypertable/wiki/HiveIntegration">Hypertable-Hive Integration</a> - This document describes how to access Hypertable from the Hive data warehouse system.</p>
+					<p><a class="external"  href="http://code.google.com/p/hypertable/wiki/HiveExtension">Hypertable-Hive Extension</a> - This document describes how to access Hypertable from the Hive data warehouse system.</p>
 					<p><a href="doxygen/index.html">Source Documentation</a> - Doxygen documentation for the source code.  Includes class references, class relationship diagrams, and annotated source files.</p>
 				</div><!-- left -->
 				<div class="right">

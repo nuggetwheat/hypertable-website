@@ -28,23 +28,26 @@
 	<div id="contents-container">
 		<div id="contents">
 			<div id="fullpage" class="sub documentation">
-<h2>SHOW TABLES</h2>
+<h2>DROP NAMESPACE </h2>
 
 <h4>EBNF</h4>
 
-<pre><code>SHOW TABLES
+<pre><code>DROP NAMESPACE [IF EXISTS] namespace_name
 </code></pre>
 
 <h4>Description</h4>
 
 <p><p>
-The <code>SHOW TABLES</code> command lists only the tables in the current namespace </p>
+The DROP NAMESPACE removes a namespace. If the IF EXISTS clause is specified, 
+the command wont generate an error if the namespace namespace<em>name does not exist.
+A namespace can only be dropped if it is empty (ie has contains no tables or sub-namespaces
+If namespace</em>name starts with '/' it treats the namespace_name as an absolute path,
+otherwise it considers it to be a sub-namespace relative to the current namespace.</p>
 
 <h4>Example</h4>
 
-<pre><code>hypertable&gt; SHOW TABLES;
-foo
-Test
+<pre><code>hypertable&gt; DROP NAMESPACE "/test/subtest";
+hypertable&gt; DROP NAMESPACE "/test";
 </code></pre>
 			</div><!-- home -->
 		</div><!-- contents -->

@@ -28,23 +28,25 @@
 	<div id="contents-container">
 		<div id="contents">
 			<div id="fullpage" class="sub documentation">
-<h2>SHOW TABLES</h2>
+<h2>CREATE NAMESPACE </h2>
 
 <h4>EBNF</h4>
 
-<pre><code>SHOW TABLES
+<pre><code>CREATE NAMESPACE namespace_name
 </code></pre>
 
 <h4>Description</h4>
 
 <p><p>
-The <code>SHOW TABLES</code> command lists only the tables in the current namespace </p>
+<code>CREATE NAMESPACE</code>command creates a new namespace. 
+If namespace<em>name starts with '/' it treats the namespace</em>name as an absolute path
+otherwise it considers it to be a sub-namespace relative to the current namespace.</p>
 
 <h4>Example</h4>
 
-<pre><code>hypertable&gt; SHOW TABLES;
-foo
-Test
+<pre><code>hypertable&gt; CREATE NAMESPACE "/test";
+hypertable&gt; USE NAMESPACE "/test";
+hypertable&gt; CREATE NAMESPACE "subtest";
 </code></pre>
 			</div><!-- home -->
 		</div><!-- contents -->

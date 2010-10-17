@@ -1,8 +1,8 @@
 <div id="news">
 	<h3>News and Announcements</h3>
 	<dl>
-		<dt>May 19 2010</dt>
-		<dd>Hypertable selected for the conference program at NoSQL Frankfurt<br/>September 28th 2010, <a href="http://sites.google.com/site/nosqlfrankfurt/">NoSQL Frankfurt»</a> Goethe University Frankfurt, Germany</dd>
+		<dt>Oct 17 2010</dt>
+		<dd>Doug Judd will present <a href="http://www.meetup.com/cloudcomputing/calendar/14362435/">Database Architectures and Hypertable</a> at the Silicon Valley Cloud Computing Group Meetup, October 21st 2010<br> Fenwick & West, Mountain View, CA</dd>
 	</dl>
 	<dl>
 		<dt>Sep 23 2010</dt>

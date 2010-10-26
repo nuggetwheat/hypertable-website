@@ -36,9 +36,14 @@
 CREATE TABLE name LIKE example_name
 
 create_definition:
-  column_family_name [MAX_VERSIONS '=' int] [TTL '=' duration]
+  column_family_name [column_family_option ...]
   | ACCESS GROUP name [access_group_option ...]
     ['(' [column_family_name, ...] ')']
+
+column_family_option:
+  MAX_VERSIONS '=' int
+  | TTL '=' duration
+  | COUNTER
 
 duration:
   int MONTHS
@@ -49,7 +54,8 @@ duration:
   | int [ SECONDS ]
 
 access_group_option:
-  IN_MEMORY
+  COUNTER
+  | IN_MEMORY
   | BLOCKSIZE '=' int
   | REPLICATION '=' int
   | COMPRESSOR '=' compressor_spec
@@ -195,6 +201,7 @@ The following column family options are supported:</p>
 <ul>
 <li><code>MAX_VERSIONS '=' int</code></li>
 <li><code>TTL '=' duration</code></li>
+<li><code>COUNTER</code></li>
 </ul>
 
 <p>Cells in a table are specified by not only a row key and a qualified column,
@@ -210,18 +217,64 @@ specify that you only want to keep cells that were created within the past two
 weeks.  Like the <code>MAX_VERSIONS</code> option, older versions are lazily garbage
 collected through the normal compaction process.</p>
 
+<p>The <code>COUNTER</code> option makes each instance of this column act as an atomic
+counter.  Counter columns are accessed using the same methods as other
+columns.  However, to modify the counter, the value must be formatted
+specially, as described in the following table.
+<p></p>
+
+<table border="1">
+<tr>
+<th>Value Format</th>
+<th>Description</th>
+</tr>
+<tr>
+<td><pre> ['+'] n </pre></td>
+<td> Increment the counter by n </td>
+</tr>
+<tr>
+<td><pre> '-' n </pre></td>
+<td> Decrement the counter by n </td>
+</tr>
+<tr>
+<td><pre> '=' n </pre></td>
+<td> Reset the counter to n </td>
+</tr>
+</table>
+
+<p><p>
+For example, consider the following sequence of values written to a counter
+column:</p>
+
+<pre>
+  +9
+  =0
+  +3
+  +4
+  +5
+  -2
+</pre>
+
+<p>After these six values get written to a counter column, a subsequent read of that
+column would return the ASCII string "10".</p>
+
 <h3>Access Group Options</h3>
 
 <p><p>
 The following access group options are supported:</p>
 
 <ul>
+<li><code>COUNTER</code></li>
 <li><code>IN_MEMORY</code></li>
 <li><code>BLOCKSIZE '=' int</code></li>
 <li><code>REPLICATION '=' int</code></li>
 <li><code>COMPRESSOR '=' compressor_spec</code></li>
 <li><code>BLOOMFILTER '=' bloom_filter_spec</code></li>
 </ul>
+
+<p>The <code>COUNTER</code> option makes all column families in the access group
+counter columns (see <code>COUNTER</code> description under Column Family Options
+section).</p>
 
 <p>The <code>IN_MEMORY</code> option indicates that all cell data for the access group should
 remain memory resident.  Queries against column families in IN_MEMORY access

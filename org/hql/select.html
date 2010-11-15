@@ -32,7 +32,7 @@
 
 <h4>EBNF</h4>
 
-<pre><code>SELECT ('*' | column_family_name [',' column_family_name]*)
+<pre><code>SELECT ('*' | (column_predicate [',' column_predicate]*))
   FROM table_name
   [where_clause]
   [options_spec]
@@ -47,6 +47,11 @@ where_predicate:
 
 relop: '=' | '&lt;' | '&lt;=' | '&gt;' | '&gt;=' | '=^'
 
+column_predicate
+  = column_family
+  | column_family ':' column_qualifer
+  | column_family ':' '/' column_qualifier_regexp '/'
+
 cell_spec: row ',' column
 
 cell_predicate:
@@ -58,6 +63,7 @@ row_predicate:
   [row_key relop] ROW relop row_key
   | '(' [row_key relop] ROW relop row_key
           (OR [row_key relop] ROW relop row_key)* ')'
+  | ROW REGEXP '"'row_regexp'"'
 
 timestamp_predicate:
   [timestamp relop] TIMESTAMP relop timestamp
@@ -222,6 +228,8 @@ SELECT * FROM test WHERE ( CELL = "maui","tag:abaisance" OR
                            CELL = "cow","tag:Ab" OR
                            CELL =^ "foo","tag:acya");
 SELECT * FROM test INTO FILE "dfs:///tmp/foo";
+SELECT col2:"bird" from RegexpTest WHERE ROW REGEXP "http://.*"; 
+SELECT col1:/^w[^a-zA-Z]*$/ from RegexpTest WHERE ROW REGEXP "m.*\s\S";
 </code></pre>
 			</div><!-- home -->
 		</div><!-- contents -->

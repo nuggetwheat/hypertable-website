@@ -28,49 +28,74 @@
 	<div id="contents-container">
 		<div id="contents">
 			<div id="fullpage" class="sub documentation">
-<h2>DUMP TABLE</h2>
+<h2>SELECT CELLS</h2>
 
 <h4>EBNF</h4>
 
-<pre><code>DUMP TABLE table_name
+<pre><code>SELECT CELLS ('*' | (column_predicate [',' column_predicate]*))
+  FROM table_name
   [where_clause]
   [options_spec]
 
 where_clause:
-    WHERE timestamp_predicate
+    WHERE where_predicate [AND where_predicate ...]
 
-relop: '=' | '&lt;' | '&lt;=' | '&gt;' | '&gt;='
+where_predicate:
+  cell_predicate
+  | row_predicate
+  | timestamp_predicate
+  | value_predicate
+
+relop: '=' | '&lt;' | '&lt;=' | '&gt;' | '&gt;=' | '=^'
+
+column_predicate
+  = column_family
+  | column_family ':' column_qualifer
+  | column_family ':' '/' column_qualifier_regexp '/'
+
+cell_spec: row ',' column
+
+cell_predicate:
+  [cell_spec relop] CELL relop cell_spec
+  | '(' [cell_spec relop] CELL relop cell_spec
+        (OR [cell_spec relop] CELL relop cell_spec)* ')'
+
+row_predicate:
+  [row_key relop] ROW relop row_key
+  | '(' [row_key relop] ROW relop row_key
+          (OR [row_key relop] ROW relop row_key)* ')'
+  | ROW REGEXP '"'row_regexp'"'
 
 timestamp_predicate:
   [timestamp relop] TIMESTAMP relop timestamp
 
+value_predicate:
+  VALUE REGEXP '"'value_regexp'"' 
+
+
 options_spec:
   (REVS revision_count
+  | LIMIT row_count
+  | CELL_LIMIT max_cells_per_cf
   | INTO FILE [file_location]filename[.gz]
-  | BUCKETS n
-  | NO_ESCAPE)*
-
-file_location:
-  "dfs://" | "file://"
+  | DISPLAY_TIMESTAMPS
+  | KEYS_ONLY
+  | NO_ESCAPE
+  | RETURN_DELETES)*
 
 timestamp:
   'YYYY-MM-DD HH:MM:SS[.nanoseconds]'
+
+file_location:
+  "dfs://" | "file://"
 </code></pre>
 
 <h4>Description</h4>
 
 <p><p>
-The <code>DUMP TABLE</code> command provides a way to create efficient table backups
-which can be loaded with <code>LOAD DATA INFILE</code>.  The problem with using <code>SELECT</code>
-to create table backups is that it outputs table data in order of row key.
-<code>LOAD DATA INFILE</code> yields worst-case performance when loading data that is
-sorted by the row key because only one RangeServer at a time will be actively
-receiving updates.  Backup file generated with <code>DUMP TABLE</code> are much more
-efficient because the data distribution in the backup file causes many (or all)
-of the RangeServers to actively receive updates during the loading process.
-The <code>DUMP TABLE</code> command will randomly select n ranges and output cells from
-those ranges in round-robin fashion.  n is the number of buckets (default is 20)
-and can be specified with the <code>BUCKETS</code> option.</p>
+The parser only accepts a single timestamp predicate.  The '=^' operator is the
+"starts with" operator.  It will return all rows that have the same prefix as
+the operand.</p>
 
 <h4>Options</h4>
 
@@ -80,34 +105,70 @@ and can be specified with the <code>BUCKETS</code> option.</p>
 
 <p><p>
 Each cell in a Hypertable table can have multiple timestamped revisions.  By
-default all revisions of a cell are returned by the <code>DUMP TABLE</code> statement.  The
+default all revisions of a cell are returned by the <code>SELECT CELLS</code> statement.  The
 <code>REVS</code> option allows control over the number of cell revisions returned.  The
-cell revisions are stored in reverse-chronological order, so <code>REVS 1</code> will
+cell revisions are stored in reverse-chronological order, so <code>REVS=1</code> will
 return the most recent version of the cell.</p>
+
+<h4><code>LIMIT row_count</code></h4>
+
+<p><p>
+Limits the number of rows returned by the <code>SELECT CELLS</code> statement to <code>row_count</code>.</p>
+
+<h4><code>CELL_LIMIT max_cells_per_cf</code></h4>
+
+<p><p>
+Limits the number of cells returned per row per column family by the <code>SELECT CELLS</code> 
+statement to <code>max_cells_per_cf</code>.</p>
 
 <h4><code>INTO FILE [file://|dfs://]filename[.gz]</code></h4>
 
 <p><p>
-The result of a <code>DUMP TABLE</code> command is displayed to standard output by default.
+The result of a <code>SELECT CELLS</code> command is displayed to standard output by default.
 The <code>INTO FILE</code> option allows the output to get redirected to a file. <br />
 If the file name starts with the location specifier <code>dfs://</code> then the output file is 
 assumed to reside in the DFS. If it starts with <code>file://</code> then output is 
 sent to a local file. This is also the default location in the absence of any 
 location specifier.
 If the file name specified ends in a <code>.gz</code> extension, then the output is compressed
-with gzip before it is written to the file.</p>
+with gzip before it is written to the file.  The first line of the output,
+when using the <code>INTO FILE</code> option, is a header line, which will take one of
+the two following formats.  The second format will be output if the
+<code>DISPLAY_TIMESTAMPS</code> option is supplied.</p>
 
-<h4><code>BUCKETS n</code></h4>
+<pre><code> #row '\t' column '\t' value
+
+ #timestamp '\t' row '\t' column '\t' value
+</code></pre>
+
+<p><p></p>
+
+<h4><code>DISPLAY_TIMESTAMPS</code></h4>
 
 <p><p>
-This option causes the <code>DUMP TABLE</code> command to use <code>n</code> buckets.  The default is
-20.  It is recommended that <code>n</code> is at least as large as the number of nodes
-in the cluster that the backup with be restored to.</p>
+The <code>SELECT CELLS</code> command displays one cell per line of output.  Each line contains
+three tab delimited fields, row, column, and value.  The <code>DISPLAY_TIMESTAMPS</code>
+option causes the cell timestamp to be included in the output as well.  When
+this option is used, each output line will contain four tab delimited fields
+in the following order:</p>
+
+<pre><code> timestamp, row, column, value
+</code></pre>
+
+<p><p></p>
+
+<h4><code>KEYS_ONLY</code></h4>
+
+<p><p>
+The <code>KEYS_ONLY</code> option suppresses the output of the value.  It is somewhat
+efficient because the option is processed by the RangeServers and not by
+the client.  The value data is not transferred back to the client, only
+the key data.</p>
 
 <h4><code>NO_ESCAPE</code></h4>
 
 <p><p>
-The output format of a <code>DUMP TABLE</code> command comprises tab delimited lines, one
+The output format of a <code>SELECT CELLS</code> command comprises tab delimited lines, one
 cell per line, which is suitable for input to the <code>LOAD DATA INFILE</code>
 command.  However, if the value portion of the cell contains either newline
 or tab characters, then it will confuse the <code>LOAD DATA INFILE</code> input parser.
@@ -137,12 +198,29 @@ converted into two character escape sequences, described in the following table.
 The <code>NO_ESCAPE</code> option turns off this escaping mechanism.
 <p></p>
 
+<h4><code>RETURN_DELETES</code></h4>
+
+<p><p>
+The <code>RETURN_DELETES</code> option is used internally for debugging.  When data is
+deleted from a table, the data is not actually deleted right away.  A delete
+key will get inserted into the database and the delete will get processed
+and applied during subsequent scans.  The <code>RETURN_DELETES</code> option will return
+the delete keys in addition to the normal cell keys and values.  This option
+can be useful when used in conjuction with the <code>DISPLAY_TIMESTAMPS</code> option to
+understand how the delete mechanism works.</p>
+
+<p><p></p>
+
 <h4>Examples</h4>
 
-<pre><code>DUMP TABLE foo;
-DUMP TABLE foo WHERE '2008-07-28 00:00:02' &lt; TIMESTAMP &lt; '2008-07-28 00:00:07';
-DUMP TABLE foo INTO FILE 'foo.tsv.gz'
-DUMP TABLE foo REVS 1 BUCKETS 1000;
+<pre><code>SELECT CELLS * FROM test WHERE ('a' &lt;= ROW &lt;= 'e') and
+       CELLS                   '2008-07-28 00:00:02' &lt; TIMESTAMP &lt; '2008-07-28 00:00:07';
+SELECT CELLS * FROM test WHERE ROW =^ 'b';
+SELECT CELLS * FROM test WHERE (ROW = 'a' or ROW = 'c' or ROW = 'g');
+SELECT CELLS * FROM test WHERE ('a' &lt; ROW &lt;= 'c' or ROW = 'g' or ROW = 'c');
+
+SELECT CELLS col1:/^w[^a-zA-Z]*$/ from RegexpTest WHERE ROW REGEXP "^\D+" AND VALUE REGEXP "l.*e";
+SELECT CELLS col1:/^w/, col2:/^[em].*/ from RegexpTest;
 </code></pre>
 			</div><!-- home -->
 		</div><!-- contents -->

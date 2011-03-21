@@ -10,9 +10,12 @@
 <tr>
 <td>Client</td><td><a href="Client.html#Svc_ClientService">ClientService</a><br/>
 <ul>
+<li><a href="Client.html#Fn_ClientService_cancel_future">cancel_future</a></li>
+<li><a href="Client.html#Fn_ClientService_close_future">close_future</a></li>
 <li><a href="Client.html#Fn_ClientService_close_mutator">close_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_close_namespace">close_namespace</a></li>
 <li><a href="Client.html#Fn_ClientService_close_scanner">close_scanner</a></li>
+<li><a href="Client.html#Fn_ClientService_close_scanner_async">close_scanner_async</a></li>
 <li><a href="Client.html#Fn_ClientService_create_namespace">create_namespace</a></li>
 <li><a href="Client.html#Fn_ClientService_create_table">create_table</a></li>
 <li><a href="Client.html#Fn_ClientService_drop_namespace">drop_namespace</a></li>
@@ -24,6 +27,9 @@
 <li><a href="Client.html#Fn_ClientService_get_cells">get_cells</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cells_as_arrays">get_cells_as_arrays</a></li>
 <li><a href="Client.html#Fn_ClientService_get_cells_serialized">get_cells_serialized</a></li>
+<li><a href="Client.html#Fn_ClientService_get_future_result">get_future_result</a></li>
+<li><a href="Client.html#Fn_ClientService_get_future_result_as_arrays">get_future_result_as_arrays</a></li>
+<li><a href="Client.html#Fn_ClientService_get_future_result_serialized">get_future_result_serialized</a></li>
 <li><a href="Client.html#Fn_ClientService_get_listing">get_listing</a></li>
 <li><a href="Client.html#Fn_ClientService_get_row">get_row</a></li>
 <li><a href="Client.html#Fn_ClientService_get_row_as_arrays">get_row_as_arrays</a></li>
@@ -43,9 +49,11 @@
 <li><a href="Client.html#Fn_ClientService_offer_cell_as_array">offer_cell_as_array</a></li>
 <li><a href="Client.html#Fn_ClientService_offer_cells">offer_cells</a></li>
 <li><a href="Client.html#Fn_ClientService_offer_cells_as_arrays">offer_cells_as_arrays</a></li>
+<li><a href="Client.html#Fn_ClientService_open_future">open_future</a></li>
 <li><a href="Client.html#Fn_ClientService_open_mutator">open_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_open_namespace">open_namespace</a></li>
 <li><a href="Client.html#Fn_ClientService_open_scanner">open_scanner</a></li>
+<li><a href="Client.html#Fn_ClientService_open_scanner_async">open_scanner_async</a></li>
 <li><a href="Client.html#Fn_ClientService_refresh_shared_mutator">refresh_shared_mutator</a></li>
 <li><a href="Client.html#Fn_ClientService_rename_table">rename_table</a></li>
 <li><a href="Client.html#Fn_ClientService_set_cell">set_cell</a></li>
@@ -62,6 +70,7 @@
 <a href="Client.html#Typedef_CellsSerialized">CellsSerialized</a><br/>
 <a href="Client.html#Struct_ClientException">ClientException</a><br/>
 <a href="Client.html#Struct_ColumnFamily">ColumnFamily</a><br/>
+<a href="Client.html#Typedef_Future">Future</a><br/>
 <a href="Client.html#Struct_Key">Key</a><br/>
 <a href="Client.html#Enum_KeyFlag">KeyFlag</a><br/>
 <a href="Client.html#Struct_MutateSpec">MutateSpec</a><br/>
@@ -69,9 +78,13 @@
 <a href="Client.html#Enum_MutatorFlag">MutatorFlag</a><br/>
 <a href="Client.html#Typedef_Namespace">Namespace</a><br/>
 <a href="Client.html#Struct_NamespaceListing">NamespaceListing</a><br/>
+<a href="Client.html#Struct_Result">Result</a><br/>
+<a href="Client.html#Struct_ResultAsArrays">ResultAsArrays</a><br/>
+<a href="Client.html#Struct_ResultSerialized">ResultSerialized</a><br/>
 <a href="Client.html#Struct_RowInterval">RowInterval</a><br/>
 <a href="Client.html#Struct_ScanSpec">ScanSpec</a><br/>
 <a href="Client.html#Typedef_Scanner">Scanner</a><br/>
+<a href="Client.html#Typedef_ScannerAsync">ScannerAsync</a><br/>
 <a href="Client.html#Struct_Schema">Schema</a><br/>
 <a href="Client.html#Struct_TableSplit">TableSplit</a><br/>
 <a href="Client.html#Typedef_Value">Value</a><br/>
@@ -108,6 +121,11 @@ IGNORE_UNKNOWN_CFS: Don't throw exception if mutator writes to unknown column fa
 <tr><td><code>IGNORE_UNKNOWN_CFS</code></td><td><code>2</code></td></tr>
 </table></div>
 <hr/><h2 id="Typedefs">Type declarations</h2>
+<div class="definition"><h3 id="Typedef_Future">Typedef: Future</h3>
+<p><strong>Base type:</strong>&nbsp;<code>i64</code></p>
+Opaque ID for a Future object
+<p/>
+<br/></div>
 <div class="definition"><h3 id="Typedef_Namespace">Typedef: Namespace</h3>
 <p><strong>Base type:</strong>&nbsp;<code>i64</code></p>
 Opaque ID for a Namespace
@@ -116,6 +134,13 @@ Opaque ID for a Namespace
 <div class="definition"><h3 id="Typedef_Scanner">Typedef: Scanner</h3>
 <p><strong>Base type:</strong>&nbsp;<code>i64</code></p>
 Opaque ID for a table scanner
+<p/>
+A scanner is recommended for returning large amount of data, say a full
+table dump.
+<br/></div>
+<div class="definition"><h3 id="Typedef_ScannerAsync">Typedef: ScannerAsync</h3>
+<p><strong>Base type:</strong>&nbsp;<code>i64</code></p>
+Opaque ID for a asynchronous table scanner
 <p/>
 A scanner is recommended for returning large amount of data, say a full
 table dump.
@@ -216,6 +241,7 @@ Binary buffer holding serialized sequence of cells
 <tr><td>10</td><td>cell_limit</td><td><code>i32</code></td><td></td><td>optional</td><td>0</td></tr>
 <tr><td>11</td><td>row_regexp</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
 <tr><td>12</td><td>value_regexp</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>13</td><td>scan_and_filter_rows</td><td><code>bool</code></td><td></td><td>optional</td><td>0</td></tr>
 </table><br/>Specifies options for a scan
 <p/>
 <dl>
@@ -254,6 +280,9 @@ Binary buffer holding serialized sequence of cells
 <p/>
   <dt>value_regexp</dt>
   <dd>Specifies a regexp used to filter by cell value</dd>
+<p/>
+  <dt>scan_and_filter_rows</dt>
+  <dd>Indicates whether table scan filters the rows specified instead of individual look up</dd>
 </dl>
 <br/></div><div class="definition"><h3 id="Struct_Key">Struct: Key</h3>
 <table><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr>
@@ -315,6 +344,108 @@ Binary buffer holding serialized sequence of cells
 <p/>
   <dt>value</dt>
   <dd>Value of a cell. Currently a sequence of uninterpreted bytes.</dd>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_Result">Struct: Result</h3>
+<table><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr>
+<tr><td>1</td><td>is_empty</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>id</td><td><code>i64</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>is_scan</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>4</td><td>is_error</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>5</td><td>error</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>6</td><td>error_msg</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>7</td><td>cells</td><td><code>list&lt;<code><a href="Client.html#Struct_Cell">Cell</a></code>&gt;</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/>Specifies a result object for asynchronous requests.
+TODO: add support for update results
+<p/>
+<dl>
+  <dt>is_empty</dt>
+  <dd>Indicates whether this object contains a result or not</dd>
+<p/>
+  <dt>id</dt>
+  <dd>Scanner/mutator id for which these results pertain to</dd>
+  
+  <dt>is_scan</dt>
+  <dd>Indicates whether these are scan results or update results</dd>
+  
+  <dt>is_error</dt>
+  <dd>Indicates whether the async request was successful or not</dd>
+  
+  <dt>error</dt>
+  <dd>Error code</dd>
+<p/>
+  <dt>error_msg</dt>
+  <dd>Error message</dd>
+<p/>
+  <dt>cells</dt>
+  <dd>Cells returned by asynchronous scanner</dd>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_ResultAsArrays">Struct: ResultAsArrays</h3>
+<table><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr>
+<tr><td>1</td><td>is_empty</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>id</td><td><code>i64</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>is_scan</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>4</td><td>is_error</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>5</td><td>error</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>6</td><td>error_msg</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>7</td><td>cells</td><td><code>list&lt;<code><a href="Client.html#Typedef_CellAsArray">CellAsArray</a></code>&gt;</code></td><td></td><td>optional</td><td></td></tr>
+</table><br/>Specifies a result object for asynchronous requests.
+TODO: add support for update results
+<p/>
+<dl>
+  <dt>is_empty</dt>
+  <dd>Indicates whether this object contains a result or not</dd>
+<p/>
+  <dt>id</dt>
+  <dd>Scanner/mutator id for which these results pertain to</dd>
+  
+  <dt>is_scan</dt>
+  <dd>Indicates whether these are scan results or update results</dd>
+  
+  <dt>is_error</dt>
+  <dd>Indicates whether the async request was successful or not</dd>
+  
+  <dt>error</dt>
+  <dd>Error code</dd>
+<p/>
+  <dt>error_msg</dt>
+  <dd>Error message</dd>
+<p/>
+  <dt>cells</dt>
+  <dd>Cells returned by asynchronous scanner</dd>
+</dl>
+<br/></div><div class="definition"><h3 id="Struct_ResultSerialized">Struct: ResultSerialized</h3>
+<table><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr>
+<tr><td>1</td><td>is_empty</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>2</td><td>id</td><td><code>i64</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>3</td><td>is_scan</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>4</td><td>is_error</td><td><code>bool</code></td><td></td><td>required</td><td></td></tr>
+<tr><td>5</td><td>error</td><td><code>i32</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>6</td><td>error_msg</td><td><code>string</code></td><td></td><td>optional</td><td></td></tr>
+<tr><td>7</td><td>cells</td><td><code><a href="Client.html#Typedef_CellsSerialized">CellsSerialized</a></code></td><td></td><td>optional</td><td></td></tr>
+</table><br/>Specifies a serialized result object for asynchronous requests.
+TODO: add support for update results
+<p/>
+<dl>
+  <dt>is_empty</dt>
+  <dd>Indicates whether this object contains a result or not</dd>
+<p/>
+  <dt>id</dt>
+  <dd>Scanner/mutator id for which these results pertain to</dd>
+  
+  <dt>is_scan</dt>
+  <dd>Indicates whether these are scan results or update results</dd>
+  
+  <dt>is_error</dt>
+  <dd>Indicates whether the async request was successful or not</dd>
+  
+  <dt>error</dt>
+  <dd>Error code</dd>
+<p/>
+  <dt>error_msg</dt>
+  <dd>Error message</dd>
+<p/>
+  <dt>cells</dt>
+  <dd>Cells returned by asynchronous scanner</dd>
 </dl>
 <br/></div><div class="definition"><h3 id="Struct_NamespaceListing">Struct: NamespaceListing</h3>
 <table><tr><th>Key</th><th>Field</th><th>Type</th><th>Description</th><th>Requiredness</th><th>Default value</th></tr>
@@ -475,6 +606,39 @@ mutator interface flattened.
 </pre>Close a namespace
 <p/>
 @param ns - namespace
+<br/></div><div class="definition"><h4 id="Fn_ClientService_open_future">Function: ClientService.open_future</h4>
+<pre><code><a href="Client.html#Typedef_Future">Future</a></code> open_future(<code>i32</code> queue_size = 0)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Open a future object
+@param queue_size - num of results the future object can enqueue without blocking threads
+<br/></div><div class="definition"><h4 id="Fn_ClientService_cancel_future">Function: ClientService.cancel_future</h4>
+<pre><code>void</code> cancel_future(<code><a href="Client.html#Typedef_Future">Future</a></code> ff)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Cancel tasks outstanding in a future object
+@param ff - Future object
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_future_result">Function: ClientService.get_future_result</h4>
+<pre><code><a href="Client.html#Struct_Result">Result</a></code> get_future_result(<code><a href="Client.html#Typedef_Future">Future</a></code> ff)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Fetch asynchronous results
+@param ff - Future object which has the asynchronous results
+@return - result from async scanner/mutator
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_future_result_as_arrays">Function: ClientService.get_future_result_as_arrays</h4>
+<pre><code><a href="Client.html#Struct_ResultAsArrays">ResultAsArrays</a></code> get_future_result_as_arrays(<code><a href="Client.html#Typedef_Future">Future</a></code> ff)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Fetch asynchronous results
+@param ff - Future object which has the asynchronous results
+@return - result from async scanner/mutator
+<br/></div><div class="definition"><h4 id="Fn_ClientService_get_future_result_serialized">Function: ClientService.get_future_result_serialized</h4>
+<pre><code><a href="Client.html#Struct_ResultSerialized">ResultSerialized</a></code> get_future_result_serialized(<code><a href="Client.html#Typedef_Future">Future</a></code> ff)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Fetch asynchronous results
+@param ff - Future object which has the asynchronous results
+@return - result from async scanner/mutator
+<br/></div><div class="definition"><h4 id="Fn_ClientService_close_future">Function: ClientService.close_future</h4>
+<pre><code>void</code> close_future(<code><a href="Client.html#Typedef_Future">Future</a></code> ff)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Close a future object
+@param ff - the future object to be closed
 <br/></div><div class="definition"><h4 id="Fn_ClientService_open_scanner">Function: ClientService.open_scanner</h4>
 <pre><code><a href="Client.html#Typedef_Scanner">Scanner</a></code> open_scanner(<code><a href="Client.html#Typedef_Namespace">Namespace</a></code> ns,
                      <code>string</code> table_name,
@@ -487,8 +651,28 @@ mutator interface flattened.
 @param scan_spec - scan specification
 @param retry_table_not_found - whether to retry upon errors caused by
        drop/create tables with the same name
+<br/></div><div class="definition"><h4 id="Fn_ClientService_open_scanner_async">Function: ClientService.open_scanner_async</h4>
+<pre><code><a href="Client.html#Typedef_ScannerAsync">ScannerAsync</a></code> open_scanner_async(<code><a href="Client.html#Typedef_Namespace">Namespace</a></code> ns,
+                                <code>string</code> table_name,
+                                <code><a href="Client.html#Typedef_Future">Future</a></code> future,
+                                <code><a href="Client.html#Struct_ScanSpec">ScanSpec</a></code> scan_spec,
+                                <code>bool</code> retry_table_not_found = 0)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Open an asynchronous table scanner
+@param ns - namespace id
+@param table_name - table name
+@param future - callback object
+@param scan_spec - scan specification
+@param retry_table_not_found - whether to retry upon errors caused by
+       drop/create tables with the same name
 <br/></div><div class="definition"><h4 id="Fn_ClientService_close_scanner">Function: ClientService.close_scanner</h4>
 <pre><code>void</code> close_scanner(<code><a href="Client.html#Typedef_Scanner">Scanner</a></code> scanner)
+    throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
+</pre>Close a table scanner
+<p/>
+@param scanner - scanner id to close
+<br/></div><div class="definition"><h4 id="Fn_ClientService_close_scanner_async">Function: ClientService.close_scanner_async</h4>
+<pre><code>void</code> close_scanner_async(<code><a href="Client.html#Typedef_ScannerAsync">ScannerAsync</a></code> scanner)
     throws <code><a href="Client.html#Struct_ClientException">ClientException</a></code>
 </pre>Close a table scanner
 <p/>

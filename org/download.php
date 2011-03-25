@@ -1,3 +1,3 @@
 <?php
 $v = urlencode($_REQUEST['v']);
-header("Location: http://hypertable.googlecode.com/files/hypertable-$v-src.tar.gz");
+header("Location: http://www.hypertable.com/download/packages/$v/hypertable-$v-src.tar.gz");

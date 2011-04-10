@@ -1,3 +1,54 @@
+Version 0.9.5.0.pre2:
+(2011-04-11)
+
+    Ensure amount of unused physical memory for RangeServer
+    Fixed scanner deadlock when RangeServer dies or throws exception in create_scanner request.
+    Fixed ThriftBroker timeout problem; Removed default value for ThriftBroker.Timeout
+    Added --nomd5 option to rpm command
+    Got rid of role for install tasks in Capfiles
+    Fixed bug which causes assert when error message length > int16_t limit.
+    More Capfile changes.
+    Changes to Capfile. Replaced "dist" task with "install" and modified "upgrade".
+    Lazily create RangeLocator in RangeServer
+    Fix for recent changes to ApplicationQueue
+    Fixed bugs in TimeInline parse_ts function; Added regression test
+    Fixed problem with recent changes to ApplicationQueue
+    Put shell into "batch mode" when commands supplied with --execute
+    Set default RangeServer work thread count back down to 50
+    Modified ApplicationQueue to create thread on urgent task if all busy
+    Added server-side timeout during initialization; Increased worker threads
+    Fixed RSML upgrade logic
+    Fixed problem with SystemInfo::DiskUsage computation
+    Issue 598:  Common-properties and Common-init tests failing on some platforms. Fixed.
+    Fixed shutdown problem with TableMutatorIntervalHandler
+    Fixed Range load_acknowledged problem when upgrading from pre-0.9.5
+    Fixed release string verification regex; Added print functions for MaintenanceData
+    Fixed hang problem with serverup dfsbroker
+    Fixed some bugs with recent monitoring changes
+    Fixed RangeServer freeze during initialization with low memory condition
+    Fixed typos in VersionHelper.cmake
+    Fixed MasterClient-TransparentFailover test
+    Fixed some issues with monitoring graphs
+    Fixed bug in Future class.
+    Use existing app queue for metadata/metrics table
+    Added "Range Count" to range server monitoring table
+    Fixed low memory freeze problem
+    Stopped Master GC from adding unnecessary deletes into METADATA table
+    Made RangeServer print error and exit on listen error
+    Fixed bug in ScanCells interface whereby it was possibly to dereference a null pointer.
+    Fixed monitoring bug, changed installation dir from "0.9.4.3" to "current"
+    Fixed problem resulting from lost load acknowledge response
+    Fixed bug in future_abrupt_end_test.
+    Fixed Master DispatchHandler outstanding tracking
+    Fixed deadlock in scanners.
+    Fixed bug in scanner logic.
+    issue 585: Copy new METADATA.xml and RS_METRICS.xml in fhsize.sh
+    if on startup MML is empty and /sys/METADATA exists, don't try to create it
+    Fixed shutdown order sequence
+    Fixed RangeServerConnection state persistence problem
+    Updated CHANGES file for 0.9.5.0.pre release
+    Fixed scanner bug where once a scan was cancelled scanners were being set current out of order.
+
 Version 0.9.5.0.pre:
 (2011-03-24)
 
